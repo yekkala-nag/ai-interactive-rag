@@ -153,66 +153,151 @@ const COMPARISON = [
 // Wraps any SVG diagram with a maximize/restore control + fullscreen modal.
 const ZoomableFigure = ({ title, children }) => {
   const [zoomed, setZoomed] = useState(false);
+  const [scale, setScale]   = useState(1);
+
+  const zoomIn = (e) => {
+    if (e) e.stopPropagation();
+    setScale(s => Math.min(+(s + 0.25).toFixed(2), 3));
+  };
+
+  const zoomOut = (e) => {
+    if (e) e.stopPropagation();
+    setScale(s => Math.max(+(s - 0.25).toFixed(2), 0.5));
+  };
+
+  const resetZoom = (e) => {
+    if (e) e.stopPropagation();
+    setScale(1);
+  };
+
   return (
     <>
-      <div style={{ position: "relative" }}>
-        <button
-          onClick={() => setZoomed(true)}
-          title="Maximize diagram"
-          style={{
-            position: "absolute", top: 4, right: 4, zIndex: 5,
-            width: 26, height: 26, borderRadius: 4,
-            background: "rgba(255,255,255,0.9)", border: "1px solid #d0ccc4",
-            color: "#6a6a7a", cursor: "pointer", display: "flex",
-            alignItems: "center", justifyContent: "center", fontSize: "0.85rem",
-            transition: "all 0.15s", boxShadow: "0 1px 4px rgba(0,0,0,0.08)",
-          }}
-          onMouseEnter={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = "#c9a84c"; e.currentTarget.style.borderColor = "#c9a84c"; }}
-          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.9)"; e.currentTarget.style.color = "#6a6a7a"; e.currentTarget.style.borderColor = "#d0ccc4"; }}
-        >
-          ⤢
-        </button>
-        {children}
+      <div style={{ borderRadius: 6, border: "1px solid #e0dcd4", background: "#ffffff", overflow: "hidden", marginBottom: "0.5rem" }}>
+        {/* Top Control Header Toolbar */}
+        <div style={{
+          display: "flex", justifyContent: "space-between", alignItems: "center",
+          padding: "0.4rem 0.8rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4",
+          fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: "#4a4a5a"
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <span>🔍</span>
+            <span style={{ color: "#1a1a2e" }}>{title || "Interactive Figure / Workflow"}</span>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            <button
+              onClick={zoomOut}
+              title="Zoom Out (-25%)"
+              style={{
+                padding: "2px 8px", height: 24, borderRadius: 4, background: "#ffffff", border: "1px solid #d0ccc4",
+                color: "#1a1a2e", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem", display: "flex", alignItems: "center"
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#c4572a"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.color = "#1a1a2e"; }}
+            >
+              🔍- Zoom Out
+            </button>
+
+            <button
+              onClick={resetZoom}
+              title="Reset Zoom to 100%"
+              style={{
+                padding: "2px 8px", height: 24, borderRadius: 4, background: "#ffffff", border: "1px solid #d0ccc4",
+                color: "#6a6a7a", cursor: "pointer", fontWeight: 700, fontSize: "0.6rem", fontFamily: "DM Mono, monospace"
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#c9a84c"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.color = "#6a6a7a"; }}
+            >
+              {Math.round(scale * 100)}% Reset
+            </button>
+
+            <button
+              onClick={zoomIn}
+              title="Zoom In (+25%)"
+              style={{
+                padding: "2px 8px", height: 24, borderRadius: 4, background: "#ffffff", border: "1px solid #d0ccc4",
+                color: "#1a1a2e", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem", display: "flex", alignItems: "center"
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#2a8a84"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.color = "#1a1a2e"; }}
+            >
+              🔍+ Zoom In
+            </button>
+
+            <button
+              onClick={() => setZoomed(true)}
+              title="Maximize Fullscreen View"
+              style={{
+                padding: "2px 8px", height: 24, borderRadius: 4, background: "#ffffff", border: "1px solid #d0ccc4",
+                color: "#9b7fd4", cursor: "pointer", fontWeight: 700, fontSize: "0.62rem", display: "flex", alignItems: "center"
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#9b7fd4"; e.currentTarget.style.color = "#fff"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.color = "#9b7fd4"; }}
+            >
+              ⤢ Fullscreen
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable Diagram Viewport */}
+        <div style={{ width: "100%", overflow: "auto", padding: "0.75rem", background: "#ffffff" }}>
+          <div style={{
+            width: scale !== 1 ? `${scale * 100}%` : "100%",
+            minWidth: "100%",
+            transition: "width 0.2s ease, transform 0.2s ease",
+            transformOrigin: "top left"
+          }}>
+            {children}
+          </div>
+        </div>
       </div>
+
+      {/* FULLSCREEN MODAL VIEW */}
       {zoomed && (
         <div
           onClick={() => setZoomed(false)}
           style={{
             position: "fixed", inset: 0, zIndex: 1000,
-            background: "rgba(20,18,14,0.72)", backdropFilter: "blur(2px)",
+            background: "rgba(11,12,16,0.85)", backdropFilter: "blur(6px)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            padding: "3rem", animation: "fadeIn 0.2s ease",
+            padding: "2rem", animation: "fadeIn 0.2s ease",
           }}
         >
           <div
             onClick={e => e.stopPropagation()}
             style={{
               position: "relative", background: "#ffffff", borderRadius: 8,
-              border: "1px solid #e0dcd4", padding: "2rem",
-              maxWidth: "min(1100px, 92vw)", maxHeight: "88vh", overflow: "auto",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.35)",
+              border: "1px solid #e0dcd4", padding: "1.5rem",
+              width: "94vw", height: "90vh", display: "flex", flexDirection: "column",
+              boxShadow: "0 24px 60px rgba(0,0,0,0.45)",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-              {title && <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c9a84c" }}>{title}</div>}
-              <button
-                onClick={() => setZoomed(false)}
-                title="Restore size"
-                style={{
-                  marginLeft: "auto", width: 30, height: 30, borderRadius: 4,
-                  background: "#f7f5f0", border: "1px solid #e0dcd4",
-                  color: "#6a6a7a", cursor: "pointer", fontSize: "0.9rem",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  transition: "all 0.15s",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = "#f0ede6"; e.currentTarget.style.color = "#c4572a"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "#f7f5f0"; e.currentTarget.style.color = "#6a6a7a"; }}
-              >
-                ✕
-              </button>
+            {/* Modal Header Controls */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", borderBottom: "1px solid #e0dcd4", paddingBottom: "0.75rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.8rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#2a8a84" }}>
+                🔍 {title || "Diagram / Workflow Viewer"}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <button onClick={zoomOut} style={{ padding: "0.4rem 0.8rem", borderRadius: 4, background: "#f7f5f0", border: "1px solid #e0dcd4", cursor: "pointer", fontWeight: 800 }}>🔍- Zoom Out</button>
+                <button onClick={resetZoom} style={{ padding: "0.4rem 0.8rem", borderRadius: 4, background: "#f7f5f0", border: "1px solid #e0dcd4", cursor: "pointer", fontWeight: 700, fontFamily: "DM Mono, monospace" }}>Reset ({Math.round(scale * 100)}%)</button>
+                <button onClick={zoomIn} style={{ padding: "0.4rem 0.8rem", borderRadius: 4, background: "#2a8a84", color: "#fff", border: "none", cursor: "pointer", fontWeight: 800 }}>🔍+ Zoom In</button>
+                <button
+                  onClick={() => setZoomed(false)}
+                  style={{
+                    padding: "0.4rem 0.8rem", borderRadius: 4, background: "#c4572a", border: "none",
+                    color: "#fff", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem"
+                  }}
+                >
+                  ✕ Close
+                </button>
+              </div>
             </div>
-            <div style={{ transform: "scale(1.35)", transformOrigin: "top left", width: "74%" }}>
-              {children}
+
+            {/* Scrollable Modal Content */}
+            <div style={{ flex: 1, overflow: "auto", background: "#fcfbf9", borderRadius: 6, padding: "1.5rem" }}>
+              <div style={{ width: scale !== 1 ? `${scale * 120}%` : "100%", minWidth: "100%", transition: "width 0.2s ease" }}>
+                {children}
+              </div>
             </div>
           </div>
         </div>
@@ -3392,10 +3477,10 @@ const MemoryEngineeringTab = ({ s }) => {
       <div style={s.sectionLabel("#9b7fd4")}>Generated Visualisations — Memory & Speed Profiles</div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
         <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
-          <MemoryDiagram activeId={highlighted} />
+          <ZoomableFigure title="Memory Diagram"><MemoryDiagram activeId={highlighted} /></ZoomableFigure>
         </div>
         <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
-          <SpeedDiagram activeId={highlighted} />
+          <ZoomableFigure title="Speed Diagram"><SpeedDiagram activeId={highlighted} /></ZoomableFigure>
         </div>
       </div>
 
@@ -4491,9 +4576,9 @@ const AIGlossaryTab = ({ s }) => {
       <div style={s.sectionLabel("#9b7fd4")}>Three Core Concepts — Visualised</div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
         {[
-          { title: "The AI Hierarchy", component: <AIHierarchyDiagram /> },
-          { title: "Hallucination vs RAG", component: <HallucinationDiagram /> },
-          { title: "Tokenisation", component: <TokenDiagram /> },
+          { title: "The AI Hierarchy", component: <ZoomableFigure title="A I Hierarchy Diagram"><AIHierarchyDiagram /></ZoomableFigure> },
+          { title: "Hallucination vs RAG", component: <ZoomableFigure title="Hallucination Diagram"><HallucinationDiagram /></ZoomableFigure> },
+          { title: "Tokenisation", component: <ZoomableFigure title="Token Diagram"><TokenDiagram /></ZoomableFigure> },
         ].map((d, i) => (
           <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#8a8a9a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.6rem" }}>{d.title}</div>
@@ -13561,6 +13646,471 @@ const GenPatternsTab = ({ s }) => {
   );
 };
 
+// ─── 3X TOKEN BILL FIX TAB ───────────────────────────────────────
+const TokenBillTab = ({ s }) => {
+  const [failureRate, setFailureRate]         = useState(15);
+  const [graphDepth, setGraphDepth]           = useState(3);
+  const [initialContext, setInitialContext]   = useState(3000);
+  const [taskRouting, setTaskRouting]         = useState(true);
+  const [contextTrimming, setContextTrimming] = useState(true);
+  const [parallelExec, setParallelExec]       = useState(true);
+  const [subTab, setSubTab]                   = useState("simulator");
+  const [selectedTraceStep, setSelectedTraceStep] = useState(0);
+
+  // Math Calculations for Naive vs Optimized
+  const naiveTokens = Math.round(initialContext * graphDepth * (1 + graphDepth * 0.4) * (1 + (failureRate / 100) * (graphDepth * 1.5)));
+  const naiveCost = ((naiveTokens * 1000) / 1000000) * 15.0; // All flagship model ($15/1M)
+  const naiveLatency = (graphDepth * 1.2) * (1 + (failureRate / 100) * (graphDepth * 1.2));
+  const naiveBlastRadius = graphDepth;
+
+  const modelCostRate = taskRouting ? (0.8 * 0.15 + 0.2 * 15.0) : 15.0; // 80% Flash ($0.15/1M), 20% Flagship ($15/1M)
+  const ctxFactor = contextTrimming ? 0.38 : (1 + graphDepth * 0.4);
+  const retryFactor = parallelExec ? (1 + (failureRate / 100) * 0.15) : (1 + (failureRate / 100) * (graphDepth * 1.5));
+  const optTokens = Math.round(initialContext * graphDepth * ctxFactor * retryFactor);
+  const optCost = ((optTokens * 1000) / 1000000) * modelCostRate;
+  const optLatency = (graphDepth * 1.2) * (parallelExec ? 0.45 : 1.0) * (1 + (failureRate / 100) * (parallelExec ? 0.15 : 1.2));
+  const optBlastRadius = parallelExec ? 1 : graphDepth;
+
+  const tokenSavingsPct = Math.max(0, Math.round(((naiveTokens - optTokens) / naiveTokens) * 100));
+  const costSavingsPct = Math.max(0, Math.round(((naiveCost - optCost) / naiveCost) * 100));
+  const latencySavingsPct = Math.max(0, Math.round(((naiveLatency - optLatency) / naiveLatency) * 100));
+
+  const TRACE_STEPS = [
+    { step: 1, name: "Supervisor Intake & Router", role: "Supervisor", model: taskRouting ? "Gemini 2.5 Flash" : "Claude 3.5 Sonnet", costTier: taskRouting ? "Cheap ($0.15/1M)" : "Flagship ($15/1M)", inputTokens: contextTrimming ? 850 : 3400, outputTokens: 180, latencySec: 0.3, status: "SUCCESS", trimmedState: ["task_type", "user_query"] },
+    { step: 2, name: "Data Extraction Branch (Parallel)", role: "Extractor", model: taskRouting ? "GPT-4o-mini" : "Claude 3.5 Sonnet", costTier: taskRouting ? "Cheap ($0.15/1M)" : "Flagship ($15/1M)", inputTokens: contextTrimming ? 1200 : 4800, outputTokens: 420, latencySec: 0.6, status: "SUCCESS", trimmedState: ["extracted_entities", "db_filters"] },
+    { step: 3, name: "Multi-Hop Reasoning Node", role: "Reasoner", model: "Claude 3.5 Sonnet", costTier: "Flagship ($15/1M)", inputTokens: contextTrimming ? 1900 : 7200, outputTokens: 650, latencySec: 1.4, status: failureRate > 25 ? "VALIDATION_RETRY" : "SUCCESS", trimmedState: ["reasoning_summary", "key_findings"] },
+    { step: 4, name: "Isolated Retry Node (Isolated Branch)", role: "Formatter", model: taskRouting ? "Gemini 2.5 Flash" : "Claude 3.5 Sonnet", costTier: taskRouting ? "Cheap ($0.15/1M)" : "Flagship ($15/1M)", inputTokens: contextTrimming ? 950 : 9800, outputTokens: 310, latencySec: 0.4, status: "SUCCESS (Isolated Retry)", trimmedState: ["final_result", "output_schema"] },
+  ];
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg, #101926, #162436, #1b1c2e)", border: "1px solid #2a3a50", borderRadius: 8, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.3)" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "linear-gradient(90deg, #c4572a, #c9a84c, #2a8a84, #9b7fd4)" }} />
+        <div style={{ position: "absolute", right: "2rem", top: "1rem", fontFamily: "Playfair Display, serif", fontSize: "6rem", fontWeight: 900, color: "rgba(201,168,76,0.05)", lineHeight: 1, pointerEvents: "none" }}>💸</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.75rem" }}>
+          Production Cost & Architecture Optimization · Towards Data Science Guide
+        </div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.8rem", fontWeight: 900, color: "#ffffff", lineHeight: 1.2, marginBottom: "0.75rem" }}>
+          The 3× Token Bill We Didn't See Coming:<br />
+          <em style={{ color: "#c9a84c", fontStyle: "italic" }}>Multi-Agent Graph & Cost Optimization</em>
+        </h2>
+        <p style={{ fontSize: "0.75rem", color: "#a0aab8", lineHeight: 1.8, maxWidth: 680, marginBottom: "1.2rem" }}>
+          How moving from single-agent prompts to a multi-agent graph (LangGraph supervisor + sub-agents) quietly tripled LLM API bills without traffic changes—and the 3-part architectural triad that cut tokens by <strong>40%</strong> and latency by <strong>50%</strong>.
+        </p>
+
+        {/* STAT BADGES */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.8rem", maxWidth: 720 }}>
+          {[
+            { val: `-${tokenSavingsPct}%`, label: "Token Consumption", sub: "Via Context Trimming", color: "#2a8a84" },
+            { val: `-${costSavingsPct}%`, label: "API Cost Savings", sub: "Via Task-Based Routing", color: "#c9a84c" },
+            { val: `-${latencySavingsPct}%`, label: "Latency Reduction", sub: "Via Parallel Branches", color: "#4a9a4a" },
+            { val: `${optBlastRadius} Node`, label: "Retry Blast Radius", sub: "Isolated Branch Retry", color: "#9b7fd4" },
+          ].map((stat, idx) => (
+            <div key={idx} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 6, padding: "0.8rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: stat.color, lineHeight: 1, marginBottom: "0.2rem" }}>{stat.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#ffffff", marginBottom: "0.1rem" }}>{stat.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#8a9aab" }}>{stat.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SUB TAB NAVIGATION */}
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", borderBottom: "1px solid #e0dcd4", paddingBottom: "0.5rem" }}>
+        {[
+          { id: "simulator", label: "🎛️ Live Cost Simulator", desc: "Interactive Graph & Savings Calculator" },
+          { id: "triad",     label: "🛠️ The Triad Fix", desc: "Routing, Trimming, & Asynchronous Branching" },
+          { id: "diagrams",  label: "🖼️ AI Architecture Diagrams", desc: "Visual Flowcharts & Retry Cascades" },
+          { id: "matrix",    label: "📊 Comparison Matrix", desc: "Single vs Naive vs Optimized Multi-Agent" },
+          { id: "logs",      label: "📜 Trace Sandbox", desc: "Per-Step Token & Cost Attribution Log" },
+        ].map(t => (
+          <button key={t.id} onClick={() => setSubTab(t.id)}
+            style={{
+              padding: "0.6rem 1rem",
+              background: subTab === t.id ? "#ffffff" : "transparent",
+              border: subTab === t.id ? "1px solid #c9a84c" : "1px solid transparent",
+              borderBottom: subTab === t.id ? "2px solid #c9a84c" : "2px solid transparent",
+              borderRadius: 6,
+              cursor: "pointer",
+              textAlign: "left",
+              transition: "all 0.2s"
+            }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: subTab === t.id ? "#c9a84c" : "#1a1a2e" }}>{t.label}</div>
+            <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>{t.desc}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* SUB-TAB 1: LIVE SIMULATOR */}
+      {subTab === "simulator" && (
+        <div>
+          <div style={s.sectionLabel("#c9a84c")}>Multi-Agent Cost & Retry Cascade Simulator</div>
+          <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: "1.5rem", marginBottom: "1.5rem" }}>
+            
+            {/* CONTROLS PANEL */}
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#1a1a2e", marginBottom: "1rem" }}>
+                ⚙️ Graph Parameters
+              </div>
+
+              <div style={{ marginBottom: "1.2rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", marginBottom: "0.3rem" }}>
+                  <span style={{ fontWeight: 700, color: "#4a4a5a" }}>Sub-Agent Failure Rate:</span>
+                  <span style={{ fontFamily: "DM Mono, monospace", color: "#c4572a", fontWeight: 700 }}>{failureRate}%</span>
+                </div>
+                <input type="range" min="0" max="50" step="5" value={failureRate} onChange={e => setFailureRate(Number(e.target.value))} style={{ width: "100%" }} />
+                <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Rate of validation / JSON tool parsing failures</div>
+              </div>
+
+              <div style={{ marginBottom: "1.2rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", marginBottom: "0.3rem" }}>
+                  <span style={{ fontWeight: 700, color: "#4a4a5a" }}>Graph Node Depth:</span>
+                  <span style={{ fontFamily: "DM Mono, monospace", color: "#9b7fd4", fontWeight: 700 }}>{graphDepth} Layers</span>
+                </div>
+                <input type="range" min="1" max="5" step="1" value={graphDepth} onChange={e => setGraphDepth(Number(e.target.value))} style={{ width: "100%" }} />
+                <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Sequential depth of agents in the graph</div>
+              </div>
+
+              <div style={{ marginBottom: "1.2rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", marginBottom: "0.3rem" }}>
+                  <span style={{ fontWeight: 700, color: "#4a4a5a" }}>Initial Prompt Context:</span>
+                  <span style={{ fontFamily: "DM Mono, monospace", color: "#2a8a84", fontWeight: 700 }}>{initialContext.toLocaleString()} Tokens</span>
+                </div>
+                <input type="range" min="1000" max="10000" step="500" value={initialContext} onChange={e => setInitialContext(Number(e.target.value))} style={{ width: "100%" }} />
+                <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Raw prompt + system prompt size</div>
+              </div>
+
+              <hr style={{ border: "none", borderTop: "1px dashed #e0dcd4", margin: "1.2rem 0" }} />
+
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#2a8a84", marginBottom: "0.8rem" }}>
+                🛡️ Optimization Toggles
+              </div>
+
+              {[
+                { label: "Task-Based Model Routing", state: taskRouting, setState: setTaskRouting, desc: "Use cheap models for mechanical tasks, flagship for reasoning" },
+                { label: "Context Trimming Handoffs", state: contextTrimming, setState: setContextTrimming, desc: "Pass only needed_fields instead of full history trace" },
+                { label: "Parallel Execution (asyncio)", state: parallelExec, setState: setParallelExec, desc: "Independent branches run parallel & isolate retries" },
+              ].map((opt, idx) => (
+                <label key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", marginBottom: "0.9rem", cursor: "pointer" }}>
+                  <input type="checkbox" checked={opt.state} onChange={e => opt.setState(e.target.checked)} style={{ marginTop: "0.15rem" }} />
+                  <div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: opt.state ? "#2a8a84" : "#6a6a7a" }}>{opt.label}</div>
+                    <div style={{ fontSize: "0.55rem", color: "#8a8a9a", lineHeight: 1.4 }}>{opt.desc}</div>
+                  </div>
+                </label>
+              ))}
+            </div>
+
+            {/* METRICS & COMPARISON PANEL */}
+            <div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.2rem" }}>
+                {/* NAIVE CARD */}
+                <div style={{ background: "#ffffff", border: "1px solid #c4572a40", borderRadius: 8, padding: "1.2rem", borderTop: "3px solid #c4572a" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.6rem" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c4572a" }}>❌ Naive Multi-Agent</div>
+                    <span style={{ fontSize: "0.55rem", background: "rgba(196,87,42,0.1)", color: "#c4572a", padding: "0.15rem 0.4rem", borderRadius: 4, fontWeight: 700 }}>Unoptimized</span>
+                  </div>
+                  
+                  <div style={{ fontSize: "1.5rem", fontFamily: "Playfair Display, serif", fontWeight: 900, color: "#1a1a2e", marginBottom: "0.2rem" }}>
+                    ${naiveCost.toFixed(2)} <span style={{ fontSize: "0.65rem", fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>/ 1k queries</span>
+                  </div>
+                  
+                  <div style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                    • Total Tokens / Query: <strong style={{ color: "#1a1a2e" }}>{naiveTokens.toLocaleString()}</strong><br />
+                    • Avg Latency / Query: <strong style={{ color: "#1a1a2e" }}>{naiveLatency.toFixed(1)}s</strong><br />
+                    • Retry Blast Radius: <strong style={{ color: "#c4572a" }}>{naiveBlastRadius} Upstream Nodes Re-executed</strong><br />
+                    • Model Tiering: <strong style={{ color: "#c4572a" }}>100% Flagship ($15/1M)</strong>
+                  </div>
+                </div>
+
+                {/* OPTIMIZED CARD */}
+                <div style={{ background: "#ffffff", border: "1px solid #2a8a8440", borderRadius: 8, padding: "1.2rem", borderTop: "3px solid #2a8a84" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.6rem" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84" }}>✅ Triad-Optimized Agent Graph</div>
+                    <span style={{ fontSize: "0.55rem", background: "rgba(42,138,132,0.1)", color: "#2a8a84", padding: "0.15rem 0.4rem", borderRadius: 4, fontWeight: 700 }}>Triad Active</span>
+                  </div>
+                  
+                  <div style={{ fontSize: "1.5rem", fontFamily: "Playfair Display, serif", fontWeight: 900, color: "#2a8a84", marginBottom: "0.2rem" }}>
+                    ${optCost.toFixed(2)} <span style={{ fontSize: "0.65rem", fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>/ 1k queries</span>
+                  </div>
+                  
+                  <div style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                    • Total Tokens / Query: <strong style={{ color: "#2a8a84" }}>{optTokens.toLocaleString()} (-{tokenSavingsPct}%)</strong><br />
+                    • Avg Latency / Query: <strong style={{ color: "#2a8a84" }}>{optLatency.toFixed(1)}s (-{latencySavingsPct}%)</strong><br />
+                    • Retry Blast Radius: <strong style={{ color: "#2a8a84" }}>{optBlastRadius} Isolated Node Only</strong><br />
+                    • Model Tiering: <strong style={{ color: "#2a8a84" }}>{taskRouting ? "80% Cheap ($0.15/1M) / 20% Flagship" : "100% Flagship"}</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* VISUAL BAR COMPARISON */}
+              <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#1a1a2e", marginBottom: "0.8rem" }}>
+                  📊 Estimated Cost Comparison per 1,000 Tasks
+                </div>
+
+                <div style={{ marginBottom: "0.8rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.6rem", color: "#6a6a7a", marginBottom: "0.2rem" }}>
+                    <span>Naive Setup (Full Cascade & Heavy Context)</span>
+                    <span style={{ fontWeight: 700, color: "#c4572a" }}>${naiveCost.toFixed(2)}</span>
+                  </div>
+                  <div style={{ background: "#f0ede6", height: 16, borderRadius: 4, overflow: "hidden" }}>
+                    <div style={{ width: "100%", height: "100%", background: "#c4572a" }} />
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.6rem", color: "#6a6a7a", marginBottom: "0.2rem" }}>
+                    <span>Optimized Triad Setup</span>
+                    <span style={{ fontWeight: 700, color: "#2a8a84" }}>${optCost.toFixed(2)} (Save ${Math.max(0, naiveCost - optCost).toFixed(2)})</span>
+                  </div>
+                  <div style={{ background: "#f0ede6", height: 16, borderRadius: 4, overflow: "hidden" }}>
+                    <div style={{ width: `${Math.max(5, (optCost / (naiveCost || 1)) * 100)}%`, height: "100%", background: "#2a8a84", transition: "width 0.3s ease" }} />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 2: THE TRIAD FIX */}
+      {subTab === "triad" && (
+        <div>
+          <div style={s.sectionLabel("#2a8a84")}>The Engineering Triad: How We Solved the 3× Bill</div>
+          
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.2rem", marginBottom: "1.5rem" }}>
+            
+            {/* FIX 1 */}
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", borderTop: "3px solid #2a8a84" }}>
+              <div style={{ fontSize: "1.2rem", marginBottom: "0.4rem" }}>🎯</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
+                1. Task Complexity Routing
+              </div>
+              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                Assign models based on step complexity rather than using flagship models everywhere by default. Routine formatting, tool-call wrapping, and summarization move to <strong>Gemini Flash / GPT-4o-mini ($0.15/1M)</strong> while multi-step reasoning remains on flagship models.
+              </p>
+              <CodeBlock code={`# Model Routing Table mapping agent role to tier
+MODEL_ROUTING_TABLE = {
+  "supervisor":   "gemini-2.5-flash",  # Quick routing
+  "formatter":    "gpt-4o-mini",      # Mechanical schema
+  "summarizer":   "gemini-2.5-flash",  # Simple summary
+  "deep_reasoner":"claude-3.5-sonnet"# Multi-step logic
+}`} />
+            </div>
+
+            {/* FIX 2 */}
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", borderTop: "3px solid #c9a84c" }}>
+              <div style={{ fontSize: "1.2rem", marginBottom: "0.4rem" }}>✂️</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c9a84c", marginBottom: "0.4rem" }}>
+                2. Context Trimming Handoffs
+              </div>
+              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                By default, LangGraph passes accumulated conversation traces to every node. Trimming handoffs down to only <code style={{ color: "#c9a84c" }}>needed_fields</code> strips useless upstream reasoning before invoking downstream agents.
+              </p>
+              <CodeBlock code={`def trim_handoff_context(state, needed_fields):
+    return {
+        field: state[field]
+        for field in needed_fields
+        if field in state
+    }
+
+# Formatting agent receives ONLY final result
+handoff = trim_handoff_context(
+    graph_state,
+    needed_fields=["final_result", "schema"]
+)`} />
+            </div>
+
+            {/* FIX 3 */}
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", borderTop: "3px solid #9b7fd4" }}>
+              <div style={{ fontSize: "1.2rem", marginBottom: "0.4rem" }}>⚡</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#9b7fd4", marginBottom: "0.4rem" }}>
+                3. Parallel Execution & Isolated Retries
+              </div>
+              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                Running independent sub-agent branches with <code style={{ color: "#9b7fd4" }}>asyncio.gather</code> cuts latency by <strong>45–55%</strong> AND shrinks retry blast radius. A failure in Branch A no longer forces re-running Branch B's upstream state!
+              </p>
+              <CodeBlock code={`import asyncio
+
+async def run_independent_branches(agents, payload):
+    # Runs independent branches simultaneously;
+    # retry blast radius is restricted to 1 branch
+    results = await asyncio.gather(
+        *(agent.ainvoke(payload) for agent in agents),
+        return_exceptions=False,
+    )
+    return results`} />
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 3: AI DIAGRAMS */}
+      {subTab === "diagrams" && (
+        <div>
+          <div style={s.sectionLabel("#9b7fd4")}>AI Visual Workflows & Architecture Diagrams</div>
+          
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "1.5rem" }}>
+            
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#1a1a2e", marginBottom: "0.6rem" }}>
+                📐 Overall Multi-Agent Cost Architecture
+              </div>
+              <ZoomableFigure title="Dynamic LLM Multi-Agent Cost Architecture">
+                <img
+                  src="file:///Users/nyakkala/.gemini/antigravity-ide/brain/c77b7377-55d0-486c-a313-d4f4e85a6ef8/multi_agent_token_cost_architecture_1785577825087.png"
+                  alt="Multi-Agent Token Cost Architecture"
+                  style={{ width: "100%", borderRadius: 6, border: "1px solid #e0dcd4" }}
+                />
+              </ZoomableFigure>
+              <p style={{ fontSize: "0.62rem", color: "#6a6a7a", lineHeight: 1.6, marginTop: "0.8rem" }}>
+                Flow showing supervisor task routing between high-cost reasoning models vs low-cost fast models, with context trimming before handoffs and parallel branch collection via <code style={{ color: "#2a8a84" }}>asyncio.gather()</code>.
+              </p>
+            </div>
+
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c4572a", marginBottom: "0.6rem" }}>
+                🔁 Naive Retry Cascade vs. Isolated Retry Flow
+              </div>
+              <ZoomableFigure title="Retry Cascade vs Isolated Retry Infographic">
+                <img
+                  src="file:///Users/nyakkala/.gemini/antigravity-ide/brain/c77b7377-55d0-486c-a313-d4f4e85a6ef8/retry_cascade_vs_isolated_1785577840013.png"
+                  alt="Retry Cascade vs Isolated Retry"
+                  style={{ width: "100%", borderRadius: 6, border: "1px solid #e0dcd4" }}
+                />
+              </ZoomableFigure>
+              <p style={{ fontSize: "0.62rem", color: "#6a6a7a", lineHeight: 1.6, marginTop: "0.8rem" }}>
+                Left: Naive retries force full upstream chain re-execution with heavy context. Right: Isolated retry with trimmed context and localized execution avoids redundant computation.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 4: COMPARISON MATRIX */}
+      {subTab === "matrix" && (
+        <div>
+          <div style={s.sectionLabel("#c4572a")}>7-Dimension Architectural Comparison Matrix</div>
+          
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, overflow: "hidden", marginBottom: "1.5rem" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.67rem" }}>
+              <thead>
+                <tr style={{ background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
+                  {["Dimension", "Single Agent", "Naive Multi-Agent", "Capped Tenacity Retries", "Triad-Optimized Graph"].map(h => (
+                    <th key={h} style={{ textAlign: "left", padding: "0.8rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#1a1a2e", fontSize: "0.62rem", textTransform: "uppercase" }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["Token Overhead", "1.0× Baseline", "3.0× Baseline (Tripled)", "2.6× Baseline", "1.1× Baseline (-40% Tokens)"],
+                  ["Model Tiering Strategy", "Single Flagship Model", "Flagship Everywhere by Default", "Flagship Everywhere by Default", "Task Complexity Routing (80% Cheap / 20% Fast)"],
+                  ["Context State Footprint", "Single Prompt Window", "Monotonically Growing History", "Monotonically Growing History", "Trimmed Handoffs (needed_fields Only)"],
+                  ["Retry Blast Radius", "1 Call Re-run", "Full Upstream Chain Re-run", "Full Upstream Chain Re-run", "Isolated Sub-Agent Node Only"],
+                  ["End-to-End Latency", "Baseline (1 call)", "High (Sequential + Cascades)", "Moderate", "45–55% Faster (Parallel async)"],
+                  ["Failure Mode Detection", "Visible LLM Exception", "Silent Retries (Hidden Cost)", "Capped Exception Escalation", "Cost & Attribution Monitoring Dashboard"],
+                  ["Maintenance Overhead", "Low (1 Prompt)", "Medium", "Medium", "Requires Static/Dynamic Routing Table"],
+                ].map((row, ri) => (
+                  <tr key={ri} style={{ borderBottom: "1px solid #f0ede6", background: ri % 2 === 0 ? "#ffffff" : "#faf9f6" }}>
+                    <td style={{ padding: "0.8rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#1a1a2e" }}>{row[0]}</td>
+                    <td style={{ padding: "0.8rem 1rem", color: "#6a6a7a" }}>{row[1]}</td>
+                    <td style={{ padding: "0.8rem 1rem", color: "#c4572a", fontWeight: 600 }}>{row[2]}</td>
+                    <td style={{ padding: "0.8rem 1rem", color: "#c9a84c" }}>{row[3]}</td>
+                    <td style={{ padding: "0.8rem 1rem", color: "#2a8a84", fontWeight: 700 }}>{row[4]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 5: LOG TRACE SANDBOX */}
+      {subTab === "logs" && (
+        <div>
+          <div style={s.sectionLabel("#4a9a4a")}>Per-Step Token & Cost Attribution Trace Sandbox</div>
+          
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <p style={{ fontSize: "0.68rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "1rem" }}>
+              Click any step in the multi-agent execution trace below to inspect input/output tokens, assigned model tier, handoff context state, and isolated retry status.
+            </p>
+
+            <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.2rem", overflowX: "auto" }}>
+              {TRACE_STEPS.map((st, idx) => (
+                <button key={idx} onClick={() => setSelectedTraceStep(idx)}
+                  style={{
+                    padding: "0.6rem 0.9rem",
+                    background: selectedTraceStep === idx ? "rgba(42,138,132,0.1)" : "#f7f5f0",
+                    border: selectedTraceStep === idx ? "1px solid #2a8a84" : "1px solid #e0dcd4",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    textAlign: "left",
+                    minWidth: 160
+                  }}>
+                  <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: "#8a8a9a" }}>Step {st.step} · {st.role}</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: selectedTraceStep === idx ? "#2a8a84" : "#1a1a2e" }}>{st.name}</div>
+                  <div style={{ fontSize: "0.52rem", color: st.status.includes("RETRY") ? "#c4572a" : "#4a9a4a", fontWeight: 700, marginTop: "0.2rem" }}>{st.status}</div>
+                </button>
+              ))}
+            </div>
+
+            {/* TRACE STEP DETAILS */}
+            {TRACE_STEPS[selectedTraceStep] && (() => {
+              const currentStep = TRACE_STEPS[selectedTraceStep];
+              return (
+                <div style={{ background: "#0d0d1a", border: "1px solid #2a3a50", borderRadius: 6, padding: "1.2rem", color: "#a0aab8" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", borderBottom: "1px solid #1e2d40", paddingBottom: "0.6rem" }}>
+                    <div>
+                      <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: "#c9a84c" }}>Step {currentStep.step} / {TRACE_STEPS.length}</span>
+                      <h4 style={{ fontFamily: "Syne, sans-serif", fontSize: "0.9rem", color: "#ffffff", fontWeight: 800 }}>{currentStep.name}</h4>
+                    </div>
+                    <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: "#2a8a84", background: "rgba(42,138,132,0.15)", padding: "0.2rem 0.5rem", borderRadius: 4 }}>{currentStep.costTier}</span>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.8rem", marginBottom: "1.2rem" }}>
+                    <div>
+                      <div style={{ fontSize: "0.55rem", color: "#6a7a8c", textTransform: "uppercase" }}>Assigned Model</div>
+                      <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.7rem", color: "#ffffff", fontWeight: 700 }}>{currentStep.model}</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "0.55rem", color: "#6a7a8c", textTransform: "uppercase" }}>Input Tokens</div>
+                      <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.7rem", color: "#2a8a84", fontWeight: 700 }}>{currentStep.inputTokens}</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "0.55rem", color: "#6a7a8c", textTransform: "uppercase" }}>Output Tokens</div>
+                      <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.7rem", color: "#c9a84c", fontWeight: 700 }}>{currentStep.outputTokens}</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: "0.55rem", color: "#6a7a8c", textTransform: "uppercase" }}>Latency</div>
+                      <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.7rem", color: "#9b7fd4", fontWeight: 700 }}>{currentStep.latencySec}s</div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style={{ fontSize: "0.58rem", fontFamily: "Syne, sans-serif", color: "#c9a84c", fontWeight: 700, marginBottom: "0.4rem" }}>
+                      ✂️ Trimmed Context Passed Downstream (`needed_fields`):
+                    </div>
+                    <div style={{ background: "#16202e", padding: "0.6rem 0.8rem", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: "#7aaa7a" }}>
+                      {JSON.stringify(currentStep.trimmedState, null, 2)}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+};
+
 // ─── MEASURING CONTEXT QUALITY TAB ───────────────────────────────
 
 // ── Data: 7 criteria ──
@@ -17034,6 +17584,7 @@ export default function App() {
     { id: "ragbeyond",     label: "㉝ Beyond RAG 🔮" },
     { id: "practices",     label: "㉞ Best Practices" },
     { id: "progress",      label: "㉟ Progress 🎯" },
+    { id: "tokenbill",     label: "㊱ 3× Token Bill Fix 💸" },
   ];
 
   useEffect(() => {
@@ -17566,6 +18117,9 @@ for chunk in rag_chain.stream("What is hybrid search?"):
 
         {/* ── 4 BRICKS STOP HALLUCINATIONS ── */}
         {tab === "hallucbricks" && <HallucBricksTab s={s} />}
+
+        {/* ── 3X TOKEN BILL FIX ── */}
+        {tab === "tokenbill" && <TokenBillTab s={s} />}
 
       </main>
 
