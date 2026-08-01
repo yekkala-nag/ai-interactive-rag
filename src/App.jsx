@@ -153,11 +153,21 @@ const COMPARISON = [
 // Wraps any SVG diagram with a maximize/restore control + fullscreen modal.
 const ZoomableFigure = ({ title, children }) => {
   const [zoomed, setZoomed] = useState(false);
-  const [scale, setScale]   = useState(1);
+  const [scale, setScale]   = useState(1.0);
+
+  const openModal = () => {
+    setScale(1.0);
+    setZoomed(true);
+  };
+
+  const closeModal = () => {
+    setZoomed(false);
+    setScale(1.0);
+  };
 
   const zoomIn = (e) => {
     if (e) e.stopPropagation();
-    setScale(s => Math.min(+(s + 0.25).toFixed(2), 3));
+    setScale(s => Math.min(+(s + 0.25).toFixed(2), 3.0));
   };
 
   const zoomOut = (e) => {
@@ -167,137 +177,175 @@ const ZoomableFigure = ({ title, children }) => {
 
   const resetZoom = (e) => {
     if (e) e.stopPropagation();
-    setScale(1);
+    setScale(1.0);
+  };
+
+  const handleWheel = (e) => {
+    e.stopPropagation();
+    if (e.deltaY < 0) {
+      setScale(s => Math.min(+(s + 0.15).toFixed(2), 3.0));
+    } else {
+      setScale(s => Math.max(+(s - 0.15).toFixed(2), 0.5));
+    }
   };
 
   return (
     <>
       <div style={{ borderRadius: 6, border: "1px solid #e0dcd4", background: "#ffffff", overflow: "hidden", marginBottom: "0.5rem" }}>
-        {/* Top Control Header Toolbar */}
+        {/* Clean Inline Header — Title & Fullscreen button ONLY (NO Zoom In/Out text) */}
         <div style={{
           display: "flex", justifyContent: "space-between", alignItems: "center",
-          padding: "0.4rem 0.8rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4",
-          fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: "#4a4a5a"
+          padding: "0.45rem 0.8rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4",
+          fontFamily: "Syne, sans-serif", fontSize: "0.65rem", fontWeight: 700, color: "#4a4a5a"
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
             <span>🔍</span>
-            <span style={{ color: "#1a1a2e" }}>{title || "Interactive Figure / Workflow"}</span>
+            <span style={{ color: "#1a1a2e" }}>{title || "Figure / Workflow"}</span>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-            <button
-              onClick={zoomOut}
-              title="Zoom Out (-25%)"
-              style={{
-                padding: "2px 8px", height: 24, borderRadius: 4, background: "#ffffff", border: "1px solid #d0ccc4",
-                color: "#1a1a2e", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem", display: "flex", alignItems: "center"
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#c4572a"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.color = "#1a1a2e"; }}
-            >
-              🔍- Zoom Out
-            </button>
-
-            <button
-              onClick={resetZoom}
-              title="Reset Zoom to 100%"
-              style={{
-                padding: "2px 8px", height: 24, borderRadius: 4, background: "#ffffff", border: "1px solid #d0ccc4",
-                color: "#6a6a7a", cursor: "pointer", fontWeight: 700, fontSize: "0.6rem", fontFamily: "DM Mono, monospace"
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#c9a84c"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.color = "#6a6a7a"; }}
-            >
-              {Math.round(scale * 100)}% Reset
-            </button>
-
-            <button
-              onClick={zoomIn}
-              title="Zoom In (+25%)"
-              style={{
-                padding: "2px 8px", height: 24, borderRadius: 4, background: "#ffffff", border: "1px solid #d0ccc4",
-                color: "#1a1a2e", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem", display: "flex", alignItems: "center"
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#2a8a84"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.color = "#1a1a2e"; }}
-            >
-              🔍+ Zoom In
-            </button>
-
-            <button
-              onClick={() => setZoomed(true)}
-              title="Maximize Fullscreen View"
-              style={{
-                padding: "2px 8px", height: 24, borderRadius: 4, background: "#ffffff", border: "1px solid #d0ccc4",
-                color: "#9b7fd4", cursor: "pointer", fontWeight: 700, fontSize: "0.62rem", display: "flex", alignItems: "center"
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#9b7fd4"; e.currentTarget.style.color = "#fff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.color = "#9b7fd4"; }}
-            >
-              ⤢ Fullscreen
-            </button>
-          </div>
+          <button
+            onClick={openModal}
+            title="Expand to Fullscreen View"
+            style={{
+              padding: "4px 10px", height: 26, borderRadius: 4, background: "#ffffff", border: "1px solid #d0ccc4",
+              color: "#2a8a84", cursor: "pointer", fontWeight: 700, fontSize: "0.65rem", display: "flex", alignItems: "center", gap: "4px",
+              boxShadow: "0 1px 2px rgba(0,0,0,0.05)", transition: "all 0.15s ease"
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#2a8a84"; e.currentTarget.style.color = "#fff"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.color = "#2a8a84"; }}
+          >
+            <span>⤢</span> Fullscreen
+          </button>
         </div>
 
-        {/* Scrollable Diagram Viewport */}
-        <div style={{ width: "100%", overflow: "auto", padding: "0.75rem", background: "#ffffff" }}>
-          <div style={{
-            width: scale !== 1 ? `${scale * 100}%` : "100%",
-            minWidth: "100%",
-            transition: "width 0.2s ease, transform 0.2s ease",
-            transformOrigin: "top left"
-          }}>
+        {/* Inline Viewport */}
+        <div
+          onClick={openModal}
+          title="Click to view full screen"
+          style={{
+            width: "100%",
+            padding: "0.75rem",
+            background: "#ffffff",
+            cursor: "pointer"
+          }}
+        >
+          <div style={{ width: "100%" }}>
             {children}
           </div>
         </div>
       </div>
 
-      {/* FULLSCREEN MODAL VIEW */}
+      {/* FULLSCREEN MODAL VIEW — Expansive Full Window Overlay */}
       {zoomed && (
         <div
-          onClick={() => setZoomed(false)}
+          onClick={closeModal}
           style={{
-            position: "fixed", inset: 0, zIndex: 1000,
-            background: "rgba(11,12,16,0.85)", backdropFilter: "blur(6px)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            padding: "2rem", animation: "fadeIn 0.2s ease",
+            position: "fixed", inset: 0, zIndex: 9999,
+            background: "rgba(10, 12, 18, 0.92)", backdropFilter: "blur(10px)",
+            display: "flex", flexDirection: "column",
+            animation: "fadeIn 0.2s ease",
+            padding: "1rem"
           }}
         >
+          {/* Modal Header */}
           <div
             onClick={e => e.stopPropagation()}
             style={{
-              position: "relative", background: "#ffffff", borderRadius: 8,
-              border: "1px solid #e0dcd4", padding: "1.5rem",
-              width: "94vw", height: "90vh", display: "flex", flexDirection: "column",
-              boxShadow: "0 24px 60px rgba(0,0,0,0.45)",
+              display: "flex", justifyContent: "space-between", alignItems: "center",
+              padding: "0.75rem 1.25rem", background: "#ffffff", borderRadius: "8px 8px 0 0",
+              borderBottom: "1px solid #e0dcd4", boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
             }}
           >
-            {/* Modal Header Controls */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", borderBottom: "1px solid #e0dcd4", paddingBottom: "0.75rem" }}>
-              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.8rem", fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#2a8a84" }}>
-                🔍 {title || "Diagram / Workflow Viewer"}
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <button onClick={zoomOut} style={{ padding: "0.4rem 0.8rem", borderRadius: 4, background: "#f7f5f0", border: "1px solid #e0dcd4", cursor: "pointer", fontWeight: 800 }}>🔍- Zoom Out</button>
-                <button onClick={resetZoom} style={{ padding: "0.4rem 0.8rem", borderRadius: 4, background: "#f7f5f0", border: "1px solid #e0dcd4", cursor: "pointer", fontWeight: 700, fontFamily: "DM Mono, monospace" }}>Reset ({Math.round(scale * 100)}%)</button>
-                <button onClick={zoomIn} style={{ padding: "0.4rem 0.8rem", borderRadius: 4, background: "#2a8a84", color: "#fff", border: "none", cursor: "pointer", fontWeight: 800 }}>🔍+ Zoom In</button>
-                <button
-                  onClick={() => setZoomed(false)}
-                  style={{
-                    padding: "0.4rem 0.8rem", borderRadius: 4, background: "#c4572a", border: "none",
-                    color: "#fff", cursor: "pointer", fontWeight: 800, fontSize: "0.75rem"
-                  }}
-                >
-                  ✕ Close
-                </button>
-              </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+              <span style={{ fontSize: "1.1rem" }}>🔍</span>
+              <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.9rem", fontWeight: 800, color: "#1a1a2e", letterSpacing: "0.05em" }}>
+                {title || "Diagram / Workflow Inspection"}
+              </span>
             </div>
 
-            {/* Scrollable Modal Content */}
-            <div style={{ flex: 1, overflow: "auto", background: "#fcfbf9", borderRadius: 6, padding: "1.5rem" }}>
-              <div style={{ width: scale !== 1 ? `${scale * 120}%` : "100%", minWidth: "100%", transition: "width 0.2s ease" }}>
-                {children}
-              </div>
+            {/* Minimal Icon Controls inside Fullscreen — No text clutter */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <button
+                onClick={zoomOut}
+                title="Zoom Out (-)"
+                style={{
+                  width: 34, height: 34, borderRadius: 6, background: "#f4f2ed", border: "1px solid #d0ccc4",
+                  color: "#1a1a2e", cursor: "pointer", fontWeight: 800, fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center"
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = "#c4572a"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "#f4f2ed"; e.currentTarget.style.color = "#1a1a2e"; }}
+              >
+                ➖
+              </button>
+
+              <button
+                onClick={resetZoom}
+                title="Reset Zoom (100%)"
+                style={{
+                  padding: "0 10px", height: 34, borderRadius: 6, background: "#f4f2ed", border: "1px solid #d0ccc4",
+                  color: scale !== 1 ? "#c9a84c" : "#5a5a6a", cursor: "pointer", fontWeight: 700, fontSize: "0.75rem", fontFamily: "DM Mono, monospace"
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = "#c9a84c"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "#f4f2ed"; e.currentTarget.style.color = scale !== 1 ? "#c9a84c" : "#5a5a6a"; }}
+              >
+                {Math.round(scale * 100)}%
+              </button>
+
+              <button
+                onClick={zoomIn}
+                title="Zoom In (+)"
+                style={{
+                  width: 34, height: 34, borderRadius: 6, background: "#f4f2ed", border: "1px solid #d0ccc4",
+                  color: "#1a1a2e", cursor: "pointer", fontWeight: 800, fontSize: "1rem", display: "flex", alignItems: "center", justifyContent: "center"
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = "#2a8a84"; e.currentTarget.style.color = "#fff"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "#f4f2ed"; e.currentTarget.style.color = "#1a1a2e"; }}
+              >
+                ➕
+              </button>
+
+              <div style={{ width: 1, height: 24, background: "#e0dcd4", margin: "0 4px" }} />
+
+              <button
+                onClick={closeModal}
+                title="Close Fullscreen (Esc)"
+                style={{
+                  padding: "0 14px", height: 34, borderRadius: 6, background: "#c4572a", border: "none",
+                  color: "#ffffff", cursor: "pointer", fontWeight: 800, fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "4px"
+                }}
+              >
+                ✕ Close
+              </button>
+            </div>
+          </div>
+
+          {/* Expansive Full Window Viewport Area */}
+          <div
+            onClick={e => e.stopPropagation()}
+            onWheel={handleWheel}
+            style={{
+              flex: 1,
+              background: "#ffffff",
+              borderRadius: "0 0 8px 8px",
+              overflow: "auto",
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "2rem"
+            }}
+          >
+            <div style={{
+              transform: `scale(${scale})`,
+              transformOrigin: "center center",
+              transition: "transform 0.15s cubic-bezier(0.2, 0, 0, 1)",
+              width: "100%",
+              maxWidth: "1400px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}>
+              {children}
             </div>
           </div>
         </div>
@@ -4401,7 +4449,7 @@ const GLOSSARY_LEVELS = ["All", "Beginner", "Intermediate"];
 
 // SVG: AI terminology hierarchy
 const AIHierarchyDiagram = () => (
-  <svg viewBox="0 0 240 110" style={{ width: "100%", height: 160 }}>
+  <svg viewBox="0 0 240 110" style={{ width: "100%", height: "auto", maxHeight: "100%" }}>
     <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE AI HIERARCHY</text>
     {/* Concentric ovals */}
     <ellipse cx="120" cy="65" rx="108" ry="38" fill="rgba(42,138,132,0.06)" stroke="#2a8a84" strokeWidth="0.7"/>
@@ -4424,7 +4472,7 @@ const AIHierarchyDiagram = () => (
 
 // SVG: Hallucination vs Grounding
 const HallucinationDiagram = () => (
-  <svg viewBox="0 0 240 90" style={{ width: "100%", height: 130 }}>
+  <svg viewBox="0 0 240 90" style={{ width: "100%", height: "auto", maxHeight: "100%" }}>
     <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HALLUCINATION vs GROUNDING (RAG)</text>
     {/* Without RAG */}
     <rect x="10" y="18" width="100" height="62" rx={3} fill="#ffffff" stroke="#c4572a" strokeWidth="0.7"/>
@@ -4468,7 +4516,7 @@ const TokenDiagram = () => {
   ];
   let x = 12;
   return (
-    <svg viewBox="0 0 240 70" style={{ width: "100%", height: 100 }}>
+    <svg viewBox="0 0 240 70" style={{ width: "100%", height: "auto", maxHeight: "100%" }}>
       <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HOW TOKENISATION WORKS</text>
       {words.map((w, i) => {
         if (w.text === " ") { x += 6; return null; }
@@ -4576,12 +4624,11 @@ const AIGlossaryTab = ({ s }) => {
       <div style={s.sectionLabel("#9b7fd4")}>Three Core Concepts — Visualised</div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
         {[
-          { title: "The AI Hierarchy", component: <ZoomableFigure title="A I Hierarchy Diagram"><AIHierarchyDiagram /></ZoomableFigure> },
-          { title: "Hallucination vs RAG", component: <ZoomableFigure title="Hallucination Diagram"><HallucinationDiagram /></ZoomableFigure> },
-          { title: "Tokenisation", component: <ZoomableFigure title="Token Diagram"><TokenDiagram /></ZoomableFigure> },
+          { title: "The AI Hierarchy", component: <AIHierarchyDiagram /> },
+          { title: "Hallucination vs RAG", component: <HallucinationDiagram /> },
+          { title: "Tokenisation", component: <TokenDiagram /> },
         ].map((d, i) => (
-          <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1rem" }}>
-            <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#8a8a9a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.6rem" }}>{d.title}</div>
+          <div key={i}>
             <ZoomableFigure title={d.title}>{d.component}</ZoomableFigure>
           </div>
         ))}
