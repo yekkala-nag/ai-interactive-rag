@@ -165,6 +165,21 @@ const ZoomableFigure = ({ title, children }) => {
     setScale(1.0);
   };
 
+  // Close on Escape and lock the page scroll while the modal is open.
+  useEffect(() => {
+    if (!zoomed) return;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") closeModal();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [zoomed]);
+
   const zoomIn = (e) => {
     if (e) e.stopPropagation();
     setScale(s => Math.min(+(s + 0.25).toFixed(2), 3.0));
@@ -180,12 +195,16 @@ const ZoomableFigure = ({ title, children }) => {
     setScale(1.0);
   };
 
+  // Wheel scrolls the fullscreen canvas natively. Zooming stays on the
+  // toolbar (+ / − / %) so scrolling is always reachable for oversized content.
   const handleWheel = (e) => {
-    e.stopPropagation();
-    if (e.deltaY < 0) {
-      setScale(s => Math.min(+(s + 0.15).toFixed(2), 3.0));
-    } else {
-      setScale(s => Math.max(+(s - 0.15).toFixed(2), 0.5));
+    if (e.ctrlKey || e.metaKey) {
+      e.stopPropagation();
+      if (e.deltaY < 0) {
+        setScale(s => Math.min(+(s + 0.15).toFixed(2), 3.0));
+      } else {
+        setScale(s => Math.max(+(s - 0.15).toFixed(2), 0.5));
+      }
     }
   };
 
@@ -323,6 +342,10 @@ const ZoomableFigure = ({ title, children }) => {
           </div>
 
           {/* Fullscreen Canvas Viewport */}
+          {/* Overflow is centered with `margin: auto` (NOT flex centering) so
+              oversized content stays reachable via scrollbars. Zoom uses the
+              `zoom` property (not transform) so the layout grows with the scale
+              and scrollbars appear when content exceeds the screen. */}
           <div
             onClick={e => e.stopPropagation()}
             onWheel={handleWheel}
@@ -330,29 +353,30 @@ const ZoomableFigure = ({ title, children }) => {
               flex: 1,
               overflow: "auto",
               position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "2.5rem",
               background: "#0d0f17"
             }}
           >
-            <div style={{
-              background: "#ffffff",
-              borderRadius: 8,
-              padding: "2rem",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
-              transition: "transform 0.15s cubic-bezier(0.2, 0, 0, 1)",
-              transform: `scale(${scale})`,
-              transformOrigin: "center center",
-              maxWidth: "1100px",
-              width: "90%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "auto"
-            }}>
-              <div style={{ width: "100%", height: "100%" }}>
+            <div
+              style={{
+                minHeight: "100%",
+                width: "100%",
+                display: "flex",
+                padding: "2rem",
+                boxSizing: "border-box"
+              }}
+            >
+              <div
+                style={{
+                  margin: "auto",
+                  background: "#ffffff",
+                  borderRadius: 8,
+                  padding: "1.5rem",
+                  boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+                  zoom: scale,
+                  maxWidth: "100%",
+                  width: "100%"
+                }}
+              >
                 {children}
               </div>
             </div>
@@ -14167,6 +14191,467 @@ async def run_independent_branches(agents, payload):
   );
 };
 
+// ─── HIGH-SCALE PRODUCTION AI AGENTS TAB (MILLIONS OF REQUESTS) ───
+const HighScaleAgentsTab = ({ s }) => {
+  const [subTab, setSubTab] = useState("simulator");
+  const [requestVolume, setRequestVolume] = useState(250000);
+  const [archMode, setArchMode] = useState("decomposed");
+  const [scopeLimiting, setScopeLimiting] = useState(true);
+  const [executionCaps, setExecutionCaps] = useState(true);
+  const [checkpointing, setCheckpointing] = useState(true);
+  const [backoffRateLimit, setBackoffRateLimit] = useState(true);
+  const [incompleteDataHeuristic, setIncompleteDataHeuristic] = useState(true);
+  const [selectedDebugCall, setSelectedDebugCall] = useState(0);
+
+  const isMonolithic = archMode === "monolithic";
+
+  const baseTokensPerReq = isMonolithic ? 4500 : (scopeLimiting ? 1300 : 2800);
+  const totalTokens = requestVolume * baseTokensPerReq;
+  const costPerMillion = isMonolithic ? 15.0 : (scopeLimiting ? 1.25 : 3.50);
+  const totalCostDollars = Math.round((totalTokens / 1000000) * costPerMillion);
+  const latencyPerDocSec = isMonolithic ? 14.2 : (checkpointing ? 3.1 : 6.8);
+
+  const subTabs = [
+    { id: "simulator", label: "⚡ 1M-Request Engine", desc: "Monolith vs Decomposed agent benchmark" },
+    { id: "guardrails", label: "🛡️ Guardrails Triad", desc: "Scope limits, step caps & checkpointing" },
+    { id: "resilience", label: "💾 Checkpoints & Backoff", desc: "PostgresSaver & Tenacity retries" },
+    { id: "token_debugger", label: "🔍 Live Request Inspector", desc: "Traced agent step logs & context overhead" }
+  ];
+
+  return (
+    <div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.8rem", marginBottom: "1.5rem" }}>
+        {subTabs.map(t => (
+          <button
+            key={t.id}
+            onClick={() => setSubTab(t.id)}
+            style={{
+              padding: "0.8rem 1rem",
+              background: subTab === t.id ? "#f0fdfa" : "#ffffff",
+              border: subTab === t.id ? "1px solid #2a8a84" : "1px solid #e0dcd4",
+              borderBottom: subTab === t.id ? "3px solid #2a8a84" : "1px solid #e0dcd4",
+              borderRadius: 8,
+              cursor: "pointer",
+              textAlign: "left",
+              transition: "all 0.2s"
+            }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: subTab === t.id ? "#2a8a84" : "#1a1a2e" }}>{t.label}</div>
+            <div style={{ fontSize: "0.58rem", color: "#6a6a7a" }}>{t.desc}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* SUB-TAB 1: MILLION-REQUEST SIMULATOR */}
+      {subTab === "simulator" && (
+        <div>
+          <div style={s.sectionLabel("#2a8a84")}>Million-Request Pipeline Throughput & Architecture Engine</div>
+          <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: "1.5rem", marginBottom: "1.5rem" }}>
+            
+            {/* CONTROLS */}
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#1a1a2e", marginBottom: "1rem" }}>
+                ⚙️ Production Workload & Controls
+              </div>
+
+              <div style={{ marginBottom: "1.2rem" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", marginBottom: "0.3rem" }}>
+                  <span style={{ fontWeight: 700, color: "#4a4a5a" }}>Request Volume:</span>
+                  <span style={{ fontFamily: "DM Mono, monospace", color: "#2a8a84", fontWeight: 700 }}>{requestVolume.toLocaleString()} Docs</span>
+                </div>
+                <input type="range" min="10000" max="1000000" step="10000" value={requestVolume} onChange={e => setRequestVolume(Number(e.target.value))} style={{ width: "100%" }} />
+              </div>
+
+              <div style={{ marginBottom: "1.2rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: "#4a4a5a", marginBottom: "0.4rem" }}>Architecture Design:</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                  <label style={{ fontSize: "0.62rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", color: isMonolithic ? "#c4572a" : "#6a6a7a", fontWeight: isMonolithic ? 700 : 400 }}>
+                    <input type="radio" name="arch" checked={isMonolithic} onChange={() => setArchMode("monolithic")} />
+                    ❌ Monolithic Monologue Agent (All-in-one prompt)
+                  </label>
+                  <label style={{ fontSize: "0.62rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", color: !isMonolithic ? "#2a8a84" : "#6a6a7a", fontWeight: !isMonolithic ? 700 : 400 }}>
+                    <input type="radio" name="arch" checked={!isMonolithic} onChange={() => setArchMode("decomposed")} />
+                    ✅ Decomposed Prompt-Chaining Workflow (3 Steps)
+                  </label>
+                </div>
+              </div>
+
+              <hr style={{ border: "none", borderTop: "1px dashed #e0dcd4", margin: "1rem 0" }} />
+
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c9a84c", marginBottom: "0.8rem" }}>
+                🛡️ Production Guardrails & Resilience
+              </div>
+
+              {[
+                { label: "Function Scope Limiting", state: scopeLimiting, setState: setScopeLimiting, desc: "Sub-agents only see relevant tool schemas" },
+                { label: "Execution Time & Call Caps", state: executionCaps, setState: setExecutionCaps, desc: "Cap max iterations to kill infinite loops" },
+                { label: "State Checkpointing", state: checkpointing, setState: setCheckpointing, desc: "Save intermediate state to resume on dropout" },
+                { label: "Exponential Backoff", state: backoffRateLimit, setState: setBackoffRateLimit, desc: "Handle provider rate limits smoothly" },
+                { label: "Incomplete Data Heuristic", state: incompleteDataHeuristic, setState: setIncompleteDataHeuristic, desc: "Discard unrecoverable docs after 2 retries" },
+              ].map((g, idx) => (
+                <label key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.8rem", cursor: "pointer" }}>
+                  <input type="checkbox" checked={g.state} onChange={e => g.setState(e.target.checked)} style={{ marginTop: "0.15rem" }} />
+                  <div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.63rem", color: g.state ? "#2a8a84" : "#6a6a7a" }}>{g.label}</div>
+                    <div style={{ fontSize: "0.53rem", color: "#8a8a9a" }}>{g.desc}</div>
+                  </div>
+                </label>
+              ))}
+            </div>
+
+            {/* RESULTS DASHBOARD */}
+            <div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginBottom: "1.2rem" }}>
+                <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1rem" }}>
+                  <div style={{ fontSize: "0.58rem", color: "#8a8a9a", textTransform: "uppercase", fontWeight: 700 }}>Total Tokens Consumed</div>
+                  <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: "#1a1a2e", margin: "0.2rem 0" }}>
+                    {((requestVolume * baseTokensPerReq) / 1000000).toFixed(1)} M <span style={{ fontSize: "0.6rem", fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>Tokens</span>
+                  </div>
+                  <div style={{ fontSize: "0.55rem", color: isMonolithic ? "#c4572a" : "#2a8a84" }}>
+                    {isMonolithic ? "⚠️ Heavy context duplication per prompt" : "⚡ Trimmed 71% token overhead"}
+                  </div>
+                </div>
+
+                <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1rem" }}>
+                  <div style={{ fontSize: "0.58rem", color: "#8a8a9a", textTransform: "uppercase", fontWeight: 700 }}>Estimated API Spend</div>
+                  <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: "#2a8a84", margin: "0.2rem 0" }}>
+                    ${totalCostDollars.toLocaleString()}
+                  </div>
+                  <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>
+                    {isMonolithic ? "$15.00 / 1M tokens" : "$1.25 / 1M average tiering"}
+                  </div>
+                </div>
+
+                <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1rem" }}>
+                  <div style={{ fontSize: "0.58rem", color: "#8a8a9a", textTransform: "uppercase", fontWeight: 700 }}>Avg Processing Latency</div>
+                  <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: "#9b7fd4", margin: "0.2rem 0" }}>
+                    {latencyPerDocSec.toFixed(1)}s <span style={{ fontSize: "0.6rem", fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>/ doc</span>
+                  </div>
+                  <div style={{ fontSize: "0.55rem", color: checkpointing ? "#4a9a4a" : "#c4572a" }}>
+                    {checkpointing ? "✅ Fast checkpoint recovery" : "⚠️ Full re-processing on dropout"}
+                  </div>
+                </div>
+              </div>
+
+              {/* ARCHITECTURE COMPARISON CARD */}
+              <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#1a1a2e", marginBottom: "0.8rem" }}>
+                  📊 Production Readiness Comparison
+                </div>
+
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.65rem" }}>
+                  <thead>
+                    <tr style={{ background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
+                      <th style={{ padding: "0.6rem", textAlign: "left" }}>Metric</th>
+                      <th style={{ padding: "0.6rem", textAlign: "left", color: "#c4572a" }}>Monolithic Monologue</th>
+                      <th style={{ padding: "0.6rem", textAlign: "left", color: "#2a8a84" }}>Decomposed Workflow + Guardrails</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style={{ borderBottom: "1px solid #f0ede6" }}>
+                      <td style={{ padding: "0.6rem", fontWeight: 700 }}>Task Decomposition</td>
+                      <td style={{ padding: "0.6rem", color: "#c4572a" }}>❌ 1 Giant Prompt (Reads 100 contracts at once)</td>
+                      <td style={{ padding: "0.6rem", color: "#2a8a84", fontWeight: 700 }}>✅ 3 Sub-Agent Steps (Extract → Filter → Present)</td>
+                    </tr>
+                    <tr style={{ borderBottom: "1px solid #f0ede6" }}>
+                      <td style={{ padding: "0.6rem", fontWeight: 700 }}>Tool Selection Error Rate</td>
+                      <td style={{ padding: "0.6rem", color: "#c4572a" }}>High (Confused by too many options)</td>
+                      <td style={{ padding: "0.6rem", color: "#2a8a84", fontWeight: 700 }}>Near Zero (Function scope limited)</td>
+                    </tr>
+                    <tr style={{ borderBottom: "1px solid #f0ede6" }}>
+                      <td style={{ padding: "0.6rem", fontWeight: 700 }}>Infinite Loop Prevention</td>
+                      <td style={{ padding: "0.6rem", color: "#c4572a" }}>❌ Unbounded (Runs until API quota crash)</td>
+                      <td style={{ padding: "0.6rem", color: "#2a8a84", fontWeight: 700 }}>✅ Capped (Kills execution at step limit)</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: "0.6rem", fontWeight: 700 }}>Corrupt / Missing Field Handling</td>
+                      <td style={{ padding: "0.6rem", color: "#c4572a" }}>Hallucinates missing dates/locations</td>
+                      <td style={{ padding: "0.6rem", color: "#2a8a84", fontWeight: 700 }}>✅ Heuristic discard after 2 retries</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 2: PRODUCTION GUARDRAILS TRIAD */}
+      {subTab === "guardrails" && (
+        <div>
+          <div style={s.sectionLabel("#c9a84c")}>The 3 Pillars of Production AI Agent Guardrails</div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.2rem", marginBottom: "1.5rem" }}>
+            
+            {/* PILLAR 1 */}
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", borderTop: "3px solid #2a8a84" }}>
+              <div style={{ fontSize: "1.2rem", marginBottom: "0.4rem" }}>🎯</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
+                1. Function & Tool Scope Limiting
+              </div>
+              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                Giving an agent access to all tools at once causes wrong tool picks and loop traps. Restrict tools so each sub-agent ONLY sees the functions required for its step.
+              </p>
+              <CodeBlock code={`# Tool Scope Limiting: Extractor agent ONLY sees extraction tool
+extractor_agent = create_agent(
+    model="gpt-4o-mini",
+    tools=[extract_contract_fields], # Scope limited!
+    system_prompt="You extract location, time, and contact person."
+)`} />
+            </div>
+
+            {/* PILLAR 2 */}
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", borderTop: "3px solid #c9a84c" }}>
+              <div style={{ fontSize: "1.2rem", marginBottom: "0.4rem" }}>⏱️</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c9a84c", marginBottom: "0.4rem" }}>
+                2. Execution Time & Tool Call Caps
+              </div>
+              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                Prevent runaway cloud bills and infinite loops by strictly capping tool invocation iterations and timeout seconds before raising human intervention.
+              </p>
+              <CodeBlock code={`# LangGraph Recursion & Iteration Cap
+config = {
+    "recursion_limit": 5,      # Max 5 loop steps
+    "configurable": {"thread_id": "req_1001"}
+}
+
+# Invoke graph with strict iteration bounds
+graph.invoke(inputs, config=config)`} />
+            </div>
+
+            {/* PILLAR 3 */}
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", borderTop: "3px solid #c4572a" }}>
+              <div style={{ fontSize: "1.2rem", marginBottom: "0.4rem" }}>🛑</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c4572a", marginBottom: "0.4rem" }}>
+                3. Human-in-the-Loop (HITL) Supervision
+              </div>
+              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                Require explicit human approval before executing destructive actions (e.g., deleting objects, sending emails, processing payments).
+              </p>
+              <CodeBlock code={`from langgraph.checkpoint.memory import MemorySaver
+
+# Interrupt execution before high-risk tool call
+graph = builder.compile(
+    checkpointer=MemorySaver(),
+    interrupt_before=["delete_contract_db", "send_wire_transfer"]
+)`} />
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 3: 100-CONTRACT EXTRACTION CASE STUDY */}
+      {subTab === "case_study" && (
+        <div>
+          <div style={s.sectionLabel("#9b7fd4")}>Case Study Walkthrough: Processing 100 Contracts Efficiently</div>
+
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.5rem", marginBottom: "1.5rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+              <div>
+                <h4 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: "#1a1a2e" }}>
+                  📋 3-Step Decomposed Workflow (Anthropic Prompt Chaining Pattern)
+                </h4>
+                <div style={{ fontSize: "0.62rem", color: "#6a6a7a" }}>Task: Extract location, time, and contact person from 100 contracts → Filter to top 5 latest → Present in table.</div>
+              </div>
+
+              {/* STEP CONTROLS */}
+              <div style={{ display: "flex", gap: "0.4rem" }}>
+                {[1, 2, 3].map(st => (
+                  <button key={st} onClick={() => setContractStep(st)}
+                    style={{
+                      padding: "0.4rem 0.8rem", borderRadius: 4,
+                      background: contractStep === st ? "#2a8a84" : "#f7f5f0",
+                      color: contractStep === st ? "#ffffff" : "#4a4a5a",
+                      border: "1px solid #d0ccc4", cursor: "pointer", fontWeight: 700, fontSize: "0.65rem"
+                    }}>
+                    Step {st}: {st === 1 ? "Extraction" : (st === 2 ? "Filtering" : "Presentation")}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* STEP DETAIL VIEW */}
+            {contractStep === 1 && (
+              <div style={{ background: "#faf9f6", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
+                  Step 1: Sub-Agent Parallel Information Extraction (100 PDF Documents)
+                </div>
+                <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                  Dedicated sub-agents run across all 100 contract files in parallel. Each contract produces 3 target attributes: <code style={{ color: "#2a8a84" }}>location</code>, <code style={{ color: "#2a8a84" }}>time</code>, and <code style={{ color: "#2a8a84" }}>contact_person</code>.
+                </p>
+                <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", padding: "0.8rem", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#1a1a2e" }}>
+                  Input: [Contract_1001.pdf ... Contract_1100.pdf]<br />
+                  Result: 98/100 documents cleanly extracted into 3-column structured data array.<br />
+                  <span style={{ color: "#c4572a", fontWeight: 700 }}>Heuristic Triggered: 2 contracts (#1005 & #1010) had missing timestamps; automatically discarded after 2 retries.</span>
+                </div>
+              </div>
+            )}
+
+            {contractStep === 2 && (
+              <div style={{ background: "#faf9f6", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c9a84c", marginBottom: "0.4rem" }}>
+                  Step 2: Information Filtering & Date Sorting (Top 5 Latest Contracts)
+                </div>
+                <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                  The filtering sub-agent inspects the 98 valid extracted rows, sorts by ISO timestamp, and filters down strictly to the top 5 latest contract files.
+                </p>
+                <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", padding: "0.8rem", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#2a8a84" }}>
+                  • Contract_1098.pdf — Date: 2026-07-28 · Location: San Francisco, CA · Contact: Alice Chen<br />
+                  • Contract_1094.pdf — Date: 2026-07-25 · Location: New York, NY · Contact: Bob Smith<br />
+                  • Contract_1091.pdf — Date: 2026-07-22 · Location: London, UK · Contact: Carol Vance<br />
+                  • Contract_1088.pdf — Date: 2026-07-20 · Location: Austin, TX · Contact: David K.<br />
+                  • Contract_1085.pdf — Date: 2026-07-18 · Location: Seattle, WA · Contact: Emma R.
+                </div>
+              </div>
+            )}
+
+            {contractStep === 3 && (
+              <div style={{ background: "#faf9f6", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#9b7fd4", marginBottom: "0.4rem" }}>
+                  Step 3: Information Presentation (Markdown Table Output)
+                </div>
+                <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                  The presentation sub-agent formats the top 5 filtered contracts into a clean, human-readable markdown table.
+                </p>
+                <div style={{ background: "#0d0d1a", border: "1px solid #2a3a50", padding: "0.8rem", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: "#a8d8a8" }}>
+                  {`| Contract ID | Location | Timestamp | Contact Person |
+|---|---|---|---|
+| Contract_1098 | San Francisco, CA | 2026-07-28 | Alice Chen |
+| Contract_1094 | New York, NY | 2026-07-25 | Bob Smith |
+| Contract_1091 | London, UK | 2026-07-22 | Carol Vance |
+| Contract_1088 | Austin, TX | 2026-07-20 | David K. |
+| Contract_1085 | Seattle, WA | 2026-07-18 | Emma R. |`}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 4: RESILIENCE & CHECKPOINTING */}
+      {subTab === "resilience" && (
+        <div>
+          <div style={s.sectionLabel("#4a9a4a")}>Production Error Handling, Rate Limits & Checkpointing</div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "1.5rem" }}>
+            
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#1a1a2e", marginBottom: "0.6rem" }}>
+                💾 Checkpointing & State Persistence
+              </div>
+              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                When processing high-volume workflows taking over 1 minute per batch, checkpointing intermediate state prevents restarting from scratch during network dropouts or transient LLM provider rate limits.
+              </p>
+              <CodeBlock code={`# Checkpointer persistence setup in LangGraph
+from langgraph.checkpoint.postgres import PostgresSaver
+
+with PostgresSaver.from_conn_string(DB_URI) as checkpointer:
+    graph = builder.compile(checkpointer=checkpointer)
+    
+    # In case of dropout at step 2, resume directly at step 2!
+    graph.invoke(None, config={"configurable": {"thread_id": "batch_99"}}) `} />
+            </div>
+
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c4572a", marginBottom: "0.6rem" }}>
+                ⏳ Rate Limit Backoff & Await Async Execution
+              </div>
+              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                LLM providers enforce strict TPM (Tokens Per Minute) limits. Use exponential backoff and always \`await\` async calls to simplify application concurrency.
+              </p>
+              <CodeBlock code={`from tenacity import retry, wait_exponential, stop_after_attempt
+
+@retry(
+    wait=wait_exponential(multiplier=1, min=2, max=30),
+    stop=stop_after_attempt(5)
+)
+async def safe_llm_invoke(agent, payload):
+    # Await LLM call with exponential backoff on 429 Rate Limit
+    return await agent.ainvoke(payload)`} />
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 5: GREG BROCKMAN TOKEN INSPECTOR */}
+      {subTab === "token_debugger" && (
+        <div>
+          <div style={s.sectionLabel("#9b7fd4")}>Greg Brockman Data & Token Inspection Sandbox</div>
+
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <blockquote style={{ borderLeft: "3px solid #2a8a84", paddingLeft: "0.8rem", margin: "0 0 1rem 0", fontStyle: "italic", fontSize: "0.7rem", color: "#4a4a5a" }}>
+              "Manual inspection of data has probably the highest value-to-prestige ratio of any activity in machine learning." — Greg Brockman
+            </blockquote>
+
+            <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "1rem" }}>
+              Inspect input, thinking, and output tokens across 15 real production requests to catch system prompt ambiguities, duplicate context bloat, or internal LLM reasoning misunderstandings.
+            </p>
+
+            {/* CALL SELECTOR BUTTONS */}
+            <div style={{ display: "flex", gap: "0.4rem", overflowX: "auto", marginBottom: "1.2rem", paddingBottom: "0.4rem" }}>
+              {DEBUG_CALLS.map((call, idx) => (
+                <button key={call.id} onClick={() => setSelectedDebugCall(idx)}
+                  style={{
+                    padding: "0.5rem 0.8rem", borderRadius: 4,
+                    background: selectedDebugCall === idx ? "rgba(42,138,132,0.12)" : "#f7f5f0",
+                    border: selectedDebugCall === idx ? "1px solid #2a8a84" : "1px solid #e0dcd4",
+                    cursor: "pointer", textAlign: "left", minWidth: 140
+                  }}>
+                  <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: "#8a8a9a" }}>Req #{call.id}</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: selectedDebugCall === idx ? "#2a8a84" : "#1a1a2e" }}>{call.docName}</div>
+                  <div style={{ fontSize: "0.52rem", color: call.status.includes("SUCCESS") ? "#4a9a4a" : "#c4572a", fontWeight: 700, marginTop: "0.15rem" }}>{call.status}</div>
+                </button>
+              ))}
+            </div>
+
+            {/* SELECTED CALL TOKEN BREAKDOWN */}
+            {DEBUG_CALLS[selectedDebugCall] && (() => {
+              const item = DEBUG_CALLS[selectedDebugCall];
+              return (
+                <div style={{ background: "#0d0d1a", border: "1px solid #2a3a50", borderRadius: 6, padding: "1.2rem", color: "#a0aab8" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.8rem", borderBottom: "1px solid #1e2d40", paddingBottom: "0.5rem" }}>
+                    <div>
+                      <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: "#c9a84c" }}>Inspection Log #{item.id}</span>
+                      <h4 style={{ fontFamily: "Syne, sans-serif", fontSize: "0.85rem", color: "#ffffff", fontWeight: 800 }}>{item.docName}</h4>
+                    </div>
+                    <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: item.status.includes("SUCCESS") ? "#4a9a4a" : "#c4572a" }}>{item.status}</span>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.8rem", marginBottom: "1rem" }}>
+                    <div style={{ background: "#16202e", padding: "0.6rem 0.8rem", borderRadius: 4 }}>
+                      <div style={{ fontSize: "0.53rem", color: "#6a7a8c", textTransform: "uppercase" }}>📥 Input Context Tokens</div>
+                      <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.8rem", color: "#2a8a84", fontWeight: 700 }}>{item.inputTokens}</div>
+                    </div>
+                    <div style={{ background: "#16202e", padding: "0.6rem 0.8rem", borderRadius: 4 }}>
+                      <div style={{ fontSize: "0.53rem", color: "#6a7a8c", textTransform: "uppercase" }}>🧠 Thinking / Reasoning Tokens</div>
+                      <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.8rem", color: "#9b7fd4", fontWeight: 700 }}>{item.thinkingTokens}</div>
+                    </div>
+                    <div style={{ background: "#16202e", padding: "0.6rem 0.8rem", borderRadius: 4 }}>
+                      <div style={{ fontSize: "0.53rem", color: "#6a7a8c", textTransform: "uppercase" }}>📤 Output Response Tokens</div>
+                      <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.8rem", color: "#c9a84c", fontWeight: 700 }}>{item.outputTokens}</div>
+                    </div>
+                  </div>
+
+                  <div style={{ fontSize: "0.62rem", color: "#7aaa7a", background: "#141c28", padding: "0.7rem 0.9rem", borderRadius: 4, fontFamily: "DM Mono, monospace", lineHeight: 1.6 }}>
+                    {item.systemPromptNote}<br /><br />
+                    Extracted Attributes:<br />
+                    • Location: "{item.location}"<br />
+                    • Date: "{item.date}"<br />
+                    • Contact Person: "{item.contact}"
+                  </div>
+                </div>
+              );
+            })()}
+
+          </div>
+        </div>
+      )}
+
+    </div>
+  );
+};
+
 // ─── MEASURING CONTEXT QUALITY TAB ───────────────────────────────
 
 // ── Data: 7 criteria ──
@@ -17641,6 +18126,7 @@ export default function App() {
     { id: "practices",     label: "㉞ Best Practices" },
     { id: "progress",      label: "㉟ Progress 🎯" },
     { id: "tokenbill",     label: "㊱ 3× Token Bill Fix 💸" },
+    { id: "agentscale",    label: "㊲ High-Scale Agent Systems 🚀" },
   ];
 
   useEffect(() => {
@@ -18176,6 +18662,9 @@ for chunk in rag_chain.stream("What is hybrid search?"):
 
         {/* ── 3X TOKEN BILL FIX ── */}
         {tab === "tokenbill" && <TokenBillTab s={s} />}
+
+        {/* ── HIGH-SCALE PRODUCTION AGENTS (MILLIONS OF REQUESTS) ── */}
+        {tab === "agentscale" && <HighScaleAgentsTab s={s} />}
 
       </main>
 
