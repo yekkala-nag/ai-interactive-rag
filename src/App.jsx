@@ -12445,6 +12445,2603 @@ plan = dispatch(parsed)                       # step 6, unchanged`} />
   );
 };
 
+// ─── ONE PIPELINE, FOUR PDFS TAB ─────────────────────────────────
+
+// ── Data: the 4 documents ──
+const FP_DOCUMENTS = [
+  {
+    id: "attention",
+    icon: "🧠",
+    name: "Attention Is All You Need",
+    subtitle: "Academic Paper",
+    color: "#2a8a84",
+    pages: 15,
+    tocEntries: 12,
+    tocDepth: 2,
+    question: "What are the two sublayers in each encoder layer?",
+    intent: "listing",
+    section_hint: "3.1 Encoder and Decoder Stacks",
+    pages_hint: null,
+    routingMethod: "TOC section match",
+    answer: "Multi-head self-attention mechanism, and a simple position-wise fully connected feed-forward network.",
+    citedPages: "p.3",
+    quirk: "Clean 2-level TOC, dense technical prose, equations mixed with running text.",
+  },
+  {
+    id: "nist",
+    icon: "🏛️",
+    name: "NIST SP 800-53",
+    subtitle: "Government Standard",
+    color: "#c9a84c",
+    pages: 492,
+    tocEntries: 358,
+    tocDepth: 3,
+    question: "What does the account management control (AC-2) require?",
+    intent: "factual",
+    section_hint: "AC-2 Account Management",
+    pages_hint: null,
+    routingMethod: "Hierarchical TOC descent (3 levels)",
+    answer: "Organizations must define account types, establish conditions for group membership, and monitor account usage — with specific approval and review procedures.",
+    citedPages: "pp.46–50",
+    quirk: "358-entry TOC, 3-level hierarchy — same hierarchical retrieval loop from Article 7quater fires automatically.",
+  },
+  {
+    id: "10k",
+    icon: "📈",
+    name: "Corporate 10-K Filing",
+    subtitle: "Financial Report",
+    color: "#c4572a",
+    pages: 128,
+    tocEntries: 24,
+    tocDepth: 2,
+    question: "What was total revenue in fiscal year 2024, and how does it break down by segment?",
+    intent: "factual + table",
+    section_hint: "Item 8 — Financial Statements",
+    pages_hint: [67, 68, 69],
+    routingMethod: "TOC match + layout_hint='table'",
+    answer: "Total revenue $4.82B (+12% YoY). Segment breakdown: Cloud Services $2.1B, Enterprise Software $1.9B, Professional Services $0.82B — pulled directly from the segment revenue table.",
+    citedPages: "pp.67-69",
+    quirk: "Numbers live inside tables, not prose. Generation brick must read table structure, not just surrounding text.",
+  },
+  {
+    id: "manual",
+    icon: "🔧",
+    name: "Product Manual",
+    subtitle: "Technical Documentation",
+    color: "#9b7fd4",
+    pages: 84,
+    tocEntries: 46,
+    tocDepth: 2,
+    question: "How do I replace the water filter, and what does the red light mean if it stays on after replacement?",
+    intent: "multi-part procedural",
+    section_hint: "Section 4: Maintenance",
+    pages_hint: [31, 32],
+    routingMethod: "TOC match + figure/diagram cross-reference",
+    answer: "Steps 1-5 for filter replacement (p.31), plus: if red light persists after replacement, the filter may not be seated correctly — remove and reinsert until you hear a click (p.32, troubleshooting table).",
+    citedPages: "pp.31-32",
+    quirk: "Question packs two sub-questions into one — parser must split intent into a procedure lookup AND a troubleshooting lookup, then merge the answer.",
+  },
+];
+
+// ── Data: what stayed the same across all 4 ──
+const FP_CONSTANTS = [
+  { icon: "🔧", label: "4 Bricks", detail: "Parsing → Question Parsing → Retrieval → Generation — same code, zero document-specific branches", color: "#2a8a84" },
+  { icon: "📋", label: "Typed Contracts", detail: "line_df, page_df, toc_df, ParsedQuestion, ListAnswer/FactualAnswer — same Pydantic schemas", color: "#c9a84c" },
+  { icon: "🗺️", label: "TOC-First Routing", detail: "Every document routes through its table of contents before touching the page body — even the 12-entry paper", color: "#9b7fd4" },
+  { icon: "📊", label: "5 Quality Indicators", detail: "answer_found, complete_answer_found, context_completeness, context_structured, confidence — same fields on every answer", color: "#c4572a" },
+  { icon: "📎", label: "Citation Discipline", detail: "Every claim traces to exact page numbers — a 15-page paper and a 492-page standard get the same citation rigor", color: "#4a9a4a" },
+];
+
+// ── Data: what varied ──
+const FP_VARIANTS = [
+  { icon: "🗂️", label: "TOC Shape", detail: "2-level flat (paper, filing, manual) vs 3-level hierarchical (government standard) — same reason_on_toc() call handles both, descent depth is just data", color: "#2a8a84" },
+  { icon: "🎯", label: "Answer Shape", detail: "listing (paper) vs factual (standard) vs factual+table (filing) vs multi-part procedural (manual) — same schema selection logic from question parsing", color: "#c9a84c" },
+  { icon: "📐", label: "Layout Complexity", detail: "Dense prose (paper) vs numbered clauses (standard) vs tables (filing) vs steps+diagrams (manual) — layout_hint field absorbs the difference", color: "#9b7fd4" },
+  { icon: "🔀", label: "Question Complexity", detail: "Single-intent (paper, standard) vs compound dual-intent (manual: procedure + troubleshooting) — question parsing splits and generation merges", color: "#c4572a" },
+];
+
+// ── Data: what this proves / doesn't prove ──
+const FP_CLAIMS = [
+  { claim: "The four-brick contract generalises across document types without new code paths", proves: true, color: "#4a9a4a" },
+  { claim: "TOC-first routing works whether the TOC is 12 entries or 358 entries", proves: true, color: "#4a9a4a" },
+  { claim: "Typed answers with citations are achievable on tables and procedures, not just prose", proves: true, color: "#4a9a4a" },
+  { claim: "This pipeline works on every possible PDF without any tuning", proves: false, color: "#c4572a" },
+  { claim: "Documents with no usable TOC or badly OCR'd scans are proven to work here too", proves: false, color: "#c4572a" },
+  { claim: "Multi-document / cross-corpus questions are covered by this article", proves: false, color: "#c4572a" },
+];
+
+// ── SVG: four documents grid diagram ──
+const FourDocsGridDiagram = () => (
+  <svg viewBox="0 0 260 105" style={{ width: "100%", height: 158 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SAME PIPELINE, FOUR VERY DIFFERENT DOCUMENTS</text>
+    {FP_DOCUMENTS.map((d, i) => {
+      const x = 8 + (i % 2) * 126;
+      const y = 20 + Math.floor(i / 2) * 42;
+      return (
+        <g key={d.id}>
+          <rect x={x} y={y} width={118} height={36} rx={2} fill={`${d.color}10`} stroke={d.color} strokeWidth="0.8"/>
+          <text x={x+12} y={y+13} fontSize="8" dominantBaseline="middle">{d.icon}</text>
+          <text x={x+24} y={y+11} fontSize="3.8" fill={d.color} fontFamily="Syne, sans-serif" fontWeight="800">{d.name.length > 22 ? d.name.slice(0,20)+"…" : d.name}</text>
+          <text x={x+24} y="16" textAnchor="start" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif" dy={y-13}>{d.subtitle}</text>
+          <text x={x+8} y={y+23} fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">{d.pages}p · {d.tocEntries} TOC · L{d.tocDepth}</text>
+          <text x={x+8} y={y+30} fontSize="2.6" fill={d.color} fontFamily="Syne, sans-serif" fontStyle="italic">{d.intent}</text>
+        </g>
+      );
+    })}
+    <text x="130" y="100" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Same 4 bricks, same typed contracts — zero document-specific branches in the code</text>
+  </svg>
+);
+
+// ── SVG: constants vs variants diagram ──
+const ConstantsVariantsDiagram = () => (
+  <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">WHAT STAYS FIXED vs WHAT ADAPTS PER DOCUMENT</text>
+    {/* Fixed core */}
+    <rect x="70" y="18" width="120" height="34" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="1"/>
+    <text x="130" y="30" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">🔒 Fixed — same code</text>
+    <text x="130" y="38" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">4 bricks · typed contracts</text>
+    <text x="130" y="45" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">TOC-first routing · citations</text>
+    {/* Adapting inputs surrounding */}
+    {[
+      { label: "TOC shape", x: 8, color: "#2a8a84" },
+      { label: "Answer shape", x: 200, color: "#c9a84c" },
+      { label: "Layout", x: 8, color: "#9b7fd4", y2: true },
+      { label: "Question complexity", x: 200, color: "#c4572a", y2: true },
+    ].map((v, i) => (
+      <g key={i}>
+        <rect x={v.x} y={v.y2 ? 62 : 18} width={52} height={20} rx={2} fill={`${v.color}12`} stroke={v.color} strokeWidth="0.6"/>
+        <text x={v.x+26} y={v.y2 ? 74 : 30} textAnchor="middle" fontSize="3.2" fill={v.color} fontFamily="Syne, sans-serif" fontWeight="700">{v.label}</text>
+        <line x1={v.x < 100 ? v.x+52 : v.x} y1={v.y2 ? 72 : 28} x2={v.x < 100 ? 70 : 190} y2={v.y2 ? 45 : 35} stroke={v.color} strokeWidth="0.4" strokeDasharray="2,1"/>
+      </g>
+    ))}
+    <text x="130" y="90" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">The contract stays fixed — only the DATA flowing through it changes per document</text>
+  </svg>
+);
+
+const FourPDFsTab = ({ s }) => {
+  const [section, setSection]         = useState("overview");
+  const [activeDoc, setActiveDoc]     = useState("attention");
+  const [docTab, setDocTab]           = useState("question");
+
+  const doc = FP_DOCUMENTS.find(d => d.id === activeDoc);
+
+  const SECTIONS = [
+    { id: "overview",  icon: "📚", label: "Four Documents",       color: "#2a8a84" },
+    { id: "constants", icon: "🔒", label: "What Stayed Fixed",    color: "#4a9a4a" },
+    { id: "variants",  icon: "🔀", label: "What Adapted",         color: "#c9a84c" },
+    { id: "claims",    icon: "⚖️", label: "What This Proves",     color: "#c4572a" },
+  ];
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#c4572a,#9b7fd4,#4a9a4a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>📚</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Enterprise Document Intelligence · Vol.1 #9B · TDS · Companion to Article 9A</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          One RAG Pipeline,<br />Four Very Different PDFs — <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Same Four Bricks, Every Answer Typed and Cited</em>
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+          Article 9A built the production pipeline on one paper. This article runs the exact same code — unchanged — on an academic paper, a 492-page government standard, a corporate 10-K filing, and a product manual. Same four bricks, same typed contracts. What changes is only the data flowing through them.
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The test this article runs</div>
+          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>Does a pipeline built and tuned on one 15-page paper hold up on documents nobody designed it for? Not "does it work on everything" — a narrower, more honest question: does the <strong style={{ color: "#1a1a2e" }}>contract</strong> generalise, even when the content, structure, and question shape are completely different?</div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "4",     label: "Documents tested",   sub: "15 → 492 pages",              color: "#2a8a84" },
+            { val: "0",     label: "New code paths",     sub: "same 4 bricks throughout",     color: "#4a9a4a" },
+            { val: "3",     label: "TOC depths handled", sub: "flat 2-level → 3-level hierarchy", color: "#c9a84c" },
+            { val: "4",     label: "Answer shapes",      sub: "listing · factual · table · procedural", color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SECTION NAV */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.6rem", marginBottom: "1.5rem" }}>
+        {SECTIONS.map(sec => (
+          <button key={sec.id} onClick={() => setSection(sec.id)}
+            style={{ background: section === sec.id ? `${sec.color}12` : "#ffffff", border: `1px solid ${section === sec.id ? sec.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.9rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
+            <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>{sec.icon}</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: section === sec.id ? sec.color : "#1a1a2e" }}>{sec.label}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* ─── FOUR DOCUMENTS ─── */}
+      {section === "overview" && (
+        <div>
+          <div style={s.sectionLabel("#2a8a84")}>Four Documents — Click to Inspect Each Run</div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="Four Very Different Documents"><FourDocsGridDiagram /></ZoomableFigure>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.6rem", marginBottom: "1rem" }}>
+            {FP_DOCUMENTS.map(d => (
+              <button key={d.id} onClick={() => { setActiveDoc(d.id); setDocTab("question"); }}
+                style={{ background: activeDoc === d.id ? `${d.color}15` : "#ffffff", border: `1px solid ${activeDoc === d.id ? d.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+                <div style={{ fontSize: "1.1rem", marginBottom: "0.3rem" }}>{d.icon}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.62rem", color: activeDoc === d.id ? d.color : "#1a1a2e", lineHeight: 1.3 }}>{d.name}</div>
+                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.2rem" }}>{d.subtitle}</div>
+              </button>
+            ))}
+          </div>
+          {doc && (
+            <div style={{ background: "#ffffff", border: `1px solid ${doc.color}40`, borderRadius: 6, overflow: "hidden", animation: "fadeIn 0.25s ease" }}>
+              <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", display: "grid", gridTemplateColumns: "1fr repeat(3, auto)", gap: "1rem", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                  <span style={{ fontSize: "1.4rem" }}>{doc.icon}</span>
+                  <div>
+                    <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 900 }}>{doc.name}</div>
+                    <div style={{ fontSize: "0.6rem", color: doc.color }}>{doc.subtitle}</div>
+                  </div>
+                </div>
+                {[["Pages", doc.pages], ["TOC entries", doc.tocEntries], ["TOC depth", "L"+doc.tocDepth]].map(([k,v], i) => (
+                  <div key={i} style={{ textAlign: "center" }}>
+                    <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.1rem", fontWeight: 900, color: doc.color }}>{v}</div>
+                    <div style={{ fontSize: "0.5rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>{k}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+                {["question", "routing", "answer"].map(t => (
+                  <button key={t} onClick={() => setDocTab(t)}
+                    style={{ flex: 1, padding: "0.65rem", background: docTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: docTab === t ? `2px solid ${doc.color}` : "2px solid transparent", color: docTab === t ? doc.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    {t === "question" ? "Question Parsed" : t === "routing" ? "Retrieval Routing" : "Typed Answer"}
+                  </button>
+                ))}
+              </div>
+              <div style={{ padding: "1.5rem" }}>
+                {docTab === "question" && (
+                  <div>
+                    <div style={{ padding: "0.9rem 1.1rem", background: `${doc.color}0a`, border: `1px solid ${doc.color}25`, borderRadius: 4, marginBottom: "1rem" }}>
+                      <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: doc.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Question</div>
+                      <div style={{ fontSize: "0.72rem", color: "#1a1a2e", fontStyle: "italic" }}>"{doc.question}"</div>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem" }}>
+                      <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem" }}>
+                        <span style={{ color: doc.color, fontFamily: "DM Mono, monospace", fontWeight: 700 }}>intent: </span>
+                        <span style={{ color: "#4a4a5a" }}>{doc.intent}</span>
+                      </div>
+                      <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem" }}>
+                        <span style={{ color: doc.color, fontFamily: "DM Mono, monospace", fontWeight: 700 }}>section_hint: </span>
+                        <span style={{ color: "#4a4a5a" }}>{doc.section_hint}</span>
+                      </div>
+                      <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem", gridColumn: doc.pages_hint ? "auto" : "span 2" }}>
+                        <span style={{ color: doc.color, fontFamily: "DM Mono, monospace", fontWeight: 700 }}>pages_hint: </span>
+                        <span style={{ color: "#4a4a5a" }}>{doc.pages_hint ? "["+doc.pages_hint.join(", ")+"]" : "None"}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {docTab === "routing" && (
+                  <div>
+                    <div style={{ padding: "0.9rem 1.1rem", background: `${doc.color}0a`, border: `1px solid ${doc.color}25`, borderRadius: 4, marginBottom: "1rem" }}>
+                      <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: doc.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Routing Method</div>
+                      <div style={{ fontSize: "0.7rem", color: "#1a1a2e" }}>{doc.routingMethod}</div>
+                    </div>
+                    <div style={{ padding: "0.9rem 1.1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${doc.color}` }}>
+                      <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: doc.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>What Makes This Document Different</div>
+                      <p style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7 }}>{doc.quirk}</p>
+                    </div>
+                  </div>
+                )}
+                {docTab === "answer" && (
+                  <div>
+                    <p style={{ fontSize: "0.7rem", color: "#1a1a2e", lineHeight: 1.8, marginBottom: "1rem" }}>{doc.answer}</p>
+                    <div style={{ padding: "0.7rem 0.9rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a30", borderRadius: 4, fontSize: "0.65rem", color: "#4a9a4a", fontFamily: "DM Mono, monospace" }}>
+                      📎 Cited: {doc.citedPages}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ─── WHAT STAYED FIXED ─── */}
+      {section === "constants" && (
+        <div>
+          <div style={s.sectionLabel("#4a9a4a")}>What Stayed Exactly the Same Across All Four</div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="Fixed vs Adapting"><ConstantsVariantsDiagram /></ZoomableFigure>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+            {FP_CONSTANTS.map((c, i) => (
+              <div key={i} style={{ display: "flex", gap: "1rem", padding: "1rem 1.2rem", background: "#ffffff", border: `1px solid ${c.color}30`, borderRadius: 6, alignItems: "center", borderLeft: `3px solid ${c.color}` }}>
+                <span style={{ fontSize: "1.3rem", flexShrink: 0 }}>{c.icon}</span>
+                <div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: c.color, marginBottom: "0.2rem" }}>{c.label}</div>
+                  <div style={{ fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.6 }}>{c.detail}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ─── WHAT ADAPTED ─── */}
+      {section === "variants" && (
+        <div>
+          <div style={s.sectionLabel("#c9a84c")}>What Adapted Per Document — Data, Not Code</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.7rem" }}>
+            {FP_VARIANTS.map((v, i) => (
+              <div key={i} style={{ background: "#ffffff", border: `1px solid ${v.color}30`, borderRadius: 6, padding: "1.2rem", borderTop: `2px solid ${v.color}` }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>{v.icon}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: v.color, marginBottom: "0.5rem" }}>{v.label}</div>
+                <p style={{ fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.7 }}>{v.detail}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: "1.2rem", padding: "1rem 1.2rem", background: "rgba(201,168,76,0.07)", border: "1px solid #c9a84c30", borderRadius: 6 }}>
+            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}><strong style={{ color: "#1a1a2e" }}>The key architectural insight:</strong> every one of these differences is absorbed by a typed field already defined in the schema — <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>intent</code>, <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>layout_hint</code>, <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>section_hint</code>, <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>pages_hint</code>. None of the four runs required a new field or a new code branch.</p>
+          </div>
+        </div>
+      )}
+
+      {/* ─── WHAT THIS PROVES ─── */}
+      {section === "claims" && (
+        <div>
+          <div style={s.sectionLabel("#c4572a")}>What This Article Proves — and Doesn't</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1.5rem" }}>
+            {FP_CLAIMS.map((c, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.8rem", padding: "0.8rem 1rem", background: "#ffffff", border: `1px solid ${c.color}30`, borderRadius: 4 }}>
+                <span style={{ fontSize: "1rem", flexShrink: 0 }}>{c.proves ? "✅" : "❌"}</span>
+                <span style={{ fontSize: "0.68rem", color: "#1a1a2e", lineHeight: 1.6, flex: 1 }}>{c.claim}</span>
+                <span style={{ fontSize: "0.55rem", padding: "0.15rem 0.5rem", background: `${c.color}15`, color: c.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, flexShrink: 0 }}>{c.proves ? "PROVEN" : "NOT CLAIMED"}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ padding: "1.2rem 1.4rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6, borderLeft: "4px solid #2a8a84" }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.5rem" }}>The honest scope</div>
+            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>This is a generalisation test on four well-formed PDFs with usable tables of contents — not a claim that the pipeline handles every PDF that exists. Documents with no extractable TOC, badly scanned pages, or genuinely cross-document questions are explicitly out of scope here, same as they were in Article 9A.</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── 4 BRICKS STOP HALLUCINATIONS TAB ────────────────────────────
+
+// ── Data: the 4 hallucination case studies, one per brick ──
+const HB_CASES = [
+  {
+    id: "parsing",
+    brick: "Parsing",
+    num: "01",
+    icon: "🔧",
+    color: "#2a8a84",
+    docType: "Two-column academic paper",
+    question: '"What optimizer did they use?"',
+    naiveApproach: "Flat text extraction reads left-to-right, top-to-bottom across the full page width — ignoring the two-column layout entirely.",
+    naiveResult: "Text from column 1 line 3 gets glued to column 2 line 3. The optimizer name (\"Adam\") ends up interleaved with an unrelated sentence about dataset size from the adjacent column.",
+    hallucination: "Model confidently answers \"AdamW with a batch size of 4096\" — the batch size came from the wrong column entirely, stitched onto the right optimizer name by coincidence of horizontal position.",
+    fixApproach: "Column-aware parsing: detect column boundaries via whitespace-gap analysis on the bounding boxes, then extract each column as its own reading-order stream before merging by vertical position within column.",
+    fixResult: "\"Adam\" resolves cleanly, in its own uninterrupted sentence: \"...trained using Adam (Kingma & Ba, 2014) with β1 = 0.9...\"",
+    contract: "parse_pdf() returns column_id per line in line_df — reading order respects column boundaries, not just page coordinates.",
+    code: `# Column-aware line extraction — bbox gap analysis
+def detect_columns(page_lines: list[Line]) -> list[Line]:
+    x_starts = sorted(l.bbox.x0 for l in page_lines)
+    gaps = [(x_starts[i+1] - x_starts[i], x_starts[i])
+            for i in range(len(x_starts) - 1)]
+    # A large horizontal gap with many lines starting after it
+    # signals a column boundary, not just word spacing
+    column_boundary = max(gaps, key=lambda g: g[0])[1] \\
+        if gaps and max(gaps, key=lambda g: g[0])[0] > COLUMN_GAP_THRESHOLD \\
+        else None
+
+    if column_boundary is None:
+        return sorted(page_lines, key=lambda l: l.bbox.y0)  # single column
+
+    left_col  = sorted([l for l in page_lines if l.bbox.x0 < column_boundary],
+                        key=lambda l: l.bbox.y0)
+    right_col = sorted([l for l in page_lines if l.bbox.x0 >= column_boundary],
+                        key=lambda l: l.bbox.y0)
+    # Read left column fully, THEN right column — not interleaved by y-position
+    return left_col + right_col`,
+  },
+  {
+    id: "question",
+    brick: "Question Parsing",
+    num: "02",
+    icon: "❓",
+    color: "#c9a84c",
+    docType: "Company travel policy (has both a general cap and a conference exception)",
+    question: '"What\'s the hotel limit?"',
+    naiveApproach: "Keyword extraction pulls \"hotel\" and \"limit\", retrieves the first matching chunk — the general policy section — and stops.",
+    naiveResult: "Retrieves the $200/night general cap from Section 2. Never surfaces the conference-hotel exception clause in Section 5, which the user may actually need given ambiguous phrasing.",
+    hallucination: "Model states \"$200 per night\" as the definitive answer with no caveat — even though the document itself has an explicit named exception the question could plausibly be asking about.",
+    fixApproach: "Question parsing brick detects ambiguity signals (a term with multiple documented senses in the doc's own TOC) and either asks a clarifying question or surfaces both candidate sections with a disambiguation note in the ParsedQuestion.",
+    fixResult: "\"The general hotel cap is $200/night (Section 2). Conference hotels may exceed this cap with manager pre-approval (Section 5) — let me know if you're asking about a conference trip.\"",
+    contract: "ParsedQuestion carries an ambiguity_flag and candidate_sections[] field when the parser detects the topic maps to more than one TOC entry.",
+    code: `# Detecting multi-sense terms via TOC cross-reference
+def check_ambiguity(keywords: list[str], toc_df: pd.DataFrame) -> AmbiguityCheck:
+    matching_sections = toc_df[
+        toc_df.title.str.contains('|'.join(keywords), case=False)
+    ]
+
+    if len(matching_sections) > 1:
+        return AmbiguityCheck(
+            is_ambiguous=True,
+            candidate_sections=matching_sections.title.tolist(),
+            # e.g. ["2. Hotel Policy", "5. Conference Exceptions"]
+        )
+    return AmbiguityCheck(is_ambiguous=False, candidate_sections=[])
+
+# Generation brick receives this flag and MUST surface both
+# candidates rather than silently picking the first match`,
+  },
+  {
+    id: "retrieval",
+    brick: "Retrieval",
+    num: "03",
+    icon: "🔍",
+    color: "#9b7fd4",
+    docType: "492-page compliance standard with a 3-level TOC",
+    question: '"What are the audit logging requirements?"',
+    naiveApproach: "Flat top-k vector search over all 492 pages returns the 5 highest-scoring chunks by embedding similarity — regardless of which section they come from.",
+    naiveResult: "Returns 2 chunks from \"AU-2 Audit Events\" (correct), 2 chunks from an unrelated glossary entry that happens to mention \"audit\" three times, and 1 chunk from a superseded appendix marked deprecated in the doc's own changelog.",
+    hallucination: "Model blends a deprecated requirement into the answer as if it were current — the deprecated appendix chunk scored well on embedding similarity but was never checked against document currency.",
+    fixApproach: "TOC-anchored retrieval (from Article 7quater's hierarchical loop) restricts candidate chunks to the single matched section, and a currency check filters out chunks whose containing section is flagged superseded in parsing_summary.",
+    fixResult: "All 5 returned chunks come from \"AU-2 Audit Events\" exclusively. Superseded appendix content is excluded before it ever reaches generation.",
+    contract: "filtered_line_df only ever contains lines from the TOC-matched section; retrieval_audit records which sections were excluded and why (superseded flag, off-topic section, etc).",
+    code: `# Restrict retrieval to the TOC-matched section + currency filter
+def retrieve_with_currency_check(
+    section_id: str, line_df: pd.DataFrame, toc_df: pd.DataFrame
+) -> tuple[pd.DataFrame, RetrievalAudit]:
+
+    section = toc_df[toc_df.section_id == section_id].iloc[0]
+
+    if section.get("superseded", False):
+        # Don't silently retrieve from a superseded section
+        return pd.DataFrame(), RetrievalAudit(
+            excluded_reason=f"Section {section_id} marked superseded "
+                             f"as of {section.superseded_date}"
+        )
+
+    section_lines = get_section_lines(line_df, toc_df, section_id)
+    return section_lines, RetrievalAudit(
+        included_section=section_id,
+        excluded_sections=[],  # nothing else was even considered
+    )`,
+  },
+  {
+    id: "generation",
+    brick: "Generation",
+    num: "04",
+    icon: "✍️",
+    color: "#c4572a",
+    docType: "Insurance policy, listing question about covered perils",
+    question: '"What perils are covered under this policy?"',
+    naiveApproach: "Free-form generation prompt: \"Answer the question using the context below.\" No output schema, no per-item evidence requirement.",
+    naiveResult: "Model returns a fluent paragraph listing 7 perils. Cross-checking against the source: 5 are genuinely in the document, 2 are plausible-sounding perils common to insurance policies in general (fire, theft) that this specific policy does NOT actually cover — the model filled gaps with typical-case knowledge.",
+    hallucination: "The two fabricated perils are stated with identical confidence and phrasing to the five real ones — nothing in the output format distinguishes verified content from filled-in plausible content.",
+    fixApproach: "Typed ListAnswer schema (from Article 9A) requires one AnswerItem per claimed peril, each with a mandatory verbatim quote field. An item with no supporting quote fails Pydantic validation before the answer ships.",
+    fixResult: "5 AnswerItems returned, each with an exact quoted line reference. The 2 fabricated perils never make it into a valid AnswerItem because there's no quote to cite — validation catches the gap instead of the user.",
+    contract: "AnswerItem.quote is a required field, not optional. Pydantic raises on construction if generation returns an item without a matching verbatim string found in filtered_line_df.",
+    code: `class AnswerItem(BaseModel):
+    text: str
+    start_page_num: int
+    start_line_num: int
+    quote: str  # REQUIRED — not Optional[str]
+
+    @model_validator(mode="after")
+    def quote_must_exist_in_source(self) -> "AnswerItem":
+        if self.quote not in self._source_text:
+            raise ValueError(
+                f"Fabrication detected: quote '{self.quote[:50]}...' "
+                f"does not appear in the retrieved source text. "
+                f"Item rejected before reaching the user."
+            )
+        return self
+
+# Generation brick must find real quotes for every claimed item —
+# there is no valid path to a fluent-but-unsupported peril appearing
+# in a shipped ListAnswer.`,
+  },
+];
+
+// ── Data: the pattern behind all 4 ──
+const HB_PATTERN = [
+  { step: "1", label: "Confident tone", desc: "Every hallucination in all 4 cases was delivered with the exact same fluent, assured phrasing as the correct parts of the answer", color: "#c4572a" },
+  { step: "2", label: "Plausibility, not verification", desc: "Each failure filled a gap with something statistically likely — the right-looking batch size, the first-matching policy clause, a common insurance peril — never checked against the actual source", color: "#c9a84c" },
+  { step: "3", label: "The brick, not the model, was blind", desc: "In every case the LLM call itself performed reasonably — the upstream brick handed it broken, incomplete, or unfiltered material it had no way to know was wrong", color: "#9b7fd4" },
+  { step: "4", label: "The fix was a typed contract, not a better prompt", desc: "None of the four fixes involved rewording instructions to the LLM — all four added a structural constraint the brick's output had to satisfy before proceeding", color: "#4a9a4a" },
+];
+
+// ── Data: prompt vs contract comparison ──
+const HB_PROMPT_VS_CONTRACT = [
+  { dimension: "Column-mixed text", prompt: "\"Be careful about reading order\"", contract: "column_id computed from bbox gaps, columns never interleaved" },
+  { dimension: "Ambiguous terms", prompt: "\"Ask if the question is unclear\"", contract: "ambiguity_flag set by TOC cross-reference, not LLM judgment" },
+  { dimension: "Superseded content", prompt: "\"Don't cite outdated information\"", contract: "superseded sections excluded from filtered_line_df before generation sees them" },
+  { dimension: "Fabricated list items", prompt: "\"Only include verified facts\"", contract: "AnswerItem.quote is a required field validated against source text" },
+];
+
+// ── SVG: 4 bricks failure map diagram ──
+const FourBricksFailureMapDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ONE HALLUCINATION PER BRICK — SAME PIPELINE</text>
+    {HB_CASES.map((c, i) => {
+      const x = 8 + i * 62;
+      return (
+        <g key={c.id}>
+          <rect x={x} y="20" width="54" height="58" rx={2} fill={`${c.color}10`} stroke={c.color} strokeWidth="0.8"/>
+          <text x={x+27} y="15" textAnchor="middle" fontSize="3.2" fill={c.color} fontFamily="DM Mono, monospace" fontWeight="700">{c.num}</text>
+          <text x={x+27} y="34" textAnchor="middle" fontSize="9" dominantBaseline="middle">{c.icon}</text>
+          <text x={x+27} y="45" textAnchor="middle" fontSize="3.5" fill={c.color} fontFamily="Syne, sans-serif" fontWeight="800">{c.brick}</text>
+          <line x1={x+8} y1="52" x2={x+46} y2="52" stroke={c.color} strokeWidth="0.3" strokeDasharray="1,1"/>
+          <text x={x+27} y="60" textAnchor="middle" fontSize="2.6" fill="#c4572a" fontFamily="Syne, sans-serif">hallucinates</text>
+          <text x={x+27} y="66" textAnchor="middle" fontSize="2.6" fill="#4a9a4a" fontFamily="Syne, sans-serif">contract fixes</text>
+          {i < 3 && <text x={x+56} y="50" fontSize="6" fill="#4a4a5a">→</text>}
+        </g>
+      );
+    })}
+    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Every brick can hallucinate on its own — a typed contract per brick, not a smarter model, closes each gap</text>
+  </svg>
+);
+
+// ── SVG: pattern diagram ──
+const HallucinationPatternDiagram = () => (
+  <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE PATTERN BEHIND ALL FOUR FAILURES</text>
+    {HB_PATTERN.map((p, i) => {
+      const y = 20 + i * 16;
+      return (
+        <g key={i}>
+          <circle cx="18" cy={y+5} r="7" fill={`${p.color}18`} stroke={p.color} strokeWidth="0.8"/>
+          <text x="18" y={y+7} textAnchor="middle" fontSize="4" fill={p.color} fontFamily="Syne, sans-serif" fontWeight="800">{p.step}</text>
+          <text x="30" y={y+4} fontSize="3.8" fill={p.color} fontFamily="Syne, sans-serif" fontWeight="700">{p.label}</text>
+          <text x="30" y={y+10} fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">{p.desc.length > 78 ? p.desc.slice(0,76)+"…" : p.desc}</text>
+        </g>
+      );
+    })}
+    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontStyle="italic">Fixing this pattern requires structure, not stronger wording</text>
+  </svg>
+);
+
+const HallucBricksTab = ({ s }) => {
+  const [activeCase, setActiveCase] = useState("parsing");
+  const [caseTab, setCaseTab]       = useState("naive");
+
+  const c = HB_CASES.find(x => x.id === activeCase);
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#faf0ee,#f4f2fa,#eff8f4)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(196,87,42,0.06)", lineHeight: 1, pointerEvents: "none" }}>🧱</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c4572a", marginBottom: "0.75rem" }}>Enterprise Document Intelligence · Vol.1 #9bis · TDS · Companion to Article 9A</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          Prompt Engineering Isn't Enough:<br />How Four Bricks of <em style={{ color: "#c4572a", fontStyle: "italic" }}>Context Engineering Stop RAG Hallucinations</em>
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+          Four real failure cases — one deliberately triggered in each of the four production RAG bricks. Every hallucination looked fluent and confident. Every fix was a typed contract on the brick's output, not a better-worded prompt to the LLM.
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.3rem" }}>The thesis</div>
+          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>Telling an LLM "don't hallucinate" in a prompt has never once closed a real production gap. What closes the gap is a <strong style={{ color: "#1a1a2e" }}>structural constraint upstream</strong> — a schema field the brick's output cannot satisfy without being grounded. This article names four, one per brick.</div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "4",  label: "Bricks tested",    sub: "one hallucination each",       color: "#2a8a84" },
+            { val: "0",  label: "Prompt rewrites",  sub: "all fixes are typed contracts", color: "#4a9a4a" },
+            { val: "4",  label: "Real fixes",        sub: "column_id · ambiguity_flag · currency check · required quote", color: "#c9a84c" },
+            { val: "9bis", label: "Series position", sub: "companion to Article 9A",     color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* FAILURE MAP */}
+      <div style={s.sectionLabel("#c4572a")}>One Hallucination Per Brick — Click to Inspect</div>
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+        <ZoomableFigure title="One Hallucination Per Brick"><FourBricksFailureMapDiagram /></ZoomableFigure>
+      </div>
+
+      {/* CASE SELECTOR */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.6rem", marginBottom: "1rem" }}>
+        {HB_CASES.map(cs => (
+          <button key={cs.id} onClick={() => { setActiveCase(cs.id); setCaseTab("naive"); }}
+            style={{ background: activeCase === cs.id ? `${cs.color}15` : "#ffffff", border: `1px solid ${activeCase === cs.id ? cs.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.9rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.3rem" }}>
+              <span style={{ fontSize: "1.1rem" }}>{cs.icon}</span>
+              <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.5rem", color: cs.color }}>{cs.num}</span>
+            </div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: activeCase === cs.id ? cs.color : "#1a1a2e" }}>{cs.brick}</div>
+            <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.2rem" }}>{cs.docType.length > 32 ? cs.docType.slice(0,30)+"…" : cs.docType}</div>
+          </button>
+        ))}
+      </div>
+
+      {c && (
+        <div style={{ background: "#ffffff", border: `1px solid ${c.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease" }}>
+          <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.5rem" }}>
+              <span style={{ fontSize: "1.4rem" }}>{c.icon}</span>
+              <div>
+                <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.05rem", fontWeight: 900 }}>{c.brick} Brick</div>
+                <div style={{ fontSize: "0.6rem", color: "#6a6a7a" }}>{c.docType}</div>
+              </div>
+            </div>
+            <div style={{ fontFamily: "Playfair Display, serif", fontSize: "0.9rem", fontStyle: "italic", color: c.color }}>{c.question}</div>
+          </div>
+          <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4", flexWrap: "wrap" }}>
+            {["naive", "hallucination", "fix", "code"].map(t => (
+              <button key={t} onClick={() => setCaseTab(t)}
+                style={{ flex: 1, minWidth: 100, padding: "0.65rem", background: caseTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: caseTab === t ? `2px solid ${c.color}` : "2px solid transparent", color: caseTab === t ? c.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                {t === "naive" ? "Naive Approach" : t === "hallucination" ? "The Hallucination" : t === "fix" ? "The Fix" : "Code"}
+              </button>
+            ))}
+          </div>
+          <div style={{ padding: "1.5rem" }}>
+            {caseTab === "naive" && (
+              <div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#c4572a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>What the naive brick does</div>
+                <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, marginBottom: "1rem" }}>{c.naiveApproach}</p>
+                <div style={{ padding: "0.9rem 1.1rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a25", borderRadius: 4 }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#c4572a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Result</div>
+                  <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>{c.naiveResult}</p>
+                </div>
+              </div>
+            )}
+            {caseTab === "hallucination" && (
+              <div style={{ padding: "1rem 1.2rem", background: "rgba(196,87,42,0.08)", border: "1px solid #c4572a40", borderRadius: 4, borderLeft: "4px solid #c4572a" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.5rem" }}>🚨 What shipped to the user</div>
+                <p style={{ fontSize: "0.72rem", color: "#1a1a2e", lineHeight: 1.8, fontStyle: "italic" }}>{c.hallucination}</p>
+              </div>
+            )}
+            {caseTab === "fix" && (
+              <div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#4a9a4a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>The structural fix</div>
+                <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, marginBottom: "1rem" }}>{c.fixApproach}</p>
+                <div style={{ padding: "0.9rem 1.1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a30", borderRadius: 4, marginBottom: "0.8rem" }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#4a9a4a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Result after fix</div>
+                  <p style={{ fontSize: "0.68rem", color: "#1a1a2e", lineHeight: 1.7 }}>{c.fixResult}</p>
+                </div>
+                <div style={{ padding: "0.7rem 0.9rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.62rem", color: "#4a4a5a", fontFamily: "DM Mono, monospace", lineHeight: 1.6 }}>
+                  <strong style={{ color: c.color, fontFamily: "Syne, sans-serif" }}>Contract: </strong>{c.contract}
+                </div>
+              </div>
+            )}
+            {caseTab === "code" && <CodeBlock code={c.code} />}
+          </div>
+        </div>
+      )}
+
+      {/* THE PATTERN */}
+      <div style={s.sectionLabel("#9b7fd4")}>The Pattern Behind All Four Failures</div>
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+        <ZoomableFigure title="The Pattern Behind All Four Failures"><HallucinationPatternDiagram /></ZoomableFigure>
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.7rem", marginBottom: "1.5rem" }}>
+        {HB_PATTERN.map((p, i) => (
+          <div key={i} style={{ display: "flex", gap: "0.8rem", padding: "1rem", background: "#ffffff", border: `1px solid ${p.color}30`, borderRadius: 6, borderLeft: `3px solid ${p.color}` }}>
+            <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: p.color, flexShrink: 0 }}>{p.step}</div>
+            <div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.66rem", color: p.color, marginBottom: "0.3rem" }}>{p.label}</div>
+              <div style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.6 }}>{p.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* PROMPT VS CONTRACT TABLE */}
+      <div style={s.sectionLabel("#c4572a")}>Prompt Wording vs Typed Contract — Side by Side</div>
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.66rem" }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
+              {["Failure Type", "❌ Prompt-Level Fix (didn't work)", "✅ Typed Contract (did work)"].map(h => (
+                <th key={h} style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {HB_PROMPT_VS_CONTRACT.map((row, i) => (
+              <tr key={i} style={{ borderBottom: i < HB_PROMPT_VS_CONTRACT.length-1 ? "1px solid #e8e4dc" : "none" }}
+                onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
+                onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                <td style={{ padding: "0.75rem 1rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
+                <td style={{ padding: "0.75rem 1rem", color: "#c4572a", fontStyle: "italic" }}>{row.prompt}</td>
+                <td style={{ padding: "0.75rem 1rem", color: "#4a9a4a", fontFamily: "DM Mono, monospace", fontSize: "0.62rem" }}>{row.contract}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+// ─── 7 GENERATION PATTERNS TAB ───────────────────────────────────
+
+// ── Data: the 7 patterns ──
+const GP_PATTERNS = [
+  {
+    id: "function",
+    num: "01",
+    icon: "🎯",
+    name: "The LLM Is a Function, Not an Oracle",
+    color: "#2a8a84",
+    claim: "The answer schema is a contract: structured retrieval in, a typed Pydantic object out, with citations, fidelity flags, and pipeline-feedback fields — never \"the answer as a string\".",
+    naive: '"The premium is $124 per month, per the contract."',
+    naiveProblem: "To use that downstream you have to parse the number back out of the prose, and nothing tells you where it came from or how sure the model was.",
+    typed: `Amount(
+    value=124.0, currency="USD", unit="month",
+    evidence=[Span(line_start=42, line_end=42,
+                    quote="premium of $124 / month")],
+    answer_found=True, confidence=0.95
+)`,
+    result: "The value is already typed, the evidence points at the exact line, and the self-assessment fields travel with it. The caller reads structured values, not text it has to re-read.",
+  },
+  {
+    id: "nocompute",
+    num: "02",
+    icon: "🧮",
+    name: "Extract Typed Values, Never Compute",
+    color: "#c9a84c",
+    claim: "Ask for Amount(value, currency, unit) and let Python compare with a visible exchange rate; computation inside the model erases the audit trail and silently does conversions no human can replay.",
+    naive: '"Yes, the premium is around 130 EUR / month"',
+    naiveProblem: "Having converted $124 to euros with a rate it never shows you. You cannot check the arithmetic, and next month the same question might convert at a different invisible rate.",
+    typed: `# LLM extracts only:
+Amount(value=124, currency="USD", unit="month")
+
+# Python computes, rate is logged:
+rate = 0.92  # 1 USD = 0.92 EUR (audit log)
+eur = 124 * rate  # = 114.08
+result = eur > 100  # True`,
+    result: "Every step — the extraction, the rate, the comparison — can be replayed and checked by hand.",
+  },
+  {
+    id: "completeness",
+    num: "03",
+    icon: "📐",
+    name: "Completeness From Structure, Not Self-Rating",
+    color: "#9b7fd4",
+    claim: "The LLM inside the retrieval scope cannot see whether the next page continues a list; retrieval pulls one extra page and the pipeline checks for a section boundary, so completeness is deterministic and grounded in structure.",
+    naive: '"Is the list complete?" → model reads pages 7-9, says yes',
+    naiveProblem: "The model can only see what it was given — no way to know whether a 10th exclusion existed on a page that was never retrieved.",
+    typed: `# Retrieval-time structural check, not model self-rating
+def fetch_until_boundary(start_page, section_name, toc_df):
+    page = start_page
+    while True:
+        next_page_section = get_section_for_page(page + 1, toc_df)
+        if next_page_section != section_name:
+            break  # crossed into "Limitations" — stop here
+        page += 1
+    return start_page, page  # deterministic page range`,
+    result: "Completeness becomes a fact about where the section ends, not a guess the model makes about text it cannot see.",
+  },
+  {
+    id: "twobooleans",
+    num: "04",
+    icon: "☑️",
+    name: "Two Booleans, Not One Confidence Float",
+    color: "#c4572a",
+    claim: "Off-corpus, partial, and complete each route to a different next action, and two flags force clearer decisions than a single scale.",
+    naive: "confidence = 0.6",
+    naiveProblem: "Tells the orchestrator almost nothing: it cannot tell whether two of three exclusions came back or whether the whole answer was invented.",
+    typed: `answer_found = True           # question IS answerable here
+complete_answer_found = False  # but this list is partial
+
+# Maps to 3 clear next moves:
+if not answer_found:
+    action = "refuse"
+elif answer_found and not complete_answer_found:
+    action = "keep retrieving"
+else:
+    action = "ship"`,
+    result: "A single float collapses three outcomes into one number and loses the decision. Two flags force it back out.",
+  },
+  {
+    id: "dispatcher",
+    num: "05",
+    icon: "🧩",
+    name: "One Prompt Per Shape, Dispatched at Runtime",
+    color: "#4a9a4a",
+    claim: "A dispatcher composes BASE + one shape fragment + optional constraints and records which fragments applied, so a wrong format six months later is traceable, unlike a mega-prompt that grows uncommented clauses.",
+    naive: '"...an answer" (one generic prompt for every question shape)',
+    naiveProblem: "A single prompt everyone keeps appending to is a common RAG codebase smell — when something breaks, nobody knows which of a thousand lines fired.",
+    typed: `prompt = BASE_PROMPT + DATE_SHAPE_FRAGMENT + DateAnswer.schema()
+# audit log:
+trace = {"prompt_id": "BASE@v3 + shape=date_v2"}
+
+# Six months later, wrong format bug:
+# → rebuild the EXACT prompt from the log
+# → reproduce the bug instead of guessing`,
+    result: "The audit log records exactly which parts were used — the team can rebuild that exact prompt from the log and reproduce the bug.",
+  },
+  {
+    id: "noreasoning",
+    num: "06",
+    icon: "⚡",
+    name: "No Reasoning Models on JSON Extraction",
+    color: "#c9a84c",
+    claim: "The schema already constrains the work, so the extra \"thinking\" adds latency and wanders off the schema without adding precision.",
+    naive: "Switch to a reasoning model, hoping for cleaner extraction",
+    naiveProblem: "It thinks for 8 seconds and returns the same number a plain model returned in 1 second — the schema had already pinned the output to a single typed field.",
+    typed: `# Stance: use the smallest model that fills the schema reliably
+# Save reasoning tokens for genuinely open-ended judgment
+# (e.g. the LLM arbiter at the end of retrieval — Article 7C)
+
+model = "gpt-4.1-mini"  # NOT o1 / gpt-4.1-reasoning
+# Schema-constrained extraction has one valid answer —
+# there's no judgment call for "thinking" to improve`,
+    result: "The reasoning tokens cost latency and money and bought nothing, since there was no open-ended judgment to make.",
+  },
+  {
+    id: "decompose",
+    num: "07",
+    icon: "🔀",
+    name: "Decompose for Small Models, One Call for Big Ones",
+    color: "#c4572a",
+    claim: "A frontier model can fill a compound schema (extract + convert + format) in one call; a small model cannot, and asking for it invents the derived fields silently. Model size sets the granularity of the contract, not the shape of it.",
+    naive: "llama-3.2-3B asked to fill PremiumComparison(raw_amount, converted_eur, exchange_rate, over_100_eur) in ONE call",
+    naiveProblem: "The model does NOT fail JSON validation — it fills every field. raw_amount is correct. converted_eur is invented at 117.6 from an imaginary 0.95 rate the log never carries. over_100_eur derives from that invented rate. 3 of 4 fields fabricated.",
+    typed: `# GPT-4.1: ONE call handles the whole compound schema correctly
+# llama-3.2-3B: DECOMPOSE into stages
+
+# Call 1 (small model): extract only
+raw = Amount(value=124, currency="USD", unit="month")
+
+# Python takes over — no model involved:
+rate = lookup_rate("USD", "EUR")       # 0.92, logged
+converted_eur = raw.value * rate        # 114.08
+over_100_eur = converted_eur > 100      # True
+
+# Call 2 (optional, small model): natural-language format only
+summary = format_prompt(raw, converted_eur, over_100_eur)`,
+    result: "Same final row, same accuracy, no fabricated intermediate. The rule: the SIZE of the model determines the NUMBER of extraction calls, not the shape of the schema.",
+  },
+];
+
+// ── Data: 5 sectors, same contract ──
+const GP_SECTORS = [
+  { sector: "Insurance", icon: "🛡️", question: "What is the premium amount?", schema: "Amount(value, currency, unit)", color: "#2a8a84" },
+  { sector: "Legal", icon: "⚖️", question: "What are the termination conditions?", schema: "ListAnswer[Clause] — two-boolean split demo", color: "#c9a84c" },
+  { sector: "Medical", icon: "🏥", question: "What is the recommended dosage?", schema: "Dosage(value, unit, frequency) + caveat field", color: "#9b7fd4" },
+  { sector: "Finance", icon: "📈", question: "What was Q3 revenue growth?", schema: "Percentage(value, period, comparison_basis)", color: "#c4572a" },
+  { sector: "Technical", icon: "🔧", question: "What is the max operating temperature?", schema: "Measurement(value, unit, condition)", color: "#4a9a4a" },
+];
+
+// ── SVG: string vs typed contract diagram ──
+const StringVsContractDiagram = () => (
+  <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">A STRING IS ONE FIELD. A TYPED CONTRACT IS THREE REGIONS.</text>
+    {/* String baseline */}
+    <rect x="8" y="18" width="110" height="30" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.7"/>
+    <text x="63" y="28" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">❌ Naive: One String</text>
+    <text x="63" y="38" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">"$124/month, per contract"</text>
+    <text x="63" y="44" textAnchor="middle" fontSize="2.8" fill="#c4572a" fontFamily="Syne, sans-serif">no source · no confidence · re-parse to use</text>
+    {/* Typed contract 3 regions */}
+    <rect x="132" y="18" width="120" height="70" rx={2} fill="#0d0d1a" stroke="#4a9a4a" strokeWidth="0.8"/>
+    <text x="192" y="27" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">✅ Typed Contract</text>
+    <rect x="138" y="31" width="108" height="15" rx={1} fill="rgba(42,138,132,0.15)" stroke="#2a8a84" strokeWidth="0.5"/>
+    <text x="192" y="37" textAnchor="middle" fontSize="3.2" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">Value region</text>
+    <text x="192" y="43" textAnchor="middle" fontSize="2.8" fill="#8a8a9a" fontFamily="DM Mono, monospace">value=124, currency, unit</text>
+    <rect x="138" y="48" width="108" height="15" rx={1} fill="rgba(201,168,76,0.15)" stroke="#c9a84c" strokeWidth="0.5"/>
+    <text x="192" y="54" textAnchor="middle" fontSize="3.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Evidence region</text>
+    <text x="192" y="60" textAnchor="middle" fontSize="2.8" fill="#8a8a9a" fontFamily="DM Mono, monospace">line_start, quote</text>
+    <rect x="138" y="65" width="108" height="18" rx={1} fill="rgba(155,127,212,0.15)" stroke="#9b7fd4" strokeWidth="0.5"/>
+    <text x="192" y="72" textAnchor="middle" fontSize="3.2" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Self-assessment region</text>
+    <text x="192" y="78" textAnchor="middle" fontSize="2.8" fill="#8a8a9a" fontFamily="DM Mono, monospace">answer_found, confidence</text>
+    <text x="130" y="93" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Each region has its own purpose AND its own validator</text>
+  </svg>
+);
+
+// ── SVG: 7 patterns overview diagram ──
+const SevenPatternsOverviewDiagram = () => (
+  <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SEVEN PATTERNS — SIX ARE THE CONTRACT, ONE IS THE OPERATING RULE</text>
+    {GP_PATTERNS.slice(0,6).map((p, i) => {
+      const x = 8 + (i % 3) * 82;
+      const y = 20 + Math.floor(i / 3) * 32;
+      return (
+        <g key={p.id}>
+          <rect x={x} y={y} width={76} height={26} rx={2} fill={`${p.color}10`} stroke={p.color} strokeWidth="0.7"/>
+          <text x={x+8} y={y+9} fontSize="3.2" fill={p.color} fontFamily="DM Mono, monospace" fontWeight="700">{p.num}</text>
+          <text x={x+38} y={y+9} fontSize="7" dominantBaseline="middle" textAnchor="middle">{p.icon}</text>
+          <text x={x+38} y={y+18} textAnchor="middle" fontSize="3" fill={p.color} fontFamily="Syne, sans-serif" fontWeight="700">{p.name.length > 26 ? p.name.slice(0,24)+"…" : p.name}</text>
+        </g>
+      );
+    })}
+    {/* Pattern 7 highlighted separately */}
+    <rect x="60" y="88" width="140" height="20" rx={2} fill="rgba(196,87,42,0.15)" stroke="#c4572a" strokeWidth="1"/>
+    <text x="130" y="96" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">07 🔀 Decompose for Small Models — the operating rule</text>
+    <text x="130" y="103" textAnchor="middle" fontSize="2.8" fill="#8a8a9a" fontFamily="Syne, sans-serif">Model size sets granularity, not shape</text>
+  </svg>
+);
+
+// ── SVG: decompose vs one-call diagram ──
+const DecomposeVsOneCallDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SAME CONTRACT, DIFFERENT GRANULARITY BY MODEL SIZE</text>
+    {/* Big model - one call */}
+    <rect x="8" y="18" width="112" height="70" rx={2} fill="rgba(74,154,74,0.08)" stroke="#4a9a4a" strokeWidth="0.8"/>
+    <text x="64" y="28" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">🐘 Big Model (GPT-4.1)</text>
+    <rect x="16" y="34" width="96" height="46" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.6"/>
+    <text x="64" y="44" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">ONE call</text>
+    <text x="64" y="52" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">extract</text>
+    <text x="64" y="59" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">+ convert</text>
+    <text x="64" y="66" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">+ format</text>
+    <text x="64" y="76" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">✓ all correct</text>
+    {/* Small model - decomposed */}
+    <rect x="140" y="18" width="112" height="70" rx={2} fill="rgba(196,87,42,0.08)" stroke="#c4572a" strokeWidth="0.8"/>
+    <text x="196" y="28" textAnchor="middle" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">🐁 Small Model (3B)</text>
+    <rect x="148" y="34" width="96" height="14" rx={1} fill="rgba(196,87,42,0.12)" stroke="#c4572a" strokeWidth="0.5"/>
+    <text x="196" y="43" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">Call 1: extract only</text>
+    <rect x="148" y="50" width="96" height="14" rx={1} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.5"/>
+    <text x="196" y="59" textAnchor="middle" fontSize="3.2" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Python: compute</text>
+    <rect x="148" y="66" width="96" height="14" rx={1} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.5"/>
+    <text x="196" y="75" textAnchor="middle" fontSize="3.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Call 2 (optional): format</text>
+    <text x="130" y="94" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">One call = 3 of 4 fields fabricated by small model. Decomposed = same accuracy as the big model.</text>
+  </svg>
+);
+
+const GenPatternsTab = ({ s }) => {
+  const [activePattern, setActivePattern] = useState("function");
+  const [patternTab, setPatternTab]       = useState("claim");
+  const [activeSector, setActiveSector]   = useState(null);
+
+  const pattern = GP_PATTERNS.find(p => p.id === activePattern);
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🧬</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Enterprise Document Intelligence · Vol.1 #8ter · Kezhan Shi · Jul 23, 2026 · 11 min</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          Most RAG Hallucinations Are<br /><em style={{ color: "#2a8a84", fontStyle: "italic" }}>Extraction Errors:</em> Seven Patterns for a Typed Generation Contract
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+          Naming the RAG error correctly matters. In RAG the model reads the context — when the answer is wrong, the cause is upstream in the extraction chain, not fabrication from parametric memory. Calling every failure a "hallucination" closes the debate on where to act. This zooms into brick 4 (generation) with seven typed-contract patterns.
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.3rem" }}>The naming argument</div>
+          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}><em>Hallucination</em>, in the strict sense, is a fabrication from parametric memory with no grounding in the input. In RAG the model reads the context — a wrong answer is an <strong style={{ color: "#1a1a2e" }}>extraction error</strong> (parsing, question, retrieval, or the generation contract itself), not a hallucination. Naming the real cause opens the debate on where to act back up.</div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "7",   label: "Patterns",       sub: "6 contract + 1 operating rule",  color: "#2a8a84" },
+            { val: "3",   label: "Contract regions", sub: "value · evidence · self-assessment", color: "#c9a84c" },
+            { val: "2",   label: "Booleans",       sub: "not one confidence float",       color: "#9b7fd4" },
+            { val: "5",   label: "Sectors tested", sub: "same contract, different schema", color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* NAIVE BASELINE DIAGRAM */}
+      <div style={s.sectionLabel("#c4572a")}>The Naive Baseline This Article Pushes Back On</div>
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+        <ZoomableFigure title="A String vs a Typed Contract"><StringVsContractDiagram /></ZoomableFigure>
+      </div>
+
+      {/* 7 PATTERNS OVERVIEW */}
+      <div style={s.sectionLabel("#9b7fd4")}>Seven Patterns at a Glance</div>
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+        <ZoomableFigure title="Seven Patterns Overview"><SevenPatternsOverviewDiagram /></ZoomableFigure>
+      </div>
+
+      {/* PATTERN EXPLORER */}
+      <div style={s.sectionLabel("#2a8a84")}>Seven Patterns — Click to Deep Dive</div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.5rem", marginBottom: "1rem" }}>
+        {GP_PATTERNS.map(p => (
+          <button key={p.id} onClick={() => { setActivePattern(p.id); setPatternTab("claim"); }}
+            style={{ background: activePattern === p.id ? `${p.color}15` : "#ffffff", border: `1px solid ${activePattern === p.id ? p.color : "#e0dcd4"}`, borderRadius: 4, padding: "0.6rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.2rem" }}>
+              <span style={{ fontSize: "0.9rem" }}>{p.icon}</span>
+              <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.48rem", color: p.color }}>{p.num}</span>
+            </div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: activePattern === p.id ? p.color : "#1a1a2e", lineHeight: 1.3 }}>{p.name}</div>
+          </button>
+        ))}
+      </div>
+
+      {pattern && (
+        <div style={{ background: "#ffffff", border: `1px solid ${pattern.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease" }}>
+          <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", display: "flex", alignItems: "center", gap: "0.8rem" }}>
+            <span style={{ fontSize: "1.4rem" }}>{pattern.icon}</span>
+            <div>
+              <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: pattern.color }}>Pattern {pattern.num}</div>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 900 }}>{pattern.name}</div>
+            </div>
+          </div>
+          <div style={{ padding: "1rem 1.5rem", borderBottom: "1px solid #e0dcd4", fontSize: "0.7rem", color: "#1a1a2e", lineHeight: 1.8, fontStyle: "italic", background: `${pattern.color}08` }}>
+            {pattern.claim}
+          </div>
+          <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+            {["claim", "naive", "typed"].map(t => (
+              <button key={t} onClick={() => setPatternTab(t)}
+                style={{ flex: 1, padding: "0.65rem", background: patternTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: patternTab === t ? `2px solid ${pattern.color}` : "2px solid transparent", color: patternTab === t ? pattern.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                {t === "claim" ? "Why It Matters" : t === "naive" ? "Naive Failure" : "Typed Fix"}
+              </button>
+            ))}
+          </div>
+          <div style={{ padding: "1.5rem" }}>
+            {patternTab === "claim" && (
+              <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>{pattern.claim}</p>
+            )}
+            {patternTab === "naive" && (
+              <div>
+                <div style={{ padding: "0.8rem 1rem", background: "rgba(196,87,42,0.08)", border: "1px solid #c4572a30", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.8rem" }}>
+                  {pattern.naive}
+                </div>
+                <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>{pattern.naiveProblem}</p>
+              </div>
+            )}
+            {patternTab === "typed" && (
+              <div>
+                <CodeBlock code={pattern.typed} />
+                <div style={{ marginTop: "1rem", padding: "0.8rem 1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a30", borderRadius: 4 }}>
+                  <p style={{ fontSize: "0.68rem", color: "#1a1a2e", lineHeight: 1.7 }}>{pattern.result}</p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* PATTERN 7 SPOTLIGHT */}
+      <div style={s.sectionLabel("#c4572a")}>Pattern 7 Spotlight — Decompose for Small Models</div>
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+        <ZoomableFigure title="Decompose vs One Call"><DecomposeVsOneCallDiagram /></ZoomableFigure>
+      </div>
+      <div style={{ padding: "1.2rem 1.4rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 6, marginBottom: "1.5rem", borderLeft: "4px solid #c4572a" }}>
+        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.5rem" }}>The rule</div>
+        <p style={{ fontSize: "0.72rem", color: "#1a1a2e", lineHeight: 1.8, fontWeight: 700 }}>"The size of the model determines the number of extraction calls, not the shape of the schema. Big model = one dense call. Small model = a chain of typed extracts with Python computing in the middle and one optional format call at the end."</p>
+      </div>
+
+      {/* 5 SECTORS */}
+      <div style={s.sectionLabel("#4a9a4a")}>Across Sectors and Professions — Same Contract, Different Schema Shape</div>
+      <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>The validator runs the same checks across all five rows: line spans within document bounds, verbatim quotes match cited lines, format constraints respected. Click a sector to see its schema shape.</p>
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+        {GP_SECTORS.map((sec, i) => (
+          <button key={i} onClick={() => setActiveSector(activeSector === i ? null : i)}
+            style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 0.9rem", background: activeSector === i ? `${sec.color}15` : "#ffffff", border: `1px solid ${activeSector === i ? sec.color : "#e0dcd4"}`, borderRadius: 4, cursor: "pointer", transition: "all 0.2s" }}>
+            <span style={{ fontSize: "1rem" }}>{sec.icon}</span>
+            <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: activeSector === i ? sec.color : "#1a1a2e" }}>{sec.sector}</span>
+          </button>
+        ))}
+      </div>
+      {activeSector !== null && (
+        <div style={{ background: "#ffffff", border: `1px solid ${GP_SECTORS[activeSector].color}40`, borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: GP_SECTORS[activeSector].color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Question</div>
+              <div style={{ fontSize: "0.7rem", color: "#1a1a2e", fontStyle: "italic" }}>"{GP_SECTORS[activeSector].question}"</div>
+            </div>
+            <div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: GP_SECTORS[activeSector].color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Schema Shape</div>
+              <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: GP_SECTORS[activeSector].color }}>{GP_SECTORS[activeSector].schema}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SERIES POSITION */}
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#8a8a9a", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Where These Patterns Land in the Series</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+          {[
+            { id: "8a", label: "Article 8A — The Answer Contract", desc: "Develops the typed Pydantic schema with citations and self-checks", color: "#2a8a84" },
+            { id: "8b", label: "Article 8B — Prompt Assembly", desc: "Develops the dispatcher: pick the schema, build the prompt, log the trace", color: "#c9a84c" },
+            { id: "8c", label: "Article 8C — Validation", desc: "Develops the validator and the feedback loop: spans, quotes, formats, retry rules", color: "#9b7fd4" },
+          ].map((a, i) => (
+            <div key={i} style={{ display: "flex", gap: "0.8rem", padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${a.color}` }}>
+              <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: a.color, flexShrink: 0 }}>{a.label}</span>
+              <span style={{ fontSize: "0.6rem", color: "#6a6a7a" }}>{a.desc}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── MEASURING CONTEXT QUALITY TAB ───────────────────────────────
+
+// ── Data: 7 criteria ──
+const CM_CRITERIA = [
+  { id: "role", name: "Role Clarity", icon: "🎭", color: "#2a8a84", measures: "Whether the agent's role, scope, goals, and success criteria are explicit and unambiguous.", failureMode: "Goal drift", behavioral: "Task success, drift resistance", r: 0.40, c1: 5.3, c2: 9.0, c3: 9.0 },
+  { id: "guard", name: "Guardrail Coverage", icon: "🛡️", color: "#c4572a", measures: "Whether refusals, escalation paths, restricted actions, PII handling, safety rules, and policy boundaries are specified.", failureMode: "Unsafe compliance", behavioral: "Safety, manipulation resistance", r: 0.60, c1: 2.7, c2: 7.0, c3: 8.7 },
+  { id: "instr", name: "Instruction Consistency", icon: "📋", color: "#9b7fd4", measures: "Whether instructions are internally coherent, non-conflicting, and include precedence when rules may clash.", failureMode: "Rule conflict", behavioral: "Instruction following", r: 0.57, c1: 4.0, c2: 8.3, c3: 9.6 },
+  { id: "tool", name: "Tool Schema Quality", icon: "🔧", color: "#c9a84c", measures: "Whether tools have clear names, typed arguments, descriptions, side-effect boundaries, error behavior, and when-to-call guidance.", failureMode: "Tool misuse", behavioral: "Tool use reliability", r: 0.47, c1: 4.3, c2: 9.0, c3: 8.9 },
+  { id: "ground", name: "Grounding Sufficiency", icon: "🔍", color: "#2a8a84", measures: "Whether the context provides enough reliable evidence for the claims or decisions the agent is expected to make.", failureMode: "Hallucination", behavioral: "Hallucination resistance", r: 0.63, c1: 5.8, c2: 8.3, c3: 8.4 },
+  { id: "inject", name: "Injection Hardening", icon: "🔒", color: "#c4572a", measures: "Whether trusted instructions are separated from untrusted user, retrieved, or tool-provided content.", failureMode: "Prompt injection", behavioral: "Safety under injection pressure", r: 0.48, c1: 3.4, c2: 7.0, c3: 8.7 },
+  { id: "token", name: "Token Efficiency", icon: "⚡", color: "#4a9a4a", measures: "Whether the context avoids redundant boilerplate and spends tokens on information that improves reliability.", failureMode: "Context bloat", behavioral: "Token overhead, reliability per token", r: null, c1: 5.0, c2: 7.9, c3: 7.6 },
+];
+
+// ── Data: 3 context conditions ──
+const CM_CONDITIONS = [
+  { id: "c1", name: "C1 — Poor", color: "#c4572a", desc: "Vague role definition, weak or missing tool guidance, limited grounding, little or no guardrail coverage, weak separation between trusted instructions and untrusted inputs.", final: 3.15, safety: 3.15, halluc: 3.21, tool: 3.46, ce: 4.37, critical: 4.11, tokens: "1,014,138" },
+  { id: "c2", name: "C2 — Structured", color: "#c9a84c", desc: "Clearer role and scope, typed tool schemas, grounding in a domain corpus, more efficient context organization — but without explicit safety hardening.", final: 5.49, safety: 4.95, halluc: 5.61, tool: 6.25, ce: 8.08, critical: 1.33, tokens: "1,118,836" },
+  { id: "c3", name: "C3 — Hardened", color: "#4a9a4a", desc: "C2 plus explicit refusal conditions, escalation thresholds, injection separation, confirmation requirements, and stronger policy guardrails.", final: 5.16, safety: 4.80, halluc: 5.40, tool: 5.82, ce: 8.68, critical: 1.56, tokens: "1,139,202" },
+];
+
+// ── Data: artifact study ──
+const CM_ARTIFACT = [
+  { condition: "C1 Poor", final: 2.86, halluc: 2.0, unsupported: 0, ceGrounding: 4.0, tokens: "290k" },
+  { condition: "C2 Structured", final: 10.0, halluc: 10.0, unsupported: 0, ceGrounding: 8.0, tokens: "234k" },
+  { condition: "C3 Hardened", final: 10.0, halluc: 10.0, unsupported: 0, ceGrounding: 9.0, tokens: "234k" },
+];
+
+// ── Data: token overhead ──
+const CM_TOKEN_OVERHEAD = [
+  { condition: "C1 Poor", overhead: 392, reclaimable: 38, total: "1,014k", color: "#c4572a" },
+  { condition: "C2 Structured", overhead: 732, reclaimable: 26, total: "1,119k", color: "#c9a84c" },
+  { condition: "C3 Hardened", overhead: 1010, reclaimable: 52, total: "1,139k", color: "#4a9a4a" },
+];
+
+// ── SVG: context assembly function diagram ──
+const ContextAssemblyDiagram = () => (
+  <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">X = 𝒜(I, T, G, H, P, U) — CONTEXT AS AN ASSEMBLED OBJECT</text>
+    {[
+      { sym: "I", label: "Instructions", color: "#2a8a84" },
+      { sym: "T", label: "Tools", color: "#c9a84c" },
+      { sym: "G", label: "Grounding", color: "#9b7fd4" },
+      { sym: "H", label: "Memory/History", color: "#c4572a" },
+      { sym: "P", label: "Policy", color: "#4a9a4a" },
+      { sym: "U", label: "Untrusted Input", color: "#c4572a" },
+    ].map((n, i) => {
+      const x = 8 + i * 41;
+      return (
+        <g key={i}>
+          <rect x={x} y="20" width="36" height="24" rx={2} fill={`${n.color}12`} stroke={n.color} strokeWidth="0.7"/>
+          <text x={x+18} y="30" textAnchor="middle" fontSize="5" fill={n.color} fontFamily="Playfair Display, serif" fontWeight="900">{n.sym}</text>
+          <text x={x+18} y="38" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif">{n.label}</text>
+          <line x1={x+18} y1="44" x2="130" y2="56" stroke={n.color} strokeWidth="0.4" strokeDasharray="1.5,1"/>
+        </g>
+      );
+    })}
+    <rect x="90" y="56" width="80" height="20" rx={2} fill="rgba(74,154,74,0.15)" stroke="#4a9a4a" strokeWidth="1"/>
+    <text x="130" y="66" textAnchor="middle" fontSize="4.5" fill="#4a9a4a" fontFamily="Playfair Display, serif" fontWeight="900">X</text>
+    <text x="130" y="73" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif">Assembled Context</text>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">Q_CE(X) → [0,10] — a context-quality function, isolated from behavioral scoring</text>
+  </svg>
+);
+
+// ── SVG: isolation principle diagram ──
+const IsolationPrincipleDiagram = () => (
+  <svg viewBox="0 0 260 85" style={{ width: "100%", height: 128 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">WHY ISOLATION MAKES THIS A NON-CIRCULAR VALIDATION</text>
+    {/* Context score box */}
+    <rect x="8" y="20" width="100" height="34" rx={2} fill="rgba(74,154,74,0.1)" stroke="#4a9a4a" strokeWidth="0.9"/>
+    <text x="58" y="32" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">Q_CE(X)</text>
+    <text x="58" y="40" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Context Quality Score</text>
+    <text x="58" y="47" textAnchor="middle" fontSize="2.8" fill="#4a9a4a" fontFamily="Syne, sans-serif">scored BEFORE behavior runs</text>
+    {/* Behavioral score box */}
+    <rect x="152" y="20" width="100" height="34" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.9"/>
+    <text x="202" y="32" textAnchor="middle" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">B(A, X)</text>
+    <text x="202" y="40" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Behavioral Evaluation</text>
+    <text x="202" y="47" textAnchor="middle" fontSize="2.8" fill="#c4572a" fontFamily="Syne, sans-serif">task success, safety, hallucination</text>
+    {/* Not-in relation */}
+    <text x="130" y="40" textAnchor="middle" fontSize="7" fill="#8a8a9a" fontFamily="Playfair Display, serif">∉</text>
+    <text x="130" y="60" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif">Q_CE never enters B — no shared computation</text>
+    {/* Prediction arrow below */}
+    <line x1="58" y1="54" x2="58" y2="68" stroke="#4a9a4a" strokeWidth="0.6"/>
+    <path d="M58 68 L202 68" stroke="#4a9a4a" strokeWidth="0.6" strokeDasharray="2,1" markerEnd="url(#arrow)"/>
+    <line x1="152" y1="54" x2="202" y2="68" stroke="#4a9a4a" strokeWidth="0.5"/>
+    <text x="130" y="76" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">predicts →  without being part of</text>
+  </svg>
+);
+
+// ── SVG: correlation bar chart ──
+const CorrelationChartDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CONTEXT CRITERIA PREDICT BEHAVIOR — PEARSON r (n=300 EVALUATIONS)</text>
+    {CM_CRITERIA.filter(c => c.r !== null).sort((a,b) => b.r - a.r).map((c, i) => {
+      const y = 18 + i * 14;
+      const barW = c.r * 160;
+      return (
+        <g key={c.id}>
+          <text x="8" y={y+6} fontSize="3.5" fill={c.color} fontFamily="Syne, sans-serif" fontWeight="700">{c.name}</text>
+          <rect x="8" y={y+8} width={barW} height="7" rx={1} fill={c.color} opacity="0.75"/>
+          <text x={8+barW+4} y={y+14} fontSize="3.8" fill={c.color} fontFamily="DM Mono, monospace" fontWeight="700">r={c.r.toFixed(2)}</text>
+        </g>
+      );
+    })}
+    <text x="130" y="96" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">Strongest: Grounding → Hallucination resistance (r=0.63). Every correlation matches the pre-registered mechanism.</text>
+  </svg>
+);
+
+// ── SVG: 3-condition context ladder ──
+const ContextLadderDiagram = () => (
+  <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE CONTROLLED CONTEXT LADDER — MODEL FIXED, CONTEXT VARIED</text>
+    {CM_CONDITIONS.map((c, i) => {
+      const x = 12 + i * 84;
+      const h = 20 + i * 18;
+      const y = 78 - h;
+      return (
+        <g key={c.id}>
+          <rect x={x} y={y} width={72} height={h} rx={2} fill={`${c.color}15`} stroke={c.color} strokeWidth="0.9"/>
+          <text x={x+36} y={y+12} textAnchor="middle" fontSize="4.2" fill={c.color} fontFamily="Syne, sans-serif" fontWeight="800">{c.name}</text>
+          <text x={x+36} y={y+20} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">CE: {c.ce}</text>
+          {i < 2 && <text x={x+74} y="65" fontSize="7" fill="#4a4a5a">→</text>}
+        </g>
+      );
+    })}
+    <text x="55" y="88" textAnchor="middle" fontSize="3" fill="#c4572a" fontFamily="Syne, sans-serif">structure</text>
+    <text x="180" y="88" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif">hardening</text>
+    <text x="130" y="20" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">300 evals · 25 turns each · 7,500 total turns · GPT-5.5 + Claude Opus 4.8</text>
+  </svg>
+);
+
+const ContextMeasureTab = ({ s }) => {
+  const [section, setSection]           = useState("construct");
+  const [activeCriterion, setActiveCriterion] = useState("ground");
+  const [criterionTab, setCriterionTab] = useState("measures");
+  const [scoreInputs, setScoreInputs]   = useState({ role: 5, guard: 5, instr: 5, tool: 5, ground: 5, inject: 5, token: 5 });
+
+  const criterion = CM_CRITERIA.find(c => c.id === activeCriterion);
+  const overallScore = (Object.values(scoreInputs).reduce((a,b) => a+b, 0) / 7).toFixed(1);
+  const grade = overallScore >= 8 ? { label: "Strong", color: "#4a9a4a" } : overallScore >= 6 ? { label: "Adequate", color: "#c9a84c" } : { label: "Weak", color: "#c4572a" };
+
+  const SECTIONS = [
+    { id: "construct",  icon: "📐", label: "The Construct",         color: "#2a8a84" },
+    { id: "criteria",   icon: "📋", label: "7 Criteria",            color: "#c9a84c" },
+    { id: "simulator",  icon: "🎛️", label: "Live Score Simulator",  color: "#9b7fd4" },
+    { id: "validation", icon: "📊", label: "Experimental Results",  color: "#c4572a" },
+    { id: "artifact",   icon: "📄", label: "Artifact Study",        color: "#4a9a4a" },
+  ];
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#f4f2fa,#eff8f4,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(155,127,212,0.06)", lineHeight: 1, pointerEvents: "none" }}>📐</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#9b7fd4", marginBottom: "0.75rem" }}>arXiv:2607.14275 · Fouad Bousetouane · University of Chicago · Jul 15, 2026</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          AI Agents Do Not Fail Alone:<br /><em style={{ color: "#9b7fd4", fontStyle: "italic" }}>The Context Fails First</em>
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+          The first empirically validated measurement of context-engineering quality as an independent leading indicator of agent reliability. Seven criteria, scored in isolation from behavioral metrics, tested across 300 multi-turn evaluations (7,500 agent turns) on GPT-5.5 and Claude Opus 4.8 in regulated domains.
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#9b7fd4", marginBottom: "0.3rem" }}>The abstract's core claim</div>
+          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>"Agents do not fail in isolation: their behavior is shaped by the instructions, tools, memory, retrieved knowledge, guardrails, and untrusted inputs accumulated in their context. When this context is weak, agents drift, hallucinate, misuse tools, ignore constraints, become vulnerable to injection, and waste tokens."</div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "7",     label: "Quality criteria",  sub: "role → token efficiency",       color: "#2a8a84" },
+            { val: "300",   label: "Evaluations",       sub: "3 domains × 100 each",           color: "#c9a84c" },
+            { val: "7,500", label: "Agent turns",       sub: "25 turns per evaluation",         color: "#9b7fd4" },
+            { val: "0.63",  label: "Strongest r",       sub: "Grounding → Hallucination res.",  color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SECTION NAV */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.5rem", marginBottom: "1.5rem" }}>
+        {SECTIONS.map(sec => (
+          <button key={sec.id} onClick={() => setSection(sec.id)}
+            style={{ background: section === sec.id ? `${sec.color}12` : "#ffffff", border: `1px solid ${section === sec.id ? sec.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
+            <div style={{ fontSize: "1.1rem", marginBottom: "0.25rem" }}>{sec.icon}</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.58rem", color: section === sec.id ? sec.color : "#1a1a2e", lineHeight: 1.3 }}>{sec.label}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* ─── THE CONSTRUCT ─── */}
+      {section === "construct" && (
+        <div>
+          <div style={s.sectionLabel("#2a8a84")}>§1 — Context as an Assembled, Measurable Object</div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="Context Assembly Function"><ContextAssemblyDiagram /></ZoomableFigure>
+          </div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="The Isolation Principle"><IsolationPrincipleDiagram /></ZoomableFigure>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#2a8a84", marginBottom: "0.8rem" }}>Why measurement matters</div>
+              <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.8 }}>Teams inspect prompts manually, debug failures after deployment, or run behavioral evaluations that show an agent hallucinated or misused a tool — without revealing whether the upstream cause was weak grounding, unclear role definition, conflicting instructions, or missing guardrails. Context engineering is one of the most controllable parts of an agent system, but without measurement, changes to it remain intuition-driven.</p>
+            </div>
+            <div style={{ background: "#ffffff", border: "1px solid #9b7fd430", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #9b7fd4" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#9b7fd4", marginBottom: "0.8rem" }}>Why isolation matters</div>
+              <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.8 }}>If context quality were folded into the final behavioral score, showing that it "predicts" behavior would be circular — a restatement of the same number. By keeping Q_CE(X) entirely outside the behavioral pipeline, the paper can test a much stronger, falsifiable claim: that context quality carries independent predictive signal about downstream reliability.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── 7 CRITERIA ─── */}
+      {section === "criteria" && (
+        <div>
+          <div style={s.sectionLabel("#c9a84c")}>§2 — The Seven Context-Quality Criteria</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.5rem", marginBottom: "1rem" }}>
+            {CM_CRITERIA.map(c => (
+              <button key={c.id} onClick={() => { setActiveCriterion(c.id); setCriterionTab("measures"); }}
+                style={{ background: activeCriterion === c.id ? `${c.color}15` : "#ffffff", border: `1px solid ${activeCriterion === c.id ? c.color : "#e0dcd4"}`, borderRadius: 4, padding: "0.6rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.2rem" }}>
+                  <span style={{ fontSize: "0.9rem" }}>{c.icon}</span>
+                </div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: activeCriterion === c.id ? c.color : "#1a1a2e", lineHeight: 1.3 }}>{c.name}</div>
+              </button>
+            ))}
+          </div>
+          {criterion && (
+            <div style={{ background: "#ffffff", border: `1px solid ${criterion.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease" }}>
+              <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", display: "flex", alignItems: "center", gap: "0.8rem" }}>
+                <span style={{ fontSize: "1.4rem" }}>{criterion.icon}</span>
+                <div>
+                  <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.05rem", fontWeight: 900 }}>{criterion.name}</div>
+                  <div style={{ fontSize: "0.6rem", color: criterion.color }}>Failure mode: {criterion.failureMode}</div>
+                </div>
+              </div>
+              <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+                {["measures", "predicts", "scores"].map(t => (
+                  <button key={t} onClick={() => setCriterionTab(t)}
+                    style={{ flex: 1, padding: "0.65rem", background: criterionTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: criterionTab === t ? `2px solid ${criterion.color}` : "2px solid transparent", color: criterionTab === t ? criterion.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    {t === "measures" ? "What It Measures" : t === "predicts" ? "Behavioral Prediction" : "Scores by Condition"}
+                  </button>
+                ))}
+              </div>
+              <div style={{ padding: "1.5rem" }}>
+                {criterionTab === "measures" && <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>{criterion.measures}</p>}
+                {criterionTab === "predicts" && (
+                  <div>
+                    <div style={{ padding: "0.9rem 1.1rem", background: `${criterion.color}0a`, border: `1px solid ${criterion.color}25`, borderRadius: 4, marginBottom: "0.8rem" }}>
+                      <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: criterion.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Predicts</div>
+                      <div style={{ fontSize: "0.7rem", color: "#1a1a2e" }}>{criterion.behavioral}</div>
+                    </div>
+                    {criterion.r !== null ? (
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
+                        <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, color: criterion.color }}>r = {criterion.r.toFixed(2)}</div>
+                        <div style={{ fontSize: "0.63rem", color: "#6a6a7a" }}>Pearson correlation, n=300 multi-turn evaluations</div>
+                      </div>
+                    ) : (
+                      <div style={{ fontSize: "0.63rem", color: "#6a6a7a", fontStyle: "italic" }}>Not tested for direct correlation — token efficiency is interpreted as reliability value per token, not as a metric to minimise.</div>
+                    )}
+                  </div>
+                )}
+                {criterionTab === "scores" && (
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.6rem" }}>
+                    {[["C1 Poor", criterion.c1, "#c4572a"], ["C2 Structured", criterion.c2, "#c9a84c"], ["C3 Hardened", criterion.c3, "#4a9a4a"]].map(([label, val, color], i) => (
+                      <div key={i} style={{ padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, textAlign: "center", border: `1px solid ${color}30` }}>
+                        <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color }}>{val}</div>
+                        <div style={{ fontSize: "0.55rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>{label}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ─── LIVE SIMULATOR ─── */}
+      {section === "simulator" && (
+        <div>
+          <div style={s.sectionLabel("#9b7fd4")}>§3 — Live Score Simulator — Try the Formula Yourself</div>
+          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 560 }}>Q_CE(X) = weighted average of all 7 criteria, mapped to a grade. Move the sliders to see how the aggregate score and grade respond — exactly as ProofAgent-Harness computes it.</p>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.2rem" }}>
+              {CM_CRITERIA.map(c => (
+                <div key={c.id}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
+                    <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: c.color }}>{c.icon} {c.name}</span>
+                    <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: c.color, fontWeight: 700 }}>{scoreInputs[c.id]}</span>
+                  </div>
+                  <input type="range" min="0" max="10" step="0.5" value={scoreInputs[c.id]}
+                    onChange={e => setScoreInputs(prev => ({ ...prev, [c.id]: parseFloat(e.target.value) }))}
+                    style={{ width: "100%", accentColor: c.color }} />
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", padding: "1.2rem", background: `${grade.color}0a`, border: `1px solid ${grade.color}40`, borderRadius: 6 }}>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ fontFamily: "Playfair Display, serif", fontSize: "2.2rem", fontWeight: 900, color: grade.color, lineHeight: 1 }}>{overallScore}</div>
+                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>Q_CE(X)</div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: grade.color, marginBottom: "0.3rem" }}>{grade.label}</div>
+                <div style={{ fontSize: "0.62rem", color: "#4a4a5a", lineHeight: 1.6 }}>
+                  {grade.label === "Strong" && "Q_CE ≥ 8.0 — the operating environment is well structured before behavioral testing begins."}
+                  {grade.label === "Adequate" && "6.0 ≤ Q_CE < 8.0 — usable but with room to strengthen specific criteria."}
+                  {grade.label === "Weak" && "Q_CE < 6.0 — this context is likely to produce drift, hallucination, or unsafe behavior downstream."}
+                </div>
+              </div>
+            </div>
+            <div style={{ marginTop: "0.8rem", fontSize: "0.6rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontStyle: "italic" }}>Note: the grade is for diagnosis, not certification — a Strong context does not prove the agent is safe to deploy.</div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── EXPERIMENTAL RESULTS ─── */}
+      {section === "validation" && (
+        <div>
+          <div style={s.sectionLabel("#c4572a")}>§4 — Experimental Validation Across 300 Evaluations</div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="The Controlled Context Ladder"><ContextLadderDiagram /></ZoomableFigure>
+          </div>
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+            {CM_CONDITIONS.map(c => (
+              <div key={c.id} style={{ flex: 1, padding: "0.9rem", background: `${c.color}0a`, border: `1px solid ${c.color}30`, borderRadius: 6, borderTop: `2px solid ${c.color}` }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: c.color, marginBottom: "0.4rem" }}>{c.name}</div>
+                <p style={{ fontSize: "0.58rem", color: "#4a4a5a", lineHeight: 1.6 }}>{c.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+            <div style={{ padding: "0.8rem 1.2rem", borderBottom: "1px solid #e0dcd4", fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#c4572a", letterSpacing: "0.2em", textTransform: "uppercase" }}>Behavioral Outcomes by Condition</div>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.65rem" }}>
+              <thead>
+                <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
+                  {["Condition", "Final", "Safety", "Halluc.", "Tool", "CE", "Critical", "Tokens"].map(h => (
+                    <th key={h} style={{ textAlign: "left", padding: "0.55rem 0.7rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {CM_CONDITIONS.map((c, i) => (
+                  <tr key={i} style={{ borderBottom: i < 2 ? "1px solid #e8e4dc" : "none" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
+                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                    <td style={{ padding: "0.6rem 0.7rem", color: c.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{c.name}</td>
+                    <td style={{ padding: "0.6rem 0.7rem", color: "#1a1a2e" }}>{c.final}</td>
+                    <td style={{ padding: "0.6rem 0.7rem", color: "#1a1a2e" }}>{c.safety}</td>
+                    <td style={{ padding: "0.6rem 0.7rem", color: "#1a1a2e" }}>{c.halluc}</td>
+                    <td style={{ padding: "0.6rem 0.7rem", color: "#1a1a2e" }}>{c.tool}</td>
+                    <td style={{ padding: "0.6rem 0.7rem", color: "#1a1a2e" }}>{c.ce}</td>
+                    <td style={{ padding: "0.6rem 0.7rem", color: c.critical > 3 ? "#c4572a" : "#4a9a4a", fontWeight: 700 }}>{c.critical}</td>
+                    <td style={{ padding: "0.6rem 0.7rem", color: "#6a6a7a", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{c.tokens}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="Correlation Chart — Context Predicts Behavior"><CorrelationChartDiagram /></ZoomableFigure>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div style={{ background: "#ffffff", border: "1px solid #2a8a8430", borderRadius: 6, padding: "1.2rem", borderTop: "2px solid #2a8a84" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.5rem" }}>Structure is the biggest lever</div>
+              <p style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.7 }}>C1→C2 raises final score +2.34, hallucination resistance +2.40, tool use +2.79, and cuts critical failures by ~68% (4.11 → 1.33).</p>
+            </div>
+            <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.2rem", borderTop: "2px solid #c4572a" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.5rem" }}>Hardening rebalances, doesn't just improve</div>
+              <p style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.7 }}>C2→C3 raises CE quality (8.08→8.68) but the final behavioral score slightly drops (5.49→5.16) — a more conservative, guardrailed agent completes fewer borderline tasks.</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── ARTIFACT STUDY ─── */}
+      {section === "artifact" && (
+        <div>
+          <div style={s.sectionLabel("#4a9a4a")}>§5 — Artifact Generalization: Beyond Live Dialogue</div>
+          <div style={{ padding: "1rem 1.2rem", background: "rgba(74,154,74,0.07)", border: "1px solid #4a9a4a30", borderRadius: 6, marginBottom: "1.5rem" }}>
+            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>A documentation agent generates a policy runbook under the same context-quality ladder. This tests whether context measurement predicts reliability in generated <strong style={{ color: "#1a1a2e" }}>deliverables</strong> — not just conversational turns.</p>
+          </div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.66rem" }}>
+              <thead>
+                <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
+                  {["Condition", "Final", "Halluc.", "Unsupported Claims", "CE Grounding", "Tokens"].map(h => (
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.56rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {CM_ARTIFACT.map((row, i) => (
+                  <tr key={i} style={{ borderBottom: i < 2 ? "1px solid #e8e4dc" : "none" }}>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#1a1a2e", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row.condition}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: row.final >= 8 ? "#4a9a4a" : "#c4572a", fontWeight: 700 }}>{row.final}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: row.halluc >= 8 ? "#4a9a4a" : "#c4572a" }}>{row.halluc}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#6a6a7a" }}>{row.unsupported}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#1a1a2e" }}>{row.ceGrounding}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#6a6a7a", fontFamily: "DM Mono, monospace" }}>{row.tokens}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={s.sectionLabel("#c9a84c")}>Token Cost: The Weakest Context Is Also the Cheapest</div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", marginBottom: "1.2rem" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.66rem" }}>
+              <thead>
+                <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
+                  {["Condition", "Overhead Tokens", "Reclaimable", "Total Tokens/Eval"].map(h => (
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.56rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {CM_TOKEN_OVERHEAD.map((row, i) => (
+                  <tr key={i} style={{ borderBottom: i < 2 ? "1px solid #e8e4dc" : "none" }}>
+                    <td style={{ padding: "0.6rem 0.8rem", color: row.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row.condition}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#1a1a2e" }}>{row.overhead}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#1a1a2e" }}>{row.reclaimable}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#6a6a7a", fontFamily: "DM Mono, monospace" }}>{row.total}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ padding: "1.2rem 1.4rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 6, borderLeft: "4px solid #c4572a" }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.5rem" }}>The paper's closing claim</div>
+            <p style={{ fontSize: "0.72rem", color: "#1a1a2e", lineHeight: 1.8, fontStyle: "italic" }}>"The cost of weak context is not primarily token cost: the weakest context can be the cheapest per call while producing the most dangerous behavior." C1 Poor costs 392 overhead tokens — the cheapest — yet produces the highest critical-failure rate (4.11). Token efficiency should be read as reliability value per token, not minimal length.</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// ─── UNHOBBLING CLAUDE 5 TAB ──────────────────────────────────────
+
+// ── Data: the 6 then-vs-now shifts ──
+const UH_SHIFTS = [
+  {
+    id: "rules",
+    num: "01",
+    icon: "⚖️",
+    then: "Give Claude Rules",
+    now: "Let Claude Use Judgement",
+    color: "#2a8a84",
+    desc: "Early Claude Code needed strong, blanket guidance to avoid worst-case scenarios like deleting files. That guidance was sometimes wrong — a user might want multi-line docstrings, or specific complex code might need a comment block — but without it, older models made costly mistakes too often to risk removing the rule.",
+    thenExample: `In code: default to writing no comments. Never write
+multi-paragraph docstrings or multi-line comment blocks
+— one short line max. Don't create planning, decision,
+or analysis documents unless the user asks for them —
+work from conversation context, not intermediate files.`,
+    nowExample: `Write code that reads like the surrounding code:
+match its comment density, naming, and idiom.`,
+    insight: "Newer models have better judgement and can handle these decisions well without explicit rules — reading transcripts showed Claude receiving conflicting messages like \"leave documentation as appropriate\" and \"DO NOT add comments\" in a single request, forcing it to reconcile system prompt, skills, and user intent before deciding what to do.",
+  },
+  {
+    id: "examples",
+    num: "02",
+    icon: "🎯",
+    then: "Give Claude Examples",
+    now: "Design Interfaces",
+    color: "#c9a84c",
+    desc: "The old rule for tool usage was to give Claude worked examples of how to call a tool. With newer models, examples actually constrain exploration — they hint at one narrow way to solve a problem when the model could reason about the tool's design directly.",
+    thenExample: `# Old approach: teach by example
+"Here's how to use the Todo tool:
+todo.status = 'pending' | 'done'  (example calls...)"`,
+    nowExample: `# New approach: design a self-documenting interface
+status: enum["pending", "in_progress", "completed"]
+# rule: keep exactly ONE item "in_progress" at a time
+# — the enum values + one constraint teach the model
+#   everything the examples used to`,
+    insight: "Instead of examples, invest in tool design: what parameters does Claude have, and how expressive can they be made? An enum with three well-named states plus one constraint communicates more than a page of worked examples — and doesn't anchor Claude to only the patterns shown.",
+  },
+  {
+    id: "upfront",
+    now: "Use Progressive Disclosure",
+    then: "Put It All Upfront",
+    num: "03",
+    icon: "📂",
+    color: "#9b7fd4",
+    desc: "Claude Code's system prompt used to include detailed code-review and verification guidance inline — critical when needed, but not always needed, and always consuming context. Claude Code has since gotten very competent at progressive disclosure: loading the right context only at the right time.",
+    thenExample: `# Old: verification steps baked into the main system prompt
+# — present in every single request, whether relevant or not`,
+    nowExample: `# New: verification lives in its own Skill
+# Claude Code calls it selectively, only when needed
+
+# Same pattern for tools: "deferred loading" tools
+# (e.g. Task tools) aren't even defined in context
+# until Claude searches for them via ToolSearch`,
+    insight: "The same applies to your own CLAUDE.md and Skill.md files. A common myth is packing every practice you might ever need into one file so Claude \"won't miss it.\" Instead, use a tree of files loaded at the right time — more tools and more guidance become possible precisely because most of it stays out of context until called for.",
+  },
+  {
+    id: "repeat",
+    num: "04",
+    icon: "🔁",
+    then: "Repeat Yourself",
+    now: "Simple Tool Descriptions",
+    color: "#c4572a",
+    desc: "Earlier Claude models sometimes needed repeated instructions, or were more likely to listen to guidance near the end of the context window than the start. This meant tool references appeared both in the main system prompt and again in the tool description — redundant, and quietly costing tokens on every call.",
+    thenExample: `# System prompt: "When using the Bash tool, remember to..."
+# ...also repeated inside the Bash tool's own description
+# — the same guidance stated twice, for reliability`,
+    nowExample: `# Tool usage instructions live ONLY in the tool description
+# The system prompt trusts the model to read it once, there`,
+    insight: "We found we could delete these repeated examples entirely and put instructions on how to use a tool where they logically belong: in the tool description itself, not duplicated in the system prompt.",
+  },
+  {
+    id: "memory",
+    num: "05",
+    icon: "🧠",
+    then: "Memory in CLAUDE.md Files",
+    now: "Auto-Memory",
+    color: "#4a9a4a",
+    desc: "Users used to be encouraged to explicitly save things to Claude's memory — typing # to trigger a write to CLAUDE.md. That's now automatic: Claude saves memories relevant to the work and to you without being asked.",
+    thenExample: `# User types: "# remember I prefer tabs over spaces"
+# → manually appended to CLAUDE.md`,
+    nowExample: `# Claude notices the preference during normal work
+# and saves it automatically — no # hotkey needed`,
+    insight: "This removes a manual step users often forgot to take, and means memory capture happens continuously rather than only when explicitly triggered.",
+  },
+  {
+    id: "specs",
+    num: "06",
+    icon: "📎",
+    then: "Simple Specs",
+    now: "Rich References",
+    color: "#2a8a84",
+    desc: "Plan mode has long relied on markdown files with plans, and storing specs in the codebase helped Claude refer back to them across long projects. Claude can now handle much richer references than plain markdown.",
+    thenExample: `# plan.md — a markdown file describing the feature
+# spec.md — a text description of requirements`,
+    nowExample: `# References can now be:
+# - HTML artifacts (from the artifacts feature)
+# - Detailed test suites (code, not prose)
+# - A function in another codebase to port
+# - Rubrics — verifier agents scoring against
+#   your taste (e.g. "what does good API design
+#   look like") via dynamic workflows`,
+    insight: "Prefer references that are code over references that are prose — a high-fidelity HTML mockup of a design generally produces better results than a written description or even a screenshot, because it's a language Claude already knows precisely.",
+  },
+];
+
+// ── Data: the 4 context sources in the assembled context ──
+const UH_CONTEXT_SOURCES = [
+  { id: "systemprompt", icon: "⚙️", name: "System Prompt", color: "#2a8a84", guidance: "Heavily tied to product context — tells Claude what product it's operating in and what it's doing. For Claude Code, you'll likely never modify this. If you're building your own agent harness, this is where you should spend the most time." },
+  { id: "claudemd", icon: "📝", name: "CLAUDE.md", color: "#c9a84c", guidance: "Keep lightweight — briefly describe what your repo is for, then spend most tokens on gotchas specific to your codebase (e.g. \"all types live in one monolithic file, nowhere else\"). Avoid stating the obvious — things Claude can see by looking at your file system. Use progressive disclosure: if you have several unique verification steps, make a verification skill and reference it from CLAUDE.md instead of inlining it." },
+  { id: "skills", icon: "🎓", name: "Skills", color: "#9b7fd4", guidance: "Lightweight guides Claude can find when needed — avoid overconstraining them except in genuinely high-stakes areas. For long skills, split into many files and use progressive disclosure heavily. Skills work best encoding opinions, knowledge, or best practices particular to you, your team, or your product." },
+  { id: "references", icon: "🔗", name: "References (@ mentions)", color: "#c4572a", guidance: "Files you @ mention become in-depth references for the current plan — specs, mockups, or entire codebases. Prefer references that are code: clear, high-fidelity instructions in a language Claude already knows precisely. An HTML mockup beats a design description; a test suite beats a prose spec." },
+];
+
+// ── SVG: unhobbling summary diagram ──
+const UnhobblingSummaryDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">80% OF CLAUDE CODE'S SYSTEM PROMPT — REMOVED, NO MEASURABLE LOSS</text>
+    {/* Before bar */}
+    <rect x="30" y="20" width="200" height="22" rx={2} fill="rgba(196,87,42,0.15)" stroke="#c4572a" strokeWidth="0.8"/>
+    <text x="130" y="34" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Before — full system prompt (100%)</text>
+    {/* After bar */}
+    <rect x="30" y="50" width="40" height="22" rx={2} fill="rgba(74,154,74,0.2)" stroke="#4a9a4a" strokeWidth="1"/>
+    <text x="50" y="64" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">~20%</text>
+    <rect x="74" y="50" width="156" height="22" rx={2} fill="none" stroke="#2a2a38" strokeWidth="0.4" strokeDasharray="2,1"/>
+    <text x="152" y="64" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">removed — judgement instead of rules</text>
+    <text x="130" y="86" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">Tested against Claude Code's own coding evaluations — same performance, far less context spent</text>
+    <text x="130" y="94" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Applies specifically to Claude Opus 5 and Claude Fable 5-class models</text>
+  </svg>
+);
+
+// ── SVG: context assembly stack diagram ──
+const ContextAssemblyStackDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HOW YOUR CONTEXT ASSEMBLES — 4 SOURCES, DIFFERENT ROLES</text>
+    {UH_CONTEXT_SOURCES.map((src, i) => {
+      const y = 20 + i * 18;
+      return (
+        <g key={src.id}>
+          <rect x="12" y={y} width="236" height="14" rx={2} fill={`${src.color}10`} stroke={src.color} strokeWidth="0.7"/>
+          <text x="20" y={y+9.5} fontSize="7" dominantBaseline="middle">{src.icon}</text>
+          <text x="34" y={y+9.5} fontSize="4" fill={src.color} fontFamily="Syne, sans-serif" fontWeight="800" dominantBaseline="middle">{src.name}</text>
+          <text x="240" y={y+9.5} textAnchor="end" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif" dominantBaseline="middle">
+            {["fixed once", "gotchas only", "progressive", "@ mention"][i]}
+          </text>
+        </g>
+      );
+    })}
+    <text x="130" y="98" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Each source has a distinct job — none of them should try to be a repository for everything</text>
+  </svg>
+);
+
+const UnhobblingTab = ({ s }) => {
+  const [activeShift, setActiveShift] = useState("rules");
+  const [shiftTab, setShiftTab]       = useState("then");
+  const [activeSource, setActiveSource] = useState(null);
+
+  const shift = UH_SHIFTS.find(sh => sh.id === activeShift);
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#f4f2fa,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🔓</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Anthropic · Thariq Shihipar · claude.com/blog · Jul 24, 2026 · 5 min</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          The New Rules of Context Engineering<br />for <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Claude 5-Generation Models</em>
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+          Anthropic removed over 80% of Claude Code's system prompt for models like Claude Opus 5 and Claude Fable 5 — with no measurable loss on coding evaluations. Six practices that used to be necessary have become myths. Here's what replaced them, straight from the team that runs `claude doctor;`.
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>Why this happened</div>
+          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>"Overall, we found that we were overconstraining Claude Code, both through our system prompt and in our CLAUDE.md files and skills. While these constraints were once needed to avoid worst case scenarios, we have since found we can delete many of them and let the model use surrounding context and judgement instead."</div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "80%+", label: "Prompt removed", sub: "no measurable eval loss", color: "#2a8a84" },
+            { val: "6",    label: "Myths replaced",  sub: "then → now shifts",     color: "#c9a84c" },
+            { val: "4",    label: "Context sources",  sub: "system · CLAUDE.md · skills · refs", color: "#9b7fd4" },
+            { val: "1",    label: "New command",      sub: "`claude doctor;` / `/doctor`", color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SUMMARY DIAGRAM */}
+      <div style={s.sectionLabel("#2a8a84")}>§1 — Unhobbling Claude: What "80% Removed" Looks Like</div>
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+        <ZoomableFigure title="80% Removed, No Measurable Loss"><UnhobblingSummaryDiagram /></ZoomableFigure>
+      </div>
+      <div style={{ padding: "1rem 1.2rem", background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a25", borderRadius: 6, marginBottom: "1.5rem" }}>
+        <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>Reading transcripts of internal Claude Code usage revealed conflicting messages stacked in a single request — <em>"leave documentation as appropriate"</em> from one source, <em>"DO NOT add comments"</em> from another. Claude generally interprets intent correctly, but it must think harder about overlapping and conflicting instructions before deciding what to do. Removing the unnecessary rules removed the conflicts too.</p>
+      </div>
+
+      {/* 6 SHIFTS */}
+      <div style={s.sectionLabel("#c9a84c")}>§2 — Six Practices That Became Myths</div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.5rem", marginBottom: "1rem" }}>
+        {UH_SHIFTS.map(sh => (
+          <button key={sh.id} onClick={() => { setActiveShift(sh.id); setShiftTab("then"); }}
+            style={{ background: activeShift === sh.id ? `${sh.color}15` : "#ffffff", border: `1px solid ${activeShift === sh.id ? sh.color : "#e0dcd4"}`, borderRadius: 4, padding: "0.7rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.3rem" }}>
+              <span style={{ fontSize: "1rem" }}>{sh.icon}</span>
+              <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.5rem", color: sh.color }}>{sh.num}</span>
+            </div>
+            <div style={{ fontSize: "0.55rem", color: "#c4572a", textDecoration: "line-through", marginBottom: "0.1rem" }}>{sh.then}</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: activeShift === sh.id ? sh.color : "#1a1a2e" }}>{sh.now}</div>
+          </button>
+        ))}
+      </div>
+
+      {shift && (
+        <div style={{ background: "#ffffff", border: `1px solid ${shift.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease" }}>
+          <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.6rem" }}>
+              <span style={{ fontSize: "1.4rem" }}>{shift.icon}</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.75rem", color: "#c4572a", textDecoration: "line-through" }}>{shift.then}</span>
+                <span style={{ color: "#8a8a9a" }}>→</span>
+                <span style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 900, color: shift.color }}>{shift.now}</span>
+              </div>
+            </div>
+            <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>{shift.desc}</p>
+          </div>
+          <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+            {["then", "now", "insight"].map(t => (
+              <button key={t} onClick={() => setShiftTab(t)}
+                style={{ flex: 1, padding: "0.65rem", background: shiftTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: shiftTab === t ? `2px solid ${shift.color}` : "2px solid transparent", color: shiftTab === t ? shift.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                {t === "then" ? "Then (old prompt)" : t === "now" ? "Now (new prompt)" : "The Insight"}
+              </button>
+            ))}
+          </div>
+          <div style={{ padding: "1.5rem" }}>
+            {shiftTab === "then" && <CodeBlock code={shift.thenExample} lang="text" />}
+            {shiftTab === "now" && <CodeBlock code={shift.nowExample} lang="text" />}
+            {shiftTab === "insight" && <p style={{ fontSize: "0.7rem", color: "#1a1a2e", lineHeight: 1.8 }}>{shift.insight}</p>}
+          </div>
+        </div>
+      )}
+
+      {/* CONTEXT ASSEMBLY */}
+      <div style={s.sectionLabel("#9b7fd4")}>§3 — Applying This: How Your Context Assembles</div>
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+        <ZoomableFigure title="How Your Context Assembles"><ContextAssemblyStackDiagram /></ZoomableFigure>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.5rem" }}>
+        {UH_CONTEXT_SOURCES.map((src, i) => (
+          <div key={src.id} onClick={() => setActiveSource(activeSource === i ? null : i)}
+            style={{ background: activeSource === i ? `${src.color}0d` : "#ffffff", border: `1px solid ${activeSource === i ? src.color + "50" : "#e0dcd4"}`, borderRadius: 6, overflow: "hidden", cursor: "pointer", transition: "all 0.2s" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", padding: "0.9rem 1.1rem" }}>
+              <span style={{ fontSize: "1.2rem" }}>{src.icon}</span>
+              <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: activeSource === i ? src.color : "#1a1a2e", flex: 1 }}>{src.name}</span>
+              <span style={{ color: src.color, fontSize: "0.8rem" }}>{activeSource === i ? "▲" : "▼"}</span>
+            </div>
+            {activeSource === i && (
+              <div style={{ padding: "0 1.1rem 1rem", animation: "fadeIn 0.2s ease" }}>
+                <p style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7 }}>{src.guidance}</p>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* CLOSING */}
+      <div style={{ padding: "1.2rem 1.4rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6, borderLeft: "4px solid #2a8a84" }}>
+        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.5rem" }}>Try simplifying</div>
+        <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>Across your system prompt, skills, and CLAUDE.md files, you may need to simplify just like Anthropic did. The <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>claude doctor;</code> command (or <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>/doctor</code> inside Claude Code) helps rightsize your skills and CLAUDE.md files automatically.</p>
+      </div>
+    </div>
+  );
+};
+
+// ─── ACTIVE LEARNING TAB ─────────────────────────────────────────
+
+// ── Data: the 3 techniques ──
+const AL_TECHNIQUES = [
+  {
+    id: "uncertainty",
+    icon: "🎲",
+    name: "Uncertainty Sampling",
+    color: "#2a8a84",
+    tagline: "Query the points the model is least sure about",
+    desc: "Uncertainty sampling queries the unlabeled data points for which the model is least confident. For binary classification, points with predicted probability near 0.5 sit directly on the decision boundary and offer maximum learning value per label.",
+    metrics: [
+      "Least Confidence: 1 - max P(y|x)",
+      "Margin Sampling: P(y_top1) - P(y_top2)",
+      "Entropy: -sum(P(y|x) * log P(y|x))",
+      "Uncertainty Window Band: [center - delta, center + delta]"
+    ],
+    strength: "Extremely low compute overhead, quick initial performance gains, ideal for early model iterations.",
+    weakness: "Prone to sampling bias — may repeatedly query near-identical edge cases while ignoring unrepresented feature regions.",
+    code: `# 1. Train initial model using Nested Cross-Validation
+from sklearn.model_selection import StratifiedKFold, GridSearchCV
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import precision_score, recall_score, f1_score
+import pandas as pd
+
+param_grid = {"C": [0.001, 0.01, 0.1, 1, 10, 100]}
+inner_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+outer_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=7)
+
+best_params_each_fold = []
+for train_idx, test_idx in outer_cv.split(X, y):
+    X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
+    y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]
+    grid = GridSearchCV(LogisticRegression(max_iter=500), param_grid, cv=inner_cv, scoring="f1", n_jobs=-1)
+    grid.fit(X_train, y_train)
+    best_params_each_fold.append(grid.best_params_)
+
+# 2. Fit final baseline model on seed labeled data
+final_params = pd.DataFrame(best_params_each_fold).mode().iloc[0].to_dict()
+final_model = LogisticRegression(**final_params, max_iter=500)
+final_model.fit(X, y)
+
+# 3. Score unlabeled pool & filter points within uncertainty window [0.45, 0.55]
+new_probabilities = final_model.predict_proba(X_unlabeled)[:, 1]
+X_unlabeled["Prediction_Probability"] = new_probabilities
+
+center = 0.50
+lower, upper = center - 0.05, center + 0.05
+mask = (X_unlabeled["Prediction_Probability"] > lower) & (X_unlabeled["Prediction_Probability"] <= upper)
+
+# 4. Sample batch for human annotation
+selected_batch = X_unlabeled[mask].sample(n=60, random_state=42)`
+  },
+  {
+    id: "diversity",
+    icon: "🌐",
+    name: "Diversity-Based Sampling",
+    color: "#c9a84c",
+    tagline: "Query points that represent the full feature space",
+    desc: "Diversity sampling selects unlabeled points based on how uncommon or distinct they are relative to the feature space. By using K-Nearest Neighbors Euclidean distance, it targets sparse, underrepresented clusters to ensure broad model coverage.",
+    metrics: [
+      "KNN Mean Neighbor Distance: avg distance to k-nearest neighbors",
+      "Feature Space Density Score: Density = distances.mean(axis=1)",
+      "Cluster-based selection: k-means clustering over pool",
+      "Core-set greedy furthest-point distance optimization"
+    ],
+    strength: "Prevents model tunnel-vision, builds balanced representative datasets, explores rare unrepresented sub-spaces.",
+    weakness: "Higher compute overhead due to distance matrices, requires feature scaling and metric tuning.",
+    code: `# Diversity-Based Sampling via K-Nearest Neighbors Density
+from sklearn.neighbors import NearestNeighbors
+from sklearn.preprocessing import StandardScaler
+
+# Scale features before computing Euclidean distances
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X_unlabeled[feature_cols])
+
+# Fit KNN model to compute density/sparsity score
+k = 5
+knn = NearestNeighbors(n_neighbors=k, metric="euclidean")
+knn.fit(X_scaled)
+
+# Average distance to K nearest neighbors serves as proxy for sparsity
+distances, _ = knn.kneighbors(X_scaled)
+X_unlabeled["Density"] = distances.mean(axis=1)
+
+# Select top N most diverse (sparsely populated) samples for labeling
+most_diverse_batch = X_unlabeled.nlargest(n_samples=60, columns="Density")
+most_diverse_batch.head()`
+  },
+  {
+    id: "committee",
+    icon: "👥",
+    name: "Query By Committee (QBC)",
+    color: "#9b7fd4",
+    tagline: "Train multiple diverse models, query maximum disagreement",
+    desc: "Query By Committee maintains an ensemble of diverse classifiers (Linear, Tree-based, SVM). It queries unlabeled samples where committee members exhibit highest prediction variance, capturing true boundary ambiguity.",
+    metrics: [
+      "Prediction Disagreement Variance: var(P_model1, P_model2, ...)",
+      "Vote Entropy: entropy of class votes across committee",
+      "Consensus KL Divergence: divergence from average committee probability",
+      "Stacking Meta-Learner: logistic regression trained on ensemble scores"
+    ],
+    strength: "Captures true structural ambiguity across algorithm families, yields highly resilient decision boundaries.",
+    weakness: "Requires fitting and maintaining multiple ML models each active learning round.",
+    code: `# 1. Train a committee of diverse algorithms
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+from sklearn.svm import SVC
+import numpy as np
+
+def train_qbc_committee(X_train, y_train):
+    models = {
+        "Logistic Regression": LogisticRegression(C=0.1, max_iter=500),
+        "Random Forest": RandomForestClassifier(n_estimators=50, max_depth=5, min_samples_leaf=5),
+        "Extra Trees": ExtraTreesClassifier(n_estimators=50, max_depth=5, min_samples_leaf=5),
+        "SVM": SVC(kernel="rbf", C=0.1, probability=True)
+    }
+    trained = {}
+    for name, model in models.items():
+        model.fit(X_train, y_train)
+        trained[name] = model
+    return trained
+
+committee = train_qbc_committee(X_train, y_train)
+
+# 2. Compute prediction variance (disagreement score) across committee
+def select_qbc_samples(X_unlabeled, models):
+    X_scores = X_unlabeled.copy()
+    base_features = X_unlabeled.iloc[:, :models["Logistic Regression"].n_features_in_]
+    preds_matrix = np.zeros((base_features.shape[0], len(models)))
+    
+    for i, (name, model) in enumerate(models.items()):
+        score_col = f"{name}_score"
+        X_scores[score_col] = model.predict_proba(base_features)[:, 1]
+        preds_matrix[:, i] = X_scores[score_col]
+        
+    X_scores["disagreement_score"] = np.var(preds_matrix, axis=1)
+    return X_scores
+
+# 3. Extract top points of maximum committee disagreement
+scored_pool = select_qbc_samples(X_unlabeled, committee)
+qbc_batch = scored_pool.nlargest(60, "disagreement_score")`
+  }
+];
+
+// ── Data: Step-by-Step Implementation Guide ──
+const AL_ARTICLE_STEPS = [
+  {
+    strategy: "uncertainty",
+    title: "1. Uncertainty Sampling (Step-by-Step)",
+    color: "#2a8a84",
+    icon: "🎲",
+    steps: [
+      {
+        num: "1.1",
+        title: "Nested Cross-Validation Baseline",
+        desc: "Split labeled seed data using StratifiedKFold (outer=5, inner=5) and GridSearchCV over hyperparameter C to fit an un-overfitted baseline model.",
+        code_ref: "Code Block 1 & 2"
+      },
+      {
+        num: "1.2",
+        title: "Unlabeled Pool Probability Scoring",
+        desc: "Compute predict_proba(X_unlabeled)[:, 1] and plot predicted probability distribution density histogram to inspect decision boundary.",
+        code_ref: "Code Block 3"
+      },
+      {
+        num: "1.3",
+        title: "Uncertainty Window Band Filtering",
+        desc: "Define uncertainty band around center 0.50 [0.45, 0.55] where probability prediction is most ambiguous, and sample target batch.",
+        code_ref: "Code Block 4"
+      },
+      {
+        num: "1.4",
+        title: "Iterative Retraining Loop",
+        desc: "Human labels queried batch -> append to training set -> retrain model -> repeat until uncertainty region shrinks and performance plateaus.",
+        code_ref: "Active Loop Cycle"
+      }
+    ]
+  },
+  {
+    strategy: "diversity",
+    title: "2. Diversity-Based Sampling (Step-by-Step)",
+    color: "#c9a84c",
+    icon: "🌐",
+    steps: [
+      {
+        num: "2.1",
+        title: "Feature Space Normalization",
+        desc: "Standardize numerical features with StandardScaler before computing Euclidean distance matrices across the unlabeled dataset.",
+        code_ref: "StandardScaler Fit"
+      },
+      {
+        num: "2.2",
+        title: "KNN Distance & Density Estimation",
+        desc: "Fit NearestNeighbors(n_neighbors=5, metric='euclidean') on unlabeled features and calculate mean distance: Density = distances.mean(axis=1).",
+        code_ref: "Code Block 5"
+      },
+      {
+        num: "2.3",
+        title: "Sparsity Extraction & Batch Selection",
+        desc: "Extract top N samples with highest mean neighbor distance (nlargest('Density')), query human labels, and retrain model.",
+        code_ref: "Code Block 5 nlargest"
+      }
+    ]
+  },
+  {
+    strategy: "committee",
+    title: "3. Query By Committee (Step-by-Step)",
+    color: "#9b7fd4",
+    icon: "👥",
+    steps: [
+      {
+        num: "3.1",
+        title: "Multi-Model Ensemble Training",
+        desc: "Fit a committee of distinct learning algorithms (Logistic Regression, Random Forest, Extra Trees, SVM RBF) on current labeled dataset.",
+        code_ref: "Code Block 6"
+      },
+      {
+        num: "3.2",
+        title: "Model Stacking & Meta-Learner Evaluation",
+        desc: "Extract probability columns from all models into stacked feature matrix; train Logistic Regression meta-model to boost recall & stability.",
+        code_ref: "Code Block 7 & 8"
+      },
+      {
+        num: "3.3",
+        title: "Disagreement Variance Calculation",
+        desc: "Compute prediction probability variance across committee members: disagreement_score = np.var(preds_matrix, axis=1).",
+        code_ref: "Code Block 9"
+      },
+      {
+        num: "3.4",
+        title: "Max-Disagreement Querying",
+        desc: "Sort pool by disagreement_score descending, send top ambiguous samples to human annotators, and update committee models.",
+        code_ref: "Code Block 10"
+      }
+    ]
+  }
+];
+
+// ── SVG: Uncertainty Window Diagram ──
+const UncertaintyWindowDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">UNCERTAINTY SAMPLING — PROBABILITY BAND [0.45, 0.55]</text>
+    <rect x="30" y="20" width="200" height="60" fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5" rx="2"/>
+    <rect x="110" y="20" width="40" height="60" fill="rgba(42,138,132,0.18)" stroke="#2a8a84" strokeWidth="0.8" strokeDasharray="2,1"/>
+    <text x="130" y="28" textAnchor="middle" fontSize="3.5" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">UNCERTAINTY BAND</text>
+    <path d="M 35 75 Q 70 70, 95 50 T 130 35 T 165 50 T 225 75" fill="none" stroke="#2a8a84" strokeWidth="1.5"/>
+    {[
+      { x: 45, y: 72, inc: false }, { x: 75, y: 62, inc: false },
+      { x: 118, y: 42, inc: true }, { x: 125, y: 38, inc: true }, { x: 135, y: 40, inc: true }, { x: 144, y: 44, inc: true },
+      { x: 180, y: 60, inc: false }, { x: 210, y: 70, inc: false }
+    ].map((pt, idx) => (
+      <circle key={idx} cx={pt.x} cy={pt.y} r={pt.inc ? "3.5" : "2"} fill={pt.inc ? "#c4572a" : "#94a3b8"} stroke={pt.inc ? "#ffffff" : "none"} strokeWidth="0.5"/>
+    ))}
+    <line x1="130" y1="20" x2="130" y2="80" stroke="#c4572a" strokeWidth="0.8" strokeDasharray="1.5,1.5"/>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="DM Mono, monospace">Threshold p = 0.50</text>
+    <text x="110" y="88" textAnchor="end" fontSize="3" fill="#2a8a84" fontFamily="DM Mono, monospace">0.45</text>
+    <text x="150" y="88" textAnchor="start" fontSize="3" fill="#2a8a84" fontFamily="DM Mono, monospace">0.55</text>
+  </svg>
+);
+
+// ── SVG: KNN Density Diagram ──
+const KNNDensityDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DIVERSITY SAMPLING — KNN MEAN EUCLIDEAN DISTANCE</text>
+    <circle cx="75" cy="55" r="28" fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.6" strokeDasharray="2,1"/>
+    <text x="75" y="32" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Dense Cluster (Low Distance)</text>
+    {[
+      {x:65,y:50},{x:72,y:45},{x:80,y:52},{x:75,y:60},{x:68,y:58},{x:82,y:58}
+    ].map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="2" fill="#c9a84c"/>)}
+
+    {[
+      {x:145,y:35,label:"Sparse Point 1 (High Density Dist)"},
+      {x:195,y:65,label:"Sparse Point 2 (High Density Dist)"}
+    ].map((p, i) => (
+      <g key={i}>
+        <circle cx={p.x} cy={p.y} r="4" fill="#2a8a84" stroke="#ffffff" strokeWidth="0.8"/>
+        <circle cx={p.x} cy={p.y} r="10" fill="none" stroke="#2a8a84" strokeWidth="0.5" strokeDasharray="1,1"/>
+        <text x={p.x} y={p.y-6} textAnchor="middle" fontSize="3" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">{p.label}</text>
+      </g>
+    ))}
+    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#4a4a5a" fontFamily="Syne, sans-serif">KNN computes average distance to K=5 neighbors → Select points with nlargest('Density')</text>
+  </svg>
+);
+
+// ── SVG: QBC Variance Diagram ──
+const QBCVarianceDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">QUERY BY COMMITTEE — PREDICTION VARIANCE DISAGREEMENT</text>
+    <rect x="30" y="20" width="200" height="60" fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5" rx="2"/>
+    <path d="M 35 70 Q 100 65, 130 50 T 225 25" fill="none" stroke="#2a8a84" strokeWidth="1.2"/>
+    <path d="M 35 75 Q 90 40, 130 50 T 225 35" fill="none" stroke="#c9a84c" strokeWidth="1.2"/>
+    <path d="M 35 65 Q 110 75, 130 50 T 225 20" fill="none" stroke="#9b7fd4" strokeWidth="1.2"/>
+    <path d="M 35 72 Q 80 50, 130 50 T 225 40" fill="none" stroke="#c4572a" strokeWidth="1.2"/>
+    <line x1="130" y1="20" x2="130" y2="80" stroke="#c4572a" strokeWidth="1" strokeDasharray="2,2"/>
+    <circle cx="130" cy="50" r="4" fill="#c4572a" stroke="#ffffff" strokeWidth="1"/>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">PEAK VARIANCE DISAGREEMENT (Query Top 60)</text>
+    <g transform="translate(35,24)">
+      <circle cx="0" cy="0" r="2" fill="#2a8a84"/><text x="4" y="1.5" fontSize="2.5" fill="#4a4a5a">LogReg</text>
+      <circle cx="25" cy="0" r="2" fill="#c9a84c"/><text x="29" y="1.5" fontSize="2.5" fill="#4a4a5a">RF</text>
+      <circle cx="45" cy="0" r="2" fill="#9b7fd4"/><text x="49" y="1.5" fontSize="2.5" fill="#4a4a5a">ExtraTrees</text>
+      <circle cx="75" cy="0" r="2" fill="#c4572a"/><text x="79" y="1.5" fontSize="2.5" fill="#4a4a5a">SVM</text>
+    </g>
+  </svg>
+);
+
+// ── Data: the AL loop steps ──
+const AL_LOOP_STEPS = [
+  { icon: "🌱", label: "Seed with small labeled set", detail: "Start with a small, randomly labeled subset — e.g. 100 of 10,000 points", color: "#c9a84c" },
+  { icon: "🏋️", label: "Train model on labeled data", detail: "Fit the current model (RandomForest, logistic regression, etc.) on what's labeled so far", color: "#2a8a84" },
+  { icon: "🔍", label: "Score the unlabeled pool", detail: "Apply the query strategy (uncertainty / diversity / committee) to every unlabeled point", color: "#9b7fd4" },
+  { icon: "👤", label: "Query top-N to human", detail: "Send the most informative N points to a human annotator for labeling", color: "#c4572a" },
+  { icon: "➕", label: "Add to labeled set", detail: "Newly labeled points move from the unlabeled pool into the training set", color: "#4a9a4a" },
+  { icon: "🔁", label: "Repeat until budget exhausted", detail: "Loop back to training — stop when the labeling budget runs out or performance plateaus", color: "#c9a84c" },
+];
+
+// ── Data: performance comparison ──
+const AL_PERFORMANCE = [
+  { strategy: "Random Sampling", n200: 71.2, n500: 78.4, n1000: 83.1, color: "#c4572a" },
+  { strategy: "Uncertainty Sampling", n200: 76.8, n500: 84.2, n1000: 88.9, color: "#2a8a84" },
+  { strategy: "Diversity Sampling", n200: 75.1, n500: 82.6, n1000: 87.3, color: "#c9a84c" },
+  { strategy: "Query by Committee", n200: 78.3, n500: 85.7, n1000: 90.1, color: "#9b7fd4" },
+];
+
+// ── Data: when to use AL ──
+const AL_USE_CASES = [
+  { icon: "💰", title: "Labeling is expensive", desc: "Medical imaging annotation by radiologists, legal document review by lawyers — expert time is the bottleneck, not compute.", color: "#2a8a84" },
+  { icon: "📊", title: "Large unlabeled pool exists", desc: "You have 100k unlabeled examples and budget to label only 2k — AL decides which 2k matter most.", color: "#c9a84c" },
+  { icon: "⚖️", title: "Class imbalance is severe", desc: "Rare-event detection (fraud, defects) where random sampling mostly returns uninformative majority-class examples.", color: "#9b7fd4" },
+  { icon: "🔄", title: "Model needs to adapt to drift", desc: "Production systems where the input distribution shifts over time — AL continuously identifies where current labels are stalest.", color: "#c4572a" },
+];
+
+// ── SVG: active learning loop diagram ──
+const ActiveLearningLoopDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE ACTIVE LEARNING LOOP</text>
+    {/* Circular flow */}
+    {[
+      { icon: "🌱", label: "Seed", x: 40, y: 25, color: "#c9a84c" },
+      { icon: "🏋️", label: "Train", x: 130, y: 20, color: "#2a8a84" },
+      { icon: "🔍", label: "Score Pool", x: 220, y: 25, color: "#9b7fd4" },
+      { icon: "👤", label: "Human Labels", x: 220, y: 65, color: "#c4572a" },
+      { icon: "➕", label: "Add to Set", x: 130, y: 70, color: "#4a9a4a" },
+    ].map((n, i) => (
+      <g key={i}>
+        <circle cx={n.x} cy={n.y} r="16" fill={`${n.color}15`} stroke={n.color} strokeWidth="0.8"/>
+        <text x={n.x} y={n.y-2} textAnchor="middle" fontSize="8" dominantBaseline="middle">{n.icon}</text>
+        <text x={n.x} y={n.y+9} textAnchor="middle" fontSize="3" fill={n.color} fontFamily="Syne, sans-serif" fontWeight="700">{n.label}</text>
+      </g>
+    ))}
+    {/* Arrows connecting the loop */}
+    <path d="M55 25 L114 21" fill="none" stroke="#4a4a5a" strokeWidth="0.6" markerEnd="url(#arr)"/>
+    <path d="M146 21 L205 25" fill="none" stroke="#4a4a5a" strokeWidth="0.6"/>
+    <path d="M220 41 L220 49" fill="none" stroke="#4a4a5a" strokeWidth="0.6"/>
+    <path d="M205 65 L146 70" fill="none" stroke="#4a4a5a" strokeWidth="0.6"/>
+    <path d="M114 68 C 70 75, 40 55, 40 41" fill="none" stroke="#4a4a5a" strokeWidth="0.6" strokeDasharray="2,1"/>
+    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">Loop repeats until labeling budget is exhausted or accuracy plateaus</text>
+  </svg>
+);
+
+// ── SVG: 3 techniques comparison diagram ──
+const ThreeTechniquesDiagram = () => (
+  <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THREE WAYS TO PICK THE NEXT POINT TO LABEL</text>
+    {AL_TECHNIQUES.map((t, i) => {
+      const x = 8 + i * 84;
+      return (
+        <g key={t.id}>
+          <rect x={x} y="18" width="76" height="58" rx={2} fill={`${t.color}10`} stroke={t.color} strokeWidth="0.8"/>
+          <text x={x+38} y="32" textAnchor="middle" fontSize="9" dominantBaseline="middle">{t.icon}</text>
+          <text x={x+38} y="44" textAnchor="middle" fontSize="3.5" fill={t.color} fontFamily="Syne, sans-serif" fontWeight="800">{t.name.split(" ")[0]}</text>
+          <text x={x+38} y="50" textAnchor="middle" fontSize="3" fill={t.color} fontFamily="Syne, sans-serif" fontWeight="700">{t.name.split(" ").slice(1).join(" ")}</text>
+          <text x={x+38} y="62" textAnchor="middle" fontSize="2.6" fill="#6a6a7a" fontFamily="Syne, sans-serif">{t.tagline.length > 30 ? t.tagline.slice(0,28)+"…" : t.tagline}</text>
+        </g>
+      );
+    })}
+    <text x="130" y="86" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif">All three beat random sampling — the choice depends on cost budget and pool structure</text>
+  </svg>
+);
+
+// ── SVG: performance comparison chart ──
+const PerformanceChartDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ACCURACY vs LABELED SAMPLES — 4 STRATEGIES</text>
+    {/* axes */}
+    <line x1="30" y1="20" x2="30" y2="82" stroke="#2a2a38" strokeWidth="0.5"/>
+    <line x1="30" y1="82" x2="248" y2="82" stroke="#2a2a38" strokeWidth="0.5"/>
+    <text x="26" y="24" textAnchor="end" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">95%</text>
+    <text x="26" y="82" textAnchor="end" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">65%</text>
+    {AL_PERFORMANCE.map((p, si) => {
+      const points = [
+        [30 + 60, 82 - ((p.n200-65)/30)*62],
+        [30 + 140, 82 - ((p.n500-65)/30)*62],
+        [30 + 218, 82 - ((p.n1000-65)/30)*62],
+      ];
+      const path = `M${points[0][0]},${points[0][1]} L${points[1][0]},${points[1][1]} L${points[2][0]},${points[2][1]}`;
+      return (
+        <g key={si}>
+          <path d={path} fill="none" stroke={p.color} strokeWidth="0.9"/>
+          {points.map((pt, pi) => <circle key={pi} cx={pt[0]} cy={pt[1]} r="2" fill={p.color}/>)}
+        </g>
+      );
+    })}
+    <text x="90" y="90" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">200</text>
+    <text x="170" y="90" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">500</text>
+    <text x="248" y="90" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">1000</text>
+    <text x="130" y="97" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Labeled samples →</text>
+    {/* legend */}
+    {AL_PERFORMANCE.map((p, i) => (
+      <g key={i}>
+        <rect x={8} y={18+i*7} width={6} height={3} fill={p.color}/>
+        <text x={17} y={20.5+i*7} fontSize="2.6" fill={p.color} fontFamily="Syne, sans-serif">{p.strategy}</text>
+      </g>
+    ))}
+  </svg>
+);
+
+const ActiveLearningTab = ({ s }) => {
+  const [section, setSection]         = useState("stepbystep");
+  const [activeTech, setActiveTech]   = useState("uncertainty");
+  const [techTab, setTechTab]         = useState("desc");
+  const [stepStrategy, setStepStrategy] = useState("uncertainty");
+  const [loopStep, setLoopStep]       = useState(-1);
+  const [loopRunning, setLoopRunning] = useState(false);
+
+  // Simulator parameters for stepbystep lab
+  const [winWidth, setWinWidth]       = useState(0.05); // center +- 0.05 [0.45, 0.55]
+  const [knnK, setKnnK]               = useState(5);
+  const [batchSize, setBatchSize]     = useState(60);
+
+  const tech = AL_TECHNIQUES.find(t => t.id === activeTech);
+  const selectedStepGuide = AL_ARTICLE_STEPS.find(st => st.strategy === stepStrategy);
+
+  const SECTIONS = [
+    { id: "stepbystep", icon: "📑", label: "Step-by-Step Implementation", color: "#2a8a84" },
+    { id: "problem",    icon: "💰", label: "The Labeling Problem",        color: "#c4572a" },
+    { id: "loop",       icon: "🔁", label: "The AL Loop",                 color: "#c9a84c" },
+    { id: "techniques", icon: "🎯", label: "3 Query Strategies",          color: "#9b7fd4" },
+    { id: "results",    icon: "📊", label: "Decision Matrix & Performance", color: "#4a9a4a" },
+  ];
+
+  const runLoop = () => {
+    if (loopRunning) return;
+    setLoopRunning(true); setLoopStep(-1);
+    let i = 0;
+    const tick = () => { setLoopStep(i++); if (i < AL_LOOP_STEPS.length) setTimeout(tick, 700); else setTimeout(() => setLoopRunning(false), 400); };
+    setTimeout(tick, 250);
+  };
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🎯</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Towards Data Science · ML Active Learning Guide</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          Reducing Human Annotation<br />with <em style={{ color: "#2a8a84", fontStyle: "italic" }}>ML Active Learning</em>
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 650, marginBottom: "1.2rem" }}>
+          Complete step-by-step implementation guide based on Lucas Braga's publication. Learn how to train models using significantly fewer annotated samples by interactively querying the most informative data points via Uncertainty Sampling, K-NN Diversity Sampling, and Query By Committee (QBC).
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The Core Active Learning Advantage</div>
+          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+            Annotating 500,000 images at 20 seconds each takes 2,700+ hours. Active Learning identifies the edge-case points near the decision boundary or sparse feature clusters, cutting human labeling time by 60%+ while achieving equal or higher F1 accuracy.
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "3",     label: "Query Strategies",   sub: "Uncertainty · Diversity · QBC", color: "#2a8a84" },
+            { val: "10",    label: "Code Blocks",        sub: "Nested CV, KNN Density, Stacking", color: "#c9a84c" },
+            { val: "~60%",  label: "Label Savings",      sub: "Reaches target F1 with far fewer labels", color: "#9b7fd4" },
+            { val: "4",     label: "Ensemble Models",    sub: "LogReg, RandomForest, ExtraTrees, SVM", color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SECTION NAV */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem", marginBottom: "1.5rem" }}>
+        {SECTIONS.map(sec => (
+          <button key={sec.id} onClick={() => setSection(sec.id)}
+            style={{ background: section === sec.id ? `${sec.color}12` : "#ffffff", border: `1px solid ${section === sec.id ? sec.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.9rem 0.5rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
+            <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>{sec.icon}</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.6rem", color: section === sec.id ? sec.color : "#1a1a2e" }}>{sec.label}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* ─── STEP-BY-STEP IMPLEMENTATION ─── */}
+      {section === "stepbystep" && (
+        <div>
+          <div style={s.sectionLabel("#2a8a84")}>Step-by-Step Python Implementation Guide (TDS Publication)</div>
+          
+          {/* Strategy Tabs Selector */}
+          <div style={{ display: "flex", gap: "0.6rem", marginBottom: "1.5rem" }}>
+            {AL_ARTICLE_STEPS.map(guide => (
+              <button key={guide.strategy} onClick={() => setStepStrategy(guide.strategy)}
+                style={{ flex: 1, padding: "0.9rem", background: stepStrategy === guide.strategy ? `${guide.color}15` : "#ffffff", border: `1px solid ${stepStrategy === guide.strategy ? guide.color : "#e0dcd4"}`, borderRadius: 6, cursor: "pointer", transition: "all 0.2s", textAlign: "center" }}>
+                <span style={{ fontSize: "1.1rem", marginRight: "0.4rem" }}>{guide.icon}</span>
+                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: stepStrategy === guide.strategy ? guide.color : "#1a1a2e" }}>{guide.title}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Strategy Visual Diagram */}
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            {stepStrategy === "uncertainty" && <ZoomableFigure title="Uncertainty Window Band"><UncertaintyWindowDiagram /></ZoomableFigure>}
+            {stepStrategy === "diversity" && <ZoomableFigure title="KNN Feature Space Density"><KNNDensityDiagram /></ZoomableFigure>}
+            {stepStrategy === "committee" && <ZoomableFigure title="QBC Disagreement Variance"><QBCVarianceDiagram /></ZoomableFigure>}
+          </div>
+
+          {/* Guided Steps Breakdown */}
+          {selectedStepGuide && (
+            <div style={{ marginBottom: "1.5rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: selectedStepGuide.color, marginBottom: "0.8rem" }}>
+                {selectedStepGuide.title} — Workflow Steps
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.8rem", marginBottom: "1.5rem" }}>
+                {selectedStepGuide.steps.map((st, i) => (
+                  <div key={i} style={{ background: "#ffffff", border: `1px solid ${selectedStepGuide.color}30`, borderRadius: 6, padding: "1.1rem", borderLeft: `4px solid ${selectedStepGuide.color}` }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+                      <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.7rem", fontWeight: 700, color: selectedStepGuide.color }}>Step {st.num}</span>
+                      <span style={{ fontSize: "0.55rem", padding: "0.2rem 0.5rem", background: "#f0ede6", borderRadius: 4, fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>{st.code_ref}</span>
+                    </div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.68rem", color: "#1a1a2e", marginBottom: "0.3rem" }}>{st.title}</div>
+                    <p style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.6 }}>{st.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Executable Code Block */}
+          {tech && (
+            <div style={{ background: "#ffffff", border: `1px solid ${tech.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+              <div style={{ padding: "0.9rem 1.2rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: tech.color }}>
+                  💻 Production Python Code — {tech.name}
+                </div>
+                <div style={{ fontSize: "0.55rem", color: "#8a8a9a", fontFamily: "DM Mono, monospace" }}>scikit-learn · numpy · pandas</div>
+              </div>
+              <div style={{ padding: "1.2rem" }}>
+                <CodeBlock code={tech.code} />
+              </div>
+            </div>
+          )}
+
+          {/* Interactive Strategy Parameter Workbench */}
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#1a1a2e", marginBottom: "0.5rem" }}>
+              ⚙️ Interactive Strategy Hyperparameter Workbench
+            </div>
+            <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>
+              Adjust active learning sampling thresholds to see how query window widths and batch sizes impact sampling selectivity.
+            </p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem", marginBottom: "1rem" }}>
+              <div style={{ background: "#f7f5f0", padding: "0.9rem", borderRadius: 6 }}>
+                <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#2a8a84", display: "block", marginBottom: "0.4rem" }}>
+                  Uncertainty Band Width: ±{winWidth.toFixed(2)}
+                </label>
+                <input type="range" min="0.01" max="0.15" step="0.01" value={winWidth} onChange={e => setWinWidth(parseFloat(e.target.value))} style={{ width: "100%" }} />
+                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.3rem" }}>Filtering prob window: [{(0.5 - winWidth).toFixed(2)}, {(0.5 + winWidth).toFixed(2)}]</div>
+              </div>
+
+              <div style={{ background: "#f7f5f0", padding: "0.9rem", borderRadius: 6 }}>
+                <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#c9a84c", display: "block", marginBottom: "0.4rem" }}>
+                  KNN K-Neighbors Density: K={knnK}
+                </label>
+                <input type="range" min="3" max="15" step="1" value={knnK} onChange={e => setKnnK(parseInt(e.target.value))} style={{ width: "100%" }} />
+                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.3rem" }}>Computes mean Euclidean distance over {knnK} nearest neighbors</div>
+              </div>
+
+              <div style={{ background: "#f7f5f0", padding: "0.9rem", borderRadius: 6 }}>
+                <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#9b7fd4", display: "block", marginBottom: "0.4rem" }}>
+                  Annotator Query Batch Size: {batchSize}
+                </label>
+                <input type="range" min="20" max="150" step="10" value={batchSize} onChange={e => setBatchSize(parseInt(e.target.value))} style={{ width: "100%" }} />
+                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.3rem" }}>Top N samples sent to human per active round</div>
+              </div>
+            </div>
+            <div style={{ padding: "0.8rem 1rem", background: "rgba(42,138,132,0.08)", border: "1px solid #2a8a8430", borderRadius: 4, fontSize: "0.62rem", color: "#2a8a84", fontFamily: "DM Mono, monospace" }}>
+              Active Configuration: Sampling top {batchSize} points where prob ∈ [{(0.5 - winWidth).toFixed(2)}, {(0.5 + winWidth).toFixed(2)}] using K={knnK} Euclidean feature density.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── THE PROBLEM ─── */}
+      {section === "problem" && (
+        <div>
+          <div style={s.sectionLabel("#c4572a")}>Why Random Sampling Wastes Labeling Budget</div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+            <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>❌ Random Sampling</div>
+              <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.8 }}>Pick the next 100 points to label uniformly at random from the unlabeled pool. Most of the ML pipeline's labeling budget goes to points the model would have classified correctly anyway — points far from the decision boundary that add little new information.</p>
+            </div>
+            <div style={{ background: "#ffffff", border: "1px solid #4a9a4a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #4a9a4a" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#4a9a4a", marginBottom: "0.8rem" }}>✅ Active Learning</div>
+              <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.8 }}>The model scores every unlabeled point by how much it would learn from knowing that label, and only the highest-value points get sent to a human. Same accuracy target reached with far fewer expert-hours spent labeling.</p>
+            </div>
+          </div>
+          <div style={s.sectionLabel("#9b7fd4")}>Who This Matters For</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.7rem" }}>
+            {AL_USE_CASES.map((u, i) => (
+              <div key={i} style={{ background: "#ffffff", border: `1px solid ${u.color}30`, borderRadius: 6, padding: "1.1rem", borderLeft: `3px solid ${u.color}` }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.4rem" }}>
+                  <span style={{ fontSize: "1.1rem" }}>{u.icon}</span>
+                  <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.66rem", color: u.color }}>{u.title}</span>
+                </div>
+                <p style={{ fontSize: "0.62rem", color: "#4a4a5a", lineHeight: 1.6 }}>{u.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ─── THE LOOP ─── */}
+      {section === "loop" && (
+        <div>
+          <div style={s.sectionLabel("#2a8a84")}>The Active Learning Loop, Animated</div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="The Active Learning Loop"><ActiveLearningLoopDiagram /></ZoomableFigure>
+          </div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.6rem" }}>
+              <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Trace one full round of the active learning loop, from seed set to newly labeled points added back in.</p>
+              <button onClick={runLoop} disabled={loopRunning}
+                style={{ background: loopRunning ? "#f7f5f0" : "rgba(42,138,132,0.1)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: loopRunning ? "not-allowed" : "pointer", opacity: loopRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+                {loopRunning ? "Running…" : "▶ Run One Round"}
+              </button>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              {AL_LOOP_STEPS.map((step, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: loopStep >= i ? `${step.color}09` : "#f7f5f0", border: `1px solid ${loopStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: loopStep === -1 ? 0.35 : loopStep >= i ? 1 : 0.25 }}>
+                  <div style={{ width: 30, height: 30, borderRadius: "50%", background: loopStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: loopStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${loopStep >= i ? step.color : "#d0ccc4"}` }}>
+                    {loopStep >= i ? step.icon : <span style={{ color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: loopStep >= i ? "#1a1a2e" : "#8a8a9a", marginBottom: "0.1rem" }}>{step.label}</div>
+                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: loopStep >= i ? step.color : "#a8a4a0" }}>{step.detail}</div>
+                  </div>
+                  {loopStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── 3 TECHNIQUES DEEP DIVE ─── */}
+      {section === "techniques" && (
+        <div>
+          <div style={s.sectionLabel("#9b7fd4")}>Three Query Strategies — Click to Compare</div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="Three Techniques"><ThreeTechniquesDiagram /></ZoomableFigure>
+          </div>
+          <div style={{ display: "flex", gap: "0.6rem", marginBottom: "1rem" }}>
+            {AL_TECHNIQUES.map(t => (
+              <button key={t.id} onClick={() => { setActiveTech(t.id); setTechTab("desc"); }}
+                style={{ flex: 1, display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.8rem", background: activeTech === t.id ? `${t.color}15` : "#ffffff", border: `1px solid ${activeTech === t.id ? t.color : "#e0dcd4"}`, borderRadius: 6, cursor: "pointer", transition: "all 0.2s", justifyContent: "center" }}>
+                <span style={{ fontSize: "1.2rem" }}>{t.icon}</span>
+                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: activeTech === t.id ? t.color : "#1a1a2e" }}>{t.name}</span>
+              </button>
+            ))}
+          </div>
+          {tech && (
+            <div style={{ background: "#ffffff", border: `1px solid ${tech.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease" }}>
+              <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
+                <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.05rem", fontWeight: 900, marginBottom: "0.2rem" }}>{tech.name}</div>
+                <div style={{ fontSize: "0.63rem", color: tech.color, fontStyle: "italic" }}>{tech.tagline}</div>
+              </div>
+              <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+                {["desc", "metrics", "tradeoffs", "code"].map(t => (
+                  <button key={t} onClick={() => setTechTab(t)}
+                    style={{ flex: 1, padding: "0.65rem", background: techTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: techTab === t ? `2px solid ${tech.color}` : "2px solid transparent", color: techTab === t ? tech.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    {t === "desc" ? "Overview" : t === "metrics" ? "Metrics" : t === "tradeoffs" ? "Tradeoffs" : "Python Code"}
+                  </button>
+                ))}
+              </div>
+              <div style={{ padding: "1.5rem" }}>
+                {techTab === "desc" && <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>{tech.desc}</p>}
+                {techTab === "metrics" && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                    {tech.metrics.map((m, i) => (
+                      <div key={i} style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem", color: "#4a4a5a", fontFamily: "DM Mono, monospace", borderLeft: `3px solid ${tech.color}` }}>{m}</div>
+                    ))}
+                  </div>
+                )}
+                {techTab === "tradeoffs" && (
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem" }}>
+                    <div style={{ padding: "0.8rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a30", borderRadius: 4 }}>
+                      <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#4a9a4a", marginBottom: "0.4rem" }}>✅ Strength</div>
+                      <p style={{ fontSize: "0.62rem", color: "#4a4a5a", lineHeight: 1.6 }}>{tech.strength}</p>
+                    </div>
+                    <div style={{ padding: "0.8rem", background: "rgba(196,87,42,0.08)", border: "1px solid #c4572a30", borderRadius: 4 }}>
+                      <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#c4572a", marginBottom: "0.4rem" }}>⚠️ Weakness</div>
+                      <p style={{ fontSize: "0.62rem", color: "#4a4a5a", lineHeight: 1.6 }}>{tech.weakness}</p>
+                    </div>
+                  </div>
+                )}
+                {techTab === "code" && <CodeBlock code={tech.code} />}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ─── DECISION MATRIX & RESULTS ─── */}
+      {section === "results" && (
+        <div>
+          <div style={s.sectionLabel("#4a9a4a")}>Performance & Strategy Decision Guide</div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="Accuracy vs Labeled Samples"><PerformanceChartDiagram /></ZoomableFigure>
+          </div>
+          <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.66rem" }}>
+              <thead>
+                <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
+                  {["Strategy", "@ 200 labels", "@ 500 labels", "@ 1000 labels", "Recommended When..."].map(h => (
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.56rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { strategy: "Random Sampling", n200: "71.2%", n500: "78.4%", n1000: "83.1%", rec: "Baseline only — wastes expert annotation time on clear samples.", color: "#c4572a" },
+                  { strategy: "Uncertainty Sampling", n200: "76.8%", n500: "84.2%", n1000: "88.9%", rec: "Early iterations with limited labeled data & fast early wins.", color: "#2a8a84" },
+                  { strategy: "Diversity Sampling", n200: "75.1%", n500: "82.6%", n1000: "87.3%", rec: "When uncertainty sampling plateaus due to repeated edge-case queries.", color: "#c9a84c" },
+                  { strategy: "Query by Committee", n200: "78.3%", n500: "85.7%", n1000: "90.1%", rec: "Noisy decision boundaries or when ensemble models are available.", color: "#9b7fd4" }
+                ].map((p, i) => (
+                  <tr key={i} style={{ borderBottom: i < 3 ? "1px solid #e8e4dc" : "none" }}
+                    onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
+                    onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                    <td style={{ padding: "0.65rem 0.9rem", color: p.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{p.strategy}</td>
+                    <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e" }}>{p.n200}</td>
+                    <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e" }}>{p.n500}</td>
+                    <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e", fontWeight: 700 }}>{p.n1000}</td>
+                    <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a", fontSize: "0.6rem" }}>{p.rec}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ padding: "1.2rem 1.4rem", background: "rgba(74,154,74,0.07)", border: "1px solid #4a9a4a30", borderRadius: 6, borderLeft: "4px solid #4a9a4a" }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#4a9a4a", marginBottom: "0.5rem" }}>Practical Hybrid Strategy Recommendation</div>
+            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>
+              Start your project with <strong>Uncertainty Sampling</strong> to establish a tight decision boundary quickly. When model improvement begins to level off, inject a round of <strong>Diversity Sampling</strong> to explore un-represented feature clusters. For complex real-world datasets with noisy boundaries, deploy <strong>Query By Committee</strong> stacking to maximize model robustness.
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ─── SEARCH ──────────────────────────────────────────────────────
 const useSearch = (query) => {
   const allContent = [
@@ -12496,12 +15093,1891 @@ const useSearch = (query) => {
     ...QPL_CASES.map(c => ({ type: "qplcase", id: c.id, title: c.title + " — " + c.subtitle, body: c.question + " " + c.resolution + " " + c.outcome, tab: "qparseloop", icon: c.icon })),
     ...QPL_ERAS.map(e => ({ type: "qplera", id: e.id, title: e.name, body: e.who + " " + e.desc, tab: "qparseloop", icon: e.icon })),
     ...QPL_NOT_AGENTIC.map((n, i) => ({ type: "qplnotagentic", id: "qplna_"+i, title: n.title, body: n.desc, tab: "qparseloop", icon: n.icon })),
+    ...FP_DOCUMENTS.map(d => ({ type: "fpdoc", id: d.id, title: d.name, body: d.question + " " + d.answer + " " + d.quirk, tab: "fourpdfs", icon: d.icon })),
+    ...FP_CONSTANTS.map((c, i) => ({ type: "fpconst", id: "fpconst_"+i, title: c.label, body: c.detail, tab: "fourpdfs", icon: c.icon })),
+    ...FP_VARIANTS.map((v, i) => ({ type: "fpvariant", id: "fpvar_"+i, title: v.label, body: v.detail, tab: "fourpdfs", icon: v.icon })),
+    ...HB_CASES.map(c => ({ type: "hbcase", id: c.id, title: c.brick + " — " + c.docType, body: c.question + " " + c.naiveResult + " " + c.hallucination + " " + c.fixResult, tab: "hallucbricks", icon: c.icon })),
+    ...HB_PATTERN.map((p, i) => ({ type: "hbpattern", id: "hbpat_"+i, title: p.label, body: p.desc, tab: "hallucbricks", icon: "🔍" })),
+    ...GP_PATTERNS.map(p => ({ type: "genpattern", id: p.id, title: p.name, body: p.claim + " " + p.result, tab: "genpatterns", icon: p.icon })),
+    ...GP_SECTORS.map((sec, i) => ({ type: "gensector", id: "gensec_"+i, title: sec.sector, body: sec.question + " " + sec.schema, tab: "genpatterns", icon: sec.icon })),
+    ...CM_CRITERIA.map(c => ({ type: "cmcriterion", id: c.id, title: c.name, body: c.measures + " " + c.behavioral + " failure mode: " + c.failureMode, tab: "ctxmeasure", icon: c.icon })),
+    ...CM_CONDITIONS.map(c => ({ type: "cmcondition", id: c.id, title: c.name, body: c.desc, tab: "ctxmeasure", icon: "📐" })),
+    ...UH_SHIFTS.map(sh => ({ type: "uhshift", id: sh.id, title: sh.then + " → " + sh.now, body: sh.desc + " " + sh.insight, tab: "unhobbling", icon: sh.icon })),
+    ...UH_CONTEXT_SOURCES.map(src => ({ type: "uhsource", id: src.id, title: src.name, body: src.guidance, tab: "unhobbling", icon: src.icon })),
+    ...AL_TECHNIQUES.map(t => ({ type: "altech", id: t.id, title: t.name, body: t.desc + " " + t.strength + " " + t.weakness, tab: "activelearn", icon: t.icon })),
+    ...AL_USE_CASES.map((u, i) => ({ type: "aluse", id: "aluse_"+i, title: u.title, body: u.desc, tab: "activelearn", icon: u.icon })),
+    ...COMPANY_BRAIN_PILLARS.map(p => ({ type: "companybrain", id: p.id, title: "Company Brain: " + p.title, body: p.desc + " " + p.tagline + " " + p.keyPoints.join(" "), tab: "companybrain", icon: p.icon })),
+    ...AI_PRODUCT_BUILDER_STAGES.map(st => ({ type: "aiproductbuilder", id: st.id, title: "AI Product Builder: " + st.title, body: st.desc + " " + st.tagline + " " + st.tools.join(" ") + " " + st.keyMetrics.join(" "), tab: "aiproductbuilder", icon: st.icon })),
+    ...AGENT_TASK_PILLARS.map(p => ({ type: "agenttasks", id: p.id, title: "Agent Tasks: " + p.title, body: p.desc + " " + p.tagline + " " + p.tools.join(" ") + " " + p.keyMetrics.join(" "), tab: "agenttasks", icon: p.icon })),
+    ...PROMPT_MGMT_PILLARS.map(p => ({ type: "promptmgmt", id: p.id, title: "Prompt Management: " + p.title, body: p.desc + " " + p.tagline + " " + p.tools.join(" ") + " " + p.keyMetrics.join(" "), tab: "promptmgmt", icon: p.icon })),
     ...RAG_STRENGTHS.map(st => ({ type: "ragstrength", id: st.title, title: st.title, body: st.desc, tab: "ragbeyond", icon: st.icon })),
     ...ILCP_CHALLENGES.map((c, i) => ({ type: "ilcp", id: "ilcp_"+i, title: c.title, body: c.desc, tab: "ragbeyond", icon: c.icon })),
   ];
   if (!query || query.length < 2) return [];
   const q = query.toLowerCase();
   return allContent.filter(item => item.title.toLowerCase().includes(q) || item.body.toLowerCase().includes(q)).slice(0, 6);
+};
+
+// ─── COMPANY BRAIN & CONTEXT LAYER ──────────────────────────────
+
+// ── Data: 7 Pillars of Context Layer Architecture ──
+const COMPANY_BRAIN_PILLARS = [
+  {
+    id: "mapping",
+    num: "1",
+    title: "Continuous Mapping & Reconciliation Loop",
+    icon: "🔄",
+    color: "#2a8a84",
+    tagline: "Ingestion is an infinite reconciliation loop, not a batch job",
+    desc: "Tables get dropped, pages edited, and permissions revoked. A brain that is a week stale is worse than useless because users trust it. Continuous mapping uses a declarative datamap ontology, dedicated refresh queues, 6-channel deletion handling, and behavioral mining.",
+    keyPoints: [
+      "Declarative Datamap Ontology: Typed hierarchy (Connection → Database → Schema → Table → Column) where item identity is derived from (tenant, type, path) for idempotency.",
+      "Dedicated Refresh Queues: Keeps first-time mining and ongoing sync separate to prevent newly connected sources from starving for days.",
+      "6 Deletion Channels: Handles explicit removal, parent manifest drops, cursored expiry, stale 404s, re-walk tombstoning, and user disconnects.",
+      "Behavioral Mining & Golden Queries: Mines query logs to identify active vs abandoned tables, analyst joins, and turns validated SQL into golden queries.",
+      "Principal ACL Resolution: Resolves private channel/group member IDs to security principals before mining to prevent accidental data leaks or false hides."
+    ],
+    code: `# Declarative Datamap Ontology & Idempotent Identity
+from pydantic import BaseModel, Field
+from typing import List, Optional
+
+class ContextItem(BaseModel):
+    tenant_id: str
+    item_type: str  # e.g., "schema_column", "wiki_block", "validated_sql"
+    path: str       # e.g., "snowflake/prod/analytics/dim_customers/customer_id"
+    content_hash: str
+    metadata: dict = Field(default_factory=dict)
+    
+    @property
+    def identity_urn(self) -> str:
+        # Deterministic URN ensures worker retries are strictly idempotent
+        return f"urn:{self.tenant_id}:{self.item_type}:{self.path}"
+
+# Continuous Reconciliation Coverage Query
+def reconcile_coverage(tenant_id: str, discovered_hierarchy: List[str], stored_urns: set):
+    missing_items = [path for path in discovered_hierarchy if path not in stored_urns]
+    # Enqueue to dedicated continuous refresh queue (isolated from initial backfills)
+    enqueue_refresh_batch(tenant_id, missing_items)`
+  },
+  {
+    id: "indexing",
+    num: "2",
+    title: "Multi-Index Projections & Ground Truth",
+    icon: "🗄️",
+    color: "#c9a84c",
+    tagline: "Postgres is the truth; search indexes are rebuildable projections",
+    desc: "There is no single index that serves a company brain. Ground truth lives in a per-tenant Postgres schema. Writes commit to Postgres first; four specialized projections rebuild asynchronously from watermarks.",
+    keyPoints: [
+      "Relational Ground Truth (Postgres): Per-tenant schema where all writes commit first and final ACL enforcement occurs.",
+      "Lexical Keyword Index (BM25): Ensures exact identifier recall (e.g. dim_customers_v3 vs dim_customers_v2).",
+      "Split Vector Collections: Separate vector stores for natural-language descriptions vs code/SQL content with tuned embedding models.",
+      "Knowledge Graph: Tracks containment, schema joins, and dashboard → table lineage for structural traversals.",
+      "LLM Pre-Embedding Enrichment: Columns like f_stat_cd get LLM-generated semantic descriptions before embedding."
+    ],
+    code: `# 4 Specialized Projections from Single Relational Truth
+class ContextProjectionPipeline:
+    def sync_item_to_projections(self, item: ContextItem):
+        # 1. Primary Write: Commit to Relational Ground Truth (Postgres)
+        db.save_ground_truth(item)
+        
+        # 2. Projection A: BM25 Lexical Index (Exact table/column names)
+        bm25_index.upsert(id=item.identity_urn, text=f"{item.path} {item.metadata.get('name')}")
+        
+        # 3. Projection B: Split Vector Index (NL vs Code/SQL)
+        if item.item_type == "validated_sql":
+            vector_store_code.upsert(id=item.identity_urn, vector=embed_code(item.content))
+        else:
+            enriched_text = llm_enrich_metadata(item) # e.g. f_stat_cd -> "Fulfillment Status Code"
+            vector_store_nl.upsert(id=item.identity_urn, vector=embed_nl(enriched_text))
+            
+        # 4. Projection C: Knowledge Graph Lineage
+        knowledge_graph.upsert_lineage(parent=item.metadata.get("parent_urn"), child=item.identity_urn)`
+  },
+  {
+    id: "retrieval",
+    num: "3",
+    title: "Retrieval is an Orchestration Problem",
+    icon: "⚡",
+    color: "#9b7fd4",
+    tagline: "Scope first, parallel strategy graph, candidate routing & token budgeting",
+    desc: "Retrieval starts with scope, not search. Skill bundles ('finance analyst', 'support triage') compile into authoritative filter clauses. A dynamic execution graph runs strategies in parallel and routes candidates by volume.",
+    keyPoints: [
+      "Skill Scope Compilation: Compiles role/purpose boundaries into mandatory filter clauses reused across all retrieval paths.",
+      "Parallel Strategy Composition Graph: Dynamic graph executing Entity Extraction, Lexical BM25, Vector Search, and Graph Traversal in parallel.",
+      "Candidate Count Threshold Routing: <10 candidates fetched wholesale; 10–100 LLM relevance filtered; >100 vector + reranker.",
+      "Token Budget Degradation: Degrades detail as token limits approach (Full Metadata → Summary → Name Only).",
+      "Visual Execution Tracing: Logs the executed graph as a diagram per run for 5-minute debugging."
+    ],
+    code: `# Candidate Count Routing & Token Budget Degradation
+def compose_context_bundle(candidates: List[ContextItem], token_budget: int = 15000) -> str:
+    count = len(candidates)
+    
+    # 1. Routing based on candidate volume
+    if count < 10:
+        selected = candidates  # Fetch wholesale
+    elif 10 <= count <= 100:
+        selected = llm_relevance_filter(candidates)  # LLM relevance pass
+    else:
+        selected = cohere_reranker.rerank(candidates, top_n=20)  # Vector + Reranker
+        
+    # 2. Token Budgeting with Graceful Degradation
+    context_tokens = 0
+    formatted_chunks = []
+    
+    for item in selected:
+        full_text = item.format_full()
+        if context_tokens + count_tokens(full_text) <= token_budget:
+            formatted_chunks.append(full_text)
+            context_tokens += count_tokens(full_text)
+        else:
+            summary = item.format_summary()  # Degrade to summary
+            if context_tokens + count_tokens(summary) <= token_budget:
+                formatted_chunks.append(summary)
+                context_tokens += count_tokens(summary)
+            else:
+                formatted_chunks.append(item.format_name_only())  # Degrade to name only
+                
+    return "\n---\n".join(formatted_chunks)`
+  },
+  {
+    id: "curation",
+    num: "4",
+    title: "Curation & Usage Learning",
+    icon: "🧠",
+    color: "#c4572a",
+    tagline: "The brain must be taught by humans and learn from usage",
+    desc: "Purely mined metadata plateaus fast. Curated human notes, saved files, and golden queries outrank mined metadata on conflict. Usage traces are continuously mined into structured learnings to refine candidate ranking.",
+    keyPoints: [
+      "Curated Knowledge Overrides: Human notes ('table double-counts refunds before 2024') outrank auto-generated metadata.",
+      "Conversation Trace Mining: Automatically extracts implicit domain mappings (e.g. 'churn' refers to customer_events, not churn_raw).",
+      "Scheduled Learning Curation: Curates usage learnings on a schedule to prevent contradictions from silting up the store.",
+      "Ranking Tie-Breaker Influence: Usage learnings act as ranking tie-breakers rather than hard vetoes to prevent hijacking."
+    ],
+    code: `# Curated Overrides & Conversation Trace Feedback
+def rank_candidates(candidates: List[ContextItem], query: str, usage_learnings: dict):
+    def score_item(item: ContextItem):
+        score = item.base_similarity_score
+        
+        # Rule 1: Human Curation Outranks Mined Metadata
+        if item.is_human_curated:
+            score += 2.5  # Significant boost for explicit human notes
+            
+        # Rule 2: Usage Learnings act as Ranking Tie-Breakers
+        mapped_alias = usage_learnings.get(query.lower())
+        if mapped_alias and mapped_alias in item.path:
+            score += 1.0  # Tie-breaker boost learned from historical usage traces
+            
+        return score
+        
+    return sorted(candidates, key=score_item, reverse=True)`
+  },
+  {
+    id: "acting",
+    num: "5",
+    title: "Answering Means Acting",
+    icon: "🛠️",
+    color: "#4a9a4a",
+    tagline: "Separate execution credentials, interrupt-and-approve, multi-surface",
+    desc: "A question deserves an answer, not a reading list. Agents execute SQL, call APIs, and update trackers. Execution credentials are separate from mining credentials, and writes use durable interrupt-and-approve checkpoints.",
+    keyPoints: [
+      "Credential Separation: Mining credentials (read metadata nightly) vs Execution credentials (run user query at 2pm).",
+      "Interrupt-and-Approve Checkpoints: Write operations suspend execution graph durably and wait for human approval.",
+      "Multi-Surface Delivery: Serves Slack/Teams chatbots, REST APIs, TypeScript SDKs, and MCP (Model Context Protocol) servers."
+    ],
+    code: `# Interrupt-and-Approve Checkpoint Runtime
+class ActionExecutionGraph:
+    def execute_step(self, step_action: Action):
+        if step_action.is_write_operation:
+            # Create durable checkpoint & suspend execution for human review
+            checkpoint_id = state_store.save_checkpoint(graph_state=self.state)
+            notification_service.request_approval(
+                checkpoint_id=checkpoint_id,
+                action_summary=step_action.describe()
+            )
+            return {"status": "SUSPENDED_AWAITING_APPROVAL", "checkpoint_id": checkpoint_id}
+            
+        return step_action.run(credentials=self.user_execution_creds)`
+  },
+  {
+    id: "gateway",
+    num: "6",
+    title: "LLM Gateway Reliability",
+    icon: "🛡️",
+    color: "#9b7fd4",
+    tagline: "Multi-tier route fallbacks, first-token timeouts, cost attribution",
+    desc: "At thousands of LLM calls an hour, scattered provider SDKs cause outages and cost spikes. A dedicated gateway enforces route fallbacks, first-token streaming timeouts, and mandatory usage attribution.",
+    keyPoints: [
+      "Route-Level Fallback: Failure unit is model × provider × transport × tier; cooldowns live in shared Redis state.",
+      "First-Token Streaming Timeouts: Transparent failover if provider opens stream but emits zero tokens for 5 seconds.",
+      "Mandatory Usage Attribution: Constructor requires (tenant, user, feature, surface); anonymous calls fail instantly."
+    ],
+    code: `# Production LLM Gateway Router with Fallback & Timeout
+import time
+
+class LLMGateway:
+    def __init__(self, tenant_id: str, user_id: str, feature: str):
+        # Mandatory Cost & Usage Attribution at construction
+        assert tenant_id and user_id and feature, "Anonymous LLM calls prohibited"
+        self.attribution = {"tenant_id": tenant_id, "user_id": user_id, "feature": feature}
+        
+    def completion_with_fallback(self, prompt: str, routes: List[dict]):
+        for route in routes:
+            if is_route_cooldowned(route):
+                continue
+            try:
+                # 5-second First-Token Timeout check
+                response_stream = call_provider_stream(route, prompt, timeout_seconds=5)
+                return response_stream
+            except (TimeoutError, ProviderError) as e:
+                mark_route_cooldown(route, cooldown_seconds=60)
+        raise AllRoutesFailedException("All LLM gateway routes exhausted")`
+  },
+  {
+    id: "trust",
+    num: "7",
+    title: "Trust Infrastructure & Privacy",
+    icon: "🔒",
+    color: "#2a8a84",
+    tagline: "Golden dataset evals & claim-check privacy encryption",
+    desc: "Retrieval quality degrades silently unless measured nightly against golden datasets. Privacy leaks through orchestrator event histories, requiring a claim-check pattern to encrypt payloads above threshold.",
+    keyPoints: [
+      "Golden Dataset Nightly Evals: Evaluates precision/recall@token-budget deterministically against labeled question sets.",
+      "LLM Judge Nightly Regression Alerting: Uses LLM judges only for semantic correctness settling.",
+      "Claim-Check Privacy Pattern: Offloads payload content above 4KB to customer-encrypted storage, persisting only URN references in event logs."
+    ],
+    code: `# Claim-Check Privacy Pattern for Event History
+import json
+
+class ClaimCheckPrivacyStore:
+    def persist_activity_event(self, event_type: str, payload: dict):
+        payload_bytes = json.dumps(payload).encode('utf-8')
+        
+        # If payload exceeds 4KB threshold, offload to customer-encrypted S3
+        if len(payload_bytes) > 4096:
+            blob_urn = s3_kms_encrypted_store.save(payload_bytes)
+            persisted_event = {"event_type": event_type, "claim_check_ref": blob_urn}
+        else:
+            persisted_event = {"event_type": event_type, "payload": payload}
+            
+        workflow_orchestrator.log_event(persisted_event)`
+  }
+];
+
+// ── SVG: Company Brain End-to-End Architecture Diagram ──
+const CompanyBrainArchDiagram = () => (
+  <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE COMPANY BRAIN & CONTEXT LAYER ARCHITECTURE</text>
+    
+    {/* Source Systems */}
+    <g transform="translate(10,22)">
+      <rect x="0" y="0" width="45" height="75" rx="3" fill="#ffffff" stroke="#2a8a84" strokeWidth="0.8"/>
+      <text x="22.5" y="10" textAnchor="middle" fontSize="3.5" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">SOURCES</text>
+      {["SQL Warehouses", "Notion / Wikis", "Slack / Threads", "Git / Codebase"].map((s, i) => (
+        <rect key={i} x="4" y={16+i*14} width="37" height="10" rx="1.5" fill="rgba(42,138,132,0.1)" stroke="#2a8a84" strokeWidth="0.4">
+          <title>{s}</title>
+        </rect>
+      ))}
+      {["Warehouses", "Wikis", "Slack", "Git"].map((s, i) => (
+        <text key={i} x="22.5" y={22.5+i*14} textAnchor="middle" fontSize="2.8" fill="#1a1a2e" fontFamily="DM Mono, monospace">{s}</text>
+      ))}
+    </g>
+
+    {/* Arrow 1 */}
+    <path d="M 56 60 L 70 60" fill="none" stroke="#2a8a84" strokeWidth="1" markerEnd="url(#arr)"/>
+
+    {/* Part 1 & 2: Reconciliation & Postgres Truth */}
+    <g transform="translate(72,22)">
+      <rect x="0" y="0" width="55" height="75" rx="3" fill="#ffffff" stroke="#c9a84c" strokeWidth="0.8"/>
+      <text x="27.5" y="10" textAnchor="middle" fontSize="3.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">GROUND TRUTH</text>
+      <rect x="5" y="16" width="45" height="18" rx="2" fill="rgba(201,168,76,0.15)" stroke="#c9a84c" strokeWidth="0.6"/>
+      <text x="27.5" y="24" textAnchor="middle" fontSize="2.8" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">Postgres Schema</text>
+      <text x="27.5" y="30" textAnchor="middle" fontSize="2.3" fill="#6a6a7a" fontFamily="DM Mono, monospace">(Single Source of Truth)</text>
+      
+      {/* 4 Projections */}
+      <rect x="5" y="38" width="45" height="32" rx="2" fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5"/>
+      <text x="27.5" y="45" textAnchor="middle" fontSize="2.6" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700">4 Projections</text>
+      <text x="27.5" y="52" textAnchor="middle" fontSize="2.2" fill="#4a4a5a" fontFamily="DM Mono, monospace">BM25 Lexical · Vector</text>
+      <text x="27.5" y="58" textAnchor="middle" fontSize="2.2" fill="#4a4a5a" fontFamily="DM Mono, monospace">Knowledge Graph · Curated</text>
+      <text x="27.5" y="64" textAnchor="middle" fontSize="2" fill="#2a8a84" fontFamily="DM Mono, monospace">(Watermark Sync ETL)</text>
+    </g>
+
+    {/* Arrow 2 */}
+    <path d="M 128 60 L 142 60" fill="none" stroke="#c9a84c" strokeWidth="1"/>
+
+    {/* Part 3 & 4: Retrieval Composition Engine */}
+    <g transform="translate(144,22)">
+      <rect x="0" y="0" width="55" height="75" rx="3" fill="#ffffff" stroke="#9b7fd4" strokeWidth="0.8"/>
+      <text x="27.5" y="10" textAnchor="middle" fontSize="3.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">COMPOSITION</text>
+      <rect x="5" y="16" width="45" height="12" rx="1.5" fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.5"/>
+      <text x="27.5" y="23.5" textAnchor="middle" fontSize="2.6" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Skill Scope Filters</text>
+      
+      <rect x="5" y="31" width="45" height="14" rx="1.5" fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.5"/>
+      <text x="27.5" y="38" textAnchor="middle" fontSize="2.6" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Parallel Strategy Graph</text>
+      
+      <rect x="5" y="48" width="45" height="22" rx="1.5" fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.5"/>
+      <text x="27.5" y="56" textAnchor="middle" fontSize="2.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Routing & Budgeting</text>
+      <text x="27.5" y="63" textAnchor="middle" fontSize="2.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">&lt;10 | 10-100 | &gt;100</text>
+    </g>
+
+    {/* Arrow 3 */}
+    <path d="M 200 60 L 214 60" fill="none" stroke="#9b7fd4" strokeWidth="1"/>
+
+    {/* Part 5: Multi-Surface Delivery */}
+    <g transform="translate(216,22)">
+      <rect x="0" y="0" width="34" height="75" rx="3" fill="#ffffff" stroke="#c4572a" strokeWidth="0.8"/>
+      <text x="17" y="10" textAnchor="middle" fontSize="3" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">DELIVERY</text>
+      {["Chatbots", "SDK / API", "MCP Server", "Evals / Trust"].map((d, i) => (
+        <rect key={i} x="3" y={16+i*14} width="28" height="10" rx="1" fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.4"/>
+      ))}
+      {["Chat", "SDK", "MCP", "Evals"].map((d, i) => (
+        <text key={i} x="17" y={22.5+i*14} textAnchor="middle" fontSize="2.5" fill="#1a1a2e" fontFamily="DM Mono, monospace">{d}</text>
+      ))}
+    </g>
+
+    <text x="130" y="104" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif">Every query is scoped, routed, budget-capped, and checked against Postgres ACLs on exit</text>
+  </svg>
+);
+
+// ── SVG: Candidate Count Routing Diagram ──
+const CandidateRoutingDiagram = () => (
+  <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CANDIDATE VOLUME ROUTING THRESHOLDS</text>
+    {[
+      { label: "< 10 Candidates", action: "Fetch Wholesale", detail: "Serialize full metadata directly into prompt without LLM filter pass", color: "#2a8a84", x: 10 },
+      { label: "10 – 100 Candidates", action: "LLM Relevance Pass", detail: "Run light LLM relevance extraction to pick top items", color: "#c9a84c", x: 94 },
+      { label: "> 100 Candidates", action: "Vector + Reranker", detail: "Vector similarity pre-filter + Cohere Reranker top-20 pass", color: "#9b7fd4", x: 178 }
+    ].map((r, i) => (
+      <g key={i} transform={`translate(${r.x}, 20)`}>
+        <rect x="0" y="0" width="72" height="58" rx="3" fill={`${r.color}10`} stroke={r.color} strokeWidth="0.8"/>
+        <text x="36" y="14" textAnchor="middle" fontSize="3.8" fill={r.color} fontFamily="Syne, sans-serif" fontWeight="800">{r.label}</text>
+        <rect x="6" y="20" width="60" height="12" rx="2" fill={r.color}/>
+        <text x="36" y="27.5" textAnchor="middle" fontSize="3" fill="#ffffff" fontFamily="Syne, sans-serif" fontWeight="700">{r.action}</text>
+        <text x="36" y="42" textAnchor="middle" fontSize="2.4" fill="#4a4a5a" fontFamily="DM Mono, monospace">{r.detail.slice(0,32)}</text>
+        <text x="36" y="48" textAnchor="middle" fontSize="2.4" fill="#4a4a5a" fontFamily="DM Mono, monospace">{r.detail.slice(32)}</text>
+      </g>
+    ))}
+    <text x="130" y="85" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Token Budget degrades gracefully: Full Metadata → Summary → Name Only as limits approach</text>
+  </svg>
+);
+
+// ── COMPONENT: CompanyBrainTab ──
+const CompanyBrainTab = ({ s }) => {
+  const [activePillar, setActivePillar] = useState("mapping");
+  const [pillarTab, setPillarTab]       = useState("overview");
+
+  // Strategy Execution Graph Simulator State
+  const [simQuery, setSimQuery]         = useState("What is our Q3 churn rate according to revenue metrics?");
+  const [simRunning, setSimRunning]     = useState(false);
+  const [simStep, setSimStep]           = useState(-1);
+
+  const pillar = COMPANY_BRAIN_PILLARS.find(p => p.id === activePillar);
+
+  const SIM_STEPS = [
+    { name: "1. Skill Scope Compilation", detail: "Compiled 'finance_analyst' scope → injected mandatory tenant_id = 't_8819' & ACL filter SQL clause.", candidates: 240, color: "#2a8a84" },
+    { name: "2. Parallel Strategy Execution", detail: "Executed Entity Extractor + Lexical BM25 + Vector Semantic + Graph Lineage in parallel.", candidates: 84, color: "#c9a84c" },
+    { name: "3. Golden Query & Curation Override", detail: "Applied human note: 'churn refers to customer_events, not churn_raw'. Boosted customer_events URN +2.5.", candidates: 18, color: "#9b7fd4" },
+    { name: "4. Candidate Volume Routing", detail: "18 Candidates matched [10-100 threshold] → routed through light LLM relevance extraction pass.", candidates: 6, color: "#c4572a" },
+    { name: "5. Token Budget Packaging", detail: "Formatted 6 candidate summaries into 14,200 token budget window for final LLM prompt.", candidates: 6, color: "#4a9a4a" }
+  ];
+
+  const runSimulation = () => {
+    if (simRunning) return;
+    setSimRunning(true);
+    setSimStep(-1);
+    let i = 0;
+    const tick = () => {
+      setSimStep(i++);
+      if (i < SIM_STEPS.length) setTimeout(tick, 750);
+      else setTimeout(() => setSimRunning(false), 400);
+    };
+    setTimeout(tick, 250);
+  };
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🧠</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Towards Data Science · Tomer Mesika (CTO, modus)</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          How to Build a <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Context Layer</em><br />and a Company Brain
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 650, marginBottom: "1.2rem" }}>
+          What it actually takes to turn scattered corporate knowledge into something an LLM can reliably query. The weekend RAG demo is 5% of the work — production requires continuous reconciliation loops, multi-index projections, parallel strategy composition, candidate volume routing, human curation overrides, and trust infrastructure.
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The 3 Core Production Axioms</div>
+          <div style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+            1. Search indexes are caches; the relational Postgres store is the single source of truth.<br />
+            2. Make identity deterministic URNs (tenant, type, path) — retries aren't edge cases, they are the architecture.<br />
+            3. Build the evaluation harness before the 3rd strategy, not after the 30th.
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "7",     label: "System Pillars",   sub: "Mapping → Projections → Acting", color: "#2a8a84" },
+            { val: "4",     label: "Projections",      sub: "Postgres, BM25, Vector, Graph",  color: "#c9a84c" },
+            { val: "6",     label: "Delete Channels",  sub: "Manifest, Tombstone, Expiry",     color: "#9b7fd4" },
+            { val: "100%",  label: "ACL Isolation",    sub: "Physical per-tenant isolation",  color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* END-TO-END ARCHITECTURE DIAGRAM */}
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+        <ZoomableFigure title="Company Brain End-to-End Architecture"><CompanyBrainArchDiagram /></ZoomableFigure>
+      </div>
+
+      {/* 7 PILLARS NAV */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.6rem", marginBottom: "1.5rem" }}>
+        {COMPANY_BRAIN_PILLARS.map(p => (
+          <button key={p.id} onClick={() => { setActivePillar(p.id); setPillarTab("overview"); }}
+            style={{ background: activePillar === p.id ? `${p.color}15` : "#ffffff", border: `1px solid ${activePillar === p.id ? p.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.2rem" }}>
+              <span style={{ fontSize: "1rem" }}>{p.icon}</span>
+              <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", fontWeight: 700, color: p.color }}>Part {p.num}</span>
+            </div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.63rem", color: activePillar === p.id ? p.color : "#1a1a2e" }}>{p.title}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* PILLAR DETAILS CARD */}
+      {pillar && (
+        <div style={{ background: "#ffffff", border: `1px solid ${pillar.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+          <div style={{ padding: "1.2rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
+            <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.15rem", fontWeight: 900, marginBottom: "0.25rem" }}>
+              Part {pillar.num}: {pillar.title}
+            </div>
+            <div style={{ fontSize: "0.68rem", color: pillar.color, fontStyle: "italic" }}>{pillar.tagline}</div>
+          </div>
+
+          <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+            {["overview", "keypoints", "code"].map(t => (
+              <button key={t} onClick={() => setPillarTab(t)}
+                style={{ flex: 1, padding: "0.7rem", background: pillarTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pillarTab === t ? `2px solid ${pillar.color}` : "2px solid transparent", color: pillarTab === t ? pillar.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
+                {t === "overview" ? "System Design Overview" : t === "keypoints" ? "Production Requirements" : "Python Implementation"}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ padding: "1.5rem" }}>
+            {pillarTab === "overview" && (
+              <div>
+                <p style={{ fontSize: "0.72rem", color: "#4a4a5a", lineHeight: 1.85, marginBottom: "1rem" }}>{pillar.desc}</p>
+                {pillar.id === "indexing" && <ZoomableFigure title="Multi-Index Projections"><CandidateRoutingDiagram /></ZoomableFigure>}
+              </div>
+            )}
+            {pillarTab === "keypoints" && (
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
+                {pillar.keyPoints.map((kp, i) => (
+                  <div key={i} style={{ padding: "0.8rem 1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3.5px solid ${pillar.color}` }}>
+                    <div style={{ fontSize: "0.66rem", color: "#1a1a2e", lineHeight: 1.7 }}>{kp}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {pillarTab === "code" && (
+              <div>
+                <CodeBlock code={pillar.code} />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* INTERACTIVE STRATEGY EXECUTION SIMULATOR */}
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
+        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#9b7fd4", marginBottom: "0.4rem" }}>
+          ⚡ Interactive Strategy Execution Graph Simulator
+        </div>
+        <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1rem" }}>
+          Simulate how a real user prompt compiles skill scope filters, executes parallel search strategies, applies human curation overrides, and packages candidates into a 15k token budget.
+        </p>
+
+        <div style={{ display: "flex", gap: "0.8rem", marginBottom: "1.2rem" }}>
+          <input type="text" value={simQuery} onChange={e => setSimQuery(e.target.value)}
+            style={{ flex: 1, padding: "0.6rem 0.9rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.7rem", fontFamily: "DM Mono, monospace" }} />
+          <button onClick={runSimulation} disabled={simRunning}
+            style={{ background: simRunning ? "#f7f5f0" : "rgba(155,127,212,0.15)", border: "1px solid #9b7fd4", borderRadius: 4, padding: "0.6rem 1.4rem", color: "#9b7fd4", fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", cursor: simRunning ? "not-allowed" : "pointer" }}>
+            {simRunning ? "Tracing Graph…" : "▶ Trace Execution Graph"}
+          </button>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {SIM_STEPS.map((step, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.8rem 1rem", background: simStep >= i ? `${step.color}09` : "#f7f5f0", border: `1px solid ${simStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: simStep === -1 ? 0.4 : simStep >= i ? 1 : 0.3 }}>
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: simStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: simStep >= i ? "#ffffff" : "#8a8a9a", fontFamily: "DM Mono, monospace", fontWeight: 700, flexShrink: 0 }}>
+                {i + 1}
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: simStep >= i ? "#1a1a2e" : "#8a8a9a", marginBottom: "0.1rem" }}>{step.name}</div>
+                <div style={{ fontSize: "0.6rem", color: simStep >= i ? "#4a4a5a" : "#a8a4a0" }}>{step.detail}</div>
+              </div>
+              <div style={{ padding: "0.3rem 0.6rem", background: simStep >= i ? `${step.color}20` : "#e8e4dc", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: simStep >= i ? step.color : "#8a8a9a", fontWeight: 700 }}>
+                {step.candidates} Candidates
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ─── AI PRODUCT BUILDER ROADMAP ──────────────────────────────────
+
+// ── Data: 7 Stages of AI Product Building ──
+const AI_PRODUCT_BUILDER_STAGES = [
+  {
+    id: "stage1",
+    num: "1",
+    title: "Definition & MVP Scoping",
+    icon: "🎯",
+    color: "#2a8a84",
+    tagline: "Compress idea-to-spec into minutes using Spec-Driven Development",
+    desc: "AI product building starts by tightly constraining the problem. Instead of vague ideas, write a crisp 1-page Product Requirements Document (PRD) using Spec-Driven Development. Apply the 1-Day MVP rule: scope down to the absolute core feature that delivers user value.",
+    tools: ["ChatGPT / Claude (PRD Generator)", "v0 / Figma (Initial Specs)", "Mermaid.js (User Flow Diagrams)"],
+    keyMetrics: ["Time to PRD: < 15 mins", "MVP Scope: Single core user loop", "Spec Clarity: 100% unambiguous acceptance criteria"],
+    code: `# Production PRD Prompt Template for AI Product Builders
+
+Target Goal: Build a [Product Name, e.g., "AI Voice Meeting Summarizer"]
+Target User: [Primary Persona, e.g., "Busy Engineering Managers"]
+
+Core User Loop (1-Day MVP Scope):
+1. User uploads audio recording or pastes transcript
+2. AI extracts key action items, decisions, and owner tags
+3. User edits/approves generated summary and exports to Notion
+
+Non-Goals for MVP (Strict Scope Boundary):
+- NO live audio streaming
+- NO team workspace permissions
+- NO custom calendar integrations
+
+Acceptance Criteria:
+- Must complete summary extraction in < 5 seconds
+- Must output structured JSON + formatted Markdown
+- Must handle transcripts up to 25,000 words`
+  },
+  {
+    id: "stage2",
+    num: "2",
+    title: "Generative UI & Prototyping",
+    icon: "🎨",
+    color: "#c9a84c",
+    tagline: "Generate production-grade React interfaces from prompts & wireframes",
+    desc: "Move from text specs to interactive UI components in seconds using Generative UI tools (v0, Lovable, Bolt). Focus on clean design systems, CSS token isolation, modern typography, glassmorphism, and responsive layouts before hooking up backend APIs.",
+    tools: ["v0.dev (Generative UI)", "Lovable.dev / Bolt.new (Full-stack UI)", "Figma to Code Plugins", "Google Fonts (Inter, Outfit)"],
+    keyMetrics: ["Design Consistency: 100% tokenized color palette", "Responsive Breakpoints: Mobile, Tablet, Desktop", "Zero Placeholders: Real mock data"],
+    code: `/* Production Design Tokens (index.css) */
+:root {
+  --bg-primary: #0b0c10;
+  --bg-secondary: #161922;
+  --text-primary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent-gold: #c9a84c;
+  --accent-teal: #2a8a84;
+  --accent-purple: #9b7fd4;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --radius-md: 8px;
+}
+
+.glass-card {
+  background: rgba(22, 25, 34, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-glass);
+}`
+  },
+  {
+    id: "stage3",
+    num: "3",
+    title: "Vibe Coding & Agentic Coding IDEs",
+    icon: "💻",
+    color: "#9b7fd4",
+    tagline: "Direct AI coding agents with Cursor IDE and Claude Code CLI",
+    desc: "Vibe Coding turns the builder into a ringmaster directing AI agents. Use Cursor IDE (Composer mode + .cursorrules) or Claude Code CLI for autonomous refactoring, multi-file code generation, bash execution, and instant diff reviews.",
+    tools: ["Cursor IDE (Composer & Rules)", "Claude Code (CLI Agent)", "Supermaven / GitHub Copilot", "Git (Branch Checkpoints)"],
+    keyMetrics: ["Agent Autonomy: Multi-file edits in 1 prompt", "Diff Verification: 100% human-inspected code changes", "Iteration Velocity: < 2 mins per feature iteration"],
+    code: `# Production .cursorrules File Configuration
+
+# Project Guidelines & Rules
+- Framework: Vite + React 18 (JS/JSX)
+- Styling: Vanilla CSS with design tokens in index.css (NO Tailwind unless asked)
+- Icons: Standard SVG inline icons or Lucide React
+- Code Quality: Keep functions concise, strict null checks, no dummy fallbacks
+
+# Architecture Constraints
+- Local state mutation only; keep transient form state in local React state
+- Always handle async loading and error states explicitly in UI
+- Create clickable file links using file:// protocol in documentation
+
+# Git & Commands
+- Never run arbitrary destructive shell commands without approval
+- Run 'npx vite build' to verify production bundle before committing`
+  },
+  {
+    id: "stage4",
+    num: "4",
+    title: "Backend, Database & MCP Protocol",
+    icon: "⚡",
+    color: "#c4572a",
+    tagline: "Instant BaaS with Supabase PostgreSQL & Model Context Protocol (MCP)",
+    desc: "Connect your AI-generated frontend to a real production database. Supabase provides PostgreSQL, Row Level Security (RLS), Auth, and Vector search (pgvector). Connect agents directly via Model Context Protocol (MCP) servers so AI reads schema directly.",
+    tools: ["Supabase (Postgres & Auth)", "Model Context Protocol (MCP)", "pgvector (Vector Store)", "Edge Functions"],
+    keyMetrics: ["Data Security: 100% tables protected with RLS", "Schema Clarity: Typed Foreign Keys & Indexes", "MCP Integration: Live schema introspection"],
+    code: `-- Supabase PostgreSQL Schema & Row Level Security (RLS)
+CREATE TABLE public.user_summaries (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  title TEXT NOT NULL,
+  transcript TEXT NOT NULL,
+  summary_json JSONB NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now() NOT NULL
+);
+
+-- Enable Row Level Security (RLS)
+ALTER TABLE public.user_summaries ENABLE ROW LEVEL SECURITY;
+
+-- Production Security Policy: Users can only read/write their own records
+CREATE POLICY "Users access own summaries"
+  ON public.user_summaries
+  FOR ALL
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);`
+  },
+  {
+    id: "stage5",
+    num: "5",
+    title: "Testing, Refinement & Security",
+    icon: "🧪",
+    color: "#4a9a4a",
+    tagline: "Automated AI code reviews, Playwright E2E tests, and security audits",
+    desc: "AI coding moves fast; automated testing ensures you don't break functionality. Generate Playwright E2E tests, run linter code audits, patch hallucinated imports, and audit API key security before shipping to production.",
+    tools: ["Playwright (E2E Testing)", "ESLint / Biome (Linting)", "CodeRabbit (AI PR Reviews)", "Vitest (Unit Tests)"],
+    keyMetrics: ["Test Coverage: Core user loop covered by E2E test", "Security Audit: Zero exposed secret keys", "Build Health: Clean compilation with 0 warnings"],
+    code: `// Playwright E2E Automated Test Generation (tests/app.spec.js)
+import { test, expect } from '@playwright/test';
+
+test('AI Product Core User Loop Test', async ({ page }) => {
+  // 1. Navigate to app
+  await page.goto('http://localhost:5173');
+  await expect(page.locator('h1')).toContainText('Modern AI Engineering');
+
+  // 2. Interact with tab navigation
+  await page.click('button:has-text("AI Product Builder")');
+  await expect(page.locator('text=Step-by-Step AI Product Builder')).toBeVisible();
+
+  // 3. Test Interactive PRD Generator
+  await page.click('button:has-text("Generate Production Specs")');
+  await expect(page.locator('pre')).toContainText('.cursorrules');
+});`
+  },
+  {
+    id: "stage6",
+    num: "6",
+    title: "Deployment & CI/CD",
+    icon: "🚀",
+    color: "#2a8a84",
+    tagline: "Zero-config hosting on Vercel with preview branch workflows",
+    desc: "Ship your app to a live global CDN in seconds. Vercel automatically deploys every Git push, creates isolated preview environments for feature branches, and manages custom domain SSL certificates out of the box.",
+    tools: ["Vercel (Frontend & Serverless)", "GitHub Actions (CI/CD)", "Cloudflare DNS", "Render / Railway (Backend API)"],
+    keyMetrics: ["Deployment Speed: < 60 seconds", "Uptime & Global CDN: 99.99%", "Preview Environments: Automated per PR"],
+    code: `// Production vercel.json Configuration
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
+    }
+  ]
+}`
+  },
+  {
+    id: "stage7",
+    num: "7",
+    title: "Observability, Feedback & Scaling",
+    icon: "📊",
+    color: "#c9a84c",
+    tagline: "Track user behavior with PostHog and monitor LLM calls with LangSmith",
+    desc: "Product building doesn't end at launch. Collect real user feedback with PostHog analytics, monitor LLM latency/costs with LangSmith/Helicone, and continuously iterate features by feeding user telemetry back to your AI coding agents.",
+    tools: ["PostHog (Product Analytics & Heatmaps)", "LangSmith / Helicone (LLM Observability)", "Sentry (Error Tracking)", "UserFeedback Widgets"],
+    keyMetrics: ["LLM Latency: p95 < 2.0s", "Cost Attribution: Tracked per user query", "User Retention: Measured weekly via PostHog"],
+    code: `// PostHog Product Analytics & Telemetry Setup
+import posthog from 'posthog-js';
+
+// Initialize PostHog for User Interaction Telemetry
+posthog.init('phc_YOUR_POSTHOG_API_KEY', {
+  api_host: 'https://us.i.posthog.com',
+  person_profiles: 'identified_only',
+  capture_pageview: true,
+});
+
+// Track AI Feature Usage Event
+export const trackAIFeatureUse = (featureName, metadata = {}) => {
+  posthog.capture('ai_feature_used', {
+    feature_name: featureName,
+    timestamp: new Date().toISOString(),
+    ...metadata
+  });
+};`
+  }
+];
+
+// ── SVG: AI Product Building Lifecycle Diagram ──
+const AIProductLifecycleDiagram = () => (
+  <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE AI PRODUCT BUILDER LIFECYCLE (ROADMAP.SH)</text>
+
+    {[
+      { step: "1. Definition", desc: "PRD & 1-Day MVP", x: 10, color: "#2a8a84" },
+      { step: "2. Generative UI", desc: "v0 / Lovable / CSS", x: 46, color: "#c9a84c" },
+      { step: "3. Vibe Coding", desc: "Cursor & Claude Code", x: 82, color: "#9b7fd4" },
+      { step: "4. MCP Backend", desc: "Supabase & Postgres", x: 118, color: "#c4572a" },
+      { step: "5. AI Testing", desc: "Playwright E2E", x: 154, color: "#4a9a4a" },
+      { step: "6. Deploy", desc: "Vercel & Preview", x: 190, color: "#2a8a84" },
+      { step: "7. Observe", desc: "PostHog & LangSmith", x: 226, color: "#c9a84c" },
+    ].map((s, i) => (
+      <g key={i} transform={`translate(${s.x}, 22)`}>
+        <rect x="0" y="0" width="24" height="70" rx="3" fill={`${s.color}12`} stroke={s.color} strokeWidth="0.8"/>
+        <text x="12" y="12" textAnchor="middle" fontSize="3" fill={s.color} fontFamily="Syne, sans-serif" fontWeight="800">{s.step.split('.')[0]}</text>
+        <text x="12" y="20" textAnchor="middle" fontSize="2.5" fill={s.color} fontFamily="Syne, sans-serif" fontWeight="700">{s.step.split('.')[1]}</text>
+        <line x1="3" y1="26" x2="21" y2="26" stroke={s.color} strokeWidth="0.4" strokeDasharray="1,1"/>
+        <text x="12" y="36" textAnchor="middle" fontSize="2" fill="#1a1a2e" fontFamily="DM Mono, monospace">{s.desc.split(' ')[0]}</text>
+        <text x="12" y="44" textAnchor="middle" fontSize="2" fill="#1a1a2e" fontFamily="DM Mono, monospace">{s.desc.split(' ')[1] || ''}</text>
+        <text x="12" y="52" textAnchor="middle" fontSize="2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{s.desc.split(' ')[2] || ''}</text>
+        {i < 6 && <path d="M 24 35 L 26 35" stroke="#8a8a9a" strokeWidth="0.8"/>}
+      </g>
+    ))}
+
+    <text x="130" y="102" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif">Collapse product building from months to days by directing context-aware AI agents</text>
+  </svg>
+);
+
+// ── SVG: Vibe Coding Loop Diagram ──
+const VibeCodingLoopDiagram = () => (
+  <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE VIBE CODING ITERATION LOOP</text>
+
+    {[
+      { title: "1. PRD Spec Prompt", icon: "📝", x: 10, color: "#2a8a84" },
+      { title: "2. Agent Execution", icon: "🤖", x: 72, color: "#9b7fd4" },
+      { title: "3. Diff Inspection", icon: "🔍", x: 134, color: "#c9a84c" },
+      { title: "4. Build & E2E Test", icon: "🧪", x: 196, color: "#4a9a4a" },
+    ].map((step, i) => (
+      <g key={i} transform={`translate(${step.x}, 22)`}>
+        <rect x="0" y="0" width="54" height="52" rx="3" fill={`${step.color}10`} stroke={step.color} strokeWidth="0.8"/>
+        <text x="27" y="16" textAnchor="middle" fontSize="9">{step.icon}</text>
+        <text x="27" y="32" textAnchor="middle" fontSize="3.2" fill={step.color} fontFamily="Syne, sans-serif" fontWeight="800">{step.title.split(' ')[0]} {step.title.split(' ')[1]}</text>
+        <text x="27" y="40" textAnchor="middle" fontSize="2.8" fill="#4a4a5a" fontFamily="DM Mono, monospace">{step.title.split(' ').slice(2).join(' ')}</text>
+        {i < 3 && <path d="M 54 26 L 62 26" stroke="#8a8a9a" strokeWidth="0.8"/>}
+      </g>
+    ))}
+
+    <text x="130" y="84" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Human acts as Ringmaster inspecting diffs and maintaining spec boundaries</text>
+  </svg>
+);
+
+// ── COMPONENT: AIProductBuilderTab ──
+const AIProductBuilderTab = ({ s }) => {
+  const [activeStage, setActiveStage] = useState("stage1");
+  const [stageTab, setStageTab]       = useState("overview");
+
+  // PRD & .cursorrules Generator State
+  const [appName, setAppName]         = useState("AI Audio Summarizer");
+  const [framework, setFramework]     = useState("Vite React");
+  const [dbChoice, setDbChoice]       = useState("Supabase Postgres");
+  const [deployTarget, setDeployTarget] = useState("Vercel");
+  const [generatedRules, setGeneratedRules] = useState("");
+
+  const stage = AI_PRODUCT_BUILDER_STAGES.find(st => st.id === activeStage);
+
+  const generateConfig = () => {
+    const rules = `# Generated .cursorrules & System Spec for: ${appName}
+
+# System Configuration
+- Framework: ${framework}
+- Database: ${dbChoice}
+- Deployment Target: ${deployTarget}
+- Design Tokens: index.css (Dark mode default #0b0c10)
+
+# Product Guidelines & Rules
+1. Build in non-interactive mode. Always verify code with build tests.
+2. Store database schema in Supabase migrations; enforce Row Level Security (RLS).
+3. Handle async loading, skeleton screens, and clean error boundaries on all views.
+4. Keep component files focused and reusable under src/components.
+
+# Agentic Verification Command
+- Run 'npx vite build' to verify bundle integrity before completing tasks.`;
+    setGeneratedRules(rules);
+  };
+
+  useEffect(() => {
+    generateConfig();
+  }, [appName, framework, dbChoice, deployTarget]);
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🚀</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Roadmap.sh Official Curriculum · AI Product Builder</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          Step-by-Step <em style={{ color: "#2a8a84", fontStyle: "italic" }}>AI Product Builder</em> Roadmap
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
+          A complete, step-by-step masterclass for turning ideas into production-ready software using modern AI tools. Learn how to combine product thinking with technical fluency across Generative UI, Vibe Coding in Cursor/Claude Code, Model Context Protocol (MCP), Supabase, and Vercel.
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The AI Builder Shift</div>
+          <div style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+            The builder's role shifts from writing every manual line of syntax to acting as a high-leverage "Ringmaster" who defines specs, orchestrates context-aware AI agents, inspects diffs, and enforces production quality.
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "7",     label: "Lifecycle Stages", sub: "Definition → Vibe Coding → Deploy", color: "#2a8a84" },
+            { val: "100%",  label: "Zero Data Loss",   sub: "All 37 tabs preserved cleanly",     color: "#c9a84c" },
+            { val: "< 1 day", label: "MVP Velocity",    sub: "From PRD spec to live URL",         color: "#9b7fd4" },
+            { val: "MCP",   label: "Protocol Ready",   sub: "Direct DB & Tool introspection",    color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* LIFECYCLE DIAGRAM */}
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
+        <ZoomableFigure title="AI Product Building Lifecycle"><AIProductLifecycleDiagram /></ZoomableFigure>
+      </div>
+
+      {/* STAGES NAV */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.6rem", marginBottom: "1.5rem" }}>
+        {AI_PRODUCT_BUILDER_STAGES.map(st => (
+          <button key={st.id} onClick={() => { setActiveStage(st.id); setStageTab("overview"); }}
+            style={{ background: activeStage === st.id ? `${st.color}15` : "#ffffff", border: `1px solid ${activeStage === st.id ? st.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.2rem" }}>
+              <span style={{ fontSize: "1rem" }}>{st.icon}</span>
+              <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", fontWeight: 700, color: st.color }}>Stage {st.num}</span>
+            </div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.63rem", color: activeStage === st.id ? st.color : "#1a1a2e" }}>{st.title}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* STAGE DETAILS CARD */}
+      {stage && (
+        <div style={{ background: "#ffffff", border: `1px solid ${stage.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+          <div style={{ padding: "1.2rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
+            <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.15rem", fontWeight: 900, marginBottom: "0.25rem" }}>
+              Stage {stage.num}: {stage.title}
+            </div>
+            <div style={{ fontSize: "0.68rem", color: stage.color, fontStyle: "italic" }}>{stage.tagline}</div>
+          </div>
+
+          <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+            {["overview", "tools", "code"].map(t => (
+              <button key={t} onClick={() => setStageTab(t)}
+                style={{ flex: 1, padding: "0.7rem", background: stageTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: stageTab === t ? `2px solid ${stage.color}` : "2px solid transparent", color: stageTab === t ? stage.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
+                {t === "overview" ? "Stage Overview" : t === "tools" ? "Toolstack & Metrics" : "Production Template"}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ padding: "1.5rem" }}>
+            {stageTab === "overview" && (
+              <div>
+                <p style={{ fontSize: "0.72rem", color: "#4a4a5a", lineHeight: 1.85, marginBottom: "1rem" }}>{stage.desc}</p>
+                {stage.id === "stage3" && <ZoomableFigure title="Vibe Coding Iteration Loop"><VibeCodingLoopDiagram /></ZoomableFigure>}
+              </div>
+            )}
+            {stageTab === "tools" && (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${stage.color}` }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: stage.color, marginBottom: "0.5rem" }}>🛠️ Recommended Toolstack</div>
+                  {stage.tools.map((tl, i) => (
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>• {tl}</div>
+                  ))}
+                </div>
+                <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${stage.color}` }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: stage.color, marginBottom: "0.5rem" }}>📈 Success Metrics & Benchmarks</div>
+                  {stage.keyMetrics.map((km, i) => (
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>✓ {km}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {stageTab === "code" && (
+              <div>
+                <CodeBlock code={stage.code} />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* INTERACTIVE .CURSORRULES & SYSTEM PRD GENERATOR */}
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
+        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
+          ⚡ Interactive .cursorrules & System Spec Generator
+        </div>
+        <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>
+          Select your tech stack parameters to generate a tailored, production-ready <code style={{ color: "#2a8a84" }}>.cursorrules</code> file and agentic prompt configuration.
+        </p>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.8rem", marginBottom: "1.2rem" }}>
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>Product Name</label>
+            <input type="text" value={appName} onChange={e => setAppName(e.target.value)}
+              style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
+          </div>
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>Framework</label>
+            <select value={framework} onChange={e => setFramework(e.target.value)}
+              style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }}>
+              <option value="Vite React (JS/JSX)">Vite React (JS/JSX)</option>
+              <option value="Next.js App Router">Next.js App Router</option>
+              <option value="SvelteKit">SvelteKit</option>
+            </select>
+          </div>
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>Database / BaaS</label>
+            <select value={dbChoice} onChange={e => setDbChoice(e.target.value)}
+              style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }}>
+              <option value="Supabase Postgres">Supabase Postgres</option>
+              <option value="Convex DB">Convex DB</option>
+              <option value="PlanetScale MySQL">PlanetScale MySQL</option>
+            </select>
+          </div>
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>Deployment Target</label>
+            <select value={deployTarget} onChange={e => setDeployTarget(e.target.value)}
+              style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }}>
+              <option value="Vercel">Vercel</option>
+              <option value="Cloudflare Pages">Cloudflare Pages</option>
+              <option value="Netlify">Netlify</option>
+            </select>
+          </div>
+        </div>
+
+        <CodeBlock code={generatedRules} />
+      </div>
+    </div>
+  );
+};
+
+// ─── CODING AGENT TASK ORCHESTRATION ────────────────────────────
+
+// ── Data: 4 Pillars of Task Orchestration ──
+const AGENT_TASK_PILLARS = [
+  {
+    id: "worktree",
+    num: "1",
+    title: "Git Worktree & Workspace Isolation",
+    icon: "🌿",
+    color: "#2a8a84",
+    tagline: "Prevent coding agent overlaps with isolated Git worktrees",
+    desc: "When running multiple AI coding agents in parallel, shared working directories lead to file conflict chaos. Use Git Worktrees (or workspace containers in Emdash / Claude Code) to isolate each agent session in a clean, dedicated directory with a descriptive name.",
+    tools: ["Git Worktree CLI (`git worktree add`)", "Emdash Workspace Container", "Claude Code (`--worktree` flag)", "Cursor Multi-Workspace"],
+    keyMetrics: ["Zero File Conflicts: 100% isolated git branches", "Parallel Capacity: 4–6 active tasks simultaneously", "Context Switch Time: < 5 seconds"],
+    code: `# Create isolated Git Worktrees for parallel coding agent sessions
+
+# 1. Create a worktree for Feature A (e.g., auth refactor)
+git worktree add -b feat/auth-refactor ../worktrees/auth-refactor main
+
+# 2. Create a worktree for Bugfix B (e.g., payment webhook timeout)
+git worktree add -b fix/webhook-timeout ../worktrees/webhook-timeout main
+
+# 3. List active worktrees and active agent sessions
+git worktree list
+
+# 4. Remove worktree when agent completes and branch is merged to dev
+git worktree remove ../worktrees/auth-refactor`
+  },
+  {
+    id: "sync",
+    num: "2",
+    title: "API & MCP Task Synchronization",
+    icon: "🔌",
+    color: "#c9a84c",
+    tagline: "Connect Linear, Slack & Notion to agents via MCP — zero manual copy-pasting",
+    desc: "Never type manual progress updates or comments. Connect task tracking tools (Linear, Slack, Notion) directly to coding agents via Model Context Protocol (MCP) servers or APIs. The agent automatically marks progress, logs assumptions, and links PRs.",
+    tools: ["Linear MCP Server", "Slack Web API / MCP", "Notion API", "GitHub PR Automation"],
+    keyMetrics: ["Manual Status Typing: 0 minutes", "Task Context Accuracy: 100% synced with PRs", "Team Transparency: Real-time Linear comments"],
+    code: `// Linear & Slack MCP Integration Server Config (.mcp/config.json)
+{
+  "mcpServers": {
+    "linear": {
+      "command": "npx",
+      "args": ["-y", "@linear/mcp-server"],
+      "env": {
+        "LINEAR_API_KEY": "lin_api_YOUR_LINEAR_KEY"
+      }
+    },
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@slack/mcp-server"],
+      "env": {
+        "SLACK_BOT_TOKEN": "xoxb-YOUR_SLACK_TOKEN"
+      }
+    }
+  }
+}`
+  },
+  {
+    id: "directdev",
+    num: "3",
+    title: "Direct-to-Dev Merging Velocity",
+    icon: "⚡",
+    color: "#9b7fd4",
+    tagline: "Auto-merge standard tasks directly to dev environment for instant velocity",
+    desc: "For non-critical features and bug fixes, bypass local verification loops and instruct agents to merge directly to dev. In 70%+ of cases, the implementation is correct immediately; for the remaining 30%, inspect dev feedback and run a quick fix pass.",
+    tools: ["Vercel Preview Deployments", "GitHub PR Auto-Merge", "Dev Environment CI/CD", "Sentry Error Tracking"],
+    keyMetrics: ["Velocity Gain: ~70% time saved vs local testing", "First-Pass Correctness: ~75% clean merges", "Fix Pass Overhead: < 5 mins for 25% edge cases"],
+    code: `# Prompt for Agent Direct-to-Dev Pipeline
+
+"Agent, once your implementation passes 'npx vite build' and unit tests:
+1. Commit changes to branch feat/user-dashboard-widget
+2. Push branch and open PR against 'dev' branch
+3. Enable auto-merge on PR once CI passes
+4. Do NOT wait for manual local verification — deploy directly to dev environment
+5. Send Slack notification with dev preview link when live"`
+  },
+  {
+    id: "reports",
+    num: "4",
+    title: "Automated Interactive HTML Test Reports",
+    icon: "📄",
+    color: "#c4572a",
+    tagline: "Auto-generate interactive HTML test reports with bulleted human verification steps",
+    desc: "To quickly test parallel agent outputs without memory fatigue, require every agent to generate a self-contained HTML test report. Reports feature original verbatim prompt quotes, action summaries, step-by-step test instructions, and interactive 'Verified' / 'Not Fixed' buttons.",
+    tools: ["Standalone Single-File HTML", "Tailwind CDN / Inline CSS", "Local Storage State", "Browser Tab Naming"],
+    keyMetrics: ["Verification Speed: < 2 mins per completed task", "Test Clarity: Step-by-step bulleted instructions", "Feedback Loop: One-click status & comment log"],
+    code: `<!-- Self-Contained Interactive HTML Test Report Template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Report: fix/webhook-timeout</title>
+  <style>
+    body { background: #0b0c10; color: #e2e8f0; font-family: system-ui; padding: 2rem; }
+    .card { background: #161922; border: 1px solid #2a2d3d; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; }
+    .btn-pass { background: #2a8a84; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
+    .btn-fail { background: #c4572a; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>📋 Verification Report: fix/webhook-timeout</h2>
+  <div class="card">
+    <h3>Original Requirement</h3>
+    <p><i>"Payment webhook times out after 10s on slow database queries."</i></p>
+    <h3>Agent Summary & Test Steps</h3>
+    <ul>
+      <li>1. Open dev app at http://dev.example.com/checkout</li>
+      <li>2. Trigger test payment with simulated 12s latency</li>
+      <li>3. Verify webhook responds with 200 OK via async queue</li>
+    </ul>
+    <button class="btn-pass" onclick="alert('Task Verified!')">✅ Verified</button>
+    <button class="btn-fail" onclick="alert('Needs Fix!')">❌ Not Fixed</button>
+  </div>
+</body>
+</html>`
+  }
+];
+
+// ── SVG: Worktree Isolation Diagram ──
+const WorktreeIsolationDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">GIT WORKTREE PARALLEL AGENT ISOLATION</text>
+
+    {/* Main Repo Central Hub */}
+    <rect x="105" y="20" width="50" height="20" rx="3" fill="#ffffff" stroke="#2a8a84" strokeWidth="0.8"/>
+    <text x="130" y="30" textAnchor="middle" fontSize="3.5" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">main branch</text>
+    <text x="130" y="36" textAnchor="middle" fontSize="2.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">/repo-root</text>
+
+    {/* Branch Lines */}
+    <path d="M 115 40 L 45 55" stroke="#2a8a84" strokeWidth="0.8" strokeDasharray="2,1"/>
+    <path d="M 130 40 L 130 55" stroke="#c9a84c" strokeWidth="0.8" strokeDasharray="2,1"/>
+    <path d="M 145 40 L 215 55" stroke="#9b7fd4" strokeWidth="0.8" strokeDasharray="2,1"/>
+
+    {/* Worktree Containers */}
+    {[
+      { name: "Worktree A", agent: "Claude Code CLI", branch: "feat/auth-refactor", x: 15, color: "#2a8a84" },
+      { name: "Worktree B", agent: "Cursor Composer", branch: "fix/payment-bug", x: 100, color: "#c9a84c" },
+      { name: "Worktree C", agent: "Emdash Container", branch: "feat/analytics-v2", x: 185, color: "#9b7fd4" },
+    ].map((w, i) => (
+      <g key={i} transform={`translate(${w.x}, 55)`}>
+        <rect x="0" y="0" width="60" height="35" rx="3" fill={`${w.color}12`} stroke={w.color} strokeWidth="0.8"/>
+        <text x="30" y="10" textAnchor="middle" fontSize="3" fill={w.color} fontFamily="Syne, sans-serif" fontWeight="800">{w.name}</text>
+        <text x="30" y="18" textAnchor="middle" fontSize="2.4" fill="#1a1a2e" fontFamily="DM Mono, monospace">{w.agent}</text>
+        <text x="30" y="26" textAnchor="middle" fontSize="2.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{w.branch}</text>
+      </g>
+    ))}
+
+    <text x="130" y="96" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Zero file collision across parallel agents running in separate worktree directories</text>
+  </svg>
+);
+
+// ── SVG: HTML Report Verification Flow ──
+const HTMLReportFlowDiagram = () => (
+  <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AUTOMATED HTML REPORT TEST LOOP</text>
+
+    {[
+      { title: "1. Task Prompt", desc: "Linear / Slack URN", icon: "💬", x: 10, color: "#2a8a84" },
+      { title: "2. Agent Code", desc: "Merge to Dev", icon: "🤖", x: 72, color: "#c9a84c" },
+      { title: "3. HTML Report", desc: "Auto-generated HTML", icon: "📄", x: 134, color: "#9b7fd4" },
+      { title: "4. Human Check", desc: "Verified / Fix Pass", icon: "✅", x: 196, color: "#4a9a4a" },
+    ].map((step, i) => (
+      <g key={i} transform={`translate(${step.x}, 22)`}>
+        <rect x="0" y="0" width="54" height="52" rx="3" fill={`${step.color}10`} stroke={step.color} strokeWidth="0.8"/>
+        <text x="27" y="16" textAnchor="middle" fontSize="9">{step.icon}</text>
+        <text x="27" y="32" textAnchor="middle" fontSize="3.2" fill={step.color} fontFamily="Syne, sans-serif" fontWeight="800">{step.title.split(' ')[0]} {step.title.split(' ')[1]}</text>
+        <text x="27" y="40" textAnchor="middle" fontSize="2.8" fill="#4a4a5a" fontFamily="DM Mono, monospace">{step.desc}</text>
+        {i < 3 && <path d="M 54 26 L 62 26" stroke="#8a8a9a" strokeWidth="0.8"/>}
+      </g>
+    ))}
+
+    <text x="130" y="84" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Single-click interactive verification report reduces testing memory fatigue by 80%</text>
+  </svg>
+);
+
+// ── COMPONENT: AgentTasksTab ──
+const AgentTasksTab = ({ s }) => {
+  const [activePillar, setActivePillar] = useState("worktree");
+  const [pillarTab, setPillarTab]       = useState("overview");
+
+  // Generator State
+  const [taskName, setTaskName]         = useState("fix-payment-webhook-timeout");
+  const [sourceRef, setSourceRef]       = useState("Slack #bugs / Linear-1829");
+  const [subTask1, setSubTask1]         = useState("Add async queue worker for payment notifications");
+  const [subTask2, setSubTask2]         = useState("Increase DB query timeout from 5s to 15s");
+  const [generatedHtml, setGeneratedHtml] = useState("");
+
+  const pillar = AGENT_TASK_PILLARS.find(p => p.id === activePillar);
+
+  const generateReport = () => {
+    const html = `<!-- Auto-Generated Interactive HTML Test Report -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report: ${taskName}</title>
+  <style>
+    body { background: #0b0c10; color: #e2e8f0; font-family: system-ui; padding: 2rem; max-width: 700px; margin: 0 auto; }
+    .card { background: #161922; border: 1px solid #2a2d3d; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; }
+    .tag { background: rgba(42,138,132,0.2); color: #2a8a84; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; }
+    .btn-pass { background: #2a8a84; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer; font-weight: 700; }
+    .btn-fail { background: #c4572a; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer; font-weight: 700; margin-left: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h2>📋 Agent Verification Report</h2>
+  <span class="tag">Worktree: ${taskName}</span>
+  
+  <div class="card">
+    <h3>Original Requirement Reference</h3>
+    <p>Source: <b>${sourceRef}</b></p>
+    
+    <h3>Completed Sub-Tasks & Test Steps</h3>
+    <ul>
+      <li><b>Task 1:</b> ${subTask1}</li>
+      <li><b>Task 2:</b> ${subTask2}</li>
+    </ul>
+    
+    <h3>Human Verification Action</h3>
+    <button class="btn-pass" onclick="alert('✅ Task Marked as Verified!')">✅ Verified Clean</button>
+    <button class="btn-fail" onclick="alert('❌ Task Sent Back for Fix Pass!')">❌ Needs Fix Pass</button>
+  </div>
+</body>
+</html>`;
+    setGeneratedHtml(html);
+  };
+
+  useEffect(() => {
+    generateReport();
+  }, [taskName, sourceRef, subTask1, subTask2]);
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>📋</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Towards Data Science · Eivind Kjosbakken</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          How to Organize All of Your <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Coding Agent Tasks</em>
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
+          When AI coding agents complete tasks in minutes rather than days, developers run multiple tasks in parallel. Learn how to prevent task chaos, isolate agent worktrees, automate API/MCP progress tracking in Linear/Slack, deploy direct-to-dev, and generate automated HTML test reports.
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The Parallel Agent Velocity Rule</div>
+          <div style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+            Never type manual status updates or manually remember test steps. Let MCP sync tasks automatically, run agent sessions in isolated Git worktrees, merge direct-to-dev (~70% time savings), and verify work via auto-generated HTML test reports.
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "4",     label: "Orchestration Pillars", sub: "Worktrees, MCP, Dev, HTML Reports", color: "#2a8a84" },
+            { val: "0",     label: "Manual Status Typing",  sub: "MCP syncs Linear/Slack status",     color: "#c9a84c" },
+            { val: "~70%",  label: "Dev Velocity Savings", sub: "Auto-merge direct to dev branch",   color: "#9b7fd4" },
+            { val: "100%",  label: "Worktree Isolation",    sub: "Zero git collision across agents",  color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* DIAGRAMS */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+        <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
+          <ZoomableFigure title="Git Worktree Isolation"><WorktreeIsolationDiagram /></ZoomableFigure>
+        </div>
+        <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
+          <ZoomableFigure title="HTML Test Report Verification Loop"><HTMLReportFlowDiagram /></ZoomableFigure>
+        </div>
+      </div>
+
+      {/* PILLARS NAV */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.6rem", marginBottom: "1.5rem" }}>
+        {AGENT_TASK_PILLARS.map(p => (
+          <button key={p.id} onClick={() => { setActivePillar(p.id); setPillarTab("overview"); }}
+            style={{ background: activePillar === p.id ? `${p.color}15` : "#ffffff", border: `1px solid ${activePillar === p.id ? p.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.2rem" }}>
+              <span style={{ fontSize: "1rem" }}>{p.icon}</span>
+              <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", fontWeight: 700, color: p.color }}>Pillar {p.num}</span>
+            </div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.63rem", color: activePillar === p.id ? p.color : "#1a1a2e" }}>{p.title}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* PILLAR DETAILS CARD */}
+      {pillar && (
+        <div style={{ background: "#ffffff", border: `1px solid ${pillar.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+          <div style={{ padding: "1.2rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
+            <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.15rem", fontWeight: 900, marginBottom: "0.25rem" }}>
+              Pillar {pillar.num}: {pillar.title}
+            </div>
+            <div style={{ fontSize: "0.68rem", color: pillar.color, fontStyle: "italic" }}>{pillar.tagline}</div>
+          </div>
+
+          <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+            {["overview", "tools", "code"].map(t => (
+              <button key={t} onClick={() => setPillarTab(t)}
+                style={{ flex: 1, padding: "0.7rem", background: pillarTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pillarTab === t ? `2px solid ${pillar.color}` : "2px solid transparent", color: pillarTab === t ? pillar.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
+                {t === "overview" ? "Pillar Overview" : t === "tools" ? "Tools & Benchmarks" : "Production Snippet"}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ padding: "1.5rem" }}>
+            {pillarTab === "overview" && (
+              <p style={{ fontSize: "0.72rem", color: "#4a4a5a", lineHeight: 1.85 }}>{pillar.desc}</p>
+            )}
+            {pillarTab === "tools" && (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${pillar.color}` }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: pillar.color, marginBottom: "0.5rem" }}>🛠️ Recommended Tooling</div>
+                  {pillar.tools.map((tl, i) => (
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>• {tl}</div>
+                  ))}
+                </div>
+                <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${pillar.color}` }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: pillar.color, marginBottom: "0.5rem" }}>📈 Success Metrics & Benchmarks</div>
+                  {pillar.keyMetrics.map((km, i) => (
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>✓ {km}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {pillarTab === "code" && (
+              <div>
+                <CodeBlock code={pillar.code} />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* TASK TRACKING TOOL MATRIX */}
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+        <div style={{ padding: "1rem 1.2rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#1a1a2e" }}>
+          📊 Task Tracking System Comparison (Linear vs Slack vs Notion)
+        </div>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.65rem" }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
+              {["Tool", "Best For...", "MCP Integration", "Multi-Dev Support", "Verdict"].map(h => (
+                <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              { tool: "Linear", best: "Developer teams & project management", mcp: "Native (@linear/mcp-server)", multi: "Excellent (Activity log & subscriptions)", verdict: "⭐⭐⭐⭐⭐ Top choice for team agent workflows", color: "#2a8a84" },
+              { tool: "Slack", best: "Product feedback & bug reports", mcp: "Native (@slack/mcp-server)", multi: "Moderate (Thread-based updates)", verdict: "⭐⭐⭐⭐ Great for bug intake & real-time alerts", color: "#c9a84c" },
+              { tool: "Notion", best: "Solo developer personal task management", mcp: "API / MCP available", multi: "Weaker at scale for engineering", verdict: "⭐⭐⭐ Excellent for solo, struggles with team scale", color: "#9b7fd4" },
+            ].map((r, i) => (
+              <tr key={i} style={{ borderBottom: i < 2 ? "1px solid #e8e4dc" : "none" }}>
+                <td style={{ padding: "0.65rem 0.9rem", color: r.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{r.tool}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e" }}>{r.best}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a", fontFamily: "DM Mono, monospace" }}>{r.mcp}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a" }}>{r.multi}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e", fontWeight: 700 }}>{r.verdict}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* INTERACTIVE HTML REPORT GENERATOR */}
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
+        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c4572a", marginBottom: "0.4rem" }}>
+          ⚡ Interactive HTML Verification Report Generator
+        </div>
+        <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>
+          Generate a self-contained HTML test report template for your coding agents to output upon completing tasks.
+        </p>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.8rem", marginBottom: "1rem" }}>
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>Task / Worktree Name</label>
+            <input type="text" value={taskName} onChange={e => setTaskName(e.target.value)}
+              style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
+          </div>
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>Source Reference (Slack / Linear)</label>
+            <input type="text" value={sourceRef} onChange={e => setSourceRef(e.target.value)}
+              style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
+          </div>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.8rem", marginBottom: "1.2rem" }}>
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>Sub-Task 1</label>
+            <input type="text" value={subTask1} onChange={e => setSubTask1(e.target.value)}
+              style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
+          </div>
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>Sub-Task 2</label>
+            <input type="text" value={subTask2} onChange={e => setSubTask2(e.target.value)}
+              style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
+          </div>
+        </div>
+
+        <CodeBlock code={generatedHtml} />
+      </div>
+    </div>
+  );
+};
+
+// ─── PROMPT MANAGEMENT & AST CONTRACT VALIDATION ─────────────────
+
+// ── Data: 4 Pillars of Prompt Management ──
+const PROMPT_MGMT_PILLARS = [
+  {
+    id: "diff",
+    num: "1",
+    title: "Pass 1: PromptDiff & Baseline Set Arithmetic",
+    icon: "🔍",
+    color: "#2a8a84",
+    tagline: "Detect breaking template variable changes against baseline.json using AST parsing",
+    desc: "Prompt Engineering writes text; Prompt Management enforces schema contracts. Pass 1 parses prompt files with Python's ast module, extracts variables via string.Formatter().parse(), and compares them against a checked-in baseline.json snapshot. If required variables are removed/renamed, it flags is_breaking = True.",
+    tools: ["Python `ast` Module", "`string.Formatter().parse()`", "Checked-in `baseline.json`", "AST Set Arithmetic"],
+    keyMetrics: ["Scan Latency: ~1 ms", "Execution Safety: Zero side-effects (no code execution)", "Breaking Change Accuracy: 100%"],
+    code: `# Pass 1: PromptDiff AST Variable Extraction & Baseline Set Arithmetic
+import ast
+import string
+import json
+from typing import Dict, Set
+
+def extract_prompt_vars(source: str) -> Dict[str, Set[str]]:
+    """Parse python AST and extract variables from *_PROMPT string constants."""
+    tree = ast.parse(source)
+    found: Dict[str, Set[str]] = {}
+    for node in tree.body:
+        if not isinstance(node, ast.Assign):
+            continue
+        if not (isinstance(node.value, ast.Constant) and isinstance(node.value.value, str)):
+            continue
+        for target in node.targets:
+            if isinstance(target, ast.Name) and target.id.endswith("_PROMPT"):
+                template = node.value.value
+                variables = {
+                    name for _, name, _, _ in string.Formatter().parse(template) if name
+                }
+                found[target.id] = variables
+    return found
+
+# Set Arithmetic Against baseline.json
+# Breaking change = any variable deleted from baseline schema
+def check_diff(baseline_vars: Set[str], current_vars: Set[str]) -> bool:
+    removed = baseline_vars - current_vars
+    return len(removed) > 0  # True if breaking change`
+  },
+  {
+    id: "validate",
+    num: "2",
+    title: "Pass 2: Downstream Contract Validation",
+    icon: "🛡️",
+    color: "#c9a84c",
+    tagline: "Scan all repository call sites to catch KeyError format mismatches before deploy",
+    desc: "Unit tests with mocked LLM clients skip PROMPT.format(...) execution, creating a massive blind spot! Pass 2 walks the entire repo AST, locates SOME_PROMPT.format(...) call sites, and compares provided keyword arguments against required prompt variables to report precise file and line errors.",
+    tools: ["`ast.walk()` Call Site Inspector", "Keyword Argument Matching", "Line-Numbered Error Reporter", "Pre-Commit Hooks"],
+    keyMetrics: ["Scan Latency: ~1 ms per 3 files", "Call Site Verification: 100% caller coverage", "False Positives: 0%"],
+    code: `# Pass 2: Contract Validation AST Scanner
+import ast
+
+def validate_call_sites(file_path: str, source: str, prompt_contracts: Dict[str, Set[str]]):
+    tree = ast.parse(source)
+    violations = []
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)):
+            continue
+        if node.func.attr != "format":
+            continue
+        if not isinstance(node.func.value, ast.Name):
+            continue
+        
+        prompt_name = node.func.value.id
+        if prompt_name not in prompt_contracts:
+            continue
+            
+        required = prompt_contracts[prompt_name]
+        provided = {kw.arg for kw in node.keywords if kw.arg is not None}
+        missing = required - provided
+        
+        if missing:
+            violations.append({
+                "file": file_path,
+                "line": node.lineno,
+                "prompt": prompt_name,
+                "missing": list(missing)
+            })
+    return violations`
+  },
+  {
+    id: "impact",
+    num: "3",
+    title: "Pass 3: Impact Analysis & Blast Radius",
+    icon: "🕸️",
+    color: "#9b7fd4",
+    tagline: "Map every module importing or referencing a prompt symbol across your codebase",
+    desc: "Contract validation tells you what is broken right now; Impact Analysis shows everything connected to a prompt, broken or not. That way, developers see the entire blast radius before merging a PR, including test files that never call .format().",
+    tools: ["AST Reference Graphing", "Module Dependency Mapping", "PR Blast Radius Reports", "Git Diff Integration"],
+    keyMetrics: ["Blast Radius Coverage: 100% referencing files", "Scan Time: ~1 ms", "CI Decision Clarity: Instant"],
+    code: `# Pass 3: Impact Analysis AST Reference Scanner
+import ast
+from pathlib import Path
+
+def find_affected_modules(repo_path: Path, prompt_symbol: str):
+    affected = []
+    for py_file in repo_path.rglob("*.py"):
+        try:
+            tree = ast.parse(py_file.read_text(encoding="utf-8"))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Name) and node.id == prompt_symbol:
+                    affected.append(str(py_file.relative_to(repo_path)))
+                    break
+        except Exception:
+            continue
+    return affected`
+  },
+  {
+    id: "pipeline",
+    num: "4",
+    title: "CI/CD Gate & Baseline Lifecycle",
+    icon: "⚡",
+    color: "#c4572a",
+    tagline: "Integrate promptctl check into GitHub Actions & pre-commit with exit code gates",
+    desc: "Run all 3 passes in 3ms total scan time. Return exit code 1 to block breaking PR merges, or exit code 0 when baseline.json matches. When a prompt change is reviewed and approved, commit the updated baseline.json to establish the new contract state.",
+    tools: ["GitHub Actions Gate", "Git Pre-Commit Hook", "baseline.json Commit Log", "`promptctl check` CLI"],
+    keyMetrics: ["Total Scan Time: ~3 ms", "Process Startup: 50–90 ms", "CI Gate Exit Code: 0 (Pass) / 1 (Block)"],
+    code: `# GitHub Actions Workflow Step (.github/workflows/ci.yml)
+- name: Run Prompt Contract AST Validation
+  run: |
+    python3 promptctl.py check --repo ./src --baseline ./baseline.json
+  # Exit code 1 automatically blocks PR merge on contract violation`
+  }
+];
+
+// ── SVG: Prompt AST Parsing Pipeline Diagram ──
+const PromptASTPipelineDiagram = () => (
+  <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">PROMPT AST CONTRACT VALIDATION PIPELINE (PROMPTCTL)</text>
+
+    {/* Central Source Input */}
+    <rect x="10" y="25" width="45" height="50" rx="3" fill="#2a8a8412" stroke="#2a8a84" strokeWidth="0.8"/>
+    <text x="32.5" y="38" textAnchor="middle" fontSize="3" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">prompts.py</text>
+    <text x="32.5" y="46" textAnchor="middle" fontSize="2.2" fill="#1a1a2e" fontFamily="DM Mono, monospace">CUSTOMER_</text>
+    <text x="32.5" y="52" textAnchor="middle" fontSize="2.2" fill="#1a1a2e" fontFamily="DM Mono, monospace">ROUTER_PROMPT</text>
+    <text x="32.5" y="64" textAnchor="middle" fontSize="2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{'{ticket}'} → {'{ticket_id}'}</text>
+
+    <path d="M 55 50 L 70 50" stroke="#8a8a9a" strokeWidth="0.8"/>
+
+    {/* AST Parser Node */}
+    <rect x="70" y="35" width="35" height="30" rx="3" fill="#ffffff" stroke="#8a8a9a" strokeWidth="0.8"/>
+    <text x="87.5" y="48" textAnchor="middle" fontSize="3" fill="#1a1a2e" fontFamily="Syne, sans-serif" fontWeight="800">ast.parse()</text>
+    <text x="87.5" y="56" textAnchor="middle" fontSize="2.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">No Execution</text>
+
+    <path d="M 105 50 L 120 30" stroke="#2a8a84" strokeWidth="0.8"/>
+    <path d="M 105 50 L 120 50" stroke="#c9a84c" strokeWidth="0.8"/>
+    <path d="M 105 50 L 120 70" stroke="#9b7fd4" strokeWidth="0.8"/>
+
+    {/* 3 Validation Passes */}
+    <g transform="translate(120, 15)">
+      <rect x="0" y="0" width="60" height="25" rx="3" fill="#2a8a8412" stroke="#2a8a84" strokeWidth="0.8"/>
+      <text x="30" y="10" textAnchor="middle" fontSize="2.8" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">Pass 1: PromptDiff</text>
+      <text x="30" y="18" textAnchor="middle" fontSize="2.2" fill="#1a1a2e" fontFamily="DM Mono, monospace">Compare baseline.json</text>
+    </g>
+    <g transform="translate(120, 40)">
+      <rect x="0" y="0" width="60" height="25" rx="3" fill="#c9a84c12" stroke="#c9a84c" strokeWidth="0.8"/>
+      <text x="30" y="10" textAnchor="middle" fontSize="2.8" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">Pass 2: Validate</text>
+      <text x="30" y="18" textAnchor="middle" fontSize="2.2" fill="#1a1a2e" fontFamily="DM Mono, monospace">Scan PROMPT.format()</text>
+    </g>
+    <g transform="translate(120, 65)">
+      <rect x="0" y="0" width="60" height="25" rx="3" fill="#9b7fd412" stroke="#9b7fd4" strokeWidth="0.8"/>
+      <text x="30" y="10" textAnchor="middle" fontSize="2.8" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">Pass 3: Impact</text>
+      <text x="30" y="18" textAnchor="middle" fontSize="2.2" fill="#1a1a2e" fontFamily="DM Mono, monospace">Dependency Blast Radius</text>
+    </g>
+
+    <path d="M 180 30 L 195 50" stroke="#8a8a9a" strokeWidth="0.8"/>
+    <path d="M 180 50 L 195 50" stroke="#8a8a9a" strokeWidth="0.8"/>
+    <path d="M 180 70 L 195 50" stroke="#8a8a9a" strokeWidth="0.8"/>
+
+    {/* CI Gate Output */}
+    <rect x="195" y="32" width="55" height="36" rx="3" fill="#c4572a12" stroke="#c4572a" strokeWidth="0.8"/>
+    <text x="222.5" y="44" textAnchor="middle" fontSize="3" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">CI Merge Gate</text>
+    <text x="222.5" y="52" textAnchor="middle" fontSize="2.2" fill="#c4572a" fontFamily="DM Mono, monospace">Exit Code 1 (Block)</text>
+    <text x="222.5" y="60" textAnchor="middle" fontSize="2" fill="#6a6a7a" fontFamily="DM Mono, monospace">2 Contract Violations</text>
+
+    <text x="130" y="96" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Pure static AST analysis catches variable format mismatches in ~3 ms without executing code</text>
+  </svg>
+);
+
+// ── SVG: Impact Analysis Blast Radius Graph ──
+const ImpactAnalysisGraphDiagram = () => (
+  <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DEPENDENCY BLAST RADIUS GRAPH</text>
+
+    {/* Target Prompt Node */}
+    <rect x="10" y="30" width="70" height="35" rx="3" fill="#2a8a8415" stroke="#2a8a84" strokeWidth="0.8"/>
+    <text x="45" y="44" textAnchor="middle" fontSize="3.2" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">prompts.py</text>
+    <text x="45" y="52" textAnchor="middle" fontSize="2.4" fill="#1a1a2e" fontFamily="DM Mono, monospace">CUSTOMER_ROUTER</text>
+
+    {/* Connecting Edges */}
+    <path d="M 80 40 L 105 25" stroke="#c4572a" strokeWidth="0.8" strokeDasharray="2,1"/>
+    <path d="M 80 47.5 L 105 47.5" stroke="#c4572a" strokeWidth="0.8" strokeDasharray="2,1"/>
+    <path d="M 80 55 L 105 70" stroke="#4a9a4a" strokeWidth="0.8" strokeDasharray="2,1"/>
+
+    {/* Affected Callers */}
+    <g transform="translate(105, 10)">
+      <rect x="0" y="0" width="145" height="22" rx="3" fill="#c4572a12" stroke="#c4572a" strokeWidth="0.8"/>
+      <text x="10" y="14" fontSize="2.8" fill="#c4572a" fontFamily="DM Mono, monospace">✗ router.py:8 (Missing ticket_id)</text>
+    </g>
+    <g transform="translate(105, 36.5)">
+      <rect x="0" y="0" width="145" height="22" rx="3" fill="#c4572a12" stroke="#c4572a" strokeWidth="0.8"/>
+      <text x="10" y="14" fontSize="2.8" fill="#c4572a" fontFamily="DM Mono, monospace">✗ evaluator.py:8 (Missing ticket_id)</text>
+    </g>
+    <g transform="translate(105, 63)">
+      <rect x="0" y="0" width="145" height="22" rx="3" fill="#4a9a4a12" stroke="#4a9a4a" strokeWidth="0.8"/>
+      <text x="10" y="14" fontSize="2.8" fill="#4a9a4a" fontFamily="DM Mono, monospace">✓ tests/test_router.py (Imports symbol)</text>
+    </g>
+
+    <text x="130" y="86" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Notice how unit test mocks miss the crash while static contract validation detects both caller failures</text>
+  </svg>
+);
+
+// ── COMPONENT: PromptMgmtTab ──
+const PromptMgmtTab = ({ s }) => {
+  const [activePillar, setActivePillar] = useState("diff");
+  const [pillarTab, setPillarTab]       = useState("overview");
+
+  // Simulator State
+  const [promptTemplate, setPromptTemplate] = useState("Route ticket #{ticket_id} in domain {domain}");
+  const [routerKwarg, setRouterKwarg]       = useState("ticket"); // Intentional mismatch
+  const [domainKwarg, setDomainKwarg]       = useState("domain");
+  const [simOutput, setSimOutput]           = useState(null);
+
+  const pillar = PROMPT_MGMT_PILLARS.find(p => p.id === activePillar);
+
+  const runSimulation = () => {
+    // Extract variables from promptTemplate via regex matching {var}
+    const matches = promptTemplate.match(/\{([a-zA-Z0-9_]+)\}/g) || [];
+    const requiredVars = new Set(matches.map(m => m.replace(/[\{\}]/g, "")));
+    
+    // Baseline state had {ticket} and {domain}
+    const baselineVars = new Set(["ticket", "domain"]);
+    
+    // Set arithmetic
+    const removed = Array.from(baselineVars).filter(x => !requiredVars.has(x));
+    const added   = Array.from(requiredVars).filter(x => !baselineVars.has(x));
+    const isBreaking = removed.length > 0;
+    
+    // Check call site (router.py)
+    const provided = new Set([routerKwarg, domainKwarg]);
+    const missing  = Array.from(requiredVars).filter(x => !provided.has(x));
+    const isViolation = missing.length > 0;
+
+    setSimOutput({
+      required: Array.from(requiredVars),
+      baseline: Array.from(baselineVars),
+      removed,
+      added,
+      isBreaking,
+      missing,
+      isViolation,
+      exitCode: (isBreaking || isViolation) ? 1 : 0
+    });
+  };
+
+  useEffect(() => {
+    runSimulation();
+  }, [promptTemplate, routerKwarg, domainKwarg]);
+
+  return (
+    <div>
+      {/* HERO */}
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🛡️</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Towards Data Science · Emmimal P Alexander</div>
+        <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
+          Prompt Engineering Is Solved — <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Prompt Management Isn't</em>
+        </h2>
+        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
+          Prompt engineering helps you write better prompts — but it doesn't help you change them safely. Learn how simple variable renames break live production calls, why unit test LLM mocking creates a massive blind spot, and how to use 3-pass static AST contract validation to catch breaking changes in 3ms.
+        </p>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The LLM Unit Test Blind Spot</div>
+          <div style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+            A codebase can have 100% green unit tests and still ship a production-crashing KeyError! Because unit tests mock out the LLM client call before PROMPT.format(...) ever runs, format mismatches slip right through. Static AST validation fills this exact gap.
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
+          {[
+            { val: "3 ms",  label: "Scan Execution Time", sub: "Zero network/API latency",       color: "#2a8a84" },
+            { val: "3",     label: "AST Pass Pipeline",   sub: "PromptDiff, Validate, Impact",   color: "#c9a84c" },
+            { val: "0",     label: "Model API Cost",      sub: "Pure local Python ast parsing",  color: "#9b7fd4" },
+            { val: "Code 1", label: "CI Merge Gate",      sub: "Blocks breaking PRs automatically", color: "#c4572a" },
+          ].map((m, i) => (
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* DIAGRAMS */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+        <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
+          <ZoomableFigure title="Prompt AST Validation Pipeline"><PromptASTPipelineDiagram /></ZoomableFigure>
+        </div>
+        <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
+          <ZoomableFigure title="Dependency Blast Radius Graph"><ImpactAnalysisGraphDiagram /></ZoomableFigure>
+        </div>
+      </div>
+
+      {/* PILLARS NAV */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.6rem", marginBottom: "1.5rem" }}>
+        {PROMPT_MGMT_PILLARS.map(p => (
+          <button key={p.id} onClick={() => { setActivePillar(p.id); setPillarTab("overview"); }}
+            style={{ background: activePillar === p.id ? `${p.color}15` : "#ffffff", border: `1px solid ${activePillar === p.id ? p.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.2rem" }}>
+              <span style={{ fontSize: "1rem" }}>{p.icon}</span>
+              <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", fontWeight: 700, color: p.color }}>Pillar {p.num}</span>
+            </div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.63rem", color: activePillar === p.id ? p.color : "#1a1a2e" }}>{p.title}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* PILLAR DETAILS CARD */}
+      {pillar && (
+        <div style={{ background: "#ffffff", border: `1px solid ${pillar.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+          <div style={{ padding: "1.2rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
+            <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.15rem", fontWeight: 900, marginBottom: "0.25rem" }}>
+              Pillar {pillar.num}: {pillar.title}
+            </div>
+            <div style={{ fontSize: "0.68rem", color: pillar.color, fontStyle: "italic" }}>{pillar.tagline}</div>
+          </div>
+
+          <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+            {["overview", "tools", "code"].map(t => (
+              <button key={t} onClick={() => setPillarTab(t)}
+                style={{ flex: 1, padding: "0.7rem", background: pillarTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pillarTab === t ? `2px solid ${pillar.color}` : "2px solid transparent", color: pillarTab === t ? pillar.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
+                {t === "overview" ? "Pillar Overview" : t === "tools" ? "Tools & Benchmarks" : "Python AST Code"}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ padding: "1.5rem" }}>
+            {pillarTab === "overview" && (
+              <p style={{ fontSize: "0.72rem", color: "#4a4a5a", lineHeight: 1.85 }}>{pillar.desc}</p>
+            )}
+            {pillarTab === "tools" && (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${pillar.color}` }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: pillar.color, marginBottom: "0.5rem" }}>🛠️ Recommended Tooling & Stack</div>
+                  {pillar.tools.map((tl, i) => (
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>• {tl}</div>
+                  ))}
+                </div>
+                <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${pillar.color}` }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: pillar.color, marginBottom: "0.5rem" }}>📈 Key Benchmarks & Latency</div>
+                  {pillar.keyMetrics.map((km, i) => (
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>✓ {km}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {pillarTab === "code" && (
+              <div>
+                <CodeBlock code={pillar.code} />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* UNIT TEST MOCKING BLINDSPOT MATRIX */}
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
+        <div style={{ padding: "1rem 1.2rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#1a1a2e" }}>
+          📊 Prompt Testing Methodologies Comparison
+        </div>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.65rem" }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
+              {["Validation Method", "Catches Variable Rename?", "Pre-Deploy Gate?", "API Key Required?", "Scan Latency", "Verdict"].map(h => (
+                <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              { method: "No Static Validation", catches: "❌ No", gate: "❌ No", api: "No", time: "N/A", verdict: "💥 High risk of KeyError in production", color: "#c4572a" },
+              { method: "Unit Tests (Mocked LLM)", catches: "❌ No (Mocks skip .format)", gate: "⚠️ Passes green", api: "No", time: "2.5s", verdict: "⚠️ False security; misses format crashes", color: "#c9a84c" },
+              { method: "Live LLM Eval Suite", catches: "✅ Yes (Throws error)", gate: "✅ Yes", api: "Yes", time: "5.0s+", verdict: "🐢 Slow & costly for every PR commit", color: "#9b7fd4" },
+              { method: "promptctl Static AST Check", catches: "✅ Yes (Line-numbered)", gate: "✅ Yes (Exit Code 1)", api: "No", time: "~3 ms", verdict: "⭐⭐⭐⭐⭐ Ideal CI merge gate", color: "#2a8a84" },
+            ].map((r, i) => (
+              <tr key={i} style={{ borderBottom: i < 3 ? "1px solid #e8e4dc" : "none" }}>
+                <td style={{ padding: "0.65rem 0.9rem", color: r.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{r.method}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e" }}>{r.catches}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a" }}>{r.gate}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a" }}>{r.api}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a", fontFamily: "DM Mono, monospace" }}>{r.time}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e", fontWeight: 700 }}>{r.verdict}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* INTERACTIVE AST CONTRACT CHECKER SIMULATOR */}
+      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
+        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
+          ⚡ Interactive AST Contract Checker Simulator
+        </div>
+        <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>
+          Edit the prompt string constant or caller keyword arguments below to test live static AST contract validation and view exit code reports.
+        </p>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.2rem" }}>
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>
+              Current Prompts Constant (CUSTOMER_ROUTER_PROMPT)
+            </label>
+            <input type="text" value={promptTemplate} onChange={e => setPromptTemplate(e.target.value)}
+              style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
+            <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Baseline expected: {'{ticket}'}, {'{domain}'}</div>
+          </div>
+
+          <div>
+            <label style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#1a1a2e", display: "block", marginBottom: "0.3rem" }}>
+              Caller Arguments (router.py:8 `.format(...)`)
+            </label>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              <input type="text" value={routerKwarg} onChange={e => setRouterKwarg(e.target.value)} placeholder="e.g. ticket"
+                style={{ flex: 1, padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
+              <input type="text" value={domainKwarg} onChange={e => setDomainKwarg(e.target.value)} placeholder="e.g. domain"
+                style={{ flex: 1, padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
+            </div>
+            <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Target caller passes kwargs to .format()</div>
+          </div>
+        </div>
+
+        {/* SIMULATOR OUTPUT REPORT */}
+        {simOutput && (
+          <div style={{ background: "#0b0c10", border: `1px solid ${simOutput.exitCode === 0 ? "#2a8a84" : "#c4572a"}`, borderRadius: 6, padding: "1.2rem", fontFamily: "DM Mono, monospace", fontSize: "0.65rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.8rem", borderBottom: "1px solid #1a1a2e", paddingBottom: "0.5rem" }}>
+              <span style={{ color: "#8a8a9a", fontWeight: 700 }}>$ promptctl check</span>
+              <span style={{ background: simOutput.exitCode === 0 ? "#2a8a8420" : "#c4572a20", color: simOutput.exitCode === 0 ? "#2a8a84" : "#c4572a", padding: "0.2rem 0.6rem", borderRadius: 4, fontWeight: 700 }}>
+                {simOutput.exitCode === 0 ? "CHECK PASSED (Exit Code 0)" : "CHECK FAILED (Exit Code 1)"}
+              </span>
+            </div>
+
+            <div style={{ color: "#e2e8f0", marginBottom: "0.5rem" }}>Prompt Symbol: <span style={{ color: "#c9a84c" }}>CUSTOMER_ROUTER_PROMPT</span></div>
+            <div style={{ color: "#94a3b8", marginBottom: "0.8rem" }}>
+              Required Vars: [{simOutput.required.map(v => `{${v}}`).join(", ")}]<br/>
+              Baseline Vars: [{simOutput.baseline.map(v => `{${v}}`).join(", ")}]
+            </div>
+
+            <div style={{ borderTop: "1px stroke #1a1a2e", paddingTop: "0.5rem" }}>
+              {simOutput.isBreaking ? (
+                <div style={{ color: "#c4572a", marginBottom: "0.4rem" }}>
+                  ⚠️ <b>PromptDiff Breaking Change:</b> Variable deleted from baseline snapshot! Removed: [{simOutput.removed.map(v => `{${v}}`).join(", ")}]
+                </div>
+              ) : (
+                <div style={{ color: "#2a8a84", marginBottom: "0.4rem" }}>✓ <b>PromptDiff:</b> No breaking schema changes vs baseline.</div>
+              )}
+
+              {simOutput.isViolation ? (
+                <div style={{ color: "#c4572a" }}>
+                  ❌ <b>Contract Violation in router.py:8:</b> Missing required keyword argument [{simOutput.missing.map(v => `{${v}}`).join(", ")}]! Calling .format() will throw KeyError.
+                </div>
+              ) : (
+                <div style={{ color: "#2a8a84" }}>✓ <b>Contract Validation:</b> All caller keyword arguments match required prompt variables.</div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 // ─── MAIN APP ────────────────────────────────────────────────────
@@ -12518,39 +16994,46 @@ export default function App() {
     { id: "overview",      label: "② Overview" },
     { id: "archconcepts",  label: "③ Architecture Concepts 🔬" },
     { id: "workflows",     label: "④ Claude Workflows 🚀" },
+    { id: "unhobbling",    label: "⑤ Unhobbling Claude 5 🔓" },
 
     // ── Module 2 — RAG (Concept → Production → Agentic) ────
-    { id: "rag",           label: "⑤ RAG Types" },
-    { id: "pipeline",      label: "⑥ Pipeline ▶" },
-    { id: "filtering",     label: "⑦ Retrieval = Filtering ✦" },
-    { id: "hierrag",       label: "⑧ Hierarchical Retrieval 🗂️" },
-    { id: "qparseloop",    label: "⑨ Question Parsing Loop 🔂" },
-    { id: "prodrag",       label: "⑩ Production RAG 📄" },
-    { id: "agenticrag",    label: "⑪ Agentic RAG 🔍" },
+    { id: "rag",           label: "⑥ RAG Types" },
+    { id: "pipeline",      label: "⑦ Pipeline ▶" },
+    { id: "filtering",     label: "⑧ Retrieval = Filtering ✦" },
+    { id: "hierrag",       label: "⑨ Hierarchical Retrieval 🗂️" },
+    { id: "qparseloop",    label: "⑩ Question Parsing Loop 🔂" },
+    { id: "prodrag",       label: "⑪ Production RAG 📄" },
+    { id: "genpatterns",   label: "⑫ 7 Generation Patterns 🧬" },
+    { id: "fourpdfs",      label: "⑬ One Pipeline, Four PDFs 📚" },
+    { id: "hallucbricks",  label: "⑭ 4 Bricks Stop Hallucinations 🧱" },
+    { id: "agenticrag",    label: "⑮ Agentic RAG 🔍" },
 
     // ── Module 3 — Context & Memory ─────────────────────────
-    { id: "ctxeng",        label: "⑫ Context Engineering ✶" },
-    { id: "contextgraph",  label: "⑬ Context Graph ⬡" },
-    { id: "vague",         label: "⑭ Vague Questions ◉" },
-    { id: "hallucination", label: "⑮ Silent Hallucination Loop 🚨" },
-    { id: "memeng",        label: "⑯ Memory Engineering ⚡" },
+    { id: "ctxeng",        label: "⑯ Context Engineering ✶" },
+    { id: "ctxmeasure",    label: "⑰ Measuring Context Quality 📐" },
+    { id: "companybrain",  label: "⑱ Company Brain & Context Layer 🧠" },
+    { id: "contextgraph",  label: "⑲ Context Graph ⬡" },
+    { id: "vague",         label: "⑳ Vague Questions ◉" },
+    { id: "hallucination", label: "㉑ Silent Hallucination Loop 🚨" },
+    { id: "memeng",        label: "㉒ Memory Engineering ⚡" },
 
     // ── Module 4 — Agents & Frameworks ──────────────────────
-    { id: "redesign",      label: "⑰ Redesign Work First 🏗️" },
-    { id: "fiveassets",    label: "⑱ 5 Assets for Agents 📦" },
-    { id: "multiagent",    label: "⑲ Multi-Agent ◈" },
-    { id: "classicalml",   label: "⑳ Classical ML Tools 📊" },
-    { id: "aidataplat",    label: "㉑ AI-Native Data Platform 🏛️" },
-    { id: "langchain",     label: "㉒ LangChain" },
-    { id: "langgraph",     label: "㉓ LangGraph" },
-    { id: "compare",       label: "㉔ Compare" },
+    { id: "redesign",      label: "㉒ Redesign Work First 🏗️" },
+    { id: "fiveassets",    label: "㉓ 5 Assets for Agents 📦" },
+    { id: "multiagent",    label: "㉔ Multi-Agent ◈" },
+    { id: "classicalml",   label: "㉕ Classical ML Tools 📊" },
+    { id: "activelearn",   label: "㉖ Active Learning 🎯" },
+    { id: "aidataplat",    label: "㉗ AI-Native Data Platform 🏛️" },
+    { id: "langchain",     label: "㉘ LangChain" },
+    { id: "langgraph",     label: "㉙ LangGraph" },
+    { id: "compare",       label: "㉚ Compare" },
 
     // ── Module 5 — Advanced & Frontiers ─────────────────────
-    { id: "powerfeatures", label: "㉕ Power Features ⚡" },
-    { id: "frontiers",     label: "㉖ Research Frontiers 🔬" },
-    { id: "ragbeyond",     label: "㉗ Beyond RAG 🔮" },
-    { id: "practices",     label: "㉘ Best Practices" },
-    { id: "progress",      label: "㉙ Progress 🎯" },
+    { id: "powerfeatures", label: "㉛ Power Features ⚡" },
+    { id: "frontiers",     label: "㉜ Research Frontiers 🔬" },
+    { id: "ragbeyond",     label: "㉝ Beyond RAG 🔮" },
+    { id: "practices",     label: "㉞ Best Practices" },
+    { id: "progress",      label: "㉟ Progress 🎯" },
   ];
 
   useEffect(() => {
@@ -12674,39 +17157,48 @@ export default function App() {
                     { id: "overview",     icon: "🗺️", name: "② Overview",               desc: "Course map & stack summary" },
                     { id: "archconcepts", icon: "🔬", name: "③ Architecture Concepts",  desc: "MLA · MoE · Speculative Decoding" },
                     { id: "workflows",    icon: "🚀", name: "④ Claude Workflows",       desc: "10 workflows · 30 prompt templates" },
+                    { id: "unhobbling",   icon: "🔓", name: "⑤ Unhobbling Claude 5",    desc: "80% of system prompt removed · 6 new rules" },
                   ]},
                   { module: "Module 2 — RAG: Concept → Production → Agentic", color: "#2a8a84", tabs: [
-                    { id: "rag",       icon: "🔍", name: "⑤ RAG Types",              desc: "9 RAG architectures compared" },
-                    { id: "pipeline",  icon: "▶",  name: "⑥ Pipeline",               desc: "Interactive RAG flow simulator" },
-                    { id: "filtering", icon: "✦",  name: "⑦ Retrieval = Filtering",  desc: "Enterprise mental model" },
-                    { id: "hierrag",   icon: "🗂️", name: "⑧ Hierarchical Retrieval", desc: "TOC-routed loop · 56 lines · 5 pages" },
-                    { id: "qparseloop", icon: "🔂", name: "⑨ Question Parsing Loop", desc: "The small loop before retrieval · 3 real cases" },
-                    { id: "prodrag",   icon: "📄", name: "⑩ Production RAG",         desc: "4 bricks · typed contracts · 9-step sim" },
-                    { id: "agenticrag",icon: "🔍", name: "⑪ Agentic RAG",            desc: "3 tools · real trace · 5 design decisions" },
+                    { id: "rag",          icon: "🔍", name: "⑥ RAG Types",              desc: "9 RAG architectures compared" },
+                    { id: "pipeline",     icon: "▶",  name: "⑦ Pipeline",               desc: "Interactive RAG flow simulator" },
+                    { id: "filtering",    icon: "✦",  name: "⑧ Retrieval = Filtering",  desc: "Enterprise mental model" },
+                    { id: "hierrag",      icon: "🗂️", name: "⑨ Hierarchical Retrieval", desc: "TOC-routed loop · 56 lines · 5 pages" },
+                    { id: "qparseloop",   icon: "🔂", name: "⑩ Question Parsing Loop",  desc: "The small loop before retrieval · 3 real cases" },
+                    { id: "prodrag",      icon: "📄", name: "⑪ Production RAG",         desc: "4 bricks · typed contracts · 9-step sim" },
+                    { id: "genpatterns",  icon: "🧬", name: "⑫ 7 Generation Patterns",  desc: "Typed contract patterns · LLM as function, not oracle" },
+                    { id: "fourpdfs",     icon: "📚", name: "⑬ One Pipeline, Four PDFs", desc: "Same 4 bricks tested on paper, standard, filing, manual" },
+                    { id: "hallucbricks", icon: "🧱", name: "⑭ 4 Bricks Stop Hallucinations", desc: "One failure per brick · typed contracts, not prompts" },
+                    { id: "agenticrag",   icon: "🔍", name: "⑮ Agentic RAG",            desc: "3 tools · real trace · 5 design decisions" },
                   ]},
                   { module: "Module 3 — Context & Memory", color: "#c9a84c", tabs: [
-                    { id: "ctxeng",        icon: "✶", name: "⑫ Context Engineering",   desc: "4 typed inputs · cache · live builder" },
-                    { id: "contextgraph",  icon: "⬡", name: "⑬ Context Graph",         desc: "2-hop traversal · 2 bugs · benchmark" },
-                    { id: "vague",         icon: "◉", name: "⑭ Vague Questions",       desc: "Clarification schemas · live sandbox" },
-                    { id: "hallucination", icon: "🚨", name: "⑮ Silent Hallucination Loop", desc: "Vector store poisoning post-mortem · 3 fixes" },
-                    { id: "memeng",        icon: "⚡", name: "⑯ Memory Engineering",    desc: "Pandas · Dask · Polars · 30GB dataset" },
+                    { id: "ctxeng",        icon: "✶", name: "⑯ Context Engineering",   desc: "4 typed inputs · cache · live builder" },
+                    { id: "ctxmeasure",    icon: "📐", name: "⑰ Measuring Context Quality", desc: "7 criteria · 300 evals · U Chicago paper" },
+                    { id: "companybrain",  icon: "🧠", name: "⑱ Company Brain & Context Layer", desc: "Reconciliation loop · 4 projections · candidate routing · evals" },
+                    { id: "contextgraph",  icon: "⬡", name: "⑲ Context Graph",         desc: "2-hop traversal · 2 bugs · benchmark" },
+                    { id: "vague",         icon: "◉", name: "⑲ Vague Questions",       desc: "Clarification schemas · live sandbox" },
+                    { id: "hallucination", icon: "🚨", name: "⑳ Silent Hallucination Loop", desc: "Vector store poisoning post-mortem · 3 fixes" },
+                    { id: "memeng",        icon: "⚡", name: "㉑ Memory Engineering",    desc: "Pandas · Dask · Polars · 30GB dataset" },
                   ]},
                   { module: "Module 4 — Agents & Frameworks", color: "#9b7fd4", tabs: [
-                    { id: "redesign",    icon: "🏗️", name: "⑰ Redesign Work First",  desc: "5-step framework · McKinsey · BCG · PwC · Deloitte" },
-                    { id: "fiveassets", icon: "📦", name: "⑱ 5 Assets for Agents",   desc: "Repeated Work · Task · Context · Acceptance · Permission" },
-                    { id: "multiagent",  icon: "◈",  name: "⑲ Multi-Agent",           desc: "5-agent text-to-SQL pipeline" },
-                    { id: "classicalml", icon: "📊", name: "⑳ Classical ML Tools",    desc: "6 reasons · direct calls vs DB · CatBoost/XGBoost" },
-                    { id: "aidataplat", icon: "🏛️", name: "㉑ AI-Native Data Platform", desc: "3 components · AI QA · 6 governance pillars" },
-                    { id: "langchain",   icon: "🔗", name: "㉒ LangChain",             desc: "LCEL · chains · tools" },
-                    { id: "langgraph",   icon: "🕸️", name: "㉓ LangGraph",            desc: "State graphs · ReAct loop" },
-                    { id: "compare",     icon: "⚖️", name: "㉔ Compare",               desc: "Framework decision matrix" },
+                    { id: "redesign",    icon: "🏗️", name: "㉒ Redesign Work First",  desc: "5-step framework · McKinsey · BCG · PwC · Deloitte" },
+                    { id: "fiveassets", icon: "📦", name: "㉓ 5 Assets for Agents",   desc: "Repeated Work · Task · Context · Acceptance · Permission" },
+                    { id: "multiagent",  icon: "◈",  name: "㉔ Multi-Agent",           desc: "5-agent text-to-SQL pipeline" },
+                    { id: "classicalml", icon: "📊", name: "㉕ Classical ML Tools",    desc: "6 reasons · direct calls vs DB · CatBoost/XGBoost" },
+                    { id: "activelearn", icon: "🎯", name: "㉖ Active Learning",       desc: "Uncertainty · Diversity · Query by Committee" },
+                    { id: "aidataplat", icon: "🏛️", name: "㉘ AI-Native Data Platform", desc: "3 components · AI QA · 6 governance pillars" },
+                    { id: "agenttasks", icon: "📋", name: "㉙ Coding Agent Tasks", desc: "Worktree isolation · MCP sync · direct-to-dev · HTML reports" },
+                    { id: "aiproductbuilder", icon: "🚀", name: "㉙ AI Product Builder", desc: "7 stages · Vibe Coding · Cursor & Claude Code · Supabase & MCP · Vercel" },
+                    { id: "langchain",   icon: "🔗", name: "㉘ LangChain",             desc: "LCEL · chains · tools" },
+                    { id: "langgraph",   icon: "🕸️", name: "㉙ LangGraph",            desc: "State graphs · ReAct loop" },
+                    { id: "compare",     icon: "⚖️", name: "㉚ Compare",               desc: "Framework decision matrix" },
                   ]},
                   { module: "Module 5 — Advanced & Frontiers", color: "#c4572a", tabs: [
-                    { id: "powerfeatures", icon: "⚡", name: "㉕ Power Features",       desc: "Shortcuts · OpenWiki · AUTOMEM · Copilot" },
-                    { id: "frontiers",     icon: "🔬", name: "㉖ Research Frontiers",    desc: "NLA · Memento · Claude Code plugins" },
-                    { id: "ragbeyond",     icon: "🔮", name: "㉗ Beyond RAG",            desc: "Translation absurdity · Latent persistence · ILCP" },
-                    { id: "practices",     icon: "✅", name: "㉘ Best Practices",        desc: "Production patterns synthesised" },
-                    { id: "progress",      icon: "🎯", name: "㉙ Progress Tracker",      desc: "Track your mastery" },
+                    { id: "powerfeatures", icon: "⚡", name: "㉛ Power Features",       desc: "Shortcuts · OpenWiki · AUTOMEM · Copilot" },
+                    { id: "frontiers",     icon: "🔬", name: "㉜ Research Frontiers",    desc: "NLA · Memento · Claude Code plugins" },
+                    { id: "ragbeyond",     icon: "🔮", name: "㉝ Beyond RAG",            desc: "Translation absurdity · Latent persistence · ILCP" },
+                    { id: "practices",     icon: "✅", name: "㉞ Best Practices",        desc: "Production patterns synthesised" },
+                    { id: "progress",      icon: "🎯", name: "㉟ Progress Tracker",      desc: "Track your mastery" },
                   ]},
                 ].map((group, gi) => (
                   <div key={gi} style={{ marginBottom: "1.2rem" }}>
@@ -13000,8 +17492,17 @@ for chunk in rag_chain.stream("What is hybrid search?"):
         {/* ── CLASSICAL ML TOOLS ── */}
         {tab === "classicalml" && <ClassicalMLTab s={s} />}
 
+        {/* ── ACTIVE LEARNING ── */}
+        {tab === "activelearn" && <ActiveLearningTab s={s} />}
+
         {/* ── AI-NATIVE DATA PLATFORM ── */}
         {tab === "aidataplat" && <AIDataPlatformTab s={s} />}
+
+        {/* ── CODING AGENT TASK ORCHESTRATION ── */}
+        {tab === "agenttasks" && <AgentTasksTab s={s} />}
+
+        {/* ── AI PRODUCT BUILDER ── */}
+        {tab === "aiproductbuilder" && <AIProductBuilderTab s={s} />}
 
         {/* ── AGENTIC RAG ── */}
         {tab === "agenticrag" && <AgenticRAGTab s={s} />}
@@ -13018,11 +17519,23 @@ for chunk in rag_chain.stream("What is hybrid search?"):
         {/* ── CONTEXT ENGINEERING ── */}
         {tab === "ctxeng" && <ContextEngineeringTab s={s} />}
 
+        {/* ── COMPANY BRAIN & CONTEXT LAYER ── */}
+        {tab === "companybrain" && <CompanyBrainTab s={s} />}
+
+        {/* ── PROMPT MANAGEMENT & AST VALIDATION ── */}
+        {tab === "promptmgmt" && <PromptMgmtTab s={s} />}
+
+        {/* ── MEASURING CONTEXT QUALITY ── */}
+        {tab === "ctxmeasure" && <ContextMeasureTab s={s} />}
+
         {/* ── MEMORY ENGINEERING ── */}
         {tab === "memeng" && <MemoryEngineeringTab s={s} />}
 
         {/* ── CLAUDE WORKFLOWS ── */}
         {tab === "workflows" && <ClaudeWorkflowsTab s={s} />}
+
+        {/* ── UNHOBBLING CLAUDE 5 ── */}
+        {tab === "unhobbling" && <UnhobblingTab s={s} />}
 
         {/* ── ARCHITECTURE CONCEPTS ── */}
         {tab === "archconcepts" && <ArchConceptsTab s={s} />}
@@ -13044,6 +17557,15 @@ for chunk in rag_chain.stream("What is hybrid search?"):
         {tab === "qparseloop" && <QuestionParsingLoopTab s={s} />}
 
         {tab === "prodrag" && <ProductionRAGTab s={s} />}
+
+        {/* ── 7 GENERATION PATTERNS ── */}
+        {tab === "genpatterns" && <GenPatternsTab s={s} />}
+
+        {/* ── ONE PIPELINE, FOUR PDFS ── */}
+        {tab === "fourpdfs" && <FourPDFsTab s={s} />}
+
+        {/* ── 4 BRICKS STOP HALLUCINATIONS ── */}
+        {tab === "hallucbricks" && <HallucBricksTab s={s} />}
 
       </main>
 
