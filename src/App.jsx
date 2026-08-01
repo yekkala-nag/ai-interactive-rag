@@ -218,24 +218,26 @@ const ZoomableFigure = ({ title, children }) => {
           </button>
         </div>
 
-        {/* Inline Viewport */}
+        {/* Inline Viewport — Active overflow scrollbars */}
         <div
           onClick={openModal}
           title="Click to view full screen"
           style={{
             width: "100%",
+            maxHeight: "550px",
+            overflow: "auto",
             padding: "0.75rem",
             background: "#ffffff",
             cursor: "pointer"
           }}
         >
-          <div style={{ width: "100%" }}>
+          <div style={{ width: "100%", overflowX: "auto" }}>
             {children}
           </div>
         </div>
       </div>
 
-      {/* FULLSCREEN MODAL VIEW — Expansive Full Window Overlay */}
+      {/* FULLSCREEN MODAL VIEW — Expansive Full Window Overlay with Scrollbars on Overflow */}
       {zoomed && (
         <div
           onClick={closeModal}
@@ -319,7 +321,7 @@ const ZoomableFigure = ({ title, children }) => {
             </div>
           </div>
 
-          {/* Expansive Full Window Viewport Area */}
+          {/* Expansive Full Window Viewport Area with Active Overflow Scrollbars */}
           <div
             onClick={e => e.stopPropagation()}
             onWheel={handleWheel}
@@ -329,21 +331,24 @@ const ZoomableFigure = ({ title, children }) => {
               borderRadius: "0 0 8px 8px",
               overflow: "auto",
               position: "relative",
+              padding: "2rem",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "2rem"
+              alignItems: scale > 1 ? "flex-start" : "center",
+              justifyContent: scale > 1 ? "flex-start" : "center"
             }}
           >
             <div style={{
+              width: scale > 1 ? `${Math.round(scale * 100)}%` : "100%",
+              minWidth: scale > 1 ? `${Math.round(scale * 100)}%` : "100%",
               transform: `scale(${scale})`,
-              transformOrigin: "center center",
-              transition: "transform 0.15s cubic-bezier(0.2, 0, 0, 1)",
-              width: "100%",
-              maxWidth: "1400px",
+              transformOrigin: scale > 1 ? "top left" : "center center",
+              transition: "transform 0.15s cubic-bezier(0.2, 0, 0, 1), width 0.15s ease",
               display: "flex",
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
+              margin: scale > 1 ? "0" : "0 auto",
+              marginBottom: scale > 1 ? `${Math.round((scale - 1) * 300)}px` : "0px",
+              marginRight: scale > 1 ? `${Math.round((scale - 1) * 300)}px` : "0px"
             }}>
               {children}
             </div>
