@@ -19921,7 +19921,8 @@ fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
             </div>
 
             {/* AGENT TOOLING COMPARISON */}
-            <div style={{ background: "#ffffff", border: "1px solid #cbd5e1", borderRadius: 6, padding: "1rem", marginBottom: "1.5rem" }}>
+            <ZoomableFigure title="Coding Agent CLI & IDE Tooling Comparison">
+            <div style={{ background: "#ffffff", border: "1px solid #cbd5e1", borderRadius: 6, padding: "1rem", marginBottom: "0.5rem" }}>
               <div style={s.sectionLabel("#4338ca")}>Coding Agent CLI & IDE Tooling Comparison</div>
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.62rem" }}>
@@ -19956,8 +19957,10 @@ fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
                 </table>
               </div>
             </div>
+            </ZoomableFigure>
 
             {/* BOUNDARY MATRIX */}
+            <ZoomableFigure title="Automation Boundary Matrix: What to Automate vs Keep Manual">
             <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", borderRadius: 6, padding: "1rem" }}>
               <div style={s.sectionLabel("#4338ca")}>Automation Boundary Matrix: What to Automate vs What to Keep Manual</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "0.8rem" }}>
@@ -19988,6 +19991,7 @@ fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
                 </div>
               </div>
             </div>
+            </ZoomableFigure>
           </div>
         </div>
       )}
@@ -20059,6 +20063,7 @@ fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
 
       {/* SUB-TAB 3: SIMULATOR */}
       {subTab === "simulator" && (
+        <ZoomableFigure title="Interactive Non-Programming Agent Task Simulator">
         <div style={s.card}>
           <div style={s.sectionLabel("#4338ca")}>Interactive Non-Programming Agent Task Simulator</div>
           <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem" }}>
@@ -20244,6 +20249,7 @@ fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
             ))}
           </div>
         </div>
+        </ZoomableFigure>
       )}
 
       {/* SUB-TAB 4: DIAGNOSTIC CALCULATOR */}
@@ -20620,7 +20626,8 @@ const MedallionArchTab = ({ s }) => {
             </div>
 
             {/* OPEN TABLE FORMATS & PROD CONTROLS */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1.5rem" }}>
+            <ZoomableFigure title="Lakehouse Formats & Production Quality Controls Matrix">
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "0.5rem" }}>
               <div style={{ background: "#ffffff", border: "1px solid #cbd5e1", borderRadius: 6, padding: "1rem" }}>
                 <div style={s.sectionLabel("#d97706")}>Cloud Lakehouse Table Formats Comparison</div>
                 <div style={{ overflowX: "auto" }}>
@@ -20675,9 +20682,11 @@ const MedallionArchTab = ({ s }) => {
                 </div>
               </div>
             </div>
+            </ZoomableFigure>
 
             {/* FLOW DIAGRAM */}
-            <div style={{ marginTop: "1.5rem", background: "#0f172a", borderRadius: 8, padding: "1.5rem", color: "#ffffff" }}>
+            <ZoomableFigure title="Medallion Data Quality Flow Diagram Across Schemas">
+            <div style={{ marginTop: "0.5rem", background: "#0f172a", borderRadius: 8, padding: "1.5rem", color: "#ffffff" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "#f59e0b", marginBottom: "1rem", textAlign: "center" }}>
                 Data Quality Flow Across Medallion Schemas
               </div>
@@ -20731,6 +20740,7 @@ const MedallionArchTab = ({ s }) => {
                 </div>
               </div>
             </div>
+            </ZoomableFigure>
           </div>
         </div>
       )}
@@ -20965,6 +20975,7 @@ def ingest_bronze(connection: duckdb.DuckDBPyConnection, source: Path) -> bool:
 
       {/* SUB-TAB 3: SIMULATOR */}
       {subTab === "simulator" && (
+        <ZoomableFigure title="Interactive Medallion Retail Pipeline Simulator">
         <div style={s.card}>
           <div style={s.sectionLabel("#d97706")}>Interactive Medallion Retail Pipeline Simulator</div>
           <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem" }}>
@@ -21203,6 +21214,7 @@ def ingest_bronze(connection: duckdb.DuckDBPyConnection, source: Path) -> bool:
             ))}
           </div>
         </div>
+        </ZoomableFigure>
       )}
 
       {/* SUB-TAB 4: DIAGNOSTIC QUIZ */}
@@ -21716,6 +21728,7 @@ const AITestDataBottleneckTab = ({ s }) => {
           </div>
 
           {/* 3 STRUCTURAL CAUSES */}
+          <ZoomableFigure title="3 Structural Causes of Test Data Bottlenecks">
           <div style={s.card}>
             <div style={s.sectionLabel("#0284c7")}>The 3 Structural Causes of Test Data Delays</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
@@ -21750,6 +21763,7 @@ const AITestDataBottleneckTab = ({ s }) => {
               </div>
             </div>
           </div>
+          </ZoomableFigure>
         </div>
       )}
 
@@ -21757,7 +21771,8 @@ const AITestDataBottleneckTab = ({ s }) => {
       {subTab === "principles" && (
         <div>
           {/* 4 TDM DESIGN PRINCIPLES */}
-          <div style={{ ...s.card, marginBottom: "1.5rem" }}>
+          <ZoomableFigure title="4 Modern TDM Design Principles & GitHub Actions API Integration">
+          <div style={{ ...s.card, marginBottom: "0.5rem" }}>
             <div style={s.sectionLabel("#0284c7")}>4 Modern TDM Design Principles</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
               <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", padding: "1rem", borderRadius: 6 }}>
@@ -21817,6 +21832,7 @@ const AITestDataBottleneckTab = ({ s }) => {
   run: npm run test:integration`} />
             </div>
           </div>
+          </ZoomableFigure>
 
           {/* CASE STUDIES */}
           <div style={s.card}>
@@ -21848,6 +21864,7 @@ const AITestDataBottleneckTab = ({ s }) => {
 
       {/* SUB-TAB 3: SIMULATOR */}
       {subTab === "simulator" && (
+        <ZoomableFigure title="Interactive Ephemeral TDM Pipeline Simulator">
         <div style={s.card}>
           <div style={s.sectionLabel("#0284c7")}>Interactive Ephemeral TDM Pipeline Simulator</div>
           <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem" }}>
@@ -21990,6 +22007,7 @@ const AITestDataBottleneckTab = ({ s }) => {
             ))}
           </div>
         </div>
+        </ZoomableFigure>
       )}
 
       {/* SUB-TAB 4: DIAGNOSTIC CALCULATOR */}
