@@ -342,10 +342,6 @@ const ZoomableFigure = ({ title, children }) => {
           </div>
 
           {/* Fullscreen Canvas Viewport */}
-          {/* Overflow is centered with `margin: auto` (NOT flex centering) so
-              oversized content stays reachable via scrollbars. Zoom uses the
-              `zoom` property (not transform) so the layout grows with the scale
-              and scrollbars appear when content exceeds the screen. */}
           <div
             onClick={e => e.stopPropagation()}
             onWheel={handleWheel}
@@ -353,32 +349,51 @@ const ZoomableFigure = ({ title, children }) => {
               flex: 1,
               overflow: "auto",
               position: "relative",
-              background: "#0d0f17"
+              background: "#0d0f17",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1rem"
             }}
           >
+            <style>{`
+              .zoomable-modal-content svg {
+                width: 100% !important;
+                height: 100% !important;
+                max-height: calc(100vh - 140px) !important;
+                min-height: 70vh !important;
+                object-fit: contain !important;
+              }
+              .zoomable-modal-content img {
+                width: 100% !important;
+                height: auto !important;
+                max-height: calc(100vh - 140px) !important;
+                object-fit: contain !important;
+              }
+              .zoomable-modal-content table {
+                width: 100% !important;
+                font-size: 0.85rem !important;
+              }
+            `}</style>
             <div
+              className="zoomable-modal-content"
               style={{
-                minHeight: "100%",
+                background: "#ffffff",
+                borderRadius: 8,
+                padding: "1.5rem",
+                boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+                zoom: scale,
                 width: "100%",
+                maxWidth: "1600px",
+                minHeight: "calc(100vh - 120px)",
                 display: "flex",
-                padding: "2rem",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
                 boxSizing: "border-box"
               }}
             >
-              <div
-                style={{
-                  margin: "auto",
-                  background: "#ffffff",
-                  borderRadius: 8,
-                  padding: "1.5rem",
-                  boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
-                  zoom: scale,
-                  maxWidth: "100%",
-                  width: "100%"
-                }}
-              >
-                {children}
-              </div>
+              {children}
             </div>
           </div>
         </div>
