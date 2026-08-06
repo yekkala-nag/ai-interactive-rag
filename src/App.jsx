@@ -18594,6 +18594,3576 @@ const AgentDebuggingTab = ({ s }) => {
 };
 
 
+// ─── AGENTS AS TOOLS TAB ─────────────────────────────────────────
+const AgentsAsToolsTab = ({ s }) => {
+  const [subTab, setSubTab] = useState("architecture"); // 'architecture' | 'steps' | 'simulator' | 'decision'
+  const [selectedStep, setSelectedStep] = useState(1);
+  const [simScenario, setSimScenario] = useState("munich");
+  const [simStepIndex, setSimStepIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [quizAnswers, setQuizAnswers] = useState({ q1: null, q2: null, q3: null });
+
+  const SCENARIOS = {
+    munich: {
+      name: "🇩🇪 Munich 10-Hour Family Layover",
+      location: "Munich, Germany (MUC)",
+      params: "Arrival: 8:00 AM | Departure: 6:00 PM | Travelers: 2 Adults + 1 7yo | Requirement: Relaxed, memorable sights, Bavarian lunch",
+      userRequest: "We have a 10-hour layover in Munich.\nWe arrive at Munich Airport at 8:00 AM and depart at 6:00 PM.\nWe are two adults and one 7-year-old.\nWe want to see something memorable, eat good food, and avoid missing the flight.\nPlease keep the plan relaxed.",
+      turns: [
+        {
+          turn: 1,
+          agent: "Travel planner (Manager Agent)",
+          type: "reasoning",
+          icon: "🧠",
+          action: "Analyze request & delegate logistics check",
+          details: "Manager receives user request. Evaluates constraint: 10 hours total layover, family with 7-year-old. Before proposing places, invokes check_logistics tool to assess feasibility of central Munich vs nearby alternatives.",
+          toolCall: { name: "check_logistics", args: { query: "Munich airport layover 8am-6pm S-Bahn vs nearby towns for family" } }
+        },
+        {
+          turn: 2,
+          agent: "Logistics specialist (Sub-Agent Tool)",
+          type: "specialist_execution",
+          icon: "📦",
+          action: "Sub-agent turn budget 1/3: Web search & feasibility calculation",
+          details: "Specialist agent runs WebSearchTool to query S-Bahn S1/S8 lines (45 min each way to Marienplatz) vs Freising bus/train (15 min). Analyzes buffer: Central Munich consumes 2.5h total travel + walking, exhausting for 7yo. Recommends Freising (historic Bavarian town 15 min from airport) with 4-hour safety buffer before 6 PM flight.",
+          result: "FEASIBILITY REPORT: Central Munich possible but tight with a child. RECOMMENDATION: Visit Freising (15 mins away). Return to airport by 1:45 PM for 6:00 PM departure."
+        },
+        {
+          turn: 3,
+          agent: "Travel planner (Manager Agent)",
+          type: "reasoning",
+          icon: "🧠",
+          action: "Delegate local experience discovery",
+          details: "Manager accepts logistics guidance (focus on Freising). Now delegates to suggest_local_options tool to find family-friendly sights and Bavarian dining in Freising.",
+          toolCall: { name: "suggest_local_options", args: { location: "Freising, Germany", focus: "family friendly, historic, Bavarian lunch" } }
+        },
+        {
+          turn: 4,
+          agent: "Local experience specialist (Sub-Agent Tool)",
+          type: "specialist_execution",
+          icon: "🍱",
+          action: "Sub-agent turn budget 1/3: Web search for attractions & restaurants",
+          details: "Specialist agent runs WebSearchTool to find top spots in Freising: Marienplatz Freising historic center, Domberg (Cathedral Hill), and lunch at Bräustüberl Weihenstephan (world's oldest brewery terrace with kid-friendly Bavarian food).",
+          result: "RECOMMENDED OPTIONS: 1. Stroll Freising Marienplatz & Cathedral Hill. 2. Bavarian lunch at Weihenstephan Brewery terrace. 3. relaxed return."
+        },
+        {
+          turn: 5,
+          agent: "Travel planner (Manager Agent)",
+          type: "reasoning",
+          icon: "🧠",
+          action: "Delegate risk assessment of draft plan",
+          details: "Manager builds draft itinerary for Freising. Delegates to review_risks tool to identify potential bottlenecks (train delays, baggage storage, security queues).",
+          toolCall: { name: "review_risks", args: { plan: "Freising outing 9:30am-1:30pm, return MUC airport 1:45pm, flight 6:00pm" } }
+        },
+        {
+          turn: 6,
+          agent: "Risk specialist (Sub-Agent Tool)",
+          type: "specialist_execution",
+          icon: "🛡️",
+          action: "Sub-agent turn budget 1/3: Pure LLM Risk Analysis",
+          details: "Specialist agent reviews the itinerary without web search. Flags risks: 1. S-Bahn regional bus delays. 2. Passport control queue at MUC Terminal 2. Mitigation: Store bags at airport left luggage (Terminal 1/2), download DB Navigator app, maintain 4-hour return buffer.",
+          result: "RISK EVALUATION: Low-medium risk. Back-up plan: If regional bus delayed, take taxi (15 mins, ~€25). Ensure left luggage drop before exiting."
+        },
+        {
+          turn: 7,
+          agent: "Travel planner (Manager Agent)",
+          type: "final_synthesis",
+          icon: "✅",
+          action: "Synthesize final response & validate against LayoverPlan Pydantic schema",
+          details: "Manager combines sub-agent findings into structured LayoverPlan schema.",
+          pydanticOutput: {
+            summary: "Relaxed family outing to historic Freising (15 mins from Munich Airport) featuring Bavarian lunch at Weihenstephan and Marienplatz stroll.",
+            itinerary: [
+              "08:00 AM - Arrive MUC, clear passport control & store bags at Left Luggage.",
+              "09:15 AM - Bus 635 to Freising station (15 mins).",
+              "09:30 AM - Stroll Freising Old Town & Cathedral Hill (Domberg).",
+              "11:30 AM - Lunch at Weihenstephan Brewery Terrace (kid-friendly Bavarian food).",
+              "01:30 PM - Bus 635 back to Munich Airport.",
+              "01:45 PM - Re-enter MUC Airport with 4.25 hour flight buffer."
+            ],
+            airport_return_time: "01:45 PM (4 hours 15 minutes before 6:00 PM flight)",
+            backup_plan: "If Bus 635 is delayed, catch local Taxi/Uber (~€25, 12 mins). If passport queue >45 mins, switch to airport indoor visitors park.",
+            rationale: "Visiting central Munich requires 90+ minutes of transit round trip, creating unnecessary stress for a 7-year-old. Freising offers authentic Bavarian charm, the world's oldest brewery, and a massive safety buffer."
+          }
+        }
+      ]
+    },
+    tokyo: {
+      name: "🇯🇵 Tokyo Narita 8-Hour Solo Layover",
+      location: "Tokyo Narita (NRT)",
+      params: "Arrival: 9:00 AM | Departure: 5:00 PM | Traveler: Solo | Requirement: Fresh sushi & Narita Shinshoji Temple walk",
+      userRequest: "I have an 8-hour layover at Tokyo Narita (9 AM - 5 PM). Solo traveler. Want fresh sushi & historic temple visit.",
+      turns: [
+        {
+          turn: 1,
+          agent: "Travel planner (Manager Agent)",
+          type: "reasoning",
+          icon: "🧠",
+          action: "Delegate Narita transit feasibility check",
+          details: "Manager receives Narita layover request. Invokes check_logistics tool to compare Narita City (10 min JR train) vs Central Tokyo / Shibuya (70 min Keisei Skyliner).",
+          toolCall: { name: "check_logistics", args: { query: "Narita Airport layover 9am-5pm Narita City vs Tokyo station" } }
+        },
+        {
+          turn: 2,
+          agent: "Logistics specialist (Sub-Agent Tool)",
+          type: "specialist_execution",
+          icon: "📦",
+          action: "Sub-agent turn budget 1/3: Web search Narita Express & JR Keisei lines",
+          details: "Specialist checks train schedules. Central Tokyo takes 2.5h round trip transit. Narita City (Narita Station) takes only 10 mins on JR Narita Line or Keisei Line. Recommends Narita Omotesando & Shinshoji Temple.",
+          result: "FEASIBILITY: Narita Town is 10 mins away. Return to airport by 2:30 PM for 5:00 PM international departure."
+        },
+        {
+          turn: 3,
+          agent: "Travel planner (Manager Agent)",
+          type: "reasoning",
+          icon: "🧠",
+          action: "Delegate sushi & temple experience search",
+          details: "Manager invokes suggest_local_options tool for Narita Omotesando street sushi and historic Shinshoji Temple.",
+          toolCall: { name: "suggest_local_options", args: { location: "Narita Omotesando street", focus: "unagi, sushi, Shinshoji temple" } }
+        },
+        {
+          turn: 4,
+          agent: "Local experience specialist (Sub-Agent Tool)",
+          type: "specialist_execution",
+          icon: "🍱",
+          action: "Sub-agent turn budget 1/3: Search local dining & attractions",
+          details: "Specialist finds Kikuya (famous sushi & eel restaurant on Omotesando) and Naritasan Shinshoji Temple grounds & pagoda.",
+          result: "OPTIONS: 1. Walk historic Narita Omotesando. 2. Lunch at Kikuya or Edokkko Sushi. 3. Explore Shinshoji Temple garden."
+        },
+        {
+          turn: 5,
+          agent: "Travel planner (Manager Agent)",
+          type: "reasoning",
+          icon: "🧠",
+          action: "Delegate risk review",
+          details: "Manager calls review_risks tool to verify IC card (Suica/Pasmo) usage, customs queue at NRT, and train frequency.",
+          toolCall: { name: "review_risks", args: { plan: "Narita town 10:30am-2:00pm, return NRT 2:30pm" } }
+        },
+        {
+          turn: 6,
+          agent: "Risk specialist (Sub-Agent Tool)",
+          type: "specialist_execution",
+          icon: "🛡️",
+          action: "Sub-agent turn budget 1/3: Risk critique",
+          details: "Specialist reviews plan. Main risk: NRT international security queue can spike at 3 PM. Mitigation: Be back at NRT Terminal 1/2 by 2:30 PM sharp.",
+          result: "RISK EVALUATION: Very safe. Trains run every 15 minutes between Narita Station and Airport."
+        },
+        {
+          turn: 7,
+          agent: "Travel planner (Manager Agent)",
+          type: "final_synthesis",
+          icon: "✅",
+          action: "Synthesize final response into LayoverPlan schema",
+          details: "Manager compiles complete Narita layover plan.",
+          pydanticOutput: {
+            summary: "Excursion to Narita Omotesando and Shinshoji Temple (10 mins from NRT) with authentic sushi lunch.",
+            itinerary: [
+              "09:00 AM - Arrive NRT, pass immigration & store luggage.",
+              "10:15 AM - Catch Keisei Line to Keisei-Narita Station (10 mins).",
+              "10:30 AM - Walk historic Omotesando street to Shinshoji Temple.",
+              "12:00 PM - Lunch at Kikuya (fresh sushi & grilled unagi).",
+              "01:30 PM - Stroll Naritasan Park.",
+              "02:20 PM - Train back to NRT Airport.",
+              "02:30 PM - Re-enter NRT Airport with 2.5 hour buffer."
+            ],
+            airport_return_time: "02:30 PM (2.5 hours before 5:00 PM flight)",
+            backup_plan: "If JR/Keisei trains face delays, taxi ride back is 15 minutes (~3,500 JPY).",
+            rationale: "Traveling to central Tokyo (Shibuya/Shinjuku) wastes 3 hours in transit. Narita Town delivers 1000-year-old temple culture and top-tier sushi just 10 minutes from the terminal."
+          }
+        }
+      ]
+    }
+  };
+
+  const currentSim = SCENARIOS[simScenario];
+  const maxSimSteps = currentSim.turns.length;
+
+  useEffect(() => {
+    let timer;
+    if (isPlaying && simStepIndex < maxSimSteps - 1) {
+      timer = setTimeout(() => {
+        setSimStepIndex(prev => prev + 1);
+      }, 1200);
+    } else if (simStepIndex >= maxSimSteps - 1) {
+      setIsPlaying(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isPlaying, simStepIndex, maxSimSteps]);
+
+  const handleNextStep = () => {
+    if (simStepIndex < maxSimSteps - 1) {
+      setSimStepIndex(prev => prev + 1);
+    }
+  };
+
+  const handleResetSim = () => {
+    setIsPlaying(false);
+    setSimStepIndex(0);
+  };
+
+  return (
+    <div>
+      {/* SECTION HEADER */}
+      <div style={s.sectionLabel("#c9a84c")}>Multi-Agent Pattern · OpenAI Agents SDK</div>
+      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", border: "1px solid #334155" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
+          <div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#38bdf8", marginBottom: "0.5rem" }}>
+              Manager–Specialist Architecture
+            </div>
+            <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.8rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.5rem", lineHeight: 1.1 }}>
+              Using <em style={{ color: "#38bdf8", fontStyle: "italic" }}>Agents as Tools</em>
+            </h2>
+            <p style={{ fontSize: "0.72rem", color: "#94a3b8", maxWidth: 680, lineHeight: 1.7 }}>
+              Standard tool calls execute static scripts or APIs. But for open-ended problem solving (like feasibility checks, web search research, or risk critique), standard functions are too rigid. In this pattern, <strong>specialist agents are exposed as tools</strong> via <code style={{ color: "#38bdf8", background: "#0284c720", padding: "0.1rem 0.4rem", borderRadius: 3 }}>.as_tool()</code> for a manager agent to call dynamically.
+            </p>
+          </div>
+          <div style={{ background: "#0284c715", border: "1px solid #0284c740", padding: "0.8rem 1rem", borderRadius: 6, textAlign: "right" }}>
+            <div style={{ fontSize: "0.6rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em" }}>SDK Library</div>
+            <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.85rem", fontWeight: 700, color: "#38bdf8" }}>openai-agents</div>
+            <div style={{ fontSize: "0.58rem", color: "#64748b", marginTop: "0.2rem" }}>OpenAI Agents SDK (Aug 2026)</div>
+          </div>
+        </div>
+      </div>
+
+      {/* SUB-TABS */}
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", borderBottom: "1px solid #e2e8f0", paddingBottom: "0.5rem" }}>
+        {[
+          { id: "architecture", label: "① Architecture & Concept 🔬" },
+          { id: "steps",        label: "② 5-Step Guided Code 💻" },
+          { id: "simulator",    label: "③ Interactive Layover Simulator 🎮" },
+          { id: "decision",     label: "④ Decision Matrix & Quiz 🎯" },
+        ].map(t => (
+          <button
+            key={t.id}
+            onClick={() => setSubTab(t.id)}
+            style={{
+              padding: "0.6rem 1rem",
+              fontFamily: "Syne, sans-serif",
+              fontSize: "0.65rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              borderRadius: 4,
+              border: "1px solid",
+              borderColor: subTab === t.id ? "#0f172a" : "transparent",
+              background: subTab === t.id ? "#0f172a" : "#ffffff",
+              color: subTab === t.id ? "#ffffff" : "#64748b",
+              cursor: "pointer",
+              transition: "all 0.2s"
+            }}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* SUB-TAB 1: ARCHITECTURE */}
+      {subTab === "architecture" && (
+        <div>
+          <div style={{ ...s.card, marginBottom: "1.5rem" }}>
+            <div style={s.sectionLabel("#0284c7")}>Manager–Specialist Interaction Flow</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
+              <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>🧠</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a", marginBottom: "0.3rem" }}>
+                  1. Manager Agent
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#64748b", lineHeight: 1.6 }}>
+                  Configured with overall goal (<code style={{ color: "#0284c7" }}>travel_planner_agent</code>) and structured Pydantic output schema (<code style={{ color: "#0284c7" }}>LayoverPlan</code>). Delegates sub-problems to tools when needed.
+                </div>
+              </div>
+
+              <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>🛠️ Agent.as_tool()</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#166534", marginBottom: "0.3rem" }}>
+                  2. Specialist Wrapped as Tool
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#15803d", lineHeight: 1.6 }}>
+                  Exposes sub-agent as a tool function to the manager. Specialist gets its own prompt <code style={{ color: "#166534" }}>instructions</code>, tools (<code style={{ color: "#166534" }}>WebSearchTool</code>), and max turn budget (<code style={{ color: "#166534" }}>max_turns=3</code>).
+                </div>
+              </div>
+
+              <div style={{ background: "#fefce8", border: "1px solid #fef08a", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>🔄 Bounded Execution</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#854d0e", marginBottom: "0.3rem" }}>
+                  3. Result Synthesis
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#a16207", lineHeight: 1.6 }}>
+                  The manager sees only standard tool inputs & outputs. It doesn't get burdened with internal specialist search turns, keeping the main context clean and structured.
+                </div>
+              </div>
+            </div>
+
+            {/* DIAGRAM */}
+            <div style={{ marginTop: "1.5rem", background: "#0f172a", borderRadius: 8, padding: "1.5rem", color: "#ffffff" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "#38bdf8", marginBottom: "1rem", textAlign: "center" }}>
+                Architecture Flow: Travel Planner Manager & 3 Specialist Tools
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+                {/* User Input */}
+                <div style={{ background: "#1e293b", border: "1px solid #475569", padding: "0.6rem 1.2rem", borderRadius: 20, fontSize: "0.7rem", color: "#cbd5e1" }}>
+                  💬 User Request: "10-hour layover in Munich with a 7yo child..."
+                </div>
+                <div style={{ color: "#38bdf8", fontSize: "0.8rem" }}>↓</div>
+
+                {/* Manager Agent */}
+                <div style={{ background: "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)", border: "2px solid #38bdf8", padding: "0.8rem 1.5rem", borderRadius: 8, textAlign: "center", width: "80%", boxShadow: "0 4px 12px rgba(2,132,199,0.3)" }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: "#ffffff" }}>
+                    🧠 Manager Agent: travel_planner_agent
+                  </div>
+                  <div style={{ fontSize: "0.62rem", color: "#e0f2fe", marginTop: "0.2rem" }}>
+                    Output Schema: LayoverPlan (summary, itinerary, airport_return_time, backup_plan, rationale)
+                  </div>
+                </div>
+                <div style={{ color: "#38bdf8", fontSize: "0.8rem" }}>↓ calls tools (.as_tool)</div>
+
+                {/* 3 Specialist Tools */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", width: "100%" }}>
+                  <div style={{ background: "#1e293b", border: "1px dashed #38bdf8", padding: "0.8rem", borderRadius: 6, textAlign: "center" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", color: "#38bdf8" }}>
+                      📦 check_logistics
+                    </div>
+                    <div style={{ fontSize: "0.58rem", color: "#94a3b8", marginTop: "0.3rem" }}>
+                      Logistics Specialist Agent<br />
+                      + WebSearchTool()<br />
+                      max_turns=3
+                    </div>
+                  </div>
+
+                  <div style={{ background: "#1e293b", border: "1px dashed #34d399", padding: "0.8rem", borderRadius: 6, textAlign: "center" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", color: "#34d399" }}>
+                      🍱 suggest_local_options
+                    </div>
+                    <div style={{ fontSize: "0.58rem", color: "#94a3b8", marginTop: "0.3rem" }}>
+                      Local Experience Agent<br />
+                      + WebSearchTool()<br />
+                      max_turns=3
+                    </div>
+                  </div>
+
+                  <div style={{ background: "#1e293b", border: "1px dashed #facc15", padding: "0.8rem", borderRadius: 6, textAlign: "center" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", color: "#facc15" }}>
+                      🛡️ review_risks
+                    </div>
+                    <div style={{ fontSize: "0.58rem", color: "#94a3b8", marginTop: "0.3rem" }}>
+                      Risk Specialist Agent<br />
+                      (Pure LLM Reasoning)<br />
+                      max_turns=3
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ color: "#38bdf8", fontSize: "0.8rem" }}>↓ structured synthesis</div>
+                <div style={{ background: "#059669", padding: "0.6rem 1.2rem", borderRadius: 6, fontSize: "0.7rem", color: "#ffffff", fontWeight: 700 }}>
+                  ✅ Validated LayoverPlan Pydantic JSON Output
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* COMPARISON MATRIX */}
+          <div style={{ ...s.card, marginBottom: "1.5rem" }}>
+            <div style={s.sectionLabel("#0284c7")}>Pattern Comparison: Function vs Agent-as-Tool vs Handoff</div>
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.67rem" }}>
+                <thead>
+                  <tr style={{ background: "#f8fafc", borderBottom: "2px solid #e2e8f0", textAlign: "left" }}>
+                    <th style={{ padding: "0.6rem" }}>Dimension</th>
+                    <th style={{ padding: "0.6rem", color: "#64748b" }}>Deterministic Function Tool</th>
+                    <th style={{ padding: "0.6rem", color: "#0284c7", fontWeight: 700 }}>Agent as a Tool (.as_tool)</th>
+                    <th style={{ padding: "0.6rem", color: "#166534" }}>Agent Handoff Pattern</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                    <td style={{ padding: "0.6rem", fontWeight: 700 }}>Sub-task Nature</td>
+                    <td style={{ padding: "0.6rem" }}>Fixed, script-based (SQL query, calculator, REST API)</td>
+                    <td style={{ padding: "0.6rem", color: "#0284c7", fontWeight: 700 }}>Open-ended, bounded problem requiring reasoning & search</td>
+                    <td style={{ padding: "0.6rem" }}>Complete shift of conversation ownership to another agent</td>
+                  </tr>
+                  <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                    <td style={{ padding: "0.6rem", fontWeight: 700 }}>Caller Control</td>
+                    <td style={{ padding: "0.6rem" }}>Caller receives exact function retvals</td>
+                    <td style={{ padding: "0.6rem", color: "#0284c7", fontWeight: 700 }}>Manager retains control & synthesizes final result</td>
+                    <td style={{ padding: "0.6rem" }}>Target agent takes over chat loop completely</td>
+                  </tr>
+                  <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                    <td style={{ padding: "0.6rem", fontWeight: 700 }}>Sub-agent Tool Access</td>
+                    <td style={{ padding: "0.6rem" }}>None (static code execution)</td>
+                    <td style={{ padding: "0.6rem", color: "#0284c7", fontWeight: 700 }}>Specialist has its own tools (e.g. WebSearchTool)</td>
+                    <td style={{ padding: "0.6rem" }}>Target agent has its own toolset</td>
+                  </tr>
+                  <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                    <td style={{ padding: "0.6rem", fontWeight: 700 }}>Context Window Impact</td>
+                    <td style={{ padding: "0.6rem" }}>Only tool input/output string added</td>
+                    <td style={{ padding: "0.6rem", color: "#0284c7", fontWeight: 700 }}>Internal sub-agent turns hidden; only summary returned</td>
+                    <td style={{ padding: "0.6rem" }}>Full turn transcript passed to next agent</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 2: 5-STEP CODE */}
+      {subTab === "steps" && (
+        <div>
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+            {[1, 2, 3, 4, 5].map(step => (
+              <button
+                key={step}
+                onClick={() => setSelectedStep(step)}
+                style={{
+                  flex: 1,
+                  padding: "0.6rem",
+                  borderRadius: 4,
+                  border: "1px solid",
+                  borderColor: selectedStep === step ? "#0284c7" : "#cbd5e1",
+                  background: selectedStep === step ? "#0284c7" : "#ffffff",
+                  color: selectedStep === step ? "#ffffff" : "#475569",
+                  fontFamily: "Syne, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "0.65rem",
+                  cursor: "pointer"
+                }}
+              >
+                Step {step}
+              </button>
+            ))}
+          </div>
+
+          {selectedStep === 1 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#0284c7")}>Step 1: Pydantic Schema & Manager Agent Setup</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                Define the output schema <code style={{ color: "#0284c7" }}>LayoverPlan</code> using Pydantic, and configure the main <code style={{ color: "#0284c7" }}>travel_planner_agent</code> with <code style={{ color: "#0284c7" }}>output_type=LayoverPlan</code>.
+              </p>
+              <CodeBlock code={`# pip install openai-agents pydantic
+import os
+from pydantic import BaseModel
+from agents import Agent, ModelSettings, OpenAIResponsesModel
+from openai import AsyncAzureOpenAI
+
+client = AsyncAzureOpenAI(
+    api_key=os.environ["OPENAI_API_KEY"],
+    azure_endpoint=os.environ["OPENAI_API_BASE"],
+    api_version=os.environ["OPENAI_API_VERSION"],
+)
+
+# 1. Output Schema for Structured Output
+class LayoverPlan(BaseModel):
+    summary: str
+    itinerary: list[str]
+    airport_return_time: str
+    backup_plan: str
+    rationale: str
+
+# 2. Manager Agent Definition
+travel_planner_agent = Agent(
+    name="Travel planner",
+    instructions="Create a travel plan for the user using the available tools.",
+    model=OpenAIResponsesModel(
+        model="gpt-5.4",
+        openai_client=client,
+    ),
+    model_settings=ModelSettings(
+        reasoning={"effort": "medium"},
+    ),
+    tools=[
+        logistics_tool,
+        local_experience_tool,
+        risk_tool,
+    ],
+    output_type=LayoverPlan,
+)`} />
+            </div>
+          )}
+
+          {selectedStep === 2 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#0284c7")}>Step 2: Logistics Specialist Agent (logistics_tool)</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                The logistics specialist checks travel feasibility. We attach <code style={{ color: "#0284c7" }}>WebSearchTool()</code> so it can search live transport schedules, and wrap it with <code style={{ color: "#0284c7" }}>.as_tool(max_turns=3)</code>.
+              </p>
+              <CodeBlock code={`from agents import WebSearchTool
+
+# 1. Define the specialist agent with web search
+logistics_agent = Agent(
+    name="Logistics specialist",
+    instructions="Check whether a travel plan is feasible using current transportation and timing information.",
+    model=OpenAIResponsesModel(
+        model="gpt-5.4",
+        openai_client=client,
+    ),
+    model_settings=ModelSettings(
+        reasoning={"effort": "medium"},
+    ),
+    tools=[WebSearchTool()],
+)
+
+# 2. Expose the specialist agent AS A TOOL to the manager
+logistics_tool = logistics_agent.as_tool(
+    tool_name="check_logistics",
+    tool_description="Check travel timing, transportation feasibility, and buffers.",
+    max_turns=3,
+)
+
+# NOTE:
+# - 'instructions' is specialist agent-facing (tells it how to act when called).
+# - 'tool_description' is manager agent-facing (tells manager when to pick this tool).`} />
+            </div>
+          )}
+
+          {selectedStep === 3 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#0284c7")}>Step 3: Local Experience Specialist Agent (local_experience_tool)</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                The local experience specialist discovers activities and food options matching traveler constraints. It also uses <code style={{ color: "#0284c7" }}>WebSearchTool()</code> for live recommendations.
+              </p>
+              <CodeBlock code={`local_experience_agent = Agent(
+    name="Local experience specialist",
+    instructions="Suggest activities and food options that fit the traveler's preferences and constraints.",
+    model=OpenAIResponsesModel(
+        model="gpt-5.4",
+        openai_client=client,
+    ),
+    model_settings=ModelSettings(
+        reasoning={"effort": "medium"},
+    ),
+    tools=[WebSearchTool()],
+)
+
+local_experience_tool = local_experience_agent.as_tool(
+    tool_name="suggest_local_options",
+    tool_description="Suggest activities and food options that fit the traveler.",
+    max_turns=3,
+)`} />
+            </div>
+          )}
+
+          {selectedStep === 4 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#0284c7")}>Step 4: Risk Review Specialist Agent (risk_tool)</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                The risk specialist reviews the proposed plan to spot practical failure modes (passport queues, transit delays). Since it only requires qualitative judgment, it does NOT need extra tools.
+              </p>
+              <CodeBlock code={`risk_agent = Agent(
+    name="Risk specialist",
+    instructions="Identify practical risks in a travel plan and suggest ways to make it more robust.",
+    model=OpenAIResponsesModel(
+        model="gpt-5.4",
+        openai_client=client,
+    ),
+    model_settings=ModelSettings(
+        reasoning={"effort": "medium"},
+    ),
+)
+
+risk_tool = risk_agent.as_tool(
+    tool_name="review_risks",
+    tool_description="Review practical risks and robustness of the travel plan.",
+    max_turns=3,
+)`} />
+            </div>
+          )}
+
+          {selectedStep === 5 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#0284c7")}>Step 5: Manager Execution Loop & Structured Output</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                Run the complete system with <code style={{ color: "#0284c7" }}>Runner.run()</code>. The travel planner calls specialist tools, synthesizes the results, and returns validated Pydantic JSON.
+              </p>
+              <CodeBlock code={`from agents import Runner
+
+user_request = """
+We have a 10-hour layover in Munich.
+
+We arrive at Munich Airport at 8:00 AM and depart at 6:00 PM.
+We are two adults and one 7-year-old.
+We want to see something memorable, eat good food, and avoid missing the flight.
+
+Please keep the plan relaxed.
+"""
+
+# Run the manager agent
+result = await Runner.run(
+    travel_planner_agent,
+    user_request,
+    max_turns=10,
+)
+
+# Access validated Pydantic object
+print(result.final_output.model_dump_json(indent=2))`} />
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* SUB-TAB 3: SIMULATOR */}
+      {subTab === "simulator" && (
+        <div style={s.card}>
+          <div style={s.sectionLabel("#0284c7")}>Interactive Layover Manager-Specialist Simulator</div>
+          <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem" }}>
+            Select a scenario and step through the turn-by-turn trajectory logs showing sub-agent activations, specialist tool execution, and final Pydantic JSON output.
+          </p>
+
+          {/* SCENARIO SELECTOR */}
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem" }}>
+            {Object.keys(SCENARIOS).map(key => (
+              <button
+                key={key}
+                onClick={() => {
+                  setSimScenario(key);
+                  setSimStepIndex(0);
+                  setIsPlaying(false);
+                }}
+                style={{
+                  padding: "0.5rem 0.9rem",
+                  borderRadius: 4,
+                  border: "1px solid",
+                  borderColor: simScenario === key ? "#0284c7" : "#cbd5e1",
+                  background: simScenario === key ? "#0284c7" : "#ffffff",
+                  color: simScenario === key ? "#ffffff" : "#475569",
+                  fontSize: "0.65rem",
+                  fontWeight: 700,
+                  cursor: "pointer"
+                }}
+              >
+                {SCENARIOS[key].name}
+              </button>
+            ))}
+          </div>
+
+          {/* SCENARIO META */}
+          <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "0.8rem", borderRadius: 6, marginBottom: "1rem" }}>
+            <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#0f172a" }}>Scenario Context</div>
+            <div style={{ fontSize: "0.62rem", color: "#64748b", fontFamily: "DM Mono, monospace", marginTop: "0.2rem" }}>
+              {currentSim.params}
+            </div>
+          </div>
+
+          {/* PLAYER CONTROLS */}
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "1.5rem" }}>
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "none",
+                background: isPlaying ? "#dc2626" : "#16a34a",
+                color: "#ffffff",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                cursor: "pointer"
+              }}
+            >
+              {isPlaying ? "⏸ Pause Flow" : "▶ Play Full Flow"}
+            </button>
+            <button
+              onClick={handleNextStep}
+              disabled={simStepIndex >= maxSimSteps - 1}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "1px solid #cbd5e1",
+                background: "#ffffff",
+                color: "#475569",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                cursor: simStepIndex >= maxSimSteps - 1 ? "not-allowed" : "pointer"
+              }}
+            >
+              ⏩ Next Step ({simStepIndex + 1}/{maxSimSteps})
+            </button>
+            <button
+              onClick={handleResetSim}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "1px solid #cbd5e1",
+                background: "#ffffff",
+                color: "#64748b",
+                fontSize: "0.65rem",
+                fontWeight: 600,
+                cursor: "pointer"
+              }}
+            >
+              🔄 Reset
+            </button>
+          </div>
+
+          {/* TRAJECTORY STEPS DISPLAY */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+            {currentSim.turns.slice(0, simStepIndex + 1).map((item, idx) => (
+              <div
+                key={idx}
+                style={{
+                  background: item.type === "specialist_execution" ? "#f0fdf4" : item.type === "final_synthesis" ? "#eff6ff" : "#ffffff",
+                  border: "1px solid",
+                  borderColor: item.type === "specialist_execution" ? "#bbf7d0" : item.type === "final_synthesis" ? "#bfdbfe" : "#e2e8f0",
+                  borderRadius: 6,
+                  padding: "1rem",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                    <span style={{ fontSize: "1.1rem" }}>{item.icon}</span>
+                    <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a" }}>
+                      Turn {item.turn}: {item.agent}
+                    </span>
+                  </div>
+                  <span style={{
+                    fontSize: "0.58rem",
+                    padding: "0.15rem 0.5rem",
+                    borderRadius: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    background: item.type === "specialist_execution" ? "#dcfce7" : item.type === "final_synthesis" ? "#dbeafe" : "#f1f5f9",
+                    color: item.type === "specialist_execution" ? "#15803d" : item.type === "final_synthesis" ? "#1e40af" : "#475569"
+                  }}>
+                    {item.type}
+                  </span>
+                </div>
+
+                <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#1e293b", marginBottom: "0.3rem" }}>
+                  {item.action}
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#475569", lineHeight: 1.6, marginBottom: "0.5rem" }}>
+                  {item.details}
+                </div>
+
+                {item.toolCall && (
+                  <div style={{ background: "#0f172a", borderRadius: 4, padding: "0.6rem", fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: "#38bdf8" }}>
+                    🔧 Tool Call Issued by Manager: {item.toolCall.name}({JSON.stringify(item.toolCall.args)})
+                  </div>
+                )}
+
+                {item.result && (
+                  <div style={{ background: "#f8fafc", borderLeft: "3px solid #16a34a", padding: "0.5rem", fontSize: "0.62rem", color: "#166534", marginTop: "0.4rem", fontFamily: "DM Mono, monospace" }}>
+                    {item.result}
+                  </div>
+                )}
+
+                {item.pydanticOutput && (
+                  <div style={{ marginTop: "0.5rem" }}>
+                    <div style={{ fontSize: "0.62rem", fontWeight: 700, color: "#1e40af", marginBottom: "0.3rem" }}>
+                      Validated LayoverPlan Pydantic JSON Output:
+                    </div>
+                    <CodeBlock code={JSON.stringify(item.pydanticOutput, null, 2)} lang="json" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 4: DECISION QUIZ */}
+      {subTab === "decision" && (
+        <div style={s.card}>
+          <div style={s.sectionLabel("#0284c7")}>Interactive Diagnostic: When to Use "Agents as Tools"</div>
+          <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1.5rem", lineHeight: 1.7 }}>
+            Answer these 3 core questions from the Towards Data Science article to determine if your scenario is a fit for the Agent-as-a-Tool pattern.
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+            {/* Question 1 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                1. Is part of the task open-ended enough to require an agent rather than a predefined function?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <button
+                  onClick={() => setQuizAnswers({ ...quizAnswers, q1: "yes" })}
+                  style={{
+                    padding: "0.4rem 0.8rem",
+                    borderRadius: 4,
+                    border: "1px solid",
+                    borderColor: quizAnswers.q1 === "yes" ? "#16a34a" : "#cbd5e1",
+                    background: quizAnswers.q1 === "yes" ? "#16a34a" : "#ffffff",
+                    color: quizAnswers.q1 === "yes" ? "#ffffff" : "#475569",
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    cursor: "pointer"
+                  }}
+                >
+                  Yes (e.g. searching transport, finding activities, risk assessment)
+                </button>
+                <button
+                  onClick={() => setQuizAnswers({ ...quizAnswers, q1: "no" })}
+                  style={{
+                    padding: "0.4rem 0.8rem",
+                    borderRadius: 4,
+                    border: "1px solid",
+                    borderColor: quizAnswers.q1 === "no" ? "#dc2626" : "#cbd5e1",
+                    background: quizAnswers.q1 === "no" ? "#dc2626" : "#ffffff",
+                    color: quizAnswers.q1 === "no" ? "#ffffff" : "#475569",
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    cursor: "pointer"
+                  }}
+                >
+                  No (e.g. database query, static price calculation)
+                </button>
+              </div>
+            </div>
+
+            {/* Question 2 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                2. Can that work be delegated as a clearly bounded specialist task?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <button
+                  onClick={() => setQuizAnswers({ ...quizAnswers, q2: "yes" })}
+                  style={{
+                    padding: "0.4rem 0.8rem",
+                    borderRadius: 4,
+                    border: "1px solid",
+                    borderColor: quizAnswers.q2 === "yes" ? "#16a34a" : "#cbd5e1",
+                    background: quizAnswers.q2 === "yes" ? "#16a34a" : "#ffffff",
+                    color: quizAnswers.q2 === "yes" ? "#ffffff" : "#475569",
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    cursor: "pointer"
+                  }}
+                >
+                  Yes (Logistics check vs Local experience vs Risk review)
+                </button>
+                <button
+                  onClick={() => setQuizAnswers({ ...quizAnswers, q2: "no" })}
+                  style={{
+                    padding: "0.4rem 0.8rem",
+                    borderRadius: 4,
+                    border: "1px solid",
+                    borderColor: quizAnswers.q2 === "no" ? "#dc2626" : "#cbd5e1",
+                    background: quizAnswers.q2 === "no" ? "#dc2626" : "#ffffff",
+                    color: quizAnswers.q2 === "no" ? "#ffffff" : "#475569",
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    cursor: "pointer"
+                  }}
+                >
+                  No (Tightly coupled continuous dialogue)
+                </button>
+              </div>
+            </div>
+
+            {/* Question 3 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                3. Should the original manager agent remain responsible for the overall result?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <button
+                  onClick={() => setQuizAnswers({ ...quizAnswers, q3: "yes" })}
+                  style={{
+                    padding: "0.4rem 0.8rem",
+                    borderRadius: 4,
+                    border: "1px solid",
+                    borderColor: quizAnswers.q3 === "yes" ? "#16a34a" : "#cbd5e1",
+                    background: quizAnswers.q3 === "yes" ? "#16a34a" : "#ffffff",
+                    color: quizAnswers.q3 === "yes" ? "#ffffff" : "#475569",
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    cursor: "pointer"
+                  }}
+                >
+                  Yes (Manager synthesizes final LayoverPlan schema)
+                </button>
+                <button
+                  onClick={() => setQuizAnswers({ ...quizAnswers, q3: "no" })}
+                  style={{
+                    padding: "0.4rem 0.8rem",
+                    borderRadius: 4,
+                    border: "1px solid",
+                    borderColor: quizAnswers.q3 === "no" ? "#dc2626" : "#cbd5e1",
+                    background: quizAnswers.q3 === "no" ? "#dc2626" : "#ffffff",
+                    color: quizAnswers.q3 === "no" ? "#ffffff" : "#475569",
+                    fontSize: "0.65rem",
+                    fontWeight: 700,
+                    cursor: "pointer"
+                  }}
+                >
+                  No (Next agent takes over user conversation permanently)
+                </button>
+              </div>
+            </div>
+
+            {/* DIAGNOSTIC RECOMMENDATION */}
+            {quizAnswers.q1 && quizAnswers.q2 && quizAnswers.q3 && (
+              <div style={{
+                background: (quizAnswers.q1 === "yes" && quizAnswers.q2 === "yes" && quizAnswers.q3 === "yes") ? "#f0fdf4" : "#fef2f2",
+                border: "1px solid",
+                borderColor: (quizAnswers.q1 === "yes" && quizAnswers.q2 === "yes" && quizAnswers.q3 === "yes") ? "#bbf7d0" : "#fecaca",
+                padding: "1rem",
+                borderRadius: 6
+              }}>
+                <div style={{
+                  fontFamily: "Syne, sans-serif",
+                  fontWeight: 800,
+                  fontSize: "0.8rem",
+                  color: (quizAnswers.q1 === "yes" && quizAnswers.q2 === "yes" && quizAnswers.q3 === "yes") ? "#15803d" : "#991b1b",
+                  marginBottom: "0.3rem"
+                }}>
+                  {(quizAnswers.q1 === "yes" && quizAnswers.q2 === "yes" && quizAnswers.q3 === "yes")
+                    ? "✨ Ideal Fit for Agent-as-a-Tool Pattern!"
+                    : "⚠️ Consider Alternative Pattern"}
+                </div>
+                <div style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.6 }}>
+                  {(quizAnswers.q1 === "yes" && quizAnswers.q2 === "yes" && quizAnswers.q3 === "yes")
+                    ? "All three criteria are met! Wrap your specialist agents with .as_tool(...) to keep your manager agent focused on high-level coordination and structured output synthesis."
+                    : (quizAnswers.q1 === "no")
+                    ? "If operations can be captured in deterministic code, use a standard Python/JS function tool instead of incurring agent LLM overhead."
+                    : (quizAnswers.q3 === "no")
+                    ? "If the sub-agent should permanently take over the conversation with the user, use the Agent Handoff pattern instead of Agent-as-a-Tool."
+                    : "Review your task boundaries and ensure sub-agents have clean, decoupled instructions."}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+// ─── NON-PROGRAMMING CODING AGENTS TAB ───────────────────────────
+const NonProgCodingAgentsTab = ({ s }) => {
+  const [subTab, setSubTab] = useState("architecture"); // 'architecture' | 'domains' | 'simulator' | 'diagnostic'
+  const [selectedDomain, setSelectedDomain] = useState("budget");
+  const [simScenario, setSimScenario] = useState("finance");
+  const [simStepIndex, setSimStepIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [diagScores, setDiagScores] = useState({ q1: 0, q2: 0, q3: 0, q4: 0 });
+
+  const DOMAINS = {
+    budget: {
+      title: "📊 Budgeting & Interactive HTML Reports",
+      icon: "📊",
+      desc: "Download raw bank transaction CSVs, pass them to the coding agent, and let it clean, group, and render a standalone responsive HTML financial dashboard.",
+      workflow: [
+        "1. Download monthly CSV export from online bank/credit card.",
+        "2. Instruct coding agent: 'Parse statement.csv, group expenses by category, calculate savings rate, and generate an interactive HTML report.'",
+        "3. Coding agent writes a Python script using pandas & Chart.js, executes it via terminal, and outputs budget_report.html.",
+        "4. Open HTML report in browser for instant visual insights."
+      ],
+      codeSnippet: `# Example script generated & run autonomously by coding agent:
+import pandas as pd
+
+df = pd.read_csv("transactions.csv")
+category_totals = df.groupby("Category")["Amount"].sum().to_dict()
+
+html_content = f"""
+<!DOCTYPE html>
+<html>
+<head><title>Financial Report</title></head>
+<body>
+  <h2>Monthly Spending Summary</h2>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <canvas id="spendingChart"></canvas>
+  <script>
+    new Chart(document.getElementById('spendingChart'), {
+      type: 'doughnut',
+      data: {
+        labels: {list(category_totals.keys())},
+        datasets: [{{ data: {list(category_totals.values())} }}]
+      }
+    });
+  </script>
+</body>
+</html>
+"""
+with open("budget_report.html", "w") as f:
+    f.write(html_content)`
+    },
+    slides: {
+      title: "📑 PDF Presentation Generation & Style Cloning",
+      icon: "📑",
+      desc: "One-shot generate slide decks in PDF format (using Typst, WeasyPrint, or HTML-to-PDF). Pass existing pitch deck PDFs to clone typography, colors, and layout.",
+      workflow: [
+        "1. Provide prompt: 'Create a 5-slide PDF pitch deck on Q3 AI Strategy based on strategy_notes.md.'",
+        "2. Provide reference: 'Imitate the color palette and font pairing in previous_deck.pdf.'",
+        "3. Coding agent analyzes PDF layout, generates HTML/CSS slides, and uses headless Chrome / WeasyPrint to compile deck.pdf.",
+        "4. Rapidly iterate deck layout through natural language feedback."
+      ],
+      codeSnippet: `# Coding Agent executes headless compilation command:
+# 1. Agent writes index.html with slide CSS page breaks (@page { size: 16in 9in; })
+# 2. Agent runs CLI command:
+npx -y puppeteer print index.html presentation.pdf --landscape --no-header`
+    },
+    browser: {
+      title: "🌐 Browser Navigation & Web Operations",
+      icon: "🌐",
+      desc: "Use dedicated browser sub-agents to complete tedious SaaS management, download invoices, rotate API keys, or configure admin dashboards.",
+      workflow: [
+        "1. Configure a dedicated browser profile with persistent login credentials.",
+        "2. Ask agent: 'Log into Cloud Provider, generate a new read-only API key for Staging, and save key to .env.'",
+        "3. Agent opens browser, navigates admin settings, handles popups, extracts secret key, and writes to local environment file.",
+        "4. Saves developer 15+ minutes of manual clicking."
+      ],
+      codeSnippet: `// Coding agent browser automation action snippet
+await page.goto("https://dashboard.provider.com/settings/api-keys");
+await page.click("#create-new-key-btn");
+await page.type("#key-name-input", "Staging-ReadOnly-Key");
+await page.click("#submit-btn");
+const apiKey = await page.$eval("#generated-key-code", el => el.innerText);
+fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
+    },
+    sales: {
+      title: "💼 Sales CRM & Workspace Isolation (/sales/)",
+      icon: "💼",
+      desc: "Maintain a dedicated /sales/ workspace folder where the agent builds a lightweight file-based CRM, tracks lead research, and manages outreach schedules.",
+      workflow: [
+        "1. Create dedicated isolated directory: /workspace/sales/",
+        "2. Instruct agent: 'Research prospects at Acme Corp, summarize funding history & key executives, and save lead file.'",
+        "3. Coding agent searches web, structures acme_corp.md lead profile, and sets calendar reminders in leads_index.json.",
+        "4. Agent accumulates persistent domain knowledge across sessions."
+      ],
+      codeSnippet: `# /sales/leads/acme_corp.md
+# Acme Corp — Lead Profile
+- Industry: B2B Enterprise SaaS
+- Funding: Series B ($25M)
+- Decision Maker: Jane Doe (VP Engineering)
+- Key Pain Point: High latency in RAG vector search
+- Status: Initial outreach sent (Follow up: 2026-08-10)`
+    },
+    shopping: {
+      title: "🛒 E-Commerce Spec & Price Research",
+      icon: "🛒",
+      desc: "Delegate complex multi-variable shopping research (e.g. finding blackout curtains with exact 120x210cm dimensions at the lowest price).",
+      workflow: [
+        "1. Prompt: 'Find blackout curtains (min 120x210cm) under $50 with top reviews.'",
+        "2. Coding agent queries online stores, parses dimensions & prices from product pages.",
+        "3. Generates a structured comparison table with direct links, specs, and price/unit score.",
+        "4. User makes purchase decision in 10 seconds."
+      ],
+      codeSnippet: `| Product Name | Brand | Dimensions | Shading Rate | Price | Rating | Direct Link |
+|--------------|-------|------------|--------------|-------|--------|-------------|
+| Thermal Max  | Nicetown | 132x213 cm | 100% Blackout | $29.99 | 4.8/5 | [View Store](https://example.com/item1) |
+| Eclipse Room | Deconovo | 140x240 cm | 95% Blackout  | $34.50 | 4.6/5 | [View Store](https://example.com/item2) |`
+    },
+    language: {
+      title: "🇳🇴 Language Learning & Spaced Repetition (/norwegian/)",
+      icon: "🇳🇴",
+      desc: "Turn coding agents into personal language tutors that maintain daily vocabulary lists, track weak words, and run 10-minute terminal review sessions.",
+      workflow: [
+        "1. Create persistent folder: /workspace/norwegian/",
+        "2. Agent maintains vocab.json with word difficulty ratings & review dates.",
+        "3. Daily 10-min CLI prompt: 'Run today's spaced repetition quiz on my weak Norwegian verbs.'",
+        "4. Agent quizzes user in terminal, updates accuracy scores, and logs progress."
+      ],
+      codeSnippet: `# /norwegian/vocab.json snippet
+{
+  "takk": { "translation": "thank you", "mastery": 5, "last_reviewed": "2026-08-05" },
+  "hvor": { "translation": "where", "mastery": 2, "last_reviewed": "2026-08-06", "notes": "Confused with hvem" },
+  "utfordring": { "translation": "challenge", "mastery": 1, "last_reviewed": "2026-08-06" }
+}`
+    }
+  };
+
+  const SCENARIOS = {
+    finance: {
+      name: "📊 Scenario 1: Bank CSV → Interactive HTML Budget",
+      params: "Task: Process 450 transactions from statement.csv | Output: Standalone Chart.js Dashboard",
+      turns: [
+        {
+          turn: 1,
+          agent: "Coding Agent (CLI)",
+          type: "reasoning",
+          icon: "🧠",
+          action: "Inspect workspace files & identify CSV schema",
+          details: "Agent receives statement.csv in /finance/ folder. Runs head -n 5 statement.csv via shell to verify columns (Date, Merchant, Category, Amount).",
+          shellCmd: "head -n 5 /workspace/finance/statement.csv"
+        },
+        {
+          turn: 2,
+          agent: "Coding Agent (Execution)",
+          type: "execution",
+          icon: "💻",
+          action: "Write & execute Python data parsing script",
+          details: "Agent writes parse_finance.py using pandas. Groups expenses, computes monthly savings rate (28.5%), identifies top spending categories (Housing, Dining, Travel).",
+          result: "SUCCESS: Processed 450 rows. Housing: $2,100 | Dining: $840 | Travel: $620 | Savings: $1,450."
+        },
+        {
+          turn: 3,
+          agent: "Coding Agent (Output Generation)",
+          type: "output",
+          icon: "🎨",
+          action: "Generate standalone HTML report with Chart.js dashboard",
+          details: "Agent writes finance_dashboard.html with responsive Tailwind CSS layout and embedded Chart.js donut chart.",
+          artifactResult: "Generated file:///workspace/finance/finance_dashboard.html"
+        }
+      ]
+    },
+    shopping: {
+      name: "🛒 Scenario 2: Blackout Curtain Spec & Price Research",
+      params: "Constraint: Width >= 120cm, Height >= 210cm | Requirement: 100% Blackout | Budget: < $50",
+      turns: [
+        {
+          turn: 1,
+          agent: "Coding Agent (Research)",
+          type: "reasoning",
+          icon: "🧠",
+          action: "Deconstruct product requirements & form search queries",
+          details: "Agent parses search criteria: 100% light blockage, dimension threshold 120x210cm. Prepares browser search queries.",
+          toolCall: "search_web(query='100 blackout curtains 120x210cm price under 50 USD')"
+        },
+        {
+          turn: 2,
+          agent: "Coding Agent (Extraction)",
+          type: "execution",
+          icon: "📦",
+          action: "Extract specs, prices, and shading ratings across 4 retail sites",
+          details: "Agent parses product detail pages, filters out products under 210cm height or sub-95% shading ratings.",
+          result: "FILTERED: 4 matching products found out of 18 candidates."
+        },
+        {
+          turn: 3,
+          agent: "Coding Agent (Report)",
+          type: "output",
+          icon: "📋",
+          action: "Output structured Markdown comparison table with direct links",
+          details: "Agent formats curtain_comparison.md sorted by price/value ratio.",
+          tableOutput: [
+            { name: "Nicetown Thermal", dims: "132x213 cm", shading: "100%", price: "$29.99", score: "9.5/10" },
+            { name: "Deconovo Linen Look", dims: "140x240 cm", shading: "98%", price: "$34.50", score: "9.1/10" },
+            { name: "RYB HOME Blackout", dims: "132x213 cm", shading: "100%", price: "$39.99", score: "8.8/10" }
+          ]
+        }
+      ]
+    },
+    norwegian: {
+      name: "🇳🇴 Scenario 3: Norwegian Spaced-Repetition Quiz",
+      params: "Workspace: /workspace/norwegian/ | Mode: Terminal CLI Spaced Repetition",
+      turns: [
+        {
+          turn: 1,
+          agent: "Coding Agent (Memory Access)",
+          type: "reasoning",
+          icon: "🧠",
+          action: "Load /norwegian/vocab.json & filter weak words",
+          details: "Agent reads vocab.json, identifies 5 words with mastery score < 3 due for review today.",
+          shellCmd: "cat /workspace/norwegian/vocab.json"
+        },
+        {
+          turn: 2,
+          agent: "Coding Agent (Interactive Quiz)",
+          type: "execution",
+          icon: "💬",
+          action: "Prompt user with 5-question Norwegian terminal quiz",
+          details: "Agent quizzes user on target words ('utfordring', 'mulighet', 'hvor', 'forskning', 'sammen'). Evaluates answers & records response time.",
+          result: "QUIZ RESULTS: 4/5 correct. 'utfordring' mastered! 'hvor' needs 1 more review."
+        },
+        {
+          turn: 3,
+          agent: "Coding Agent (Persistence)",
+          type: "output",
+          icon: "💾",
+          action: "Update vocab.json and log daily streak",
+          details: "Agent increments daily streak to 14 days, updates word mastery ratings, and schedules tomorrow's 10-minute session.",
+          artifactResult: "Updated /workspace/norwegian/vocab.json (Streak: 14 Days 🔥)"
+        }
+      ]
+    }
+  };
+
+  const currentSim = SCENARIOS[simScenario];
+  const maxSimSteps = currentSim.turns.length;
+
+  useEffect(() => {
+    let timer;
+    if (isPlaying && simStepIndex < maxSimSteps - 1) {
+      timer = setTimeout(() => {
+        setSimStepIndex(prev => prev + 1);
+      }, 1300);
+    } else if (simStepIndex >= maxSimSteps - 1) {
+      setIsPlaying(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isPlaying, simStepIndex, maxSimSteps]);
+
+  const handleNextStep = () => {
+    if (simStepIndex < maxSimSteps - 1) {
+      setSimStepIndex(prev => prev + 1);
+    }
+  };
+
+  const handleResetSim = () => {
+    setIsPlaying(false);
+    setSimStepIndex(0);
+  };
+
+  const calcTotalScore = () => {
+    const sum = Object.values(diagScores).reduce((a, b) => a + b, 0);
+    return Math.min(100, sum * 25);
+  };
+
+  const totalScore = calcTotalScore();
+
+  return (
+    <div>
+      {/* SECTION HEADER */}
+      <div style={s.sectionLabel("#e11d48")}>Agentic AI Pattern · Towards Data Science</div>
+      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)", border: "1px solid #4338ca" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
+          <div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#a5b4fc", marginBottom: "0.5rem" }}>
+              Force-Multiplier Mindset
+            </div>
+            <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.8rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.5rem", lineHeight: 1.1 }}>
+              Applying <em style={{ color: "#38bdf8", fontStyle: "italic" }}>Coding Agents</em> to Non-Programming Tasks
+            </h2>
+            <p style={{ fontSize: "0.72rem", color: "#c7d2fe", maxWidth: 680, lineHeight: 1.7 }}>
+              Coding agents (Claude Code, Cursor, Codex, Gemini CLI) aren't just for software development. Their core tools — <strong>File System I/O, Terminal Script Execution, Headless Browser Navigation, and Persistent Workspaces</strong> — make them the ultimate digital assistant for budgeting, sales CRM, research, slide decks, and language learning.
+            </p>
+          </div>
+          <div style={{ background: "#3730a350", border: "1px solid #6366f160", padding: "0.8rem 1rem", borderRadius: 6, textAlign: "right" }}>
+            <div style={{ fontSize: "0.6rem", color: "#a5b4fc", textTransform: "uppercase", letterSpacing: "0.1em" }}>Author</div>
+            <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.85rem", fontWeight: 700, color: "#ffffff" }}>Eivind Kjosbakken</div>
+            <div style={{ fontSize: "0.58rem", color: "#818cf8", marginTop: "0.2rem" }}>Towards Data Science (2026)</div>
+          </div>
+        </div>
+      </div>
+
+      {/* SUB-TABS */}
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", borderBottom: "1px solid #e2e8f0", paddingBottom: "0.5rem" }}>
+        {[
+          { id: "architecture", label: "① Architecture & Mindset 🧠" },
+          { id: "domains",      label: "② 6 Non-Programming Domains 🛠️" },
+          { id: "simulator",    label: "③ Interactive Task Simulator 🎮" },
+          { id: "diagnostic",   label: "④ Task Suitability Calculator 🎯" },
+        ].map(t => (
+          <button
+            key={t.id}
+            onClick={() => setSubTab(t.id)}
+            style={{
+              padding: "0.6rem 1rem",
+              fontFamily: "Syne, sans-serif",
+              fontSize: "0.65rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              borderRadius: 4,
+              border: "1px solid",
+              borderColor: subTab === t.id ? "#312e81" : "transparent",
+              background: subTab === t.id ? "#312e81" : "#ffffff",
+              color: subTab === t.id ? "#ffffff" : "#64748b",
+              cursor: "pointer",
+              transition: "all 0.2s"
+            }}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* SUB-TAB 1: ARCHITECTURE */}
+      {subTab === "architecture" && (
+        <div>
+          <div style={{ ...s.card, marginBottom: "1.5rem" }}>
+            <div style={s.sectionLabel("#4338ca")}>The Non-Programming Agent Mindset</div>
+            <div style={{ background: "#f8fafc", borderLeft: "4px solid #4338ca", padding: "1rem", borderRadius: 4, marginBottom: "1.5rem" }}>
+              <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.05rem", fontWeight: 700, color: "#1e1b4b", marginBottom: "0.4rem" }}>
+                "When you receive ANY digital task on your computer, your first thought should be: <em style={{ color: "#4338ca" }}>How can I solve this task using a coding agent?</em>"
+              </div>
+              <div style={{ fontSize: "0.68rem", color: "#64748b" }}>
+                — Eivind Kjosbakken, Towards Data Science
+              </div>
+            </div>
+
+            {/* 4 TOOL PILLARS */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+              <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>📁</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a", marginBottom: "0.3rem" }}>
+                  1. File System Access
+                </div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b", lineHeight: 1.6 }}>
+                  Reads CSVs, PDFs, JSON, Markdown, images. Writes cleaned outputs, reports, and code scripts.
+                </div>
+              </div>
+
+              <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>⚙️</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a", marginBottom: "0.3rem" }}>
+                  2. Terminal & Code Exec
+                </div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b", lineHeight: 1.6 }}>
+                  Runs Python data pipelines, Puppeteer PDF generators, background scripts, and local utilities autonomously.
+                </div>
+              </div>
+
+              <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>🌐</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a", marginBottom: "0.3rem" }}>
+                  3. Browser Sub-Agents
+                </div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b", lineHeight: 1.6 }}>
+                  Navigates authenticated SaaS websites in background profiles to download receipts, generate keys, or scrape pricing.
+                </div>
+              </div>
+
+              <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>📂</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a", marginBottom: "0.3rem" }}>
+                  4. Persistent Workspaces
+                </div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b", lineHeight: 1.6 }}>
+                  Isolated folders (<code style={{ color: "#4338ca" }}>/sales/</code>, <code style={{ color: "#4338ca" }}>/finance/</code>, <code style={{ color: "#4338ca" }}>/norwegian/</code>) preserve long-term context and memory across sessions.
+                </div>
+              </div>
+            </div>
+
+            {/* AGENT TOOLING COMPARISON */}
+            <div style={{ background: "#ffffff", border: "1px solid #cbd5e1", borderRadius: 6, padding: "1rem", marginBottom: "1.5rem" }}>
+              <div style={s.sectionLabel("#4338ca")}>Coding Agent CLI & IDE Tooling Comparison</div>
+              <div style={{ overflowX: "auto" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.62rem" }}>
+                  <thead>
+                    <tr style={{ background: "#f8fafc", borderBottom: "1px solid #cbd5e1", textAlign: "left" }}>
+                      <th style={{ padding: "0.4rem" }}>Agent Tool</th>
+                      <th style={{ padding: "0.4rem" }}>Primary Execution Mode</th>
+                      <th style={{ padding: "0.4rem" }}>Best Non-Programming Strengths</th>
+                      <th style={{ padding: "0.4rem" }}>Browser / System Integration</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                      <td style={{ padding: "0.4rem", fontWeight: 700, color: "#4338ca" }}>Claude Code (CLI)</td>
+                      <td style={{ padding: "0.4rem" }}>Terminal shell & sub-agent loops</td>
+                      <td style={{ padding: "0.4rem" }}>Deep reasoning, complex multi-file workspaces, automated script creation</td>
+                      <td style={{ padding: "0.4rem" }}>Full terminal execution, headless browser scripts, file system I/O</td>
+                    </tr>
+                    <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                      <td style={{ padding: "0.4rem", fontWeight: 700, color: "#0284c7" }}>Cursor IDE</td>
+                      <td style={{ padding: "0.4rem" }}>VS Code native inline & chat agent</td>
+                      <td style={{ padding: "0.4rem" }}>Interactive UI previewing, rapid Markdown/HTML document editing</td>
+                      <td style={{ padding: "0.4rem" }}>Integrated terminal, local file system search, diff previews</td>
+                    </tr>
+                    <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                      <td style={{ padding: "0.4rem", fontWeight: 700, color: "#166534" }}>Gemini CLI / Codex</td>
+                      <td style={{ padding: "0.4rem" }}>Command line & script runners</td>
+                      <td style={{ padding: "0.4rem" }}>Large context window (2M tokens) for processing massive CSVs & PDFs</td>
+                      <td style={{ padding: "0.4rem" }}>Direct shell integration, API scripting, background batch runs</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* BOUNDARY MATRIX */}
+            <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", borderRadius: 6, padding: "1rem" }}>
+              <div style={s.sectionLabel("#4338ca")}>Automation Boundary Matrix: What to Automate vs What to Keep Manual</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "0.8rem" }}>
+                <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", padding: "0.8rem", borderRadius: 6 }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", color: "#166534", marginBottom: "0.4rem" }}>
+                    ✅ Ideal Non-Programming Agent Tasks
+                  </div>
+                  <ul style={{ fontSize: "0.65rem", color: "#15803d", lineHeight: 1.7, paddingLeft: "1.2rem", margin: 0 }}>
+                    <li>Parsing bank statements & generating HTML dashboards</li>
+                    <li>Compiling PDF slide presentations with style cloning</li>
+                    <li>Navigating websites to download invoices or rotate keys</li>
+                    <li>E-commerce spec & price extraction across multiple stores</li>
+                    <li>Managing sales prospect files in an isolated CRM folder</li>
+                    <li>Running daily spaced-repetition language review sessions</li>
+                  </ul>
+                </div>
+
+                <div style={{ background: "#fef2f2", border: "1px solid #fecaca", padding: "0.8rem", borderRadius: 6 }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", color: "#991b1b", marginBottom: "0.4rem" }}>
+                    ❌ Keep Manual (Human-Only)
+                  </div>
+                  <ul style={{ fontSize: "0.65rem", color: "#b91c1c", lineHeight: 1.7, paddingLeft: "1.2rem", margin: 0 }}>
+                    <li>Answering personal messages or emails from close friends</li>
+                    <li>Authoring personal opinion articles & thought leadership essays</li>
+                    <li>High-stakes emotional or interpersonal negotiations</li>
+                    <li>Passing manual CAPTCHA challenges on protected sites</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 2: 6 DOMAINS */}
+      {subTab === "domains" && (
+        <div>
+          {/* DOMAIN SELECTOR */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem", marginBottom: "1.5rem" }}>
+            {Object.keys(DOMAINS).map(key => (
+              <button
+                key={key}
+                onClick={() => setSelectedDomain(key)}
+                style={{
+                  padding: "0.8rem",
+                  borderRadius: 6,
+                  border: "1px solid",
+                  borderColor: selectedDomain === key ? "#4338ca" : "#cbd5e1",
+                  background: selectedDomain === key ? "#312e81" : "#ffffff",
+                  color: selectedDomain === key ? "#ffffff" : "#334155",
+                  textAlign: "left",
+                  cursor: "pointer",
+                  transition: "all 0.2s"
+                }}
+              >
+                <div style={{ fontSize: "1rem", marginBottom: "0.2rem" }}>{DOMAINS[key].icon}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem" }}>
+                  {DOMAINS[key].title}
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* ACTIVE DOMAIN DETAIL */}
+          {DOMAINS[selectedDomain] && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#4338ca")}>{DOMAINS[selectedDomain].title}</div>
+              <p style={{ fontSize: "0.75rem", color: "#475569", marginBottom: "1.2rem", lineHeight: 1.7 }}>
+                {DOMAINS[selectedDomain].desc}
+              </p>
+
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+                {/* WORKFLOW */}
+                <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.8rem" }}>
+                    Standard Execution Workflow
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                    {DOMAINS[selectedDomain].workflow.map((item, idx) => (
+                      <div key={idx} style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.6, background: "#ffffff", padding: "0.5rem 0.8rem", borderRadius: 4, border: "1px solid #cbd5e1" }}>
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CODE / ARTIFACT PATTERN */}
+                <div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                    Agent Execution Artifact / Code Snippet
+                  </div>
+                  <CodeBlock code={DOMAINS[selectedDomain].codeSnippet} />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* SUB-TAB 3: SIMULATOR */}
+      {subTab === "simulator" && (
+        <div style={s.card}>
+          <div style={s.sectionLabel("#4338ca")}>Interactive Non-Programming Agent Task Simulator</div>
+          <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem" }}>
+            Select a non-programming task scenario to observe how coding agents execute shell tools, python data parsers, and web tools to complete complex non-coding work.
+          </p>
+
+          {/* SCENARIO SELECTOR */}
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem" }}>
+            {Object.keys(SCENARIOS).map(key => (
+              <button
+                key={key}
+                onClick={() => {
+                  setSimScenario(key);
+                  setSimStepIndex(0);
+                  setIsPlaying(false);
+                }}
+                style={{
+                  padding: "0.5rem 0.9rem",
+                  borderRadius: 4,
+                  border: "1px solid",
+                  borderColor: simScenario === key ? "#4338ca" : "#cbd5e1",
+                  background: simScenario === key ? "#4338ca" : "#ffffff",
+                  color: simScenario === key ? "#ffffff" : "#475569",
+                  fontSize: "0.65rem",
+                  fontWeight: 700,
+                  cursor: "pointer"
+                }}
+              >
+                {SCENARIOS[key].name}
+              </button>
+            ))}
+          </div>
+
+          {/* META */}
+          <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "0.8rem", borderRadius: 6, marginBottom: "1rem" }}>
+            <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#0f172a" }}>Task Context</div>
+            <div style={{ fontSize: "0.62rem", color: "#64748b", fontFamily: "DM Mono, monospace", marginTop: "0.2rem" }}>
+              {currentSim.params}
+            </div>
+          </div>
+
+          {/* CONTROLS */}
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "1.5rem" }}>
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "none",
+                background: isPlaying ? "#dc2626" : "#16a34a",
+                color: "#ffffff",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                cursor: "pointer"
+              }}
+            >
+              {isPlaying ? "⏸ Pause Flow" : "▶ Play Full Flow"}
+            </button>
+            <button
+              onClick={handleNextStep}
+              disabled={simStepIndex >= maxSimSteps - 1}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "1px solid #cbd5e1",
+                background: "#ffffff",
+                color: "#475569",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                cursor: simStepIndex >= maxSimSteps - 1 ? "not-allowed" : "pointer"
+              }}
+            >
+              ⏩ Next Step ({simStepIndex + 1}/{maxSimSteps})
+            </button>
+            <button
+              onClick={handleResetSim}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "1px solid #cbd5e1",
+                background: "#ffffff",
+                color: "#64748b",
+                fontSize: "0.65rem",
+                fontWeight: 600,
+                cursor: "pointer"
+              }}
+            >
+              🔄 Reset
+            </button>
+          </div>
+
+          {/* TURNS DISPLAY */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+            {currentSim.turns.slice(0, simStepIndex + 1).map((item, idx) => (
+              <div
+                key={idx}
+                style={{
+                  background: item.type === "execution" ? "#f0fdf4" : item.type === "output" ? "#eff6ff" : "#ffffff",
+                  border: "1px solid",
+                  borderColor: item.type === "execution" ? "#bbf7d0" : item.type === "output" ? "#bfdbfe" : "#e2e8f0",
+                  borderRadius: 6,
+                  padding: "1rem"
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                    <span style={{ fontSize: "1.1rem" }}>{item.icon}</span>
+                    <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a" }}>
+                      Turn {item.turn}: {item.agent}
+                    </span>
+                  </div>
+                  <span style={{
+                    fontSize: "0.58rem",
+                    padding: "0.15rem 0.5rem",
+                    borderRadius: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    background: item.type === "execution" ? "#dcfce7" : item.type === "output" ? "#dbeafe" : "#f1f5f9",
+                    color: item.type === "execution" ? "#15803d" : item.type === "output" ? "#1e40af" : "#475569"
+                  }}>
+                    {item.type}
+                  </span>
+                </div>
+
+                <div style={{ fontSize: "0.7rem", fontWeight: 700, color: "#1e293b", marginBottom: "0.3rem" }}>
+                  {item.action}
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#475569", lineHeight: 1.6, marginBottom: "0.5rem" }}>
+                  {item.details}
+                </div>
+
+                {item.shellCmd && (
+                  <div style={{ background: "#0f172a", borderRadius: 4, padding: "0.6rem", fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: "#38bdf8" }}>
+                    💻 Executed Shell Tool: $ {item.shellCmd}
+                  </div>
+                )}
+
+                {item.toolCall && (
+                  <div style={{ background: "#0f172a", borderRadius: 4, padding: "0.6rem", fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: "#38bdf8" }}>
+                    🔧 Executed Tool Call: {item.toolCall}
+                  </div>
+                )}
+
+                {item.result && (
+                  <div style={{ background: "#f8fafc", borderLeft: "3px solid #16a34a", padding: "0.5rem", fontSize: "0.62rem", color: "#166534", marginTop: "0.4rem", fontFamily: "DM Mono, monospace" }}>
+                    {item.result}
+                  </div>
+                )}
+
+                {item.artifactResult && (
+                  <div style={{ background: "#eff6ff", borderLeft: "3px solid #2563eb", padding: "0.5rem", fontSize: "0.62rem", color: "#1e40af", marginTop: "0.4rem", fontFamily: "DM Mono, monospace" }}>
+                    📄 {item.artifactResult}
+                  </div>
+                )}
+
+                {item.tableOutput && (
+                  <div style={{ overflowX: "auto", marginTop: "0.5rem" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.62rem" }}>
+                      <thead>
+                        <tr style={{ background: "#f1f5f9", borderBottom: "1px solid #cbd5e1" }}>
+                          <th style={{ padding: "0.4rem" }}>Product</th>
+                          <th style={{ padding: "0.4rem" }}>Dimensions</th>
+                          <th style={{ padding: "0.4rem" }}>Shading</th>
+                          <th style={{ padding: "0.4rem" }}>Price</th>
+                          <th style={{ padding: "0.4rem" }}>Value Score</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {item.tableOutput.map((row, rIdx) => (
+                          <tr key={rIdx} style={{ borderBottom: "1px solid #f1f5f9" }}>
+                            <td style={{ padding: "0.4rem", fontWeight: 700 }}>{row.name}</td>
+                            <td style={{ padding: "0.4rem" }}>{row.dims}</td>
+                            <td style={{ padding: "0.4rem" }}>{row.shading}</td>
+                            <td style={{ padding: "0.4rem", color: "#16a34a", fontWeight: 700 }}>{row.price}</td>
+                            <td style={{ padding: "0.4rem", color: "#2563eb" }}>{row.score}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 4: DIAGNOSTIC CALCULATOR */}
+      {subTab === "diagnostic" && (
+        <div style={s.card}>
+          <div style={s.sectionLabel("#4338ca")}>Task Suitability & Automation Score Calculator</div>
+          <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1.5rem", lineHeight: 1.7 }}>
+            Answer 4 quick questions about your computer task to evaluate whether a coding agent is ideal for automating it.
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+            {/* Q1 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                1. Does the task involve digital files (CSV, PDF, JSON, Markdown, HTML)?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, heavy file input/output (+25%)", val: 1 },
+                  { label: "Some file interaction (+15%)", val: 0.6 },
+                  { label: "No files involved (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q1: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q1 === opt.val ? "#4338ca" : "#cbd5e1",
+                      background: diagScores.q1 === opt.val ? "#4338ca" : "#ffffff",
+                      color: diagScores.q1 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q2 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                2. Does the task involve repetitive browser clicking, data extraction, or web search?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, tedious web navigation (+25%)", val: 1 },
+                  { label: "Occasional web research (+15%)", val: 0.6 },
+                  { label: "No web access needed (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q2: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q2 === opt.val ? "#4338ca" : "#cbd5e1",
+                      background: diagScores.q2 === opt.val ? "#4338ca" : "#ffffff",
+                      color: diagScores.q2 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q3 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                3. Can the work benefit from persistent workspace context (e.g. /sales/, /norwegian/)?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, ongoing project workspace (+25%)", val: 1 },
+                  { label: "One-off task (+15%)", val: 0.6 },
+                  { label: "No context needed (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q3: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q3 === opt.val ? "#4338ca" : "#cbd5e1",
+                      background: diagScores.q3 === opt.val ? "#4338ca" : "#ffffff",
+                      color: diagScores.q3 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q4 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                4. Is the task impersonal (NOT private messaging to friends or human opinion articles)?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, purely operational work (+25%)", val: 1 },
+                  { label: "Partially personal (+10%)", val: 0.4 },
+                  { label: "Highly personal / intimate (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q4: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q4 === opt.val ? "#4338ca" : "#cbd5e1",
+                      background: diagScores.q4 === opt.val ? "#4338ca" : "#ffffff",
+                      color: diagScores.q4 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* SCORE DISPLAY */}
+            <div style={{
+              background: totalScore >= 75 ? "#f0fdf4" : totalScore >= 40 ? "#fffbe5" : "#fef2f2",
+              border: "1px solid",
+              borderColor: totalScore >= 75 ? "#bbf7d0" : totalScore >= 40 ? "#fef08a" : "#fecaca",
+              padding: "1.2rem",
+              borderRadius: 6,
+              display: "flex",
+              justify: "space-between",
+              alignItems: "center"
+            }}>
+              <div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: totalScore >= 75 ? "#15803d" : totalScore >= 40 ? "#854d0e" : "#991b1b" }}>
+                  Automation Feasibility Score: {totalScore}%
+                </div>
+                <div style={{ fontSize: "0.68rem", color: "#334155", marginTop: "0.3rem", lineHeight: 1.6 }}>
+                  {totalScore >= 75
+                    ? "🚀 Prime Candidate for Coding Agent Automation! Open a coding agent (Claude Code / Cursor / Codex), state your objective, and let it execute via shell & python scripts."
+                    : totalScore >= 40
+                    ? "⚡ Partial Automation Potential. Have the coding agent generate draft files or scripts, but retain human oversight for final verification."
+                    : "✋ Keep Manual. Tasks involving intimate personal relationships or genuine human opinion writing should remain human-authored."}
+                </div>
+              </div>
+              <div style={{ fontSize: "2rem", fontWeight: 900, color: totalScore >= 75 ? "#16a34a" : totalScore >= 40 ? "#ca8a04" : "#dc2626" }}>
+                {totalScore}%
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+// ─── MEDALLION DATA ARCHITECTURE TAB ────────────────────────────
+const MedallionArchTab = ({ s }) => {
+  const [subTab, setSubTab] = useState("architecture"); // 'architecture' | 'steps' | 'simulator' | 'diagnostic'
+  const [selectedStep, setSelectedStep] = useState(1);
+  const [simStepIndex, setSimStepIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [diagScores, setDiagScores] = useState({ q1: 0, q2: 0, q3: 0, q4: 0 });
+
+  const SIMULATOR_TURNS = [
+    {
+      turn: 1,
+      layer: "Bronze",
+      icon: "🥉",
+      title: "Stage 1 & 2: Raw Ingestion into bronze.orders_raw (Append-Only)",
+      desc: "The overnight orders_2026-07-19.csv arrives. SHA-256 hash is checked against bronze.ingestion_batches for idempotency, then all 6 raw records are appended AS-IS into bronze.orders_raw without filtering.",
+      hashStatus: "SHA-256: e3b0c44298fc... (New Batch Accepted)",
+      records: [
+        { id: "1001", date: "2026-07-19T09:10:00Z", cust: "C001", region: "North", amt: "125.50", cur: "GBP", status: "paid", note: "Raw string" },
+        { id: "1002", date: "2026-07-19T10:05:00Z", cust: "C002", region: "South", amt: "89.99", cur: "GBP", status: "paid", note: "First entry" },
+        { id: "1002", date: "2026-07-19T10:05:00Z", cust: "C002", region: "South", amt: "89.99", cur: "GBP", status: "paid", note: "DUPLICATE ENTRY" },
+        { id: "1003", date: "not-a-date", cust: "C003", region: "North", amt: "45.00", cur: "GBP", status: "paid", note: "BAD DATE STRING" },
+        { id: "1004", date: "2026-07-19T11:42:00Z", cust: "C004", region: "West", amt: "-10.00", cur: "GBP", status: "paid", note: "NEGATIVE AMOUNT" },
+        { id: "1005", date: "2026-07-19T12:20:00Z", cust: "C005", region: "North", amt: "210.00", cur: "GBP", status: "refunded", note: "Valid refund" }
+      ]
+    },
+    {
+      turn: 2,
+      layer: "Silver",
+      icon: "🥈",
+      title: "Stage 3: Validation, Deduplication & Quarantine in silver Schema",
+      desc: "Silver executes Window Functions (row_number PARTITION BY order_id) and try_cast() type rules. Valid records move to silver.orders, while bad rows are diverted to silver.orders_quarantine with explicit rejection tags.",
+      validRecords: [
+        { id: "1001", date: "2026-07-19 10:10:00+01", cust: "C001", region: "NORTH", amt: "$125.50", status: "paid" },
+        { id: "1002", date: "2026-07-19 11:05:00+01", cust: "C002", region: "SOUTH", amt: "$89.99", status: "paid" },
+        { id: "1005", date: "2026-07-19 13:20:00+01", cust: "C005", region: "NORTH", amt: "$210.00", status: "refunded" }
+      ],
+      quarantineRecords: [
+        { id: "1002", date: "2026-07-19 11:05:00+01", amt: "$89.99", reason: "duplicate order_id" },
+        { id: "1003", date: "NULL", amt: "$45.00", reason: "invalid ordered_at" },
+        { id: "1004", date: "2026-07-19 12:42:00+01", amt: "-$10.00", reason: "negative amount" }
+      ]
+    },
+    {
+      turn: 3,
+      layer: "Gold",
+      icon: "🥇",
+      title: "Stage 4 & 5: Data Quality Verification & Gold Business Aggregates",
+      desc: "Quality contract asserts 0 duplicate keys and 0 null IDs in silver.orders. Gold aggregates clean silver orders into daily regional sales reporting views by 07:00 AM.",
+      goldSummary: [
+        { date: "2026-07-19", region: "NORTH", currency: "GBP", paidOrders: 1, grossSales: "$125.50", refundedOrders: 1, refundedValue: "$210.00" },
+        { date: "2026-07-19", region: "SOUTH", currency: "GBP", paidOrders: 1, grossSales: "$89.99", refundedOrders: 0, refundedValue: "$0.00" }
+      ]
+    }
+  ];
+
+  const maxSimSteps = SIMULATOR_TURNS.length;
+
+  useEffect(() => {
+    let timer;
+    if (isPlaying && simStepIndex < maxSimSteps - 1) {
+      timer = setTimeout(() => {
+        setSimStepIndex(prev => prev + 1);
+      }, 1500);
+    } else if (simStepIndex >= maxSimSteps - 1) {
+      setIsPlaying(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isPlaying, simStepIndex, maxSimSteps]);
+
+  const handleNextStep = () => {
+    if (simStepIndex < maxSimSteps - 1) {
+      setSimStepIndex(prev => prev + 1);
+    }
+  };
+
+  const handleResetSim = () => {
+    setIsPlaying(false);
+    setSimStepIndex(0);
+  };
+
+  const calcTotalScore = () => {
+    const sum = Object.values(diagScores).reduce((a, b) => a + b, 0);
+    return Math.min(100, sum * 25);
+  };
+
+  const totalScore = calcTotalScore();
+
+  return (
+    <div>
+      {/* SECTION HEADER */}
+      <div style={s.sectionLabel("#d97706")}>Data Engineering Pattern · Databricks & DuckDB</div>
+      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)", border: "1px solid #d97706" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
+          <div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#f59e0b", marginBottom: "0.5rem" }}>
+              Progressive Data Quality Pipeline
+            </div>
+            <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.8rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.5rem", lineHeight: 1.1 }}>
+              The <em style={{ color: "#f59e0b", fontStyle: "italic" }}>Medallion Data Architecture</em>
+            </h2>
+            <p style={{ fontSize: "0.72rem", color: "#c7d2fe", maxWidth: 680, lineHeight: 1.7 }}>
+              ETL pipelines become harder to trust as they grow. The Medallion Architecture organizes data into three progressive layers: <strong>Bronze 🥉 (Raw Ingestion)</strong> → <strong>Silver 🥈 (Cleaned & Quarantined Foundation)</strong> → <strong>Gold 🥇 (Business Aggregates)</strong>.
+            </p>
+          </div>
+          <div style={{ background: "#3730a350", border: "1px solid #f59e0b60", padding: "0.8rem 1rem", borderRadius: 6, textAlign: "right" }}>
+            <div style={{ fontSize: "0.6rem", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.1em" }}>Author</div>
+            <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.85rem", fontWeight: 700, color: "#ffffff" }}>Thomas Reid</div>
+            <div style={{ fontSize: "0.58rem", color: "#818cf8", marginTop: "0.2rem" }}>Towards Data Science (2026)</div>
+          </div>
+        </div>
+      </div>
+
+      {/* SUB-TABS */}
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", borderBottom: "1px solid #e2e8f0", paddingBottom: "0.5rem" }}>
+        {[
+          { id: "architecture", label: "① Concept & Architecture 🔬" },
+          { id: "steps",        label: "② 5-Stage DuckDB Code 💻" },
+          { id: "simulator",    label: "③ Interactive Retail Simulator 🎮" },
+          { id: "diagnostic",   label: "④ Data Quality Contract Quiz 🎯" },
+        ].map(t => (
+          <button
+            key={t.id}
+            onClick={() => setSubTab(t.id)}
+            style={{
+              padding: "0.6rem 1rem",
+              fontFamily: "Syne, sans-serif",
+              fontSize: "0.65rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              borderRadius: 4,
+              border: "1px solid",
+              borderColor: subTab === t.id ? "#312e81" : "transparent",
+              background: subTab === t.id ? "#312e81" : "#ffffff",
+              color: subTab === t.id ? "#ffffff" : "#64748b",
+              cursor: "pointer",
+              transition: "all 0.2s"
+            }}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* SUB-TAB 1: ARCHITECTURE */}
+      {subTab === "architecture" && (
+        <div>
+          <div style={{ ...s.card, marginBottom: "1.5rem" }}>
+            <div style={s.sectionLabel("#d97706")}>The 3 Progressive Layers</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
+              {/* BRONZE */}
+              <div style={{ background: "#fffbebe0", border: "1px solid #fcd34d", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.5rem", marginBottom: "0.3rem" }}>🥉</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#92400e", marginBottom: "0.3rem" }}>
+                  Bronze (Raw Ingestion)
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#b45309", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                  Exact record of what arrived from source systems (CSVs, JSON, APIs).
+                </div>
+                <ul style={{ fontSize: "0.6rem", color: "#78350f", paddingLeft: "1rem", margin: 0, lineHeight: 1.6 }}>
+                  <li><strong>Immutable & Append-Only</strong></li>
+                  <li>Stores ingestion metadata (<code style={{ color: "#92400e" }}>source_hash</code>, <code style={{ color: "#92400e" }}>ingested_at</code>)</li>
+                  <li>SHA-256 batch hash prevents duplicate re-ingestion</li>
+                  <li>Bad dates/amounts retained as-is for auditing</li>
+                </ul>
+              </div>
+
+              {/* SILVER */}
+              <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.5rem", marginBottom: "0.3rem" }}>🥈</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#334155", marginBottom: "0.3rem" }}>
+                  Silver (Cleaned Foundation)
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#475569", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                  Applies validation rules, type casting, and deduplication.
+                </div>
+                <ul style={{ fontSize: "0.6rem", color: "#334155", paddingLeft: "1rem", margin: 0, lineHeight: 1.6 }}>
+                  <li>Parses & enforces data types (<code style={{ color: "#0284c7" }}>try_cast</code>)</li>
+                  <li>Deduplicates via Window functions (<code style={{ color: "#0284c7" }}>row_number() OVER ...</code>)</li>
+                  <li><strong>Quarantine Table</strong> (<code style={{ color: "#dc2626" }}>silver.orders_quarantine</code>) isolates bad rows with explicit rejection reasons</li>
+                </ul>
+              </div>
+
+              {/* GOLD */}
+              <div style={{ background: "#fefce8", border: "1px solid #fef08a", borderRadius: 6, padding: "1rem" }}>
+                <div style={{ fontSize: "1.5rem", marginBottom: "0.3rem" }}>🥇</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#854d0e", marginBottom: "0.3rem" }}>
+                  Gold (Business Aggregates)
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#a16207", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                  Organized for specific business domains & decision makers.
+                </div>
+                <ul style={{ fontSize: "0.6rem", color: "#713f12", paddingLeft: "1rem", margin: 0, lineHeight: 1.6 }}>
+                  <li>Summarized metrics (daily sales, active users)</li>
+                  <li>Star schemas & data marts optimized for fast queries</li>
+                  <li>Direct foundation for BI dashboards (PowerBI/Tableau)</li>
+                  <li>Guaranteed high accuracy & minimal query latency</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* OPEN TABLE FORMATS & PROD CONTROLS */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1.5rem" }}>
+              <div style={{ background: "#ffffff", border: "1px solid #cbd5e1", borderRadius: 6, padding: "1rem" }}>
+                <div style={s.sectionLabel("#d97706")}>Cloud Lakehouse Table Formats Comparison</div>
+                <div style={{ overflowX: "auto" }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.62rem" }}>
+                    <thead>
+                      <tr style={{ background: "#f8fafc", borderBottom: "1px solid #cbd5e1", textAlign: "left" }}>
+                        <th style={{ padding: "0.4rem" }}>Format</th>
+                        <th style={{ padding: "0.4rem" }}>Primary Creator</th>
+                        <th style={{ padding: "0.4rem" }}>Key Strength</th>
+                        <th style={{ padding: "0.4rem" }}>Best Use Case</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                        <td style={{ padding: "0.4rem", fontWeight: 700, color: "#d97706" }}>Delta Lake</td>
+                        <td style={{ padding: "0.4rem" }}>Databricks / Linux Foundation</td>
+                        <td style={{ padding: "0.4rem" }}>ACID transactions & time travel on Spark/DuckDB</td>
+                        <td style={{ padding: "0.4rem" }}>Standard Medallion pipelines with Spark & DB SQL</td>
+                      </tr>
+                      <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                        <td style={{ padding: "0.4rem", fontWeight: 700, color: "#0284c7" }}>Apache Iceberg</td>
+                        <td style={{ padding: "0.4rem" }}>Netflix / Apache Foundation</td>
+                        <td style={{ padding: "0.4rem" }}>Engine-agnostic schema evolution & hidden partitioning</td>
+                        <td style={{ padding: "0.4rem" }}>Multi-engine querying (Trino, Athena, Snowflake, Spark)</td>
+                      </tr>
+                      <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
+                        <td style={{ padding: "0.4rem", fontWeight: 700, color: "#166534" }}>Apache Hudi</td>
+                        <td style={{ padding: "0.4rem" }}>Uber / Apache Foundation</td>
+                        <td style={{ padding: "0.4rem" }}>Upserts, record-level deletes & incremental processing</td>
+                        <td style={{ padding: "0.4rem" }}>Low-latency streaming CDC ingestion into Bronze/Silver</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div style={{ background: "#ffffff", border: "1px solid #cbd5e1", borderRadius: 6, padding: "1rem" }}>
+                <div style={s.sectionLabel("#d97706")}>Production Medallion Quality Controls</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", fontSize: "0.62rem" }}>
+                  <div style={{ background: "#fffbeb", padding: "0.4rem 0.6rem", borderRadius: 4, borderLeft: "3px solid #d97706" }}>
+                    <strong>1. Row Count & Completeness Verification:</strong> Validate Bronze row counts match inbound source event metrics before triggering Silver.
+                  </div>
+                  <div style={{ background: "#f8fafc", padding: "0.4rem 0.6rem", borderRadius: 4, borderLeft: "3px solid #0284c7" }}>
+                    <strong>2. Silver Referential Integrity & Key Uniqueness:</strong> Assert zero duplicate keys and validate foreign key references.
+                  </div>
+                  <div style={{ background: "#f0fdf4", padding: "0.4rem 0.6rem", borderRadius: 4, borderLeft: "3px solid #16a34a" }}>
+                    <strong>3. Gold Reconciliation:</strong> Reconcile Gold aggregate sums against Silver raw detail sums to catch calculation drift.
+                  </div>
+                  <div style={{ background: "#fef2f2", padding: "0.4rem 0.6rem", borderRadius: 4, borderLeft: "3px solid #dc2626" }}>
+                    <strong>4. Freshness & Volume Alerts:</strong> Set SLA threshold timers (e.g. 07:00 AM delivery) and alert when quarantine rates exceed 5%.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* FLOW DIAGRAM */}
+            <div style={{ marginTop: "1.5rem", background: "#0f172a", borderRadius: 8, padding: "1.5rem", color: "#ffffff" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.15em", color: "#f59e0b", marginBottom: "1rem", textAlign: "center" }}>
+                Data Quality Flow Across Medallion Schemas
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+                <div style={{ background: "#1e293b", border: "1px solid #475569", padding: "0.5rem 1.2rem", borderRadius: 20, fontSize: "0.68rem", color: "#cbd5e1" }}>
+                  📥 Raw Inbound CSV / JSON Stream (orders_2026-07-19.csv)
+                </div>
+                <div style={{ color: "#f59e0b", fontSize: "0.8rem" }}>↓ Idempotency SHA-256 Check</div>
+
+                <div style={{ background: "#78350f", border: "2px solid #f59e0b", padding: "0.8rem 1.5rem", borderRadius: 8, textAlign: "center", width: "80%" }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#fef3c7" }}>
+                    🥉 bronze.orders_raw (Append-Only Landing)
+                  </div>
+                  <div style={{ fontSize: "0.58rem", color: "#fde68a", marginTop: "0.2rem" }}>
+                    Metadata: source_file, source_hash, ingested_at | Raw text values
+                  </div>
+                </div>
+
+                <div style={{ color: "#cbd5e1", fontSize: "0.8rem" }}>↓ try_cast() + Window Deduplication</div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "1rem", width: "90%" }}>
+                  <div style={{ background: "#1e293b", border: "2px solid #38bdf8", padding: "0.8rem", borderRadius: 8, textAlign: "center" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#38bdf8" }}>
+                      🥈 silver.orders (Valid & Typed)
+                    </div>
+                    <div style={{ fontSize: "0.58rem", color: "#94a3b8", marginTop: "0.2rem" }}>
+                      Type enforcement, UPPER(region), DECIMAL(18,2) amount
+                    </div>
+                  </div>
+
+                  <div style={{ background: "#450a0a", border: "2px solid #ef4444", padding: "0.8rem", borderRadius: 8, textAlign: "center" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#fca5a5" }}>
+                      ⚠️ silver.orders_quarantine
+                    </div>
+                    <div style={{ fontSize: "0.58rem", color: "#fecaca", marginTop: "0.2rem" }}>
+                      Tagged: duplicate order_id, negative amount, bad date
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ color: "#f59e0b", fontSize: "0.8rem" }}>↓ Daily Business Aggregation</div>
+
+                <div style={{ background: "linear-gradient(135deg, #ca8a04 0%, #a16207 100%)", border: "2px solid #fef08a", padding: "0.8rem 1.5rem", borderRadius: 8, textAlign: "center", width: "80%" }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: "#ffffff" }}>
+                    🥇 gold.daily_sales_by_region (Executive Reporting Mart)
+                  </div>
+                  <div style={{ fontSize: "0.58rem", color: "#fefde8", marginTop: "0.2rem" }}>
+                    Metrics: order_date, region, currency, paid_orders, gross_sales, refunded_orders, refunded_value
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 2: 5 STAGES */}
+      {subTab === "steps" && (
+        <div>
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
+            {[1, 2, 3, 4, 5].map(step => (
+              <button
+                key={step}
+                onClick={() => setSelectedStep(step)}
+                style={{
+                  flex: 1,
+                  padding: "0.6rem",
+                  borderRadius: 4,
+                  border: "1px solid",
+                  borderColor: selectedStep === step ? "#d97706" : "#cbd5e1",
+                  background: selectedStep === step ? "#d97706" : "#ffffff",
+                  color: selectedStep === step ? "#ffffff" : "#475569",
+                  fontFamily: "Syne, sans-serif",
+                  fontWeight: 700,
+                  fontSize: "0.65rem",
+                  cursor: "pointer"
+                }}
+              >
+                Stage {step}
+              </button>
+            ))}
+          </div>
+
+          {selectedStep === 1 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#d97706")}>Stage 1: Schemas & Ingestion Batch Table Setup</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                Create explicit <code style={{ color: "#d97706" }}>bronze</code>, <code style={{ color: "#d97706" }}>silver</code>, and <code style={{ color: "#d97706" }}>gold</code> database schemas, along with the batch hash tracking table.
+              </p>
+              <CodeBlock code={`import duckdb
+from pathlib import Path
+
+DATABASE = Path("warehouse.duckdb")
+
+def initialise(connection: duckdb.DuckDBPyConnection) -> None:
+    connection.execute("CREATE SCHEMA IF NOT EXISTS bronze")
+    connection.execute("CREATE SCHEMA IF NOT EXISTS silver")
+    connection.execute("CREATE SCHEMA IF NOT EXISTS gold")
+
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS bronze.ingestion_batches (
+            source_hash VARCHAR PRIMARY KEY,
+            source_file VARCHAR NOT NULL,
+            ingested_at TIMESTAMPTZ NOT NULL DEFAULT current_timestamp
+        )
+    """)
+
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS bronze.orders_raw (
+            order_id VARCHAR,
+            ordered_at VARCHAR,
+            customer_id VARCHAR,
+            region VARCHAR,
+            amount VARCHAR,
+            currency VARCHAR,
+            status VARCHAR,
+            source_file VARCHAR NOT NULL,
+            source_hash VARCHAR NOT NULL,
+            ingested_at TIMESTAMPTZ NOT NULL
+        )
+    """)`} />
+            </div>
+          )}
+
+          {selectedStep === 2 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#d97706")}>Stage 2: Idempotent Bronze Ingestion with SHA-256 Hashing</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                Calculates SHA-256 digest of inbound CSV file. If hash exists in <code style={{ color: "#d97706" }}>bronze.ingestion_batches</code>, processing skips to prevent duplicate loading.
+              </p>
+              <CodeBlock code={`import hashlib
+
+def file_hash(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+def ingest_bronze(connection: duckdb.DuckDBPyConnection, source: Path) -> bool:
+    source = source.resolve()
+    digest = file_hash(source)
+
+    already_loaded = connection.execute(
+        "SELECT 1 FROM bronze.ingestion_batches WHERE source_hash = ?",
+        [digest]
+    ).fetchone()
+
+    if already_loaded:
+        print(f"Skipping {source.name}: exact file hash already ingested!")
+        return False
+
+    connection.begin()
+    try:
+        connection.execute("""
+            INSERT INTO bronze.orders_raw
+            SELECT order_id, ordered_at, customer_id, region, amount, currency, status,
+                   ?, ?, current_timestamp
+            FROM read_csv(?, header = true, all_varchar = true)
+        """, [source.name, digest, str(source)])
+
+        connection.execute("""
+            INSERT INTO bronze.ingestion_batches (source_hash, source_file)
+            VALUES (?, ?)
+        """, [digest, source.name])
+        connection.commit()
+    except Exception:
+        connection.rollback()
+        raise
+
+    print(f"Loaded {source.name} into bronze.orders_raw")
+    return True`} />
+            </div>
+          )}
+
+          {selectedStep === 3 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#d97706")}>Stage 3: Silver Cleaning, Window Deduplication & Quarantine Generation</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                Uses SQL window function <code style={{ color: "#d97706" }}>row_number() OVER (PARTITION BY trim(order_id) ORDER BY ingested_at DESC)</code> to rank duplicates. Splits rows into valid <code style={{ color: "#d97706" }}>silver.orders</code> and tagged <code style={{ color: "#d97706" }}>silver.orders_quarantine</code>.
+              </p>
+              <CodeBlock code={`def build_silver(connection: duckdb.DuckDBPyConnection) -> None:
+    connection.execute("""
+        CREATE OR REPLACE TEMP VIEW typed_orders AS
+        SELECT
+            trim(order_id) AS order_id,
+            try_cast(ordered_at AS TIMESTAMPTZ) AS ordered_at,
+            trim(customer_id) AS customer_id,
+            upper(trim(region)) AS region,
+            try_cast(amount AS DECIMAL(18, 2)) AS amount,
+            upper(trim(currency)) AS currency,
+            lower(trim(status)) AS status,
+            source_file, source_hash, ingested_at,
+            row_number() OVER (
+                PARTITION BY trim(order_id)
+                ORDER BY ingested_at DESC, source_file DESC
+            ) AS duplicate_rank
+        FROM bronze.orders_raw
+    """)
+
+    valid_condition = """
+        order_id IS NOT NULL AND order_id <> '' AND
+        ordered_at IS NOT NULL AND
+        customer_id IS NOT NULL AND customer_id <> '' AND
+        amount IS NOT NULL AND amount >= 0 AND
+        currency IN ('GBP', 'EUR', 'USD') AND
+        status IN ('paid', 'refunded', 'cancelled') AND
+        duplicate_rank = 1
+    """
+
+    connection.execute(f"""
+        CREATE OR REPLACE TABLE silver.orders AS
+        SELECT * EXCLUDE (duplicate_rank)
+        FROM typed_orders
+        WHERE {valid_condition}
+    """)
+
+    connection.execute(f"""
+        CREATE OR REPLACE TABLE silver.orders_quarantine AS
+        SELECT * EXCLUDE (duplicate_rank),
+            CASE
+                WHEN duplicate_rank > 1 THEN 'duplicate order_id'
+                WHEN ordered_at IS NULL THEN 'invalid ordered_at'
+                WHEN amount IS NULL THEN 'invalid amount'
+                WHEN amount < 0 THEN 'negative amount'
+                WHEN currency NOT IN ('GBP', 'EUR', 'USD') THEN 'unsupported currency'
+                WHEN status NOT IN ('paid', 'refunded', 'cancelled') THEN 'invalid status'
+                ELSE 'missing required value'
+            END AS rejection_reason
+        FROM typed_orders
+        WHERE NOT ({valid_condition})
+    """)`} />
+            </div>
+          )}
+
+          {selectedStep === 4 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#d97706")}>Stage 4: Silver Quality Assertion Checks</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                Before building Gold aggregates, execute explicit runtime assertions verifying 0 duplicate keys and 0 null IDs in <code style={{ color: "#d97706" }}>silver.orders</code>.
+              </p>
+              <CodeBlock code={`def check_quality(connection: duckdb.DuckDBPyConnection) -> None:
+    duplicate_count = connection.execute(
+        "SELECT count(*) - count(DISTINCT order_id) FROM silver.orders"
+    ).fetchone()[0]
+
+    null_key_count = connection.execute(
+        "SELECT count(*) FROM silver.orders WHERE order_id IS NULL"
+    ).fetchone()[0]
+
+    if duplicate_count or null_key_count:
+        raise RuntimeError(
+            f"Silver quality contract failed! Duplicates={duplicate_count}, NullKeys={null_key_count}"
+        )
+    print("✅ Silver Quality Contract Assertions Passed!")`} />
+            </div>
+          )}
+
+          {selectedStep === 5 && (
+            <div style={s.card}>
+              <div style={s.sectionLabel("#d97706")}>Stage 5: Gold Executive Aggregates Creation</div>
+              <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem", lineHeight: 1.7 }}>
+                Aggregate silver records by date, region, and currency, separating paid vs refunded metrics using SQL <code style={{ color: "#d97706" }}>FILTER (WHERE status = ...)</code> syntax.
+              </p>
+              <CodeBlock code={`def build_gold(connection: duckdb.DuckDBPyConnection) -> None:
+    connection.execute("""
+        CREATE OR REPLACE TABLE gold.daily_sales_by_region AS
+        SELECT
+            cast(ordered_at AS DATE) AS order_date,
+            region,
+            currency,
+            count(*) FILTER (WHERE status = 'paid') AS paid_orders,
+            sum(amount) FILTER (WHERE status = 'paid') AS gross_sales,
+            count(*) FILTER (WHERE status = 'refunded') AS refunded_orders,
+            sum(amount) FILTER (WHERE status = 'refunded') AS refunded_value
+        FROM silver.orders
+        GROUP BY order_date, region, currency
+        ORDER BY order_date, region, currency
+    """)`} />
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* SUB-TAB 3: SIMULATOR */}
+      {subTab === "simulator" && (
+        <div style={s.card}>
+          <div style={s.sectionLabel("#d97706")}>Interactive Medallion Retail Pipeline Simulator</div>
+          <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem" }}>
+            Step through the progressive transformations as a raw overnight retail orders CSV passes through Bronze landing, Silver validation & quarantine, and Gold executive aggregations.
+          </p>
+
+          {/* PLAYER CONTROLS */}
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "1.5rem" }}>
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "none",
+                background: isPlaying ? "#dc2626" : "#16a34a",
+                color: "#ffffff",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                cursor: "pointer"
+              }}
+            >
+              {isPlaying ? "⏸ Pause Pipeline" : "▶ Run Full Pipeline"}
+            </button>
+            <button
+              onClick={handleNextStep}
+              disabled={simStepIndex >= maxSimSteps - 1}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "1px solid #cbd5e1",
+                background: "#ffffff",
+                color: "#475569",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                cursor: simStepIndex >= maxSimSteps - 1 ? "not-allowed" : "pointer"
+              }}
+            >
+              ⏩ Next Layer ({simStepIndex + 1}/{maxSimSteps})
+            </button>
+            <button
+              onClick={handleResetSim}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "1px solid #cbd5e1",
+                background: "#ffffff",
+                color: "#64748b",
+                fontSize: "0.65rem",
+                fontWeight: 600,
+                cursor: "pointer"
+              }}
+            >
+              🔄 Reset
+            </button>
+          </div>
+
+          {/* ACTIVE STEP DISPLAY */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {SIMULATOR_TURNS.slice(0, simStepIndex + 1).map((turnItem, idx) => (
+              <div
+                key={idx}
+                style={{
+                  background: turnItem.layer === "Bronze" ? "#fffbebe0" : turnItem.layer === "Silver" ? "#f8fafc" : "#fefce8",
+                  border: "1px solid",
+                  borderColor: turnItem.layer === "Bronze" ? "#fcd34d" : turnItem.layer === "Silver" ? "#cbd5e1" : "#fef08a",
+                  borderRadius: 6,
+                  padding: "1rem"
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                    <span style={{ fontSize: "1.2rem" }}>{turnItem.icon}</span>
+                    <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#0f172a" }}>
+                      {turnItem.title}
+                    </span>
+                  </div>
+                  <span style={{
+                    fontSize: "0.58rem",
+                    padding: "0.15rem 0.5rem",
+                    borderRadius: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    background: turnItem.layer === "Bronze" ? "#fef3c7" : turnItem.layer === "Silver" ? "#e2e8f0" : "#fef9c3",
+                    color: turnItem.layer === "Bronze" ? "#92400e" : turnItem.layer === "Silver" ? "#334155" : "#854d0e"
+                  }}>
+                    {turnItem.layer} Layer
+                  </span>
+                </div>
+
+                <div style={{ fontSize: "0.67rem", color: "#475569", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                  {turnItem.desc}
+                </div>
+
+                {turnItem.hashStatus && (
+                  <div style={{ background: "#78350f", padding: "0.4rem 0.8rem", borderRadius: 4, fontSize: "0.62rem", color: "#fef3c7", fontFamily: "DM Mono, monospace", marginBottom: "0.8rem" }}>
+                    🔑 {turnItem.hashStatus}
+                  </div>
+                )}
+
+                {/* BRONZE RAW RECORDS TABLE */}
+                {turnItem.records && (
+                  <div style={{ overflowX: "auto" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.62rem" }}>
+                      <thead>
+                        <tr style={{ background: "#fef3c7", borderBottom: "1px solid #fcd34d", textAlign: "left" }}>
+                          <th style={{ padding: "0.4rem" }}>order_id</th>
+                          <th style={{ padding: "0.4rem" }}>ordered_at</th>
+                          <th style={{ padding: "0.4rem" }}>customer_id</th>
+                          <th style={{ padding: "0.4rem" }}>region</th>
+                          <th style={{ padding: "0.4rem" }}>amount</th>
+                          <th style={{ padding: "0.4rem" }}>status</th>
+                          <th style={{ padding: "0.4rem" }}>raw_ingest_note</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {turnItem.records.map((r, rIdx) => (
+                          <tr key={rIdx} style={{ borderBottom: "1px solid #fef9c3" }}>
+                            <td style={{ padding: "0.4rem", fontFamily: "DM Mono, monospace", fontWeight: 700 }}>{r.id}</td>
+                            <td style={{ padding: "0.4rem", fontFamily: "DM Mono, monospace" }}>{r.date}</td>
+                            <td style={{ padding: "0.4rem" }}>{r.cust}</td>
+                            <td style={{ padding: "0.4rem" }}>{r.region}</td>
+                            <td style={{ padding: "0.4rem" }}>{r.amt}</td>
+                            <td style={{ padding: "0.4rem" }}>{r.status}</td>
+                            <td style={{ padding: "0.4rem", color: r.note.includes("DUPLICATE") || r.note.includes("BAD") || r.note.includes("NEGATIVE") ? "#dc2626" : "#16a34a", fontWeight: 700 }}>
+                              {r.note}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* SILVER TABLES DISPLAY */}
+                {turnItem.validRecords && (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    <div>
+                      <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#15803d", marginBottom: "0.3rem" }}>
+                        ✅ silver.orders (Valid & Typed Records)
+                      </div>
+                      <div style={{ overflowX: "auto" }}>
+                        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.62rem" }}>
+                          <thead>
+                            <tr style={{ background: "#dcfce7", borderBottom: "1px solid #bbf7d0", textAlign: "left" }}>
+                              <th style={{ padding: "0.4rem" }}>order_id</th>
+                              <th style={{ padding: "0.4rem" }}>ordered_at (TIMESTAMPTZ)</th>
+                              <th style={{ padding: "0.4rem" }}>customer_id</th>
+                              <th style={{ padding: "0.4rem" }}>region</th>
+                              <th style={{ padding: "0.4rem" }}>amount</th>
+                              <th style={{ padding: "0.4rem" }}>status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {turnItem.validRecords.map((vr, vrIdx) => (
+                              <tr key={vrIdx} style={{ borderBottom: "1px solid #f0fdf4" }}>
+                                <td style={{ padding: "0.4rem", fontFamily: "DM Mono, monospace", fontWeight: 700 }}>{vr.id}</td>
+                                <td style={{ padding: "0.4rem", fontFamily: "DM Mono, monospace" }}>{vr.date}</td>
+                                <td style={{ padding: "0.4rem" }}>{vr.cust}</td>
+                                <td style={{ padding: "0.4rem", fontWeight: 700 }}>{vr.region}</td>
+                                <td style={{ padding: "0.4rem", color: "#16a34a", fontWeight: 700 }}>{vr.amt}</td>
+                                <td style={{ padding: "0.4rem" }}>{vr.status}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#b91c1c", marginBottom: "0.3rem" }}>
+                        ⚠️ silver.orders_quarantine (Diverted Bad Rows with Tagged Reasons)
+                      </div>
+                      <div style={{ overflowX: "auto" }}>
+                        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.62rem" }}>
+                          <thead>
+                            <tr style={{ background: "#fee2e2", borderBottom: "1px solid #fecaca", textAlign: "left" }}>
+                              <th style={{ padding: "0.4rem" }}>order_id</th>
+                              <th style={{ padding: "0.4rem" }}>ordered_at</th>
+                              <th style={{ padding: "0.4rem" }}>amount</th>
+                              <th style={{ padding: "0.4rem" }}>rejection_reason</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {turnItem.quarantineRecords.map((qr, qrIdx) => (
+                              <tr key={qrIdx} style={{ borderBottom: "1px solid #fef2f2" }}>
+                                <td style={{ padding: "0.4rem", fontFamily: "DM Mono, monospace", fontWeight: 700 }}>{qr.id}</td>
+                                <td style={{ padding: "0.4rem", fontFamily: "DM Mono, monospace" }}>{qr.date}</td>
+                                <td style={{ padding: "0.4rem" }}>{qr.amt}</td>
+                                <td style={{ padding: "0.4rem", color: "#dc2626", fontWeight: 700 }}>{qr.reason}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* GOLD SUMMARY TABLE */}
+                {turnItem.goldSummary && (
+                  <div>
+                    <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#854d0e", marginBottom: "0.3rem" }}>
+                      🥇 gold.daily_sales_by_region (Executive Reporting View)
+                    </div>
+                    <div style={{ overflowX: "auto" }}>
+                      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.62rem" }}>
+                        <thead>
+                          <tr style={{ background: "#fef08a", borderBottom: "1px solid #fde047", textAlign: "left" }}>
+                            <th style={{ padding: "0.4rem" }}>order_date</th>
+                            <th style={{ padding: "0.4rem" }}>region</th>
+                            <th style={{ padding: "0.4rem" }}>currency</th>
+                            <th style={{ padding: "0.4rem" }}>paid_orders</th>
+                            <th style={{ padding: "0.4rem" }}>gross_sales</th>
+                            <th style={{ padding: "0.4rem" }}>refunded_orders</th>
+                            <th style={{ padding: "0.4rem" }}>refunded_value</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {turnItem.goldSummary.map((gs, gsIdx) => (
+                            <tr key={gsIdx} style={{ borderBottom: "1px solid #fefce8" }}>
+                              <td style={{ padding: "0.4rem", fontFamily: "DM Mono, monospace" }}>{gs.date}</td>
+                              <td style={{ padding: "0.4rem", fontWeight: 700 }}>{gs.region}</td>
+                              <td style={{ padding: "0.4rem" }}>{gs.currency}</td>
+                              <td style={{ padding: "0.4rem", color: "#16a34a", fontWeight: 700 }}>{gs.paidOrders}</td>
+                              <td style={{ padding: "0.4rem", color: "#16a34a", fontWeight: 700 }}>{gs.grossSales}</td>
+                              <td style={{ padding: "0.4rem", color: "#dc2626" }}>{gs.refundedOrders}</td>
+                              <td style={{ padding: "0.4rem", color: "#dc2626" }}>{gs.refundedValue}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 4: DIAGNOSTIC QUIZ */}
+      {subTab === "diagnostic" && (
+        <div style={s.card}>
+          <div style={s.sectionLabel("#d97706")}>Medallion Quality Assurance & Boundary Contract Quiz</div>
+          <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1.5rem", lineHeight: 1.7 }}>
+            Answer 4 data engineering questions to evaluate your pipeline's layer contract strength and compute your Data Quality Assurance Index.
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+            {/* Q1 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                1. Is your Bronze layer append-only with idempotency hash checking (e.g. SHA-256)?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, SHA-256 batch hash prevents duplicate re-ingest (+25%)", val: 1 },
+                  { label: "Append-only but no hash checking (+15%)", val: 0.6 },
+                  { label: "Overwrites existing tables on load (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q1: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q1 === opt.val ? "#d97706" : "#cbd5e1",
+                      background: diagScores.q1 === opt.val ? "#d97706" : "#ffffff",
+                      color: diagScores.q1 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q2 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                2. How are invalid or corrupt rows handled at the Silver layer boundary?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Diverted to silver_quarantine table with rejection_reason tags (+25%)", val: 1 },
+                  { label: "Silently dropped / filtered out (+10%)", val: 0.4 },
+                  { label: "Fails & crashes entire pipeline (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q2: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q2 === opt.val ? "#d97706" : "#cbd5e1",
+                      background: diagScores.q2 === opt.val ? "#d97706" : "#ffffff",
+                      color: diagScores.q2 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q3 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                3. Are runtime assertions (check_quality) executed before updating Gold aggregates?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, asserts 0 duplicate keys and 0 null IDs (+25%)", val: 1 },
+                  { label: "Manual spot checks after run (+15%)", val: 0.6 },
+                  { label: "No assertions executed (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q3: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q3 === opt.val ? "#d97706" : "#cbd5e1",
+                      background: diagScores.q3 === opt.val ? "#d97706" : "#ffffff",
+                      color: diagScores.q3 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q4 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                4. Can your Silver & Gold tables be completely reproduced from Bronze data at any time?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, 100% reproducible via deterministic transformations (+25%)", val: 1 },
+                  { label: "Mostly reproducible (+15%)", val: 0.6 },
+                  { label: "No, Silver contains state not saved in Bronze (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q4: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q4 === opt.val ? "#d97706" : "#cbd5e1",
+                      background: diagScores.q4 === opt.val ? "#d97706" : "#ffffff",
+                      color: diagScores.q4 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* SCORE DISPLAY */}
+            <div style={{
+              background: totalScore >= 75 ? "#f0fdf4" : totalScore >= 40 ? "#fffbe5" : "#fef2f2",
+              border: "1px solid",
+              borderColor: totalScore >= 75 ? "#bbf7d0" : totalScore >= 40 ? "#fef08a" : "#fecaca",
+              padding: "1.2rem",
+              borderRadius: 6,
+              display: "flex",
+              justify: "space-between",
+              alignItems: "center"
+            }}>
+              <div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: totalScore >= 75 ? "#15803d" : totalScore >= 40 ? "#854d0e" : "#991b1b" }}>
+                  Data Quality Assurance Index: {totalScore}%
+                </div>
+                <div style={{ fontSize: "0.68rem", color: "#334155", marginTop: "0.3rem", lineHeight: 1.6 }}>
+                  {totalScore >= 75
+                    ? "🏆 Enterprise-Grade Medallion Architecture! Your data layers are idempotent, fully reproducible, and protected by quarantine tables & quality contracts."
+                    : totalScore >= 40
+                    ? "⚠️ Moderate Quality Protection. Implement SHA-256 idempotency checking in Bronze and explicit quarantine tables in Silver to prevent silent data corruption."
+                    : "🚨 Vulnerable Pipeline. Raw data overwrites and silent row omissions put downstream Gold dashboards at high risk of bad decisions."}
+                </div>
+              </div>
+              <div style={{ fontSize: "2rem", fontWeight: 900, color: totalScore >= 75 ? "#16a34a" : totalScore >= 40 ? "#ca8a04" : "#dc2626" }}>
+                {totalScore}%
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
+// ─── AI TEST DATA BOTTLENECK TAB ────────────────────────────────
+const AITestDataBottleneckTab = ({ s }) => {
+  const [subTab, setSubTab] = useState("mismatch"); // 'mismatch' | 'principles' | 'simulator' | 'diagnostic'
+  const [codeGenSpeed, setCodeGenSpeed] = useState(30); // minutes
+  const [testDataWait, setTestDataWait] = useState(14); // days
+  const [simMode, setSimMode] = useState("traditional"); // 'traditional' | 'ephemeral'
+  const [simStepIndex, setSimStepIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [diagScores, setDiagScores] = useState({ q1: 0, q2: 0, q3: 0, q4: 0 });
+
+  const CASE_STUDIES = [
+    {
+      company: "Worldpay",
+      industry: "Financial Services & Payments",
+      stat: "28 Days → 4 Days",
+      metric: "Environment Setup Reduction",
+      desc: "Streamlined test data provisioning across enterprise payment processing pipelines, drastically shortening release cycles.",
+      badgeColor: "#0284c7"
+    },
+    {
+      company: "Molina Healthcare",
+      industry: "Healthcare & Insurance (HIPAA Regulated)",
+      stat: "Days → <10 Minutes",
+      metric: "Provisioning Speed & 50% Timeline Cut",
+      desc: "Reduced project timelines from 6 months to 3 months by automating PHI masking and self-service database cloning.",
+      badgeColor: "#166534"
+    },
+    {
+      company: "Delta Dental",
+      industry: "Dental Insurance & Health Data",
+      stat: "8 Weeks → Hours",
+      metric: "Cloud Test Data Migration Time",
+      desc: "Accelerated cloud migration by embedding automated compliance policies directly into CI/CD data movement workflows.",
+      badgeColor: "#d97706"
+    }
+  ];
+
+  const SIM_TRADITIONAL = [
+    {
+      step: 1,
+      title: "1. AI Code & Test Generation (Minutes)",
+      time: "15 Minutes",
+      actor: "Claude Code / Cursor Agent",
+      status: "COMPLETED",
+      details: "Agentic AI generates new feature code, unit tests, and API integration stubs in 15 minutes.",
+      icon: "🤖",
+      color: "#16a34a"
+    },
+    {
+      step: 2,
+      title: "2. JIRA Test Data Request Ticket Submitted",
+      time: "Day 1 (09:00 AM)",
+      actor: "Developer / QA Team",
+      status: "WAITING",
+      details: "Developer submits ticket requesting production-like database subset with PII masking.",
+      icon: "🎫",
+      color: "#ca8a04"
+    },
+    {
+      step: 3,
+      title: "3. DBA Team Queue & Manual Data Extraction",
+      time: "Days 2 - 7",
+      actor: "DBA Team (Cross-functional bottleneck)",
+      status: "BLOCKED",
+      details: "DBA manually queries production DB, extracts subset dump, and writes custom masking scripts.",
+      icon: "⏳",
+      color: "#dc2626"
+    },
+    {
+      step: 4,
+      title: "4. Security & Compliance Manual Audit Review",
+      time: "Days 8 - 12",
+      actor: "InfoSec & Governance Gatekeepers",
+      status: "BLOCKED",
+      details: "Security audits dataset for unmasked SSNs, credit card numbers, and PHI fields.",
+      icon: "🔒",
+      color: "#dc2626"
+    },
+    {
+      step: 5,
+      title: "5. Environment Load & Stale Data Validation",
+      time: "Day 14",
+      actor: "QA Pipeline",
+      status: "STALE DEBT",
+      details: "14 days later, data is loaded into staging DB. AI-generated code must now be re-contextualized.",
+      icon: "🐌",
+      color: "#991b1b"
+    }
+  ];
+
+  const SIM_EPHEMERAL = [
+    {
+      step: 1,
+      title: "1. AI Code Generation & PR Creation",
+      time: "15 Minutes",
+      actor: "Claude Code / Cursor Agent",
+      status: "COMPLETED",
+      details: "Agentic tool generates feature branch and opens Pull Request #142 in GitHub.",
+      icon: "🤖",
+      color: "#16a34a"
+    },
+    {
+      step: 2,
+      title: "2. CI/CD Webhook Triggers Ephemeral TDM API",
+      time: "+ 10 Seconds",
+      actor: "GitHub Actions / Jenkins Pipeline",
+      status: "AUTOMATED",
+      details: "CI pipeline calls TDM API: POST /api/v1/environments/provision with PR #142 context.",
+      icon: "⚡",
+      color: "#2563eb"
+    },
+    {
+      step: 3,
+      title: "3. Instant Virtual DB Clone & Auto-Masking",
+      time: "+ 2 Minutes",
+      actor: "Self-Service Delphix / Ephemeral Data Engine",
+      status: "AUTOMATED",
+      details: "Engine clones production DB block-map in seconds and applies built-in default PII masking rules.",
+      icon: "🛡️",
+      color: "#16a34a"
+    },
+    {
+      step: 4,
+      title: "4. Automated Test Suite Execution",
+      time: "+ 1 Minute",
+      actor: "Containerized Test Runner",
+      status: "SUCCESS",
+      details: "Full integration test suite runs against fresh compliant database clone.",
+      icon: "🧪",
+      color: "#16a34a"
+    },
+    {
+      step: 5,
+      title: "5. Ephemeral Teardown & Clean Merge",
+      time: "Total: 18 Minutes",
+      actor: "Automated Pipeline",
+      status: "MERGED",
+      details: "Test suite passes, PR auto-merges, and ephemeral DB environment is instantly destroyed.",
+      icon: "🚀",
+      color: "#15803d"
+    }
+  ];
+
+  const activeSimTurns = simMode === "traditional" ? SIM_TRADITIONAL : SIM_EPHEMERAL;
+  const maxSimSteps = activeSimTurns.length;
+
+  useEffect(() => {
+    let timer;
+    if (isPlaying && simStepIndex < maxSimSteps - 1) {
+      timer = setTimeout(() => {
+        setSimStepIndex(prev => prev + 1);
+      }, 1400);
+    } else if (simStepIndex >= maxSimSteps - 1) {
+      setIsPlaying(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isPlaying, simStepIndex, maxSimSteps]);
+
+  const handleNextStep = () => {
+    if (simStepIndex < maxSimSteps - 1) {
+      setSimStepIndex(prev => prev + 1);
+    }
+  };
+
+  const handleResetSim = () => {
+    setIsPlaying(false);
+    setSimStepIndex(0);
+  };
+
+  const calcStallRatio = () => {
+    const codeGenHours = codeGenSpeed / 60;
+    const testDataHours = testDataWait * 24;
+    return Math.round(testDataHours / Math.max(0.1, codeGenHours));
+  };
+
+  const stallRatio = calcStallRatio();
+
+  const calcTotalScore = () => {
+    const sum = Object.values(diagScores).reduce((a, b) => a + b, 0);
+    return Math.min(100, sum * 25);
+  };
+
+  const totalScore = calcTotalScore();
+
+  return (
+    <div>
+      {/* SECTION HEADER */}
+      <div style={s.sectionLabel("#0284c7")}>DevOps & Test Data Management · The New Stack</div>
+      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", border: "1px solid #0284c7" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
+          <div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#38bdf8", marginBottom: "0.5rem" }}>
+              The Shifted Delivery Bottleneck
+            </div>
+            <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.8rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.5rem", lineHeight: 1.1 }}>
+              Test Data Wait Times: <em style={{ color: "#38bdf8", fontStyle: "italic" }}>The AI Execution Bottleneck</em>
+            </h2>
+            <p style={{ fontSize: "0.72rem", color: "#cbd5e1", maxWidth: 680, lineHeight: 1.7 }}>
+              AI generates code and tests in minutes, but software delivery pipelines stall at <strong>validation</strong>. When 99% of organizations wait over a day and 42% wait weeks for production test data, AI code acceleration becomes a <em>full stop</em> rather than a speedup.
+            </p>
+          </div>
+          <div style={{ background: "#1e293b", border: "1px solid #0284c760", padding: "0.8rem 1rem", borderRadius: 6, textAlign: "right" }}>
+            <div style={{ fontSize: "0.6rem", color: "#38bdf8", textTransform: "uppercase", letterSpacing: "0.1em" }}>Author</div>
+            <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.85rem", fontWeight: 700, color: "#ffffff" }}>Woody Evans</div>
+            <div style={{ fontSize: "0.58rem", color: "#94a3b8", marginTop: "0.2rem" }}>VP Sales Eng, Perforce (The New Stack 2026)</div>
+          </div>
+        </div>
+      </div>
+
+      {/* SUB-TABS */}
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", borderBottom: "1px solid #e2e8f0", paddingBottom: "0.5rem" }}>
+        {[
+          { id: "mismatch",   label: "① Velocity Mismatch ⚠️" },
+          { id: "principles", label: "② 4 TDM Principles & Case Studies 🏗️" },
+          { id: "simulator",  label: "③ Interactive Ephemeral TDM Simulator 🎮" },
+          { id: "diagnostic", label: "④ AI-Readiness Diagnostic Quiz 🎯" },
+        ].map(t => (
+          <button
+            key={t.id}
+            onClick={() => setSubTab(t.id)}
+            style={{
+              padding: "0.6rem 1rem",
+              fontFamily: "Syne, sans-serif",
+              fontSize: "0.65rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              borderRadius: 4,
+              border: "1px solid",
+              borderColor: subTab === t.id ? "#0284c7" : "transparent",
+              background: subTab === t.id ? "#0284c7" : "#ffffff",
+              color: subTab === t.id ? "#ffffff" : "#64748b",
+              cursor: "pointer",
+              transition: "all 0.2s"
+            }}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* SUB-TAB 1: MISMATCH */}
+      {subTab === "mismatch" && (
+        <div>
+          {/* STATS HIGHLIGHT */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
+            <div style={{ background: "#fef2f2", border: "1px solid #fecaca", borderRadius: 6, padding: "1rem", textAlign: "center" }}>
+              <div style={{ fontSize: "1.8rem", fontWeight: 900, color: "#dc2626" }}>99%</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", color: "#991b1b", marginTop: "0.2rem" }}>
+                Wait &gt;1 Business Day
+              </div>
+              <div style={{ fontSize: "0.6rem", color: "#b91c1c", marginTop: "0.3rem" }}>
+                Of enterprises wait longer than 24 hours for production test data access.
+              </div>
+            </div>
+
+            <div style={{ background: "#450a0a", border: "1px solid #ef4444", borderRadius: 6, padding: "1rem", textAlign: "center", color: "#ffffff" }}>
+              <div style={{ fontSize: "1.8rem", fontWeight: 900, color: "#fca5a5" }}>42%</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", color: "#fecaca", marginTop: "0.2rem" }}>
+                Wait Weeks or Months
+              </div>
+              <div style={{ fontSize: "0.6rem", color: "#fee2e2", marginTop: "0.3rem" }}>
+                Face extreme validation delays while AI agents generate code in minutes.
+              </div>
+            </div>
+
+            <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 6, padding: "1rem", textAlign: "center" }}>
+              <div style={{ fontSize: "1.8rem", fontWeight: 900, color: "#16a34a" }}>98%</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", color: "#166534", marginTop: "0.2rem" }}>
+                Rely on Manual Steps
+              </div>
+              <div style={{ fontSize: "0.6rem", color: "#15803d", marginTop: "0.3rem" }}>
+                In their provisioning process, creating an operational bottleneck.
+              </div>
+            </div>
+          </div>
+
+          {/* CALCULATOR */}
+          <div style={{ ...s.card, marginBottom: "1.5rem" }}>
+            <div style={s.sectionLabel("#0284c7")}>Interactive Velocity Mismatch Calculator</div>
+            <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1.2rem", lineHeight: 1.6 }}>
+              Adjust code generation time vs test data wait time to compute your pipeline's <strong>Validation Friction Ratio</strong>.
+            </p>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "1.2rem" }}>
+              <div style={{ background: "#f8fafc", padding: "1rem", borderRadius: 6, border: "1px solid #e2e8f0" }}>
+                <label style={{ fontSize: "0.68rem", fontWeight: 700, color: "#0f172a", display: "block", marginBottom: "0.4rem" }}>
+                  AI Code & Test Generation Speed: <strong>{codeGenSpeed} Minutes</strong>
+                </label>
+                <input
+                  type="range"
+                  min="5"
+                  max="120"
+                  value={codeGenSpeed}
+                  onChange={e => setCodeGenSpeed(Number(e.target.value))}
+                  style={{ width: "100%" }}
+                />
+              </div>
+
+              <div style={{ background: "#f8fafc", padding: "1rem", borderRadius: 6, border: "1px solid #e2e8f0" }}>
+                <label style={{ fontSize: "0.68rem", fontWeight: 700, color: "#0f172a", display: "block", marginBottom: "0.4rem" }}>
+                  Test Data Request & Provisioning Wait: <strong>{testDataWait} Days</strong>
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="30"
+                  value={testDataWait}
+                  onChange={e => setTestDataWait(Number(e.target.value))}
+                  style={{ width: "100%" }}
+                />
+              </div>
+            </div>
+
+            <div style={{
+              background: stallRatio > 500 ? "#450a0a" : "#fef2f2",
+              border: "1px solid #ef4444",
+              borderRadius: 6,
+              padding: "1rem",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              color: stallRatio > 500 ? "#ffffff" : "#0f172a"
+            }}>
+              <div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: stallRatio > 500 ? "#fca5a5" : "#dc2626" }}>
+                  Validation Friction Ratio: {stallRatio}x Delay Factor
+                </div>
+                <div style={{ fontSize: "0.65rem", marginTop: "0.3rem", lineHeight: 1.6 }}>
+                  Your team waits <strong>{stallRatio} times longer</strong> to validate code than it takes AI agents to write it. This leads to massive unvalidated feature debt and context switching.
+                </div>
+              </div>
+              <div style={{ fontSize: "2.2rem", fontWeight: 900, color: stallRatio > 500 ? "#ef4444" : "#dc2626" }}>
+                {stallRatio}x
+              </div>
+            </div>
+          </div>
+
+          {/* 3 STRUCTURAL CAUSES */}
+          <div style={s.card}>
+            <div style={s.sectionLabel("#0284c7")}>The 3 Structural Causes of Test Data Delays</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
+              <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>🔀</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a", marginBottom: "0.4rem" }}>
+                  1. Fragmented Workflows
+                </div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b", lineHeight: 1.6 }}>
+                  Test data requests cross multiple team boundaries (DBAs, Security, Dev, Compliance) with no single owner responsible for end-to-end delivery speed.
+                </div>
+              </div>
+
+              <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>🧱</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a", marginBottom: "0.4rem" }}>
+                  2. Manual Quality Gates
+                </div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b", lineHeight: 1.6 }}>
+                  Data quality is handled as a manual review gate rather than an automated pipeline property, creating unnecessary trade-offs between speed and reliability.
+                </div>
+              </div>
+
+              <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+                <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>⚖️</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0f172a", marginBottom: "0.4rem" }}>
+                  3. Governance Friction
+                </div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b", lineHeight: 1.6 }}>
+                  Regulated industries (healthcare, finance) face real PII/PHI constraints. Without automated masking, compliance acts as a manual approval wall.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 2: PRINCIPLES & CASE STUDIES */}
+      {subTab === "principles" && (
+        <div>
+          {/* 4 TDM DESIGN PRINCIPLES */}
+          <div style={{ ...s.card, marginBottom: "1.5rem" }}>
+            <div style={s.sectionLabel("#0284c7")}>4 Modern TDM Design Principles</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
+              <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", padding: "1rem", borderRadius: 6 }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0284c7", marginBottom: "0.4rem" }}>
+                  1. End-to-End Automated Provisioning
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>
+                  Automate the entire data lifecycle — provision, refresh, instant branching, and teardown — rather than automating individual steps while leaving others manual.
+                </div>
+              </div>
+
+              <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", padding: "1rem", borderRadius: 6 }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0284c7", marginBottom: "0.4rem" }}>
+                  2. Built-In Governance by Default
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>
+                  Compliant, masked, production-like data and synthetic data should be the automated output of the pipeline, not a prerequisite that slows it down.
+                </div>
+              </div>
+
+              <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", padding: "1rem", borderRadius: 6 }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0284c7", marginBottom: "0.4rem" }}>
+                  3. Ephemeral Test Environments
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>
+                  Treat test data environments as disposable containerized resources, provisioned in seconds and discarded immediately after test execution.
+                </div>
+              </div>
+
+              <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", padding: "1rem", borderRadius: 6 }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0284c7", marginBottom: "0.4rem" }}>
+                  4. API-First CI/CD Integration
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>
+                  Provide REST APIs and CLI tools so data availability keeps pace with automated code generation in GitHub Actions, Jenkins, and GitLab CI.
+                </div>
+              </div>
+            </div>
+
+            {/* API SNIPPET */}
+            <div style={{ marginTop: "1rem" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#0f172a", marginBottom: "0.4rem" }}>
+                Example GitHub Actions TDM API Step (.github/workflows/test.yml)
+              </div>
+              <CodeBlock code={`- name: Provision Ephemeral Masked Test DB
+  run: |
+    curl -X POST https://tdm.internal.net/api/v1/environments \
+      -H "Authorization: Bearer \${{ secrets.TDM_API_KEY }}" \
+      -d '{
+        "source_snapshot": "prod_nightly_masked",
+        "branch": "'"\${{ github.head_ref }}"'",
+        "ttl_minutes": 60
+      }' -o db_env.json
+    export DB_HOST=$(jq -r '.host' db_env.json)
+
+- name: Run AI-Generated Integration Tests
+  run: npm run test:integration`} />
+            </div>
+          </div>
+
+          {/* CASE STUDIES */}
+          <div style={s.card}>
+            <div style={s.sectionLabel("#0284c7")}>Real-World Enterprise Benchmarks</div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
+              {CASE_STUDIES.map(cs => (
+                <div key={cs.company} style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 6, padding: "1rem" }}>
+                  <div style={{ fontSize: "0.6rem", color: cs.badgeColor, fontWeight: 700, textTransform: "uppercase" }}>
+                    {cs.industry}
+                  </div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 900, fontSize: "1.1rem", color: "#0f172a", marginTop: "0.2rem" }}>
+                    {cs.company}
+                  </div>
+                  <div style={{ fontSize: "1.2rem", fontWeight: 900, color: cs.badgeColor, margin: "0.4rem 0" }}>
+                    {cs.stat}
+                  </div>
+                  <div style={{ fontSize: "0.65rem", fontWeight: 700, color: "#334155" }}>
+                    {cs.metric}
+                  </div>
+                  <div style={{ fontSize: "0.62rem", color: "#64748b", marginTop: "0.3rem", lineHeight: 1.6 }}>
+                    {cs.desc}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 3: SIMULATOR */}
+      {subTab === "simulator" && (
+        <div style={s.card}>
+          <div style={s.sectionLabel("#0284c7")}>Interactive Ephemeral TDM Pipeline Simulator</div>
+          <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem" }}>
+            Compare the traditional 14-day ticket-based test data request process against modern automated self-service ephemeral data provisioning.
+          </p>
+
+          {/* MODE SELECTOR */}
+          <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem" }}>
+            <button
+              onClick={() => {
+                setSimMode("traditional");
+                setSimStepIndex(0);
+                setIsPlaying(false);
+              }}
+              style={{
+                flex: 1,
+                padding: "0.7rem",
+                borderRadius: 6,
+                border: "1px solid",
+                borderColor: simMode === "traditional" ? "#dc2626" : "#cbd5e1",
+                background: simMode === "traditional" ? "#dc2626" : "#ffffff",
+                color: simMode === "traditional" ? "#ffffff" : "#475569",
+                fontFamily: "Syne, sans-serif",
+                fontWeight: 700,
+                fontSize: "0.7rem",
+                cursor: "pointer"
+              }}
+            >
+              🐌 Traditional Ticket-Based Flow (14 Days Wait)
+            </button>
+            <button
+              onClick={() => {
+                setSimMode("ephemeral");
+                setSimStepIndex(0);
+                setIsPlaying(false);
+              }}
+              style={{
+                flex: 1,
+                padding: "0.7rem",
+                borderRadius: 6,
+                border: "1px solid",
+                borderColor: simMode === "ephemeral" ? "#16a34a" : "#cbd5e1",
+                background: simMode === "ephemeral" ? "#16a34a" : "#ffffff",
+                color: simMode === "ephemeral" ? "#ffffff" : "#475569",
+                fontFamily: "Syne, sans-serif",
+                fontWeight: 700,
+                fontSize: "0.7rem",
+                cursor: "pointer"
+              }}
+            >
+              ⚡ Modern Ephemeral API Flow (3 Minutes Total)
+            </button>
+          </div>
+
+          {/* CONTROLS */}
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "1.5rem" }}>
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "none",
+                background: isPlaying ? "#dc2626" : "#16a34a",
+                color: "#ffffff",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                cursor: "pointer"
+              }}
+            >
+              {isPlaying ? "⏸ Pause Flow" : "▶ Play Step-by-Step"}
+            </button>
+            <button
+              onClick={handleNextStep}
+              disabled={simStepIndex >= maxSimSteps - 1}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "1px solid #cbd5e1",
+                background: "#ffffff",
+                color: "#475569",
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                cursor: simStepIndex >= maxSimSteps - 1 ? "not-allowed" : "pointer"
+              }}
+            >
+              ⏩ Next Step ({simStepIndex + 1}/{maxSimSteps})
+            </button>
+            <button
+              onClick={handleResetSim}
+              style={{
+                padding: "0.5rem 1rem",
+                borderRadius: 4,
+                border: "1px solid #cbd5e1",
+                background: "#ffffff",
+                color: "#64748b",
+                fontSize: "0.65rem",
+                fontWeight: 600,
+                cursor: "pointer"
+              }}
+            >
+              🔄 Reset
+            </button>
+          </div>
+
+          {/* STEPS DISPLAY */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+            {activeSimTurns.slice(0, simStepIndex + 1).map((turn, idx) => (
+              <div
+                key={idx}
+                style={{
+                  background: simMode === "traditional" ? "#fff5f5" : "#f0fdf4",
+                  border: "1px solid",
+                  borderColor: simMode === "traditional" ? "#fecaca" : "#bbf7d0",
+                  borderRadius: 6,
+                  padding: "1rem"
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
+                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                    <span style={{ fontSize: "1.2rem" }}>{turn.icon}</span>
+                    <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.78rem", color: "#0f172a" }}>
+                      {turn.title}
+                    </span>
+                  </div>
+                  <span style={{
+                    fontSize: "0.58rem",
+                    padding: "0.15rem 0.5rem",
+                    borderRadius: 10,
+                    fontWeight: 700,
+                    background: turn.color,
+                    color: "#ffffff"
+                  }}>
+                    {turn.status} ({turn.time})
+                  </span>
+                </div>
+                <div style={{ fontSize: "0.65rem", color: "#475569", lineHeight: 1.6 }}>
+                  <strong>Actor / Engine:</strong> {turn.actor} — {turn.details}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* SUB-TAB 4: DIAGNOSTIC CALCULATOR */}
+      {subTab === "diagnostic" && (
+        <div style={s.card}>
+          <div style={s.sectionLabel("#0284c7")}>Enterprise TDM AI-Readiness Diagnostic</div>
+          <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1.5rem", lineHeight: 1.7 }}>
+            Answer 4 questions about your test data delivery infrastructure to evaluate if your organization is ready for AI-velocity code execution.
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.2rem" }}>
+            {/* Q1 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                1. How long does a developer or QA pipeline wait to receive production-like test data?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Self-service on demand in <10 minutes (+25%)", val: 1 },
+                  { label: "1 to 3 business days (+10%)", val: 0.4 },
+                  { label: "Weeks or months (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q1: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q1 === opt.val ? "#0284c7" : "#cbd5e1",
+                      background: diagScores.q1 === opt.val ? "#0284c7" : "#ffffff",
+                      color: diagScores.q1 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q2 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                2. Is PII/PHI masking and compliance enforcement automated inside the provisioning pipeline?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, default built-in policy enforcement (+25%)", val: 1 },
+                  { label: "Semi-automated custom scripts (+15%)", val: 0.6 },
+                  { label: "Manual security audit review gates (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q2: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q2 === opt.val ? "#0284c7" : "#cbd5e1",
+                      background: diagScores.q2 === opt.val ? "#0284c7" : "#ffffff",
+                      color: diagScores.q2 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q3 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                3. Are test databases treated as disposable ephemeral resources provisioned via API?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, fully ephemeral via CI/CD API (+25%)", val: 1 },
+                  { label: "Shared static staging DBs (+10%)", val: 0.4 },
+                  { label: "Manual local database setups (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q3: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q3 === opt.val ? "#0284c7" : "#cbd5e1",
+                      background: diagScores.q3 === opt.val ? "#0284c7" : "#ffffff",
+                      color: diagScores.q3 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q4 */}
+            <div style={{ background: "#f8fafc", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
+              <div style={{ fontWeight: 700, fontSize: "0.72rem", color: "#0f172a", marginBottom: "0.5rem" }}>
+                4. Can AI agents automatically spin up a test database clone for every pull request?
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                {[
+                  { label: "Yes, 100% automated PR test environment (+25%)", val: 1 },
+                  { label: "Requires manual trigger (+15%)", val: 0.6 },
+                  { label: "Not possible (0%)", val: 0 },
+                ].map(opt => (
+                  <button
+                    key={opt.label}
+                    onClick={() => setDiagScores({ ...diagScores, q4: opt.val })}
+                    style={{
+                      padding: "0.4rem 0.8rem",
+                      borderRadius: 4,
+                      border: "1px solid",
+                      borderColor: diagScores.q4 === opt.val ? "#0284c7" : "#cbd5e1",
+                      background: diagScores.q4 === opt.val ? "#0284c7" : "#ffffff",
+                      color: diagScores.q4 === opt.val ? "#ffffff" : "#475569",
+                      fontSize: "0.62rem",
+                      fontWeight: 700,
+                      cursor: "pointer"
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* SCORE DISPLAY */}
+            <div style={{
+              background: totalScore >= 75 ? "#f0fdf4" : totalScore >= 40 ? "#fffbe5" : "#fef2f2",
+              border: "1px solid",
+              borderColor: totalScore >= 75 ? "#bbf7d0" : totalScore >= 40 ? "#fef08a" : "#fecaca",
+              padding: "1.2rem",
+              borderRadius: 6,
+              display: "flex",
+              justify: "space-between",
+              alignItems: "center"
+            }}>
+              <div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: totalScore >= 75 ? "#15803d" : totalScore >= 40 ? "#854d0e" : "#991b1b" }}>
+                  Enterprise TDM AI-Readiness Score: {totalScore}%
+                </div>
+                <div style={{ fontSize: "0.68rem", color: "#334155", marginTop: "0.3rem", lineHeight: 1.6 }}>
+                  {totalScore >= 75
+                    ? "🚀 AI-Ready Delivery Pipeline! Your test data infrastructure matches AI code generation speed with ephemeral REST APIs and built-in default masking."
+                    : totalScore >= 40
+                    ? "⚡ Partial TDM Automation. Move from static shared staging databases to API-driven ephemeral data clones to eliminate developer waiting friction."
+                    : "🚨 Severe Test Data Bottleneck! Waiting days or weeks for data completely neutralizes AI code generation gains. Implement self-service TDM immediately."}
+                </div>
+              </div>
+              <div style={{ fontSize: "2rem", fontWeight: 900, color: totalScore >= 75 ? "#16a34a" : totalScore >= 40 ? "#ca8a04" : "#dc2626" }}>
+                {totalScore}%
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+
 // ─── MAIN APP ────────────────────────────────────────────────────
 export default function App() {
   const [tab, setTab] = useState("overview");
@@ -18637,7 +22207,11 @@ export default function App() {
     { id: "multiagent",    label: "㉔ Multi-Agent ◈" },
     { id: "classicalml",   label: "㉕ Classical ML Tools 📊" },
     { id: "activelearn",   label: "㉖ Active Learning 🎯" },
-    { id: "aidataplat",    label: "㉗ AI-Native Data Platform 🏛️" },
+        { id: "aidataplat",    label: "㉗ AI-Native Data Platform 🏛️" },
+        { id: "agentsastools", label: "㉘ Agents as Tools 🛠️" },
+        { id: "codingagentsnonprog", label: "㉙ Non-Programming Coding Agents ⚡" },
+        { id: "medallionarch", label: "㉚ Medallion Architecture 🥉🥈🥇" },
+    { id: "aitestdatabottleneck", label: "㉛ AI Test Data Bottleneck 🧪" },
     { id: "langchain",     label: "㉘ LangChain" },
     { id: "langgraph",     label: "㉙ LangGraph" },
     { id: "compare",       label: "㉚ Compare" },
@@ -19105,6 +22679,18 @@ for chunk in rag_chain.stream("What is hybrid search?"):
         {tab === "fiveassets" && <FiveAssetsTab s={s} />}
 
         {tab === "multiagent" && <MultiAgentTab s={s} />}
+
+        {/* ── AGENTS AS TOOLS ── */}
+        {tab === "agentsastools" && <AgentsAsToolsTab s={s} />}
+
+        {/* ── NON-PROGRAMMING CODING AGENTS ── */}
+        {tab === "codingagentsnonprog" && <NonProgCodingAgentsTab s={s} />}
+
+        {/* ── MEDALLION ARCHITECTURE ── */}
+        {tab === "medallionarch" && <MedallionArchTab s={s} />}
+
+        {/* ── AI TEST DATA BOTTLENECK ── */}
+        {tab === "aitestdatabottleneck" && <AITestDataBottleneckTab s={s} />}
 
         {/* ── CLASSICAL ML TOOLS ── */}
         {tab === "classicalml" && <ClassicalMLTab s={s} />}
