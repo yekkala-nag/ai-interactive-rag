@@ -22330,7 +22330,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
 
 
 // ─── STYLES ──────────────────────────────────────────────────────────
-const s = {
+export const s = {
   main: { padding: "2rem 2.5rem", maxWidth: 1380, width: "100%", margin: "0 auto" },
   section: { marginBottom: "2rem" },
   sectionLabel: (color = "#c9a84c") => ({ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color, borderLeft: `3px solid ${color}`, paddingLeft: "0.7rem", marginBottom: "1rem" }),
