@@ -1,5 +1,9 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import DocumentStructureTab from "./documentStructure/DocumentStructureTab.jsx";
+import { useState, useEffect, useRef, useCallback, Suspense } from "react";
+import { TABS_REGISTRY, CATEGORIES } from "./registry/tabsRegistry.js";
+
+export { default as DocumentStructureTab } from "./documentStructure/DocumentStructureTab.jsx";
+export { default as CliAgentTab } from "./cliAgents/CliAgentTab.jsx";
+export { default as ThreeLayersTab } from "./engineeringLayers/ThreeLayersTab.jsx";
 
 // ─── DATA ────────────────────────────────────────────────────────
 const RAG_PIPELINE_STEPS = [
@@ -886,6 +890,25 @@ const ProgressTracker = () => {
     </div>
   );
 };
+
+export const OverviewTab = ({ s }) => (
+  <div>
+    <div style={{ marginBottom: "2rem" }}>
+      <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.8rem", fontWeight: 900, marginBottom: "0.5rem" }}>Modern AI Systems Architecture</h2>
+      <p style={{ fontSize: "0.75rem", color: "#6a6a7a", maxWidth: 640, lineHeight: 1.6 }}>An interactive knowledge engine covering RAG, Agents, Context Engineering, Loop Engineering, and High-Scale Production Systems.</p>
+    </div>
+    <div style={{ marginBottom: "2.5rem" }}><RAGExplorer /></div>
+    <div style={{ marginBottom: "2.5rem" }}><PipelineSimulator /></div>
+  </div>
+);
+
+export const RAGTypesTab = ({ s }) => <RAGExplorer />;
+export const PipelineTab = ({ s }) => <PipelineSimulator />;
+export const LangChainTab = ({ s }) => <LangGraphVisual />;
+export const LangGraphTab = ({ s }) => <LangGraphVisual />;
+export const CompareTab = ({ s }) => <ComparisonTable />;
+export const PracticesTab = ({ s }) => <BestPracticesGrid />;
+export const ProgressTab = ({ s }) => <ProgressTracker />;
 
 // ─── FILTERING TAB ───────────────────────────────────────────────
 const QUERY_TYPES = [
@@ -22260,6 +22283,8 @@ export default function App() {
     { id: "agentscale",    label: "㊲ High-Scale Agent Systems 🚀" },
     { id: "agentdebugging", label: "🐞 AI Agent Debugging" },
     { id: "docstruct",      label: "📐 Document Structure & Loop Engineering" },
+    { id: "cliagent",       label: "🤖 Local CLI Agents (Ollama + Python)" },
+    { id: "threelayers",    label: "🏗️ 3 Engineering Layers (Prompt, Context, Loop)" },
   ];
 
   useEffect(() => {
@@ -22814,6 +22839,12 @@ for chunk in rag_chain.stream("What is hybrid search?"):
 
         {/* ── DOCUMENT STRUCTURE & LOOP ENGINEERING ── */}
         {tab === "docstruct" && <DocumentStructureTab />}
+
+        {/* ── LOCAL CLI AGENTS (OLLAMA + PYTHON) ── */}
+        {tab === "cliagent" && <CliAgentTab />}
+
+        {/* ── 3 ENGINEERING LAYERS (PROMPT, CONTEXT, LOOP) ── */}
+        {tab === "threelayers" && <ThreeLayersTab />}
 
       </main>
 
