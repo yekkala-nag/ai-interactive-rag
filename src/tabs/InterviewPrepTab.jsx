@@ -1,7 +1,9 @@
 import { useState, useMemo } from 'react';
-import { Container, Section, Grid, Flex, Stack } from '../components/layout/Primitives.jsx';
-import { Hero, CodeBlock, Stepper } from '../components/ui/Content.jsx';
-import { Card, Badge, Button, Callout } from '../components/ui/Core.jsx';
+import * as Primitives from '../components/layout/Primitives';
+import { Hero, CodeBlock, Stepper } from '../components/ui/Content';
+import { Card, Badge, Button, Callout } from '../components/ui/Core';
+
+const { Container, Section, Grid, Flex, Stack } = Primitives;
 
 // ============================================
 // DATA STRUCTURES & CONTENT FROM PDF STUDY GUIDE
