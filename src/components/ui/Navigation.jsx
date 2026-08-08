@@ -21,17 +21,18 @@ export function Sidebar({
 }) {
   const [expandedModules, setExpandedModules] = useState({
     foundations: true,
-    rag: true,
-    context: false,
-    agents: false,
-    platform: false,
+    rag_architecture: true,
+    context_memory: false,
+    agents_frameworks: false,
+    data_platform: false,
+    frontiers_production: false,
   });
 
   const toggleModule = (moduleId) => {
     setExpandedModules(prev => ({ ...prev, [moduleId]: !prev[moduleId] }));
   };
 
-  const moduleOrder = ['foundations', 'rag', 'context', 'agents', 'platform'];
+  const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
 
   return (
     <aside

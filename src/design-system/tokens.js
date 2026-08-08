@@ -35,6 +35,7 @@ export const tokens = {
       context: { primary: '#9333EA', light: '#F5E6FF', dark: '#3B0764' },
       agents: { primary: '#DC2626', light: '#FEF2F2', dark: '#7F1D1D' },
       platform: { primary: '#2563EB', light: '#DBEAFE', dark: '#1E3A8A' },
+      frontiers: { primary: '#10B981', light: '#D1FAE5', dark: '#065F46' },
     },
 
     // Semantic states
@@ -187,7 +188,20 @@ export function generateCSSVariables(tokens, prefix = 'ds') {
 
 // Module color getter
 export function getModuleColors(moduleId) {
-  return tokens.color.module[moduleId] || tokens.color.module.foundations;
+  const map = {
+    foundations: tokens.color.module.foundations,
+    rag: tokens.color.module.rag,
+    rag_architecture: tokens.color.module.rag,
+    context: tokens.color.module.context,
+    context_memory: tokens.color.module.context,
+    agents: tokens.color.module.agents,
+    agents_frameworks: tokens.color.module.agents,
+    platform: tokens.color.module.platform,
+    data_platform: tokens.color.module.platform,
+    frontiers: tokens.color.module.frontiers,
+    frontiers_production: tokens.color.module.frontiers,
+  };
+  return map[moduleId] || tokens.color.module.foundations;
 }
 
 // Semantic color getter

@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "archconcepts", "workflows", "unhobbling"]
+    tabs: ["overview", "glossary", "archconcepts", "workflows", "unhobbling", "promptmgmt"]
   },
   {
     id: "rag_architecture",
@@ -40,7 +40,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🤖",
     color: "#c4572a",
     description: "ReAct loops, multi-agent orchestration, CLI agents, LangChain & LangGraph",
-    tabs: ["cliagent", "redesign", "fiveassets", "multiagent", "agentsastools", "codingagentsnonprog", "langchain", "langgraph", "compare", "agentscale", "agentdebugging"]
+    tabs: ["cliagent", "redesign", "fiveassets", "multiagent", "agentsastools", "codingagentsnonprog", "langchain", "langgraph", "compare", "agentscale", "agentdebugging", "agenttasks", "aiproductbuilder"]
   },
   {
     id: "data_platform",
@@ -106,6 +106,15 @@ export const TABS_REGISTRY = [
     icon: "🔓",
     keywords: ["unhobbling", "claude 5", "capabilities", "reasoning"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.UnhobblingTab })))
+  },
+  {
+    id: "promptmgmt",
+    label: "Prompt Engineering & SemVer",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "📜",
+    keywords: ["prompt management", "semver", "prompt engineering", "templates", "versioning"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.PromptMgmtTab })))
   },
 
   // ── Umbrella 2 — RAG Architectures & Pipelines ──────────────────────────────
@@ -373,6 +382,24 @@ export const TABS_REGISTRY = [
     icon: "🐞",
     keywords: ["debugging", "tool errors", "traces", "inspection"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgentDebuggingTab })))
+  },
+  {
+    id: "agenttasks",
+    label: "11 Agent Task Archetypes",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "📋",
+    keywords: ["agent tasks", "archetypes", "worktree", "evaluation", "task planning"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgentTasksTab })))
+  },
+  {
+    id: "aiproductbuilder",
+    label: "AI Product Builder",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🔨",
+    keywords: ["product builder", "prd", "cursorrules", "architecture", "system spec"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.AIProductBuilderTab })))
   },
 
   // ── Umbrella 5 — Data & Platform Layers ─────────────────────

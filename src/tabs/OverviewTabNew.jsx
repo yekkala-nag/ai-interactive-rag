@@ -41,11 +41,12 @@ const QUICK_START_STEPS = [
 ];
 
 const MODULE_CARDS = [
-  { moduleId: 'foundations', label: 'Foundations', count: 5, desc: 'Core concepts, architecture, prompting', href: '#' },
-  { moduleId: 'rag', label: 'RAG Systems', count: 10, desc: 'Retrieval architectures & pipelines', href: '#' },
-  { moduleId: 'context', label: 'Context & Memory', count: 7, desc: 'Context engineering & evaluation', href: '#' },
-  { moduleId: 'agents', label: 'Agent Systems', count: 11, desc: 'ReAct, multi-agent, frameworks', href: '#' },
-  { moduleId: 'platform', label: 'Platform & Production', count: 15, desc: 'Engineering layers, cost, frontiers', href: '#' },
+  { moduleId: 'foundations', label: 'Foundations & Architecture', count: 6, desc: 'Core AI concepts, glossaries, prompt engineering', href: '#' },
+  { moduleId: 'rag_architecture', label: 'RAG Systems & Pipelines', count: 11, desc: 'Retrieval architectures, hybrid search & verification', href: '#' },
+  { moduleId: 'context_memory', label: 'Context & Memory', count: 7, desc: 'Context curation, evaluation, graphs & persistent memory', href: '#' },
+  { moduleId: 'agents_frameworks', label: 'Agent Systems & Frameworks', count: 13, desc: 'ReAct, multi-agent, CLI agents, LangChain & LangGraph', href: '#' },
+  { moduleId: 'data_platform', label: 'Data & Platform Layers', count: 7, desc: 'Prompt/Context/Loop layers, document structure & ML', href: '#' },
+  { moduleId: 'frontiers_production', label: 'Production & Frontiers', count: 6, desc: 'Token bill optimization, power features & research frontiers', href: '#' },
 ];
 
 export function OverviewTab() {
