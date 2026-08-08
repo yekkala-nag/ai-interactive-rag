@@ -626,8 +626,20 @@ const LangGraphVisual = () => {
   const nodeInfo = activeNode ? LANGGRAPH_NODES.find(n => n.id === activeNode) : null;
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
-      {/* Graph */}
+    <div>
+      {/* INTERACTIVE BLUEPRINT DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/langgraph_stateful_graphs.png"
+          alt="LangGraph Stateful Graphs Blueprint"
+          title="Architectural Blueprint — LangGraph Stateful Agent Graphs"
+          caption="CognitionX architectural blueprint detailing Graph-Based State Machines, Checkpointing, Human-in-the-Loop Interrupts, Streaming Async Output, Multi-Agent Nodes, and Framework Comparisons."
+          maxWidth={1200}
+        />
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+        {/* Graph */}
       <div style={{ background: "#f7f5f0", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", position: "relative" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem" }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#2a7a9c" }}>Agent Graph — Click nodes to inspect</div>
@@ -744,6 +756,7 @@ graph.add_edge("tools", "llm")
 # 6. Compile with checkpointing
 agent = graph.compile(checkpointer=MemorySaver())`} />
       </div>
+    </div>
     </div>
   );
 };
@@ -1535,6 +1548,17 @@ export const MultiAgentTab = ({ s }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* INTERACTIVE BLUEPRINT DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/multi_agent_systems_architecture.png"
+          alt="Multi-Agent Systems Architecture Blueprint"
+          title="Architectural Blueprint — Multi-Agent Systems & Orchestration Patterns"
+          caption="CognitionX architectural blueprint showcasing Supervisor Pattern, P2P Collaboration, Hierarchical Team, Debate Mode, Tool-Using Mesh, Topology Matrix, and Communication Flow."
+          maxWidth={1200}
+        />
       </div>
 
       {/* SINGLE vs MULTI CONTRAST */}
@@ -2486,6 +2510,17 @@ export const ContextGraphTab = ({ s }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* INTERACTIVE BLUEPRINT DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/context_graph_multi_agent_memory.png"
+          alt="Context Graph for Multi-Agent Memory Blueprint"
+          title="Architectural Blueprint — Context Graph for Multi-Agent Memory"
+          caption="CognitionX architectural blueprint mapping Shared Knowledge Graph, Agent-Specific Subgraphs, Conflict Resolution, Event Sourcing, Multi-Hop Graph Traversal, and Cypher Schema."
+          maxWidth={1200}
+        />
       </div>
 
       {/* THE CORE PROBLEM */}
@@ -3613,6 +3648,17 @@ export const MemoryEngineeringTab = ({ s }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* INTERACTIVE BLUEPRINT DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/memory_engineering_architecture.png"
+          alt="Memory Engineering Architecture Blueprint"
+          title="Architectural Blueprint — Memory Engineering Neural Storage Architecture"
+          caption="CognitionX architectural blueprint showcasing Short-Term Memory, Long-Term Memory, Memory Consolidation, Memory Retrieval, Privacy & Tenant Isolation, Memory Lifecycle, and Memory Types Comparison."
+          maxWidth={1200}
+        />
       </div>
 
       {/* THE PROBLEM */}
@@ -14930,6 +14976,17 @@ export const ContextMeasureTab = ({ s }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* INTERACTIVE BLUEPRINT DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/measuring_context_quality.png"
+          alt="Measuring Context Quality Blueprint"
+          title="Architectural Blueprint — Measuring Context Quality Evaluation Framework"
+          caption="CognitionX architectural blueprint mapping Context Precision, Recall, Relevance, Faithfulness, Utilization, RAGAS & ARES, Evaluation Dimensions Matrix, and Best Practices."
+          maxWidth={1200}
+        />
       </div>
 
       {/* SECTION NAV */}

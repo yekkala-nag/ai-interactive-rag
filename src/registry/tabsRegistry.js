@@ -24,7 +24,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
-    tabs: ["rag", "pipeline", "filtering", "hierrag", "qparseloop", "prodrag", "genpatterns", "fourpdfs", "hallucbricks", "agenticrag"]
+    tabs: ["rag", "pipeline", "filtering", "hierrag", "qparseloop", "prodrag", "genpatterns", "fourpdfs", "hallucbricks", "agenticrag", "interviewprep"]
   },
   {
     id: "context_memory",
@@ -198,6 +198,15 @@ export const TABS_REGISTRY = [
     icon: "🔍",
     keywords: ["agentic rag", "react loop", "multi-step search"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgenticRAGTab })))
+  },
+  {
+    id: "interviewprep",
+    label: "RAG Interview & Case Study",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🎯",
+    keywords: ["interview", "questions", "case study", "rag interview", "star format", "system design", "study plan"],
+    component: lazy(() => import("../tabs/InterviewPrepTab.jsx"))
   },
 
   // ── Umbrella 3 — Context & Memory Engineering ─────────────────────────
