@@ -10,6 +10,7 @@ import { Sidebar, TopBar, CommandPalette } from './components/ui/Navigation.jsx'
 import { ToastProvider, useToast, Skeleton } from './components/ui/Feedback.jsx';
 import { UMBRELLA_TOPICS, getUmbrellaForTab, getTabsForUmbrella, getTabById, TABS_REGISTRY } from './registry/tabsRegistry.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
+import { s as legacyStyles } from './styles/legacyStyles.js';
 
 // Lazy-load all tab components
 const TabComponents = {
@@ -69,11 +70,14 @@ const TabComponents = {
 
 function TabLoader({ tabId }) {
   const Component = TabComponents[tabId];
+  // #region agent log
+  fetch('http://127.0.0.1:7939/ingest/11e91471-d03c-4845-97c7-dda683ded1d4',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'262cb1'},body:JSON.stringify({sessionId:'262cb1',runId:'post-fix',hypothesisId:'A',location:'AppNew.jsx:TabLoader',message:'TabLoader render props check',data:{tabId,hasComponent:!!Component,propsPassedToComponent:['s'],legacyStylesDefined:typeof legacyStyles,hasSectionLabel:typeof legacyStyles?.sectionLabel,passingS:true,componentName:Component?.displayName||Component?.name||'lazy'},timestamp:Date.now()})}).catch(()=>{});
+  // #endregion
   if (!Component) return <div style={{ padding: 'var(--ds-space-10)', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>Tab not found: {tabId}</div>;
   return (
     <Suspense fallback={<TabSkeleton />}>
-      <ErrorBoundary fallback={<TabError tabId={tabId} />}>
-        <Component />
+      <ErrorBoundary key={tabId} fallback={<TabError tabId={tabId} />}>
+        <Component s={legacyStyles} />
       </ErrorBoundary>
     </Suspense>
   );
@@ -116,21 +120,16 @@ function TabError({ tabId }) {
 // Main App Component
 // ============================================
 export default function App() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState(() => {
+    const tab = new URLSearchParams(window.location.search).get('tab');
+    return tab && TABS_REGISTRY.some(t => t.id === tab) ? tab : 'overview';
+  });
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [toast, setToast] = useState(null);
 
   // URL sync
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tab = params.get('tab');
-    if (tab && TABS_REGISTRY.some(t => t.id === tab)) {
-      setActiveTab(tab);
-    }
-  }, []);
-
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     params.set('tab', activeTab);

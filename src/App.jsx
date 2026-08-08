@@ -1025,6 +1025,9 @@ const FILTER_METHODS = [
 ];
 
 export const FilteringTab = ({ s }) => {
+  // #region agent log
+  fetch('http://127.0.0.1:7939/ingest/11e91471-d03c-4845-97c7-dda683ded1d4',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'262cb1'},body:JSON.stringify({sessionId:'262cb1',runId:'post-fix',hypothesisId:'A',location:'App.jsx:FilteringTab',message:'FilteringTab received props',data:{sDefined:s!==undefined&&s!==null,sType:typeof s,hasSectionLabel:typeof s?.sectionLabel},timestamp:Date.now()})}).catch(()=>{});
+  // #endregion
   const [activeQuery, setActiveQuery] = useState(null);
   const [activeMethod, setActiveMethod] = useState(null);
   const [simStep, setSimStep] = useState(-1);
@@ -1471,6 +1474,10 @@ const PRODUCTION_FAILURES = [
 ];
 
 export const MultiAgentTab = ({ s }) => {
+  // #region agent log
+  fetch('http://127.0.0.1:7939/ingest/11e91471-d03c-4845-97c7-dda683ded1d4',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'262cb1'},body:JSON.stringify({sessionId:'262cb1',runId:'post-fix',hypothesisId:'D',location:'App.jsx:MultiAgentTab',message:'MultiAgentTab received props',data:{sDefined:s!==undefined&&s!==null,sType:typeof s,hasSectionLabel:typeof s?.sectionLabel},timestamp:Date.now()})}).catch(()=>{});
+  // #endregion
+
   const [activeAgent, setActiveAgent] = useState(null);
   const [agentTab, setAgentTab] = useState("why");
   const [simStep, setSimStep] = useState(-1);

@@ -12,6 +12,9 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     console.error("Uncaught runtime error in AI Knowledge Base:", error, errorInfo);
+    // #region agent log
+    fetch('http://127.0.0.1:7939/ingest/11e91471-d03c-4845-97c7-dda683ded1d4',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'262cb1'},body:JSON.stringify({sessionId:'262cb1',runId:'post-fix',hypothesisId:'A',location:'ErrorBoundary.jsx:componentDidCatch',message:'Caught render error',data:{errorMessage:String(error?.message||error),errorName:error?.name,componentStack:(errorInfo?.componentStack||'').slice(0,500),mentionsSectionLabel:String(error?.message||'').includes('sectionLabel')},timestamp:Date.now()})}).catch(()=>{});
+    // #endregion
   }
 
   handleReload = () => {
