@@ -4,6 +4,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { getModuleColors } from '../../design-system/tokens.js';
+import { Container } from '../layout/Primitives.jsx';
 import { Button, Badge, Divider } from './Core.jsx';
 
 // ============================================
