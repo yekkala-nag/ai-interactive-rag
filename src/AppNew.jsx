@@ -7,7 +7,7 @@ import { useState, useEffect, useCallback, useRef, Suspense, lazy } from 'react'
 import { globalStyles } from './design-system/globalStyles.js';
 import { Page, Container, Section } from './components/layout/Primitives.jsx';
 import { Sidebar, TopBar, CommandPalette } from './components/ui/Navigation.jsx';
-import { ToastProvider, useToast } from './components/ui/Feedback.jsx';
+import { ToastProvider, useToast, Skeleton } from './components/ui/Feedback.jsx';
 import { UMBRELLA_TOPICS, getUmbrellaForTab, getTabsForUmbrella, getTabById, TABS_REGISTRY } from './registry/tabsRegistry.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 
