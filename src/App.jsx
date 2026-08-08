@@ -631,10 +631,11 @@ const LangGraphVisual = () => {
       {/* INTERACTIVE BLUEPRINT DIAGRAM */}
       <div style={{ marginBottom: "1.5rem" }}>
         <DiagramImage
-          src="/assets/langgraph_stateful_graphs.png"
-          alt="LangGraph Stateful Graphs Blueprint"
-          title="Architectural Blueprint — LangGraph Stateful Agent Graphs"
-          caption="CognitionX architectural blueprint detailing Graph-Based State Machines, Checkpointing, Human-in-the-Loop Interrupts, Streaming Async Output, Multi-Agent Nodes, and Framework Comparisons."
+          src="/assets/langgraph_framework_infographic.png"
+          alt="LangGraph Stateful Multi-Agent Framework Infographic"
+          title="LangGraph — Stateful Multi-Agent Framework & Core Architecture"
+          caption="Full LangGraph framework diagram mapping Graph-Based State Machines, Persistent State Checkpointing, Human-in-the-Loop Interruption, Streaming & Async Branches, Multi-Agent Support, Alternatives Matrix, Workflow, and Core Concepts."
+          background="#0a0d14"
           maxWidth={1200}
         />
       </div>
@@ -929,7 +930,14 @@ export const OverviewTab = ({ s }) => (
 
 export const RAGTypesTab = ({ s }) => (
   <div>
-    <div style={{ marginBottom: "2rem" }}>
+    <div style={{ marginBottom: "2rem", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(450px, 1fr))", gap: "1.5rem" }}>
+      <DiagramImage
+        src="/assets/rag_indexing_retrieval_architecture.png"
+        alt="RAG Indexing, Vector Store Retrieval & Context Augmentation Flow"
+        title="RAG Indexing & Retrieval Architecture"
+        caption="Complete end-to-end flow: Document Indexing (Chunking → Embedding → Vector Store) paired with Runtime Query Vectorization, Top-K Node Retrieval, Context Augmentation, and LLM Generation."
+        background="#031627"
+      />
       <DiagramImage
         src="/assets/rag_types_spectrum.svg"
         alt="The RAG spectrum from Naive to cutting-edge variants"
@@ -1087,6 +1095,18 @@ export const FilteringTab = ({ s }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* HYBRID RETRIEVAL PIPELINE DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/hybrid_retrieval_fusion_pipeline.png"
+          alt="Hybrid Retrieval Pipeline Diagram"
+          title="Hybrid Retrieval Pipeline — Vector + BM25 Fusion with Reranking"
+          caption="Production Hybrid Retrieval Architecture: User Query → Parallel Dense Vector Search (Semantic Matching) & BM25 Keyword Search (Exact Match for ISINs & Policy IDs) → Reciprocal Rank Fusion (RRF) → Metadata Filters (Jurisdiction, Effective Date, Access Control) → Cross-Encoder Reranking → Top 10 Context to LLM."
+          background="#ffffff"
+          maxWidth={1200}
+        />
       </div>
 
       {/* THE CORE INSIGHT */}
@@ -2523,10 +2543,11 @@ export const ContextGraphTab = ({ s }) => {
       {/* INTERACTIVE BLUEPRINT DIAGRAM */}
       <div style={{ marginBottom: "1.5rem" }}>
         <DiagramImage
-          src="/assets/context_graph_multi_agent_memory.png"
-          alt="Context Graph for Multi-Agent Memory Blueprint"
-          title="Architectural Blueprint — Context Graph for Multi-Agent Memory"
-          caption="CognitionX architectural blueprint mapping Shared Knowledge Graph, Agent-Specific Subgraphs, Conflict Resolution, Event Sourcing, Multi-Hop Graph Traversal, and Cypher Schema."
+          src="/assets/context_graph_multi_agent_memory_infographic.png"
+          alt="Context Graph for Multi-Agent Memory Infographic"
+          title="Context Graph for Multi-Agent Memory — Architecture & Schema"
+          caption="Complete shared knowledge graph memory architecture: Unified Memory Layer, Scoped Subgraphs, Consistency Engine, Real-Time Sync, Multi-Hop Cypher Traversal, Dual Memory Stores, and Cypher Graph Schema."
+          background="#0a0d14"
           maxWidth={1200}
         />
       </div>
@@ -2987,6 +3008,17 @@ export const ContextEngineeringTab = ({ s }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* INFOGRAPHIC DIAGRAM */}
+      <div style={{ marginBottom: "2rem" }}>
+        <DiagramImage
+          src="/assets/context_engineering_infographic.png"
+          alt="Context Engineering Framework and Assembly Pipeline"
+          title="Context Engineering Framework & Assembly Pipeline"
+          caption="The complete Context Engineering architecture: Context Window Optimization, Assembly Patterns, Dynamic Retrieval Injection, Deduplication, Hierarchical Layers, State Evolution, and Key Production Principles."
+          background="#0a0d14"
+        />
       </div>
 
       {/* CONTEXT STRATEGIES OVERVIEW */}
@@ -6682,6 +6714,18 @@ export const ProductionRAGTab = ({ s }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* REAL-TIME MARKET EVENT PROCESSING DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/realtime_market_event_processing.png"
+          alt="Real-Time Market Event Processing Architecture"
+          title="Real-Time Market Event Processing RAG Architecture"
+          caption="Event-driven streaming RAG pipeline: Market Data Feed → Kafka Topic → Flink Stream Processor (Entity Resolution + Severity Scoring) → Real-time Vector Index Update, Advisor Alerts, and Approved Response Pack."
+          background="#ffffff"
+          maxWidth={1200}
+        />
       </div>
 
       {/* FULL CONTRACT DIAGRAM */}
@@ -10952,6 +10996,18 @@ export const HallucinationLoopTab = ({ s }) => {
         </div>
       </div>
 
+      {/* RAG GUARDRAILS & COMPLIANCE DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/rag_guardrails_compliance_flow.png"
+          alt="RAG Guardrails and Compliance Security Pipeline"
+          title="RAG Guardrails & Enterprise Compliance Architecture"
+          caption="Four sequential security gates along the query pipeline: Input Guardrails (Prompt Injection, PII Detection) → Retrieval Guardrails (ACL, Temporal Filters) → Generation Guardrails (Groundedness, Citations) → Output Guardrails (Required Disclosures, Audit Log) → Audited Response."
+          background="#ffffff"
+          maxWidth={1200}
+        />
+      </div>
+
       {/* SECTION NAV */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.5rem", marginBottom: "1.5rem" }}>
         {SECTIONS.map(sec => (
@@ -13949,6 +14005,18 @@ export const TokenBillTab = ({ s }) => {
         </div>
       </div>
 
+      {/* BUSINESS IMPACT BEFORE VS AFTER RAG PILOT CHART */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/rag_pilot_business_impact_chart.png"
+          alt="Business Impact: Before vs After RAG Pilot Chart"
+          title="Business Impact & ROI — Before vs. After RAG Pilot"
+          caption="Empirical business metrics from enterprise deployment: Research Time reduced from 25m to 9m (-64%), Event Prep reduced from 60m to 15m (-75%), Advisor Satisfaction increased from 3.2 to 4.4 (+37.5%), and Policy Exceptions dropped from 1.8% to 0.3% (-83.3%)."
+          background="#ffffff"
+          maxWidth={1200}
+        />
+      </div>
+
       {/* SUB TAB NAVIGATION */}
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.5rem", borderBottom: "1px solid #e0dcd4", paddingBottom: "0.5rem" }}>
         {[
@@ -14989,10 +15057,11 @@ export const ContextMeasureTab = ({ s }) => {
       {/* INTERACTIVE BLUEPRINT DIAGRAM */}
       <div style={{ marginBottom: "1.5rem" }}>
         <DiagramImage
-          src="/assets/measuring_context_quality.png"
-          alt="Measuring Context Quality Blueprint"
-          title="Architectural Blueprint — Measuring Context Quality Evaluation Framework"
-          caption="CognitionX architectural blueprint mapping Context Precision, Recall, Relevance, Faithfulness, Utilization, RAGAS & ARES, Evaluation Dimensions Matrix, and Best Practices."
+          src="/assets/measuring_context_quality_infographic.png"
+          alt="Measuring Context Quality Infographic & Evaluation Dimensions Matrix"
+          title="Measuring Context Quality — Evaluation Metrics & Matrix"
+          caption="Full evaluation framework mapping Context Precision, Recall, Relevance, Faithfulness, Utilization, RAGAS & ARES frameworks, Evaluation Dimensions Matrix, and production Best Practices."
+          background="#0a0d14"
           maxWidth={1200}
         />
       </div>
@@ -17235,6 +17304,18 @@ export const AIProductBuilderTab = ({ s }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* ENTERPRISE ADVISOR INTELLIGENCE COPILOT UI MOCKUP */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/advisor_intelligence_copilot_ui.png"
+          alt="Advisor Intelligence Copilot UI Mockup"
+          title="Advisor Intelligence Copilot — Enterprise RAG Product Interface"
+          caption="Production-grade AI Copilot UI: Grounded Conversational Q&A with real-time Portfolio Exposure visualization, Market Warning indicators, Document Citation Badges (Q2 Report.pdf, Risk Policy v3.1, Regulatory Update 2024), and automated Compliance Verification."
+          background="#0b1329"
+          maxWidth={1200}
+        />
       </div>
 
       {/* LIFECYCLE DIAGRAM */}
