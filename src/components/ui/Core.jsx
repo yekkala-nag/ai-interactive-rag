@@ -27,44 +27,59 @@ export function Button({
 
   const variantStyles = {
     primary: {
-      base: 'background: var(--ds-color-module-foundations-primary); color: white; border: none;',
-      hover: 'background: var(--ds-color-module-foundations-dark);',
-      active: 'background: var(--ds-color-module-foundations-dark); transform: scale(0.98);',
-      disabled: 'background: var(--ds-color-border-default); cursor: not-allowed;',
+      base: { background: 'var(--ds-color-module-foundations-primary)', color: 'white', border: 'none' },
+      hover: { background: 'var(--ds-color-module-foundations-dark)' },
+      active: { background: 'var(--ds-color-module-foundations-dark)', transform: 'scale(0.98)' },
+      disabled: { background: 'var(--ds-color-border-default)', cursor: 'not-allowed' },
     },
     secondary: {
-      base: 'background: var(--ds-color-bg-surface); color: var(--ds-color-text-primary); border: 1px solid var(--ds-color-border-default);',
-      hover: 'background: var(--ds-color-bg-surfaceHover); border-color: var(--ds-color-border-strong);',
-      active: 'background: var(--ds-color-border-subtle);',
-      disabled: 'color: var(--ds-color-text-tertiary); border-color: var(--ds-color-border-subtle); cursor: not-allowed;',
+      base: { background: 'var(--ds-color-bg-surface)', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-default)' },
+      hover: { background: 'var(--ds-color-bg-surfaceHover)', borderColor: 'var(--ds-color-border-strong)' },
+      active: { background: 'var(--ds-color-border-subtle)' },
+      disabled: { color: 'var(--ds-color-text-tertiary)', borderColor: 'var(--ds-color-border-subtle)', cursor: 'not-allowed' },
     },
     ghost: {
-      base: 'background: transparent; color: var(--ds-color-text-secondary); border: none;',
-      hover: 'background: var(--ds-color-bg-surfaceHover); color: var(--ds-color-text-primary);',
-      active: 'background: var(--ds-color-border-subtle);',
-      disabled: 'color: var(--ds-color-text-tertiary); cursor: not-allowed;',
+      base: { background: 'transparent', color: 'var(--ds-color-text-secondary)', border: 'none' },
+      hover: { background: 'var(--ds-color-bg-surfaceHover)', color: 'var(--ds-color-text-primary)' },
+      active: { background: 'var(--ds-color-border-subtle)' },
+      disabled: { color: 'var(--ds-color-text-tertiary)', cursor: 'not-allowed' },
     },
     danger: {
-      base: 'background: var(--ds-color-state-error-light); color: white; border: none;',
-      hover: 'background: var(--ds-color-state-error-dark);',
-      active: 'background: var(--ds-color-state-error-dark); transform: scale(0.98);',
-      disabled: 'background: var(--ds-color-border-default); cursor: not-allowed;',
+      base: { background: 'var(--ds-color-state-error-light)', color: 'white', border: 'none' },
+      hover: { background: 'var(--ds-color-state-error-dark)' },
+      active: { background: 'var(--ds-color-state-error-dark)', transform: 'scale(0.98)' },
+      disabled: { background: 'var(--ds-color-border-default)', cursor: 'not-allowed' },
     },
   };
 
   const sizeStyles = {
-    sm: 'padding: 6px 12px; font-size: var(--ds-font-size-bodySm); gap: var(--ds-space-2); border-radius: var(--ds-radius-sm);',
-    md: 'padding: 10px 18px; font-size: var(--ds-font-size-body); gap: var(--ds-space-2); border-radius: var(--ds-radius-md);',
-    lg: 'padding: 14px 24px; font-size: var(--ds-font-size-bodyLg); gap: var(--ds-space-3); border-radius: var(--ds-radius-lg);',
+    sm: { padding: '6px 12px', fontSize: 'var(--ds-font-size-bodySm)', gap: 'var(--ds-space-2)', borderRadius: 'var(--ds-radius-sm)' },
+    md: { padding: '10px 18px', fontSize: 'var(--ds-font-size-body)', gap: 'var(--ds-space-2)', borderRadius: 'var(--ds-radius-md)' },
+    lg: { padding: '14px 24px', fontSize: 'var(--ds-font-size-bodyLg)', gap: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-lg)' },
   };
 
   const v = variantStyles[variant];
   const s = sizeStyles[size];
 
-  let style = `display: inline-flex; align-items: center; justify-content: center; font-family: var(--ds-font-family-sans); font-weight: var(--ds-font-weight-medium); line-height: 1; white-space: nowrap; transition: all var(--ds-motion-duration-fast) var(--ds-motion-easing-standard); cursor: pointer; ${s} ${v.base} ${fullWidth ? 'width: 100%;' : ''}`;
-  if (disabled || loading) style += v.disabled;
-  else if (active) style += v.active;
-  else if (hovered) style += v.hover;
+  const baseStyle = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontFamily: 'var(--ds-font-family-sans)',
+    fontWeight: 'var(--ds-font-weight-medium)',
+    lineHeight: 1,
+    whiteSpace: 'nowrap',
+    transition: 'all var(--ds-motion-duration-fast) var(--ds-motion-easing-standard)',
+    cursor: 'pointer',
+    ...s,
+    ...v.base,
+    ...(fullWidth ? { width: '100%' } : {}),
+  };
+
+  let style = baseStyle;
+  if (disabled || loading) style = { ...baseStyle, ...v.disabled };
+  else if (active) style = { ...baseStyle, ...v.active };
+  else if (hovered) style = { ...baseStyle, ...v.hover };
 
   return (
     <button
@@ -225,21 +240,21 @@ export function Callout({ children, type = 'info', title, dismissible = false, o
 // ============================================
 export function Badge({ children, variant = 'default', size = 'md', dot = false, style, ...props }) {
   const variantStyles = {
-    default: 'background: var(--ds-color-bg-surfaceHover); color: var(--ds-color-text-secondary); border: 1px solid var(--ds-color-border-subtle);',
-    primary: 'background: var(--ds-color-module-foundations-light); color: var(--ds-color-module-foundations-dark);',
-    success: 'background: #DCFCE7; color: #166534;',
-    warning: 'background: #FEF9C3; color: #713F12;',
-    danger: 'background: #FEF2F2; color: #991B1B;',
+    default: { background: 'var(--ds-color-bg-surfaceHover)', color: 'var(--ds-color-text-secondary)', border: '1px solid var(--ds-color-border-subtle)' },
+    primary: { background: 'var(--ds-color-module-foundations-light)', color: 'var(--ds-color-module-foundations-dark)' },
+    success: { background: '#DCFCE7', color: '#166534' },
+    warning: { background: '#FEF9C3', color: '#713F12' },
+    danger: { background: '#FEF2F2', color: '#991B1B' },
     module: (moduleId) => {
       const c = getModuleColors(moduleId);
-      return `background: ${c.light}; color: ${c.dark};`;
+      return { background: c.light, color: c.dark };
     },
   };
 
   const sizeStyles = {
-    sm: 'padding: 2px 8px; font-size: var(--ds-font-size-caption); border-radius: var(--ds-radius-full);',
-    md: 'padding: 4px 10px; font-size: var(--ds-font-size-bodySm); border-radius: var(--ds-radius-full);',
-    lg: 'padding: 6px 14px; font-size: var(--ds-font-size-body); border-radius: var(--ds-radius-full);',
+    sm: { padding: '2px 8px', fontSize: 'var(--ds-font-size-caption)', borderRadius: 'var(--ds-radius-full)' },
+    md: { padding: '4px 10px', fontSize: 'var(--ds-font-size-bodySm)', borderRadius: 'var(--ds-radius-full)' },
+    lg: { padding: '6px 14px', fontSize: 'var(--ds-font-size-body)', borderRadius: 'var(--ds-radius-full)' },
   };
 
   let vStyle = typeof variantStyles[variant] === 'function' ? variantStyles[variant](props.moduleId) : variantStyles[variant];
