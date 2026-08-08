@@ -442,8 +442,15 @@ export function Accordion({ items, allowMultiple = false, style, ...props }) {
 // ============================================
 export function Tabs({ tabs, activeTab, onChange, variant = 'pills', style, ...props }) {
   const [indicatorStyle, setIndicatorStyle] = useState({});
+  const mountedRef = useRef(true);
 
   useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!mountedRef.current) return;
     const activeBtn = document.querySelector(`[data-tab-id="${activeTab}"]`);
     if (activeBtn) {
       const rect = activeBtn.getBoundingClientRect();

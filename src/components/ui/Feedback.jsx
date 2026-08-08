@@ -2,16 +2,24 @@
  * Feedback Components — Toast, Modal, Tooltip, Skeleton, EmptyState
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
 import { Button } from './Core.jsx';
 import { Flex } from '../layout/Primitives.jsx';
 
 // ============================================
-// Toast — Non-blocking notifications
+// Toast Context
 // ============================================
-const toastContainerRef = { current: null };
+const ToastContext = createContext(null);
 
 export function useToast() {
+  const context = useContext(ToastContext);
+  if (!context) {
+    throw new Error('useToast must be used within a ToastProvider');
+  }
+  return context;
+}
+
+export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
 
   const show = (message, options = {}) => {
@@ -33,13 +41,10 @@ export function useToast() {
   const warning = (msg, opts) => show(msg, { ...opts, type: 'warning' });
   const info = (msg, opts) => show(msg, { ...opts, type: 'info' });
 
-  return { toasts, show, dismiss, success, error, warning, info };
-}
+  const value = { toasts, show, dismiss, success, error, warning, info };
 
-export function ToastProvider({ children }) {
-  const { toasts } = useToast();
   return (
-    <>
+    <ToastContext.Provider value={value}>
       {children}
       <div style={{
         position: 'fixed', bottom: 'var(--ds-space-6)', right: 'var(--ds-space-6)',
@@ -47,22 +52,22 @@ export function ToastProvider({ children }) {
         gap: 'var(--ds-space-3)', pointerEvents: 'none',
       }}>
         {toasts.map(toast => (
-          <Toast key={toast.id} {...toast} />
+          <Toast key={toast.id} {...toast} onDismiss={dismiss} />
         ))}
       </div>
-    </>
+    </ToastContext.Provider>
   );
 }
 
-function Toast({ message, type = 'info', title, action, onDismiss, duration = 4000 }) {
+function Toast({ message, type = 'info', title, action, onDismiss, duration = 4000, ...props }) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     if (duration !== 0) {
-      const timer = setTimeout(() => { setVisible(false); setTimeout(() => onDismiss?.(), 200); }, duration);
+      const timer = setTimeout(() => { setVisible(false); setTimeout(() => onDismiss?.(props.id), 200); }, duration);
       return () => clearTimeout(timer);
     }
-  }, [duration, onDismiss]);
+  }, [duration, onDismiss, props.id]);
 
   if (!visible) return null;
 
@@ -98,7 +103,7 @@ function Toast({ message, type = 'info', title, action, onDismiss, duration = 40
         <div style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-body)', lineHeight: 'var(--ds-font-lineHeight-relaxed)' }}>{message}</div>
         {action && <Button variant="ghost" size="sm" onClick={action.onClick} style={{ marginTop: 'var(--ds-space-2)' }}>{action.label}</Button>}
       </div>
-      <button onClick={() => { setVisible(false); onDismiss?.(); }} style={{ background: 'none', border: 'none', color: 'var(--ds-color-text-tertiary)', cursor: 'pointer', padding: 'var(--ds-space-1)', fontSize: '1.25rem', lineHeight: 1, flexShrink: 0 }} aria-label="Dismiss">×</button>
+      <button onClick={() => { setVisible(false); onDismiss?.(props.id); }} style={{ background: 'none', border: 'none', color: 'var(--ds-color-text-tertiary)', cursor: 'pointer', padding: 'var(--ds-space-1)', fontSize: '1.25rem', lineHeight: 1, flexShrink: 0 }} aria-label="Dismiss">×</button>
     </div>
   );
 }
