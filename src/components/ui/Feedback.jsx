@@ -114,8 +114,15 @@ function Toast({ message, type = 'info', title, action, onDismiss, duration = 40
 export function Modal({ isOpen, onClose, title, children, size = 'md', showClose = true, style, ...props }) {
   const overlayRef = useRef(null);
   const previousActive = useRef(null);
+  const isMountedRef = useRef(false);
 
   useEffect(() => {
+    isMountedRef.current = true;
+    return () => { isMountedRef.current = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!isMountedRef.current) return;
     if (isOpen) {
       previousActive.current = document.activeElement;
       document.body.style.overflow = 'hidden';
@@ -126,7 +133,10 @@ export function Modal({ isOpen, onClose, title, children, size = 'md', showClose
       document.body.style.overflow = '';
       previousActive.current?.focus();
     }
-    return () => { document.body.style.overflow = ''; document.removeEventListener('keydown', handleKey); };
+    return () => { 
+      if (isMountedRef.current) document.body.style.overflow = ''; 
+      document.removeEventListener('keydown', handleKey); 
+    };
   }, [isOpen]);
 
   const handleKey = (e) => {

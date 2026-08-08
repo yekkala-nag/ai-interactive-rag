@@ -12,18 +12,36 @@ import { Button, Badge, Divider } from './Core.jsx';
 export function Diagram({ src, alt, caption, title, maxWidth = '1280px', style, ...props }) {
   const [zoomed, setZoomed] = useState(false);
   const [scale, setScale] = useState(1);
+  const isMountedRef = useRef(false);
 
-  const open = () => { setScale(1); setZoomed(true); document.body.style.overflow = 'hidden'; };
-  const close = () => { setZoomed(false); document.body.style.overflow = ''; };
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => { isMountedRef.current = false; };
+  }, []);
+
+  const open = () => { 
+    if (!isMountedRef.current) return;
+    setScale(1); 
+    setZoomed(true); 
+    if (typeof document !== 'undefined') document.body.style.overflow = 'hidden'; 
+  };
+  const close = () => { 
+    if (!isMountedRef.current) return;
+    setZoomed(false); 
+    if (typeof document !== 'undefined') document.body.style.overflow = ''; 
+  };
   const zoomIn = (e) => { e?.stopPropagation(); setScale(s => Math.min(s + 0.25, 3)); };
   const zoomOut = (e) => { e?.stopPropagation(); setScale(s => Math.max(s - 0.25, 0.5)); };
   const reset = (e) => { e?.stopPropagation(); setScale(1); };
 
   useEffect(() => {
-    if (!zoomed) return;
+    if (!zoomed || !isMountedRef.current) return;
     const onKey = (e) => { if (e.key === 'Escape') close(); };
     document.addEventListener('keydown', onKey);
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+    return () => { 
+      document.removeEventListener('keydown', onKey); 
+      if (isMountedRef.current && typeof document !== 'undefined') document.body.style.overflow = ''; 
+    };
   }, [zoomed]);
 
   return (
