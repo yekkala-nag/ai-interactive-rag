@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback, Suspense } from "react";
-import { TABS_REGISTRY, CATEGORIES } from "./registry/tabsRegistry.js";
+import { TABS_REGISTRY, CATEGORIES, UMBRELLA_TOPICS, getTabById } from "./registry/tabsRegistry.js";
 import DiagramImage from "./components/ui/DiagramImage.jsx";
+import Sidebar from "./components/layout/Sidebar.jsx";
+import TopBar from "./components/layout/TopBar.jsx";
 
 export { default as DocumentStructureTab } from "./documentStructure/DocumentStructureTab.jsx";
 export { default as CliAgentTab } from "./cliAgents/CliAgentTab.jsx";
@@ -21995,28 +21997,6 @@ const AITestDataBottleneckTab = ({ s }) => {
                 cursor: "pointer"
               }}
             >
-              🐌 Traditional Ticket-Based Flow (14 Days Wait)
-            </button>
-            <button
-              onClick={() => {
-                setSimMode("ephemeral");
-                setSimStepIndex(0);
-                setIsPlaying(false);
-              }}
-              style={{
-                flex: 1,
-                padding: "0.7rem",
-                borderRadius: 6,
-                border: "1px solid",
-                borderColor: simMode === "ephemeral" ? "#16a34a" : "#cbd5e1",
-                background: simMode === "ephemeral" ? "#16a34a" : "#ffffff",
-                color: simMode === "ephemeral" ? "#ffffff" : "#475569",
-                fontFamily: "Syne, sans-serif",
-                fontWeight: 700,
-                fontSize: "0.7rem",
-                cursor: "pointer"
-              }}
-            >
               ⚡ Modern Ephemeral API Flow (3 Minutes Total)
             </button>
           </div>
@@ -22288,642 +22268,68 @@ const AITestDataBottleneckTab = ({ s }) => {
 export default function App() {
   const [tab, setTab] = useState("overview");
   const [searchQ, setSearchQ] = useState("");
-  const [showSearch, setShowSearch] = useState(false);
-  const searchResults = useSearch(searchQ);
-  const searchRef = useRef(null);
-
-  const TABS = [
-    // ── Module 1 — Foundations ──────────────────────────────
-    { id: "glossary",      label: "① AI Glossary 📖" },
-    { id: "overview",      label: "② Overview" },
-    { id: "archconcepts",  label: "③ Architecture Concepts 🔬" },
-    { id: "workflows",     label: "④ Claude Workflows 🚀" },
-    { id: "unhobbling",    label: "⑤ Unhobbling Claude 5 🔓" },
-
-    // ── Module 2 — RAG (Concept → Production → Agentic) ────
-    { id: "rag",           label: "⑥ RAG Types" },
-    { id: "pipeline",      label: "⑦ Pipeline ▶" },
-    { id: "filtering",     label: "⑧ Retrieval = Filtering ✦" },
-    { id: "hierrag",       label: "⑨ Hierarchical Retrieval 🗂️" },
-    { id: "qparseloop",    label: "⑩ Question Parsing Loop 🔂" },
-    { id: "prodrag",       label: "⑪ Production RAG 📄" },
-    { id: "genpatterns",   label: "⑫ 7 Generation Patterns 🧬" },
-    { id: "fourpdfs",      label: "⑬ One Pipeline, Four PDFs 📚" },
-    { id: "hallucbricks",  label: "⑭ 4 Bricks Stop Hallucinations 🧱" },
-    { id: "agenticrag",    label: "⑮ Agentic RAG 🔍" },
-
-    // ── Module 3 — Context & Memory ─────────────────────────
-    { id: "ctxeng",        label: "⑯ Context Engineering ✶" },
-    { id: "ctxmeasure",    label: "⑰ Measuring Context Quality 📐" },
-    { id: "companybrain",  label: "⑱ Company Brain & Context Layer 🧠" },
-    { id: "contextgraph",  label: "⑲ Context Graph ⬡" },
-    { id: "vague",         label: "⑳ Vague Questions ◉" },
-    { id: "hallucination", label: "㉑ Silent Hallucination Loop 🚨" },
-    { id: "memeng",        label: "㉒ Memory Engineering ⚡" },
-
-    // ── Module 4 — Agents & Frameworks ──────────────────────
-    { id: "redesign",      label: "㉒ Redesign Work First 🏗️" },
-    { id: "fiveassets",    label: "㉓ 5 Assets for Agents 📦" },
-    { id: "multiagent",    label: "㉔ Multi-Agent ◈" },
-    { id: "classicalml",   label: "㉕ Classical ML Tools 📊" },
-    { id: "activelearn",   label: "㉖ Active Learning 🎯" },
-        { id: "aidataplat",    label: "㉗ AI-Native Data Platform 🏛️" },
-        { id: "agentsastools", label: "㉘ Agents as Tools 🛠️" },
-        { id: "codingagentsnonprog", label: "㉙ Non-Programming Coding Agents ⚡" },
-        { id: "medallionarch", label: "㉚ Medallion Architecture 🥉🥈🥇" },
-    { id: "aitestdatabottleneck", label: "㉛ AI Test Data Bottleneck 🧪" },
-    { id: "langchain",     label: "㉘ LangChain" },
-    { id: "langgraph",     label: "㉙ LangGraph" },
-    { id: "compare",       label: "㉚ Compare" },
-
-    // ── Module 5 — Advanced & Frontiers ─────────────────────
-    { id: "powerfeatures", label: "㉛ Power Features ⚡" },
-    { id: "frontiers",     label: "㉜ Research Frontiers 🔬" },
-    { id: "ragbeyond",     label: "㉝ Beyond RAG 🔮" },
-    { id: "practices",     label: "㉞ Best Practices" },
-    { id: "progress",      label: "㉟ Progress 🎯" },
-    { id: "tokenbill",     label: "㊱ 3× Token Bill Fix 💸" },
-    { id: "agentscale",    label: "㊲ High-Scale Agent Systems 🚀" },
-    { id: "agentdebugging", label: "🐞 AI Agent Debugging" },
-    { id: "docstruct",      label: "📐 Document Structure & Loop Engineering" },
-    { id: "cliagent",       label: "🤖 Local CLI Agents (Ollama + Python)" },
-    { id: "threelayers",    label: "🏗️ 3 Engineering Layers (Prompt, Context, Loop)" },
-  ];
-
-  useEffect(() => {
-    const handler = (e) => { if (!searchRef.current?.contains(e.target)) setShowSearch(false); };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const s = {
-    app: { minHeight: "100vh", background: "#f4f2ee", color: "#1a1a2e", fontFamily: "DM Mono, monospace" },
-    header: { padding: "2.5rem 3rem 1.5rem", borderBottom: "1px solid #d8d4cc", position: "relative", overflow: "hidden", background: "#ffffff" },
-    headerBg: { position: "absolute", right: "-2rem", top: "-3rem", fontFamily: "Playfair Display, serif", fontSize: "16rem", fontWeight: 900, color: "rgba(201,168,76,0.06)", lineHeight: 1, pointerEvents: "none", userSelect: "none" },
-    logo: { fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" },
-    dot: { width: 6, height: 6, background: "#c9a84c", borderRadius: "50%" },
-    h1: { fontFamily: "Playfair Display, serif", fontSize: "clamp(2rem,5vw,4rem)", fontWeight: 900, lineHeight: 0.95, letterSpacing: "-0.02em", marginBottom: "0.5rem", color: "#1a1a2e" },
-    em: { color: "#c9a84c", fontStyle: "italic" },
-    sub: { fontSize: "0.72rem", color: "#6a6a7a", maxWidth: 480, lineHeight: 1.7, marginBottom: "1.2rem" },
-    searchWrap: { position: "relative", maxWidth: 360 },
-    searchBox: { display: "flex", alignItems: "center", gap: "0.6rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, padding: "0.55rem 0.9rem", transition: "border-color 0.2s" },
-    searchInput: { background: "none", border: "none", outline: "none", color: "#1a1a2e", fontFamily: "DM Mono, monospace", fontSize: "0.72rem", width: "100%" },
-    nav: { display: "flex", gap: 0, padding: "0 3rem", borderBottom: "1px solid #d8d4cc", overflowX: "auto", background: "#ffffff" },
-    navBtn: (active) => ({ padding: "0.85rem 1.2rem", fontFamily: "Syne, sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: active ? "#c9a84c" : "#8a8a9a", cursor: "pointer", border: "none", borderBottom: active ? "2px solid #c9a84c" : "2px solid transparent", background: "none", transition: "all 0.2s", whiteSpace: "nowrap" }),
-    main: { padding: "2.5rem 3rem", maxWidth: 1280, margin: "0 auto" },
+    main: { padding: "2rem 2.5rem", maxWidth: 1380, width: "100%", margin: "0 auto" },
     section: { marginBottom: "2rem" },
-    sectionLabel: (color = "#c9a84c") => ({ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color, borderLeft: `3px solid ${color}`, paddingLeft: "0.7rem", marginBottom: "1.2rem" }),
-    card: { background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" },
-    grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" },
-    grid3: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem" },
-    grid4: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1rem" },
+    sectionLabel: (color = "#c9a84c") => ({ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color, borderLeft: `3px solid ${color}`, paddingLeft: "0.7rem", marginBottom: "1rem" }),
+    card: { background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 8, padding: "1.5rem", boxShadow: "0 1px 3px rgba(0,0,0,0.02)" },
+    grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem" },
+    grid3: { display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1.2rem" },
+    grid4: { display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1.2rem" },
   };
 
-  const SearchDropdown = () => searchResults.length > 0 && showSearch && (
-    <div style={{ position: "absolute", top: "calc(100% + 4px)", left: 0, right: 0, background: "#f0ede6", border: "1px solid #e0dcd4", borderRadius: 4, zIndex: 100, overflow: "hidden", boxShadow: "0 16px 40px rgba(0,0,0,0.6)" }}>
-      {searchResults.map((r, i) => (
-        <div key={i} onClick={() => { setTab(r.tab); setSearchQ(""); setShowSearch(false); }}
-          style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.7rem 1rem", cursor: "pointer", borderBottom: i < searchResults.length - 1 ? "1px solid #1e1e2e" : "none", transition: "background 0.15s" }}
-          onMouseEnter={e => e.currentTarget.style.background = "#e8e4dc"}
-          onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-          <span style={{ fontSize: "1rem" }}>{r.icon}</span>
-          <div>
-            <div style={{ fontSize: "0.7rem", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{r.title}</div>
-            <div style={{ fontSize: "0.6rem", color: "#6a6a7a" }}>{r.body.slice(0, 60)}…</div>
-          </div>
-          <span style={{ marginLeft: "auto", fontSize: "0.55rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>→ {r.tab}</span>
-        </div>
-      ))}
-    </div>
-  );
-
   return (
-    <div style={s.app}>
+    <div style={{ display: "flex", minHeight: "100vh", background: "#f8fafc", color: "#0f172a", fontFamily: "Inter, sans-serif" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #f4f2ee; }
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: #e8e4dc; }
-        ::-webkit-scrollbar-thumb { background: #c0bbb2; border-radius: 2px; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .panel-enter { animation: fadeIn 0.35s ease; }
+        body { background: #f8fafc; font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .panel-enter { animation: fadeIn 0.25s ease; }
       `}</style>
 
-      {/* HEADER */}
-      <header style={s.header}>
-        <div style={s.headerBg}>AI</div>
-        <div style={s.logo}><div style={s.dot} /><span>AI Systems Knowledge Base</span><span style={{ color: "#3a3a4a", margin: "0 0.5rem" }}>·</span><span style={{ color: "#6a6a7a" }}>2025–2026</span></div>
-        <h1 style={s.h1}>Modern <em style={s.em}>AI</em><br />Engineering</h1>
-        <p style={s.sub}>RAG · Agents · MCP · LangChain · LangGraph · Production — fully interactive.</p>
-        <div style={s.searchWrap} ref={searchRef}>
-          <div style={{ ...s.searchBox, borderColor: showSearch ? "#c9a84c" : "#e0dcd4" }}>
-            <span style={{ color: "#6a6a7a", fontSize: "0.9rem" }}>⌕</span>
-            <input style={s.searchInput} placeholder="Search concepts, RAG types, patterns…" value={searchQ}
-              onChange={e => { setSearchQ(e.target.value); setShowSearch(true); }}
-              onFocus={() => setShowSearch(true)} />
-            {searchQ && <button onClick={() => { setSearchQ(""); setShowSearch(false); }} style={{ background: "none", border: "none", color: "#6a6a7a", cursor: "pointer", fontSize: "0.8rem" }}>×</button>}
-          </div>
-          <SearchDropdown />
-        </div>
-      </header>
+      {/* LEFT SIDEBAR NAVIGATION */}
+      <Sidebar
+        activeTab={tab}
+        onSelectTab={setTab}
+        searchQ={searchQ}
+        onSearchChange={setSearchQ}
+        isCollapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
 
-      {/* TABS */}
-      <nav style={s.nav}>
-        {TABS.map(t => (
-          <button key={t.id} onClick={() => setTab(t.id)} style={s.navBtn(tab === t.id)}>{t.label}</button>
-        ))}
-      </nav>
+      {/* MAIN CANVAS AREA */}
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
+        <TopBar activeTab={tab} onSelectTab={setTab} />
 
-      {/* MAIN */}
-      <main style={s.main} className="panel-enter" key={tab}>
-
-        {/* ── OVERVIEW ── */}
-        {tab === "overview" && (
-          <div>
-            <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg,#0f1a20,#1a0f20)", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#5c3d8f,#c9a84c,#c4572a)" }} />
-              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "1rem" }}>19-Module AI Systems Course · Basic → Advanced</div>
-              <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, marginBottom: "0.75rem", lineHeight: 1.2 }}>From first prompt to<br /><em style={s.em}>production AI systems</em></h2>
-              <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 520 }}>Structured as a 5-module curriculum: Foundations → RAG Core → Context & Memory → Agents & Frameworks → Advanced & Frontiers. Each tab builds on the previous. Start at ① and work forward.</p>
-            </div>
-
-            <div style={{ ...s.grid4, marginBottom: "1.5rem" }}>
-              {[
-                { val: "19",    label: "Modules",         sub: "sequenced basic → advanced", color: "#c9a84c" },
-                { val: "5",     label: "Learning stages", sub: "Foundations to Frontiers",   color: "#2a8a84" },
-                { val: "34+",   label: "Integrity checks", sub: "zero data loss guaranteed", color: "#4a9a4a" },
-                { val: "7000+", label: "Lines of content", sub: "diagrams, code, simulators", color: "#9b7fd4" },
-              ].map((m, i) => (
-                <div key={i} style={{ ...s.card, textAlign: "center" }}>
-                  <div style={{ fontFamily: "Playfair Display, serif", fontSize: "2rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.3rem" }}>{m.val}</div>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.2rem" }}>{m.label}</div>
-                  <div style={{ fontSize: "0.6rem", color: "#6a6a7a" }}>{m.sub}</div>
+        <main style={s.main} className="panel-enter" key={tab}>
+          {(() => {
+            const activeTabObj = TABS_REGISTRY.find(t => t.id === tab) || TABS_REGISTRY[0];
+            const Component = activeTabObj.component;
+            return (
+              <Suspense fallback={
+                <div style={{ padding: "5rem 2rem", textAlign: "center", color: "#2a8a84", fontFamily: "DM Mono, monospace" }}>
+                  <div style={{ fontSize: "1.8rem", marginBottom: "0.5rem" }}>⚡ Loading Module...</div>
+                  <div style={{ fontSize: "0.8rem", color: "#64748b" }}>Code-split module chunk loading on demand</div>
                 </div>
-              ))}
-            </div>
+              }>
+                <Component s={s} />
+              </Suspense>
+            );
+          })()}
+        </main>
 
-            <div style={s.grid2}>
-              <div>
-                {[
-                  { module: "Module 1 — Foundations", color: "#4a9a4a", tabs: [
-                    { id: "glossary",     icon: "📖", name: "① AI Glossary",           desc: "21 terms · 4 layers · quiz" },
-                    { id: "overview",     icon: "🗺️", name: "② Overview",               desc: "Course map & stack summary" },
-                    { id: "archconcepts", icon: "🔬", name: "③ Architecture Concepts",  desc: "MLA · MoE · Speculative Decoding" },
-                    { id: "workflows",    icon: "🚀", name: "④ Claude Workflows",       desc: "10 workflows · 30 prompt templates" },
-                    { id: "unhobbling",   icon: "🔓", name: "⑤ Unhobbling Claude 5",    desc: "80% of system prompt removed · 6 new rules" },
-                  ]},
-                  { module: "Module 2 — RAG: Concept → Production → Agentic", color: "#2a8a84", tabs: [
-                    { id: "rag",          icon: "🔍", name: "⑥ RAG Types",              desc: "9 RAG architectures compared" },
-                    { id: "pipeline",     icon: "▶",  name: "⑦ Pipeline",               desc: "Interactive RAG flow simulator" },
-                    { id: "filtering",    icon: "✦",  name: "⑧ Retrieval = Filtering",  desc: "Enterprise mental model" },
-                    { id: "hierrag",      icon: "🗂️", name: "⑨ Hierarchical Retrieval", desc: "TOC-routed loop · 56 lines · 5 pages" },
-                    { id: "qparseloop",   icon: "🔂", name: "⑩ Question Parsing Loop",  desc: "The small loop before retrieval · 3 real cases" },
-                    { id: "prodrag",      icon: "📄", name: "⑪ Production RAG",         desc: "4 bricks · typed contracts · 9-step sim" },
-                    { id: "genpatterns",  icon: "🧬", name: "⑫ 7 Generation Patterns",  desc: "Typed contract patterns · LLM as function, not oracle" },
-                    { id: "fourpdfs",     icon: "📚", name: "⑬ One Pipeline, Four PDFs", desc: "Same 4 bricks tested on paper, standard, filing, manual" },
-                    { id: "hallucbricks", icon: "🧱", name: "⑭ 4 Bricks Stop Hallucinations", desc: "One failure per brick · typed contracts, not prompts" },
-                    { id: "agenticrag",   icon: "🔍", name: "⑮ Agentic RAG",            desc: "3 tools · real trace · 5 design decisions" },
-                  ]},
-                  { module: "Module 3 — Context & Memory", color: "#c9a84c", tabs: [
-                    { id: "ctxeng",        icon: "✶", name: "⑯ Context Engineering",   desc: "4 typed inputs · cache · live builder" },
-                    { id: "ctxmeasure",    icon: "📐", name: "⑰ Measuring Context Quality", desc: "7 criteria · 300 evals · U Chicago paper" },
-                    { id: "companybrain",  icon: "🧠", name: "⑱ Company Brain & Context Layer", desc: "Reconciliation loop · 4 projections · candidate routing · evals" },
-                    { id: "contextgraph",  icon: "⬡", name: "⑲ Context Graph",         desc: "2-hop traversal · 2 bugs · benchmark" },
-                    { id: "vague",         icon: "◉", name: "⑲ Vague Questions",       desc: "Clarification schemas · live sandbox" },
-                    { id: "hallucination", icon: "🚨", name: "⑳ Silent Hallucination Loop", desc: "Vector store poisoning post-mortem · 3 fixes" },
-                    { id: "memeng",        icon: "⚡", name: "㉑ Memory Engineering",    desc: "Pandas · Dask · Polars · 30GB dataset" },
-                  ]},
-                  { module: "Module 4 — Agents & Frameworks", color: "#9b7fd4", tabs: [
-                    { id: "redesign",    icon: "🏗️", name: "㉒ Redesign Work First",  desc: "5-step framework · McKinsey · BCG · PwC · Deloitte" },
-                    { id: "fiveassets", icon: "📦", name: "㉓ 5 Assets for Agents",   desc: "Repeated Work · Task · Context · Acceptance · Permission" },
-                    { id: "multiagent",  icon: "◈",  name: "㉔ Multi-Agent",           desc: "5-agent text-to-SQL pipeline" },
-                    { id: "classicalml", icon: "📊", name: "㉕ Classical ML Tools",    desc: "6 reasons · direct calls vs DB · CatBoost/XGBoost" },
-                    { id: "activelearn", icon: "🎯", name: "㉖ Active Learning",       desc: "Uncertainty · Diversity · Query by Committee" },
-                    { id: "aidataplat", icon: "🏛️", name: "㉘ AI-Native Data Platform", desc: "3 components · AI QA · 6 governance pillars" },
-                    { id: "agenttasks", icon: "📋", name: "㉙ Coding Agent Tasks", desc: "Worktree isolation · MCP sync · direct-to-dev · HTML reports" },
-                    { id: "aiproductbuilder", icon: "🚀", name: "㉙ AI Product Builder", desc: "7 stages · Vibe Coding · Cursor & Claude Code · Supabase & MCP · Vercel" },
-                    { id: "langchain",   icon: "🔗", name: "㉘ LangChain",             desc: "LCEL · chains · tools" },
-                    { id: "langgraph",   icon: "🕸️", name: "㉙ LangGraph",            desc: "State graphs · ReAct loop" },
-                    { id: "compare",     icon: "⚖️", name: "㉚ Compare",               desc: "Framework decision matrix" },
-                  ]},
-                  { module: "Module 5 — Advanced & Frontiers", color: "#c4572a", tabs: [
-                    { id: "powerfeatures", icon: "⚡", name: "㉛ Power Features",       desc: "Shortcuts · OpenWiki · AUTOMEM · Copilot" },
-                    { id: "frontiers",     icon: "🔬", name: "㉜ Research Frontiers",    desc: "NLA · Memento · Claude Code plugins" },
-                    { id: "ragbeyond",     icon: "🔮", name: "㉝ Beyond RAG",            desc: "Translation absurdity · Latent persistence · ILCP" },
-                    { id: "practices",     icon: "✅", name: "㉞ Best Practices",        desc: "Production patterns synthesised" },
-                    { id: "progress",      icon: "🎯", name: "㉟ Progress Tracker",      desc: "Track your mastery" },
-                  ]},
-                ].map((group, gi) => (
-                  <div key={gi} style={{ marginBottom: "1.2rem" }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: group.color, marginBottom: "0.5rem", paddingLeft: "0.5rem", borderLeft: `3px solid ${group.color}` }}>{group.module}</div>
-                    {group.tabs.map((t, ti) => (
-                      <div key={ti} onClick={() => setTab(t.id)}
-                        style={{ display: "flex", alignItems: "center", gap: "0.8rem", padding: "0.6rem 0.8rem", background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, marginBottom: "0.35rem", cursor: "pointer", transition: "all 0.2s" }}
-                        onMouseEnter={e => { e.currentTarget.style.background = "#f0ede6"; e.currentTarget.style.borderColor = group.color + "40"; e.currentTarget.style.transform = "translateX(3px)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.borderColor = "#e0dcd4"; e.currentTarget.style.transform = "none"; }}>
-                        <span style={{ fontSize: "1rem", flexShrink: 0 }}>{t.icon}</span>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: "#1a1a2e" }}>{t.name}</div>
-                          <div style={{ fontSize: "0.58rem", color: "#6a6a7a" }}>{t.desc}</div>
-                        </div>
-                        <span style={{ fontSize: "0.6rem", color: group.color }}>→</span>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-              <div>
-                <div style={s.sectionLabel("#c9a84c")}>Quick Jump</div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
-                  {TABS.filter(t => t.id !== "overview").map(t => (
-                    <button key={t.id} onClick={() => setTab(t.id)}
-                      style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.7rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: "#b0b0c0", cursor: "pointer", transition: "all 0.2s", textAlign: "left" }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = "#c9a84c40"; e.currentTarget.style.color = "#c9a84c"; }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = "#e0dcd4"; e.currentTarget.style.color = "#b0b0c0"; }}>
-                      {t.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── PIPELINE ── */}
-        {tab === "pipeline" && (
-          <div>
-            <div style={s.sectionLabel("#4a9a4a")}>Interactive Pipeline Simulator</div>
-            <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 600 }}>Click ▶ Simulate to animate a query through the full production RAG pipeline. Click any step to see what it does.</p>
-            <PipelineSimulator />
-            <div style={s.sectionLabel("#c9a84c")}>Pipeline Patterns</div>
-            <div style={s.grid3}>
-              {[
-                { name: "Naive (1-step)", flow: "Query → Embed → Search → Generate", color: "#2a8a84", desc: "Simple but low precision." },
-                { name: "Advanced (3-step)", flow: "HyDE → Hybrid → Rerank → Compress → Generate", color: "#c9a84c", desc: "Production standard." },
-                { name: "Agentic (N-step)", flow: "Query → [Search → Reason]×N → Synthesize", color: "#c4572a", desc: "Dynamic multi-round." },
-              ].map((p, i) => (
-                <div key={i} style={{ ...s.card, borderTop: `2px solid ${p.color}` }}>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", marginBottom: "0.5rem", color: p.color }}>{p.name}</div>
-                  <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#6a6a7a", lineHeight: 1.8, marginBottom: "0.6rem" }}>{p.flow}</div>
-                  <div style={{ fontSize: "0.65rem", color: "#b0b0c0" }}>{p.desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ── RAG TYPES ── */}
-        {tab === "rag" && (
-          <div>
-            <div style={s.sectionLabel("#2a8a84")}>9 RAG Architectures — Interactive Explorer</div>
-            <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 600 }}>Select a type to explore its architecture, code, and tradeoffs in depth.</p>
-            <RAGExplorer />
-          </div>
-        )}
-
-        {/* ── BEST PRACTICES ── */}
-        {/* ── BEYOND RAG ── */}
-        {tab === "ragbeyond" && <RAGBeyondTab s={s} />}
-
-        {tab === "practices" && (
-          <div>
-            <div style={s.sectionLabel("#c9a84c")}>Emerging Best Practices · 2025–2026</div>
-            <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 600 }}>Filter by category. Hard-won patterns from production deployments — what's actually working at scale.</p>
-            <BestPracticesGrid />
-            <div style={{ ...s.card, marginTop: "1.5rem" }}>
-              <div style={s.sectionLabel("#9b7fd4")}>The Unbreakable Rules</div>
-              <div style={s.grid2}>
-                {[
-                  { title: "Never fine-tune to inject knowledge", body: "Knowledge baked into weights goes stale and hallucinates confidently. Fine-tune for behavior; use RAG for knowledge." },
-                  { title: "Understand the loop before frameworks", body: "LangChain/LangGraph hide complexity. Build the raw ReAct loop first, then choose a framework to reduce boilerplate." },
-                  { title: "Prompt engineering first, always", body: "80% of problems are solved by better prompts. Exhaust prompt engineering before reaching for RAG or fine-tuning." },
-                  { title: "Hybrid search is the baseline", body: "Dense-only misses exact matches. Sparse-only misses semantics. There's no good reason to ship without both." },
-                  { title: "Log everything, regret nothing", body: "Agents fail in non-obvious ways. Without full traces, debugging a production failure takes days. Instrument from day one." },
-                  { title: "Cost compounds — measure from day one", body: "$0.01/query sounds cheap. At 10k queries/day it's $3,650/year per feature. Track cost per query from the first prototype." },
-                ].map((r, i) => (
-                  <div key={i} style={{ display: "flex", gap: "0.75rem", padding: "1rem", background: "#f7f5f0", borderRadius: 4 }}>
-                    <span style={{ color: "#9b7fd4", fontSize: "0.9rem", marginTop: "0.1rem", flexShrink: 0 }}>◆</span>
-                    <div>
-                      <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", marginBottom: "0.3rem" }}>{r.title}</div>
-                      <div style={{ fontSize: "0.66rem", color: "#6a6a7a", lineHeight: 1.7 }}>{r.body}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── LANGCHAIN ── */}
-        {tab === "langchain" && (
-          <div>
-            <div style={s.sectionLabel("#4a9a4a")}>LangChain — Composable AI Pipelines</div>
-            <div style={{ ...s.grid2, marginBottom: "1.5rem" }}>
-              <div style={s.card}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#4a9a4a", marginBottom: "0.8rem" }}>What Is LangChain?</div>
-                <p style={{ fontSize: "0.7rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>LangChain is a framework for building LLM applications by composing modular components — LLMs, prompts, retrievers, tools, memory, output parsers — into chains using the <code style={{ color: "#4a9a4a", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>|</code> pipe operator.</p>
-                <p style={{ fontSize: "0.7rem", color: "#8a8a9a", lineHeight: 1.8 }}>Ships with 100s of pre-built integrations. The ecosystem is the biggest moat — there's almost certainly a pre-built integration for what you need.</p>
-              </div>
-              <div style={s.card}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#4a9a4a", marginBottom: "0.8rem" }}>LCEL — Core Abstraction</div>
-                <CodeBlock code={`# LCEL pipe composition
-chain = prompt | llm | output_parser
-
-# RAG chain
-rag_chain = (
-    {"context": retriever,
-     "question": RunnablePassthrough()}
-    | prompt | llm | StrOutputParser()
-)
-
-# Invoke or stream
-result = rag_chain.invoke("What is RAG?")
-for chunk in rag_chain.stream("What is RAG?"):
-    print(chunk, end="", flush=True)`} />
-              </div>
-            </div>
-
-            <div style={s.sectionLabel("#4a9a4a")}>Core Components</div>
-            <div style={{ ...s.grid4, marginBottom: "1.5rem" }}>
-              {LANGCHAIN_CONCEPTS.map((c, i) => (
-                <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "1rem", borderTop: `2px solid ${c.color}`, transition: "transform 0.2s" }}
-                  onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-                  onMouseLeave={e => e.currentTarget.style.transform = "none"}>
-                  <div style={{ fontSize: "1.1rem", marginBottom: "0.4rem" }}>{c.icon}</div>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", marginBottom: "0.4rem", color: c.color }}>{c.name}</div>
-                  <div style={{ fontSize: "0.62rem", color: "#6a6a7a", lineHeight: 1.6 }}>{c.desc}</div>
-                </div>
-              ))}
-            </div>
-
-            <div style={s.sectionLabel("#4a9a4a")}>Full Production RAG Pipeline</div>
-            <CodeBlock code={`from langchain_anthropic import ChatAnthropic
-from langchain_community.vectorstores import PGVector
-from langchain_community.retrievers import BM25Retriever
-from langchain.retrievers import EnsembleRetriever, ContextualCompressionRetriever
-from langchain.retrievers.document_compressors import CohereRerank
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
-
-# 1. LLM
-llm = ChatAnthropic(model="claude-sonnet-4-20250514")
-
-# 2. Hybrid retriever (dense + BM25)
-vector_retriever = PGVector(...).as_retriever(search_kwargs={"k": 20})
-bm25_retriever   = BM25Retriever.from_documents(docs, k=20)
-hybrid = EnsembleRetriever(
-    retrievers=[vector_retriever, bm25_retriever],
-    weights=[0.5, 0.5]
-)
-
-# 3. Re-rank with Cohere
-compressor = CohereRerank(top_n=5)
-retriever = ContextualCompressionRetriever(
-    base_compressor=compressor,
-    base_retriever=hybrid
-)
-
-# 4. LCEL chain
-def format_docs(docs):
-    return "\\n\\n".join(f"[{i+1}] {d.page_content}" for i, d in enumerate(docs))
-
-rag_chain = (
-    {"context": retriever | format_docs,
-     "question": RunnablePassthrough()}
-    | ChatPromptTemplate.from_template(
-        "Answer using ONLY context.\\n\\nContext: {context}\\nQ: {question}")
-    | llm | StrOutputParser()
-)
-
-# Invoke / stream
-answer = rag_chain.invoke("What is hybrid search?")
-for chunk in rag_chain.stream("What is hybrid search?"):
-    print(chunk, end="", flush=True)`} />
-          </div>
-        )}
-
-        {/* ── LANGGRAPH ── */}
-        {tab === "langgraph" && (
-          <div>
-            <div style={s.sectionLabel("#2a7a9c")}>LangGraph — Stateful Agent Graphs</div>
-            <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 600 }}>Click nodes in the graph to inspect them. Click ▶ Trace Run to animate an agent execution through the graph.</p>
-            <LangGraphVisual />
-
-            <div style={{ ...s.sectionLabel("#2a7a9c"), marginTop: "2rem" }}>Advanced Patterns</div>
-            <div style={s.grid3}>
-              {[
-                { icon: "👤", name: "Human-in-the-Loop", color: "#c9a84c", desc: "Add interrupt_before=[\"tools\"] when compiling. Graph pauses, sends state for human review, then resumes on approval.", code: `agent = graph.compile(\n  checkpointer=checkpointer,\n  interrupt_before=["tools"]\n)` },
-                { icon: "🔀", name: "Parallel Subgraphs", color: "#4a9a4a", desc: "Use Send() to fan out to multiple subgraph instances running in parallel — e.g. research 5 subtopics simultaneously.", code: `from langgraph.constants import Send\n# Fan out to parallel workers\n[Send("worker", {"task": t})\n for t in state["subtasks"]]` },
-                { icon: "⏱️", name: "Time-Travel Debug", color: "#9b7fd4", desc: "With checkpointing, replay any past state to debug why an agent made a certain decision. Step through history one node at a time.", code: `# Replay from checkpoint\nagent.get_state_history(config)\nagent.update_state(config, patch)\nagent.invoke(None, config)` },
-                { icon: "🏗️", name: "Subgraph Multi-Agent", color: "#c4572a", desc: "Compile agent graphs and embed them as nodes inside a parent orchestrator graph. Clean separation of specialist agents.", code: `research = r_graph.compile()\nwriter = w_graph.compile()\n# Use compiled agents as nodes\ngraph.add_node("research", research)` },
-                { icon: "💾", name: "Persistent State", color: "#2a7a9c", desc: "Swap MemorySaver for PostgresSaver or RedisSaver to persist state across server restarts. Resume tasks days later.", code: `from langgraph.checkpoint.postgres\n    import PostgresSaver\nsaver = PostgresSaver.from_conn_string(\n    DATABASE_URL)` },
-                { icon: "🌊", name: "Streaming Events", color: "#c9a84c", desc: "Stream individual node outputs and LLM tokens in real time. Surface agent thoughts and tool calls to UI as they happen.", code: `async for event in agent.astream_events(\n    input, config, version="v2"\n):\n    print(event["data"])` },
-              ].map((p, i) => (
-                <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", transition: "transform 0.2s" }}
-                  onMouseEnter={e => e.currentTarget.style.transform = "translateY(-2px)"}
-                  onMouseLeave={e => e.currentTarget.style.transform = "none"}>
-                  <div style={{ padding: "1rem", borderBottom: "1px solid #e0dcd4", borderTop: `2px solid ${p.color}` }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-                      <span style={{ fontSize: "1rem" }}>{p.icon}</span>
-                      <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: p.color }}>{p.name}</span>
-                    </div>
-                    <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6 }}>{p.desc}</p>
-                  </div>
-                  <div style={{ background: "#f7f5f0", padding: "0.8rem", fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#7aaa7a", lineHeight: 1.8, whiteSpace: "pre" }}>{p.code}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* ── COMPARE ── */}
-        {tab === "compare" && (
-          <div>
-            <div style={s.sectionLabel("#c9a84c")}>Framework Comparison — Hover columns to highlight</div>
-            <div style={{ ...s.card, marginBottom: "1.5rem" }}>
-              <ComparisonTable />
-            </div>
-            <div style={s.sectionLabel("#2a8a84")}>RAG Type Quick Reference</div>
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.67rem" }}>
-                <thead>
-                  <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
-                    {["Type", "Complexity", "Best For", "Key Weakness"].map(h => (
-                      <th key={h} style={{ textAlign: "left", padding: "0.7rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    ["Naive", "⬜ Low", "Prototypes, simple FAQ", "Low precision"],
-                    ["Advanced", "🟨 Medium", "Most production use-cases", "Single retrieval pass"],
-                    ["Hybrid", "⬜ Low–Med", "All production (baseline)", "Needs BM25 infra"],
-                    ["Self-RAG", "🟧 High", "Mixed query loads", "Requires fine-tuned model"],
-                    ["CRAG", "🟧 High", "Incomplete knowledge bases", "Web search latency + cost"],
-                    ["Graph RAG", "🟥 Very High", "Multi-hop, entity-rich", "Expensive indexing"],
-                    ["Agentic", "🟧 High", "Complex research", "Higher latency + cost"],
-                    ["Multimodal", "🟥 Very High", "Mixed-media docs", "Model + infra complexity"],
-                    ["RAPTOR", "🟥 Very High", "Long docs, mixed queries", "Index build time"],
-                  ].map((row, ri) => (
-                    <tr key={ri} style={{ borderBottom: "1px solid rgba(42,42,56,0.5)", transition: "background 0.15s" }}
-                      onMouseEnter={e => e.currentTarget.style.background = "#ffffff"}
-                      onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                      <td style={{ padding: "0.7rem 0.8rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row[0]}</td>
-                      <td style={{ padding: "0.7rem 0.8rem", color: "#b0b0c0" }}>{row[1]}</td>
-                      <td style={{ padding: "0.7rem 0.8rem", color: "#b0b0c0" }}>{row[2]}</td>
-                      <td style={{ padding: "0.7rem 0.8rem", color: "#6a6a7a" }}>{row[3]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* ── PROGRESS ── */}
-        {tab === "progress" && (
-          <div>
-            <div style={s.sectionLabel("#c9a84c")}>Learning Progress Tracker</div>
-            <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 600 }}>Check off concepts as you learn them. Progress is saved locally in your browser.</p>
-            <ProgressTracker />
-          </div>
-        )}
-
-        {/* ── RETRIEVAL IS FILTERING ── */}
-        {tab === "filtering" && <FilteringTab s={s} />}
-
-        {/* ── MULTI-AGENT PIPELINE ── */}
-        {/* ── REDESIGN WORK FIRST ── */}
-        {tab === "redesign" && <RedesignWorkTab s={s} />}
-
-        {/* ── 5 ASSETS FOR AGENTS ── */}
-        {tab === "fiveassets" && <FiveAssetsTab s={s} />}
-
-        {tab === "multiagent" && <MultiAgentTab s={s} />}
-
-        {/* ── AGENTS AS TOOLS ── */}
-        {tab === "agentsastools" && <AgentsAsToolsTab s={s} />}
-
-        {/* ── NON-PROGRAMMING CODING AGENTS ── */}
-        {tab === "codingagentsnonprog" && <NonProgCodingAgentsTab s={s} />}
-
-        {/* ── MEDALLION ARCHITECTURE ── */}
-        {tab === "medallionarch" && <MedallionArchTab s={s} />}
-
-        {/* ── AI TEST DATA BOTTLENECK ── */}
-        {tab === "aitestdatabottleneck" && <AITestDataBottleneckTab s={s} />}
-
-        {/* ── CLASSICAL ML TOOLS ── */}
-        {tab === "classicalml" && <ClassicalMLTab s={s} />}
-
-        {/* ── ACTIVE LEARNING ── */}
-        {tab === "activelearn" && <ActiveLearningTab s={s} />}
-
-        {/* ── AI-NATIVE DATA PLATFORM ── */}
-        {tab === "aidataplat" && <AIDataPlatformTab s={s} />}
-
-        {/* ── CODING AGENT TASK ORCHESTRATION ── */}
-        {tab === "agenttasks" && <AgentTasksTab s={s} />}
-
-        {/* ── AI PRODUCT BUILDER ── */}
-        {tab === "aiproductbuilder" && <AIProductBuilderTab s={s} />}
-
-        {/* ── AGENTIC RAG ── */}
-        {tab === "agenticrag" && <AgenticRAGTab s={s} />}
-
-        {/* ── VAGUE QUESTIONS ── */}
-        {tab === "vague" && <VagueQuestionsTab s={s} />}
-
-        {/* ── SILENT HALLUCINATION LOOP ── */}
-        {tab === "hallucination" && <HallucinationLoopTab s={s} />}
-
-        {/* ── CONTEXT GRAPH MEMORY ── */}
-        {tab === "contextgraph" && <ContextGraphTab s={s} />}
-
-        {/* ── CONTEXT ENGINEERING ── */}
-        {tab === "ctxeng" && <ContextEngineeringTab s={s} />}
-
-        {/* ── COMPANY BRAIN & CONTEXT LAYER ── */}
-        {tab === "companybrain" && <CompanyBrainTab s={s} />}
-
-        {/* ── PROMPT MANAGEMENT & AST VALIDATION ── */}
-        {tab === "promptmgmt" && <PromptMgmtTab s={s} />}
-
-        {/* ── MEASURING CONTEXT QUALITY ── */}
-        {tab === "ctxmeasure" && <ContextMeasureTab s={s} />}
-
-        {/* ── MEMORY ENGINEERING ── */}
-        {tab === "memeng" && <MemoryEngineeringTab s={s} />}
-
-        {/* ── CLAUDE WORKFLOWS ── */}
-        {tab === "workflows" && <ClaudeWorkflowsTab s={s} />}
-
-        {/* ── UNHOBBLING CLAUDE 5 ── */}
-        {tab === "unhobbling" && <UnhobblingTab s={s} />}
-
-        {/* ── ARCHITECTURE CONCEPTS ── */}
-        {tab === "archconcepts" && <ArchConceptsTab s={s} />}
-
-        {/* ── AI GLOSSARY ── */}
-        {tab === "glossary" && <AIGlossaryTab s={s} />}
-
-        {/* ── POWER FEATURES ── */}
-        {tab === "powerfeatures" && <PowerFeaturesTab s={s} />}
-
-        {/* ── RESEARCH FRONTIERS ── */}
-        {tab === "frontiers" && <ResearchFrontiersTab s={s} />}
-
-        {/* ── PRODUCTION RAG PIPELINE ── */}
-        {/* ── HIERARCHICAL RETRIEVAL ── */}
-        {tab === "hierrag" && <HierarchicalRetrievalTab s={s} />}
-
-        {/* ── QUESTION PARSING LOOP ── */}
-        {tab === "qparseloop" && <QuestionParsingLoopTab s={s} />}
-
-        {tab === "prodrag" && <ProductionRAGTab s={s} />}
-
-        {/* ── 7 GENERATION PATTERNS ── */}
-        {tab === "genpatterns" && <GenPatternsTab s={s} />}
-
-        {/* ── ONE PIPELINE, FOUR PDFS ── */}
-        {tab === "fourpdfs" && <FourPDFsTab s={s} />}
-
-        {/* ── 4 BRICKS STOP HALLUCINATIONS ── */}
-        {tab === "hallucbricks" && <HallucBricksTab s={s} />}
-
-        {/* ── 3X TOKEN BILL FIX ── */}
-        {tab === "tokenbill" && <TokenBillTab s={s} />}
-
-        {/* ── HIGH-SCALE PRODUCTION AGENTS (MILLIONS OF REQUESTS) ── */}
-        {tab === "agentscale" && <HighScaleAgentsTab s={s} />}
-        {tab === "agentdebugging" && <AgentDebuggingTab s={s} />}
-
-        {/* ── DOCUMENT STRUCTURE & LOOP ENGINEERING ── */}
-        {tab === "docstruct" && <DocumentStructureTab />}
-
-        {/* ── LOCAL CLI AGENTS (OLLAMA + PYTHON) ── */}
-        {tab === "cliagent" && <CliAgentTab />}
-
-        {/* ── 3 ENGINEERING LAYERS (PROMPT, CONTEXT, LOOP) ── */}
-        {tab === "threelayers" && <ThreeLayersTab />}
-
-      </main>
-
-      {/* FOOTER */}
-      <footer style={{ padding: "1.5rem 3rem", borderTop: "1px solid #1e1e2e", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
-        <div style={{ fontSize: "0.62rem", color: "#4a4a5a" }}>AI Systems Knowledge Dashboard · 2025–2026</div>
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-          {TABS.map(t => (
-            <button key={t.id} onClick={() => setTab(t.id)} style={{ background: "none", border: "none", fontSize: "0.6rem", color: "#4a4a5a", cursor: "pointer", fontFamily: "Syne, sans-serif", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", transition: "color 0.2s" }}
-              onMouseEnter={e => e.currentTarget.style.color = "#c9a84c"}
-              onMouseLeave={e => e.currentTarget.style.color = "#4a4a5a"}>
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </footer>
+        {/* FOOTER */}
+        <footer style={{ padding: "1.2rem 2.5rem", borderTop: "1px solid #e2e8f0", background: "#ffffff", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
+          <div style={{ fontSize: "0.68rem", color: "#64748b", fontFamily: "Inter, sans-serif" }}>AI Systems Knowledge Dashboard · 2025–2026</div>
+          <div style={{ fontSize: "0.62rem", color: "#94a3b8", fontFamily: "DM Mono, monospace" }}>46+ Modules Categorized into 6 Umbrella Topics</div>
+        </footer>
+      </div>
     </div>
   );
 }
