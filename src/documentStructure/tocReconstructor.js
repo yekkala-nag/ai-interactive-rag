@@ -45,7 +45,7 @@ const HEADING_VALIDATION_SCHEMA = {
   },
 };
 
-export function reconstructTocFromBody(lineDf, spanDf = null, options = {}) {
+export async function reconstructTocFromBody(lineDf, spanDf = null, options = {}) {
   let {
     mode = 'auto',
     existingTocDf = null,
@@ -53,6 +53,7 @@ export function reconstructTocFromBody(lineDf, spanDf = null, options = {}) {
     llmParse = null,
     threshold = 3.0,
     weights = null,
+    onPassLog = null,
   } = options;
 
   let processedLineDf = lineDf;
@@ -67,11 +68,7 @@ export function reconstructTocFromBody(lineDf, spanDf = null, options = {}) {
   if (mode === 'auto') {
     if (existingTocDf && existingTocDf.length > 0) {
       const maxLevel = Math.max(...existingTocDf.map(t => t.level || 1));
-      if (maxLevel <= 2) {
-        mode = 'extend_native';
-      } else {
-        mode = 'no_toc';
-      }
+      mode = maxLevel <= 2 ? 'extend_native' : 'no_toc';
     } else {
       mode = 'no_toc';
     }
@@ -89,17 +86,49 @@ export function reconstructTocFromBody(lineDf, spanDf = null, options = {}) {
     heading_score: c.heading_score,
   }));
 
+  const validationLogs = [];
+
   if (llmParse) {
-    tocEntries = llmValidationLoop(tocEntries, processedLineDf, llmParse, maxPasses);
+    const { finalEntries, logs } = await llmValidationLoop(
+      tocEntries,
+      processedLineDf,
+      llmParse,
+      maxPasses
+    );
+    tocEntries = finalEntries;
+    validationLogs.push(...logs);
+  } else {
+    // Deterministic Mock Rule-based Validator (When AI key is absent)
+    const { finalEntries, logs } = mockRuleValidationLoop(
+      tocEntries,
+      processedLineDf,
+      maxPasses
+    );
+    tocEntries = finalEntries;
+    validationLogs.push(...logs);
   }
 
   if (mode === 'extend_native' && existingTocDf) {
-    const nativeSet = new Set(existingTocDf.map(t => `${t.title}-${t.page}`));
-    const newEntries = tocEntries.filter(e => !nativeSet.has(`${e.title}-${e.page}`));
+    const nativeSet = new Set(existingTocDf.map(t => `${t.title.toLowerCase()}-${t.page}`));
+    const newEntries = tocEntries.filter(e => !nativeSet.has(`${e.title.toLowerCase()}-${e.page}`));
     tocEntries = [...existingTocDf, ...newEntries];
   }
 
-  return tocEntries.sort((a, b) => a.page - b.page || a.level - b.level);
+  if (mode === 'composite') {
+    const boundaries = detectDocumentBoundaries(processedLineDf);
+    if (boundaries.length > 0) {
+      tocEntries = rerouteCompositeToc(tocEntries, boundaries);
+    }
+  }
+
+  tocEntries.sort((a, b) => a.page - b.page || a.level - b.level);
+
+  if (onPassLog && typeof onPassLog === 'function') {
+    onPassLog(validationLogs);
+  }
+
+  tocEntries.validationLogs = validationLogs;
+  return tocEntries;
 }
 
 function filterExisting(candidates, existingTocDf) {
@@ -111,9 +140,10 @@ function filterExisting(candidates, existingTocDf) {
 }
 
 function inferLevel(text) {
-  const match = text.match(/^(\d+(?:\.\d+)*\.?|[IVXLCDM]+\.|[A-Z]\.)/);
+  const match = (text || '').trim().match(/^(\d+(?:\.\d+)*\.?|[IVXLCDM]+\.|[A-Z]\.)/);
   if (match) {
-    return match[1].split('.').filter(Boolean).length;
+    const parts = match[1].replace(/\.$/, '').split('.').filter(Boolean);
+    return parts.length > 0 ? parts.length : 1;
   }
   return 1;
 }
@@ -121,30 +151,104 @@ function inferLevel(text) {
 async function llmValidationLoop(currentEntries, lineDf, llmParse, maxPasses) {
   let converged = false;
   let pass = 0;
+  const logs = [];
 
   while (!converged && pass < maxPasses) {
+    pass += 1;
     const context = buildContext(currentEntries, lineDf);
-    const result = await llmParse(HEADING_VALIDATION_PROMPT, context, HEADING_VALIDATION_SCHEMA);
+    let result = null;
+    let errorMsg = null;
 
-    if (!result || !Array.isArray(result)) break;
+    try {
+      result = await llmParse(HEADING_VALIDATION_PROMPT, context, HEADING_VALIDATION_SCHEMA);
+    } catch (err) {
+      errorMsg = err.message;
+    }
+
+    if (!result || !Array.isArray(result)) {
+      logs.push({
+        pass,
+        keptCount: currentEntries.length,
+        droppedCount: 0,
+        addedCount: 0,
+        status: errorMsg ? `Error: ${errorMsg}` : 'Invalid LLM response format',
+        entries: [...currentEntries],
+      });
+      break;
+    }
 
     const newEntries = result.map(r => ({
       title: r.title,
       page: r.page,
       level: r.level || inferLevel(r.title),
       source: r.source || 'body_structure',
-      heading_score: r.heading_score || 3.0,
+      heading_score: r.heading_score || 3.5,
     }));
 
-    if (arraysEqual(JSON.stringify(currentEntries), JSON.stringify(newEntries))) {
+    const keptSet = new Set(newEntries.map(e => `${e.title.toLowerCase()}-${e.page}`));
+    const droppedCount = currentEntries.filter(e => !keptSet.has(`${e.title.toLowerCase()}-${e.page}`)).length;
+    const prevSet = new Set(currentEntries.map(e => `${e.title.toLowerCase()}-${e.page}`));
+    const addedCount = newEntries.filter(e => !prevSet.has(`${e.title.toLowerCase()}-${e.page}`)).length;
+
+    const isSame = JSON.stringify(currentEntries) === JSON.stringify(newEntries);
+
+    logs.push({
+      pass,
+      keptCount: newEntries.length,
+      droppedCount,
+      addedCount,
+      status: isSame ? 'Converged (No changes)' : `Updated (-${droppedCount}, +${addedCount})`,
+      entries: [...newEntries],
+    });
+
+    if (isSame) {
       converged = true;
     } else {
       currentEntries = newEntries;
     }
-    pass += 1;
   }
 
-  return currentEntries;
+  return { finalEntries: currentEntries, logs };
+}
+
+function mockRuleValidationLoop(currentEntries, lineDf, maxPasses) {
+  const logs = [];
+  let pass = 0;
+  let entries = [...currentEntries];
+
+  while (pass < Math.min(2, maxPasses)) {
+    pass += 1;
+
+    // Filter out common false positives deterministically
+    const filtered = entries.filter(e => {
+      const t = e.title.trim();
+      // Drop single numbers or table cell digits (e.g. BLEU scores 28.4, 4.33)
+      if (/^\d+(\.\d+)?$/.test(t)) return false;
+      // Drop figure captions
+      if (/^(figure|fig\.|table|tab\.)\s*\d+/i.test(t)) return false;
+      // Drop dot leader lines
+      if (/\.{4,}/.test(t)) return false;
+      // Drop excessively long strings
+      if (t.length > 90) return false;
+      return true;
+    });
+
+    const droppedCount = entries.length - filtered.length;
+
+    logs.push({
+      pass,
+      keptCount: filtered.length,
+      droppedCount,
+      addedCount: 0,
+      status: pass === 1 ? `Deterministic Rule Filter (-${droppedCount} false positives)` : 'Converged (Mock Pass)',
+      entries: [...filtered],
+    });
+
+    entries = filtered;
+    if (droppedCount === 0) break;
+  }
+
+  return { finalEntries: entries, logs };
 }
 
 function buildContext(currentEntries, lineDf) {
@@ -178,13 +282,8 @@ function buildContext(currentEntries, lineDf) {
   return context.join('\n');
 }
 
-function arraysEqual(a, b) {
-  return a === b;
-}
-
 export function detectDocumentBoundaries(lineDf) {
   const boundaries = [];
-
   const pages = new Map();
   for (const l of lineDf) {
     if (!pages.has(l.page_num)) pages.set(l.page_num, []);
@@ -192,7 +291,10 @@ export function detectDocumentBoundaries(lineDf) {
   }
 
   let prevMaxNumber = -1;
+  let prevFontMedian = -1;
+
   for (const [pageNum, lines] of pages) {
+    // Signal 1: Numbering Re-initialization
     const pageNumbers = lines.filter(l => /^\s*\d+\s*$/.test(l.text.trim())).map(l => parseInt(l.text.trim()));
     const maxPageNumber = pageNumbers.length > 0 ? Math.max(...pageNumbers) : -1;
 
@@ -200,14 +302,111 @@ export function detectDocumentBoundaries(lineDf) {
       boundaries.push({
         type: 'numbering_reinit',
         page: pageNum,
-        confidence: 0.8,
+        confidence: 0.85,
+        reason: `Page numbers re-initialized from ${prevMaxNumber} to ${maxPageNumber}`,
+      });
+    }
+
+    // Signal 2: Font Style Rupture
+    const fontSizes = lines.map(l => l.font_size).filter(s => s > 0);
+    const medianSize = fontSizes.length > 0 ? fontSizes.reduce((a, b) => a + b, 0) / fontSizes.length : 10;
+    if (prevFontMedian > 0 && Math.abs(medianSize - prevFontMedian) > 3.0) {
+      boundaries.push({
+        type: 'style_rupture',
+        page: pageNum,
+        confidence: 0.75,
+        reason: `Median font size changed significantly (${prevFontMedian.toFixed(1)}pt -> ${medianSize.toFixed(1)}pt)`,
+      });
+    }
+
+    // Signal 3: Cover Page Detection
+    if (lines.length <= 8 && lines.some(l => l.font_size > 18)) {
+      boundaries.push({
+        type: 'cover_page',
+        page: pageNum,
+        confidence: 0.9,
+        reason: `Cover page detected (large title ${Math.max(...lines.map(l=>l.font_size))}pt with low line count)`,
       });
     }
 
     if (maxPageNumber > 0) prevMaxNumber = maxPageNumber;
+    prevFontMedian = medianSize;
   }
 
   return boundaries;
+}
+
+function rerouteCompositeToc(tocEntries, boundaries) {
+  const boundaryPages = new Set(boundaries.map(b => b.page));
+  let currentDocIndex = 1;
+
+  return tocEntries.map(entry => {
+    if (boundaryPages.has(entry.page)) {
+      currentDocIndex += 1;
+    }
+    return {
+      ...entry,
+      document_group: `Document ${currentDocIndex}`,
+      level: entry.level + 1,
+    };
+  });
+}
+
+export function tagParagraphsWithDualLayer(lineDf, tocDf, customTaxonomy = null) {
+  const defaultTaxonomy = [
+    { tag: 'garantie', keywords: ['garantie', 'guarantee', 'coverage', 'covered'] },
+    { tag: 'garantie:collision', keywords: ['collision', 'crash', 'accident'] },
+    { tag: 'exclusion', keywords: ['exclusion', 'excluded', 'not covered', 'except'] },
+    { tag: 'exclusion:vitesse', keywords: ['speed', 'vitesse', 'racing', 'race'] },
+    { tag: 'plafond', keywords: ['limit', 'plafond', 'maximum', 'deductible'] },
+  ];
+
+  const taxonomy = customTaxonomy || defaultTaxonomy;
+
+  // Group lines by page into paragraphs
+  const paragraphs = [];
+  const sortedToc = [...tocDf].sort((a, b) => a.page - b.page);
+
+  let currentParagraph = [];
+
+  for (let i = 0; i < lineDf.length; i++) {
+    const line = lineDf[i];
+    currentParagraph.push(line);
+
+    // End paragraph on blank gap or end of line array
+    const isLast = i === lineDf.length - 1;
+    const isGap = !isLast && (lineDf[i + 1].page_num !== line.page_num || lineDf[i + 1].y0 - line.y0 > 20);
+
+    if (isGap || isLast) {
+      const pText = currentParagraph.map(l => l.text).join(' ');
+      const pPage = currentParagraph[0].page_num;
+
+      // Find Layer 1 Section Anchor
+      const matchingSection = sortedToc.filter(t => t.page <= pPage).pop() || { title: 'Preamble', level: 1 };
+
+      // Compute Layer 2 Business Tags
+      const lowerText = pText.toLowerCase();
+      const tags = [];
+      for (const item of taxonomy) {
+        if (item.keywords.some(kw => lowerText.includes(kw))) {
+          tags.push(item.tag);
+        }
+      }
+
+      paragraphs.push({
+        id: `p-${paragraphs.length + 1}`,
+        page: pPage,
+        text: pText,
+        layer1_section: matchingSection.title,
+        layer1_level: matchingSection.level,
+        layer2_tags: tags.length > 0 ? tags : ['general'],
+      });
+
+      currentParagraph = [];
+    }
+  }
+
+  return paragraphs;
 }
 
 export function reconstructTocFromBodyWithFallback(lineDf, spanDf = null, options = {}) {
@@ -217,3 +416,4 @@ export function reconstructTocFromBodyWithFallback(lineDf, spanDf = null, option
   const relaxedThreshold = options.threshold ? options.threshold - 1.0 : 2.0;
   return reconstructTocFromBody(lineDf, spanDf, { ...options, threshold: relaxedThreshold });
 }
+

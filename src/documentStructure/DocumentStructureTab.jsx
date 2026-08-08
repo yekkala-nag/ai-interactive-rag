@@ -4,12 +4,16 @@ import {
   enrichLineDfWithStyle,
   detectBodyHeadings,
   reconstructTocFromBody,
+  DEFAULT_WEIGHTS,
   generateWorkflowFromToc,
   workflowToMermaid,
   generateTableFromToc,
   generateFlashcardsFromToc,
   generateImagePromptsFromToc,
   detectDocumentBoundaries,
+  PdfOverlayViewer,
+  DualLayerViewer,
+  BenchmarkViewer,
 } from '../documentStructure/index.js';
 
 const DEFAULT_AI_CONFIG = {
@@ -27,7 +31,14 @@ export default function DocumentStructureTab() {
   const [tocDf, setTocDf] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [boundaries, setBoundaries] = useState([]);
+  const [activeStep, setActiveStep] = useState(1);
   const [activeView, setActiveView] = useState('toc');
+  
+  const [threshold, setThreshold] = useState(3.0);
+  const [signalWeights, setSignalWeights] = useState(DEFAULT_WEIGHTS);
+  const [cascadeMode, setCascadeMode] = useState('auto');
+  const [validationLogs, setValidationLogs] = useState([]);
+
   const [aiConfig, setAiConfig] = useState(DEFAULT_AI_CONFIG);
   const [generating, setGenerating] = useState(false);
   const [workflow, setWorkflow] = useState(null);
@@ -45,6 +56,31 @@ export default function DocumentStructureTab() {
       setFlashcardFlipped(false);
     }
   }, [flashcards.length]);
+
+  const recomputeHeadingsAndToc = useCallback(async (lDf, sDf, thresh, w, mode) => {
+    if (!lDf || lDf.length === 0) return;
+    const enriched = enrichLineDfWithStyle(lDf, sDf);
+    const detected = detectBodyHeadings(enriched, thresh, w);
+    setCandidates(detected);
+
+    const docBoundaries = detectDocumentBoundaries(lDf);
+    setBoundaries(docBoundaries);
+
+    let logsCollector = [];
+    const toc = await reconstructTocFromBody(lDf, sDf, {
+      mode,
+      threshold: thresh,
+      weights: w,
+      maxPasses: 3,
+      llmParse: aiConfig.apiKey
+        ? async (sys, user, schema) => callLLM(aiConfig, sys, user, schema)
+        : null,
+      onPassLog: (logs) => { logsCollector = logs; },
+    });
+
+    setTocDf(toc);
+    setValidationLogs(logsCollector.length > 0 ? logsCollector : (toc.validationLogs || []));
+  }, [aiConfig]);
 
   const handleFileChange = useCallback(async (e) => {
     const selected = e.target.files?.[0];
@@ -66,33 +102,18 @@ export default function DocumentStructureTab() {
       setLineDf(line_df);
       setSpanDf(span_df);
 
-      setProgress('Analyzing typography and detecting headings...');
-      const enriched = enrichLineDfWithStyle(line_df, span_df);
-      const detected = detectBodyHeadings(enriched, 3.0);
-      setCandidates(detected);
-
-      setProgress('Detecting document boundaries...');
-      const docBoundaries = detectDocumentBoundaries(line_df);
-      setBoundaries(docBoundaries);
-
-      setProgress('Running loop engineering TOC reconstruction...');
-      const toc = await reconstructTocFromBody(line_df, span_df, {
-        mode: 'no_toc',
-        threshold: 3.0,
-        llmParse: aiConfig.apiKey
-          ? async (system, user, schema) => callLLM(aiConfig, system, user, schema)
-          : null,
-      });
-      setTocDf(toc);
+      setProgress('Running Loop Engineering TOC Reconstruction...');
+      await recomputeHeadingsAndToc(line_df, span_df, threshold, signalWeights, cascadeMode);
 
       setProgress('Complete.');
+      setActiveStep(2);
     } catch (err) {
       console.error(err);
       setError(`Parsing failed: ${err.message}`);
     } finally {
       setParsing(false);
     }
-  }, [aiConfig]);
+  }, [threshold, signalWeights, cascadeMode, recomputeHeadingsAndToc]);
 
   const callLLM = async (config, system, user, schema) => {
     const body = {
@@ -142,19 +163,46 @@ export default function DocumentStructureTab() {
     }
   }, [tocDf, lineDf, aiConfig]);
 
+  const handleWeightChange = (key, val) => {
+    const newW = { ...signalWeights, [key]: parseFloat(val) || 0 };
+    setSignalWeights(newW);
+    recomputeHeadingsAndToc(lineDf, spanDf, threshold, newW, cascadeMode);
+  };
+
+  const handleThresholdChange = (val) => {
+    const thresh = parseFloat(val) || 3.0;
+    setThreshold(thresh);
+    recomputeHeadingsAndToc(lineDf, spanDf, thresh, signalWeights, cascadeMode);
+  };
+
+  const handleModeChange = (mode) => {
+    setCascadeMode(mode);
+    recomputeHeadingsAndToc(lineDf, spanDf, threshold, signalWeights, mode);
+  };
+
   const s = {
     container: { maxWidth: 1280, margin: '0 auto', padding: '1.5rem', fontFamily: 'DM Mono, monospace', color: '#1a1a2e' },
     card: { background: '#ffffff', border: '1px solid #e0dcd4', borderRadius: 8, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' },
     sectionLabel: (color = '#c9a84c') => ({ fontFamily: 'Syne, sans-serif', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color, borderLeft: `3px solid ${color}`, paddingLeft: '0.7rem', marginBottom: '1rem' }),
     input: { width: '100%', padding: '0.55rem 0.9rem', border: '1px solid #d0ccc4', borderRadius: 4, fontSize: '0.72rem', fontFamily: 'DM Mono, monospace', outline: 'none' },
     btn: { padding: '0.6rem 1.2rem', borderRadius: 6, border: 'none', fontSize: '0.72rem', fontFamily: 'Syne, sans-serif', fontWeight: 700, cursor: 'pointer', transition: 'opacity 0.2s' },
-    btnPrimary: { ...{}, background: '#2563eb', color: '#fff' },
+    btnPrimary: { background: '#2563eb', color: '#fff' },
     btnDisabled: { opacity: 0.5, cursor: 'not-allowed' },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: '0.67rem' },
     th: { textAlign: 'left', padding: '0.7rem 0.8rem', fontFamily: 'Syne, sans-serif', fontWeight: 700, color: '#8a8a9a', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', borderBottom: '1px solid #e0dcd4' },
     td: { padding: '0.7rem 0.8rem', borderBottom: '1px solid rgba(42,42,56,0.05)', color: '#4a4a5a' },
     badge: { display: 'inline-flex', alignItems: 'center', padding: '0.15rem 0.5rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 600 },
   };
+
+  const steps = [
+    { num: 1, title: 'Upload & Extract', desc: 'PDF typography & span extraction' },
+    { num: 2, title: '6-Signal Scorer', desc: 'Weights & threshold controls' },
+    { num: 3, title: 'Cascade & Modes', desc: 'Auto, Extend Native, Composite' },
+    { num: 4, title: 'LLM Loop Trajectory', desc: 'Bounded validation passes' },
+    { num: 5, title: 'PDF Visual Overlays', desc: 'Canvas bounding-box viewer' },
+    { num: 6, title: 'Dual-Layer Architecture', desc: 'Section level & business tags' },
+    { num: 7, title: 'Ground Truth Benchmarks', desc: 'Vaswani & NIST evaluation' },
+  ];
 
   const renderTocView = () => (
     <div>
@@ -173,18 +221,19 @@ export default function DocumentStructureTab() {
 
       {boundaries.length > 0 && (
         <div style={{ background: '#fffbeb', border: '1px solid #fcd34d', borderRadius: 8, padding: '1rem', marginBottom: '1.5rem' }}>
-          <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.65rem', fontWeight: 700, color: '#92400e', marginBottom: '0.5rem' }}>Document Boundaries Detected</div>
+          <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.65rem', fontWeight: 700, color: '#92400e', marginBottom: '0.5rem' }}>Document Boundaries Detected (Composite Mode)</div>
           <ul style={{ listStyle: 'disc', paddingLeft: '1.2rem', fontSize: '0.72rem', color: '#a16207' }}>
             {boundaries.map((b, i) => (
-              <li key={i}>{b.type} at page {b.page} (confidence: {(b.confidence * 100).toFixed(0)}%)</li>
+              <li key={i}>{b.type}: {b.reason} (Page {b.page}, confidence: {(b.confidence * 100).toFixed(0)}%)</li>
             ))}
           </ul>
         </div>
       )}
 
       <div style={{ ...s.card, overflow: 'hidden' }}>
-        <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0' }}>
-          <div style={s.sectionLabel('#2a7a9c')}>Extracted Table of Contents</div>
+        <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={s.sectionLabel('#2a7a9c')}>Reconstructed Table of Contents (toc_df)</div>
+          <span style={{ fontSize: '0.62rem', color: '#64748b' }}>Cascade Mode: <strong>{cascadeMode}</strong></span>
         </div>
         <div style={{ overflowX: 'auto', maxHeight: 400, overflowY: 'auto' }}>
           <table style={s.table}>
@@ -198,7 +247,7 @@ export default function DocumentStructureTab() {
             <tbody>
               {tocDf.map((entry, i) => (
                 <tr key={i} style={{ background: entry.level === 1 ? '#eff6ff' : 'transparent' }}>
-                  <td style={{ ...s.td, paddingLeft: `${entry.level * 16 + 16}px`, fontWeight: 600, color: '#1a1a2e' }}>{entry.title}</td>
+                  <td style={{ ...s.td, paddingLeft: `${(entry.level || 1) * 16}px`, fontWeight: 600, color: '#1a1a2e' }}>{entry.title}</td>
                   <td style={s.td}>{entry.level}</td>
                   <td style={s.td}>{entry.page}</td>
                   <td style={s.td}>
@@ -206,7 +255,7 @@ export default function DocumentStructureTab() {
                       {entry.source || 'body_structure'}
                     </span>
                   </td>
-                  <td style={s.td}>{entry.heading_score?.toFixed(2)}</td>
+                  <td style={s.td}>{entry.heading_score?.toFixed(2) || '3.00'}</td>
                 </tr>
               ))}
             </tbody>
@@ -217,37 +266,111 @@ export default function DocumentStructureTab() {
   );
 
   const renderCandidatesView = () => (
-    <div style={{ ...s.card, overflow: 'hidden' }}>
-      <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0' }}>
-        <div style={s.sectionLabel('#c9a84c')}>Heading Candidates (Deterministic Pass)</div>
-        <p style={{ fontSize: '0.65rem', color: '#6a6a7a', marginTop: '0.3rem' }}>Shows all lines that scored above the threshold before LLM validation</p>
+    <div>
+      <div style={{ ...s.card, padding: '1rem', marginBottom: '1rem', background: '#f8fafc' }}>
+        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.65rem', fontWeight: 700, color: '#1e293b', marginBottom: '0.5rem' }}>
+          6-Signal Deterministic Scorer & Weight Controls
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem', marginBottom: '1rem' }}>
+          {Object.entries(signalWeights).map(([key, w]) => (
+            <div key={key}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.62rem', color: '#475569', marginBottom: '0.2rem' }}>
+                <span>{key}</span>
+                <span style={{ fontWeight: 700 }}>{w.toFixed(1)}</span>
+              </div>
+              <input
+                type="range"
+                min="0.0"
+                max="3.0"
+                step="0.1"
+                value={w}
+                onChange={e => handleWeightChange(key, e.target.value)}
+                style={{ width: '100%' }}
+              />
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#0f172a' }}>Candidate Threshold: {threshold.toFixed(1)}</span>
+          <input
+            type="range"
+            min="1.0"
+            max="5.0"
+            step="0.1"
+            value={threshold}
+            onChange={e => handleThresholdChange(e.target.value)}
+            style={{ width: 200 }}
+          />
+        </div>
       </div>
-      <div style={{ overflowX: 'auto', maxHeight: 400, overflowY: 'auto' }}>
-        <table style={s.table}>
-          <thead style={{ position: 'sticky', top: 0, background: '#f7f5f0' }}>
-            <tr>
-              {['Text', 'Page', 'Score', 'Font Ratio', 'Bold', 'Prefix', 'Short', 'Aligned', 'Blank'].map(h => (
-                <th key={h} style={s.th}>{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {candidates.map((c, i) => (
-              <tr key={i}>
-                <td style={{ ...s.td, fontWeight: 600, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.text}</td>
-                <td style={s.td}>{c.page_num}</td>
-                <td style={s.td}>{c.heading_score.toFixed(2)}</td>
-                <td style={s.td}>{(c.signal_font_size_ratio || 0).toFixed(2)}</td>
-                <td style={s.td}>{(c.signal_is_bold || 0).toFixed(2)}</td>
-                <td style={s.td}>{(c.signal_has_numeric_prefix || 0).toFixed(2)}</td>
-                <td style={s.td}>{(c.signal_is_short || 0).toFixed(2)}</td>
-                <td style={s.td}>{(c.signal_is_left_aligned || 0).toFixed(2)}</td>
-                <td style={s.td}>{(c.signal_has_blank_before || 0).toFixed(2)}</td>
+
+      <div style={{ ...s.card, overflow: 'hidden' }}>
+        <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0' }}>
+          <div style={s.sectionLabel('#c9a84c')}>Heading Candidates (Deterministic Pass)</div>
+          <p style={{ fontSize: '0.65rem', color: '#6a6a7a', marginTop: '0.3rem' }}>Lines scoring $\ge {threshold.toFixed(1)}$ before LLM validation</p>
+        </div>
+        <div style={{ overflowX: 'auto', maxHeight: 400, overflowY: 'auto' }}>
+          <table style={s.table}>
+            <thead style={{ position: 'sticky', top: 0, background: '#f7f5f0' }}>
+              <tr>
+                {['Text', 'Page', 'Score', 'Font Ratio', 'Bold', 'Prefix', 'Short', 'Aligned', 'Blank'].map(h => (
+                  <th key={h} style={s.th}>{h}</th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {candidates.map((c, i) => (
+                <tr key={i}>
+                  <td style={{ ...s.td, fontWeight: 600, maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.text}</td>
+                  <td style={s.td}>{c.page_num}</td>
+                  <td style={s.td}>{c.heading_score.toFixed(2)}</td>
+                  <td style={s.td}>{(c.signal_font_size_ratio || 0).toFixed(2)}</td>
+                  <td style={s.td}>{(c.signal_is_bold || 0).toFixed(2)}</td>
+                  <td style={s.td}>{(c.signal_has_numeric_prefix || 0).toFixed(2)}</td>
+                  <td style={s.td}>{(c.signal_is_short || 0).toFixed(2)}</td>
+                  <td style={s.td}>{(c.signal_is_left_aligned || 0).toFixed(2)}</td>
+                  <td style={s.td}>{(c.signal_has_blank_before || 0).toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
+    </div>
+  );
+
+  const renderValidationTrajectoryView = () => (
+    <div style={{ ...s.card, padding: '1.25rem' }}>
+      <div style={s.sectionLabel('#7c3aed')}>Bounded LLM Validation Trajectory</div>
+      <p style={{ fontSize: '0.72rem', color: '#64748b', marginBottom: '1rem' }}>
+        Tracks the pass-by-pass refinement loop ($max\_passes=3$). Convergence is achieved when a pass makes zero modifications.
+      </p>
+
+      {validationLogs.length === 0 ? (
+        <p style={{ color: '#94a3b8', fontSize: '0.72rem' }}>No validation logs captured yet.</p>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+          {validationLogs.map((log, idx) => (
+            <div key={idx} style={{ border: '1px solid #e2e8f0', borderRadius: 6, padding: '0.85rem', background: '#fafafa' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#1e293b' }}>Pass #{log.pass}</span>
+                <span style={{ fontSize: '0.65rem', fontWeight: 600, color: log.status.includes('Converged') ? '#16a34a' : '#2563eb' }}>
+                  {log.status}
+                </span>
+              </div>
+              <div style={{ fontSize: '0.65rem', color: '#64748b', marginBottom: '0.5rem' }}>
+                Kept: <strong>{log.keptCount}</strong> | Dropped FPs: <strong style={{ color: '#dc2626' }}>{log.droppedCount}</strong> | Added Missed: <strong style={{ color: '#16a34a' }}>{log.addedCount}</strong>
+              </div>
+              <div style={{ maxHeight: 120, overflowY: 'auto', fontSize: '0.62rem', fontFamily: 'DM Mono, monospace', color: '#334155', background: '#f1f5f9', padding: '0.5rem', borderRadius: 4 }}>
+                {log.entries?.map((e, ei) => (
+                  <div key={ei}>• Page {e.page}: "{e.title}" (L{e.level})</div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 
@@ -387,6 +510,10 @@ export default function DocumentStructureTab() {
   const navItems = [
     { id: 'toc', label: 'Table of Contents' },
     { id: 'candidates', label: `Candidates (${candidates.length})` },
+    { id: 'trajectory', label: `LLM Trajectory (${validationLogs.length})` },
+    { id: 'overlays', label: 'PDF Overlays' },
+    { id: 'duallayer', label: 'Dual-Layer Tags' },
+    { id: 'benchmark', label: 'Benchmarks' },
     { id: 'workflow', label: 'Workflow' },
     { id: 'table', label: 'Table' },
     { id: 'flashcards', label: `Flashcards (${flashcards.length})` },
@@ -395,13 +522,52 @@ export default function DocumentStructureTab() {
 
   return (
     <div style={s.container}>
-      <div style={{ ...s.card, marginBottom: '1.5rem' }}>
+      <div style={{ ...s.card, marginBottom: '1.5rem', background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)' }}>
         <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #e0dcd4' }}>
-          <div style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.5rem', fontWeight: 900, color: '#1a1a2e', marginBottom: '0.5rem' }}>Document Structure & Loop Engineering</div>
+          <div style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.5rem', fontWeight: 900, color: '#1a1a2e', marginBottom: '0.5rem' }}>
+            Document Structure with Loop Engineering
+          </div>
           <p style={{ fontSize: '0.72rem', color: '#6a6a7a', lineHeight: 1.7, maxWidth: 800 }}>
-            Recover PDF outline from body typography using deterministic signals and bounded LLM validation.
-            Based on "Building Document Structure with Loop Engineering" (Towards Data Science, 2026).
+            Recovering a PDF’s outline from body typography for RAG. Rules propose via 6 deterministic signals; bounded LLM loop validates kept entries.
           </p>
+        </div>
+
+        {/* 7-Step Interactive Pipeline Stepper */}
+        <div style={{ padding: '1rem 1.5rem', borderBottom: '1px solid #e0dcd4', background: '#f8fafc', overflowX: 'auto' }}>
+          <div style={{ display: 'flex', gap: '1rem', minWidth: 800 }}>
+            {steps.map(st => (
+              <div
+                key={st.num}
+                onClick={() => setActiveStep(st.num)}
+                style={{
+                  flex: 1,
+                  padding: '0.6rem 0.8rem',
+                  borderRadius: 6,
+                  border: activeStep === st.num ? '2px solid #2563eb' : '1px solid #e2e8f0',
+                  background: activeStep === st.num ? '#eff6ff' : '#ffffff',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.2rem' }}>
+                  <span style={{
+                    width: 18, height: 18, borderRadius: '50%',
+                    background: activeStep === st.num ? '#2563eb' : '#cbd5e1',
+                    color: '#ffffff', fontSize: '0.6rem', fontWeight: 700,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}>
+                    {st.num}
+                  </span>
+                  <span style={{ fontSize: '0.68rem', fontWeight: 700, color: activeStep === st.num ? '#1e40af' : '#475569', fontFamily: 'Syne, sans-serif' }}>
+                    {st.title}
+                  </span>
+                </div>
+                <div style={{ fontSize: '0.58rem', color: '#94a3b8', paddingLeft: '1.5rem' }}>
+                  {st.desc}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div style={{ padding: '1.25rem 1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -422,6 +588,29 @@ export default function DocumentStructureTab() {
             {file && !parsing && (
               <span style={{ fontSize: '0.72rem', color: '#6a6a7a' }}>{file.name}</span>
             )}
+
+            <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
+              <span style={{ fontSize: '0.68rem', alignSelf: 'center', color: '#475569' }}>Cascade Mode:</span>
+              {['auto', 'no_toc', 'extend_native', 'composite'].map(m => (
+                <button
+                  key={m}
+                  onClick={() => handleModeChange(m)}
+                  style={{
+                    padding: '0.3rem 0.6rem',
+                    borderRadius: 4,
+                    border: 'none',
+                    background: cascadeMode === m ? '#2563eb' : '#e2e8f0',
+                    color: cascadeMode === m ? '#ffffff' : '#475569',
+                    fontSize: '0.62rem',
+                    fontFamily: 'Syne, sans-serif',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
           </div>
 
           {error && (
@@ -432,7 +621,7 @@ export default function DocumentStructureTab() {
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, color: '#374151', marginBottom: '0.4rem' }}>AI API Key (optional)</label>
+              <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 600, color: '#374151', marginBottom: '0.4rem' }}>AI API Key (Optional - Falls back to Mock Validator)</label>
               <input
                 type="password"
                 value={aiConfig.apiKey}
@@ -459,7 +648,7 @@ export default function DocumentStructureTab() {
                 disabled={generating || tocDf.length === 0}
                 style={{ ...s.btn, ...s.btnPrimary, ...(generating || tocDf.length === 0 ? s.btnDisabled : {}) }}
               >
-                {generating ? 'Generating...' : 'Generate Workflows, Tables & Flashcards'}
+                {generating ? 'Generating Content...' : 'Generate Workflows, Tables & Flashcards'}
               </button>
             </div>
           )}
@@ -494,6 +683,10 @@ export default function DocumentStructureTab() {
           <div style={{ padding: '1rem' }}>
             {activeView === 'toc' && renderTocView()}
             {activeView === 'candidates' && renderCandidatesView()}
+            {activeView === 'trajectory' && renderValidationTrajectoryView()}
+            {activeView === 'overlays' && <PdfOverlayViewer file={file} lineDf={lineDf} candidates={candidates} threshold={threshold} />}
+            {activeView === 'duallayer' && <DualLayerViewer lineDf={lineDf} tocDf={tocDf} />}
+            {activeView === 'benchmark' && <BenchmarkViewer />}
             {activeView === 'workflow' && renderWorkflowView()}
             {activeView === 'table' && renderTableView()}
             {activeView === 'flashcards' && renderFlashcardsView()}
@@ -508,3 +701,4 @@ export default function DocumentStructureTab() {
     </div>
   );
 }
+
