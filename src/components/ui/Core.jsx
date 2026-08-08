@@ -133,28 +133,33 @@ export function Card({
   const [isHovered, setIsHovered] = useState(false);
 
   const variantStyles = {
-    default: 'background: var(--ds-color-bg-surface); border: 1px solid var(--ds-color-border-subtle);',
-    bordered: 'background: var(--ds-color-bg-surface); border: 1px solid var(--ds-color-border-default);',
-    elevated: 'background: var(--ds-color-bg-surface); box-shadow: var(--ds-shadow-sm); border: none;',
-    interactive: 'background: var(--ds-color-bg-surface); border: 1px solid var(--ds-color-border-subtle); cursor: pointer;',
+    default: { background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-subtle)' },
+    bordered: { background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-default)' },
+    elevated: { background: 'var(--ds-color-bg-surface)', boxShadow: 'var(--ds-shadow-sm)', border: 'none' },
+    interactive: { background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-subtle)', cursor: 'pointer' },
   };
 
   const paddingStyles = {
-    none: '0',
-    sm: 'var(--ds-space-3)',
-    md: 'var(--ds-space-5)',
-    lg: 'var(--ds-space-6)',
+    none: { padding: 0 },
+    sm: { padding: 'var(--ds-space-3)' },
+    md: { padding: 'var(--ds-space-5)' },
+    lg: { padding: 'var(--ds-space-6)' },
   };
 
-  let cardStyle = `border-radius: var(--ds-radius-lg); transition: all var(--ds-motion-duration-base) var(--ds-motion-easing-standard); ${variantStyles[variant]} ${paddingStyles[padding]}`;
+  let cardStyle = {
+    borderRadius: 'var(--ds-radius-lg)',
+    transition: 'all var(--ds-motion-duration-base) var(--ds-motion-easing-standard)',
+    ...variantStyles[variant],
+    ...paddingStyles[padding],
+  };
 
   if (hover || variant === 'interactive') {
-    if (isHovered) cardStyle += ' box-shadow: var(--ds-shadow-md); transform: translateY(-2px); border-color: var(--ds-color-border-strong);';
+    if (isHovered) cardStyle = { ...cardStyle, boxShadow: 'var(--ds-shadow-md)', transform: 'translateY(-2px)', borderColor: 'var(--ds-color-border-strong)' };
   }
 
   return (
     <div
-      style={cardStyle}
+      style={{ ...cardStyle, ...style }}
       className={className}
       onClick={onClick}
       onMouseEnter={() => (hover || variant === 'interactive') && setIsHovered(true)}
