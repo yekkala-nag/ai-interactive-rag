@@ -4,7 +4,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { getModuleColors } from '../../design-system/tokens.js';
-import { Button } from './Core.jsx';
+import { Button, Badge, Divider } from './Core.jsx';
 
 // ============================================
 // Diagram — Interactive SVG with fullscreen zoom
@@ -442,7 +442,8 @@ export function Accordion({ items, allowMultiple = false, style, ...props }) {
 // ============================================
 export function Tabs({ tabs, activeTab, onChange, variant = 'pills', style, ...props }) {
   const [indicatorStyle, setIndicatorStyle] = useState({});
-  const mountedRef = useRef(true);
+  const containerRef = useRef(null);
+  const mountedRef = useRef(false);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -450,23 +451,24 @@ export function Tabs({ tabs, activeTab, onChange, variant = 'pills', style, ...p
   }, []);
 
   useEffect(() => {
-    if (!mountedRef.current) return;
-    const activeBtn = document.querySelector(`[data-tab-id="${activeTab}"]`);
+    if (!mountedRef.current || !containerRef.current) return;
+    const activeBtn = containerRef.current.querySelector(`[data-tab-id="${activeTab}"]`);
     if (activeBtn) {
       const rect = activeBtn.getBoundingClientRect();
-      const container = activeBtn.parentElement;
-      if (container) {
-        setIndicatorStyle({
-          width: rect.width,
-          left: rect.left - container.getBoundingClientRect().left,
-        });
-      }
+      const containerRect = containerRef.current.getBoundingClientRect();
+      setIndicatorStyle({
+        width: rect.width,
+        left: rect.left - containerRect.left,
+      });
     }
-  }, [activeTab]);
+  }, [activeTab, tabs]);
 
   return (
     <div style={{ ...style }} {...props}>
-      <div style={{ position: 'relative', display: 'flex', gap: 'var(--ds-space-1)', background: variant === 'pills' ? 'var(--ds-color-bg-surfaceHover)' : 'transparent', padding: variant === 'pills' ? 'var(--ds-space-1)' : 0, borderRadius: variant === 'pills' ? 'var(--ds-radius-lg)' : 0, border: variant === 'line' ? 'none' : '1px solid var(--ds-color-border-subtle)', overflowX: 'auto' }}>
+      <div
+        ref={containerRef}
+        style={{ position: 'relative', display: 'flex', gap: 'var(--ds-space-1)', background: variant === 'pills' ? 'var(--ds-color-bg-surfaceHover)' : 'transparent', padding: variant === 'pills' ? 'var(--ds-space-1)' : 0, borderRadius: variant === 'pills' ? 'var(--ds-radius-lg)' : 0, border: variant === 'line' ? 'none' : '1px solid var(--ds-color-border-subtle)', overflowX: 'auto' }}
+      >
         {variant === 'line' && (
           <div style={{
             position: 'absolute', bottom: -1, height: 3, background: 'var(--ds-color-module-foundations-primary)',
