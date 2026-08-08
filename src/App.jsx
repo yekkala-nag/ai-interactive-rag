@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import DocumentStructureTab from "./documentStructure/DocumentStructureTab.jsx";
 
 // ─── DATA ────────────────────────────────────────────────────────
 const RAG_PIPELINE_STEPS = [
@@ -22258,6 +22259,7 @@ export default function App() {
     { id: "tokenbill",     label: "㊱ 3× Token Bill Fix 💸" },
     { id: "agentscale",    label: "㊲ High-Scale Agent Systems 🚀" },
     { id: "agentdebugging", label: "🐞 AI Agent Debugging" },
+    { id: "docstruct",      label: "📐 Document Structure & Loop Engineering" },
   ];
 
   useEffect(() => {
@@ -22809,6 +22811,9 @@ for chunk in rag_chain.stream("What is hybrid search?"):
         {/* ── HIGH-SCALE PRODUCTION AGENTS (MILLIONS OF REQUESTS) ── */}
         {tab === "agentscale" && <HighScaleAgentsTab s={s} />}
         {tab === "agentdebugging" && <AgentDebuggingTab s={s} />}
+
+        {/* ── DOCUMENT STRUCTURE & LOOP ENGINEERING ── */}
+        {tab === "docstruct" && <DocumentStructureTab />}
 
       </main>
 
