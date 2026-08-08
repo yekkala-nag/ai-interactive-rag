@@ -4153,6 +4153,11 @@ export const ClaudeWorkflowsTab = ({ s }) => {
         </div>
       </div>
 
+      {/* HERO VISUAL BANNER */}
+      <div style={{ background: "#111827", borderRadius: 8, padding: "0.8rem", marginBottom: "1.5rem", border: "1px solid #374151" }}>
+        <img src="/agent_inside_workflow_hero_1785850390000.png" alt="Agent Inside Workflow Architecture" style={{ width: "100%", height: "auto", display: "block", borderRadius: 6 }} />
+      </div>
+
       {/* ECOSYSTEM DIAGRAM */}
       <div style={s.sectionLabel("#c9a84c")}>The Claude Ecosystem — 10 Workflow Areas</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
@@ -18291,6 +18296,9 @@ export const AgentDebuggingTab = ({ s }) => {
             <p style={{ fontSize: "0.82rem", color: "#94a3b8", maxWidth: "850px", lineHeight: 1.6, marginTop: "0.6rem" }}>
               A systematic verification framework for recording model tool requests, function outputs, CSS patches, build checks, and Playwright DOM bounding-box proofs to prevent silent failure claims.
             </p>
+            <div style={{ marginTop: "1.2rem", borderRadius: 8, overflow: "hidden", border: "1px solid #334155" }}>
+              <img src="/ai_agent_debugging_hero_1785850378111.png" alt="AI Agent Debugging Traceability Protocol" style={{ width: "100%", height: "auto", display: "block" }} />
+            </div>
           </div>
 
           <div style={{ background: "rgba(15, 23, 42, 0.8)", border: "1px solid #334155", borderRadius: 8, padding: "1rem 1.2rem", minWidth: 260 }}>
