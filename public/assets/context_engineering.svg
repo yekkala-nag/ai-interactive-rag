@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" font-family="Syne, sans-serif">
+<rect width="1000" height="360" fill="#f7f5f0"/>
+<text x="500" y="40" font-family="Syne, sans-serif" font-size="Context Engineering — 4 Strategies (LangChain)" font-weight="800" fill="#2a8a84" text-anchor="middle">Context Engineering — 4 Strategies (LangChain)</text>
+<rect x="60" y="90" width="430" height="110" rx="12" fill="#c9a84c14" stroke="#c9a84c" stroke-width="2"/>
+<text x="84" y="134" font-family="Syne, sans-serif" font-size="✍️ WRITE" font-weight="800" fill="#c9a84c" text-anchor="start">✍️ WRITE</text>
+<text x="84" y="168" font-family="Syne, sans-serif" font-size="cache static prompt prefixes" font-weight="600" fill="#6a6a7a" text-anchor="start">cache static prompt prefixes</text>
+<rect x="510" y="90" width="430" height="110" rx="12" fill="#2a8a8414" stroke="#2a8a84" stroke-width="2"/>
+<text x="534" y="134" font-family="Syne, sans-serif" font-size="🎯 SELECT" font-weight="800" fill="#2a8a84" text-anchor="start">🎯 SELECT</text>
+<text x="534" y="168" font-family="Syne, sans-serif" font-size="retrieve only relevant fragments" font-weight="600" fill="#6a6a7a" text-anchor="start">retrieve only relevant fragments</text>
+<rect x="60" y="220" width="430" height="110" rx="12" fill="#c4572a14" stroke="#c4572a" stroke-width="2"/>
+<text x="84" y="264" font-family="Syne, sans-serif" font-size="✂️ COMPRESS" font-weight="800" fill="#c4572a" text-anchor="start">✂️ COMPRESS</text>
+<text x="84" y="298" font-family="Syne, sans-serif" font-size="strip noise, compact window" font-weight="600" fill="#6a6a7a" text-anchor="start">strip noise, compact window</text>
+<rect x="510" y="220" width="430" height="110" rx="12" fill="#9b7fd414" stroke="#9b7fd4" stroke-width="2"/>
+<text x="534" y="264" font-family="Syne, sans-serif" font-size="🛡️ ISOLATE" font-weight="800" fill="#9b7fd4" text-anchor="start">🛡️ ISOLATE</text>
+<text x="534" y="298" font-family="Syne, sans-serif" font-size="separate sub-agent memory" font-weight="600" fill="#6a6a7a" text-anchor="start">separate sub-agent memory</text>
+<text x="500" y="330" font-family="Syne, sans-serif" font-size="Curate what enters & exits the finite context window between turns — the heart of reliable RAG." font-weight="600" fill="#6a6a7a" text-anchor="middle">Curate what enters & exits the finite context window between turns — the heart of reliable RAG.</text>
+</svg>

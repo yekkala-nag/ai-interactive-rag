@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { TABS_REGISTRY, CATEGORIES } from "./registry/tabsRegistry.js";
+import DiagramImage from "./components/ui/DiagramImage.jsx";
 
 export { default as DocumentStructureTab } from "./documentStructure/DocumentStructureTab.jsx";
 export { default as CliAgentTab } from "./cliAgents/CliAgentTab.jsx";
@@ -897,13 +898,45 @@ export const OverviewTab = ({ s }) => (
       <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.8rem", fontWeight: 900, marginBottom: "0.5rem" }}>Modern AI Systems Architecture</h2>
       <p style={{ fontSize: "0.75rem", color: "#6a6a7a", maxWidth: 640, lineHeight: 1.6 }}>An interactive knowledge engine covering RAG, Agents, Context Engineering, Loop Engineering, and High-Scale Production Systems.</p>
     </div>
+    <div style={{ marginBottom: "2.5rem" }}>
+      <DiagramImage
+        src="/assets/overview_architecture.svg"
+        alt="Modern AI Systems Architecture — five interlocking layers around a single LLM call"
+        title="Modern AI Systems Architecture"
+        caption="Every RAG/agent system is one LLM call wrapped by five governing layers — each answers a single question about what to fetch, show, repeat, delegate, and ship."
+      />
+    </div>
     <div style={{ marginBottom: "2.5rem" }}><RAGExplorer /></div>
     <div style={{ marginBottom: "2.5rem" }}><PipelineSimulator /></div>
   </div>
 );
 
-export const RAGTypesTab = ({ s }) => <RAGExplorer />;
-export const PipelineTab = ({ s }) => <PipelineSimulator />;
+export const RAGTypesTab = ({ s }) => (
+  <div>
+    <div style={{ marginBottom: "2rem" }}>
+      <DiagramImage
+        src="/assets/rag_types_spectrum.svg"
+        alt="The RAG spectrum from Naive to cutting-edge variants"
+        title="The RAG Spectrum"
+        caption="Start with Naive RAG, ship Hybrid as the production baseline, and layer Graph / Agentic / Multimodal for hard enterprise knowledge."
+      />
+    </div>
+    <RAGExplorer />
+  </div>
+);
+export const PipelineTab = ({ s }) => (
+  <div>
+    <div style={{ marginBottom: "2rem" }}>
+      <DiagramImage
+        src="/assets/pipeline_flow.svg"
+        alt="RAG pipeline: query to answer in seven stages"
+        title="RAG Pipeline — Seven Stages"
+        caption="Each stage filters noise: hybrid fuses dense + sparse retrieval, rerank keeps the top-5, and compression trims tokens before the LLM generates."
+      />
+    </div>
+    <PipelineSimulator />
+  </div>
+);
 export const LangChainTab = ({ s }) => <LangGraphVisual />;
 export const LangGraphTab = ({ s }) => <LangGraphVisual />;
 export const CompareTab = ({ s }) => <ComparisonTable />;
@@ -2909,6 +2942,16 @@ const ContextEngineeringTab = ({ s }) => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* CONTEXT STRATEGIES OVERVIEW */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/context_engineering.svg"
+          alt="Context engineering four strategies: Write, Select, Compress, Isolate"
+          title="The Four Context Strategies"
+          caption="LangChain's framing: curate what enters and exits the finite context window — the discipline behind every reliable RAG answer."
+        />
       </div>
 
       {/* THE NAME */}
@@ -9782,6 +9825,16 @@ const AgenticRAGTab = ({ s }) => {
         ))}
       </div>
 
+      {/* AGENTIC OVERVIEW */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/agentic_rag.svg"
+          alt="Agentic RAG: the LLM thinks, searches, and loops until it can answer"
+          title="Agentic RAG — Reason, Retrieve, Repeat"
+          caption="The LLM decides how many retrieval rounds to run, reformulating the query between attempts — then answers only when confident."
+        />
+      </div>
+
       {/* ─── PROBLEM ─── */}
       {section === "problem" && (
         <div>
@@ -15894,8 +15947,18 @@ const ActiveLearningTab = ({ s }) => {
         </div>
       </div>
 
+      {/* HERO DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/hallucination_loop.svg"
+          alt="Silent hallucination loop: bad retrieval leads to a fluent but false answer, which poisons the store"
+          title="The Silent Hallucination Loop"
+          caption="No exception is thrown — the model sounds right, so the bad answer is embedded back into the vector store as 'ground truth'."
+        />
+      </div>
+
       {/* SECTION NAV */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem", marginBottom: "1.5rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.5rem", marginBottom: "1.5rem" }}>
         {SECTIONS.map(sec => (
           <button key={sec.id} onClick={() => setSection(sec.id)}
             style={{ background: section === sec.id ? `${sec.color}12` : "#ffffff", border: `1px solid ${section === sec.id ? sec.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.9rem 0.5rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
