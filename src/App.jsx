@@ -1010,7 +1010,7 @@ const FILTER_METHODS = [
   { id: "cooccurrence", icon: "🔀", name: "Co-occurrence Filter", table: "line_df", cost: "cheap", desc: "Find pages/sections where MULTIPLE keywords co-occur. The system does in one pass what an expert would need 10 Ctrl+F searches to do.", code: `kw1_pages = set(line_df[\n  line_df.line_text.str.contains(kw1)\n].page_no)\nkw2_pages = set(line_df[\n  line_df.line_text.str.contains(kw2)\n].page_no)\nhits = kw1_pages & kw2_pages  # intersection`, color: "#c9a84c" },
 ];
 
-const FilteringTab = ({ s }) => {
+export const FilteringTab = ({ s }) => {
   const [activeQuery, setActiveQuery] = useState(null);
   const [activeMethod, setActiveMethod] = useState(null);
   const [simStep, setSimStep] = useState(-1);
@@ -1456,7 +1456,7 @@ const PRODUCTION_FAILURES = [
   },
 ];
 
-const MultiAgentTab = ({ s }) => {
+export const MultiAgentTab = ({ s }) => {
   const [activeAgent, setActiveAgent] = useState(null);
   const [agentTab, setAgentTab] = useState("why");
   const [simStep, setSimStep] = useState(-1);
@@ -1914,7 +1914,7 @@ const DEMO_CASES = [
   },
 ];
 
-const VagueQuestionsTab = ({ s }) => {
+export const VagueQuestionsTab = ({ s }) => {
   const [activeCase, setActiveCase]     = useState(null);
   const [caseStep, setCaseStep]         = useState(-1);
   const [caseRunning, setCaseRunning]   = useState(false);
@@ -2422,7 +2422,7 @@ const CG_QUERY_CATEGORIES = [
   { type: "Join", icon: "🔗", desc: "Require combining two separately-stated facts — e.g. \"Which component does the module owned by Agent_Implementer depend on?\"", count: 5, color: "#c4572a" },
 ];
 
-const ContextGraphTab = ({ s }) => {
+export const ContextGraphTab = ({ s }) => {
   const [activeArch, setActiveArch] = useState("graph");
   const [activeBug, setActiveBug] = useState(null);
   const [hop, setHop] = useState(-1);
@@ -2875,7 +2875,7 @@ const CE_OPERATIONAL = [
   { icon: "🔗", title: "Composition", color: "#4a9a4a", desc: "PromptContext has one field activated today with two more reserved. When corpus_context and project_context land, this article doesn't need a rewrite. The signature stays; render_context_block grows by one branch.", detail: "Every brick that already takes context: PromptContext | None picks up new sub-contexts for free. No signature changes across releases." },
 ];
 
-const ContextEngineeringTab = ({ s }) => {
+export const ContextEngineeringTab = ({ s }) => {
   const [activePiece, setActivePiece]     = useState("system_prompt");
   const [pieceTab, setPieceTab]           = useState("what");
   const [activeBrick, setActiveBrick]     = useState(null);
@@ -3555,7 +3555,7 @@ const DecisionTreeDiagram = () => (
   </svg>
 );
 
-const MemoryEngineeringTab = ({ s }) => {
+export const MemoryEngineeringTab = ({ s }) => {
   const [activeSol, setActiveSol]   = useState("polars");
   const [solTab, setSolTab]         = useState("overview");
   const [simStep, setSimStep]       = useState(-1);
@@ -4078,7 +4078,7 @@ const DifficultyRampDiagram = () => (
   </svg>
 );
 
-const ClaudeWorkflowsTab = ({ s }) => {
+export const ClaudeWorkflowsTab = ({ s }) => {
   const [activeWf, setActiveWf]         = useState(null);
   const [wfTab, setWfTab]               = useState("prompts");
   const [catFilter, setCatFilter]       = useState("All");
@@ -4654,7 +4654,7 @@ const TokenDiagram = () => {
   );
 };
 
-const AIGlossaryTab = ({ s }) => {
+export const AIGlossaryTab = ({ s }) => {
   const [search, setSearch]       = useState("");
   const [catFilter, setCatFilter] = useState("All");
   const [lvlFilter, setLvlFilter] = useState("All");
@@ -5292,7 +5292,7 @@ const ShortcutFlowDiagram = () => (
   </svg>
 );
 
-const PowerFeaturesTab = ({ s }) => {
+export const PowerFeaturesTab = ({ s }) => {
   const [section, setSection]           = useState("shortcuts");
   const [activeShortcut, setActiveShortcut] = useState("writing");
   const [copiedId, setCopiedId]         = useState(null);
@@ -5828,7 +5828,7 @@ const PluginEcoDiagram = () => (
   </svg>
 );
 
-const ResearchFrontiersTab = ({ s }) => {
+export const ResearchFrontiersTab = ({ s }) => {
   const [section, setSection]         = useState("nla");
   const [activeFinding, setActiveFinding] = useState("planning");
   const [activePlug, setActivePlug]   = useState("codebase_search");
@@ -6561,7 +6561,7 @@ const TOCRouterDiagram = () => (
   </svg>
 );
 
-const ProductionRAGTab = ({ s }) => {
+export const ProductionRAGTab = ({ s }) => {
   const [activeBrick, setActiveBrick] = useState("parsing");
   const [brickTab, setBrickTab]       = useState("overview");
   const [activeFailure, setActiveFailure] = useState(null);
@@ -7268,7 +7268,7 @@ const LayerAccumulationDiagram = () => (
   </svg>
 );
 
-const RAGBeyondTab = ({ s }) => {
+export const RAGBeyondTab = ({ s }) => {
   const [section, setSection]       = useState("absurdity");
   const [activeEra, setActiveEra]   = useState("latent");
   const [chainStep, setChainStep]   = useState(-1);
@@ -7962,7 +7962,7 @@ const SeriesPositionDiagram = () => (
   </svg>
 );
 
-const HierarchicalRetrievalTab = ({ s }) => {
+export const HierarchicalRetrievalTab = ({ s }) => {
   const [section, setSection]       = useState("problem");
   const [descentStep, setDescentStep] = useState(-1);
   const [descentRunning, setDescentRunning] = useState(false);
@@ -8598,7 +8598,7 @@ const GovernanceGapDiagram = () => (
   </svg>
 );
 
-const RedesignWorkTab = ({ s }) => {
+export const RedesignWorkTab = ({ s }) => {
   const [activeStep, setActiveStep]   = useState("value");
   const [stepTab, setStepTab]         = useState("overview");
   const [activeLayer, setActiveLayer] = useState(null);
@@ -9113,7 +9113,7 @@ const DenseSparseParamDiagram = () => (
   </svg>
 );
 
-const ArchConceptsTab = ({ s }) => {
+export const ArchConceptsTab = ({ s }) => {
   const [section, setSection]     = useState("mla");
   const [mlaStep, setMlaStep]     = useState(-1);
   const [mlaRunning, setMlaRunning] = useState(false);
@@ -9751,7 +9751,7 @@ const MultiAgentPatternsDiagram = () => (
   </svg>
 );
 
-const AgenticRAGTab = ({ s }) => {
+export const AgenticRAGTab = ({ s }) => {
   const [section, setSection]         = useState("problem");
   const [activeTool, setActiveTool]   = useState("list_docs");
   const [traceStep, setTraceStep]     = useState(-1);
@@ -10348,7 +10348,7 @@ const SixReasonsDiagram = () => (
   </svg>
 );
 
-const ClassicalMLTab = ({ s }) => {
+export const ClassicalMLTab = ({ s }) => {
   const [section, setSection]         = useState("why");
   const [activeReason, setActiveReason] = useState("accuracy");
   const [activePattern, setActivePattern] = useState("direct");
@@ -10835,7 +10835,7 @@ const QuarantineArchDiagram = () => (
   </svg>
 );
 
-const HallucinationLoopTab = ({ s }) => {
+export const HallucinationLoopTab = ({ s }) => {
   const [section, setSection]       = useState("story");
   const [simStep, setSimStep]       = useState(-1);
   const [simRunning, setSimRunning] = useState(false);
@@ -11405,7 +11405,7 @@ const ChatVsWorkflowDiagram = () => (
   </svg>
 );
 
-const FiveAssetsTab = ({ s }) => {
+export const FiveAssetsTab = ({ s }) => {
   const [activeAsset, setActiveAsset] = useState("repeated");
   const [assetTab, setAssetTab]       = useState("overview");
   const [copiedId, setCopiedId]       = useState(null);
@@ -11860,7 +11860,7 @@ const GovernancePillarsDiagram = () => (
   </svg>
 );
 
-const AIDataPlatformTab = ({ s }) => {
+export const AIDataPlatformTab = ({ s }) => {
   const [section, setSection]           = useState("agents");
   const [activeComponent, setActiveComponent] = useState("dataagent");
   const [activePillar, setActivePillar] = useState("versioning");
@@ -12385,7 +12385,7 @@ const LoopScopeDiagram = () => (
   </svg>
 );
 
-const QuestionParsingLoopTab = ({ s }) => {
+export const QuestionParsingLoopTab = ({ s }) => {
   const [section, setSection]       = useState("eras");
   const [activeCase, setActiveCase] = useState("section");
   const [loopStep, setLoopStep]     = useState(-1);
@@ -12857,7 +12857,7 @@ const ConstantsVariantsDiagram = () => (
   </svg>
 );
 
-const FourPDFsTab = ({ s }) => {
+export const FourPDFsTab = ({ s }) => {
   const [section, setSection]         = useState("overview");
   const [activeDoc, setActiveDoc]     = useState("attention");
   const [docTab, setDocTab]           = useState("question");
@@ -13267,7 +13267,7 @@ const HallucinationPatternDiagram = () => (
   </svg>
 );
 
-const HallucBricksTab = ({ s }) => {
+export const HallucBricksTab = ({ s }) => {
   const [activeCase, setActiveCase] = useState("parsing");
   const [caseTab, setCaseTab]       = useState("naive");
 
@@ -13652,7 +13652,7 @@ const DecomposeVsOneCallDiagram = () => (
   </svg>
 );
 
-const GenPatternsTab = ({ s }) => {
+export const GenPatternsTab = ({ s }) => {
   const [activePattern, setActivePattern] = useState("function");
   const [patternTab, setPatternTab]       = useState("claim");
   const [activeSector, setActiveSector]   = useState(null);
@@ -13821,7 +13821,7 @@ const GenPatternsTab = ({ s }) => {
 };
 
 // ─── 3X TOKEN BILL FIX TAB ───────────────────────────────────────
-const TokenBillTab = ({ s }) => {
+export const TokenBillTab = ({ s }) => {
   const [failureRate, setFailureRate]         = useState(15);
   const [graphDepth, setGraphDepth]           = useState(3);
   const [initialContext, setInitialContext]   = useState(3000);
@@ -14286,7 +14286,7 @@ async def run_independent_branches(agents, payload):
 };
 
 // ─── HIGH-SCALE PRODUCTION AI AGENTS TAB (MILLIONS OF REQUESTS) ───
-const HighScaleAgentsTab = ({ s }) => {
+export const HighScaleAgentsTab = ({ s }) => {
   const [subTab, setSubTab] = useState("simulator");
   const [requestVolume, setRequestVolume] = useState(250000);
   const [archMode, setArchMode] = useState("decomposed");
@@ -14876,7 +14876,7 @@ const ContextLadderDiagram = () => (
   </svg>
 );
 
-const ContextMeasureTab = ({ s }) => {
+export const ContextMeasureTab = ({ s }) => {
   const [section, setSection]           = useState("construct");
   const [activeCriterion, setActiveCriterion] = useState("ground");
   const [criterionTab, setCriterionTab] = useState("measures");
@@ -15339,7 +15339,7 @@ const ContextAssemblyStackDiagram = () => (
   </svg>
 );
 
-const UnhobblingTab = ({ s }) => {
+export const UnhobblingTab = ({ s }) => {
   const [activeShift, setActiveShift] = useState("rules");
   const [shiftTab, setShiftTab]       = useState("then");
   const [activeSource, setActiveSource] = useState(null);
@@ -15882,7 +15882,7 @@ const PerformanceChartDiagram = () => (
   </svg>
 );
 
-const ActiveLearningTab = ({ s }) => {
+export const ActiveLearningTab = ({ s }) => {
   const [section, setSection]         = useState("stepbystep");
   const [activeTech, setActiveTech]   = useState("uncertainty");
   const [techTab, setTechTab]         = useState("desc");
@@ -16656,7 +16656,7 @@ const CandidateRoutingDiagram = () => (
 );
 
 // ── COMPONENT: CompanyBrainTab ──
-const CompanyBrainTab = ({ s }) => {
+export const CompanyBrainTab = ({ s }) => {
   const [activePillar, setActivePillar] = useState("mapping");
   const [pillarTab, setPillarTab]       = useState("overview");
 
@@ -17095,7 +17095,7 @@ const VibeCodingLoopDiagram = () => (
 );
 
 // ── COMPONENT: AIProductBuilderTab ──
-const AIProductBuilderTab = ({ s }) => {
+export const AIProductBuilderTab = ({ s }) => {
   const [activeStage, setActiveStage] = useState("stage1");
   const [stageTab, setStageTab]       = useState("overview");
 
@@ -17464,7 +17464,7 @@ const HTMLReportFlowDiagram = () => (
 );
 
 // ── COMPONENT: AgentTasksTab ──
-const AgentTasksTab = ({ s }) => {
+export const AgentTasksTab = ({ s }) => {
   const [activePillar, setActivePillar] = useState("worktree");
   const [pillarTab, setPillarTab]       = useState("overview");
 
@@ -17916,7 +17916,7 @@ const ImpactAnalysisGraphDiagram = () => (
 );
 
 // ── COMPONENT: PromptMgmtTab ──
-const PromptMgmtTab = ({ s }) => {
+export const PromptMgmtTab = ({ s }) => {
   const [activePillar, setActivePillar] = useState("diff");
   const [pillarTab, setPillarTab]       = useState("overview");
 
@@ -18177,7 +18177,7 @@ const PromptMgmtTab = ({ s }) => {
 
 
 // ─── AGENT DEBUGGING TAB ──────────────────────────────────────────
-const AgentDebuggingTab = ({ s }) => {
+export const AgentDebuggingTab = ({ s }) => {
   const [subTab, setSubTab] = useState("workflow");
 
   // Simulator State
@@ -18699,7 +18699,7 @@ const AgentDebuggingTab = ({ s }) => {
 
 
 // ─── AGENTS AS TOOLS TAB ─────────────────────────────────────────
-const AgentsAsToolsTab = ({ s }) => {
+export const AgentsAsToolsTab = ({ s }) => {
   const [subTab, setSubTab] = useState("architecture"); // 'architecture' | 'steps' | 'simulator' | 'decision'
   const [selectedStep, setSelectedStep] = useState(1);
   const [simScenario, setSimScenario] = useState("munich");
@@ -19638,7 +19638,7 @@ print(result.final_output.model_dump_json(indent=2))`} />
 
 
 // ─── NON-PROGRAMMING CODING AGENTS TAB ───────────────────────────
-const NonProgCodingAgentsTab = ({ s }) => {
+export const NonProgCodingAgentsTab = ({ s }) => {
   const [subTab, setSubTab] = useState("architecture"); // 'architecture' | 'domains' | 'simulator' | 'diagnostic'
   const [selectedDomain, setSelectedDomain] = useState("budget");
   const [simScenario, setSimScenario] = useState("finance");
@@ -20529,7 +20529,7 @@ fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
 
 
 // ─── MEDALLION DATA ARCHITECTURE TAB ────────────────────────────
-const MedallionArchTab = ({ s }) => {
+export const MedallionArchTab = ({ s }) => {
   const [subTab, setSubTab] = useState("architecture"); // 'architecture' | 'steps' | 'simulator' | 'diagnostic'
   const [selectedStep, setSelectedStep] = useState(1);
   const [simStepIndex, setSimStepIndex] = useState(0);
@@ -21494,7 +21494,7 @@ def ingest_bronze(connection: duckdb.DuckDBPyConnection, source: Path) -> bool:
 
 
 // ─── AI TEST DATA BOTTLENECK TAB ────────────────────────────────
-const AITestDataBottleneckTab = ({ s }) => {
+export const AITestDataBottleneckTab = ({ s }) => {
   const [subTab, setSubTab] = useState("mismatch"); // 'mismatch' | 'principles' | 'simulator' | 'diagnostic'
   const [codeGenSpeed, setCodeGenSpeed] = useState(30); // minutes
   const [testDataWait, setTestDataWait] = useState(14); // days
