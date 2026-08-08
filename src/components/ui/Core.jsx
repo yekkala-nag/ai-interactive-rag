@@ -80,14 +80,14 @@ export function Button({
       {...props}
     >
       {loading ? (
-        <svg style="width: 1em; height: 1em; animation: spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeDasharray="31.4 31.4" style="animation: spin 1s linear infinite;"></circle>
+        <svg style={{ width: '1em', height: '1em', animation: 'spin 1s linear infinite' }} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeDasharray="31.4 31.4" style={{ animation: 'spin 1s linear infinite' }}></circle>
         </svg>
       ) : (
         <>
-          {leftIcon && <span style="display: flex;">{leftIcon}</span>}
+          {leftIcon && <span style={{ display: 'flex' }}>{leftIcon}</span>}
           <span>{children}</span>
-          {rightIcon && <span style="display: flex;">{rightIcon}</span>}
+          {rightIcon && <span style={{ display: 'flex' }}>{rightIcon}</span>}
         </>
       )}
     </button>
