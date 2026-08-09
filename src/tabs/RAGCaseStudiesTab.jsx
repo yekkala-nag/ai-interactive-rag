@@ -574,6 +574,7 @@ export default function RAGCaseStudiesTab() {
   const [activeCaseStudyTab, setActiveCaseStudyTab] = useState('sdlc'); // 'sdlc' or 'financial'
   const [activeSdlcPhase, setActiveSdlcPhase] = useState(0);
   const [activeDiagram, setActiveDiagram] = useState('ast_chunking');
+  const [activeDiagStep, setActiveDiagStep] = useState(0);
   const [activeUseCase, setActiveUseCase] = useState('market_event');
   const [simStep, setSimStep] = useState(0);
   const [activePseudocode, setActivePseudocode] = useState('retrieval');
@@ -583,6 +584,13 @@ export default function RAGCaseStudiesTab() {
   const [simScenario, setSimScenario] = useState('sdlc');
   const [simCurrentStep, setSimCurrentStep] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(false);
+
+  // Tuner Config state
+  const [configChunking, setConfigChunking] = useState('ast');
+  const [configRetrieval, setConfigRetrieval] = useState('hybrid');
+  const [configGuardrails, setConfigGuardrails] = useState('docker_pass1');
+  const [configSecurity, setConfigSecurity] = useState('gitleaks_acl');
+  const [isSimulatingRun, setIsSimulatingRun] = useState(false);
 
   // Auto-play timer for System Design Simulator
   useEffect(() => {
@@ -607,13 +615,32 @@ export default function RAGCaseStudiesTab() {
     setTimeout(() => setCopiedCode(false), 2000);
   };
 
+  const runLivePipelineSimulation = () => {
+    setIsSimulatingRun(true);
+    setSimCurrentStep(0);
+    let step = 0;
+    const interval = setInterval(() => {
+      step += 1;
+      if (step > 8) {
+        clearInterval(interval);
+        setIsSimulatingRun(false);
+      } else {
+        setSimCurrentStep(step);
+      }
+    }, 600);
+  };
+
   const currentScenarioData = SYSTEM_DESIGN_SCENARIOS[simScenario] || SYSTEM_DESIGN_SCENARIOS.sdlc;
   const currentStepData = currentScenarioData.steps[simCurrentStep];
 
-  // Calculate accumulated latency up to current step
-  const accumulatedLatency = currentScenarioData.steps.slice(0, simCurrentStep + 1).reduce((acc, s) => acc + s.latency, 0);
+  // Calculate accumulated latency up to current step with tuner adjustments
+  const baseLatency = currentScenarioData.steps.slice(0, simCurrentStep + 1).reduce((acc, s) => acc + s.latency, 0);
+  const guardrailLatency = configGuardrails === 'docker_pass1' ? 450 : configGuardrails === 'ragas_faithfulness' ? 600 : 0;
+  const searchLatencyDelta = configRetrieval === 'hybrid' ? 40 : configRetrieval === 'dense' ? 10 : 5;
+  const calculatedLatency = baseLatency + (simCurrentStep >= 5 ? searchLatencyDelta : 0) + (simCurrentStep >= 6 ? guardrailLatency : 0);
+  
   const targetSlaMs = parseInt(currentScenarioData.sla);
-  const latencyPct = Math.min(100, Math.round((accumulatedLatency / targetSlaMs) * 100));
+  const latencyPct = Math.min(100, Math.round((calculatedLatency / targetSlaMs) * 100));
 
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
@@ -884,7 +911,7 @@ export default function RAGCaseStudiesTab() {
                     {SDLC_DIAGRAMS.map(d => (
                       <button
                         key={d.id}
-                        onClick={() => setActiveDiagram(d.id)}
+                        onClick={() => { setActiveDiagram(d.id); setActiveDiagStep(0); }}
                         style={{
                           padding: 'var(--ds-space-2) var(--ds-space-4)',
                           borderRadius: 'var(--ds-radius-md)',
@@ -920,16 +947,38 @@ export default function RAGCaseStudiesTab() {
                             />
                           )}
 
-                          <div>
-                            <h4 style={{ color: 'var(--ds-color-text-primary)', marginBottom: 'var(--ds-space-3)' }}>Interactive Execution Flow Sequence:</h4>
+                          <Stack gap={3}>
+                            <Flex justify="space-between" align="center">
+                              <h4 style={{ color: 'var(--ds-color-text-primary)', margin: 0 }}>Interactive Execution Flow Sequence:</h4>
+                              <Badge variant="subtle">Click any step below to inspect flow details</Badge>
+                            </Flex>
                             <Stepper
-                              steps={diag.nodes.map((node) => ({
-                                title: node.step,
-                                description: node.detail,
-                                status: 'complete'
+                              activeStep={activeDiagStep}
+                              onStepClick={(index) => setActiveDiagStep(index)}
+                              steps={diag.nodes.map((node, idx) => ({
+                                label: node.step,
+                                detail: node.detail,
+                                status: idx < activeDiagStep ? 'complete' : idx === activeDiagStep ? 'current' : 'upcoming'
                               }))}
                             />
-                          </div>
+
+                            {/* ACTIVE DIAGRAM STEP INSPECTOR CARD */}
+                            {diag.nodes[activeDiagStep] && (
+                              <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-module-foundations-primary)' }}>
+                                <Stack gap={2}>
+                                  <Flex justify="space-between" align="center">
+                                    <Badge variant="success">Step {activeDiagStep + 1} Selected: {diag.nodes[activeDiagStep].step}</Badge>
+                                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>
+                                      Step {activeDiagStep + 1} of {diag.nodes.length}
+                                    </span>
+                                  </Flex>
+                                  <p style={{ margin: 0, color: 'var(--ds-color-text-primary)', fontSize: 'var(--ds-font-size-body)', fontWeight: 'bold', lineHeight: '1.5' }}>
+                                    {diag.nodes[activeDiagStep].detail}
+                                  </p>
+                                </Stack>
+                              </Card>
+                            )}
+                          </Stack>
                         </Stack>
                       </Card>
                     );
@@ -1139,9 +1188,11 @@ export default function RAGCaseStudiesTab() {
                           <div>
                             <h4 style={{ marginBottom: 'var(--ds-space-3)' }}>Step-by-Step Execution Sequence:</h4>
                             <Stepper
+                              activeStep={simStep}
+                              onStepClick={(index) => setSimStep(index)}
                               steps={uc.flow.map((stepText, idx) => ({
-                                title: `Step ${idx + 1}`,
-                                description: stepText,
+                                label: `Step ${idx + 1}`,
+                                detail: stepText,
                                 status: idx < simStep ? 'complete' : idx === simStep ? 'current' : 'upcoming'
                               }))}
                             />
@@ -1180,11 +1231,11 @@ export default function RAGCaseStudiesTab() {
               <Stack gap={3}>
                 <Flex gap={2} align="center">
                   <Badge variant="warning">System Design Framework</Badge>
-                  <Badge variant="success">Interactive Simulator & AI Visuals</Badge>
+                  <Badge variant="success">Interactive Architecture Simulator</Badge>
                 </Flex>
                 <h2 style={{ fontSize: 'var(--ds-font-size-h1)', margin: 0 }}>9-Step RAG System Design Blueprint Simulator</h2>
                 <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodyLg)', margin: 0 }}>
-                  An interactive step-by-step simulator to practice architecting production RAG systems. Test SLA latency budgets, inspect live JSON query payloads, and review candidate answer scripts.
+                  An interactive step-by-step simulator to practice architecting production RAG systems. Test SLA latency budgets, tweak interactive architecture parameters, inspect live JSON query payloads, and run live query simulations.
                 </p>
               </Stack>
             </Card>
@@ -1201,6 +1252,108 @@ export default function RAGCaseStudiesTab() {
                 caption="9-Step Enterprise RAG System Design Blueprint — From SLA & Requirements to Ingestion, Hybrid Search, RAGAS Evals, and Safeguards."
               />
             </Section>
+
+            {/* INTERACTIVE PIPELINE ARCHITECTURE TUNER */}
+            <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
+              <Stack gap={4}>
+                <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '12px' }}>
+                  <div>
+                    <h4 style={{ margin: 0, color: 'var(--ds-color-text-primary)' }}>⚙️ Interactive Pipeline Architecture Tuner</h4>
+                    <p style={{ margin: '2px 0 0 0', fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
+                      Tweak pipeline parameters below to see live updates to Retrieval Recall@10, Latency SLA, and Compilation / Secret Security Score!
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    variant={isSimulatingRun ? "danger" : "primary"}
+                    onClick={() => runLivePipelineSimulation()}
+                  >
+                    {isSimulatingRun ? "⏳ Running Simulation..." : "🚀 Run Live Query Simulation"}
+                  </Button>
+                </Flex>
+
+                <Grid columns={4} gap={3}>
+                  <div>
+                    <label style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>1. Chunking Strategy</label>
+                    <select
+                      value={configChunking}
+                      onChange={(e) => setConfigChunking(e.target.value)}
+                      style={{ width: '100%', marginTop: '4px', padding: '8px', borderRadius: 'var(--ds-radius-md)', background: 'var(--ds-color-bg-surface)', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-subtle)' }}
+                    >
+                      <option value="ast">Tree-Sitter AST (Function/Class)</option>
+                      <option value="fixed">Fixed Token (512 tokens)</option>
+                      <option value="clause">Clause-Level (Section 4.2)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>2. Search Retrieval Mode</label>
+                    <select
+                      value={configRetrieval}
+                      onChange={(e) => setConfigRetrieval(e.target.value)}
+                      style={{ width: '100%', marginTop: '4px', padding: '8px', borderRadius: 'var(--ds-radius-md)', background: 'var(--ds-color-bg-surface)', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-subtle)' }}
+                    >
+                      <option value="hybrid">Hybrid RRF (Dense + BM25)</option>
+                      <option value="dense">Dense Vector Only</option>
+                      <option value="sparse">BM25 Keyword Only</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>3. Sandbox & Guardrails</label>
+                    <select
+                      value={configGuardrails}
+                      onChange={(e) => setConfigGuardrails(e.target.value)}
+                      style={{ width: '100%', marginTop: '4px', padding: '8px', borderRadius: 'var(--ds-radius-md)', background: 'var(--ds-color-bg-surface)', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-subtle)' }}
+                    >
+                      <option value="docker_pass1">Docker Sandbox pass@1 Compile</option>
+                      <option value="ragas_faithfulness">RAGAS Faithfulness Check</option>
+                      <option value="none">No Guardrails (Raw Output)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>4. Security & ACL Scanner</label>
+                    <select
+                      value={configSecurity}
+                      onChange={(e) => setConfigSecurity(e.target.value)}
+                      style={{ width: '100%', marginTop: '4px', padding: '8px', borderRadius: 'var(--ds-radius-md)', background: 'var(--ds-color-bg-surface)', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-subtle)' }}
+                    >
+                      <option value="gitleaks_acl">Gitleaks Scan + Pre-Retrieval ACL</option>
+                      <option value="disabled">Disabled (High Risk)</option>
+                    </select>
+                  </div>
+                </Grid>
+
+                {/* LIVE ARCHITECTURE METRICS CARDS */}
+                <Grid columns={4} gap={3} style={{ marginTop: 'var(--ds-space-2)' }}>
+                  <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
+                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Retrieval Recall@10</span>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: configRetrieval === 'hybrid' ? '#10B981' : '#CA8A04' }}>
+                      {configRetrieval === 'hybrid' ? '94.2%' : configRetrieval === 'dense' ? '71.0%' : '68.5%'}
+                    </div>
+                  </div>
+                  <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
+                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Syntax & Compilation Pass Rate</span>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: configChunking === 'ast' && configGuardrails === 'docker_pass1' ? '#10B981' : '#DC2626' }}>
+                      {configChunking === 'ast' && configGuardrails === 'docker_pass1' ? '98.5%' : configChunking === 'ast' ? '82.0%' : '62.4%'}
+                    </div>
+                  </div>
+                  <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
+                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Total Pipeline Latency</span>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: '#2563EB' }}>
+                      {calculatedLatency}ms
+                    </div>
+                  </div>
+                  <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
+                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Secret & Policy Leaks</span>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: configSecurity === 'gitleaks_acl' ? '#10B981' : '#DC2626' }}>
+                      {configSecurity === 'gitleaks_acl' ? '0 Secrets' : '⚠️ 12 Leaks'}
+                    </div>
+                  </div>
+                </Grid>
+              </Stack>
+            </Card>
 
             {/* INTERACTIVE SIMULATOR CONTROLS */}
             <Section variant="bordered">
@@ -1306,7 +1459,7 @@ export default function RAGCaseStudiesTab() {
                     ⏱ Accumulated Latency Budget Progress:
                   </span>
                   <span style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: latencyPct > 90 ? '#DC2626' : '#16A34A' }}>
-                    {accumulatedLatency}ms / {targetSlaMs}ms ({latencyPct}%)
+                    {calculatedLatency}ms / {targetSlaMs}ms ({latencyPct}%)
                   </span>
                 </Flex>
                 <div style={{
@@ -1375,7 +1528,15 @@ export default function RAGCaseStudiesTab() {
                         <Badge variant="subtle">Step {simCurrentStep + 1} of 9</Badge>
                       </Flex>
                       <CodeBlock
-                        code={JSON.stringify(currentStepData.payload, null, 2)}
+                        code={JSON.stringify({
+                          ...currentStepData.payload,
+                          config_active: {
+                            chunking: configChunking,
+                            search: configRetrieval,
+                            guardrails: configGuardrails,
+                            security: configSecurity
+                          }
+                        }, null, 2)}
                         language="json"
                       />
                     </Stack>
@@ -1411,7 +1572,7 @@ export default function RAGCaseStudiesTab() {
             {/* MODEL CANDIDATE ANSWER SCRIPT */}
             <Callout variant="tip" title="Model Candidate Answer Script (Tailored to Selected Scenario)">
               <p style={{ margin: 0, lineHeight: 'var(--ds-font-lineHeight-relaxed)', fontSize: 'var(--ds-font-size-body)' }}>
-                <em>"I would architect this {currentScenarioData.name} by starting with SLA targets ({currentScenarioData.sla}). For security, I enforce pre-retrieval tenant filtering and secret scanning. Ingestion uses Tree-Sitter AST chunking for code or clause-level OCR for docs. Hybrid search merges dense vectors with BM25 keywords via Reciprocal Rank Fusion (RRF). Finally, generated output is compiled in a Docker sandbox or checked with RAGAS Faithfulness before returning cited file#line references."</em>
+                <em>"I would architect this {currentScenarioData.name} by starting with SLA targets ({currentScenarioData.sla}). For security, I enforce pre-retrieval tenant filtering ({configSecurity}). Ingestion uses {configChunking === 'ast' ? 'Tree-Sitter AST chunking for code' : 'clause-level OCR for docs'}. Search uses {configRetrieval === 'hybrid' ? 'Hybrid RRF (Dense + BM25)' : 'Dense vector search'}. Output is verified via {configGuardrails === 'docker_pass1' ? 'Docker Sandbox pass@1 compile check' : 'RAGAS Faithfulness check'} before returning cited file#line references."</em>
               </p>
             </Callout>
           </Stack>

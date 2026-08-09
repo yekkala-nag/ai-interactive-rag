@@ -189,6 +189,10 @@ export function Stepper({ steps, activeStep = 0, onStepClick, autoPlay = false, 
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
+    setCurrentStep(activeStep);
+  }, [activeStep]);
+
+  useEffect(() => {
     if (!autoPlay || playing) return;
     const timer = setTimeout(() => {
       setCurrentStep(prev => (prev + 1) % steps.length);
@@ -206,17 +210,21 @@ export function Stepper({ steps, activeStep = 0, onStepClick, autoPlay = false, 
     <div style={{ ...style }} {...props}>
       <ol style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-space-4)', listStyle: 'none', padding: 0 }}>
         {steps.map((step, index) => {
-          const isActive = index === currentStep;
-          const isCompleted = index < currentStep;
+          const isActive = index === currentStep || step.status === 'current';
+          const isCompleted = step.status === 'complete' || (step.status !== 'upcoming' && index < currentStep);
           const stepColor = step.color || 'var(--ds-color-module-foundations-primary)';
+          const labelText = step.label || step.title || `Step ${index + 1}`;
+          const detailText = step.detail || step.description || '';
 
           return (
             <li key={index} style={{ transition: 'all var(--ds-motion-duration-base) var(--ds-motion-easing-standard)' }}>
               <button
                 onClick={() => handleStepClick(index)}
                 style={{
-                  display: 'flex', gap: 'var(--ds-space-4)', padding: 'var(--ds-space-4)',
-                  background: isActive ? `${stepColor}10` : 'var(--ds-color-bg-surface)',
+                  display: 'flex',
+                  gap: 'var(--ds-space-4)',
+                  padding: 'var(--ds-space-4)',
+                  background: isActive ? `${stepColor}15` : 'var(--ds-color-bg-surface)',
                   border: `1px solid ${isActive ? stepColor : 'var(--ds-color-border-subtle)'}`,
                   borderRadius: 'var(--ds-radius-lg)',
                   cursor: 'pointer',
@@ -230,9 +238,9 @@ export function Stepper({ steps, activeStep = 0, onStepClick, autoPlay = false, 
                 <div style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   width: '36px', height: '36px', borderRadius: 'var(--ds-radius-full)',
-                  background: isCompleted ? stepColor : isActive ? `${stepColor}20` : 'var(--ds-color-bg-surfaceHover)',
+                  background: isCompleted ? stepColor : isActive ? `${stepColor}25` : 'var(--ds-color-bg-surfaceHover)',
                   border: `2px solid ${isCompleted || isActive ? stepColor : 'var(--ds-color-border-default)'}`,
-                  color: isCompleted ? 'white' : isActive ? stepColor : 'var(--ds-color-text-tertiary)',
+                  color: isCompleted ? 'white' : isActive ? stepColor : 'var(--ds-color-text-secondary)',
                   fontWeight: 'var(--ds-font-weight-bold)',
                   fontSize: isCompleted || isActive ? 'var(--ds-font-size-body)' : 'var(--ds-font-size-bodySm)',
                   flexShrink: 0,
@@ -241,11 +249,37 @@ export function Stepper({ steps, activeStep = 0, onStepClick, autoPlay = false, 
                   {isCompleted ? '✓' : step.icon || (index + 1)}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-2)', marginBottom: 'var(--ds-space-1)' }}>
-                    <span style={{ fontSize: 'var(--ds-font-size-h4)', fontWeight: 'var(--ds-font-weight-semibold)', color: isActive ? stepColor : 'var(--ds-color-text-primary)' }}>{step.label}</span>
-                    {isActive && <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'var(--ds-font-weight-medium)', color: stepColor, background: `${stepColor}15`, padding: '2px 8px', borderRadius: 'var(--ds-radius-full)' }}>Current</span>}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-2)', marginBottom: 'var(--ds-space-1)', flexWrap: 'wrap' }}>
+                    <span style={{
+                      fontSize: 'var(--ds-font-size-bodyLg)',
+                      fontWeight: 'var(--ds-font-weight-bold)',
+                      color: isActive ? stepColor : 'var(--ds-color-text-primary)'
+                    }}>
+                      {labelText}
+                    </span>
+                    {isActive && (
+                      <span style={{
+                        fontSize: 'var(--ds-font-size-caption)',
+                        fontWeight: 'var(--ds-font-weight-bold)',
+                        color: stepColor,
+                        background: `${stepColor}20`,
+                        padding: '2px 10px',
+                        borderRadius: 'var(--ds-radius-full)'
+                      }}>
+                        Active Step
+                      </span>
+                    )}
                   </div>
-                  <p style={{ fontSize: 'var(--ds-font-size-body)', color: 'var(--ds-color-text-secondary)', lineHeight: 'var(--ds-font-lineHeight-relaxed)', margin: 0 }}>{step.detail}</p>
+                  {detailText && (
+                    <p style={{
+                      fontSize: 'var(--ds-font-size-body)',
+                      color: 'var(--ds-color-text-secondary)',
+                      lineHeight: 'var(--ds-font-lineHeight-relaxed)',
+                      margin: '4px 0 0 0'
+                    }}>
+                      {detailText}
+                    </p>
+                  )}
                 </div>
               </button>
             </li>
