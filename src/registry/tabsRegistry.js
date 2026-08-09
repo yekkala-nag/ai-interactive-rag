@@ -24,7 +24,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
-    tabs: ["rag", "pipeline", "filtering", "hierrag", "qparseloop", "prodrag", "genpatterns", "fourpdfs", "hallucbricks", "agenticrag", "interviewprep"]
+    tabs: ["rag", "pipeline", "filtering", "hierrag", "qparseloop", "prodrag", "genpatterns", "fourpdfs", "hallucbricks", "agenticrag", "ragcasestudies", "interviewprep"]
   },
   {
     id: "context_memory",
@@ -209,12 +209,21 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgenticRAGTab })))
   },
   {
+    id: "ragcasestudies",
+    label: "Enterprise Case Studies & Blueprints",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🏢",
+    keywords: ["case study", "sdlc rag", "financial rag", "devcontext", "system design", "pseudocode", "architecture", "blueprints"],
+    component: lazy(() => import("../tabs/RAGCaseStudiesTab.jsx"))
+  },
+  {
     id: "interviewprep",
-    label: "RAG Interview & Case Study",
+    label: "RAG Interview Prep",
     umbrellaId: "rag_architecture",
     category: "RAG Systems",
     icon: "🎯",
-    keywords: ["interview", "questions", "case study", "rag interview", "star format", "system design", "study plan"],
+    keywords: ["interview", "questions", "rag interview", "q&a", "study plan"],
     component: lazy(() => import("../tabs/InterviewPrepTab.jsx"))
   },
 

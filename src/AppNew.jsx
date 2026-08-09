@@ -31,6 +31,7 @@ const TabComponents = {
   fourpdfs: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.FourPDFsTab }))),
   hallucbricks: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HallucBricksTab }))),
   agenticrag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgenticRAGTab }))),
+  ragcasestudies: lazy(() => import('./tabs/RAGCaseStudiesTab.jsx')),
   interviewprep: lazy(() => import('./tabs/InterviewPrepTab.jsx')),
 
   ctxeng: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ContextEngineeringTab }))),
