@@ -181,7 +181,17 @@ a {
 a:hover { color: var(--ds-color-text-linkHover); }
 a:focus-visible { outline: 2px solid var(--ds-color-border-focus); outline-offset: 2px; border-radius: var(--ds-radius-sm); }
 
-code, pre { font-family: var(--ds-font-family-mono); }
+code, pre {
+  font-family: var(--ds-font-family-mono);
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+img, video, iframe, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
 
 /* Selection */
 ::selection { background: var(--ds-color-module-foundations-light); color: var(--ds-color-module-foundations-dark); }
@@ -199,6 +209,19 @@ code, pre { font-family: var(--ds-font-family-mono); }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Responsive Mobile & Tablet Styles */
+@media (max-width: 768px) {
+  html { font-size: 14px; }
+  h1 { font-size: 22px !important; }
+  h2 { font-size: 18px !important; }
+  h3 { font-size: 16px !important; }
+  h4 { font-size: 14px !important; }
+  
+  button, select, input {
+    touch-action: manipulation;
   }
 }
 

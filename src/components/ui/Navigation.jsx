@@ -228,7 +228,9 @@ export function Sidebar({
 // ============================================
 // TopBar — Contextual header with breadcrumb + sibling tabs
 // ============================================
-export function TopBar({ activeTab, onSelectTab, onSearchOpen }) {
+// TopBar — Header with breadcrumb, search, & mobile menu toggle
+// ============================================
+export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, sidebarCollapsed }) {
   const currentModule = getUmbrellaForTab(activeTab);
   const currentTab = getTabById(activeTab);
   const siblingTabs = getTabsForUmbrella(currentModule.id);
@@ -253,12 +255,24 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen }) {
     }}>
       {/* BREADCRUMB ROW */}
       <div style={{
-        padding: 'var(--ds-space-4) var(--ds-space-6)',
+        padding: 'clamp(8px, 2vw, 16px) clamp(12px, 3vw, 24px)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        gap: 'var(--ds-space-4)', flexWrap: 'wrap',
+        gap: 'var(--ds-space-3)', flexWrap: 'wrap',
         borderBottom: '1px solid var(--ds-color-border-subtle)',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)', flexWrap: 'wrap' }}>
+          {onToggleSidebar && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onToggleSidebar}
+              aria-label="Toggle navigation menu"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+            >
+              <span>{sidebarCollapsed ? '☰' : '✕'}</span>
+              <span style={{ fontSize: 'var(--ds-font-size-caption)' }}>Menu</span>
+            </Button>
+          )}
           <Badge variant="module" moduleId={currentModule.id} size="md" dot>
             <span>{currentModule.icon}</span>
             <span>{currentModule.title}</span>

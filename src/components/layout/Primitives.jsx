@@ -7,23 +7,56 @@ import { useState, useEffect, useRef } from 'react';
 // ============================================
 // Page — Root layout with sidebar + main
 // ============================================
-export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle }) {
-  const pageStyles = {
-    page: { display: 'flex', minHeight: '100vh', background: 'var(--ds-color-bg-canvas)' },
-    sidebar: { height: '100vh', position: 'sticky', top: 0, background: 'var(--ds-color-bg-surface)', borderRight: '1px solid var(--ds-color-border-subtle)', display: 'flex', flexDirection: 'column', zIndex: 'var(--ds-zIndex-sidebar)', overflow: 'hidden' },
-    main: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' },
-  };
+// ============================================
+// Page — Root layout with sidebar + main (Responsive Mobile/Tablet)
+// ============================================
+export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle, mobileOpen, onCloseMobile }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div style={pageStyles.page}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--ds-color-bg-canvas)', position: 'relative' }}>
+      {/* MOBILE BACKDROP OVERLAY */}
+      {isMobile && mobileOpen && (
+        <div
+          onClick={onCloseMobile}
+          style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.5)',
+            zIndex: 99,
+            backdropFilter: 'blur(2px)'
+          }}
+        />
+      )}
+
       <aside style={{
-        ...pageStyles.sidebar,
-        width: sidebarCollapsed ? '72px' : '280px',
-        minWidth: sidebarCollapsed ? '72px' : '280px',
-        transition: 'width var(--ds-motion-duration-base) var(--ds-motion-easing-standard), min-width var(--ds-motion-duration-base) var(--ds-motion-easing-standard)',
+        height: '100vh',
+        position: isMobile ? 'fixed' : 'sticky',
+        top: 0, left: 0,
+        background: 'var(--ds-color-bg-surface)',
+        borderRight: '1px solid var(--ds-color-border-subtle)',
+        display: 'flex',
+        flexDirection: 'column',
+        zIndex: isMobile ? 100 : 'var(--ds-zIndex-sidebar)',
+        width: isMobile ? (mobileOpen ? '280px' : '0px') : (sidebarCollapsed ? '72px' : '280px'),
+        minWidth: isMobile ? (mobileOpen ? '280px' : '0px') : (sidebarCollapsed ? '72px' : '280px'),
+        transition: 'all 0.3s ease',
+        overflow: 'hidden',
+        boxShadow: isMobile && mobileOpen ? '0 20px 40px rgba(0,0,0,0.3)' : 'none'
       }} aria-label="Main navigation">
         {sidebar}
       </aside>
-      <main style={pageStyles.main} role="main">
+
+      <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', width: '100%' }} role="main">
         {children}
       </main>
     </div>
@@ -31,7 +64,7 @@ export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle }) {
 }
 
 // ============================================
-// Container — Constrained content width
+// Container — Constrained content width (Responsive)
 // ============================================
 export function Container({ children, size = 'normal', className, style, ...props }) {
   const sizeMap = {
@@ -40,11 +73,15 @@ export function Container({ children, size = 'normal', className, style, ...prop
     wide: '1280px',
     full: '100%',
   };
-  const containerStyles = {
-    container: { width: '100%', margin: '0 auto', padding: '0 var(--ds-space-6)' },
-  };
   return (
-    <div style={{ ...containerStyles.container, maxWidth: sizeMap[size], ...style }} className={className} {...props}>
+    <div style={{
+      width: '100%',
+      margin: '0 auto',
+      padding: '0 clamp(12px, 3vw, 24px)',
+      maxWidth: sizeMap[size],
+      boxSizing: 'border-box',
+      ...style
+    }} className={className} {...props}>
       {children}
     </div>
   );
@@ -56,15 +93,12 @@ export function Container({ children, size = 'normal', className, style, ...prop
 export function Section({ children, variant = 'default', className, style, ...props }) {
   const variantStyles = {
     default: {},
-    bordered: { border: '1px solid var(--ds-color-border-subtle)', borderRadius: 'var(--ds-radius-lg)' },
-    elevated: { boxShadow: 'var(--ds-shadow-sm)', borderRadius: 'var(--ds-radius-lg)' },
-    hero: { borderRadius: 'var(--ds-radius-xl)', background: 'linear-gradient(135deg, var(--ds-color-bg-surface) 0%, var(--ds-color-bg-surfaceHover) 100%)', border: '1px solid var(--ds-color-border-subtle)' },
+    bordered: { border: '1px solid var(--ds-color-border-subtle)', borderRadius: 'var(--ds-radius-lg)', padding: 'clamp(12px, 2.5vw, 20px)' },
+    elevated: { boxShadow: 'var(--ds-shadow-sm)', borderRadius: 'var(--ds-radius-lg)', padding: 'clamp(12px, 2.5vw, 20px)' },
+    hero: { borderRadius: 'var(--ds-radius-xl)', background: 'linear-gradient(135deg, var(--ds-color-bg-surface) 0%, var(--ds-color-bg-surfaceHover) 100%)', border: '1px solid var(--ds-color-border-subtle)', padding: 'clamp(16px, 3vw, 28px)' },
   };
   const sectionStyles = {
     section: { marginBottom: 'var(--ds-space-8)' },
-    sectionHeader: { marginBottom: 'var(--ds-space-4)' },
-    sectionBody: {},
-    sectionFooter: { marginTop: 'var(--ds-space-6)', paddingTop: 'var(--ds-space-4)', borderTop: '1px solid var(--ds-color-border-subtle)' },
   };
   return (
     <section style={{ ...sectionStyles.section, ...variantStyles[variant], ...style }} className={className} {...props}>
@@ -74,10 +108,7 @@ export function Section({ children, variant = 'default', className, style, ...pr
 }
 
 Section.Header = function SectionHeader({ children, style, ...props }) {
-  const sectionStyles = {
-    sectionHeader: { marginBottom: 'var(--ds-space-4)' },
-  };
-  return <header style={{ ...sectionStyles.sectionHeader, ...style }} {...props}>{children}</header>;
+  return <header style={{ marginBottom: 'var(--ds-space-4)', ...style }} {...props}>{children}</header>;
 };
 
 Section.Body = function SectionBody({ children, style, ...props }) {
@@ -85,27 +116,33 @@ Section.Body = function SectionBody({ children, style, ...props }) {
 };
 
 Section.Footer = function SectionFooter({ children, style, ...props }) {
-  const sectionStyles = {
-    sectionFooter: { marginTop: 'var(--ds-space-6)', paddingTop: 'var(--ds-space-4)', borderTop: '1px solid var(--ds-color-border-subtle)' },
-  };
-  return <footer style={{ ...sectionStyles.sectionFooter, ...style }} {...props}>{children}</footer>;
+  return <footer style={{ marginTop: 'var(--ds-space-6)', paddingTop: 'var(--ds-space-4)', borderTop: '1px solid var(--ds-color-border-subtle)', ...style }} {...props}>{children}</footer>;
 };
 
 // ============================================
-// Grid — Responsive grid layout
+// Grid — Responsive grid layout (Auto-wrapping)
 // ============================================
 export function Grid({ children, columns = { base: 1 }, gap = 'md', className, style, ...props }) {
   const gapMap = { sm: 'var(--ds-space-3)', md: 'var(--ds-space-5)', lg: 'var(--ds-space-8)' };
-  const colStyle = typeof columns === 'number'
-    ? `repeat(${columns}, 1fr)`
-    : `repeat(${columns.base || 1}, 1fr)`;
+  const gapVal = typeof gap === 'string' && gapMap[gap] ? gapMap[gap] : typeof gap === 'number' ? `${gap * 4}px` : gap;
+
+  let colStyle = `repeat(1, 1fr)`;
+
+  if (typeof columns === 'number') {
+    if (columns >= 6) colStyle = `repeat(auto-fit, minmax(min(100%, 80px), 1fr))`;
+    else if (columns >= 4) colStyle = `repeat(auto-fit, minmax(min(100%, 200px), 1fr))`;
+    else if (columns === 3) colStyle = `repeat(auto-fit, minmax(min(100%, 240px), 1fr))`;
+    else if (columns === 2) colStyle = `repeat(auto-fit, minmax(min(100%, 280px), 1fr))`;
+    else colStyle = `repeat(${columns}, 1fr)`;
+  } else if (columns && typeof columns === 'object') {
+    colStyle = `repeat(${columns.base || 1}, 1fr)`;
+  }
 
   const gridStyles = {
-    grid: { display: 'grid', width: '100%' },
-    gridItem: { minWidth: 0 },
+    grid: { display: 'grid', width: '100%', gridTemplateColumns: colStyle, gap: gapVal },
   };
   return (
-    <div style={{ ...gridStyles.grid, gridTemplateColumns: colStyle, gap: gapMap[gap] }} className={className} {...props}>
+    <div style={{ ...gridStyles.grid, ...style }} className={className} {...props}>
       {children}
     </div>
   );

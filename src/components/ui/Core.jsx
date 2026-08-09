@@ -50,6 +50,12 @@ export function Button({
       active: { background: 'var(--ds-color-state-error-dark)', transform: 'scale(0.98)' },
       disabled: { background: 'var(--ds-color-border-default)', cursor: 'not-allowed' },
     },
+    outline: {
+      base: { background: 'transparent', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-default)' },
+      hover: { background: 'var(--ds-color-bg-surfaceHover)', borderColor: 'var(--ds-color-border-strong)' },
+      active: { background: 'var(--ds-color-border-subtle)' },
+      disabled: { color: 'var(--ds-color-text-tertiary)', borderColor: 'var(--ds-color-border-subtle)', cursor: 'not-allowed' },
+    },
   };
 
   const sizeStyles = {
@@ -58,8 +64,8 @@ export function Button({
     lg: { padding: '14px 24px', fontSize: 'var(--ds-font-size-bodyLg)', gap: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-lg)' },
   };
 
-  const v = variantStyles[variant];
-  const s = sizeStyles[size];
+  const v = variantStyles[variant] || variantStyles.secondary;
+  const s = sizeStyles[size] || sizeStyles.md;
 
   const baseStyle = {
     display: 'inline-flex',

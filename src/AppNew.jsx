@@ -133,6 +133,8 @@ export default function App() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [toast, setToast] = useState(null);
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   // URL sync
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -149,6 +151,7 @@ export default function App() {
       }
       if (e.key === 'Escape') {
         setCommandPaletteOpen(false);
+        setMobileOpen(false);
       }
       if (e.key === '[' && (e.metaKey || e.ctrlKey)) {
         setSidebarCollapsed(!sidebarCollapsed);
@@ -161,6 +164,7 @@ export default function App() {
   const handleTabSelect = useCallback((tabId) => {
     setActiveTab(tabId);
     setCommandPaletteOpen(false);
+    setMobileOpen(false);
   }, []);
 
   const handleSearchOpen = useCallback(() => {
@@ -172,20 +176,28 @@ export default function App() {
 
   return (
     <ToastProvider>
-      <Page sidebar={
-        <Sidebar
-          activeTab={activeTab}
-          onSelectTab={handleTabSelect}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          collapsed={sidebarCollapsed}
-          onToggleCollapse={setSidebarCollapsed}
-        />
-      } sidebarCollapsed={sidebarCollapsed} onSidebarToggle={setSidebarCollapsed}>
+      <Page
+        mobileOpen={mobileOpen}
+        onCloseMobile={() => setMobileOpen(false)}
+        sidebar={
+          <Sidebar
+            activeTab={activeTab}
+            onSelectTab={handleTabSelect}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            collapsed={sidebarCollapsed}
+            onToggleCollapse={setSidebarCollapsed}
+          />
+        }
+        sidebarCollapsed={sidebarCollapsed}
+        onSidebarToggle={setSidebarCollapsed}
+      >
         <TopBar
           activeTab={activeTab}
           onSelectTab={handleTabSelect}
           onSearchOpen={handleSearchOpen}
+          onToggleSidebar={() => setMobileOpen(!mobileOpen)}
+          sidebarCollapsed={!mobileOpen}
         />
 
         <Container size="normal">
