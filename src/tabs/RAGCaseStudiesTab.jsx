@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import * as Primitives from '../components/layout/Primitives';
 import { Hero, CodeBlock, Stepper } from '../components/ui/Content';
 import { Card, Badge, Button, Callout } from '../components/ui/Core';
@@ -275,16 +275,206 @@ const BANKING_MODERNIZATION_CASE = {
   ]
 };
 
+// ============================================
+// SIMULATOR DATA: 9-STEP SYSTEM DESIGN BLUEPRINT
+// ============================================
+
+const SYSTEM_DESIGN_SCENARIOS = {
+  sdlc: {
+    id: "sdlc",
+    name: "💻 Enterprise Monorepo SDLC Copilot",
+    sla: "2000ms",
+    scale: "4,000 engineers, 600+ microservices, 10M+ LOC",
+    targetUsers: "Software Engineers, SREs, QA, Tech Leads",
+    queryExample: "Where is refund idempotency validated in payment-gateway, and show unit test pattern to reuse?",
+    steps: [
+      {
+        step: 1,
+        title: "Step 1: Clarify Requirements & Latency Budget",
+        keyQuestions: ["What are user personas (Dev, SRE)?", "What is target latency (IDE <1s, Chat <2s)?", "What is data scale (10M+ LOC, monorepos)?", "Is RBAC required per repo?"],
+        decision: "Sub-second IDE inline completion (<800ms) and <2.0s ChatOps latency SLA. Strict repo-level tenant isolation.",
+        latency: 0,
+        payload: { user: "dev@acme.com", tenant: "payments-squad", target_sla_ms: 2000, current_accumulated_ms: 0 },
+        tradeoff: "Fast shallow retrieval vs deep multi-hop AST search."
+      },
+      {
+        step: 2,
+        title: "Step 2: Define Use Cases & Intent Routing",
+        keyQuestions: ["What queries will developers ask?", "Is this static code search or dynamic incident response?"],
+        decision: "Route queries into 6 SDLC intent categories: code_find, debug, adr_lookup, test_gen, incident_pack, release_notes.",
+        latency: 15,
+        payload: { query: "Where is refund idempotency validated?", intent: "code_find", target_symbol: "RefundService.processRefund" },
+        tradeoff: "Single universal prompt vs intent-specialized prompt templates."
+      },
+      {
+        step: 3,
+        title: "Step 3: NFRs, Security & Confidentiality",
+        keyQuestions: ["How to prevent secret leakage?", "How to handle multi-client confidentiality?", "Can copyleft code pollute internal repos?"],
+        decision: "Enforce pre-retrieval tenant filtering WHERE tenant_id = user.tenant. Scan pre-LLM & post-LLM with Gitleaks. Block GPL copyleft chunks.",
+        latency: 25,
+        payload: { tenant_filter: "WHERE repo_access CONTAINS 'payments-gateway' AND confidentiality <= 'internal'", secret_scan_status: "PASSED" },
+        tradeoff: "Strict ACL filtering overhead vs security data leakage risk."
+      },
+      {
+        step: 4,
+        title: "Step 4: Describe Data Sources & Ingestion Streams",
+        keyQuestions: ["What data stores exist?", "How are git pushes tracked?"],
+        decision: "Ingest Git repos, Confluence ADRs, Jira tickets, and PagerDuty events. Connect Git push webhooks for incremental re-indexing.",
+        latency: 40,
+        payload: { sources: ["Git (GitHub Ent)", "Confluence ADRs", "Jira Defect History"], active_commit_sha: "9f2c1ab" },
+        tradeoff: "Real-time git push indexing vs scheduled batch re-indexing."
+      },
+      {
+        step: 5,
+        title: "Step 5: Ingestion & Chunking Pipeline (AST)",
+        keyQuestions: ["How to chunk code files?", "How to store symbols?"],
+        decision: "Use Tree-Sitter AST parser to chunk at Function & Class boundaries. Attach repo > service > file > symbol breadcrumbs + ctags symbol index.",
+        latency: 80,
+        payload: { chunking: "Tree-Sitter AST", breadcrumb: "payments/src/RefundService.java > processRefund()", symbol_index: "ctags_fast_lookup" },
+        tradeoff: "Line-based chunking (fast, naive) vs Tree-Sitter AST chunking (precise, scope-aware)."
+      },
+      {
+        step: 6,
+        title: "Step 6: Query Execution & Hybrid Retrieval Engine",
+        keyQuestions: ["How to find exact method names?", "How to merge vector and keyword hits?"],
+        decision: "Execute exact ctags symbol search + BM25 + CodeBERT embeddings in parallel. Fuse using Reciprocal Rank Fusion (RRF) + Cross-encoder reranker.",
+        latency: 280,
+        payload: { dense_hits: 50, bm25_hits: 50, rrf_fused_top10: ["RefundService.java#L120-L148"], rerank_score: 0.96 },
+        tradeoff: "Dense vector search alone (misses exact identifiers) vs Hybrid RRF + Cross-encoder (100% symbol recall)."
+      },
+      {
+        step: 7,
+        title: "Step 7: Grounded Generation & Sandbox Validation",
+        keyQuestions: ["How to stop hallucinated APIs?", "How to verify generated code?"],
+        decision: "Inject compressed Repo Map + top chunks. Pass generated code to Docker sandbox for pass@1 compile & unit test execution.",
+        latency: 1250,
+        payload: { generated_snippet: "public boolean validateIdempotencyKey(String key) { ... }", sandbox_pass1: "COMPILE_SUCCESS", citations: ["RefundService.java#L120"] },
+        tradeoff: "Raw LLM output (fast, unverified) vs Docker sandbox pass@1 validation (+500ms, zero compile bugs)."
+      },
+      {
+        step: 8,
+        title: "Step 8: Production Safeguards, Caching & Observability",
+        keyQuestions: ["How to optimize sub-second IDE queries?", "How to log lineage?"],
+        decision: "Cache frequent symbol queries in Redis semantic cache. Log request token, retrieved commit_sha, and LLM output lineage.",
+        latency: 30,
+        payload: { redis_cache: "HIT_SEMANTIC_MATCH", audit_logged: true, total_latency_ms: 1640 },
+        tradeoff: "Exact string cache vs Semantic vector cache in Redis."
+      },
+      {
+        step: 9,
+        title: "Step 9: Architecture Trade-Offs & Final Blueprint Summary",
+        keyQuestions: ["What are core system trade-offs?"],
+        decision: "Summarize: AST chunking + Hybrid RRF + Docker Sandbox pass@1 + Commit_SHA staleness control = Enterprise Code RAG Success.",
+        latency: 0,
+        payload: { final_system_score: "Production-Ready", recall_10: "94.2%", mttr_reduction: "-46%" },
+        tradeoff: "Cost & complexity vs 100% developer trust & zero secret leaks."
+      }
+    ]
+  },
+
+  wealth: {
+    id: "wealth",
+    name: "🏦 Wealth Management Advisor Intelligence Copilot",
+    sla: "5000ms",
+    scale: "4,000 advisors, 50,000 PDF term sheets, 100,000 client portfolios",
+    targetUsers: "Wealth Managers, Private Bankers, Compliance Officers",
+    queryExample: "Is Product X suitable for Client B in Singapore after central bank interest rate hike?",
+    steps: [
+      {
+        step: 1,
+        title: "Step 1: Clarify Requirements & Latency Budget",
+        keyQuestions: ["Who are advisors?", "What is regulatory penalty for non-compliance?", "Is 5s latency acceptable for complex research?"],
+        decision: "< 5.0s p95 Chat latency SLA. 100% regulatory audit compliance, zero hallucinated suitability advice.",
+        latency: 0,
+        payload: { user: "advisor_341@bank.com", jurisdiction: "SG", max_client_exposure_pct: 10, target_sla_ms: 5000, current_accumulated_ms: 0 },
+        tradeoff: "Ultra-fast ungrounded chat vs 100% policy-cited regulatory compliance."
+      },
+      {
+        step: 2,
+        title: "Step 2: Define Use Cases & Intent Routing",
+        keyQuestions: ["What scenarios occur daily?"],
+        decision: "Route to: market_event_impact, client_suitability, term_sheet_summarizer, issuer_downgrade_alert.",
+        latency: 20,
+        payload: { query: "Client B suitability for Product X", intent: "client_suitability", client_id: "SG-88301" },
+        tradeoff: "Generic chat vs deterministic policy-routed agent."
+      },
+      {
+        step: 3,
+        title: "Step 3: NFRs, Security & Regulatory Compliance",
+        keyQuestions: ["How to isolate client PII?", "How to enforce MAS/FINMA cross-border rules?"],
+        decision: "Pre-retrieval WHERE jurisdiction CONTAINS 'SG' AND client_tier >= product.min_tier. Redact PII pre-LLM.",
+        latency: 35,
+        payload: { acl_filter: "WHERE jurisdiction = 'SG' AND risk_clearance >= 'HIGH'", pii_redaction: "CLEARED" },
+        tradeoff: "On-prem private vector DB vs public cloud embedding API."
+      },
+      {
+        step: 4,
+        title: "Step 4: Describe Data Sources & Ingestion Streams",
+        keyQuestions: ["Where does data live?"],
+        decision: "Ingest PDF term sheets, MAS compliance rules, internal equity research, and live Kafka market streams.",
+        latency: 60,
+        payload: { sources: ["PDF Term Sheets (50k)", "Kafka Rate Stream", "CRM Portfolio API"], kafka_topic: "market-events-v1" },
+        tradeoff: "Real-time market streaming vs static daily PDF batch indexing."
+      },
+      {
+        step: 5,
+        title: "Step 5: Ingestion & Chunking Pipeline (Clause & Table OCR)",
+        keyQuestions: ["How to parse financial tables?"],
+        decision: "Use Layout-Aware PDF Parser (Marker/Unstructured) + Clause-Level Chunking (100-250 tokens). Extract structured product tables as Markdown.",
+        latency: 120,
+        payload: { pdf_parser: "Layout-Aware OCR", chunking: "Clause-Level (Section 4.2)", table_extracted: "MIN_INVESTMENT_USD_250K" },
+        tradeoff: "Naive text extraction (breaks tables) vs Layout OCR + Table Markdown extraction."
+      },
+      {
+        step: 6,
+        title: "Step 6: Query Execution & Hybrid Retrieval Engine",
+        keyQuestions: ["How to handle ISIN codes and policy terms?"],
+        decision: "Dense Finance-BERT vectors + BM25 ISIN lookup fused via RRF. Call CRM API to fetch Client B portfolio risk limits.",
+        latency: 340,
+        payload: { crm_api_result: { client: "Client B", net_worth: "$5M", risk_tolerance: "Moderate" }, top_policy_chunk: "Suitability_SG_v3.pdf#Clause_2" },
+        tradeoff: "Vector search alone vs Hybrid Search + Live CRM API Tool Calling."
+      },
+      {
+        step: 7,
+        title: "Step 7: Grounded Generation & Faithfulness Guardrails",
+        keyQuestions: ["How to guarantee zero hallucinated financial claims?"],
+        decision: "LLM generates advice with mandatory policy citations. Run RAGAS Faithfulness check before displaying response.",
+        latency: 2200,
+        payload: { suitability_decision: "SUITABLE_WITH_CONSTRAINTS", rationale: "Product X duration matches Client B risk profile", faith_score: 0.98 },
+        tradeoff: "LLM free generation vs Faithfulness guardrail validation."
+      },
+      {
+        step: 8,
+        title: "Step 8: Production Safeguards, Caching & Audit Lineage",
+        keyQuestions: ["How to satisfy regulatory auditors?"],
+        decision: "Log complete request lineage (advisor ID, prompt, retrieved clauses, generated advice) to write-once WORM storage for 7 years.",
+        latency: 45,
+        payload: { worm_storage_log_id: "AUDIT-2026-9f8a", audit_status: "COMPLIANT", total_latency_ms: 2820 },
+        tradeoff: "Minimal logging vs full immutable audit lineage."
+      },
+      {
+        step: 9,
+        title: "Step 9: Architecture Trade-Offs & Final Blueprint Summary",
+        keyQuestions: ["What are core system trade-offs?"],
+        decision: "Summarize: Clause-level chunking + Live CRM Tool Calls + RAGAS Faithfulness + 7-year WORM Audit = Financial RAG Success.",
+        latency: 0,
+        payload: { final_system_score: "Production-Ready", research_time_saved: "-64%", citation_accuracy: "96.5%" },
+        tradeoff: "Latency vs 100% regulatory compliance."
+      }
+    ]
+  }
+};
+
 const SYSTEM_DESIGN_STEPS = [
-  { step: "Step 1: Clarify Requirements", detail: "Clarify users, data types, freshness (real-time vs batch), RBAC needs, latency target (<5s), compliance auditing." },
-  { step: "Step 2: Define Use Cases", detail: "Policy Q&A, Research summarization, Client portfolio impact, Product suitability, Market event alerts." },
-  { step: "Step 3: Define Non-Functional Requirements", detail: "p95 latency < 5s, 99.9% uptime, strict RBAC/ABAC, full request lineage auditability, zero unauthorized PII." },
-  { step: "Step 4: Describe Data Sources", detail: "Unstructured (Policies, Research, Transcripts) + Structured APIs (Portfolio, CRM, Market Data) + Streaming (Kafka market events)." },
-  { step: "Step 5: Design Ingestion Pipeline", detail: "Parsing -> Clause/Section Chunking -> Metadata Tagging (ACL, Dates) -> Embedding -> OpenSearch Vector & BM25 indexing." },
-  { step: "Step 6: Design Query Pipeline", detail: "Auth Gateway -> Intent/Entity Extraction -> Tool Calling (Portfolio API) -> Hybrid Search (Dense + BM25) -> Reranking -> Grounded Generation -> Guardrails." },
-  { step: "Step 7: Explain Evaluation Framework", detail: "Golden Dataset testing, Recall@10, Faithfulness scoring, Citation accuracy, LLM-as-judge + Human compliance sample audits." },
-  { step: "Step 8: Discuss Production Concerns", detail: "Semantic caching, fallback routing, PII redaction, token budgeting, prompt versioning, canary deployment." },
-  { step: "Step 9: Discuss Key Tradeoffs", detail: "Dense vs Hybrid search, Chunk size vs Context noise, Flagship LLM vs Latency/Cost, Real-time streaming vs Infrastructure complexity." }
+  { step: "Step 1: Clarify Requirements & Latency Budget", detail: "Clarify users, data types, freshness (real-time vs batch), RBAC needs, latency SLA target, compliance auditing." },
+  { step: "Step 2: Define Use Cases & Intent Routing", detail: "Map query intents (code_find, policy_qa, incident_pack), select specialized prompt templates and tool tools." },
+  { step: "Step 3: NFRs, Security & Confidentiality", detail: "Define p95 latency SLA, 99.9% availability, pre-retrieval RBAC/ABAC tenant filters, PII redaction, secret scanning." },
+  { step: "Step 4: Describe Data Sources & Ingestion Streams", detail: "Unstructured (Git, PDFs, Confluence) + Structured APIs (Jira, CRM, Telemetry) + Streaming (Kafka/Flink)." },
+  { step: "Step 5: Ingestion & Chunking Pipeline Strategy", detail: "Tree-Sitter AST chunking for code, Clause/Section chunking for policies, Layout-OCR for tables, symbol metadata indexing." },
+  { step: "Step 6: Query Execution & Hybrid Retrieval Engine", detail: "Parallel dense vector search + BM25 keyword search fused via Reciprocal Rank Fusion (RRF) + Cross-encoder reranker." },
+  { step: "Step 7: Grounded Generation & Sandbox Validation", detail: "Inject compressed Repo Maps, generate code/prose with exact citations, validate in Docker sandbox (pass@1) or RAGAS faith check." },
+  { step: "Step 8: Production Safeguards, Caching & Audit Lineage", detail: "Redis semantic caching, rate limiting, prompt versioning, WORM audit logging for regulatory compliance." },
+  { step: "Step 9: Architecture Trade-Offs & Final Blueprint Summary", detail: "Analyze Dense vs Hybrid, Chunk size vs Noise, Sandbox validation vs Speed, Fine-Tuning vs RAG." }
 ];
 
 const CODE_PSEUDOCODES = {
@@ -389,11 +579,41 @@ export default function RAGCaseStudiesTab() {
   const [activePseudocode, setActivePseudocode] = useState('retrieval');
   const [copiedCode, setCopiedCode] = useState(false);
 
+  // System Design Simulator state
+  const [simScenario, setSimScenario] = useState('sdlc');
+  const [simCurrentStep, setSimCurrentStep] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(false);
+
+  // Auto-play timer for System Design Simulator
+  useEffect(() => {
+    let interval = null;
+    if (isAutoPlay) {
+      interval = setInterval(() => {
+        setSimCurrentStep(prev => {
+          if (prev >= 8) {
+            setIsAutoPlay(false);
+            return 8;
+          }
+          return prev + 1;
+        });
+      }, 2500);
+    }
+    return () => clearInterval(interval);
+  }, [isAutoPlay]);
+
   const copyCodeToClipboard = (text) => {
     navigator.clipboard.writeText(text);
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 2000);
   };
+
+  const currentScenarioData = SYSTEM_DESIGN_SCENARIOS[simScenario] || SYSTEM_DESIGN_SCENARIOS.sdlc;
+  const currentStepData = currentScenarioData.steps[simCurrentStep];
+
+  // Calculate accumulated latency up to current step
+  const accumulatedLatency = currentScenarioData.steps.slice(0, simCurrentStep + 1).reduce((acc, s) => acc + s.latency, 0);
+  const targetSlaMs = parseInt(currentScenarioData.sla);
+  const latencyPct = Math.min(100, Math.round((accumulatedLatency / targetSlaMs) * 100));
 
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
@@ -402,12 +622,12 @@ export default function RAGCaseStudiesTab() {
         moduleId="rag"
         moduleLabel="Enterprise Systems & Case Studies"
         title="Enterprise RAG Case Studies & Blueprints"
-        description="Comprehensive real-world architectures featuring DevContext Copilot (SDLC RAG Platform), Financial Advisor Copilot, 9-Step System Design Blueprint, STAR Stories, and Production Pseudocodes."
+        description="Comprehensive real-world architectures featuring DevContext Copilot (SDLC RAG Platform), Financial Advisor Copilot, 9-Step System Design Blueprint & Interactive Simulator, STAR Stories, and Production Pseudocodes."
         metrics={[
           { label: 'Production Cases', value: '2 Enterprise' },
-          { label: 'System Design', value: '9-Step Framework' },
-          { label: 'SDLC Visuals', value: '5 Flow Diagrams' },
-          { label: 'Implementation', value: '90-Day Roadmap' },
+          { label: 'System Design', value: '9-Step Blueprint' },
+          { label: 'Simulator', value: 'Interactive' },
+          { label: 'SDLC Visuals', value: '6 Flow Diagrams' },
         ]}
       />
 
@@ -425,7 +645,7 @@ export default function RAGCaseStudiesTab() {
         }}>
           {[
             { id: 'casestudy', label: '🏢 Enterprise Case Studies', desc: 'DevContext SDLC & Advisor Copilot' },
-            { id: 'systemdesign', label: '🏗️ System Design Framework', desc: '9-Step Architecture Blueprint' },
+            { id: 'systemdesign', label: '⚡ 9-Step System Design Simulator', desc: 'Interactive Blueprint & Latency Budget' },
             { id: 'star', label: '🚀 STAR & Pseudocodes', desc: 'Production Code & STAR Stories' }
           ].map(mode => (
             <button
@@ -953,49 +1173,245 @@ export default function RAGCaseStudiesTab() {
           </Stack>
         )}
 
-        {/* MODE 2: SYSTEM DESIGN INTERVIEW FRAMEWORK */}
+        {/* MODE 2: 9-STEP SYSTEM DESIGN SIMULATOR & ENHANCEMENT */}
         {activeMode === 'systemdesign' && (
           <Stack gap={6}>
-            <Card style={{ padding: 'var(--ds-space-6)', background: 'var(--ds-color-bg-surface)' }}>
+            <Card style={{ padding: 'var(--ds-space-6)', background: 'linear-gradient(135deg, rgba(202,138,4,0.12) 0%, rgba(147,51,234,0.12) 100%)' }}>
               <Stack gap={3}>
-                <Badge variant="primary">System Design Framework</Badge>
-                <h2 style={{ margin: 0 }}>9-Step RAG System Design Blueprint</h2>
+                <Flex gap={2} align="center">
+                  <Badge variant="warning">System Design Framework</Badge>
+                  <Badge variant="success">Interactive Simulator & AI Visuals</Badge>
+                </Flex>
+                <h2 style={{ fontSize: 'var(--ds-font-size-h1)', margin: 0 }}>9-Step RAG System Design Blueprint Simulator</h2>
                 <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodyLg)', margin: 0 }}>
-                  Use this structured framework when asked: <em>"Design an enterprise RAG system for a global software enterprise or wealth management bank."</em>
+                  An interactive step-by-step simulator to practice architecting production RAG systems. Test SLA latency budgets, inspect live JSON query payloads, and review candidate answer scripts.
                 </p>
               </Stack>
             </Card>
 
-            <Grid columns={3} gap={4}>
-              {SYSTEM_DESIGN_STEPS.map((s, idx) => (
-                <Card key={idx} variant="bordered" style={{ padding: 'var(--ds-space-4)' }}>
-                  <Stack gap={2}>
-                    <span style={{
-                      display: 'inline-block',
-                      width: '28px',
-                      height: '28px',
-                      borderRadius: '50%',
-                      background: 'var(--ds-color-module-foundations-primary)',
-                      color: 'white',
-                      textAlign: 'center',
-                      lineHeight: '28px',
-                      fontWeight: 'bold',
-                      fontSize: '14px'
-                    }}>
-                      {idx + 1}
-                    </span>
-                    <h4 style={{ margin: 0, color: 'var(--ds-color-text-primary)' }}>{s.step}</h4>
-                    <p style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
-                      {s.detail}
-                    </p>
-                  </Stack>
-                </Card>
-              ))}
-            </Grid>
+            {/* AI GENERATED SYSTEM DESIGN ARCHITECTURE DIAGRAM */}
+            <Section variant="bordered">
+              <Section.Header>
+                <h3 style={{ margin: 0 }}>🎨 9-Step System Design Master Architecture Diagram</h3>
+                <p style={{ color: 'var(--ds-color-text-secondary)' }}>AI-generated end-to-end architecture topology covering all 9 system design phases.</p>
+              </Section.Header>
+              <DiagramImage
+                src="/assets/rag_system_design_9step_blueprint.png"
+                alt="9-Step Enterprise RAG System Design Blueprint"
+                caption="9-Step Enterprise RAG System Design Blueprint — From SLA & Requirements to Ingestion, Hybrid Search, RAGAS Evals, and Safeguards."
+              />
+            </Section>
 
-            <Callout variant="tip" title="Model Candidate Answer Script (SDLC & Financial RAG)">
-              <p style={{ margin: 0, lineHeight: 'var(--ds-font-lineHeight-relaxed)' }}>
-                <em>"I would start by clarifying users (devs/SRE/RM), repos &amp; document scale, confidentiality tenants, and latency targets (under 1-2s). For ingestion, I would use Tree-sitter AST chunking for code and clause-level chunking for docs, storing metadata including commit_sha, ACL, and owner. Indexes include exact ctags/LSP symbol search, BM25, and dense vector embeddings fused via Reciprocal Rank Fusion. Live tool calls fetch CI logs, APM metrics, or portfolio data. For security, I enforce pre-retrieval tenant filtering and secret scanning. Finally, generated code is compiled and test-verified in a sandbox before returning cited file#line references."</em>
+            {/* INTERACTIVE SIMULATOR CONTROLS */}
+            <Section variant="bordered">
+              <Section.Header>
+                <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '12px' }}>
+                  <div>
+                    <h3 style={{ margin: 0 }}>⚡ Interactive System Design Step-by-Step Simulator</h3>
+                    <p style={{ color: 'var(--ds-color-text-secondary)', margin: 0 }}>Select an enterprise scenario and step through the 9 system design phases.</p>
+                  </div>
+                  <Flex gap={2}>
+                    <Button
+                      size="sm"
+                      variant={isAutoPlay ? "danger" : "primary"}
+                      onClick={() => setIsAutoPlay(!isAutoPlay)}
+                    >
+                      {isAutoPlay ? "⏸ Pause Auto-Play" : "▶ Play Auto-Simulation ⚡"}
+                    </Button>
+                  </Flex>
+                </Flex>
+              </Section.Header>
+
+              {/* SCENARIO SELECTOR */}
+              <Flex gap={3} style={{ marginBottom: 'var(--ds-space-4)', flexWrap: 'wrap' }}>
+                {Object.values(SYSTEM_DESIGN_SCENARIOS).map(sc => (
+                  <button
+                    key={sc.id}
+                    onClick={() => { setSimScenario(sc.id); setSimCurrentStep(0); setIsAutoPlay(false); }}
+                    style={{
+                      padding: 'var(--ds-space-3) var(--ds-space-5)',
+                      borderRadius: 'var(--ds-radius-md)',
+                      border: '1px solid',
+                      borderColor: simScenario === sc.id ? 'var(--ds-color-module-foundations-primary)' : 'var(--ds-color-border-subtle)',
+                      background: simScenario === sc.id ? 'var(--ds-color-module-foundations-primary)' : 'var(--ds-color-bg-surface)',
+                      color: simScenario === sc.id ? 'white' : 'var(--ds-color-text-primary)',
+                      cursor: 'pointer',
+                      fontWeight: 'bold',
+                      fontSize: 'var(--ds-font-size-bodySm)'
+                    }}
+                  >
+                    {sc.name}
+                  </button>
+                ))}
+              </Flex>
+
+              {/* SCENARIO OVERVIEW CARD */}
+              <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-canvas)', marginBottom: 'var(--ds-space-4)' }}>
+                <Grid columns={4} gap={3}>
+                  <div>
+                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Target SLA Budget</span>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: 'var(--ds-color-module-foundations-primary)' }}>
+                      {currentScenarioData.sla}
+                    </div>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Scale & Workload</span>
+                    <div style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: 'var(--ds-color-text-primary)' }}>
+                      {currentScenarioData.scale}
+                    </div>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Target Personas</span>
+                    <div style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: 'var(--ds-color-text-primary)' }}>
+                      {currentScenarioData.targetUsers}
+                    </div>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Example Query</span>
+                    <div style={{ fontSize: 'var(--ds-font-size-caption)', fontStyle: 'italic', color: 'var(--ds-color-text-secondary)' }}>
+                      "{currentScenarioData.queryExample}"
+                    </div>
+                  </div>
+                </Grid>
+              </Card>
+
+              {/* STEP BUTTON NAVIGATION (STEP 1 - 9) */}
+              <Grid columns={9} gap={2} style={{ marginBottom: 'var(--ds-space-5)' }}>
+                {SYSTEM_DESIGN_STEPS.map((s, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => { setSimCurrentStep(idx); setIsAutoPlay(false); }}
+                    style={{
+                      padding: 'var(--ds-space-3) 0',
+                      borderRadius: 'var(--ds-radius-md)',
+                      border: '1px solid',
+                      borderColor: simCurrentStep === idx ? 'var(--ds-color-module-foundations-primary)' : 'var(--ds-color-border-subtle)',
+                      background: simCurrentStep === idx ? 'var(--ds-color-module-foundations-primary)' : idx < simCurrentStep ? 'var(--ds-color-module-foundations-light)' : 'var(--ds-color-bg-surface)',
+                      color: simCurrentStep === idx ? 'white' : idx < simCurrentStep ? 'var(--ds-color-module-foundations-dark)' : 'var(--ds-color-text-secondary)',
+                      cursor: 'pointer',
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                      fontSize: 'var(--ds-font-size-bodySm)'
+                    }}
+                  >
+                    Step {idx + 1}
+                  </button>
+                ))}
+              </Grid>
+
+              {/* LATENCY BUDGET GAUGE BAR */}
+              <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-canvas)', marginBottom: 'var(--ds-space-5)' }}>
+                <Flex justify="space-between" align="center" style={{ marginBottom: 'var(--ds-space-2)' }}>
+                  <span style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: 'var(--ds-color-text-primary)' }}>
+                    ⏱ Accumulated Latency Budget Progress:
+                  </span>
+                  <span style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: latencyPct > 90 ? '#DC2626' : '#16A34A' }}>
+                    {accumulatedLatency}ms / {targetSlaMs}ms ({latencyPct}%)
+                  </span>
+                </Flex>
+                <div style={{
+                  height: '10px',
+                  width: '100%',
+                  background: 'var(--ds-color-border-subtle)',
+                  borderRadius: '5px',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{
+                    height: '100%',
+                    width: `${latencyPct}%`,
+                    background: latencyPct > 90 ? '#DC2626' : 'linear-gradient(90deg, #10B981, #CA8A04)',
+                    transition: 'width 0.4s ease'
+                  }} />
+                </div>
+              </Card>
+
+              {/* ACTIVE STEP SIMULATION DETAILS */}
+              <Card style={{ padding: 'var(--ds-space-6)', background: 'var(--ds-color-bg-surface)' }}>
+                <Stack gap={5}>
+                  <Flex justify="space-between" align="center">
+                    <Badge variant="warning">{currentStepData.title}</Badge>
+                    <Badge variant="info">Phase Latency Contribution: +{currentStepData.latency}ms</Badge>
+                  </Flex>
+
+                  <Grid columns={2} gap={4}>
+                    {/* LEFT COLUMN: INTERVIEWER QUESTIONS & ARCHITECTURE DECISION */}
+                    <Stack gap={3}>
+                      <div>
+                        <h4 style={{ color: 'var(--ds-color-module-foundations-primary)', marginBottom: 'var(--ds-space-2)' }}>
+                          ❓ Key Questions to Clarify with Interviewer:
+                        </h4>
+                        <ul style={{ margin: 0, paddingLeft: 'var(--ds-space-4)', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+                          {currentStepData.keyQuestions.map((q, i) => (
+                            <li key={i} style={{ marginBottom: '4px' }}>{q}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 style={{ color: 'var(--ds-color-state-success-light)', marginBottom: 'var(--ds-space-2)' }}>
+                          ✅ Selected Architecture Decision:
+                        </h4>
+                        <p style={{ margin: 0, color: 'var(--ds-color-text-primary)', fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'semibold', lineHeight: '1.5' }}>
+                          {currentStepData.decision}
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 style={{ color: '#DC2626', marginBottom: 'var(--ds-space-2)' }}>
+                          ⚖️ Core Trade-Off to Discuss:
+                        </h4>
+                        <p style={{ margin: 0, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', fontStyle: 'italic' }}>
+                          {currentStepData.tradeoff}
+                        </p>
+                      </div>
+                    </Stack>
+
+                    {/* RIGHT COLUMN: LIVE SIMULATED JSON PAYLOAD INSPECTOR */}
+                    <Stack gap={2}>
+                      <Flex justify="space-between" align="center">
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>
+                          LIVE PIPELINE STEP JSON PAYLOAD
+                        </span>
+                        <Badge variant="subtle">Step {simCurrentStep + 1} of 9</Badge>
+                      </Flex>
+                      <CodeBlock
+                        code={JSON.stringify(currentStepData.payload, null, 2)}
+                        language="json"
+                      />
+                    </Stack>
+                  </Grid>
+
+                  {/* SIMULATOR STEPPER CONTROLS */}
+                  <Flex justify="space-between" align="center">
+                    <Button
+                      size="sm"
+                      disabled={simCurrentStep === 0}
+                      onClick={() => { setSimCurrentStep(s => Math.max(0, s - 1)); setIsAutoPlay(false); }}
+                    >
+                      ← Previous Step
+                    </Button>
+
+                    <span style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)' }}>
+                      Step {simCurrentStep + 1} of 9
+                    </span>
+
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      disabled={simCurrentStep >= 8}
+                      onClick={() => { setSimCurrentStep(s => Math.min(8, s + 1)); setIsAutoPlay(false); }}
+                    >
+                      Next Step →
+                    </Button>
+                  </Flex>
+                </Stack>
+              </Card>
+            </Section>
+
+            {/* MODEL CANDIDATE ANSWER SCRIPT */}
+            <Callout variant="tip" title="Model Candidate Answer Script (Tailored to Selected Scenario)">
+              <p style={{ margin: 0, lineHeight: 'var(--ds-font-lineHeight-relaxed)', fontSize: 'var(--ds-font-size-body)' }}>
+                <em>"I would architect this {currentScenarioData.name} by starting with SLA targets ({currentScenarioData.sla}). For security, I enforce pre-retrieval tenant filtering and secret scanning. Ingestion uses Tree-Sitter AST chunking for code or clause-level OCR for docs. Hybrid search merges dense vectors with BM25 keywords via Reciprocal Rank Fusion (RRF). Finally, generated output is compiled in a Docker sandbox or checked with RAGAS Faithfulness before returning cited file#line references."</em>
               </p>
             </Callout>
           </Stack>
