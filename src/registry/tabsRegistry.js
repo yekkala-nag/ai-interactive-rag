@@ -353,7 +353,7 @@ export const TABS_REGISTRY = [
     umbrellaId: "agents_frameworks",
     category: "Agents & Frameworks",
     icon: "🦜",
-    keywords: ["langchain", "framework", "chains"],
+    keywords: ["langchain", "framework", "chains", "lcel", "pipeline", "prompts", "models", "parsers", "lang chain"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.LangChainTab })))
   },
   {
@@ -362,7 +362,7 @@ export const TABS_REGISTRY = [
     umbrellaId: "agents_frameworks",
     category: "Agents & Frameworks",
     icon: "🕸️",
-    keywords: ["langgraph", "state graph", "nodes", "edges"],
+    keywords: ["langgraph", "state graph", "nodes", "edges", "hitl", "human in the loop", "checkpointing", "cyclic", "multi-agent", "lang graph"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.LangGraphTab })))
   },
   {
@@ -371,7 +371,7 @@ export const TABS_REGISTRY = [
     umbrellaId: "agents_frameworks",
     category: "Agents & Frameworks",
     icon: "⚖️",
-    keywords: ["compare", "langchain vs langgraph", "evaluation"],
+    keywords: ["compare", "langchain vs langgraph", "comparison", "evaluation", "frameworks", "langchain", "langgraph"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.CompareTab })))
   },
   {

@@ -22,9 +22,9 @@ export function Sidebar({
   const [expandedModules, setExpandedModules] = useState({
     foundations: true,
     rag_architecture: true,
-    context_memory: false,
-    agents_frameworks: false,
-    data_platform: false,
+    context_memory: true,
+    agents_frameworks: true,
+    data_platform: true,
     frontiers_production: false,
   });
 
@@ -33,6 +33,9 @@ export function Sidebar({
   };
 
   const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
+  const queryStr = (typeof searchQuery === 'string' ? searchQuery : (searchQuery?.target?.value || '')).trim().toLowerCase();
+
+  let totalVisibleTabs = 0;
 
   return (
     <aside
@@ -102,14 +105,38 @@ export function Sidebar({
 
       {/* SEARCH */}
       {!collapsed && (
-        <div style={{ padding: 'var(--ds-space-4)', borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
-          <Input
-            placeholder="Search (⌘K)..."
-            value={searchQuery}
-            onChange={onSearchChange}
-            leftIcon={<span style={{ color: 'var(--ds-color-text-tertiary)' }}>⌕</span>}
-            style={{ width: '100%' }}
-          />
+        <div style={{ padding: 'var(--ds-space-3) var(--ds-space-4)', borderBottom: '1px solid var(--ds-color-border-subtle)', position: 'relative' }}>
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+            <span style={{ position: 'absolute', left: '10px', color: 'var(--ds-color-text-tertiary)', fontSize: '0.9rem', pointerEvents: 'none' }}>⌕</span>
+            <input
+              type="text"
+              placeholder="Search tabs (⌘K)..."
+              value={typeof searchQuery === 'string' ? searchQuery : (searchQuery?.target?.value || '')}
+              onChange={(e) => onSearchChange?.(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '8px 28px 8px 30px',
+                borderRadius: 'var(--ds-radius-md)',
+                border: '1px solid var(--ds-color-border-default)',
+                background: 'var(--ds-color-bg-canvas)',
+                color: 'var(--ds-color-text-primary)',
+                fontSize: 'var(--ds-font-size-bodySm)',
+                outline: 'none',
+              }}
+            />
+            {queryStr.length > 0 && (
+              <button
+                onClick={() => onSearchChange?.('')}
+                style={{
+                  position: 'absolute', right: '8px', background: 'none', border: 'none',
+                  color: 'var(--ds-color-text-tertiary)', cursor: 'pointer', fontSize: '0.85rem', padding: '2px'
+                }}
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
         </div>
       )}
 
@@ -118,9 +145,20 @@ export function Sidebar({
         {moduleOrder.map(moduleId => {
           const module = UMBRELLA_TOPICS.find(m => m.id === moduleId);
           if (!module) return null;
-          const tabs = getTabsForUmbrella(moduleId);
-          const isExpanded = expandedModules[moduleId] || searchQuery.length > 0;
-          const hasActiveTab = tabs.some(t => t.id === activeTab);
+          const rawTabs = getTabsForUmbrella(moduleId);
+          const tabs = queryStr
+            ? rawTabs.filter(t =>
+                t.label.toLowerCase().includes(queryStr) ||
+                t.id.toLowerCase().includes(queryStr) ||
+                (t.keywords && t.keywords.some(k => k.toLowerCase().includes(queryStr)))
+              )
+            : rawTabs;
+
+          if (queryStr && tabs.length === 0) return null;
+
+          totalVisibleTabs += tabs.length;
+          const isExpanded = queryStr.length > 0 ? true : (expandedModules[moduleId] ?? false);
+          const hasActiveTab = rawTabs.some(t => t.id === activeTab);
           const moduleColors = getModuleColors(moduleId);
 
           return (
@@ -211,6 +249,27 @@ export function Sidebar({
             </div>
           );
         })}
+
+        {queryStr && totalVisibleTabs === 0 && (
+          <div style={{ padding: 'var(--ds-space-6)', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>
+            <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>🔍</div>
+            <div style={{ fontSize: '0.85rem', marginBottom: '8px' }}>No tabs match "{queryStr}"</div>
+            <button
+              onClick={() => onSearchChange?.('')}
+              style={{
+                padding: '4px 10px',
+                borderRadius: '6px',
+                border: '1px solid var(--ds-color-border-default)',
+                background: 'var(--ds-color-bg-surface)',
+                color: 'var(--ds-color-text-secondary)',
+                fontSize: '0.75rem',
+                cursor: 'pointer',
+              }}
+            >
+              Clear Search
+            </button>
+          </div>
+        )}
       </nav>
 
       {/* COLLAPSED FOOTER */}
@@ -368,9 +427,18 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
 
-  const filteredTabs = tabs
-    .filter(t => t.label.toLowerCase().includes(query.toLowerCase()) || (t.keywords?.some?.(k => k.toLowerCase().includes(query.toLowerCase()))))
-    .slice(0, 8);
+  const queryStr = (query || '').trim().toLowerCase();
+  const filteredTabs = queryStr
+    ? tabs.filter(t => {
+        const matchLabel = t.label?.toLowerCase().includes(queryStr);
+        const matchId = t.id?.toLowerCase().includes(queryStr);
+        const matchKeywords = t.keywords?.some?.(k => k.toLowerCase().includes(queryStr));
+        const matchCategory = t.category?.toLowerCase().includes(queryStr);
+        const umbrella = t.umbrellaId ? UMBRELLA_TOPICS.find(u => u.id === t.umbrellaId) : null;
+        const matchUmbrella = umbrella?.title?.toLowerCase().includes(queryStr) || umbrella?.description?.toLowerCase().includes(queryStr);
+        return matchLabel || matchId || matchKeywords || matchCategory || matchUmbrella;
+      }).slice(0, 16)
+    : tabs.slice(0, 10);
 
   useEffect(() => {
     if (isOpen) {
@@ -384,7 +452,7 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
     const handleKey = (e) => {
       if (!isOpen) return;
       if (e.key === 'Escape') onClose();
-      else if (e.key === 'ArrowDown') { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, filteredTabs.length - 1)); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, Math.max(0, filteredTabs.length - 1))); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); setSelectedIndex(i => Math.max(i - 1, 0)); }
       else if (e.key === 'Enter') { e.preventDefault(); if (filteredTabs[selectedIndex]) { onSelectTab(filteredTabs[selectedIndex].id); onClose(); } }
     };
@@ -397,7 +465,7 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
   return (
     <div
       style={{
-        position: 'fixed', top: '20%', left: '50%', transform: 'translateX(-50%)',
+        position: 'fixed', top: '15%', left: '50%', transform: 'translateX(-50%)',
         width: 'min(640px, 90vw)', zIndex: 'var(--ds-zIndex-modal)',
         background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-default)',
         borderRadius: 'var(--ds-radius-xl)', boxShadow: 'var(--ds-shadow-xl)',
@@ -414,7 +482,7 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search tabs, concepts, code..."
+            placeholder="Search tabs (e.g., langchain, langgraph, prompt, rag)..."
             value={query}
             onChange={e => { setQuery(e.target.value); setSelectedIndex(0); }}
             style={{ background: 'none', border: 'none', outline: 'none', fontSize: 'var(--ds-font-size-body)', color: 'var(--ds-color-text-primary)', width: '100%', fontFamily: 'var(--ds-font-family-sans)' }}
@@ -448,8 +516,11 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
           ))
         )}
       </div>
-      <div style={{ padding: 'var(--ds-space-3) var(--ds-space-4)', borderTop: '1px solid var(--ds-color-border-subtle)', display: 'flex', justifyContent: 'flex-end', gap: 'var(--ds-space-2)' }}>
-        <Button variant="ghost" size="sm" onClick={onClose}>Cancel</Button>
+      <div style={{ padding: 'var(--ds-space-3) var(--ds-space-4)', borderTop: '1px solid var(--ds-color-border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>
+          {filteredTabs.length} matching tab{filteredTabs.length === 1 ? '' : 's'}
+        </span>
+        <Button variant="ghost" size="sm" onClick={onClose}>Close (Esc)</Button>
       </div>
     </div>
   );
