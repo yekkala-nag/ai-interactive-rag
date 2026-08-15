@@ -659,121 +659,124 @@ const LangChainVisual = () => {
             </button>
           </div>
 
-          {/* SVG Pipeline */}
-          <svg viewBox="0 0 105 58" style={{ width: "100%", height: 200 }}>
-            <defs>
-              <marker id="green-arrow" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
-              </marker>
-              <marker id="purple-arrow" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L6,3 z" fill="#9b7fd4" />
-              </marker>
-            </defs>
+          {/* Interactive HTML/CSS Flowchart */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", margin: "1rem 0" }}>
+            {/* Top Row: Core Sequential Chain */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
+              {/* 1. PROMPT */}
+              <button
+                onClick={() => setActiveStep(activeStep === "prompt" ? null : "prompt")}
+                style={{
+                  flex: 1,
+                  padding: "0.75rem 0.5rem",
+                  borderRadius: "8px",
+                  border: activeStep === "prompt" || (traceStep >= 0 && traceOrder[0] === "prompt") ? "2px solid #4a9a4a" : "1px solid #cbd5e1",
+                  background: activeStep === "prompt" || (traceStep >= 0 && traceOrder[0] === "prompt") ? "rgba(74, 154, 74, 0.18)" : "#ffffff",
+                  boxShadow: activeStep === "prompt" || (traceStep >= 0 && traceOrder[0] === "prompt") ? "0 0 10px rgba(74, 154, 74, 0.3)" : "0 1px 3px rgba(0,0,0,0.05)",
+                  cursor: "pointer",
+                  textAlign: "center",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                <div style={{ fontSize: "1.4rem", marginBottom: "2px" }}>💬</div>
+                <div style={{ fontWeight: 800, fontSize: "0.82rem", color: "#2d6a2d", fontFamily: "Syne, sans-serif" }}>1. Prompt</div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b" }}>PromptTemplate</div>
+              </button>
 
-            {/* 1. PROMPT */}
-            <g onClick={() => setActiveStep(activeStep === "prompt" ? null : "prompt")} style={{ cursor: "pointer" }}>
-              <rect
-                x="4" y="6" width="26" height="18" rx="4"
-                fill={activeStep === "prompt" || (traceStep >= 0 && traceOrder[0] === "prompt") ? "rgba(74, 154, 74, 0.22)" : "#ffffff"}
-                stroke="#4a9a4a"
-                strokeWidth={activeStep === "prompt" || (traceStep >= 0 && traceOrder[0] === "prompt") ? 1.8 : 1}
-                style={{ transition: "all 0.2s" }}
-              />
-              <text x="17" y="16" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#2d6a2d" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
-                💬 Prompt
-              </text>
-            </g>
+              <div style={{ fontSize: "1.2rem", color: traceStep >= 1 ? "#4a9a4a" : "#cbd5e1", fontWeight: "bold" }}>➔</div>
 
-            {/* Arrow 1: Prompt -> Model */}
-            <line
-              x1="30" y1="15" x2="38" y2="15"
-              stroke={traceStep >= 1 ? "#4a9a4a" : "#cbd5e1"}
-              strokeWidth={traceStep >= 1 ? "1.5" : "1"}
-              markerEnd={traceStep >= 1 ? "url(#green-arrow)" : undefined}
-            />
+              {/* 2. MODEL */}
+              <button
+                onClick={() => setActiveStep(activeStep === "model" ? null : "model")}
+                style={{
+                  flex: 1,
+                  padding: "0.75rem 0.5rem",
+                  borderRadius: "8px",
+                  border: activeStep === "model" || (traceStep >= 1 && traceOrder[1] === "model") ? "2px solid #4a9a4a" : "1px solid #cbd5e1",
+                  background: activeStep === "model" || (traceStep >= 1 && traceOrder[1] === "model") ? "rgba(74, 154, 74, 0.18)" : "#ffffff",
+                  boxShadow: activeStep === "model" || (traceStep >= 1 && traceOrder[1] === "model") ? "0 0 10px rgba(74, 154, 74, 0.3)" : "0 1px 3px rgba(0,0,0,0.05)",
+                  cursor: "pointer",
+                  textAlign: "center",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                <div style={{ fontSize: "1.4rem", marginBottom: "2px" }}>🤖</div>
+                <div style={{ fontWeight: 800, fontSize: "0.82rem", color: "#2d6a2d", fontFamily: "Syne, sans-serif" }}>2. Model</div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b" }}>ChatAnthropic</div>
+              </button>
 
-            {/* 2. MODEL */}
-            <g onClick={() => setActiveStep(activeStep === "model" ? null : "model")} style={{ cursor: "pointer" }}>
-              <rect
-                x="39" y="6" width="26" height="18" rx="4"
-                fill={activeStep === "model" || (traceStep >= 1 && traceOrder[1] === "model") ? "rgba(74, 154, 74, 0.22)" : "#ffffff"}
-                stroke="#4a9a4a"
-                strokeWidth={activeStep === "model" || (traceStep >= 1 && traceOrder[1] === "model") ? 1.8 : 1}
-                style={{ transition: "all 0.2s" }}
-              />
-              <text x="52" y="16" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#2d6a2d" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
-                🤖 Model
-              </text>
-            </g>
+              <div style={{ fontSize: "1.2rem", color: traceStep >= 2 ? "#4a9a4a" : "#cbd5e1", fontWeight: "bold" }}>➔</div>
 
-            {/* Arrow 2: Model -> Parser */}
-            <line
-              x1="65" y1="15" x2="73" y2="15"
-              stroke={traceStep >= 2 ? "#4a9a4a" : "#cbd5e1"}
-              strokeWidth={traceStep >= 2 ? "1.5" : "1"}
-              markerEnd={traceStep >= 2 ? "url(#green-arrow)" : undefined}
-            />
+              {/* 3. PARSER */}
+              <button
+                onClick={() => setActiveStep(activeStep === "parser" ? null : "parser")}
+                style={{
+                  flex: 1,
+                  padding: "0.75rem 0.5rem",
+                  borderRadius: "8px",
+                  border: activeStep === "parser" || (traceStep >= 2 && traceOrder[2] === "parser") ? "2px solid #4a9a4a" : "1px solid #cbd5e1",
+                  background: activeStep === "parser" || (traceStep >= 2 && traceOrder[2] === "parser") ? "rgba(74, 154, 74, 0.18)" : "#ffffff",
+                  boxShadow: activeStep === "parser" || (traceStep >= 2 && traceOrder[2] === "parser") ? "0 0 10px rgba(74, 154, 74, 0.3)" : "0 1px 3px rgba(0,0,0,0.05)",
+                  cursor: "pointer",
+                  textAlign: "center",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                <div style={{ fontSize: "1.4rem", marginBottom: "2px" }}>📤</div>
+                <div style={{ fontWeight: 800, fontSize: "0.82rem", color: "#2d6a2d", fontFamily: "Syne, sans-serif" }}>3. Parser</div>
+                <div style={{ fontSize: "0.62rem", color: "#64748b" }}>StrOutputParser</div>
+              </button>
+            </div>
 
-            {/* 3. PARSER */}
-            <g onClick={() => setActiveStep(activeStep === "parser" ? null : "parser")} style={{ cursor: "pointer" }}>
-              <rect
-                x="74" y="6" width="27" height="18" rx="4"
-                fill={activeStep === "parser" || (traceStep >= 2 && traceOrder[2] === "parser") ? "rgba(74, 154, 74, 0.22)" : "#ffffff"}
-                stroke="#4a9a4a"
-                strokeWidth={activeStep === "parser" || (traceStep >= 2 && traceOrder[2] === "parser") ? 1.8 : 1}
-                style={{ transition: "all 0.2s" }}
-              />
-              <text x="87.5" y="16" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#2d6a2d" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
-                📤 Parser
-              </text>
-            </g>
+            {/* Bottom Row: Optional Branches (Tools & Memory) */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "8px", paddingRight: "4px" }}>
+              <span style={{ fontSize: "0.7rem", fontWeight: 700, color: "#9b7fd4", textTransform: "uppercase", letterSpacing: "0.05em", marginRight: "auto" }}>
+                Optional Integrations:
+              </span>
 
-            {/* Vertical Branch Line: Model -> Tools */}
-            <line
-              x1="52" y1="24" x2="52" y2="33"
-              stroke={traceStep >= 3 ? "#9b7fd4" : "#cbd5e1"}
-              strokeWidth="1"
-              strokeDasharray={traceStep >= 3 ? "none" : "2,2"}
-              markerEnd={traceStep >= 3 ? "url(#purple-arrow)" : undefined}
-            />
+              {/* 4. TOOLS */}
+              <button
+                onClick={() => setActiveStep(activeStep === "tools" ? null : "tools")}
+                style={{
+                  width: "130px",
+                  padding: "0.6rem 0.4rem",
+                  borderRadius: "8px",
+                  border: activeStep === "tools" || (traceStep >= 3 && traceOrder[3] === "tools") ? "2px solid #9b7fd4" : "1px solid #cbd5e1",
+                  background: activeStep === "tools" || (traceStep >= 3 && traceOrder[3] === "tools") ? "rgba(155, 127, 212, 0.18)" : "#ffffff",
+                  boxShadow: activeStep === "tools" || (traceStep >= 3 && traceOrder[3] === "tools") ? "0 0 10px rgba(155, 127, 212, 0.3)" : "0 1px 3px rgba(0,0,0,0.05)",
+                  cursor: "pointer",
+                  textAlign: "center",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                <div style={{ fontSize: "1.2rem", marginBottom: "2px" }}>🔧</div>
+                <div style={{ fontWeight: 800, fontSize: "0.78rem", color: "#6b46c1", fontFamily: "Syne, sans-serif" }}>4. Tools</div>
+                <div style={{ fontSize: "0.6rem", color: "#64748b" }}>@tool / Search</div>
+              </button>
 
-            {/* 4. TOOLS */}
-            <g onClick={() => setActiveStep(activeStep === "tools" ? null : "tools")} style={{ cursor: "pointer" }}>
-              <rect
-                x="39" y="34" width="26" height="18" rx="4"
-                fill={activeStep === "tools" || (traceStep >= 3 && traceOrder[3] === "tools") ? "rgba(155, 127, 212, 0.22)" : "#ffffff"}
-                stroke="#9b7fd4"
-                strokeWidth={activeStep === "tools" || (traceStep >= 3 && traceOrder[3] === "tools") ? 1.8 : 1}
-                style={{ transition: "all 0.2s" }}
-              />
-              <text x="52" y="44" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#6b46c1" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
-                🔧 Tools
-              </text>
-            </g>
+              <div style={{ fontSize: "1rem", color: traceStep >= 4 ? "#9b7fd4" : "#cbd5e1", fontWeight: "bold" }}>➔</div>
 
-            {/* Branch Line: Tools -> Memory */}
-            <line
-              x1="65" y1="43" x2="73" y2="43"
-              stroke={traceStep >= 4 ? "#9b7fd4" : "#cbd5e1"}
-              strokeWidth="1"
-              strokeDasharray={traceStep >= 4 ? "none" : "2,2"}
-              markerEnd={traceStep >= 4 ? "url(#purple-arrow)" : undefined}
-            />
-
-            {/* 5. MEMORY */}
-            <g onClick={() => setActiveStep(activeStep === "memory" ? null : "memory")} style={{ cursor: "pointer" }}>
-              <rect
-                x="74" y="34" width="27" height="18" rx="4"
-                fill={activeStep === "memory" || (traceStep >= 4 && traceOrder[4] === "memory") ? "rgba(155, 127, 212, 0.22)" : "#ffffff"}
-                stroke="#9b7fd4"
-                strokeWidth={activeStep === "memory" || (traceStep >= 4 && traceOrder[4] === "memory") ? 1.8 : 1}
-                style={{ transition: "all 0.2s" }}
-              />
-              <text x="87.5" y="44" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#6b46c1" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
-                🧠 Memory
-              </text>
-            </g>
-          </svg>
+              {/* 5. MEMORY */}
+              <button
+                onClick={() => setActiveStep(activeStep === "memory" ? null : "memory")}
+                style={{
+                  width: "130px",
+                  padding: "0.6rem 0.4rem",
+                  borderRadius: "8px",
+                  border: activeStep === "memory" || (traceStep >= 4 && traceOrder[4] === "memory") ? "2px solid #9b7fd4" : "1px solid #cbd5e1",
+                  background: activeStep === "memory" || (traceStep >= 4 && traceOrder[4] === "memory") ? "rgba(155, 127, 212, 0.18)" : "#ffffff",
+                  boxShadow: activeStep === "memory" || (traceStep >= 4 && traceOrder[4] === "memory") ? "0 0 10px rgba(155, 127, 212, 0.3)" : "0 1px 3px rgba(0,0,0,0.05)",
+                  cursor: "pointer",
+                  textAlign: "center",
+                  transition: "all 0.2s ease"
+                }}
+              >
+                <div style={{ fontSize: "1.2rem", marginBottom: "2px" }}>🧠</div>
+                <div style={{ fontWeight: 800, fontSize: "0.78rem", color: "#6b46c1", fontFamily: "Syne, sans-serif" }}>5. Memory</div>
+                <div style={{ fontSize: "0.6rem", color: "#64748b" }}>Buffer / Summary</div>
+              </button>
+            </div>
+          </div>
 
           {stepInfo && (
             <div style={{ padding: "0.8rem", background: `${stepInfo.color}10`, border: `1px solid ${stepInfo.color}40`, borderRadius: 4, fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>
