@@ -17,29 +17,44 @@ export function LangChainVsLangGraphComparison() {
       whenToUseLg: 'Use LangGraph for workflows requiring feedback loops, iterative refinement, or complex decision cycles like coding agents or planning systems.',
       diagram: (
         <svg viewBox="0 0 100 60" style={{ width: '100%', height: 80 }}>
-          {/* LangChain Pipeline */}
-          <rect x="10" y="10" width="30" height="20" rx="4" fill="#4a9a4a20" stroke="#4a9a4a" strokeWidth="1.5"/>
-          <text x="25" y="23" textAnchor="middle" fill="#4a9a4a" fontSize="10">Prompt</text>
-          <line x1="40" y1="20" x2="50" y2="20" stroke="#4a9a4a" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-          <rect x="50" y="10" width="30" height="20" rx="4" fill="#4a9a4a20" stroke="#4a9a4a" strokeWidth="1.5"/>
-          <text x="65" y="23" textAnchor="middle" fill="#4a9a4a" fontSize="10">Model</text>
-          <line x1="80" y1="20" x2="90" y2="20" stroke="#4a9a4a" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-          
-          {/* LangGraph Cyclic */}
-          <rect x="10" y="35" width="25" height="20" rx="4" fill="#2a7a9c20" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <text x="22.5" y="48" textAnchor="middle" fill="#2a7a9c" fontSize="10">Node A</text>
-          <line x1="35" y1="45" x2="65" y2="45" stroke="#2a7a9c" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-          <rect x="65" y="35" width="25" height="20" rx="4" fill="#2a7a9c20" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <text x="77.5" y="48" textAnchor="middle" fill="#2a7a9c" fontSize="10">Node B</text>
-          <line x1="90" y1="45" x2="40" y2="45" stroke="#2a7a9c" strokeWidth="1.5" markerEnd="url(#arrow)" strokeDasharray="4,2"/>
-          <line x1="40" y1="45" x2="25" y2="35" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <line x1="25" y1="35" x2="10" y2="45" stroke="#2a7a9c" strokeWidth="1.5"/>
-          
-          <defs>
-            <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-              <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
-            </marker>
-          </defs>
+{/* LangChain Pipeline */}
+            <rect x="10" y="10" width="30" height="20" rx="4" fill="#4a9a4a20" stroke="#4a9a4a" strokeWidth="1.5"/>
+            <text x="25" y="23" textAnchor="middle" fill="#4a9a4a" fontSize="10">Prompt</text>
+            <line x1="40" y1="20" x2="50" y2="20" stroke="#4a9a4a" strokeWidth="1.5" markerEnd={`url(#arrow-${diff.id}-1)`}/>
+            <rect x="50" y="10" width="30" height="20" rx="4" fill="#4a9a4a20" stroke="#4a9a4a" strokeWidth="1.5"/>
+            <text x="65" y="23" textAnchor="middle" fill="#4a9a4a" fontSize="10">Model</text>
+            <line x1="80" y1="20" x2="90" y2="20" stroke="#4a9a4a" strokeWidth="1.5" markerEnd={`url(#arrow-${diff.id}-2)`}/>
+            
+            {/* LangGraph Cyclic */}
+            <rect x="10" y="35" width="25" height="20" rx="4" fill="#2a7a9c20" stroke="#2a7a9c" strokeWidth="1.5"/>
+            <text x="22.5" y="48" textAnchor="middle" fill="#2a7a9c" fontSize="10">Node A</text>
+            <line x1="35" y1="45" x2="65" y2="45" stroke="#2a7a9c" strokeWidth="1.5" markerEnd={`url(#arrow-${diff.id}-3)`}/>
+            <rect x="65" y="35" width="25" height="20" rx="4" fill="#2a7a9c20" stroke="#2a7a9c" strokeWidth="1.5"/>
+            <text x="77.5" y="48" textAnchor="middle" fill="#2a7a9c" fontSize="10">Node B</text>
+            <line x1="90" y1="45" x2="40" y2="45" stroke="#2a7a9c" strokeWidth="1.5" markerEnd={`url(#arrow-${diff.id}-4)`} strokeDasharray="4,2"/>
+            <line x1="40" y1="45" x2="25" y2="35" stroke="#2a7a9c" strokeWidth="1.5" markerEnd={`url(#arrow-${diff.id}-5)`}/>
+            <line x1="25" y1="35" x2="10" y2="45" stroke="#2a7a9c" strokeWidth="1.5" markerEnd={`url(#arrow-${diff.id}-6)`}/>
+            
+            <defs>
+              <marker id={`arrow-${diff.id}-1`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
+              </marker>
+              <marker id={`arrow-${diff.id}-2`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
+              </marker>
+              <marker id={`arrow-${diff.id}-3`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-4`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-5`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-6`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+            </defs>
         </svg>
       )
     },
@@ -52,33 +67,54 @@ export function LangChainVsLangGraphComparison() {
       whenToUseLg: 'Use LangGraph when you need to track conversation history, validation errors, retry counts, or other state that evolves throughout the workflow.',
       diagram: (
         <svg viewBox="0 0 100 80" style={{ width: '100%', height: 100 }}>
-          {/* Stateless - LangChain */}
-          <text x="50" y="15" textAnchor="middle" fill="#8a8a9a" fontSize="10">LangChain (Stateless)</text>
-          <rect x="20" y="20" width="60" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWidth="1"/>
-          <text x="50" y="29" textAnchor="middle" fill="#4a9a4a" fontSize="9">Runnable 1: input → output</text>
-          <line x1="50" y1="32" x2="50" y2="38" stroke="#4a9a4a" strokeWidth="1" markerEnd="url(#arrow)"/>
-          <rect x="20" y="38" width="60" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWidth="1"/>
-          <text x="50" y="47" textAnchor="middle" fill="#4a9a4a" fontSize="9">Runnable 2: input → output</text>
-          <line x1="50" y1="50" x2="50" y2="56" stroke="#4a9a4a" strokeWidth="1" markerEnd="url(#arrow)"/>
-          <rect x="20" y="56" width="60" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWidth="1"/>
-          <text x="50" y="65" textAnchor="middle" fill="#4a9a4a" fontSize="9">Runnable 3: input → output</text>
-          
-          {/* Stateful - LangGraph */}
-          <text x="50" y="75" textAnchor="middle" fill="#8a8a9a" fontSize="10">LangGraph (Stateful)</text>
-          <rect x="15" y="80" width="70" height="40" rx="4" fill="#2a7a9c10" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <text x="50" y="95" textAnchor="middle" fill="#2a7a9c" fontSize="10">Agent State</text>
-          <text x="20" y="105" fontSize="8">• messages: [Human, AI]</text>
-          <text x="20" y="115" fontSize="8">• iterations: 3</text>
-          <text x="20" y="125" fontSize="8">• tool_calls: [...]</text>
-          <text x="50" y="105" fontSize="8">LLM Node → updates messages</text>
-          <text x="50" y="115" fontSize="8">Tool Node → updates tool_calls</text>
-          <text x="80" y="105" fontSize="8">Router Node → updates iterations</text>
-          
-          <defs>
-            <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-              <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
-            </marker>
-          </defs>
+{/* Stateless - LangChain */}
+            <text x="50" y="15" textAnchor="middle" fill="#8a8a9a" fontSize="10">LangChain (Stateless)</text>
+            <rect x="20" y="20" width="60" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWidth="1"/>
+            <text x="50" y="29" textAnchor="middle" fill="#4a9a4a" fontSize="9">Runnable 1: input → output</text>
+            <line x1="50" y1="32" x2="50" y2="38" stroke="#4a9a4a" strokeWidth="1" markerEnd={`url(#arrow-${diff.id}-1)`}/>
+            <rect x="20" y="38" width="60" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWidth="1"/>
+            <text x="50" y="47" textAnchor="middle" fill="#4a9a4a" fontSize="9">Runnable 2: input → output</text>
+            <line x1="50" y1="50" x2="50" y2="56" stroke="#4a9a4a" strokeWidth="1" markerEnd={`url(#arrow-${diff.id}-2)`}/>
+            <rect x="20" y="56" width="60" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWidth="1"/>
+            <text x="50" y="65" textAnchor="middle" fill="#4a9a4a" fontSize="9">Runnable 3: input → output</text>
+            
+            {/* Stateful - LangGraph */}
+            <text x="50" y="75" textAnchor="middle" fill="#8a8a9a" fontSize="10">LangGraph (Stateful)</text>
+            <rect x="15" y="80" width="70" height="40" rx="4" fill="#2a7a9c10" stroke="#2a7a9c" strokeWidth="1.5"/>
+            <text x="50" y="95" textAnchor="middle" fill="#2a7a9c" fontSize="10">Agent State</text>
+            <text x="20" y="105" fontSize="8">• messages: [Human, AI]</text>
+            <text x="20" y="115" fontSize="8">• iterations: 3</text>
+            <text x="20" y="125" fontSize="8">• tool_calls: [...]</text>
+            <text x="50" y="105" fontSize="8">LLM Node → updates messages</text>
+            <text x="50" y="115" fontSize="8">Tool Node → updates tool_calls</text>
+            <text x="80" y="105" fontSize="8">Router Node → updates iterations</text>
+            
+            <defs>
+              <marker id={`arrow-${diff.id}-1`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
+              </marker>
+              <marker id={`arrow-${diff.id}-2`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
+              </marker>
+              <marker id={`arrow-${diff.id}-3`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-4`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-5`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-6`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-7`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-8`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+            </defs>
         </svg>
       )
     },
@@ -91,33 +127,54 @@ export function LangChainVsLangGraphComparison() {
       whenToUseLg: 'Use LangGraph for workflows requiring formal human approval steps like database migrations, financial transactions, or production deployments.',
       diagram: (
         <svg viewBox="0 0 100 70" style={{ width: '100%', height: 90 }}>
-          {/* LangChain Manual HITL */}
-          <text x="25" y="15" textAnchor="middle" fill="#8a8a9a" fontSize="9">LangChain Approach</text>
-          <rect x="5" y="20" width="40" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWidth="1"/>
-          <text x="25" y="29" textAnchor="middle" fill="#4a9a4a" fontSize="8">Run until proposal</text>
-          <line x1="25" y1="32" x2="25" y2="40" stroke="#4a9a4a" strokeWidth="1" markerEnd="url(#arrow)"/>
-          <rect x="5" y="40" width="40" height="12" rx="2" fill="#e0dcd4" stroke="#b0b0c0" strokeWidth="1" strokeDasharray="2,2"/>
-          <text x="25" y="49" textAnchor="middle" fill="#8a8a9a" fontSize="8">[External App: Save proposal]</text>
-          <line x1="25" y1="52" x2="25" y2="60" stroke="#4a9a4a" strokeWidth="1" markerEnd="url(#arrow)"/>
-          <rect x="5" y="60" width="40" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWidth="1"/>
-          <text x="25" y="69" textAnchor="middle" fill="#4a9a4a" fontSize="8">Resume with context</text>
-          
-          {/* LangGraph Built-in HITL */}
-          <text x="75" y="15" textAnchor="middle" fill="#8a8a9a" fontSize="9">LangGraph Approach</text>
-          <rect x="55" y="20" width="40" height="12" rx="2" fill="#2a7a9c10" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <text x="75" y="29" textAnchor="middle" fill="#2a7a9c" fontSize="8">Run until interrupt</text>
-          <line x1="75" y1="32" x2="75" y2="40" stroke="#2a7a9c" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-          <rect x="55" y="40" width="40" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <text x="75" y="49" textAnchor="middle" fill="#2a7a9c" fontSize="8">interrupt({question: \"Run?\"})</text>
-          <line x1="75" y1="52" x2="75" y2="60" stroke="#2a7a9c" strokeWidth="1.5" markerEnd="url(#arrow)"/>
-          <rect x="55" y="60" width="40" height="12" rx="2" fill="#2a7a9c10" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <text x="75" y="69" textAnchor="middle" fill="#2a7a9c" fontSize="8">Resume with response</text>
-          
-          <defs>
-            <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-              <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
-            </marker>
-          </defs>
+{/* LangChain Manual HITL */}
+            <text x="25" y="15" textAnchor="middle" fill="#8a8a9a" fontSize="9">LangChain Approach</text>
+            <rect x="5" y="20" width="40" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWidth="1"/>
+            <text x="25" y="29" textAnchor="middle" fill="#4a9a4a" fontSize="8">Run until proposal</text>
+            <line x1="25" y1="32" x2="25" y2="40" stroke="#4a9a4a" strokeWidth="1" markerEnd={`url(#arrow-${diff.id}-1)`}/>
+            <rect x="5" y="40" width="40" height="12" rx="2" fill="#e0dcd4" stroke="#b0b0c0" strokeWidth="1" strokeDasharray="2,2"/>
+            <text x="25" y="49" textAnchor="middle" fill="#8a8a9a" fontSize="8">[External App: Save proposal]</text>
+            <line x1="25" y1="52" x2="25" y2="60" stroke="#4a9a4a" strokeWeight="1" markerEnd={`url(#arrow-${diff.id}-2)`}/>
+            <rect x="5" y="60" width="40" height="12" rx="2" fill="#4a9a4a10" stroke="#4a9a4a" strokeWeight="1"/>
+            <text x="25" y="69" textAnchor="middle" fill="#8a8a9a" fontSize="8">Resume with context</text>
+            
+            {/* LangGraph Built-in HITL */}
+            <text x="75" y="15" textAnchor="middle" fill="#8a8a9a" fontSize="9">LangGraph Approach</text>
+            <rect x="55" y="20" width="40" height="12" rx="2" fill="#2a7a9c10" stroke="#2a7a9c" strokeWeight="1.5"/>
+            <text x="75" y="29" textAnchor="middle" fill="#2a7a9c" fontSize="8">Run until interrupt</text>
+            <line x1="75" y1="32" x2="75" y2="40" stroke="#2a7a9c" strokeWeight="1.5" markerEnd={`url(#arrow-${diff.id}-3)`}/>
+            <rect x="55" y="40" width="40" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWeight="1.5"/>
+            <text x="75" y="49" textAnchor="middle" fill="#2a7a9c" fontSize="8">interrupt({question: "Run?\"})</text>
+            <line x1="75" y1="52" x2="75" y2="60" stroke="#2a7a9c" strokeWeight="1.5" markerEnd={`url(#arrow-${diff.id}-4)`}/>
+            <rect x="55" y="60" width="40" height="12" rx="2" fill="#2a7a9c10" stroke="#2a7a9c" strokeWeight="1.5"/>
+            <text x="75" y="69" textAnchor="middle" fill="#2a7a9c" fontSize="8">Resume with response</text>
+            
+            <defs>
+              <marker id={`arrow-${diff.id}-1`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
+              </marker>
+              <marker id={`arrow-${diff.id}-2`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
+              </marker>
+              <marker id={`arrow-${diff.id}-3`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-4`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-5`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-6`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-7`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-8`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+            </defs>
         </svg>
       )
     },
@@ -130,37 +187,58 @@ export function LangChainVsLangGraphComparison() {
       whenToUseLg: 'Use LangGraph for long-running, expensive workflows where re-executing successful steps would be wasteful (e.g., multi-step research, complex agent tasks).',
       diagram: (
         <svg viewBox="0 0 100 50" style={{ width: '100%', height: 65 }}>
-          {/* Restart - LangChain */}
-          <text x="25" y="12" textAnchor="middle" fill="#8a8a9a" fontSize="9">LangChain: Restart on Failure</text>
-          <rect x="5" y="15" width="12" height="12" rx="2" fill="#4a9a4a20" stroke="#4a9a4a" strokeWidth="1"/>
-          <text x="11" y="24" textAnchor="middle" fill="#4a9a4a" fontSize="8">Step 1</text>
-          <rect x="23" y="15" width="12" height="12" rx="2" fill="#4a9a4a20" stroke="#4a9a4a" strokeWidth="1"/>
-          <text x="29" y="24" textAnchor="middle" fill="#4a9a4a" fontSize="8">Step 2</text>
-          <rect x="41" y="15" width="12" height="12" rx="2" fill="#4a9a4a20" stroke="#4a9a4a" strokeWidth="1"/>
-          <text x="47" y="24" textAnchor="middle" fill="#4a9a4a" fontSize="8">Step 3</text>
-          <rect x="59" y="15" width="12" height="12" rx="2" fill="#e74c3c" stroke="#c0392b" strokeWidth="1"/>
-          <text x="65" y="24" textAnchor="middle" fill="#ffffff" fontSize="8">Step 4<br/>FAIL</text>
-          <line x1="75" y1="21" x2="5" y2="21" stroke="#e74c3c" strokeWidth="1" strokeDasharray="4,2"/>
-          <text x="40" y="10" textAnchor="middle" fill="#e74c3c" fontSize="8">RESTART ALL</text>
-          
-          {/* Resume - LangGraph */}
-          <text x="75" y="12" textAnchor="middle" fill="#8a8a9a" fontSize="9">LangGraph: Resume from Checkpoint</text>
-          <rect x="55" y="15" width="12" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <text x="61" y="24" textAnchor="middle" fill="#2a7a9c" fontSize="8">Step 1</text>
-          <rect x="73" y="15" width="12" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <text x="79" y="24" textAnchor="middle" fill="#2a7a9c" fontSize="8">Step 2</text>
-          <rect x="91" y="15" width="12" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWidth="1.5"/>
-          <text x="97" y="24" textAnchor="middle" fill="#2a7a9c" fontSize="8">Step 3</text>
-          <rect x="109" y="15" width="12" height="12" rx="2" fill="#e74c3c" stroke="#c0392b" strokeWidth="1.5"/>
-          <text x="115" y="24" textAnchor="middle" fill="#ffffff" fontSize="8">Step 4<br/>FAIL</text>
-          <line x1="125" y1="21" x2="55" y2="21" stroke="#2a7a9c" strokeWidth="1.5" strokeDasharray="4,2"/>
-          <text x="90" y="10" textAnchor="middle" fill="#2a7a9c" fontSize="8">RESUME from<br/>Checkpoint 3</text>
-          
-          <defs>
-            <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-              <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
-            </marker>
-          </defs>
+{/* Restart - LangChain */}
+            <text x="25" y="12" textAnchor="middle" fill="#8a8a9a" fontSize="9">LangChain: Restart on Failure</text>
+            <rect x="5" y="15" width="12" height="12" rx="2" fill="#4a9a4a20" stroke="#4a9a4a" strokeWidth="1"/>
+            <text x="11" y="24" textAnchor="middle" fill="#4a9a4a" fontSize="8">Step 1</text>
+            <rect x="23" y="15" width="12" height="12" rx="2" fill="#4a9a4a20" stroke="#4a9a4a" strokeWeight="1"/>
+            <text x="29" y="24" textAnchor="middle" fill="#4a9a4a" fontSize="8">Step 2</text>
+            <rect x="41" y="15" width="12" height="12" rx="2" fill="#4a9a4a20" stroke="#4a9a4a" strokeWeight="1"/>
+            <text x="47" y="24" textAnchor="middle" fill="#4a9a4a" fontSize="8">Step 3</text>
+            <rect x="59" y="15" width="12" height="12" rx="2" fill="#e74c3c" stroke="#c0392b" strokeWeight="1"/>
+            <text x="65" y="24" textAnchor="middle" fill="#ffffff" fontSize="8">Step 4<br/>FAIL</text>
+            <line x1="75" y1="21" x2="5" y2="21" stroke="#e74c3c" strokeWeight="1" strokeDasharray="4,2" markerEnd={`url(#arrow-${diff.id}-1)`}/>
+            <text x="40" y="10" textAnchor="middle" fill="#e74c3c" fontSize="8">RESTART ALL</text>
+            
+            {/* Resume - LangGraph */}
+            <text x="75" y="12" textAnchor="middle" fill="#8a8a9a" fontSize="9">LangGraph: Resume from Checkpoint</text>
+            <rect x="55" y="15" width="12" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWeight="1.5"/>
+            <text x="61" y="24" textAnchor="middle" fill="#2a7a9c" fontSize="8">Step 1</text>
+            <rect x="73" y="15" width="12" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWeight="1.5"/>
+            <text x="79" y="24" textAnchor="middle" fill="#2a7a9c" fontSize="8">Step 2</text>
+            <rect x="91" y="15" width="12" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWeight="1.5"/>
+            <text x="97" y="24" textAnchor="middle" fill="#2a7a9c" fontSize="8">Step 3</text>
+            <rect x="109" y="15" width="12" height="12" rx="2" fill="#e74c3c" stroke="#c0392b" strokeWeight="1.5"/>
+            <text x="115" y="24" textAnchor="middle" fill="#ffffff" fontSize="8">Step 4<br/>FAIL</text>
+            <line x1="125" y1="21" x2="55" y2="21" stroke="#2a7a9c" strokeWeight="1.5" strokeDasharray="4,2" markerEnd={`url(#arrow-${diff.id}-2)`}/>
+            <text x="90" y="10" textAnchor="middle" fill="#2a7a9c" fontSize="8">RESUME from<br/>Checkpoint 3</text>
+            
+            <defs>
+              <marker id={`arrow-${diff.id}-1`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#e74c3c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-2`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-3`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-4`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-5`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-6`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-7`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+              <marker id={`arrow-${diff.id}-8`} markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#2a7a9c" />
+              </marker>
+            </defs>
         </svg>
       )
     }
@@ -227,19 +305,12 @@ export function LangChainVsLangGraphComparison() {
                       </div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-space-4)' }}>
-                      <Diagram 
-                        src="data:image/svg+xml;base64,{btoa(diff.diagram.props.children?.props?.src || '')}"
-                        alt={`${diff.title} diagram`}
-                        title={`${diff.title} Comparison`}
-                        caption="Visual comparison of how LangChain and LangGraph handle this aspect"
-                        maxWidth="300px"
-                      />
-                      {/* Since we can't easily convert SVG to base64 in this context, let's use a different approach */}
-                      <div style={{ border: '1px dashed var(--ds-color-border-subtle)', borderRadius: 'var(--ds-radius-md)', padding: 'var(--ds-space-3)', background: '#fafafa' }}>
-                        <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#8a8a9a', textAlign: 'center', fontStyle: 'italic' }}>
-                          [Interactive SVG Diagram - See implementation for visual]
-                        </div>
-                      </div>
+{/* Since we can't easily convert SVG to base64 in this context, let's use a different approach */}
+                       <div style={{ border: '1px dashed var(--ds-color-border-subtle)', borderRadius: 'var(--ds-radius-md)', padding: 'var(--ds-space-3)', background: '#fafafa', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                         <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#8a8a9a', textAlign: 'center', fontStyle: 'italic' }}>
+                           [Interactive SVG Diagram - See implementation for visual]
+                         </div>
+                       </div>
                     </div>
                   </Grid>
                 </Tabs.Content>

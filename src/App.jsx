@@ -736,7 +736,7 @@ parser = StrOutputParser()
 @tool
 def search(query: str) -> str:
     """Search for relevant information."""
-    return vector_store.similarity_search(query, k=3)
+    return "Search results for: " + query  # Simplified for example
 
 # 3. Build chain (LCEL - LangChain Expression Language)
 chain = prompt | model | parser
@@ -947,41 +947,6 @@ const BestPracticesGrid = () => {
           </div>
         ))}
       </div>
-    </div>
-  );
-};
-
-// ─── COMPARISON TABLE ────────────────────────────────────────────
-const ComparisonTable = () => {
-  const [highlight, setHighlight] = useState(null);
-  const cols = ["Raw SDK", "LangChain", "LangGraph"];
-  const colColors = ["#4a9a4a", "#4a9a4a", "#2a7a9c"];
-
-  return (
-    <div style={{ overflowX: "auto" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.68rem" }}>
-        <thead>
-          <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
-            <th style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>Dimension</th>
-            {cols.map((c, i) => (
-              <th key={c}
-                onMouseEnter={() => setHighlight(i)}
-                onMouseLeave={() => setHighlight(null)}
-                style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: colColors[i], fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", background: highlight === i ? colColors[i] + "08" : "transparent", transition: "background 0.2s" }}>{c}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {COMPARISON.map((row, ri) => (
-            <tr key={ri} style={{ borderBottom: "1px solid rgba(42,42,56,0.5)" }}>
-              <td style={{ padding: "0.7rem 1rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dim}</td>
-              {[row.sdk, row.lc, row.lg].map((val, ci) => (
-                <td key={ci} style={{ padding: "0.7rem 1rem", color: val.startsWith("✅") ? colColors[ci] : val.startsWith("❌") ? "#c4572a" : "#b0b0c0", background: highlight === ci ? colColors[ci] + "06" : "transparent", transition: "background 0.2s" }}>{val}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 };
