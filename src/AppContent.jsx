@@ -62,3 +62,5 @@ export { default as CliAgentTab } from './cliAgents/CliAgentTab.jsx';
 export { default as ThreeLayersTab } from './engineeringLayers/ThreeLayersTab.jsx';
 export { default as InterviewPrepTab } from './tabs/InterviewPrepTab.jsx';
 export { default as AgenticParsingTab } from './agenticParsing/AgenticParsingTab.jsx';
+export { default as ZeroModelRouterTab } from './zeroModelRouter/ZeroModelRouterTab.jsx';
+export { default as WorkflowLoopTab } from './workflowLoop/WorkflowLoopTab.jsx';

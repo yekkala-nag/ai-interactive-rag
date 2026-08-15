@@ -42,7 +42,7 @@ const QUICK_START_STEPS = [
 
 const MODULE_CARDS = [
   { moduleId: 'foundations', label: 'Foundations & Architecture', count: 6, desc: 'Core AI concepts, glossaries, prompt engineering', href: '#' },
-  { moduleId: 'rag_architecture', label: 'RAG Systems & Pipelines', count: 11, desc: 'Retrieval architectures, hybrid search & verification', href: '#' },
+  { moduleId: 'rag_architecture', label: 'RAG Systems & Pipelines', count: 14, desc: 'Retrieval architectures, hybrid search, zero-model routing, workflow dispatchers & verification', href: '#' },
   { moduleId: 'context_memory', label: 'Context & Memory', count: 7, desc: 'Context curation, evaluation, graphs & persistent memory', href: '#' },
   { moduleId: 'agents_frameworks', label: 'Agent Systems & Frameworks', count: 13, desc: 'ReAct, multi-agent, CLI agents, LangChain & LangGraph', href: '#' },
   { moduleId: 'data_platform', label: 'Data & Platform Layers', count: 8, desc: 'Prompt/Context/Loop layers, document structure & ML', href: '#' },

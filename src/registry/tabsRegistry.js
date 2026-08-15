@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "archconcepts", "workflows", "unhobbling", "promptmgmt"]
+    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "workflows", "unhobbling"]
   },
   {
     id: "rag_architecture",
@@ -24,7 +24,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
-    tabs: ["rag", "pipeline", "filtering", "hierrag", "qparseloop", "prodrag", "genpatterns", "fourpdfs", "hallucbricks", "agenticrag", "ragcasestudies", "interviewprep"]
+    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "agenticrag", "ragcasestudies", "interviewprep"]
   },
   {
     id: "context_memory",
@@ -32,7 +32,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🧠",
     color: "#9b7fd4",
     description: "Context curation, measuring quality, company brain & context graph",
-    tabs: ["ctxeng", "ctxmeasure", "companybrain", "contextgraph", "vague", "hallucination", "memeng"]
+    tabs: ["ctxeng", "ctxmeasure", "vague", "hallucination", "contextgraph", "companybrain", "memeng"]
   },
   {
     id: "agents_frameworks",
@@ -40,7 +40,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🤖",
     color: "#c4572a",
     description: "ReAct loops, multi-agent orchestration, CLI agents, LangChain & LangGraph",
-    tabs: ["cliagent", "redesign", "fiveassets", "multiagent", "agentsastools", "codingagentsnonprog", "langchain", "langgraph", "compare", "agentscale", "agentdebugging", "agenttasks", "aiproductbuilder"]
+    tabs: ["fiveassets", "redesign", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder"]
   },
   {
     id: "data_platform",
@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["powerfeatures", "frontiers", "ragbeyond", "practices", "tokenbill", "progress"]
+    tabs: ["tokenbill", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress"]
   }
 ];
 
@@ -90,6 +90,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.ArchConceptsTab })))
   },
   {
+    id: "promptmgmt",
+    label: "Prompt Engineering & SemVer",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "📜",
+    keywords: ["prompt management", "semver", "prompt engineering", "templates", "versioning"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.PromptMgmtTab })))
+  },
+  {
     id: "workflows",
     label: "Claude Workflows",
     umbrellaId: "foundations",
@@ -106,15 +115,6 @@ export const TABS_REGISTRY = [
     icon: "🔓",
     keywords: ["unhobbling", "claude 5", "capabilities", "reasoning"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.UnhobblingTab })))
-  },
-  {
-    id: "promptmgmt",
-    label: "Prompt Engineering & SemVer",
-    umbrellaId: "foundations",
-    category: "Foundations",
-    icon: "📜",
-    keywords: ["prompt management", "semver", "prompt engineering", "templates", "versioning"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.PromptMgmtTab })))
   },
 
   // ── Umbrella 2 — RAG Architectures & Pipelines ──────────────────────────────
@@ -137,6 +137,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.PipelineTab })))
   },
   {
+    id: "qparseloop",
+    label: "Question Parsing Loop",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🔂",
+    keywords: ["question parsing", "query rewrite", "intent"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.QuestionParsingLoopTab })))
+  },
+  {
     id: "filtering",
     label: "Retrieval = Filtering",
     umbrellaId: "rag_architecture",
@@ -155,15 +164,6 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.HierarchicalRetrievalTab })))
   },
   {
-    id: "qparseloop",
-    label: "Question Parsing Loop",
-    umbrellaId: "rag_architecture",
-    category: "RAG Systems",
-    icon: "🔂",
-    keywords: ["question parsing", "query rewrite", "intent"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.QuestionParsingLoopTab })))
-  },
-  {
     id: "prodrag",
     label: "Production RAG Pipeline",
     umbrellaId: "rag_architecture",
@@ -171,6 +171,15 @@ export const TABS_REGISTRY = [
     icon: "📄",
     keywords: ["production rag", "pdf", "extraction", "tables"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.ProductionRAGTab })))
+  },
+  {
+    id: "routercheap",
+    label: "Zero-Model Fast Router",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "⚡",
+    keywords: ["zero-model router", "fast-path", "calling the llm less", "latency", "cost", "line_df", "co_occurrence_score", "margin", "09ter", "frugalgpt", "router", "fast router"],
+    component: lazy(() => import("../zeroModelRouter/ZeroModelRouterTab.jsx"))
   },
   {
     id: "genpatterns",
@@ -198,6 +207,15 @@ export const TABS_REGISTRY = [
     icon: "🧱",
     keywords: ["hallucinations", "bricks", "verification"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.HallucBricksTab })))
+  },
+  {
+    id: "workflowloop",
+    label: "Workflow & Loop Dispatcher",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🔀",
+    keywords: ["workflow loop", "dispatcher", "when to loop", "when to stop", "should_continue", "pdf_qa_loop", "iterate_with_bound", "decide.py", "13", "drift", "audit"],
+    component: lazy(() => import("../workflowLoop/WorkflowLoopTab.jsx"))
   },
   {
     id: "agenticrag",
@@ -247,24 +265,6 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.ContextMeasureTab })))
   },
   {
-    id: "companybrain",
-    label: "Company Brain Layer",
-    umbrellaId: "context_memory",
-    category: "Context & Memory",
-    icon: "🧠",
-    keywords: ["company brain", "knowledge graph", "enterprise"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.CompanyBrainTab })))
-  },
-  {
-    id: "contextgraph",
-    label: "Context Graph Memory",
-    umbrellaId: "context_memory",
-    category: "Context & Memory",
-    icon: "⬡",
-    keywords: ["context graph", "memory", "state"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.ContextGraphTab })))
-  },
-  {
     id: "vague",
     label: "Vague Questions",
     umbrellaId: "context_memory",
@@ -283,6 +283,24 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.HallucinationLoopTab })))
   },
   {
+    id: "contextgraph",
+    label: "Context Graph Memory",
+    umbrellaId: "context_memory",
+    category: "Context & Memory",
+    icon: "⬡",
+    keywords: ["context graph", "memory", "state"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.ContextGraphTab })))
+  },
+  {
+    id: "companybrain",
+    label: "Company Brain Layer",
+    umbrellaId: "context_memory",
+    category: "Context & Memory",
+    icon: "🧠",
+    keywords: ["company brain", "knowledge graph", "enterprise"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.CompanyBrainTab })))
+  },
+  {
     id: "memeng",
     label: "Memory Engineering",
     umbrellaId: "context_memory",
@@ -294,13 +312,13 @@ export const TABS_REGISTRY = [
 
   // ── Umbrella 4 — Agent Systems & Frameworks ──────────────────────
   {
-    id: "cliagent",
-    label: "Local CLI Agents",
+    id: "fiveassets",
+    label: "5 Assets for Agents",
     umbrellaId: "agents_frameworks",
     category: "Agents & Frameworks",
-    icon: "🤖",
-    keywords: ["cli agent", "ollama", "python", "subprocess", "qwen"],
-    component: lazy(() => import("../cliAgents/CliAgentTab.jsx"))
+    icon: "📦",
+    keywords: ["five assets", "tools", "evals", "prompts"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.FiveAssetsTab })))
   },
   {
     id: "redesign",
@@ -312,24 +330,6 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.RedesignWorkTab })))
   },
   {
-    id: "fiveassets",
-    label: "5 Assets for Agents",
-    umbrellaId: "agents_frameworks",
-    category: "Agents & Frameworks",
-    icon: "📦",
-    keywords: ["five assets", "tools", "evals", "prompts"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.FiveAssetsTab })))
-  },
-  {
-    id: "multiagent",
-    label: "Multi-Agent Pipelines",
-    umbrellaId: "agents_frameworks",
-    category: "Agents & Frameworks",
-    icon: "◈",
-    keywords: ["multi-agent", "orchestration", "handoffs"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.MultiAgentTab })))
-  },
-  {
     id: "agentsastools",
     label: "Agents as Tools",
     umbrellaId: "agents_frameworks",
@@ -339,6 +339,24 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgentsAsToolsTab })))
   },
   {
+    id: "agenttasks",
+    label: "11 Agent Task Archetypes",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "📋",
+    keywords: ["agent tasks", "archetypes", "worktree", "evaluation", "task planning"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgentTasksTab })))
+  },
+  {
+    id: "cliagent",
+    label: "Local CLI Agents",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🤖",
+    keywords: ["cli agent", "ollama", "python", "subprocess", "qwen"],
+    component: lazy(() => import("../cliAgents/CliAgentTab.jsx"))
+  },
+  {
     id: "codingagentsnonprog",
     label: "Non-Prog Coding Agents",
     umbrellaId: "agents_frameworks",
@@ -346,6 +364,15 @@ export const TABS_REGISTRY = [
     icon: "⚡",
     keywords: ["coding agents", "non-programmers", "no-code"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.CodingAgentsNonProgTab })))
+  },
+  {
+    id: "multiagent",
+    label: "Multi-Agent Pipelines",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "◈",
+    keywords: ["multi-agent", "orchestration", "handoffs"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.MultiAgentTab })))
   },
   {
     id: "langchain",
@@ -375,15 +402,6 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.CompareTab })))
   },
   {
-    id: "agentscale",
-    label: "High-Scale Agent Systems",
-    umbrellaId: "agents_frameworks",
-    category: "Agents & Frameworks",
-    icon: "🚀",
-    keywords: ["high-scale", "millions requests", "production"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.HighScaleAgentsTab })))
-  },
-  {
     id: "agentdebugging",
     label: "AI Agent Debugging",
     umbrellaId: "agents_frameworks",
@@ -393,13 +411,13 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgentDebuggingTab })))
   },
   {
-    id: "agenttasks",
-    label: "11 Agent Task Archetypes",
+    id: "agentscale",
+    label: "High-Scale Agent Systems",
     umbrellaId: "agents_frameworks",
     category: "Agents & Frameworks",
-    icon: "📋",
-    keywords: ["agent tasks", "archetypes", "worktree", "evaluation", "task planning"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgentTasksTab })))
+    icon: "🚀",
+    keywords: ["high-scale", "millions requests", "production"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.HighScaleAgentsTab })))
   },
   {
     id: "aiproductbuilder",
@@ -487,31 +505,13 @@ export const TABS_REGISTRY = [
 
   // ── Umbrella 6 — Production & Frontiers ─────────────────────
   {
-    id: "powerfeatures",
-    label: "Power Features",
+    id: "tokenbill",
+    label: "3× Token Bill Fix",
     umbrellaId: "frontiers_production",
     category: "Advanced & Frontiers",
-    icon: "⚡",
-    keywords: ["power features", "advanced", "optimizations"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.PowerFeaturesTab })))
-  },
-  {
-    id: "frontiers",
-    label: "Research Frontiers",
-    umbrellaId: "frontiers_production",
-    category: "Advanced & Frontiers",
-    icon: "🔬",
-    keywords: ["research frontiers", "state of art", "future"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.ResearchFrontiersTab })))
-  },
-  {
-    id: "ragbeyond",
-    label: "Beyond RAG",
-    umbrellaId: "frontiers_production",
-    category: "Advanced & Frontiers",
-    icon: "🔮",
-    keywords: ["beyond rag", "future architectures", "agents"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.RAGBeyondTab })))
+    icon: "💸",
+    keywords: ["token bill", "cost optimization", "pricing"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.TokenBillTab })))
   },
   {
     id: "practices",
@@ -523,13 +523,31 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.PracticesTab })))
   },
   {
-    id: "tokenbill",
-    label: "3× Token Bill Fix",
+    id: "powerfeatures",
+    label: "Power Features",
     umbrellaId: "frontiers_production",
     category: "Advanced & Frontiers",
-    icon: "💸",
-    keywords: ["token bill", "cost optimization", "pricing"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.TokenBillTab })))
+    icon: "⚡",
+    keywords: ["power features", "advanced", "optimizations"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.PowerFeaturesTab })))
+  },
+  {
+    id: "ragbeyond",
+    label: "Beyond RAG",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "🔮",
+    keywords: ["beyond rag", "future architectures", "agents"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.RAGBeyondTab })))
+  },
+  {
+    id: "frontiers",
+    label: "Research Frontiers",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "🔬",
+    keywords: ["research frontiers", "state of art", "future"],
+    component: lazy(() => import("../App.jsx").then(m => ({ default: m.ResearchFrontiersTab })))
   },
   {
     id: "progress",
@@ -557,5 +575,5 @@ export const getTabById = (tabId) => {
 export const getTabsForUmbrella = (umbrellaId) => {
   const umbrella = UMBRELLA_TOPICS.find(u => u.id === umbrellaId);
   if (!umbrella) return [];
-  return TABS_REGISTRY.filter(t => umbrella.tabs.includes(t.id));
+  return umbrella.tabs.map(id => TABS_REGISTRY.find(t => t.id === id)).filter(Boolean);
 };

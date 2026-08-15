@@ -11,6 +11,9 @@ import { Flex, Stack } from '../layout/Primitives.jsx';
 // ============================================
 // Sidebar — Collapsible, accordion navigation
 // ============================================
+// ============================================
+// Sidebar — Collapsible, accordion navigation
+// ============================================
 export function Sidebar({
   activeTab,
   onSelectTab,
@@ -22,11 +25,19 @@ export function Sidebar({
   const [expandedModules, setExpandedModules] = useState({
     foundations: true,
     rag_architecture: true,
-    context_memory: true,
-    agents_frameworks: true,
-    data_platform: true,
+    context_memory: false,
+    agents_frameworks: false,
+    data_platform: false,
     frontiers_production: false,
   });
+
+  // Auto-expand the module containing the currently active tab
+  useEffect(() => {
+    const parentModule = getUmbrellaForTab(activeTab);
+    if (parentModule?.id) {
+      setExpandedModules(prev => ({ ...prev, [parentModule.id]: true }));
+    }
+  }, [activeTab]);
 
   const toggleModule = (moduleId) => {
     setExpandedModules(prev => ({ ...prev, [moduleId]: !prev[moduleId] }));
@@ -40,96 +51,119 @@ export function Sidebar({
   return (
     <aside
       style={{
-        width: collapsed ? '72px' : '280px',
-        minWidth: collapsed ? '72px' : '280px',
+        width: '100%',
         height: '100vh',
-        position: 'sticky',
-        top: 0,
         background: 'var(--ds-color-bg-surface)',
-        borderRight: '1px solid var(--ds-color-border-subtle)',
         display: 'flex',
         flexDirection: 'column',
-        transition: 'width var(--ds-motion-duration-base) var(--ds-motion-easing-standard), min-width var(--ds-motion-duration-base) var(--ds-motion-easing-standard)',
-        zIndex: 'var(--ds-zIndex-sidebar)',
         overflow: 'hidden',
       }}
       aria-label="Main navigation"
     >
       {/* BRAND HEADER */}
       <div style={{
-        padding: collapsed ? 'var(--ds-space-4) var(--ds-space-2)' : 'var(--ds-space-5)',
+        padding: collapsed ? '12px 6px' : '14px 16px',
         borderBottom: '1px solid var(--ds-color-border-subtle)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: collapsed ? 'center' : 'space-between',
-        minHeight: '64px',
+        minHeight: '60px',
+        background: 'var(--ds-color-bg-surface)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)', overflow: 'hidden', flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden', flex: 1 }}>
           <div style={{
-            width: '36px', height: '36px', borderRadius: 'var(--ds-radius-md)',
-            background: 'linear-gradient(135deg, var(--ds-color-module-foundations-primary), var(--ds-color-module-rag-primary))',
+            width: '34px', height: '34px', borderRadius: '8px',
+            background: 'linear-gradient(135deg, #10b981, #2563eb)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: 'var(--ds-font-weight-bold)', fontSize: '1.1rem', color: 'white', flexShrink: 0
+            fontWeight: 'bold', fontSize: '1.05rem', color: 'white', flexShrink: 0,
+            boxShadow: '0 2px 6px rgba(37, 99, 235, 0.25)'
           }}>
             ⚡
           </div>
           {!collapsed && (
-            <div style={{ minWidth: 0 }}>
-              <div style={{
+            <div style={{ minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+              <span style={{
                 fontFamily: 'var(--ds-font-family-display)',
-                fontWeight: 'var(--ds-font-weight-bold)',
-                fontSize: 'var(--ds-font-size-h4)',
+                fontWeight: 800,
+                fontSize: '0.95rem',
                 color: 'var(--ds-color-text-primary)',
+                letterSpacing: '-0.01em',
+                lineHeight: 1.2,
                 whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
               }}>
                 AI Systems
-              </div>
-              <div style={{
-                fontSize: 'var(--ds-font-size-caption)',
+              </span>
+              <span style={{
+                fontSize: '0.65rem',
                 color: 'var(--ds-color-text-tertiary)',
                 fontFamily: 'var(--ds-font-family-mono)',
-                letterSpacing: 'var(--ds-font-letterSpacing-wide)',
+                letterSpacing: '0.06em',
                 textTransform: 'uppercase',
+                fontWeight: 600,
               }}>
                 Knowledge Base
-              </div>
+              </span>
             </div>
           )}
         </div>
-        {!collapsed && (
-          <Button variant="ghost" size="sm" onClick={onToggleCollapse} aria-label="Collapse sidebar" style={{ padding: 'var(--ds-space-1)' }}>
-            ◀
-          </Button>
+
+        {!collapsed && onToggleCollapse && (
+          <button
+            onClick={onToggleCollapse}
+            title="Collapse sidebar"
+            style={{
+              background: 'transparent',
+              border: '1px solid var(--ds-color-border-subtle)',
+              borderRadius: '6px',
+              color: 'var(--ds-color-text-secondary)',
+              cursor: 'pointer',
+              padding: '4px 7px',
+              fontSize: '0.8rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.15s ease'
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; e.currentTarget.style.color = 'var(--ds-color-text-primary)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ds-color-text-secondary)'; }}
+            aria-label="Collapse sidebar"
+          >
+            ◂
+          </button>
         )}
       </div>
 
-      {/* SEARCH */}
+      {/* SEARCH INPUT */}
       {!collapsed && (
-        <div style={{ padding: 'var(--ds-space-3) var(--ds-space-4)', borderBottom: '1px solid var(--ds-color-border-subtle)', position: 'relative' }}>
+        <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--ds-color-border-subtle)', background: 'var(--ds-color-bg-surface)' }}>
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
             <span style={{ position: 'absolute', left: '10px', color: 'var(--ds-color-text-tertiary)', fontSize: '0.9rem', pointerEvents: 'none' }}>⌕</span>
             <input
               type="text"
-              placeholder="Search tabs (⌘K)..."
+              placeholder="Search topics (⌘K)..."
               value={typeof searchQuery === 'string' ? searchQuery : (searchQuery?.target?.value || '')}
               onChange={(e) => onSearchChange?.(e.target.value)}
               style={{
                 width: '100%',
-                padding: '8px 28px 8px 30px',
-                borderRadius: 'var(--ds-radius-md)',
+                padding: '7px 28px 7px 30px',
+                borderRadius: '6px',
                 border: '1px solid var(--ds-color-border-default)',
                 background: 'var(--ds-color-bg-canvas)',
                 color: 'var(--ds-color-text-primary)',
-                fontSize: 'var(--ds-font-size-bodySm)',
+                fontSize: '0.82rem',
                 outline: 'none',
+                fontFamily: 'var(--ds-font-family-sans)',
+                transition: 'border-color 0.15s ease'
               }}
+              onFocus={e => e.currentTarget.style.borderColor = 'var(--ds-color-border-focus)'}
+              onBlur={e => e.currentTarget.style.borderColor = 'var(--ds-color-border-default)'}
             />
             {queryStr.length > 0 && (
               <button
                 onClick={() => onSearchChange?.('')}
                 style={{
                   position: 'absolute', right: '8px', background: 'none', border: 'none',
-                  color: 'var(--ds-color-text-tertiary)', cursor: 'pointer', fontSize: '0.85rem', padding: '2px'
+                  color: 'var(--ds-color-text-tertiary)', cursor: 'pointer', fontSize: '0.8rem', padding: '2px'
                 }}
                 aria-label="Clear search"
               >
@@ -140,8 +174,15 @@ export function Sidebar({
         </div>
       )}
 
-      {/* MODULE ACCORDIONS */}
-      <nav style={{ flex: 1, overflowY: 'auto', padding: collapsed ? 'var(--ds-space-3) var(--ds-space-1)' : 'var(--ds-space-3) var(--ds-space-4)' }}>
+      {/* MODULE ACCORDIONS NAV */}
+      <nav style={{
+        flex: 1,
+        overflowY: 'auto',
+        padding: collapsed ? '8px 4px' : '10px 10px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px'
+      }}>
         {moduleOrder.map(moduleId => {
           const module = UMBRELLA_TOPICS.find(m => m.id === moduleId);
           if (!module) return null;
@@ -163,43 +204,59 @@ export function Sidebar({
 
           return (
             <div key={moduleId} style={{
-              borderRadius: 'var(--ds-radius-lg)',
+              borderRadius: '8px',
               background: hasActiveTab ? `${moduleColors.light}30` : 'transparent',
-              border: `1px solid ${hasActiveTab ? `${moduleColors.primary}40` : 'transparent'}`,
-              marginBottom: 'var(--ds-space-2)',
+              border: `1px solid ${hasActiveTab ? `${moduleColors.primary}35` : 'transparent'}`,
+              marginBottom: '2px',
               overflow: 'hidden',
+              transition: 'background 0.15s ease'
             }}>
               {/* MODULE HEADER */}
               <button
-                onClick={() => collapsed ? onToggleCollapse() : toggleModule(moduleId)}
+                onClick={() => collapsed ? onToggleCollapse?.() : toggleModule(moduleId)}
+                title={module.title}
                 style={{
                   width: '100%', display: 'flex', alignItems: 'center',
                   justifyContent: collapsed ? 'center' : 'space-between',
-                  padding: collapsed ? 'var(--ds-space-3)' : 'var(--ds-space-3) var(--ds-space-3)',
-                  background: 'none', border: 'none', color: hasActiveTab ? moduleColors.primary : 'var(--ds-color-text-secondary)',
-                  cursor: 'pointer', textAlign: 'left', transition: 'color var(--ds-motion-duration-fast)',
-                  fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'var(--ds-font-weight-medium)',
+                  padding: collapsed ? '8px' : '8px 10px',
+                  background: 'none', border: 'none',
+                  color: hasActiveTab ? moduleColors.primary : 'var(--ds-color-text-primary)',
+                  cursor: 'pointer', textAlign: 'left',
+                  fontSize: '0.84rem', fontWeight: 700,
                   fontFamily: 'var(--ds-font-family-sans)',
+                  borderRadius: '6px',
+                  transition: 'all 0.15s ease',
                 }}
-                onMouseEnter={e => e.currentTarget.style.color = hasActiveTab ? moduleColors.primary : 'var(--ds-color-text-primary)'}
-                onMouseLeave={e => e.currentTarget.style.color = hasActiveTab ? moduleColors.primary : 'var(--ds-color-text-secondary)'}
+                onMouseEnter={e => { if (!hasActiveTab) e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; }}
+                onMouseLeave={e => { if (!hasActiveTab) e.currentTarget.style.background = 'none'; }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)', minWidth: 0 }}>
-                  <span style={{ fontSize: '1.25rem', flexShrink: 0 }}>{module.icon}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
+                  <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>{module.icon}</span>
                   {!collapsed && (
                     <span style={{
-                      fontWeight: 'var(--ds-font-weight-semibold)',
+                      fontWeight: 700,
                       color: hasActiveTab ? moduleColors.primary : 'inherit',
                       whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                      fontSize: '0.83rem',
                     }}>
                       {module.title}
                     </span>
                   )}
                 </div>
+
                 {!collapsed && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-2)', flexShrink: 0 }}>
-                    <Badge variant="default" size="sm">{tabs.length}</Badge>
-                    <span style={{ fontSize: '0.875rem', color: 'var(--ds-color-text-tertiary)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, marginLeft: '6px' }}>
+                    <span style={{
+                      fontSize: '0.68rem',
+                      fontWeight: 600,
+                      background: hasActiveTab ? `${moduleColors.primary}20` : 'var(--ds-color-bg-surfaceHover)',
+                      color: hasActiveTab ? moduleColors.primary : 'var(--ds-color-text-tertiary)',
+                      padding: '1px 6px',
+                      borderRadius: '10px',
+                    }}>
+                      {tabs.length}
+                    </span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)' }}>
                       {isExpanded ? '▾' : '▸'}
                     </span>
                   </div>
@@ -209,10 +266,12 @@ export function Sidebar({
               {/* SUB-TABS */}
               {!collapsed && isExpanded && (
                 <div style={{
-                  display: 'flex', flexDirection: 'column', gap: 'var(--ds-space-1)',
-                  padding: 'var(--ds-space-2) var(--ds-space-2) var(--ds-space-3) calc(var(--ds-space-3) + 36px)',
-                  borderLeft: `2px solid ${moduleColors.primary}30`,
-                  marginLeft: 'var(--ds-space-3)',
+                  display: 'flex', flexDirection: 'column', gap: '2px',
+                  padding: '3px 4px 6px 12px',
+                  borderLeft: `2px solid ${moduleColors.primary}40`,
+                  marginLeft: '16px',
+                  marginTop: '2px',
+                  marginBottom: '4px'
                 }}>
                   {tabs.map(tab => {
                     const isActive = activeTab === tab.id;
@@ -220,24 +279,29 @@ export function Sidebar({
                       <button
                         key={tab.id}
                         onClick={() => onSelectTab(tab.id)}
+                        title={tab.label}
                         style={{
-                          display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)',
-                          padding: 'var(--ds-space-2) var(--ds-space-3)',
-                          borderRadius: 'var(--ds-radius-md)',
+                          display: 'flex', alignItems: 'center', gap: '8px',
+                          padding: '6px 8px',
+                          borderRadius: '6px',
                           background: isActive ? moduleColors.primary : 'transparent',
-                          color: isActive ? 'white' : 'var(--ds-color-text-secondary)',
+                          color: isActive ? '#ffffff' : 'var(--ds-color-text-secondary)',
                           border: 'none', cursor: 'pointer', textAlign: 'left',
-                          fontSize: 'var(--ds-font-size-bodySm)', fontWeight: isActive ? 'var(--ds-font-weight-semibold)' : 'var(--ds-font-weight-normal)',
-                          fontFamily: 'var(--ds-font-family-sans)', transition: 'all var(--ds-motion-duration-fast)',
+                          fontSize: '0.8rem',
+                          fontWeight: isActive ? 700 : 500,
+                          fontFamily: 'var(--ds-font-family-sans)',
+                          transition: 'all 0.12s ease',
                           width: '100%',
+                          position: 'relative'
                         }}
-                        onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; }}
-                        onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent'; }}
+                        onMouseEnter={e => { if (!isActive) { e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; e.currentTarget.style.color = 'var(--ds-color-text-primary)'; } }}
+                        onMouseLeave={e => { if (!isActive) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ds-color-text-secondary)'; } }}
                       >
-                        <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>{tab.icon}</span>
+                        <span style={{ fontSize: '1rem', flexShrink: 0 }}>{tab.icon}</span>
                         <span style={{
-                          lineHeight: 'var(--ds-font-lineHeight-snug)',
+                          lineHeight: 1.3,
                           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                          flex: 1
                         }}>
                           {tab.label}
                         </span>
@@ -272,12 +336,26 @@ export function Sidebar({
         )}
       </nav>
 
-      {/* COLLAPSED FOOTER */}
+      {/* COLLAPSED EXPAND BUTTON */}
       {collapsed && (
-        <div style={{ padding: 'var(--ds-space-4)', borderTop: '1px solid var(--ds-color-border-subtle)' }}>
-          <Button variant="secondary" size="sm" fullWidth onClick={onToggleCollapse} aria-label="Expand sidebar">
-            ▶ Expand
-          </Button>
+        <div style={{ padding: '10px', borderTop: '1px solid var(--ds-color-border-subtle)', textAlign: 'center' }}>
+          <button
+            onClick={onToggleCollapse}
+            title="Expand sidebar"
+            style={{
+              background: 'var(--ds-color-bg-surfaceHover)',
+              border: '1px solid var(--ds-color-border-subtle)',
+              borderRadius: '6px',
+              color: 'var(--ds-color-text-primary)',
+              cursor: 'pointer',
+              padding: '6px',
+              fontSize: '0.85rem',
+              width: '100%'
+            }}
+            aria-label="Expand sidebar"
+          >
+            ▸
+          </button>
         </div>
       )}
     </aside>
@@ -285,9 +363,7 @@ export function Sidebar({
 }
 
 // ============================================
-// TopBar — Contextual header with breadcrumb + sibling tabs
-// ============================================
-// TopBar — Header with breadcrumb, search, & mobile menu toggle
+// TopBar — Clean contextual header (Desktop + Mobile)
 // ============================================
 export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, sidebarCollapsed }) {
   const currentModule = getUmbrellaForTab(activeTab);
@@ -310,64 +386,116 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
       background: 'var(--ds-color-bg-surface)',
       borderBottom: '1px solid var(--ds-color-border-subtle)',
       position: 'sticky', top: 0, zIndex: 'var(--ds-zIndex-sticky)',
-      boxShadow: 'var(--ds-shadow-xs)',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
     }}>
+      <style jsx>{`
+        .topbar-mobile-menu-btn {
+          display: none !important;
+        }
+        @media (max-width: 768px) {
+          .topbar-mobile-menu-btn {
+            display: inline-flex !important;
+          }
+        }
+      `}</style>
+
       {/* BREADCRUMB ROW */}
       <div style={{
-        padding: 'clamp(8px, 2vw, 16px) clamp(12px, 3vw, 24px)',
+        padding: '10px 18px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        gap: 'var(--ds-space-3)', flexWrap: 'wrap',
+        gap: '12px', flexWrap: 'wrap',
         borderBottom: '1px solid var(--ds-color-border-subtle)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)', flexWrap: 'wrap' }}>
+        {/* Left: Mobile Toggle + Breadcrumb Path */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexWrap: 'wrap' }}>
+          {/* Mobile hamburger button — ONLY on screen width <= 768px */}
           {onToggleSidebar && (
-            <Button
-              variant="outline"
-              size="sm"
+            <button
+              className="topbar-mobile-menu-btn"
               onClick={onToggleSidebar}
-              aria-label="Toggle navigation menu"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+              aria-label="Toggle mobile navigation menu"
+              style={{
+                alignItems: 'center', gap: '4px',
+                padding: '5px 10px',
+                background: 'var(--ds-color-bg-canvas)',
+                border: '1px solid var(--ds-color-border-default)',
+                borderRadius: '6px',
+                color: 'var(--ds-color-text-primary)',
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
             >
-              <span>{sidebarCollapsed ? '☰' : '✕'}</span>
-              <span style={{ fontSize: 'var(--ds-font-size-caption)' }}>Menu</span>
-            </Button>
+              <span>☰</span>
+              <span>Menu</span>
+            </button>
           )}
-          <Badge variant="module" moduleId={currentModule.id} size="md" dot>
+
+          {/* Module Pill */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '6px',
+            padding: '3px 8px', borderRadius: '6px',
+            background: `${moduleColors.light}60`,
+            color: moduleColors.dark || moduleColors.primary,
+            fontSize: '0.8rem', fontWeight: 600,
+            border: `1px solid ${moduleColors.primary}30`
+          }}>
             <span>{currentModule.icon}</span>
             <span>{currentModule.title}</span>
-          </Badge>
-          <span style={{ color: 'var(--ds-color-text-tertiary)' }}>/</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-2)' }}>
-            <span style={{ fontSize: '1.25rem' }}>{currentTab.icon}</span>
+          </div>
+
+          <span style={{ color: 'var(--ds-color-text-tertiary)', fontSize: '0.85rem' }}>/</span>
+
+          {/* Active Tab Name */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ fontSize: '1.1rem' }}>{currentTab.icon}</span>
             <span style={{
               fontFamily: 'var(--ds-font-family-sans)',
-              fontWeight: 'var(--ds-font-weight-semibold)',
-              fontSize: 'var(--ds-font-size-body)',
+              fontWeight: 700,
+              fontSize: '0.88rem',
               color: 'var(--ds-color-text-primary)',
-            }}>{currentTab.label}</span>
+            }}>
+              {currentTab.label}
+            </span>
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)' }}>
+        {/* Right: Counter & Search Trigger */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span style={{
-            fontSize: 'var(--ds-font-size-caption)',
+            fontSize: '0.75rem',
             color: 'var(--ds-color-text-tertiary)',
             fontFamily: 'var(--ds-font-family-mono)',
+            fontWeight: 600,
           }}>
             {activeIndex + 1} of {siblingTabs.length}
           </span>
-          <Button variant="ghost" size="sm" onClick={onSearchOpen} aria-label="Open command palette (⌘K)">
-            <kbd style={{ fontSize: 'var(--ds-font-size-caption)', padding: '2px 6px', background: 'var(--ds-color-bg-surfaceHover)', borderRadius: 'var(--ds-radius-sm)', border: '1px solid var(--ds-color-border-subtle)' }}>⌘K</kbd>
-          </Button>
+          <button
+            onClick={onSearchOpen}
+            title="Search knowledge base (⌘K)"
+            style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              padding: '4px 8px',
+              background: 'var(--ds-color-bg-canvas)',
+              border: '1px solid var(--ds-color-border-default)',
+              borderRadius: '6px',
+              color: 'var(--ds-color-text-secondary)',
+              fontSize: '0.75rem',
+              cursor: 'pointer'
+            }}
+          >
+            <span>⌕ Search</span>
+            <kbd style={{ fontSize: '0.7rem', padding: '1px 4px', background: 'var(--ds-color-bg-surface)', borderRadius: '3px', border: '1px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-tertiary)' }}>⌘K</kbd>
+          </button>
         </div>
       </div>
 
-      {/* SIBLING TABS — Horizontal scrollable pills */}
+      {/* SIBLING TABS — Horizontal quick switcher */}
       <div
         ref={scrollRef}
         style={{
-          padding: 'var(--ds-space-3) var(--ds-space-6)',
-          display: 'flex', gap: 'var(--ds-space-2)',
+          padding: '6px 14px',
+          display: 'flex', gap: '6px',
           overflowX: 'auto', scrollSnapType: 'x mandatory',
           background: 'var(--ds-color-bg-canvas)',
           scrollbarWidth: 'none',
@@ -377,43 +505,47 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
         <style jsx>{`
           div::-webkit-scrollbar { display: none; }
         `}</style>
-        {siblingTabs.map(tab => (
-          <button
-            key={tab.id}
-            data-tab-id={tab.id}
-            onClick={() => onSelectTab(tab.id)}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 'var(--ds-space-2)',
-              padding: 'var(--ds-space-2) var(--ds-space-4)',
-              borderRadius: 'var(--ds-radius-full)',
-              background: tab.id === activeTab ? moduleColors.primary : 'var(--ds-color-bg-surface)',
-              color: tab.id === activeTab ? 'white' : 'var(--ds-color-text-secondary)',
-              border: `1px solid ${tab.id === activeTab ? moduleColors.primary : 'var(--ds-color-border-subtle)'}`,
-              fontFamily: 'var(--ds-font-family-sans)',
-              fontWeight: tab.id === activeTab ? 'var(--ds-font-weight-semibold)' : 'var(--ds-font-weight-medium)',
-              fontSize: 'var(--ds-font-size-bodySm)',
-              cursor: 'pointer', whiteSpace: 'nowrap',
-              scrollSnapAlign: 'center',
-              transition: 'all var(--ds-motion-duration-fast)',
-              boxShadow: tab.id === activeTab ? `0 2px 8px ${moduleColors.primary}30` : 'none',
-            }}
-            onMouseEnter={e => {
-              if (tab.id !== activeTab) {
-                e.currentTarget.style.borderColor = moduleColors.primary;
-                e.currentTarget.style.color = moduleColors.primary;
-              }
-            }}
-            onMouseLeave={e => {
-              if (tab.id !== activeTab) {
-                e.currentTarget.style.borderColor = 'var(--ds-color-border-subtle)';
-                e.currentTarget.style.color = 'var(--ds-color-text-secondary)';
-              }
-            }}
-          >
-            <span>{tab.icon}</span>
-            <span>{tab.label}</span>
-          </button>
-        ))}
+        {siblingTabs.map(tab => {
+          const isActive = tab.id === activeTab;
+          return (
+            <button
+              key={tab.id}
+              data-tab-id={tab.id}
+              onClick={() => onSelectTab(tab.id)}
+              title={tab.label}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                padding: '4px 10px',
+                borderRadius: '16px',
+                background: isActive ? moduleColors.primary : 'var(--ds-color-bg-surface)',
+                color: isActive ? '#ffffff' : 'var(--ds-color-text-secondary)',
+                border: `1px solid ${isActive ? moduleColors.primary : 'var(--ds-color-border-subtle)'}`,
+                fontFamily: 'var(--ds-font-family-sans)',
+                fontWeight: isActive ? 700 : 500,
+                fontSize: '0.78rem',
+                cursor: 'pointer', whiteSpace: 'nowrap',
+                scrollSnapAlign: 'center',
+                transition: 'all 0.15s ease',
+                boxShadow: isActive ? `0 2px 6px ${moduleColors.primary}35` : 'none',
+              }}
+              onMouseEnter={e => {
+                if (!isActive) {
+                  e.currentTarget.style.borderColor = moduleColors.primary;
+                  e.currentTarget.style.color = moduleColors.primary;
+                }
+              }}
+              onMouseLeave={e => {
+                if (!isActive) {
+                  e.currentTarget.style.borderColor = 'var(--ds-color-border-subtle)';
+                  e.currentTarget.style.color = 'var(--ds-color-text-secondary)';
+                }
+              }}
+            >
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
       </div>
     </header>
   );

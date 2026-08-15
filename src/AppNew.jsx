@@ -27,6 +27,8 @@ const TabComponents = {
   hierrag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HierarchicalRetrievalTab }))),
   qparseloop: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.QuestionParsingLoopTab }))),
   prodrag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ProductionRAGTab }))),
+  routercheap: lazy(() => import('./zeroModelRouter/ZeroModelRouterTab.jsx')),
+  workflowloop: lazy(() => import('./workflowLoop/WorkflowLoopTab.jsx')),
   genpatterns: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.GenPatternsTab }))),
   fourpdfs: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.FourPDFsTab }))),
   hallucbricks: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HallucBricksTab }))),

@@ -22,6 +22,10 @@ export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle, mob
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const sidebarWidth = isMobile
+    ? (mobileOpen ? '320px' : '0px')
+    : (sidebarCollapsed ? '72px' : '320px');
+
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--ds-color-bg-canvas)', position: 'relative' }}>
       {/* MOBILE BACKDROP OVERLAY */}
@@ -33,12 +37,14 @@ export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle, mob
             top: 0, left: 0, right: 0, bottom: 0,
             background: 'rgba(0,0,0,0.5)',
             zIndex: 99,
-            backdropFilter: 'blur(2px)'
+            backdropFilter: 'blur(3px)',
+            transition: 'opacity 0.2s ease',
           }}
         />
       )}
 
-      <aside style={{
+      {/* SIDEBAR CONTAINER */}
+      <div style={{
         height: '100vh',
         position: isMobile ? 'fixed' : 'sticky',
         top: 0, left: 0,
@@ -47,14 +53,14 @@ export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle, mob
         display: 'flex',
         flexDirection: 'column',
         zIndex: isMobile ? 100 : 'var(--ds-zIndex-sidebar)',
-        width: isMobile ? (mobileOpen ? '280px' : '0px') : (sidebarCollapsed ? '72px' : '280px'),
-        minWidth: isMobile ? (mobileOpen ? '280px' : '0px') : (sidebarCollapsed ? '72px' : '280px'),
-        transition: 'all 0.3s ease',
+        width: sidebarWidth,
+        minWidth: sidebarWidth,
+        transition: 'width 0.25s cubic-bezier(0.4, 0, 0.2, 1), min-width 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
         overflow: 'hidden',
-        boxShadow: isMobile && mobileOpen ? '0 20px 40px rgba(0,0,0,0.3)' : 'none'
-      }} aria-label="Main navigation">
+        boxShadow: isMobile && mobileOpen ? '0 20px 40px rgba(0,0,0,0.4)' : 'none'
+      }}>
         {sidebar}
-      </aside>
+      </div>
 
       <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', width: '100%' }} role="main">
         {children}
