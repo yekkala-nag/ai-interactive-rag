@@ -20,6 +20,7 @@ const TabComponents = {
   workflows: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ClaudeWorkflowsTab }))),
   unhobbling: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.UnhobblingTab }))),
   promptmgmt: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PromptMgmtTab }))),
+  structuredoutputs: lazy(() => import('./structuredOutputs/StructuredOutputsTab.jsx')),
 
   rag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.RAGTypesTab }))),
   pipeline: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PipelineTab }))),

@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "workflows", "unhobbling"]
+    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "structuredoutputs", "workflows", "unhobbling"]
   },
   {
     id: "rag_architecture",
@@ -86,17 +86,26 @@ export const TABS_REGISTRY = [
     umbrellaId: "foundations",
     category: "Foundations",
     icon: "🔬",
-    keywords: ["architecture", "transformer", "attention", "embeddings"],
+    keywords: ["architecture", "transformer", "attention", "foundations", "latent space", "embeddings"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.ArchConceptsTab })))
   },
   {
     id: "promptmgmt",
-    label: "Prompt Engineering & SemVer",
+    label: "Prompt Management",
     umbrellaId: "foundations",
     category: "Foundations",
-    icon: "📜",
-    keywords: ["prompt management", "semver", "prompt engineering", "templates", "versioning"],
+    icon: "📝",
+    keywords: ["prompts", "prompt management", "versioning", "prompt engineering", "templates"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.PromptMgmtTab })))
+  },
+  {
+    id: "structuredoutputs",
+    label: "Structured Outputs",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "📐",
+    keywords: ["structured outputs", "json schema", "constrained decoding", "fsm", "outlines", "pydantic", "instructor", "grammars", "logit masking"],
+    component: lazy(() => import("../structuredOutputs/StructuredOutputsTab.jsx"))
   },
   {
     id: "workflows",
