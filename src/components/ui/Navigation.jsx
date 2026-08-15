@@ -23,7 +23,7 @@ export function Sidebar({
   onToggleCollapse,
 }) {
   const [expandedModules, setExpandedModules] = useState({
-    foundations: true,
+    foundations: false,
     rag_architecture: true,
     context_memory: false,
     agents_frameworks: false,
@@ -31,16 +31,40 @@ export function Sidebar({
     frontiers_production: false,
   });
 
-  // Auto-expand the module containing the currently active tab
+  // Auto-focus the module containing the currently active tab (single-accordion focus)
   useEffect(() => {
     const parentModule = getUmbrellaForTab(activeTab);
     if (parentModule?.id) {
-      setExpandedModules(prev => ({ ...prev, [parentModule.id]: true }));
+      setExpandedModules({
+        foundations: false,
+        rag_architecture: false,
+        context_memory: false,
+        agents_frameworks: false,
+        data_platform: false,
+        frontiers_production: false,
+        [parentModule.id]: true
+      });
     }
   }, [activeTab]);
 
   const toggleModule = (moduleId) => {
-    setExpandedModules(prev => ({ ...prev, [moduleId]: !prev[moduleId] }));
+    setExpandedModules(prev => {
+      const willOpen = !prev[moduleId];
+      if (willOpen) {
+        // Single open accordion mode for clean, uncluttered navigation
+        return {
+          foundations: false,
+          rag_architecture: false,
+          context_memory: false,
+          agents_frameworks: false,
+          data_platform: false,
+          frontiers_production: false,
+          [moduleId]: true
+        };
+      } else {
+        return { ...prev, [moduleId]: false };
+      }
+    });
   };
 
   const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
@@ -69,6 +93,7 @@ export function Sidebar({
         justifyContent: collapsed ? 'center' : 'space-between',
         minHeight: '60px',
         background: 'var(--ds-color-bg-surface)',
+        flexShrink: 0
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden', flex: 1 }}>
           <div style={{
@@ -135,7 +160,7 @@ export function Sidebar({
 
       {/* SEARCH INPUT */}
       {!collapsed && (
-        <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--ds-color-border-subtle)', background: 'var(--ds-color-bg-surface)' }}>
+        <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--ds-color-border-subtle)', background: 'var(--ds-color-bg-surface)', flexShrink: 0 }}>
           <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
             <span style={{ position: 'absolute', left: '10px', color: 'var(--ds-color-text-tertiary)', fontSize: '0.9rem', pointerEvents: 'none' }}>⌕</span>
             <input
@@ -178,10 +203,11 @@ export function Sidebar({
       <nav style={{
         flex: 1,
         overflowY: 'auto',
-        padding: collapsed ? '8px 4px' : '10px 10px',
+        padding: collapsed ? '8px 4px' : '8px 8px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '4px'
+        gap: '4px',
+        scrollbarWidth: 'thin'
       }}>
         {moduleOrder.map(moduleId => {
           const module = UMBRELLA_TOPICS.find(m => m.id === moduleId);
@@ -205,11 +231,10 @@ export function Sidebar({
           return (
             <div key={moduleId} style={{
               borderRadius: '8px',
-              background: hasActiveTab ? `${moduleColors.light}30` : 'transparent',
-              border: `1px solid ${hasActiveTab ? `${moduleColors.primary}35` : 'transparent'}`,
+              background: hasActiveTab ? 'rgba(0,0,0,0.02)' : 'transparent',
+              border: `1px solid ${hasActiveTab ? `${moduleColors.primary}30` : 'transparent'}`,
               marginBottom: '2px',
-              overflow: 'hidden',
-              transition: 'background 0.15s ease'
+              transition: 'all 0.15s ease'
             }}>
               {/* MODULE HEADER */}
               <button
@@ -219,7 +244,8 @@ export function Sidebar({
                   width: '100%', display: 'flex', alignItems: 'center',
                   justifyContent: collapsed ? 'center' : 'space-between',
                   padding: collapsed ? '8px' : '8px 10px',
-                  background: 'none', border: 'none',
+                  background: hasActiveTab ? `${moduleColors.light}40` : 'none',
+                  border: 'none',
                   color: hasActiveTab ? moduleColors.primary : 'var(--ds-color-text-primary)',
                   cursor: 'pointer', textAlign: 'left',
                   fontSize: '0.84rem', fontWeight: 700,
@@ -267,9 +293,9 @@ export function Sidebar({
               {!collapsed && isExpanded && (
                 <div style={{
                   display: 'flex', flexDirection: 'column', gap: '2px',
-                  padding: '3px 4px 6px 12px',
+                  padding: '4px 6px 6px 10px',
                   borderLeft: `2px solid ${moduleColors.primary}40`,
-                  marginLeft: '16px',
+                  marginLeft: '14px',
                   marginTop: '2px',
                   marginBottom: '4px'
                 }}>
@@ -282,12 +308,12 @@ export function Sidebar({
                         title={tab.label}
                         style={{
                           display: 'flex', alignItems: 'center', gap: '8px',
-                          padding: '6px 8px',
+                          padding: '5px 8px',
                           borderRadius: '6px',
                           background: isActive ? moduleColors.primary : 'transparent',
                           color: isActive ? '#ffffff' : 'var(--ds-color-text-secondary)',
                           border: 'none', cursor: 'pointer', textAlign: 'left',
-                          fontSize: '0.8rem',
+                          fontSize: '0.78rem',
                           fontWeight: isActive ? 700 : 500,
                           fontFamily: 'var(--ds-font-family-sans)',
                           transition: 'all 0.12s ease',
@@ -297,7 +323,7 @@ export function Sidebar({
                         onMouseEnter={e => { if (!isActive) { e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; e.currentTarget.style.color = 'var(--ds-color-text-primary)'; } }}
                         onMouseLeave={e => { if (!isActive) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ds-color-text-secondary)'; } }}
                       >
-                        <span style={{ fontSize: '1rem', flexShrink: 0 }}>{tab.icon}</span>
+                        <span style={{ fontSize: '0.95rem', flexShrink: 0 }}>{tab.icon}</span>
                         <span style={{
                           lineHeight: 1.3,
                           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
