@@ -660,53 +660,119 @@ const LangChainVisual = () => {
           </div>
 
           {/* SVG Pipeline */}
-          <svg viewBox="0 0 100 60" style={{ width: "100%", height: 180 }}>
-            {/* Prompt */}
-            <rect x="10" y="10" width="20" height="20" rx="4" fill={traceStep >= 0 && traceOrder[0] === "prompt" ? "#4a9a4a30" : "#ffffff"} stroke="#4a9a4a" strokeWidth={traceStep >= 0 && traceOrder[0] === "prompt" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
-              <text x="20" y="25" textAnchor="start" fontSize="2.8" fill="#4a9a4a" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>💬 Prompt</text>
-            </rect>
-            
-            {/* Arrow 1 */}
-            {traceStep >= 1 && <line x1="30" y1="20" x2="40" y2="20" stroke="#4a9a4a" strokeWidth="1.2" markerEnd="url(#arrow)" />}
-            {traceStep < 1 && <line x1="30" y1="20" x2="40" y2="20" stroke="#e0dcd4" strokeWidth="0.8" />}
-            
-            {/* Model */}
-            <rect x="40" y="10" width="20" height="20" rx="4" fill={traceStep >= 1 && traceOrder[1] === "model" ? "#4a9a4a30" : "#ffffff"} stroke="#4a9a4a" strokeWidth={traceStep >= 1 && traceOrder[1] === "model" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
-              <text x="50" y="25" textAnchor="middle" fontSize="2.8" fill="#4a9a4a" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>🤖 Model</text>
-            </rect>
-            
-            {/* Arrow 2 */}
-            {traceStep >= 2 && <line x1="60" y1="20" x2="70" y2="20" stroke="#4a9a4a" strokeWidth="1.2" markerEnd="url(#arrow)" />}
-            {traceStep < 2 && <line x1="60" y1="20" x2="70" y2="20" stroke="#e0dcd4" strokeWidth="0.8" />}
-            
-            {/* Parser */}
-            <rect x="70" y="10" width="20" height="20" rx="4" fill={traceStep >= 2 && traceOrder[2] === "parser" ? "#4a9a4a30" : "#ffffff"} stroke="#4a9a4a" strokeWidth={traceStep >= 2 && traceOrder[2] === "parser" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
-              <text x="80" y="25" textAnchor="middle" fontSize="2.8" fill="#4a9a4a" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>📤 Parser</text>
-            </rect>
-            
-            {/* Optional Tools branch */}
-            {traceStep >= 3 && <line x1="90" y1="20" x2="90" y2="35" stroke="#9b7fd4" strokeWidth="1.2" markerEnd="url(#arrow)" />}
-            {traceStep < 3 && <line x1="90" y1="20" x2="90" y2="35" stroke="#e0dcd4" strokeWidth="0.8" strokeDasharray="2,2" />}
-            {traceStep >= 3 && 
-              <rect x="80" y="35" width="30" height="20" rx="4" fill={traceStep >= 3 && traceOrder[3] === "tools" ? "#9b7fd430" : "#ffffff"} stroke="#9b7fd4" strokeWidth={traceStep >= 3 && traceOrder[3] === "tools" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
-                <text x="95" y="50" textAnchor="middle" fontSize="2.8" fill="#9b7fd4" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>🔧 Tools</text>
-              </rect>
-            }
-            
-            {/* Optional Memory branch */}
-            {traceStep >= 4 && <line x1="95" y1="55" x2="95" y2="70" stroke="#9b7fd4" strokeWidth="1.2" markerEnd="url(#arrow)" />}
-            {traceStep < 4 && <line x1="95" y1="55" x2="95" y2="70" stroke="#e0dcd4" strokeWidth="0.8" strokeDasharray="2,2" />}
-            {traceStep >= 4 && 
-              <rect x="85" y="70" width="20" height="20" rx="4" fill={traceStep >= 4 && traceOrder[4] === "memory" ? "#9b7fd430" : "#ffffff"} stroke="#9b7fd4" strokeWidth={traceStep >= 4 && traceOrder[4] === "memory" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
-                <text x="95" y="85" textAnchor="middle" fontSize="2.8" fill="#9b7fd4" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>🧠 Memory</text>
-              </rect>
-            }
-            
+          <svg viewBox="0 0 105 58" style={{ width: "100%", height: 200 }}>
             <defs>
-              <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <marker id="green-arrow" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
                 <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
               </marker>
+              <marker id="purple-arrow" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#9b7fd4" />
+              </marker>
             </defs>
+
+            {/* 1. PROMPT */}
+            <g onClick={() => setActiveStep(activeStep === "prompt" ? null : "prompt")} style={{ cursor: "pointer" }}>
+              <rect
+                x="4" y="6" width="26" height="18" rx="4"
+                fill={activeStep === "prompt" || (traceStep >= 0 && traceOrder[0] === "prompt") ? "rgba(74, 154, 74, 0.22)" : "#ffffff"}
+                stroke="#4a9a4a"
+                strokeWidth={activeStep === "prompt" || (traceStep >= 0 && traceOrder[0] === "prompt") ? 1.8 : 1}
+                style={{ transition: "all 0.2s" }}
+              />
+              <text x="17" y="16" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#2d6a2d" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
+                💬 Prompt
+              </text>
+            </g>
+
+            {/* Arrow 1: Prompt -> Model */}
+            <line
+              x1="30" y1="15" x2="38" y2="15"
+              stroke={traceStep >= 1 ? "#4a9a4a" : "#cbd5e1"}
+              strokeWidth={traceStep >= 1 ? "1.5" : "1"}
+              markerEnd={traceStep >= 1 ? "url(#green-arrow)" : undefined}
+            />
+
+            {/* 2. MODEL */}
+            <g onClick={() => setActiveStep(activeStep === "model" ? null : "model")} style={{ cursor: "pointer" }}>
+              <rect
+                x="39" y="6" width="26" height="18" rx="4"
+                fill={activeStep === "model" || (traceStep >= 1 && traceOrder[1] === "model") ? "rgba(74, 154, 74, 0.22)" : "#ffffff"}
+                stroke="#4a9a4a"
+                strokeWidth={activeStep === "model" || (traceStep >= 1 && traceOrder[1] === "model") ? 1.8 : 1}
+                style={{ transition: "all 0.2s" }}
+              />
+              <text x="52" y="16" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#2d6a2d" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
+                🤖 Model
+              </text>
+            </g>
+
+            {/* Arrow 2: Model -> Parser */}
+            <line
+              x1="65" y1="15" x2="73" y2="15"
+              stroke={traceStep >= 2 ? "#4a9a4a" : "#cbd5e1"}
+              strokeWidth={traceStep >= 2 ? "1.5" : "1"}
+              markerEnd={traceStep >= 2 ? "url(#green-arrow)" : undefined}
+            />
+
+            {/* 3. PARSER */}
+            <g onClick={() => setActiveStep(activeStep === "parser" ? null : "parser")} style={{ cursor: "pointer" }}>
+              <rect
+                x="74" y="6" width="27" height="18" rx="4"
+                fill={activeStep === "parser" || (traceStep >= 2 && traceOrder[2] === "parser") ? "rgba(74, 154, 74, 0.22)" : "#ffffff"}
+                stroke="#4a9a4a"
+                strokeWidth={activeStep === "parser" || (traceStep >= 2 && traceOrder[2] === "parser") ? 1.8 : 1}
+                style={{ transition: "all 0.2s" }}
+              />
+              <text x="87.5" y="16" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#2d6a2d" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
+                📤 Parser
+              </text>
+            </g>
+
+            {/* Vertical Branch Line: Model -> Tools */}
+            <line
+              x1="52" y1="24" x2="52" y2="33"
+              stroke={traceStep >= 3 ? "#9b7fd4" : "#cbd5e1"}
+              strokeWidth="1"
+              strokeDasharray={traceStep >= 3 ? "none" : "2,2"}
+              markerEnd={traceStep >= 3 ? "url(#purple-arrow)" : undefined}
+            />
+
+            {/* 4. TOOLS */}
+            <g onClick={() => setActiveStep(activeStep === "tools" ? null : "tools")} style={{ cursor: "pointer" }}>
+              <rect
+                x="39" y="34" width="26" height="18" rx="4"
+                fill={activeStep === "tools" || (traceStep >= 3 && traceOrder[3] === "tools") ? "rgba(155, 127, 212, 0.22)" : "#ffffff"}
+                stroke="#9b7fd4"
+                strokeWidth={activeStep === "tools" || (traceStep >= 3 && traceOrder[3] === "tools") ? 1.8 : 1}
+                style={{ transition: "all 0.2s" }}
+              />
+              <text x="52" y="44" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#6b46c1" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
+                🔧 Tools
+              </text>
+            </g>
+
+            {/* Branch Line: Tools -> Memory */}
+            <line
+              x1="65" y1="43" x2="73" y2="43"
+              stroke={traceStep >= 4 ? "#9b7fd4" : "#cbd5e1"}
+              strokeWidth="1"
+              strokeDasharray={traceStep >= 4 ? "none" : "2,2"}
+              markerEnd={traceStep >= 4 ? "url(#purple-arrow)" : undefined}
+            />
+
+            {/* 5. MEMORY */}
+            <g onClick={() => setActiveStep(activeStep === "memory" ? null : "memory")} style={{ cursor: "pointer" }}>
+              <rect
+                x="74" y="34" width="27" height="18" rx="4"
+                fill={activeStep === "memory" || (traceStep >= 4 && traceOrder[4] === "memory") ? "rgba(155, 127, 212, 0.22)" : "#ffffff"}
+                stroke="#9b7fd4"
+                strokeWidth={activeStep === "memory" || (traceStep >= 4 && traceOrder[4] === "memory") ? 1.8 : 1}
+                style={{ transition: "all 0.2s" }}
+              />
+              <text x="87.5" y="44" textAnchor="middle" dominantBaseline="middle" fontSize="3.2" fill="#6b46c1" style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, pointerEvents: "none" }}>
+                🧠 Memory
+              </text>
+            </g>
           </svg>
 
           {stepInfo && (
