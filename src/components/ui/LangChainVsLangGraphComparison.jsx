@@ -144,7 +144,7 @@ export function LangChainVsLangGraphComparison() {
             <text x="75" y="29" textAnchor="middle" fill="#2a7a9c" fontSize="8">Run until interrupt</text>
             <line x1="75" y1="32" x2="75" y2="40" stroke="#2a7a9c" strokeWeight="1.5" markerEnd={`url(#arrow-${diff.id}-3)`}/>
             <rect x="55" y="40" width="40" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWeight="1.5"/>
-            <text x="75" y="49" textAnchor="middle" fill="#2a7a9c" fontSize="8">interrupt({question: "Run?\"})</text>
+            <text x="75" y="49" textAnchor="middle" fill="#2a7a9c" fontSize="8">interrupt({question: \"Run?\"})</text>
             <line x1="75" y1="52" x2="75" y2="60" stroke="#2a7a9c" strokeWeight="1.5" markerEnd={`url(#arrow-${diff.id}-4)`}/>
             <rect x="55" y="60" width="40" height="12" rx="2" fill="#2a7a9c10" stroke="#2a7a9c" strokeWeight="1.5"/>
             <text x="75" y="69" textAnchor="middle" fill="#2a7a9c" fontSize="8">Resume with response</text>
