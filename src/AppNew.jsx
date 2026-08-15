@@ -58,6 +58,7 @@ const TabComponents = {
 
   threelayers: lazy(() => import('./engineeringLayers/ThreeLayersTab.jsx')),
   docstruct: lazy(() => import('./documentStructure/DocumentStructureTab.jsx')),
+  agenticparsing: lazy(() => import('./agenticParsing/AgenticParsingTab.jsx')),
   aidataplat: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIDataPlatformTab }))),
   medallionarch: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.MedallionArchTab }))),
   aitestdatabottleneck: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AITestDataBottleneckTab }))),

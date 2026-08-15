@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { TABS_REGISTRY, CATEGORIES, UMBRELLA_TOPICS, getTabById } from "./registry/tabsRegistry.js";
 import { s } from "./styles/legacyStyles.js";
 import DiagramImage from "./components/ui/DiagramImage.jsx";
+import LangChainVsLangGraphComparison from "./components/ui/LangChainVsLangGraphComparison.jsx";
 import Sidebar from "./components/layout/Sidebar.jsx";
 import TopBar from "./components/layout/TopBar.jsx";
 
@@ -601,6 +602,156 @@ const RAGExplorer = () => {
   );
 };
 
+// ─── LANGCHAIN VISUAL ───────────────────────────────────────
+const LangChainVisual = () => {
+  const [activeStep, setActiveStep] = useState(null);
+  const [tracing, setTracing] = useState(false);
+  const [traceStep, setTraceStep] = useState(-1);
+  const traceOrder = ["prompt", "model", "parser", "tools", "memory"]; // Simplified LangChain flow
+
+  const runTrace = () => {
+    if (tracing) return;
+    setTracing(true);
+    setTraceStep(-1);
+    setActiveStep(null);
+    let i = 0;
+    const tick = () => {
+      setTraceStep(i);
+      setActiveStep(traceOrder[i]);
+      i++;
+      if (i < traceOrder.length) setTimeout(tick, 700);
+      else setTimeout(() => { setTracing(false); }, 500);
+    };
+    setTimeout(tick, 300);
+  };
+
+  const stepInfo = activeStep ? 
+    LANGCHAIN_CONCEPTS.find(c => 
+      (activeStep === "prompt" && c.name === "Prompts") ||
+      (activeStep === "model" && c.name === "LLMs") ||
+      (activeStep === "parser" && c.name === "Output Parsers") ||
+      (activeStep === "tools" && c.name === "Tools") ||
+      (activeStep === "memory" && c.name === "Memory")
+    ) : null;
+
+  return (
+    <div>
+      {/* INTERACTIVE PIPELINE DIAGRAM */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <DiagramImage
+          src="/assets/langchain_pipeline.png"
+          alt="LangChain Pipeline Infographic"
+          title="LangChain — Composable Pipeline Architecture"
+          caption="LangChain uses a pipeline approach where components are chained together in a specific sequence: Prompt → Model → Output Parser, with optional integration of Tools and Memory."
+          background="#0a0d14"
+          maxWidth={1200}
+        />
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+        {/* Pipeline */}
+        <div style={{ background: "#f7f5f0", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", position: "relative" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem" }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#4a9a4a" }}>LangChain Pipeline — Click steps to inspect</div>
+            <button onClick={runTrace} disabled={tracing}
+              style={{ background: tracing ? "#0a1a2a" : "linear-gradient(135deg,#0a1a2a,#1a3a5a)", border: "1px solid #4a9a4a", borderRadius: 3, padding: "0.3rem 0.8rem", color: "#4a9a4a", fontSize: "0.6rem", fontFamily: "Syne, sans-serif", fontWeight: 700, cursor: tracing ? "not-allowed" : "pointer", opacity: tracing ? 0.5 : 1 }}>
+              {tracing ? "Tracing…" : "▶ Trace Pipeline"}
+            </button>
+          </div>
+
+          {/* SVG Pipeline */}
+          <svg viewBox="0 0 100 60" style={{ width: "100%", height: 180 }}>
+            {/* Prompt */}
+            <rect x="10" y="10" width="20" height="20" rx="4" fill={traceStep >= 0 && traceOrder[0] === "prompt" ? "#4a9a4a30" : "#ffffff"} stroke="#4a9a4a" strokeWidth={traceStep >= 0 && traceOrder[0] === "prompt" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
+              <text x="20" y="25" textAnchor="start" fontSize="2.8" fill="#4a9a4a" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>💬 Prompt</text>
+            </rect>
+            
+            {/* Arrow 1 */}
+            {traceStep >= 1 && <line x1="30" y1="20" x2="40" y2="20" stroke="#4a9a4a" strokeWidth="1.2" markerEnd="url(#arrow)" />}
+            {traceStep < 1 && <line x1="30" y1="20" x2="40" y2="20" stroke="#e0dcd4" strokeWidth="0.8" />}
+            
+            {/* Model */}
+            <rect x="40" y="10" width="20" height="20" rx="4" fill={traceStep >= 1 && traceOrder[1] === "model" ? "#4a9a4a30" : "#ffffff"} stroke="#4a9a4a" strokeWidth={traceStep >= 1 && traceOrder[1] === "model" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
+              <text x="50" y="25" textAnchor="middle" fontSize="2.8" fill="#4a9a4a" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>🤖 Model</text>
+            </rect>
+            
+            {/* Arrow 2 */}
+            {traceStep >= 2 && <line x1="60" y1="20" x2="70" y2="20" stroke="#4a9a4a" strokeWidth="1.2" markerEnd="url(#arrow)" />}
+            {traceStep < 2 && <line x1="60" y1="20" x2="70" y2="20" stroke="#e0dcd4" strokeWidth="0.8" />}
+            
+            {/* Parser */}
+            <rect x="70" y="10" width="20" height="20" rx="4" fill={traceStep >= 2 && traceOrder[2] === "parser" ? "#4a9a4a30" : "#ffffff"} stroke="#4a9a4a" strokeWidth={traceStep >= 2 && traceOrder[2] === "parser" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
+              <text x="80" y="25" textAnchor="middle" fontSize="2.8" fill="#4a9a4a" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>📤 Parser</text>
+            </rect>
+            
+            {/* Optional Tools branch */}
+            {traceStep >= 3 && <line x1="90" y1="20" x2="90" y2="35" stroke="#9b7fd4" strokeWidth="1.2" markerEnd="url(#arrow)" />}
+            {traceStep < 3 && <line x1="90" y1="20" x2="90" y2="35" stroke="#e0dcd4" strokeWidth="0.8" strokeDasharray="2,2" />}
+            {traceStep >= 3 && 
+              <rect x="80" y="35" width="30" height="20" rx="4" fill={traceStep >= 3 && traceOrder[3] === "tools" ? "#9b7fd430" : "#ffffff"} stroke="#9b7fd4" strokeWidth={traceStep >= 3 && traceOrder[3] === "tools" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
+                <text x="95" y="50" textAnchor="middle" fontSize="2.8" fill="#9b7fd4" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>🔧 Tools</text>
+              </rect>
+            }
+            
+            {/* Optional Memory branch */}
+            {traceStep >= 4 && <line x1="95" y1="55" x2="95" y2="70" stroke="#9b7fd4" strokeWidth="1.2" markerEnd="url(#arrow)" />}
+            {traceStep < 4 && <line x1="95" y1="55" x2="95" y2="70" stroke="#e0dcd4" strokeWidth="0.8" strokeDasharray="2,2" />}
+            {traceStep >= 4 && 
+              <rect x="85" y="70" width="20" height="20" rx="4" fill={traceStep >= 4 && traceOrder[4] === "memory" ? "#9b7fd430" : "#ffffff"} stroke="#9b7fd4" strokeWidth={traceStep >= 4 && traceOrder[4] === "memory" ? 1.5 : 0.8} style={{ transition: "all 0.2s" }}>
+                <text x="95" y="85" textAnchor="middle" fontSize="2.8" fill="#9b7fd4" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", pointerEvents: "none" }}>🧠 Memory</text>
+              </rect>
+            }
+            
+            <defs>
+              <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L6,3 z" fill="#4a9a4a" />
+              </marker>
+            </defs>
+          </svg>
+
+          {stepInfo && (
+            <div style={{ padding: "0.8rem", background: `${stepInfo.color}10`, border: `1px solid ${stepInfo.color}40`, borderRadius: 4, fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>
+              <strong style={{ color: stepInfo.color }}>{stepInfo.name}:</strong> {stepInfo.desc}
+            </div>
+          )}
+        </div>
+
+        {/* Code walkthrough */}
+        <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden" }}>
+          <div style={{ padding: "0.8rem 1.2rem", borderBottom: "1px solid #e0dcd4", background: "#f7f5f0", fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#4a9a4a", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+            Complete LangChain Chain
+          </div>
+          <CodeBlock code={`from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_anthropic import ChatAnthropic
+from langchain_core.tools import tool
+from langchain_core.runnables import RunnablePassthrough
+
+# 1. Define components
+prompt = PromptTemplate.from_template("Answer the question based on the context: {context}")
+model = ChatAnthropic(model="claude-sonnet-4-20250514")
+parser = StrOutputParser()
+
+# 2. Optional: Tools
+@tool
+def search(query: str) -> str:
+    """Search for relevant information."""
+    return vector_store.similarity_search(query, k=3)
+
+# 3. Build chain (LCEL - LangChain Expression Language)
+chain = prompt | model | parser
+
+# 4. With tools (more complex)
+# chain_with_tools = {"context": search, "question": RunnablePassthrough()} | prompt | model | parser
+
+# 5. Invoke
+response = chain.invoke({"question": "What is LangChain?", "context": "LangChain is a framework for developing LLM applications."})`} />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ─── LANGGRAPH INTERACTIVE ───────────────────────────────────────
 const LangGraphVisual = () => {
   const [activeNode, setActiveNode] = useState(null);
@@ -961,9 +1112,9 @@ export const PipelineTab = ({ s }) => (
     <PipelineSimulator />
   </div>
 );
-export const LangChainTab = ({ s }) => <LangGraphVisual />;
+export const LangChainTab = ({ s }) => <LangChainVisual />;
 export const LangGraphTab = ({ s }) => <LangGraphVisual />;
-export const CompareTab = ({ s }) => <ComparisonTable />;
+export const CompareTab = ({ s }) => <LangChainVsLangGraphComparison />;
 export const PracticesTab = ({ s }) => <BestPracticesGrid />;
 export const ProgressTab = ({ s }) => <ProgressTracker />;
 

@@ -47,8 +47,8 @@ export const UMBRELLA_TOPICS = [
     title: "Data & Platform Layers",
     icon: "🏗️",
     color: "#3b82f6",
-    description: "Prompt/Context/Loop layers, document structure, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn"]
+    description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
+    tabs: ["threelayers", "docstruct", "agenticparsing", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn"]
   },
   {
     id: "frontiers_production",
@@ -429,6 +429,15 @@ export const TABS_REGISTRY = [
     icon: "📐",
     keywords: ["document structure", "pdf parsing", "toc", "loop"],
     component: lazy(() => import("../documentStructure/DocumentStructureTab.jsx"))
+  },
+  {
+    id: "agenticparsing",
+    label: "Agentic Parsing Dispatcher",
+    umbrellaId: "data_platform",
+    category: "Advanced & Frontiers",
+    icon: "⚡",
+    keywords: ["agentic parsing", "dispatcher", "pdf nature", "docling", "fitz", "easyocr", "pick richer", "brick 1"],
+    component: lazy(() => import("../agenticParsing/AgenticParsingTab.jsx"))
   },
   {
     id: "aidataplat",

@@ -525,11 +525,40 @@ export default function DocumentStructureTab() {
       <div style={{ ...s.card, marginBottom: '1.5rem', background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)' }}>
         <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid #e0dcd4' }}>
           <div style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.5rem', fontWeight: 900, color: '#1a1a2e', marginBottom: '0.5rem' }}>
-            Document Structure with Loop Engineering
+            Document Structure with Loop Engineering [Vol.1 #5octies]
           </div>
           <p style={{ fontSize: '0.72rem', color: '#6a6a7a', lineHeight: 1.7, maxWidth: 800 }}>
-            Recovering a PDF’s outline from body typography for RAG. Rules propose via 6 deterministic signals; bounded LLM loop validates kept entries.
+            Recovering a PDF’s outline from body typography for RAG (Case 4). Rules propose via 6 deterministic signals; bounded LLM loop validates kept entries.
           </p>
+          <div style={{
+            marginTop: '10px',
+            padding: '8px 14px',
+            background: 'linear-gradient(90deg, rgba(37, 99, 235, 0.08), rgba(13, 148, 136, 0.08))',
+            border: '1px solid rgba(37, 99, 235, 0.25)',
+            borderRadius: '6px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            fontSize: '0.72rem',
+          }}>
+            <span>
+              🚀 <strong>Next Evolution:</strong> See <strong>Agentic Parsing Dispatcher [Vol.1 #5nonies]</strong> which closes Brick 1 by composing this body-structure loop with Docling, EasyOCR, fitz, and Azure DI.
+            </span>
+            <a
+              href="?tab=agenticparsing"
+              style={{
+                color: '#2563eb',
+                fontWeight: 700,
+                textDecoration: 'none',
+                padding: '3px 8px',
+                background: 'white',
+                borderRadius: '4px',
+                border: '1px solid #2563eb',
+              }}
+            >
+              Open Dispatcher ⚡
+            </a>
+          </div>
         </div>
 
         {/* 7-Step Interactive Pipeline Stepper */}
