@@ -144,7 +144,7 @@ export function LangChainVsLangGraphComparison() {
             <text x="75" y="29" textAnchor="middle" fill="#2a7a9c" fontSize="8">Run until interrupt</text>
             <line x1="75" y1="32" x2="75" y2="40" stroke="#2a7a9c" strokeWeight="1.5" markerEnd={`url(#arrow-${diff.id}-3)`}/>
             <rect x="55" y="40" width="40" height="12" rx="2" fill="#2a7a9c20" stroke="#2a7a9c" strokeWeight="1.5"/>
-            <text x="75" y="49" textAnchor="middle" fill="#2a7a9c" fontSize="8">interrupt({question: \"Run?\"})</text>
+            <text x="75" y="49" textAnchor="middle" fill="#2a7a9c" fontSize="8">{'interrupt({question: "Run?"})'}</text>
             <line x1="75" y1="52" x2="75" y2="60" stroke="#2a7a9c" strokeWeight="1.5" markerEnd={`url(#arrow-${diff.id}-4)`}/>
             <rect x="55" y="60" width="40" height="12" rx="2" fill="#2a7a9c10" stroke="#2a7a9c" strokeWeight="1.5"/>
             <text x="75" y="69" textAnchor="middle" fill="#2a7a9c" fontSize="8">Resume with response</text>
@@ -330,7 +330,7 @@ export function LangChainVsLangGraphComparison() {
           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-6)">
             <Callout variant="agent" style={{ padding: 'var(--ds-space-4)' }}>
               <Callout.Icon>🦜</Callout.Icon>
-              <Callout.Title>Use LangChain when:</strong></Callout.Title>
+              <Callout.Title>Use LangChain when:</Callout.Title>
               <Callout.Description>
                 <ul style={{ marginTop: 'var(--ds-space-2)', lineHeight: 1.6, paddingLeft: 'var(--ds-space-4)' }}>
                   <li>Building simple, linear pipelines (Retrieve → Generate)</li>
@@ -344,7 +344,7 @@ export function LangChainVsLangGraphComparison() {
             
             <Callout variant="context" style={{ padding: 'var(--ds-space-4)' }}>
               <Callout.Icon>🕸️</Callout.Icon>
-              <Callout.Title>Use LangGraph when:</strong></Callout.Title>
+              <Callout.Title>Use LangGraph when:</Callout.Title>
               <Callout.Description>
                 <ul style={{ marginTop: 'var(--ds-space-2)', lineHeight: 1.6, paddingLeft: 'var(--ds-space-4)' }}>
                   <li>Your workflow requires cyclic execution or feedback loops</li>
@@ -376,7 +376,17 @@ export function LangChainVsLangGraphComparison() {
               <Tabs.Content>
                 <CodeBlock 
                   language="python"
-                  code="from langchain_core.prompts import PromptTemplate\nfrom langchain_core.output_parsers import StrOutputParser\nfrom langchain_anthropic import ChatAnthropic\n\n# Simple LangChain pipeline\nprompt = PromptTemplate.from_template(\"What is the capital of {country}?\")\nmodel = ChatAnthropic(model=\"claude-sonnet-4-20250514\")\nparser = StrOutputParser()\n\nchain = prompt | model | parser\nresult = chain.invoke({\"country\": \"France\"})"
+                  code={`from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_anthropic import ChatAnthropic
+
+# Simple LangChain pipeline
+prompt = PromptTemplate.from_template("What is the capital of {country}?")
+model = ChatAnthropic(model="claude-sonnet-4-20250514")
+parser = StrOutputParser()
+
+chain = prompt | model | parser
+result = chain.invoke({"country": "France"})`}
                 />
               </Tabs.Content>
             </Tabs.Item>
@@ -386,7 +396,28 @@ export function LangChainVsLangGraphComparison() {
               <Tabs.Content>
                 <CodeBlock 
                   language="python"
-                  code="from typing import TypedDict, Annotated\nfrom langgraph.graph import StateGraph, END\nfrom langgraph.graph.message import add_messages\nfrom langchain_anthropic import ChatAnthropic\nfrom langchain_core.tools import tool\n\nclass AgentState(TypedDict):\n    messages: Annotated[list, add_messages]\n    iterations: int\n\n@tool\ndef search(query: str) -> str:\n    return \"Search results for: \" + query\n\nllm = ChatAnthropic(model=\"claude-sonnet-4-20250514\")\nllm_with_tools = llm.bind_tools([search])\n\ndef call_llm(state: AgentState):\n    msg = llm_with_tools.invoke(state[\"messages\"])\n    return {\"messages\": [msg], \"iterations\": state[\"iterations\"] + 1}\n\n# ... router, tools nodes, graph building\n"
+                  code={`from typing import TypedDict, Annotated
+from langgraph.graph import StateGraph, END
+from langgraph.graph.message import add_messages
+from langchain_anthropic import ChatAnthropic
+from langchain_core.tools import tool
+
+class AgentState(TypedDict):
+    messages: Annotated[list, add_messages]
+    iterations: int
+
+@tool
+def search(query: str) -> str:
+    return "Search results for: " + query
+
+llm = ChatAnthropic(model="claude-sonnet-4-20250514")
+llm_with_tools = llm.bind_tools([search])
+
+def call_llm(state: AgentState):
+    msg = llm_with_tools.invoke(state["messages"])
+    return {"messages": [msg], "iterations": state["iterations"] + 1}
+
+# ... router, tools nodes, graph building`}
                 />
               </Tabs.Content>
             </Tabs.Item>
@@ -396,3 +427,5 @@ export function LangChainVsLangGraphComparison() {
     </Container>
   );
 }
+
+export default LangChainVsLangGraphComparison;
