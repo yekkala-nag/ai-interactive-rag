@@ -32,6 +32,7 @@ const TabComponents = {
   genpatterns: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.GenPatternsTab }))),
   fourpdfs: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.FourPDFsTab }))),
   hallucbricks: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HallucBricksTab }))),
+  proxypointer: lazy(() => import('./proxyPointer/ProxyPointerTab.jsx')),
   agenticrag: lazy(() => import('./agenticRAG/AgenticRAGTab.jsx')),
   ragcasestudies: lazy(() => import('./tabs/RAGCaseStudiesTab.jsx')),
   interviewprep: lazy(() => import('./tabs/InterviewPrepTab.jsx')),
@@ -61,6 +62,7 @@ const TabComponents = {
   threelayers: lazy(() => import('./engineeringLayers/ThreeLayersTab.jsx')),
   docstruct: lazy(() => import('./documentStructure/DocumentStructureTab.jsx')),
   agenticparsing: lazy(() => import('./agenticParsing/AgenticParsingTab.jsx')),
+  knowledgebase: lazy(() => import('./knowledgeBase/KnowledgeBaseTab.jsx')),
   aidataplat: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIDataPlatformTab }))),
   medallionarch: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.MedallionArchTab }))),
   aitestdatabottleneck: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AITestDataBottleneckTab }))),
@@ -72,6 +74,7 @@ const TabComponents = {
   ragbeyond: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.RAGBeyondTab }))),
   practices: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PracticesTab }))),
   tokenbill: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.TokenBillTab }))),
+  llmevals: lazy(() => import('./llmEvals/LLMEvalLayerTab.jsx')),
   progress: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ProgressTab }))),
 };
 

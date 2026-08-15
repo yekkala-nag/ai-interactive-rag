@@ -63,4 +63,7 @@ export { default as InterviewPrepTab } from './tabs/InterviewPrepTab.jsx';
 export { default as AgenticParsingTab } from './agenticParsing/AgenticParsingTab.jsx';
 export { default as ZeroModelRouterTab } from './zeroModelRouter/ZeroModelRouterTab.jsx';
 export { default as WorkflowLoopTab } from './workflowLoop/WorkflowLoopTab.jsx';
+export { default as ProxyPointerTab } from './proxyPointer/ProxyPointerTab.jsx';
 export { default as AgenticRAGTab } from './agenticRAG/AgenticRAGTab.jsx';
+export { default as LLMEvalLayerTab } from './llmEvals/LLMEvalLayerTab.jsx';
+export { default as KnowledgeBaseTab } from './knowledgeBase/KnowledgeBaseTab.jsx';

@@ -24,7 +24,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
-    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "agenticrag", "ragcasestudies", "interviewprep"]
+    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep"]
   },
   {
     id: "context_memory",
@@ -48,7 +48,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🏗️",
     color: "#3b82f6",
     description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn"]
   },
   {
     id: "frontiers_production",
@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["tokenbill", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress"]
+    tabs: ["tokenbill", "llmevals", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress"]
   }
 ];
 
@@ -216,6 +216,15 @@ export const TABS_REGISTRY = [
     icon: "🔀",
     keywords: ["workflow loop", "dispatcher", "when to loop", "when to stop", "should_continue", "pdf_qa_loop", "iterate_with_bound", "decide.py", "13", "drift", "audit"],
     component: lazy(() => import("../workflowLoop/WorkflowLoopTab.jsx"))
+  },
+  {
+    id: "proxypointer",
+    label: "Proxy-Pointer RAG",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🏷️",
+    keywords: ["proxy pointer", "proxy pointer rag", "structure meets scale", "skeleton tree", "breadcrumb injection", "faiss pointer map", "gemini flash lite noise filter", "15"],
+    component: lazy(() => import("../proxyPointer/ProxyPointerTab.jsx"))
   },
   {
     id: "agenticrag",
@@ -458,6 +467,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../agenticParsing/AgenticParsingTab.jsx"))
   },
   {
+    id: "knowledgebase",
+    label: "Efficient Knowledge Base",
+    umbrellaId: "data_platform",
+    category: "Advanced & Frontiers",
+    icon: "🌱",
+    keywords: ["knowledge base", "efficient knowledge base", "top 10 questions", "cleansing", "deduplication", "hnsw", "ivf", "flat", "rbac", "freshness ttl", "17"],
+    component: lazy(() => import("../knowledgeBase/KnowledgeBaseTab.jsx"))
+  },
+  {
     id: "aidataplat",
     label: "AI-Native Data Platform",
     umbrellaId: "data_platform",
@@ -512,6 +530,15 @@ export const TABS_REGISTRY = [
     icon: "💸",
     keywords: ["token bill", "cost optimization", "pricing"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.TokenBillTab })))
+  },
+  {
+    id: "llmevals",
+    label: "LLM Evals Quality Gate",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "⚖️",
+    keywords: ["llm evals", "evals based on vibes", "missing layer", "attribution", "specificity", "quality gate", "serve retry block", "regression", "16"],
+    component: lazy(() => import("../llmEvals/LLMEvalLayerTab.jsx"))
   },
   {
     id: "practices",

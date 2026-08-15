@@ -468,7 +468,7 @@ const PipelineSimulator = () => {
         <button
           onClick={simulate}
           disabled={running}
-          style={{ background: running ? "#1a2a1a" : "linear-gradient(135deg,#1a3a1a,#2a5a2a)", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", cursor: running ? "not-allowed" : "pointer", letterSpacing: "0.1em", transition: "all 0.2s", opacity: running ? 0.6 : 1 }}>
+          style={{ background: running ? "#e2e8f0" : "#ffffff", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", cursor: running ? "not-allowed" : "pointer", letterSpacing: "0.1em", transition: "all 0.2s", opacity: running ? 0.6 : 1 }}>
           {running ? "Running…" : "▶ Simulate"}
         </button>
       </div>
@@ -502,7 +502,7 @@ const PipelineSimulator = () => {
         ))}
       </div>
       {active >= 0 && (
-        <div style={{ marginTop: "1rem", padding: "0.8rem 1rem", background: `${RAG_PIPELINE_STEPS[active].color}10`, border: `1px solid ${RAG_PIPELINE_STEPS[active].color}40`, borderRadius: 4, fontSize: "0.7rem", color: "#c0c0d0", lineHeight: 1.7, animation: "fadeIn 0.3s ease" }}>
+        <div style={{ marginTop: "1rem", padding: "0.8rem 1rem", background: `${RAG_PIPELINE_STEPS[active].color}10`, border: `1px solid ${RAG_PIPELINE_STEPS[active].color}40`, borderRadius: 4, fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.7, animation: "fadeIn 0.3s ease" }}>
           <strong style={{ color: RAG_PIPELINE_STEPS[active].color }}>{RAG_PIPELINE_STEPS[active].label}:</strong>{" "}
           {["Takes the user's raw natural language input as a string.", "Rewrites or expands the query. HyDE generates a hypothetical answer and embeds it instead of the raw query, bridging the query-document embedding gap.", "Two parallel searches: dense vector cosine similarity (top-20) + BM25 keyword scoring (top-20). Results fused with Reciprocal Rank Fusion.", "A cross-encoder jointly scores each (query, chunk) pair. Far more accurate than bi-encoders. Returns top-5 most relevant chunks.", "Strips irrelevant sentences from each chunk before injecting into context. Reduces token waste by 40–60%.", "ReAct agent decides: answer now, or call search() again with a refined query? Can loop multiple times.", "Final grounded answer with inline citations back to source documents."][active]}
         </div>
@@ -654,7 +654,7 @@ const LangChainVisual = () => {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#4a9a4a" }}>LangChain Pipeline — Click steps to inspect</div>
             <button onClick={runTrace} disabled={tracing}
-              style={{ background: tracing ? "#0a1a2a" : "linear-gradient(135deg,#0a1a2a,#1a3a5a)", border: "1px solid #4a9a4a", borderRadius: 3, padding: "0.3rem 0.8rem", color: "#4a9a4a", fontSize: "0.6rem", fontFamily: "Syne, sans-serif", fontWeight: 700, cursor: tracing ? "not-allowed" : "pointer", opacity: tracing ? 0.5 : 1 }}>
+              style={{ background: tracing ? "#e2e8f0" : "#ffffff", border: "1px solid #4a9a4a", borderRadius: 3, padding: "0.3rem 0.8rem", color: "#4a9a4a", fontSize: "0.6rem", fontFamily: "Syne, sans-serif", fontWeight: 700, cursor: tracing ? "not-allowed" : "pointer", opacity: tracing ? 0.5 : 1 }}>
               {tracing ? "Tracing…" : "▶ Trace Pipeline"}
             </button>
           </div>
@@ -797,7 +797,7 @@ const LangGraphVisual = () => {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem" }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#2a7a9c" }}>Agent Graph — Click nodes to inspect</div>
           <button onClick={runTrace} disabled={tracing}
-            style={{ background: tracing ? "#0a1a2a" : "linear-gradient(135deg,#0a1a2a,#1a3a5a)", border: "1px solid #2a7a9c", borderRadius: 3, padding: "0.3rem 0.8rem", color: "#2a7a9c", fontSize: "0.6rem", fontFamily: "Syne, sans-serif", fontWeight: 700, cursor: tracing ? "not-allowed" : "pointer", opacity: tracing ? 0.5 : 1 }}>
+            style={{ background: tracing ? "#e2e8f0" : "#ffffff", border: "1px solid #2a7a9c", borderRadius: 3, padding: "0.3rem 0.8rem", color: "#2a7a9c", fontSize: "0.6rem", fontFamily: "Syne, sans-serif", fontWeight: 700, cursor: tracing ? "not-allowed" : "pointer", opacity: tracing ? 0.5 : 1 }}>
             {tracing ? "Tracing…" : "▶ Trace Run"}
           </button>
         </div>
@@ -1190,7 +1190,7 @@ export const FilteringTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#0a1a14,#140a1a,#0a0f1a)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#f0f4f8,#f2f8f0,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4)" }} />
         <div style={{ position: "absolute", right: "1rem", top: "1rem", fontFamily: "Playfair Display, serif", fontSize: "8rem", fontWeight: 900, color: "rgba(201,168,76,0.04)", lineHeight: 1, pointerEvents: "none" }}>SQL</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Mental Model · Enterprise RAG · TDS 2026</div>
@@ -1351,7 +1351,7 @@ export const FilteringTab = ({ s }) => {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem" }}>
           <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 480 }}>Click ▶ to animate the full filtering pipeline — from question parsing through anchor detection to context expansion.</p>
           <button onClick={runSim} disabled={simRunning}
-            style={{ background: simRunning ? "#0a1a0a" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em" }}>
+            style={{ background: simRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em" }}>
             {simRunning ? "Running…" : "▶ Run Pipeline"}
           </button>
         </div>
@@ -1669,7 +1669,7 @@ export const MultiAgentTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#0a0f1a,#150a1a,#0a150a)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#f0f4f8,#f6f0fa,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#9b7fd4,#c4572a,#4a9a4a)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "1rem", fontFamily: "Playfair Display, serif", fontSize: "7rem", fontWeight: 900, color: "rgba(155,127,212,0.04)", lineHeight: 1, pointerEvents: "none" }}>5×</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#9b7fd4", marginBottom: "0.75rem" }}>Case Study · Text-to-SQL · TDS 2026</div>
@@ -2133,7 +2133,7 @@ export const VagueQuestionsTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#0a100f,#100a14,#0f0f0a)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#f0f4f8,#eff8f4,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#4a9a4a)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "7rem", fontWeight: 900, color: "rgba(201,168,76,0.04)", lineHeight: 1, pointerEvents: "none" }}>?</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.75rem" }}>Enterprise RAG · Question Parsing · TDS 2026</div>
@@ -2630,7 +2630,7 @@ export const ContextGraphTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#eff8f4,#0a0f1a,#140a14)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#f0f4f8,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#4a9a4a,#9b7fd4,#c4572a,#c9a84c)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "7rem", fontWeight: 900, color: "rgba(74,154,74,0.04)", lineHeight: 1, pointerEvents: "none" }}>⬡</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#4a9a4a", marginBottom: "0.75rem" }}>Multi-Agent Memory · Benchmark · TDS June 2026</div>
@@ -2764,7 +2764,7 @@ export const ContextGraphTab = ({ s }) => {
             Query: <em style={{ color: "#1a1a2e" }}>"Which component does the module owned by Agent_Implementer depend on?"</em> — no single chunk contains both facts.
           </div>
           <button onClick={runTraversal} disabled={traversing}
-            style={{ background: traversing ? "#0a1a14" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: traversing ? "not-allowed" : "pointer", opacity: traversing ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+            style={{ background: traversing ? "#e2e8f0" : "#ffffff", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: traversing ? "not-allowed" : "pointer", opacity: traversing ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
             {traversing ? "Traversing…" : "▶ Run Traversal"}
           </button>
         </div>
@@ -3100,7 +3100,7 @@ export const ContextEngineeringTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#f0f4f8,#0f140a,#140a0f)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#f0f4f8,#f2f8f0,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "6rem", fontWeight: 900, color: "rgba(201,168,76,0.04)", lineHeight: 1, pointerEvents: "none" }}>CTX</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.75rem" }}>Enterprise RAG · Vol.1 #7bis · TDS June 2026</div>
@@ -3245,7 +3245,7 @@ export const ContextEngineeringTab = ({ s }) => {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
           <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.6, maxWidth: 480 }}>Each brick emits typed outputs that converge on a single LLM call. The assembly is code — typed objects, contracts between components.</p>
           <button onClick={runSim} disabled={simRunning}
-            style={{ background: simRunning ? "#0a1a0a" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+            style={{ background: simRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
             {simRunning ? "Assembling…" : "▶ Assemble Context"}
           </button>
         </div>
@@ -3780,7 +3780,7 @@ export const MemoryEngineeringTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#f0f4f8,#140f0a,#0a1409)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#f0f4f8,#f2f8f0,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#c4572a,#4a9a4a)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "6rem", fontWeight: 900, color: "rgba(201,168,76,0.04)", lineHeight: 1, pointerEvents: "none" }}>RAM</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.75rem" }}>Data Engineering · ETL · Memory Optimisation · TDS July 2026</div>
@@ -3936,7 +3936,7 @@ export const MemoryEngineeringTab = ({ s }) => {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
           <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.6, maxWidth: 480 }}>Trace the 6.2M-row social media ETL job from extraction to clean parquet — including the OOM failure point and the memory strategy branch.</p>
           <button onClick={runSim} disabled={simRunning}
-            style={{ background: simRunning ? "#0a1a0a" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+            style={{ background: simRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
             {simRunning ? "Running…" : "▶ Run ETL"}
           </button>
         </div>
@@ -4507,7 +4507,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
           <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.6, maxWidth: 480 }}>The Skills feature lets you train Claude to write in your unique voice. Animate the process to see how it works.</p>
           <button onClick={runSkill} disabled={skillRunning}
-            style={{ background: skillRunning ? "#f4f2fa" : "linear-gradient(135deg,#140a1a,#2a1a3a)", border: "1px solid #9b7fd4", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#9b7fd4", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: skillRunning ? "not-allowed" : "pointer", opacity: skillRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+            style={{ background: skillRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #9b7fd4", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#9b7fd4", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: skillRunning ? "not-allowed" : "pointer", opacity: skillRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
             {skillRunning ? "Training…" : "▶ Train Skill"}
           </button>
         </div>
@@ -5071,7 +5071,7 @@ export const AIGlossaryTab = ({ s }) => {
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", marginBottom: "0.5rem" }}>Ready to test your AI knowledge?</div>
             <div style={{ fontSize: "0.68rem", color: "#334155", marginBottom: "1.2rem" }}>{QUIZ_QS.length} questions · multiple choice · instant feedback</div>
             <button onClick={() => setQuizActive(true)}
-              style={{ background: "linear-gradient(135deg,#1a0a0a,#3a1a1a)", border: "1px solid #c4572a", borderRadius: 4, padding: "0.6rem 1.5rem", color: "#c4572a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", cursor: "pointer", letterSpacing: "0.1em" }}>
+              style={{ background: "#ffffff", border: "1px solid #c4572a", borderRadius: 4, padding: "0.6rem 1.5rem", color: "#c4572a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", cursor: "pointer", letterSpacing: "0.1em" }}>
               ▶ Start Quiz
             </button>
           </div>
@@ -5546,7 +5546,7 @@ export const PowerFeaturesTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f0f4f8,#14080a)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f0f4f8)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5.5rem", fontWeight: 900, color: "rgba(201,168,76,0.04)", lineHeight: 1, pointerEvents: "none" }}>PRO</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.75rem" }}>Advanced Techniques · Tools & Research · July 2026</div>
@@ -5688,7 +5688,7 @@ export const PowerFeaturesTab = ({ s }) => {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
               <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace what happens when a developer pushes new code — from detection to merged documentation PR.</p>
               <button onClick={runWiki} disabled={wikiRunning}
-                style={{ background: wikiRunning ? "#f2f8f0" : "linear-gradient(135deg,#f2f8f0,#1a3a1a)", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: wikiRunning ? "not-allowed" : "pointer", opacity: wikiRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+                style={{ background: wikiRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: wikiRunning ? "not-allowed" : "pointer", opacity: wikiRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {wikiRunning ? "Running…" : "▶ Run OpenWiki"}
               </button>
             </div>
@@ -6227,7 +6227,7 @@ export const ResearchFrontiersTab = ({ s }) => {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
               <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace how Memento handles a new research task — retrieving past experience and storing the outcome.</p>
               <button onClick={runMemento} disabled={mementoRunning}
-                style={{ background: mementoRunning ? "#f2f8f0" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: mementoRunning ? "not-allowed" : "pointer", opacity: mementoRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+                style={{ background: mementoRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: mementoRunning ? "not-allowed" : "pointer", opacity: mementoRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {mementoRunning ? "Running…" : "▶ Run Memento"}
               </button>
             </div>
@@ -6805,7 +6805,7 @@ export const ProductionRAGTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#eff8f4,#f6f0fa,#140f0a)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#f6f0fa,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.05)", lineHeight: 1, pointerEvents: "none" }}>PDF</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Enterprise Document Intelligence · Vol.1 #9A · TDS July 7, 2026</div>
@@ -6859,7 +6859,7 @@ export const ProductionRAGTab = ({ s }) => {
             <div style={{ fontSize: "0.62rem", color: "#334155" }}>Trace the full upgraded pipeline from noisy question to typed ListAnswer.</div>
           </div>
           <button onClick={runSim} disabled={simRunning}
-            style={{ background: simRunning ? "#f4f2fa" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+            style={{ background: simRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
             {simRunning ? "Running…" : "▶ Run Pipeline"}
           </button>
         </div>
@@ -7523,7 +7523,7 @@ export const RAGBeyondTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#f4f2fa,#14080a,#f2f8f0)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#f4f2fa,#faf6ef,#f2f8f0)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#c4572a,#c9a84c,#9b7fd4,#2a8a84,#4a9a4a)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(155,127,212,0.05)", lineHeight: 1, pointerEvents: "none" }}>→</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c4572a", marginBottom: "0.75rem" }}>TDS · Anubhab Banerjee · July 10, 2026 · 8 min</div>
@@ -8371,7 +8371,7 @@ while True:
                 <div style={{ fontSize: "0.62rem", color: "#334155" }}>Document: NIST SP 800-53 Rev. 5 — 492 pages, 358 TOC entries, 3-level hierarchy</div>
               </div>
               <button onClick={runDescent} disabled={descentRunning}
-                style={{ background: descentRunning ? "#f2f8f0" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: descentRunning ? "not-allowed" : "pointer", opacity: descentRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+                style={{ background: descentRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: descentRunning ? "not-allowed" : "pointer", opacity: descentRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {descentRunning ? "Descending…" : "▶ Animate Descent"}
               </button>
             </div>
@@ -9366,7 +9366,7 @@ export const ArchConceptsTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#0a100f,#f6f0fa,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,#eff8f4,#f6f0fa,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "4.5rem", fontWeight: 900, color: "rgba(42,138,132,0.05)", lineHeight: 1, pointerEvents: "none" }}>∑</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Module 1 — Foundations · Architecture Concepts · DeepSeek · MoE · Speculative Decoding</div>
@@ -14090,7 +14090,7 @@ export const TokenBillTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg, #101926, #162436, #1b1c2e)", border: "1px solid #2a3a50", borderRadius: 8, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.3)" }}>
+      <div style={{ background: "linear-gradient(135deg, #f0f4f8, #f8fafc, #faf6ef)", border: "1px solid #2a3a50", borderRadius: 8, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.3)" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "linear-gradient(90deg, #c4572a, #c9a84c, #2a8a84, #9b7fd4)" }} />
         <div style={{ position: "absolute", right: "2rem", top: "1rem", fontFamily: "Playfair Display, serif", fontSize: "6rem", fontWeight: 900, color: "rgba(201,168,76,0.05)", lineHeight: 1, pointerEvents: "none" }}>💸</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.75rem" }}>
@@ -19179,7 +19179,7 @@ export const AgentsAsToolsTab = ({ s }) => {
     <div>
       {/* SECTION HEADER */}
       <div style={s.sectionLabel("#c9a84c")}>Multi-Agent Pattern · OpenAI Agents SDK</div>
-      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", border: "1px solid #334155" }}>
+      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)", border: "1px solid #334155" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
           <div>
             <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#38bdf8", marginBottom: "0.5rem" }}>
@@ -21951,7 +21951,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
     <div>
       {/* SECTION HEADER */}
       <div style={s.sectionLabel("#0284c7")}>DevOps & Test Data Management · The New Stack</div>
-      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", border: "1px solid #0284c7" }}>
+      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)", border: "1px solid #0284c7" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
           <div>
             <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#38bdf8", marginBottom: "0.5rem" }}>

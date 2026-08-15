@@ -265,7 +265,7 @@ export default function CliAgentTab() {
             <h1 style={{ fontFamily: "Playfair Display, serif", fontSize: "2.5rem", fontWeight: 900, color: "#f9fafb", margin: 0, lineHeight: 1.1 }}>
               Building Local CLI Agents from Scratch
             </h1>
-            <p style={{ color: "#9ca3af", fontSize: "0.95rem", maxWidth: 720, marginTop: "0.8rem", lineHeight: 1.6 }}>
+            <p style={{ color: "#E2E8F0", fontSize: "0.95rem", maxWidth: 720, marginTop: "0.8rem", lineHeight: 1.6 }}>
               Learn how to create a fully private, zero-cost, autonomous Command-Line Interface (CLI) Agent running Ollama locally. Connect natural language commands to real system actions via Python subprocesses.
             </p>
           </div>
@@ -273,11 +273,11 @@ export default function CliAgentTab() {
           <div style={{ display: "flex", gap: "1rem" }}>
             <div style={{ background: "#111827", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #374151", textAlign: "center" }}>
               <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#c9a84c" }}>$0.00</div>
-              <div style={{ fontSize: "0.7rem", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em" }}>API Cost</div>
+              <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase", letterSpacing: "0.05em" }}>API Cost</div>
             </div>
             <div style={{ background: "#111827", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #374151", textAlign: "center" }}>
               <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#2a8a84" }}>100%</div>
-              <div style={{ fontSize: "0.7rem", color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.05em" }}>Local Privacy</div>
+              <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase", letterSpacing: "0.05em" }}>Local Privacy</div>
             </div>
           </div>
         </div>

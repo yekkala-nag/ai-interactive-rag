@@ -25,6 +25,8 @@ export function WorkflowLoopTab() {
   const [queryIntentState, setQueryIntentState] = useState('listing');
   const [sectionHintState, setSectionHintState] = useState('5.4');
   const [layoutHintState, setLayoutHintState] = useState('table');
+  const [activeMaturityLevel, setActiveMaturityLevel] = useState(3); // 1 to 5
+  const [selectedRing, setSelectedRing] = useState('loop'); // 'bricks', 'onepass', 'loop', 'corpus'
 
   const selectedScenario = useMemo(() => {
     return WORKFLOW_SCENARIOS.find(s => s.id === selectedScenarioId) || WORKFLOW_SCENARIOS[0];
@@ -78,17 +80,25 @@ export function WorkflowLoopTab() {
         </p>
       </Section>
 
-      {/* ARCHITECTURAL INFOGRAPHIC CARD */}
-      <div style={{ marginBottom: 'var(--ds-space-6)' }}>
+      {/* DUAL ARCHITECTURAL INFOGRAPHIC CARDS */}
+      <Grid columns={{ base: '1fr', lg: '1fr 1fr' }} gap="var(--ds-space-4)" style={{ marginBottom: 'var(--ds-space-6)' }}>
         <DiagramImage
           src="/assets/rag_workflow_loop_dispatcher.png"
           alt="Enterprise RAG Workflow and Loop Engineering Dispatcher Architecture"
-          title="Workflow & Loop Engineering — Dispatcher & Bounded Feedback Architecture"
-          caption="Incoming question and document profile trigger deterministic pattern activations. The bounded orchestrator runs Pass 1, evaluates typed feedback flags, routes recovery actions via feedback rails (Pass 2 Two-Hop Resolution), and halts safely via should_continue guardrails."
+          title="1. Workflow & Loop Engineering — Dispatcher & Feedback Rails"
+          caption="Incoming question and document profile trigger deterministic pattern activations. The bounded orchestrator runs Pass 1, evaluates typed feedback flags, routes recovery actions via feedback rails, and halts safely."
           background="#0a0f1d"
-          maxWidth={1200}
+          maxWidth={700}
         />
-      </div>
+        <DiagramImage
+          src="/assets/rag_loop_state_machine.png"
+          alt="The 3-Layer Dispatcher State Machine Infographic"
+          title="2. Three-Layer State Machine: Upfront Dispatcher, Loop, & Guardrails"
+          caption="Detailed state machine transitions: Layer 1 Upfront Dispatcher ➔ Layer 2 Bounded Iteration Loop & Typed Feedback ➔ Layer 3 Termination Guardrails (Candidate Stability, Keyword Saturation, Confidence Drop)."
+          background="#0a0f1d"
+          maxWidth={700}
+        />
+      </Grid>
 
       {/* NAVIGATION SUB-TABS */}
       <div style={{
@@ -98,6 +108,8 @@ export function WorkflowLoopTab() {
       }}>
         {[
           { id: 'simulator', label: '⚡ Live Loop Simulator', icon: '⚡' },
+          { id: 'maturity', label: '🏛️ Architecture Rings & Maturity', icon: '🏛️' },
+          { id: 'statemachine', label: '🔄 Visual State Machine', icon: '🔄' },
           { id: 'dispatcher', label: '🧭 Dispatcher Matrix', icon: '🧭' },
           { id: 'guardrails', label: '🛑 Termination Guardrails', icon: '🛑' },
           { id: 'audit', label: '📋 Compliance Audit Trail', icon: '📋' },
@@ -400,7 +412,355 @@ export function WorkflowLoopTab() {
       )}
 
       {/* ========================================================================= */}
-      {/* 2. DISPATCHER DECISION MATRIX & PROFILER */}
+      {/* 2. ARCHITECTURE RINGS & 5-LEVEL CONTROL MATURITY */}
+      {/* ========================================================================= */}
+      {activeSubTab === 'maturity' && (
+        <Section variant="bordered">
+          <Section.Header>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+              Architecture Rings & Pipeline Control Maturity
+            </h2>
+            <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: '0.85rem', margin: '4px 0 0 0' }}>
+              Explore the nested handler rings, the 5 levels of control maturity, and how the upfront Dispatcher activates pipeline patterns.
+            </p>
+          </Section.Header>
+
+          <Section.Body>
+            <Stack gap={6}>
+              {/* DIAGRAM 1: UPFRONT DISPATCHER ACTIVATION PIPELINE */}
+              <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
+                <Stack gap={3}>
+                  <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
+                    <div>
+                      <Badge variant="primary">Diagram 1: Upfront Dispatcher</Badge>
+                      <h3 style={{ margin: '4px 0 0 0', fontSize: '1.1rem' }}>The Upfront Dispatcher Pattern Activation</h3>
+                    </div>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--ds-color-text-secondary)' }}>
+                      Rules in <code style={{ fontFamily: 'var(--ds-font-family-mono)' }}>decide.py</code> (One <code style={{ fontFamily: 'var(--ds-font-family-mono)' }}>if</code> per activation)
+                    </span>
+                  </Flex>
+
+                  <DiagramImage
+                    src="/assets/dispatcher_activation_pipeline.png"
+                    alt="The Upfront Dispatcher decide_pipeline_patterns architecture"
+                    title="Dispatcher Activation Architecture — Input Profile to Pipeline Flags"
+                    caption="ParsedQuestion and DocumentProfile feed into decide_pipeline_patterns(), which deterministically outputs ON/OFF boolean flags for TOC retrieval, Keyword search, Dense embeddings, Two-hop references, Listing aggregation, Adaptive parsing, and Iterative feedback."
+                    background="#ffffff"
+                    maxWidth={1000}
+                  />
+                </Stack>
+              </Card>
+
+              {/* DIAGRAM 2: NESTED HANDLER RINGS */}
+              <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
+                <Stack gap={4}>
+                  <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
+                    <div>
+                      <Badge variant="info">Diagram 2: Nested Handler Architecture</Badge>
+                      <h3 style={{ margin: '4px 0 0 0', fontSize: '1.1rem' }}>One Handler Nested in the Next: Control Stays in Code</h3>
+                    </div>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--ds-color-text-secondary)' }}>
+                      Four concentric rings wrapping execution
+                    </span>
+                  </Flex>
+
+                  <DiagramImage
+                    src="/assets/nested_handlers_rings.png"
+                    alt="Nested Handlers Architecture Rings"
+                    title="Concentric Architecture Rings — The Four Bricks to Corpus QA"
+                    caption="The Four Bricks (Parsing, Question Parsing, Retrieval, Generation) form the core spine. One Pass wraps the 4 bricks. pdf_qa_loop adds Dispatcher + Bounded Feedback. corpus_pdf_qa SQL-scopes the corpus index."
+                    background="#ffffff"
+                    maxWidth={1000}
+                  />
+
+                  {/* INTERACTIVE RING EXPLORER */}
+                  <div>
+                    <h4 style={{ fontSize: '0.9rem', marginBottom: '8px' }}>Interactive Ring Inspector:</h4>
+                    <Grid columns={{ base: '1fr 1fr', md: 'repeat(4, 1fr)' }} gap="8px">
+                      {[
+                        { id: 'bricks', label: '1. The Four Bricks', badge: 'Part II — Spine', desc: 'Parsing ➔ Question Parsing ➔ Retrieval ➔ Generation' },
+                        { id: 'onepass', label: '2. One Pass Chain', badge: 'Article 9', desc: 'Single-pass execution that emits typed feedback fields' },
+                        { id: 'loop', label: '3. pdf_qa_loop', badge: 'Article 13', desc: 'decide_pipeline_patterns + iterate_with_bound bounded loop' },
+                        { id: 'corpus', label: '4. corpus_pdf_qa', badge: 'Articles 14 / 17', desc: 'SQL-scopes corpus index to candidate docs, then runs per-doc handler' }
+                      ].map(ring => (
+                        <button
+                          key={ring.id}
+                          onClick={() => setSelectedRing(ring.id)}
+                          style={{
+                            padding: '10px 12px',
+                            borderRadius: '8px',
+                            border: `1px solid ${selectedRing === ring.id ? '#06b6d4' : 'var(--ds-color-border-subtle)'}`,
+                            background: selectedRing === ring.id ? 'rgba(6, 182, 212, 0.12)' : 'var(--ds-color-bg-surface)',
+                            color: selectedRing === ring.id ? '#06b6d4' : 'var(--ds-color-text-primary)',
+                            cursor: 'pointer',
+                            textAlign: 'left'
+                          }}
+                        >
+                          <div style={{ fontWeight: 700, fontSize: '0.82rem' }}>{ring.label}</div>
+                          <Badge variant="subtle" size="sm" style={{ margin: '4px 0' }}>{ring.badge}</Badge>
+                          <div style={{ fontSize: '0.7rem', color: 'var(--ds-color-text-secondary)', lineHeight: 1.3 }}>{ring.desc}</div>
+                        </button>
+                      ))}
+                    </Grid>
+                  </div>
+                </Stack>
+              </Card>
+
+              {/* DIAGRAM 3: PIPELINE MATURITY (5 LEVELS OF CONTROL) */}
+              <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
+                <Stack gap={4}>
+                  <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
+                    <div>
+                      <Badge variant="success">Diagram 3: Pipeline Maturity</Badge>
+                      <h3 style={{ margin: '4px 0 0 0', fontSize: '1.1rem' }}>Same Four Bricks. Five Levels of Control.</h3>
+                    </div>
+                    <span style={{ fontSize: '0.78rem', color: '#CA8A04', fontWeight: 'bold' }}>
+                      ⚡ THE JUMP THAT MATTERS: Rungs 1–4 in Code ➔ Rung 5 in LLM
+                    </span>
+                  </Flex>
+
+                  <DiagramImage
+                    src="/assets/pipeline_maturity_5levels.png"
+                    alt="Pipeline Maturity 5 Levels of Control"
+                    title="The 5-Level Control Maturity Ladder"
+                    caption="Rungs 1 to 4 keep orchestration and loop logic strictly deterministic in Python code. Only Level 5 (Agentic) moves the loop decision into the LLM's action space."
+                    background="#ffffff"
+                    maxWidth={1000}
+                  />
+
+                  {/* INTERACTIVE MATURITY LEVEL CONTROLLER */}
+                  <div>
+                    <h4 style={{ fontSize: '0.9rem', marginBottom: '8px' }}>Interactive Maturity Ladder Stepper:</h4>
+                    <Grid columns={{ base: '1fr', md: 'repeat(5, 1fr)' }} gap="8px">
+                      {[
+                        { level: 1, name: '01 BASELINE', handler: 'pdf_qa_baseline', control: 'no loop', where: 'in CODE', desc: 'Four bricks chained once, keyword retrieval only' },
+                        { level: 2, name: '02 UPGRADED', handler: 'pdf_qa', control: 'no loop', where: 'in CODE', desc: 'Full parse + TOC routing. Emits feedback, unused' },
+                        { level: 3, name: '03 WORKFLOW', handler: 'pdf_qa_loop', control: 'loop', where: 'in CODE', desc: 'The pass inside a bounded loop + pattern dispatch' },
+                        { level: 4, name: '04 MULTI-INTENT', handler: 'pdf_chat', control: 'routing', where: 'in CODE', desc: 'One chat entry, any intent; small talk exits early' },
+                        { level: 5, name: '05 AGENTIC', handler: 'pdf_qa_agentic', control: 'loop', where: 'in LLM', desc: 'The LLM picks the next step from a tool catalog itself' },
+                      ].map(l => (
+                        <button
+                          key={l.level}
+                          onClick={() => setActiveMaturityLevel(l.level)}
+                          style={{
+                            padding: '12px 10px',
+                            borderRadius: '8px',
+                            border: `2px solid ${activeMaturityLevel === l.level ? (l.level === 5 ? '#f59e0b' : '#06b6d4') : 'var(--ds-color-border-subtle)'}`,
+                            background: activeMaturityLevel === l.level ? (l.level === 5 ? 'rgba(245, 158, 11, 0.12)' : 'rgba(6, 182, 212, 0.12)') : 'var(--ds-color-bg-surface)',
+                            cursor: 'pointer',
+                            textAlign: 'left'
+                          }}
+                        >
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <strong style={{ fontSize: '0.82rem', color: l.level === 5 ? '#f59e0b' : '#06b6d4' }}>{l.name}</strong>
+                            <Badge variant={l.where === 'in LLM' ? 'warning' : 'primary'} size="sm">{l.where}</Badge>
+                          </div>
+                          <div style={{ fontSize: '0.72rem', fontFamily: 'var(--ds-font-family-mono)', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
+                            {l.handler}
+                          </div>
+                          <div style={{ fontSize: '0.68rem', color: 'var(--ds-color-text-tertiary)', marginTop: '4px', lineHeight: 1.3 }}>
+                            {l.desc}
+                          </div>
+                        </button>
+                      ))}
+                    </Grid>
+                  </div>
+                </Stack>
+              </Card>
+            </Stack>
+          </Section.Body>
+        </Section>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 3. INTERACTIVE VISUAL STATE MACHINE & FLOW GRAPH */}
+      {/* ========================================================================= */}
+      {activeSubTab === 'statemachine' && (
+        <Section variant="bordered">
+          <Section.Header>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+                  Interactive 3-Layer Loop State Machine Flowchart
+                </h2>
+                <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: '0.85rem', margin: '4px 0 0 0' }}>
+                  Visual state machine showing active execution pathways, recovery routing, and termination criteria.
+                </p>
+              </div>
+              <div style={{ display: 'flex', gap: '6px' }}>
+                <Badge variant={isFinalPass ? 'success' : 'primary'}>
+                  Current State: {isFinalPass ? 'TERMINATION_HALT' : 'FEEDBACK_RECOVERY_LOOP'}
+                </Badge>
+              </div>
+            </div>
+          </Section.Header>
+
+          <Section.Body>
+            {/* Visual State Graph Nodes */}
+            <div style={{
+              background: '#0a0f1d',
+              border: '1px solid #1e293b',
+              borderRadius: '12px',
+              padding: '24px',
+              marginBottom: 'var(--ds-space-6)',
+              overflowX: 'auto'
+            }}>
+              <div style={{ minWidth: '800px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {/* LAYER 1: UPFRONT DISPATCHER */}
+                <div style={{ borderLeft: '3px solid #06b6d4', paddingLeft: '16px' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#06b6d4', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>
+                    Layer 1: Upfront Deterministic Dispatcher
+                  </div>
+                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                    <div style={{
+                      background: 'rgba(6, 182, 212, 0.15)',
+                      border: '1px solid #06b6d4',
+                      borderRadius: '8px',
+                      padding: '12px 16px',
+                      flex: 1
+                    }}>
+                      <div style={{ color: '#67e8f9', fontWeight: 700, fontSize: '0.85rem' }}>1. Ingest Question & Document Profile</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.72rem', marginTop: '2px' }}>
+                        TOC Bookmarks: {selectedScenario.document.has_usable_toc ? 'YES' : 'NO'} | Intent: {selectedScenario.question.intent}
+                      </div>
+                    </div>
+
+                    <span style={{ color: '#06b6d4', fontSize: '1.2rem', fontWeight: 900 }}>➔</span>
+
+                    <div style={{
+                      background: 'rgba(6, 182, 212, 0.15)',
+                      border: '1px solid #06b6d4',
+                      borderRadius: '8px',
+                      padding: '12px 16px',
+                      flex: 1.2
+                    }}>
+                      <div style={{ color: '#67e8f9', fontWeight: 700, fontSize: '0.85rem' }}>2. decide_pipeline_patterns()</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.72rem', marginTop: '2px' }}>
+                        Activates TOC ({scenarioActivations.toc_retrieval ? 'ON' : 'OFF'}), Two-Hop ({scenarioActivations.two_hop_references ? 'ON' : 'OFF'}), Adaptive OCR ({scenarioActivations.adaptive_parsing ? 'ON' : 'OFF'})
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* LAYER 2: BOUNDED ITERATION LOOP */}
+                <div style={{ borderLeft: '3px solid #10b981', paddingLeft: '16px' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>
+                    Layer 2: Bounded Iteration Loop & Feedback Rails
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '12px', alignItems: 'center' }}>
+                    {/* Pass 1 Node */}
+                    <div style={{
+                      background: currentPassIndex === 0 ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.05)',
+                      border: currentPassIndex === 0 ? '2px solid #10b981' : '1px solid #334155',
+                      boxShadow: currentPassIndex === 0 ? '0 0 15px rgba(16, 185, 129, 0.4)' : 'none',
+                      borderRadius: '8px',
+                      padding: '12px 14px',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <div style={{ color: currentPassIndex === 0 ? '#6ee7b7' : '#e2e8f0', fontWeight: 700, fontSize: '0.82rem' }}>
+                        Pass 1: Primary Search
+                      </div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.7rem', marginTop: '2px' }}>
+                        Retrieves initial candidate chunks
+                      </div>
+                    </div>
+
+                    <span style={{ color: '#10b981', fontSize: '1.2rem', fontWeight: 900 }}>➔</span>
+
+                    {/* Evaluate Node */}
+                    <div style={{
+                      background: 'rgba(245, 158, 11, 0.15)',
+                      border: '1px solid #f59e0b',
+                      borderRadius: '8px',
+                      padding: '12px 14px'
+                    }}>
+                      <div style={{ color: '#fde68a', fontWeight: 700, fontSize: '0.82rem' }}>
+                        Evaluate Typed Signals
+                      </div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.7rem', marginTop: '2px' }}>
+                        Checks complete_answer, confidence ({currentPass.feedback.confidence}), pending refs
+                      </div>
+                    </div>
+
+                    <span style={{ color: '#10b981', fontSize: '1.2rem', fontWeight: 900 }}>➔</span>
+
+                    {/* Pass 2 Node */}
+                    <div style={{
+                      background: currentPassIndex > 0 ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.05)',
+                      border: currentPassIndex > 0 ? '2px solid #10b981' : '1px solid #334155',
+                      boxShadow: currentPassIndex > 0 ? '0 0 15px rgba(16, 185, 129, 0.4)' : 'none',
+                      borderRadius: '8px',
+                      padding: '12px 14px',
+                      transition: 'all 0.3s ease'
+                    }}>
+                      <div style={{ color: currentPassIndex > 0 ? '#6ee7b7' : '#e2e8f0', fontWeight: 700, fontSize: '0.82rem' }}>
+                        Pass 2: Two-Hop Recovery
+                      </div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.7rem', marginTop: '2px' }}>
+                        Drills into referenced Table / Section
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* LAYER 3: TERMINATION GUARDRAILS */}
+                <div style={{ borderLeft: '3px solid #ef4444', paddingLeft: '16px' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#ef4444', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>
+                    Layer 3: Termination Guardrails (should_continue)
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+                    <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '8px', padding: '10px 12px' }}>
+                      <div style={{ color: '#fca5a5', fontWeight: 700, fontSize: '0.78rem' }}>1. Candidate Set Stability</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.68rem', marginTop: '2px' }}>Halts if candidate passage IDs identical</div>
+                    </div>
+                    <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '8px', padding: '10px 12px' }}>
+                      <div style={{ color: '#fca5a5', fontWeight: 700, fontSize: '0.78rem' }}>2. Keyword Saturation</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.68rem', marginTop: '2px' }}>Halts if LLM repeats discovery terms</div>
+                    </div>
+                    <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '8px', padding: '10px 12px' }}>
+                      <div style={{ color: '#fca5a5', fontWeight: 700, fontSize: '0.78rem' }}>3. Confidence Drop (&gt;0.10)</div>
+                      <div style={{ color: '#94a3b8', fontSize: '0.68rem', marginTop: '2px' }}>Halts if iteration degrades answer</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Interactive Step Controller for State Machine */}
+            <div style={{ background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '8px', padding: '16px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                <div>
+                  <h4 style={{ margin: 0, fontSize: '0.95rem' }}>Active Scenario: {selectedScenario.title}</h4>
+                  <p style={{ margin: '2px 0 0 0', fontSize: '0.8rem', color: 'var(--ds-color-text-secondary)' }}>
+                    Current execution node: <strong>Pass #{currentPass.passNumber} — {currentPass.stepName}</strong>
+                  </p>
+                </div>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={currentPassIndex === 0}
+                    onClick={() => setCurrentPassIndex(Math.max(0, currentPassIndex - 1))}
+                  >
+                    ⏮ Previous State
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="primary"
+                    disabled={isFinalPass}
+                    onClick={() => setCurrentPassIndex(Math.min(selectedScenario.passes.length - 1, currentPassIndex + 1))}
+                  >
+                    Transition to Next State ➔
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Section.Body>
+        </Section>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 3. DISPATCHER DECISION MATRIX & PROFILER */}
       {/* ========================================================================= */}
       {activeSubTab === 'dispatcher' && (
         <Section variant="bordered">

@@ -136,7 +136,7 @@ export default function ThreeLayersTab() {
             <h1 style={{ fontFamily: "Playfair Display, serif", fontSize: "2.5rem", fontWeight: 900, color: "#f8fafc", margin: 0, lineHeight: 1.1 }}>
               Prompt, Context, Loop: The 3 Engineering Layers
             </h1>
-            <p style={{ color: "#94a3b8", fontSize: "0.95rem", maxWidth: 740, marginTop: "0.8rem", lineHeight: 1.6 }}>
+            <p style={{ color: "#E2E8F0", fontSize: "0.95rem", maxWidth: 740, marginTop: "0.8rem", lineHeight: 1.6 }}>
               Every RAG system is built in three engineering layers stacked on a single LLM call. Knowing which layer you are standing on is half of building and debugging enterprise AI.
             </p>
           </div>
@@ -144,15 +144,15 @@ export default function ThreeLayersTab() {
           <div style={{ display: "flex", gap: "1rem" }}>
             <div style={{ background: "#0f172a", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #334155", textAlign: "center" }}>
               <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#c9a84c" }}>Layer 1</div>
-              <div style={{ fontSize: "0.7rem", color: "#94a3b8", textTransform: "uppercase" }}>Prompt</div>
+              <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase" }}>Prompt</div>
             </div>
             <div style={{ background: "#0f172a", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #334155", textAlign: "center" }}>
               <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#2a8a84" }}>Layer 2</div>
-              <div style={{ fontSize: "0.7rem", color: "#94a3b8", textTransform: "uppercase" }}>Context</div>
+              <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase" }}>Context</div>
             </div>
             <div style={{ background: "#0f172a", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #334155", textAlign: "center" }}>
               <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#9b7fd4" }}>Layer 3</div>
-              <div style={{ fontSize: "0.7rem", color: "#94a3b8", textTransform: "uppercase" }}>Loop</div>
+              <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase" }}>Loop</div>
             </div>
           </div>
         </div>
