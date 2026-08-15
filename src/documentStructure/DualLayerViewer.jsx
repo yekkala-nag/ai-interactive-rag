@@ -41,7 +41,7 @@ export default function DualLayerViewer({ lineDf, tocDf }) {
         <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.65rem', fontWeight: 700, color: '#5c3d8f', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
           Dual-Layer Multi-Tag Document Architecture
         </div>
-        <p style={{ fontSize: '0.72rem', color: '#6a6a7a', lineHeight: 1.5 }}>
+        <p style={{ fontSize: '0.72rem', color: '#334155', lineHeight: 1.5 }}>
           <strong>Layer 1 (Typographic Level)</strong> defines section boundaries, while <strong>Layer 2 (Business Tags)</strong> tags cross-cutting themes per paragraph.
         </p>
       </div>

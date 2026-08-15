@@ -223,8 +223,8 @@ export const TABS_REGISTRY = [
     umbrellaId: "rag_architecture",
     category: "RAG Systems",
     icon: "🔍",
-    keywords: ["agentic rag", "react loop", "multi-step search"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgenticRAGTab })))
+    keywords: ["agentic rag", "react loop", "multi-step search", "let the agent search", "openai agents sdk", "14", "tools", "trace"],
+    component: lazy(() => import("../agenticRAG/AgenticRAGTab.jsx"))
   },
   {
     id: "ragcasestudies",

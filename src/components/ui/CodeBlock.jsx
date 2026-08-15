@@ -20,7 +20,7 @@ export default function CodeBlock({ code, lang = "python" }) {
             border: "1px solid rgba(255,255,255,0.1)", 
             borderRadius: 3, 
             padding: "0.2rem 0.6rem", 
-            color: copied ? "#4a9a4a" : "#8a8a9a", 
+            color: copied ? "#4a9a4a" : "#334155", 
             fontSize: "0.6rem", 
             cursor: "pointer", 
             fontFamily: "DM Mono, monospace", 

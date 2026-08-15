@@ -61,7 +61,7 @@ const DiagramImage = ({
         {caption && (
           <figcaption style={{
             padding: "0.5rem 0.9rem", borderTop: "1px solid #e0dcd4", background: "#f7f5f0",
-            fontSize: "0.62rem", color: "#6a6a7a", fontStyle: "italic", lineHeight: 1.5,
+            fontSize: "0.62rem", color: "#334155", fontStyle: "italic", lineHeight: 1.5,
           }}>
             {caption}
           </figcaption>

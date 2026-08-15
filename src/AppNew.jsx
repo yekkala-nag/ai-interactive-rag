@@ -32,7 +32,7 @@ const TabComponents = {
   genpatterns: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.GenPatternsTab }))),
   fourpdfs: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.FourPDFsTab }))),
   hallucbricks: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HallucBricksTab }))),
-  agenticrag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgenticRAGTab }))),
+  agenticrag: lazy(() => import('./agenticRAG/AgenticRAGTab.jsx')),
   ragcasestudies: lazy(() => import('./tabs/RAGCaseStudiesTab.jsx')),
   interviewprep: lazy(() => import('./tabs/InterviewPrepTab.jsx')),
 

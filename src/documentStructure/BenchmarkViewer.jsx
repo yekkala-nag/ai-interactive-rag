@@ -103,7 +103,7 @@ export default function BenchmarkViewer() {
         <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.65rem', fontWeight: 700, color: '#c9a84c', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
           Ground Truth Benchmark Evaluation Suite
         </div>
-        <p style={{ fontSize: '0.72rem', color: '#6a6a7a', lineHeight: 1.5 }}>
+        <p style={{ fontSize: '0.72rem', color: '#334155', lineHeight: 1.5 }}>
           Scored across 6 Tier-1 open-source PDF fixtures by hiding native outlines and measuring recovery accuracy against ground truth.
         </p>
       </div>

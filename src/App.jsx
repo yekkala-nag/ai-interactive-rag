@@ -226,7 +226,7 @@ const ZoomableFigure = ({ title, children }) => {
         <div style={{
           display: "flex", justifyContent: "space-between", alignItems: "center",
           padding: "0.5rem 0.9rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4",
-          fontFamily: "Syne, sans-serif", fontSize: "0.7rem", fontWeight: 700, color: "#4a4a5a"
+          fontFamily: "Syne, sans-serif", fontSize: "0.7rem", fontWeight: 700, color: "#1E293B"
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <span style={{ color: "#2a8a84" }}>🔍</span>
@@ -423,7 +423,7 @@ const CodeBlock = ({ code, lang = "python" }) => {
     <div style={{ position: "relative", background: "#0d0d1a", borderRadius: 4, border: "1px solid #e0dcd4", overflow: "hidden" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.5rem 1rem", borderBottom: "1px solid #2a2a3a", background: "#0d0d1a" }}>
         <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#4a9a4a", letterSpacing: "0.1em", textTransform: "uppercase" }}>{lang}</span>
-        <button onClick={copy} style={{ background: copied ? "rgba(74,154,74,0.2)" : "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 3, padding: "0.2rem 0.6rem", color: copied ? "#4a9a4a" : "#8a8a9a", fontSize: "0.6rem", cursor: "pointer", fontFamily: "DM Mono, monospace", transition: "all 0.2s" }}>
+        <button onClick={copy} style={{ background: copied ? "rgba(74,154,74,0.2)" : "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 3, padding: "0.2rem 0.6rem", color: copied ? "#4a9a4a" : "#334155", fontSize: "0.6rem", cursor: "pointer", fontFamily: "DM Mono, monospace", transition: "all 0.2s" }}>
           {copied ? "✓ Copied" : "Copy"}
         </button>
       </div>
@@ -491,7 +491,7 @@ const PipelineSimulator = () => {
                 transition: "filter 0.3s"
               }}>{step.icon}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: active === i ? step.color : "#1a1a2e", marginBottom: "0.2rem" }}>{step.label}</div>
-              <div style={{ fontSize: "0.55rem", color: "#8a8a9a" }}>{step.detail}</div>
+              <div style={{ fontSize: "0.55rem", color: "#334155" }}>{step.detail}</div>
             </div>
             {i < RAG_PIPELINE_STEPS.length - 1 && (
               <div style={{ width: 28, height: 2, background: active > i ? "#4a9a4a" : "#e0dcd4", transition: "background 0.3s", flexShrink: 0, position: "relative" }}>
@@ -542,7 +542,7 @@ const RAGExplorer = () => {
       {/* Detail */}
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden" }}>
         {!type ? (
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", flexDirection: "column", gap: "1rem", color: "#4a4a5a" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", flexDirection: "column", gap: "1rem", color: "#1E293B" }}>
             <div style={{ fontSize: "2.5rem" }}>👈</div>
             <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.75rem", fontWeight: 700 }}>Select a RAG type to explore</div>
           </div>
@@ -552,14 +552,14 @@ const RAGExplorer = () => {
               <span style={{ fontSize: "1.5rem" }}>{type.icon}</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.2rem", fontWeight: 900, marginBottom: "0.2rem" }}>{type.name}</div>
-                <div style={{ fontSize: "0.68rem", color: "#8a8a9a" }}>{type.tagline}</div>
+                <div style={{ fontSize: "0.68rem", color: "#334155" }}>{type.tagline}</div>
               </div>
               <Badge text={type.level} color={type.levelColor} />
             </div>
             <div style={{ display: "flex", gap: 0, borderBottom: "1px solid #e0dcd4" }}>
               {["how", "code", "tradeoffs"].map(t => (
                 <button key={t} onClick={() => setTab(t)}
-                  style={{ flex: 1, padding: "0.7rem", background: tab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: tab === t ? "2px solid #c9a84c" : "2px solid transparent", color: tab === t ? "#c9a84c" : "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                  style={{ flex: 1, padding: "0.7rem", background: tab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: tab === t ? "2px solid #c9a84c" : "2px solid transparent", color: tab === t ? "#c9a84c" : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                   {t === "how" ? "How It Works" : t === "code" ? "Code" : "Tradeoffs"}
                 </button>
               ))}
@@ -567,7 +567,7 @@ const RAGExplorer = () => {
             <div style={{ padding: "1.5rem", overflowY: "auto", maxHeight: 340 }}>
               {tab === "how" && (
                 <div>
-                  <p style={{ fontSize: "0.72rem", color: "#b0b0c0", lineHeight: 1.8, marginBottom: "1rem" }}>{type.how}</p>
+                  <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}>{type.how}</p>
                   <div style={{ padding: "0.8rem 1rem", background: `${type.levelColor}10`, border: `1px solid ${type.levelColor}30`, borderRadius: 4, fontSize: "0.68rem", color: type.levelColor, lineHeight: 1.6 }}>
                     <strong>Best for:</strong> {type.bestFor}
                   </div>
@@ -579,7 +579,7 @@ const RAGExplorer = () => {
                   <div>
                     <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#4a9a4a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.75rem" }}>✓ Strengths</div>
                     {type.strengths.map((s, i) => (
-                      <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.6 }}>
+                      <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.6 }}>
                         <span style={{ color: "#4a9a4a", flexShrink: 0 }}>▸</span><span>{s}</span>
                       </div>
                     ))}
@@ -587,7 +587,7 @@ const RAGExplorer = () => {
                   <div>
                     <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#c4572a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.75rem" }}>✗ Weaknesses</div>
                     {type.weaknesses.map((w, i) => (
-                      <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.6 }}>
+                      <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.6 }}>
                         <span style={{ color: "#c4572a", flexShrink: 0 }}>▸</span><span>{w}</span>
                       </div>
                     ))}
@@ -710,7 +710,7 @@ const LangChainVisual = () => {
           </svg>
 
           {stepInfo && (
-            <div style={{ padding: "0.8rem", background: `${stepInfo.color}10`, border: `1px solid ${stepInfo.color}40`, borderRadius: 4, fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>
+            <div style={{ padding: "0.8rem", background: `${stepInfo.color}10`, border: `1px solid ${stepInfo.color}40`, borderRadius: 4, fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>
               <strong style={{ color: stepInfo.color }}>{stepInfo.name}:</strong> {stepInfo.desc}
             </div>
           )}
@@ -847,7 +847,7 @@ const LangGraphVisual = () => {
         </svg>
 
         {nodeInfo && (
-          <div style={{ padding: "0.8rem", background: `${nodeInfo.color}10`, border: `1px solid ${nodeInfo.color}40`, borderRadius: 4, fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>
+          <div style={{ padding: "0.8rem", background: `${nodeInfo.color}10`, border: `1px solid ${nodeInfo.color}40`, borderRadius: 4, fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>
             <strong style={{ color: nodeInfo.color }}>{nodeInfo.label}:</strong> {nodeInfo.desc}
           </div>
         )}
@@ -926,7 +926,7 @@ const BestPracticesGrid = () => {
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.2rem", flexWrap: "wrap" }}>
         {cats.map(c => (
           <button key={c} onClick={() => setFilter(c)}
-            style={{ background: filter === c ? (catColors[c] ? catColors[c] + "20" : "rgba(201,168,76,0.15)") : "#ffffff", border: `1px solid ${filter === c ? (catColors[c] || "#c9a84c") : "#e0dcd4"}`, borderRadius: 4, padding: "0.4rem 0.9rem", color: filter === c ? (catColors[c] || "#c9a84c") : "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.1em", cursor: "pointer", transition: "all 0.2s" }}>
+            style={{ background: filter === c ? (catColors[c] ? catColors[c] + "20" : "rgba(201,168,76,0.15)") : "#ffffff", border: `1px solid ${filter === c ? (catColors[c] || "#c9a84c") : "#e0dcd4"}`, borderRadius: 4, padding: "0.4rem 0.9rem", color: filter === c ? (catColors[c] || "#c9a84c") : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.1em", cursor: "pointer", transition: "all 0.2s" }}>
             {c}
           </button>
         ))}
@@ -942,7 +942,7 @@ const BestPracticesGrid = () => {
               <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", flex: 1 }}>{p.name}</span>
               {p.badge && <Badge text={p.badge} color={p.badgeColor} />}
             </div>
-            <p style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.7, marginBottom: "0.8rem" }}>{p.desc}</p>
+            <p style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.7, marginBottom: "0.8rem" }}>{p.desc}</p>
             <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.4rem 0.7rem", fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: catColors[p.cat] }}>{p.tip}</div>
           </div>
         ))}
@@ -988,13 +988,13 @@ const ProgressTracker = () => {
     <div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.2rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.8rem" }}>
-          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#8a8a9a" }}>Overall Progress</div>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "#334155" }}>Overall Progress</div>
           <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: "#c9a84c" }}>{pct}%</div>
         </div>
         <div style={{ background: "#e8e4dc", borderRadius: 4, height: 8, overflow: "hidden" }}>
           <div style={{ height: "100%", width: `${pct}%`, background: `linear-gradient(90deg, #2a8a84, #c9a84c, #c4572a)`, borderRadius: 4, transition: "width 0.5s ease" }} />
         </div>
-        <div style={{ marginTop: "0.5rem", fontSize: "0.62rem", color: "#8a8a9a", textAlign: "right" }}>{done} / {total} concepts</div>
+        <div style={{ marginTop: "0.5rem", fontSize: "0.62rem", color: "#334155", textAlign: "right" }}>{done} / {total} concepts</div>
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "1rem" }}>
         {groups.map(g => {
@@ -1004,7 +1004,7 @@ const ProgressTracker = () => {
             <div key={g} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden" }}>
               <div style={{ padding: "0.8rem 1rem", borderBottom: "1px solid #e0dcd4", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: groupColors[g], letterSpacing: "0.1em" }}>{g}</span>
-                <span style={{ fontSize: "0.6rem", color: "#8a8a9a" }}>{gDone}/{gItems.length}</span>
+                <span style={{ fontSize: "0.6rem", color: "#334155" }}>{gDone}/{gItems.length}</span>
               </div>
               {gItems.map(item => (
                 <div key={item.id} onClick={() => toggle(item.id)}
@@ -1014,7 +1014,7 @@ const ProgressTracker = () => {
                   <div style={{ width: 16, height: 16, borderRadius: 3, border: `1.5px solid ${checked[item.id] ? groupColors[g] : "#3a3a48"}`, background: checked[item.id] ? groupColors[g] + "20" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all 0.2s" }}>
                     {checked[item.id] && <span style={{ color: groupColors[g], fontSize: "0.6rem", lineHeight: 1 }}>✓</span>}
                   </div>
-                  <span style={{ fontSize: "0.68rem", color: checked[item.id] ? "#6a6a7a" : "#b0b0c0", textDecoration: checked[item.id] ? "line-through" : "none", transition: "all 0.2s" }}>{item.label}</span>
+                  <span style={{ fontSize: "0.68rem", color: checked[item.id] ? "#334155" : "#1E293B", textDecoration: checked[item.id] ? "line-through" : "none", transition: "all 0.2s" }}>{item.label}</span>
                 </div>
               ))}
             </div>
@@ -1029,7 +1029,7 @@ export const OverviewTab = ({ s }) => (
   <div>
     <div style={{ marginBottom: "2rem" }}>
       <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.8rem", fontWeight: 900, marginBottom: "0.5rem" }}>Modern AI Systems Architecture</h2>
-      <p style={{ fontSize: "0.75rem", color: "#6a6a7a", maxWidth: 640, lineHeight: 1.6 }}>An interactive knowledge engine covering RAG, Agents, Context Engineering, Loop Engineering, and High-Scale Production Systems.</p>
+      <p style={{ fontSize: "0.75rem", color: "#334155", maxWidth: 640, lineHeight: 1.6 }}>An interactive knowledge engine covering RAG, Agents, Context Engineering, Loop Engineering, and High-Scale Production Systems.</p>
     </div>
     <div style={{ marginBottom: "2.5rem" }}>
       <DiagramImage
@@ -1197,7 +1197,7 @@ export const FilteringTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Retrieval Is <em style={{ color: "#c9a84c", fontStyle: "italic" }}>Filtering</em>,<br />Not Search
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 560, marginBottom: "1rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 560, marginBottom: "1rem" }}>
           The standard RAG framing — <em>"find the most similar passages"</em> — imports the wrong mental model. Once parsing produces clean DataFrames, retrieval becomes a <strong style={{ color: "#1a1a2e" }}>SQL-style filtering problem on two structured tables</strong>: <code style={{ color: "#2a8a84", background: "#ffffff", padding: "0.1rem 0.3rem", borderRadius: 3 }}>line_df</code> (text, one row per line) and <code style={{ color: "#c9a84c", background: "#ffffff", padding: "0.1rem 0.3rem", borderRadius: 3 }}>toc_df</code> (table of contents, one row per section).
         </p>
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
@@ -1207,7 +1207,7 @@ export const FilteringTab = ({ s }) => {
           ].map((t, i) => (
             <div key={i} style={{ background: "#ffffff", border: `1px solid ${t.color}40`, borderRadius: 4, padding: "0.7rem 1rem", flex: 1, minWidth: 200 }}>
               <code style={{ fontFamily: "DM Mono, monospace", fontSize: "0.8rem", fontWeight: 700, color: t.color }}>{t.label}</code>
-              <div style={{ fontSize: "0.62rem", color: "#6a6a7a", marginTop: "0.3rem", lineHeight: 1.6 }}>{t.desc}</div>
+              <div style={{ fontSize: "0.62rem", color: "#334155", marginTop: "0.3rem", lineHeight: 1.6 }}>{t.desc}</div>
             </div>
           ))}
         </div>
@@ -1239,7 +1239,7 @@ export const FilteringTab = ({ s }) => {
               <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: col.color }}>{col.title}</span>
             </div>
             {col.points.map((p, j) => (
-              <div key={j} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.4rem", fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.6 }}>
+              <div key={j} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.4rem", fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>
                 <span style={{ color: col.color, flexShrink: 0 }}>▸</span><span>{p}</span>
               </div>
             ))}
@@ -1249,7 +1249,7 @@ export const FilteringTab = ({ s }) => {
 
       {/* QUERY TYPE EXPLORER */}
       <div style={s.sectionLabel("#2a8a84")}>Interactive: Query Type → Retrieval Strategy</div>
-      <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem" }}>
+      <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem" }}>
         No single strategy fits all questions. Select a query type to see how anchor size, context size, and filtering strategy change.
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.6rem", marginBottom: "1rem" }}>
@@ -1258,7 +1258,7 @@ export const FilteringTab = ({ s }) => {
             style={{ background: activeQuery === q.id ? `${q.color}15` : "#ffffff", border: `1px solid ${activeQuery === q.id ? q.color : "#e0dcd4"}`, borderRadius: 4, padding: "0.8rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
             <div style={{ fontSize: "1.1rem", marginBottom: "0.4rem" }}>{q.icon}</div>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: activeQuery === q.id ? q.color : "#1a1a2e", marginBottom: "0.2rem" }}>{q.label}</div>
-            <div style={{ fontSize: "0.58rem", color: "#6a6a7a", fontStyle: "italic" }}>"{q.example}"</div>
+            <div style={{ fontSize: "0.58rem", color: "#334155", fontStyle: "italic" }}>"{q.example}"</div>
           </button>
         ))}
       </div>
@@ -1268,9 +1268,9 @@ export const FilteringTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "1.2rem" }}>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", color: qt.color, marginBottom: "0.6rem" }}>Anchor — Where the match lands</div>
-              <div style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.7, marginBottom: "0.6rem" }}>{qt.anchor}</div>
+              <div style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.7, marginBottom: "0.6rem" }}>{qt.anchor}</div>
               <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.4rem 0.6rem", marginBottom: "0.4rem" }}>
-                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginBottom: "0.3rem", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>ANCHOR SIZE</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginBottom: "0.3rem", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>ANCHOR SIZE</div>
                 <div style={{ background: "#e8e4dc", borderRadius: 2, height: 8, overflow: "hidden" }}>
                   <div style={{ width: `${sizeBar(qt.anchorSize)}%`, height: "100%", background: qt.color, borderRadius: 2, transition: "width 0.6s ease" }} />
                 </div>
@@ -1278,9 +1278,9 @@ export const FilteringTab = ({ s }) => {
             </div>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", color: qt.color, marginBottom: "0.6rem" }}>Context — What gets passed to the LLM</div>
-              <div style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.7, marginBottom: "0.6rem" }}>{qt.context}</div>
+              <div style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.7, marginBottom: "0.6rem" }}>{qt.context}</div>
               <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.4rem 0.6rem" }}>
-                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginBottom: "0.3rem", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>CONTEXT SIZE</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginBottom: "0.3rem", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>CONTEXT SIZE</div>
                 <div style={{ background: "#e8e4dc", borderRadius: 2, height: 8, overflow: "hidden" }}>
                   <div style={{ width: `${sizeBar(qt.contextSize)}%`, height: "100%", background: `${qt.color}99`, borderRadius: 2, transition: "width 0.6s ease" }} />
                 </div>
@@ -1289,7 +1289,7 @@ export const FilteringTab = ({ s }) => {
           </div>
           <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem", marginBottom: "1rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", color: qt.color, marginBottom: "0.5rem" }}>Strategy</div>
-            <div style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>{qt.strategy}</div>
+            <div style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{qt.strategy}</div>
           </div>
           <CodeBlock code={qt.sql} lang="sql" />
         </div>
@@ -1301,19 +1301,19 @@ export const FilteringTab = ({ s }) => {
         <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", gap: "1rem", alignItems: "center", marginBottom: "1.2rem" }}>
           <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1.2rem", border: "1px solid #9b7fd450" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#9b7fd4", marginBottom: "0.5rem" }}>⚓ Anchor</div>
-            <div style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.7 }}>Where the matching signal lands in the document. <strong style={{ color: "#1a1a2e" }}>Pick anchors small</strong> — precise, minimal, the exact row or clause where the evidence lives. The anchor is how you know you found the right place.</div>
+            <div style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.7 }}>Where the matching signal lands in the document. <strong style={{ color: "#1a1a2e" }}>Pick anchors small</strong> — precise, minimal, the exact row or clause where the evidence lives. The anchor is how you know you found the right place.</div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem" }}>
             <div style={{ width: 2, height: 20, background: "#e0dcd4" }} />
-            <span style={{ color: "#4a4a5a", fontSize: "0.7rem" }}>→</span>
+            <span style={{ color: "#1E293B", fontSize: "0.7rem" }}>→</span>
             <div style={{ width: 2, height: 20, background: "#e0dcd4" }} />
           </div>
           <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1.2rem", border: "1px solid #c9a84c50" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c9a84c", marginBottom: "0.5rem" }}>📐 Context</div>
-            <div style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.7 }}>What gets passed to the LLM for generation. <strong style={{ color: "#1a1a2e" }}>Expand context large</strong> — include the surrounding section, not just the anchor line. The context is what the model needs to answer completely and accurately.</div>
+            <div style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.7 }}>What gets passed to the LLM for generation. <strong style={{ color: "#1a1a2e" }}>Expand context large</strong> — include the surrounding section, not just the anchor line. The context is what the model needs to answer completely and accurately.</div>
           </div>
         </div>
-        <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem", fontSize: "0.68rem", color: "#6a6a7a", lineHeight: 1.8, borderLeft: "3px solid #c9a84c" }}>
+        <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem", fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, borderLeft: "3px solid #c9a84c" }}>
           <strong style={{ color: "#c9a84c" }}>The key insight:</strong> A top-k=5 retriever returns 5 chunks of fixed size regardless of question type. The filtering model separates <em>where you detect</em> (anchor, small, precise) from <em>what you return</em> (context, large, complete). A warranty-summary question might anchor on one TOC entry but return 800 lines of context. A policy-number question anchors on one line and returns 5 lines of context. Same pipeline, radically different scope.
         </div>
       </div>
@@ -1332,9 +1332,9 @@ export const FilteringTab = ({ s }) => {
               </div>
               <div style={{ display: "flex", gap: "0.4rem", marginBottom: "0.5rem" }}>
                 <span style={{ fontSize: "0.55rem", padding: "0.15rem 0.5rem", background: `${m.color}15`, color: m.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{m.table}</span>
-                <span style={{ fontSize: "0.55rem", padding: "0.15rem 0.5rem", background: "#e8e4dc", color: "#8a8a9a", borderRadius: 3, fontFamily: "Syne, sans-serif" }}>{m.cost}</span>
+                <span style={{ fontSize: "0.55rem", padding: "0.15rem 0.5rem", background: "#e8e4dc", color: "#334155", borderRadius: 3, fontFamily: "Syne, sans-serif" }}>{m.cost}</span>
               </div>
-              <div style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6 }}>{m.desc}</div>
+              <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>{m.desc}</div>
             </div>
             {activeMethod === m.id && (
               <div style={{ animation: "fadeIn 0.2s ease" }}>
@@ -1349,7 +1349,7 @@ export const FilteringTab = ({ s }) => {
       <div style={s.sectionLabel("#2a8a84")}>Filtering Pipeline Simulator</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem" }}>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 480 }}>Click ▶ to animate the full filtering pipeline — from question parsing through anchor detection to context expansion.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 480 }}>Click ▶ to animate the full filtering pipeline — from question parsing through anchor detection to context expansion.</p>
           <button onClick={runSim} disabled={simRunning}
             style={{ background: simRunning ? "#0a1a0a" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em" }}>
             {simRunning ? "Running…" : "▶ Run Pipeline"}
@@ -1359,11 +1359,11 @@ export const FilteringTab = ({ s }) => {
           {SIM_STEPS.map((step, i) => (
             <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "1rem", padding: "0.8rem 1rem", background: simStep >= i ? "rgba(42,138,132,0.08)" : "#f7f5f0", border: `1px solid ${simStep >= i ? "#2a8a8440" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: simStep === -1 ? 0.5 : simStep >= i ? 1 : 0.4 }}>
               <div style={{ width: 28, height: 28, borderRadius: "50%", background: simStep >= i ? "#2a8a84" : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.75rem", flexShrink: 0, transition: "all 0.3s" }}>
-                {simStep >= i ? step.icon : <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", color: "#4a4a5a" }}>{i + 1}</span>}
+                {simStep >= i ? step.icon : <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", color: "#1E293B" }}>{i + 1}</span>}
               </div>
               <div>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.68rem", color: simStep >= i ? "#1a1a2e" : "#4a4a5a", marginBottom: "0.2rem" }}>{step.label}</div>
-                <div style={{ fontSize: "0.62rem", color: simStep >= i ? "#8a8a9a" : "#3a3a4a" }}>{step.detail}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.68rem", color: simStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.2rem" }}>{step.label}</div>
+                <div style={{ fontSize: "0.62rem", color: simStep >= i ? "#334155" : "#1E293B" }}>{step.detail}</div>
               </div>
             </div>
           ))}
@@ -1381,9 +1381,9 @@ export const FilteringTab = ({ s }) => {
           <div key={i} style={{ background: "#ffffff", border: `1px solid ${a.color}30`, borderRadius: 6, padding: "1.2rem", borderTop: `2px solid ${a.color}` }}>
             <div style={{ fontSize: "1.3rem", marginBottom: "0.6rem" }}>{a.icon}</div>
             <div style={{ fontSize: "0.62rem", color: "#c4572a", fontFamily: "Syne, sans-serif", fontWeight: 700, letterSpacing: "0.05em", marginBottom: "0.4rem" }}>PAIN POINT</div>
-            <div style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.6, marginBottom: "0.8rem" }}>{a.pain}</div>
+            <div style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>{a.pain}</div>
             <div style={{ fontSize: "0.62rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, letterSpacing: "0.05em", marginBottom: "0.4rem" }}>PROGRAMMATIC LIFT</div>
-            <div style={{ fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.6, marginBottom: "0.8rem" }}>{a.lift}</div>
+            <div style={{ fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.6, marginBottom: "0.8rem" }}>{a.lift}</div>
             <code style={{ display: "block", background: "#f7f5f0", borderRadius: 3, padding: "0.5rem 0.7rem", fontSize: "0.6rem", color: a.color, fontFamily: "DM Mono, monospace" }}>{a.code}</code>
           </div>
         ))}
@@ -1401,7 +1401,7 @@ export const FilteringTab = ({ s }) => {
           ].map((faq, i) => (
             <div key={i} style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${faq.color}` }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: faq.color, marginBottom: "0.5rem" }}>{faq.q}</div>
-              <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>{faq.a}</div>
+              <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>{faq.a}</div>
             </div>
           ))}
         </div>
@@ -1676,7 +1676,7 @@ export const MultiAgentTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Why One Agent<br /><em style={{ color: "#9b7fd4", fontStyle: "italic" }}>Isn't Enough</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 580, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 580, marginBottom: "1.2rem" }}>
           A single agent trying to parse intent, map schema, generate SQL, and validate its own output will do each with mediocrity but none well. Every failed attempt stays in memory — by the third retry you're not getting a fresh attempt, you're getting a revision of a bad first draft.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.8rem" }}>
@@ -1688,7 +1688,7 @@ export const MultiAgentTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "1rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "2rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.3rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.15rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.58rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.58rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -1718,13 +1718,13 @@ export const MultiAgentTab = ({ s }) => {
           ].map((row, i) => (
             <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "0.6rem 0", borderBottom: i < 3 ? "1px solid #e8e4dc" : "none" }}>
               <div>
-                <div style={{ fontSize: "0.68rem", color: "#b0b0c0", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row.task}</div>
-                <div style={{ fontSize: "0.6rem", color: "#6a6a7a", marginTop: "0.1rem" }}>{row.note}</div>
+                <div style={{ fontSize: "0.68rem", color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row.task}</div>
+                <div style={{ fontSize: "0.6rem", color: "#334155", marginTop: "0.1rem" }}>{row.note}</div>
               </div>
               <span style={{ fontSize: "0.55rem", padding: "0.2rem 0.5rem", background: "rgba(196,87,42,0.12)", color: "#c4572a", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, whiteSpace: "nowrap", marginLeft: "0.5rem" }}>{row.type}</span>
             </div>
           ))}
-          <div style={{ marginTop: "1rem", padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.67rem", color: "#6a6a7a", lineHeight: 1.7, borderLeft: "2px solid #c4572a" }}>
+          <div style={{ marginTop: "1rem", padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.67rem", color: "#334155", lineHeight: 1.7, borderLeft: "2px solid #c4572a" }}>
             Result: mediocre at all four. Context bloats with failed attempts. Model makes small adjustments instead of rethinking. By retry 3 it's contradicting itself.
           </div>
         </div>
@@ -1739,12 +1739,12 @@ export const MultiAgentTab = ({ s }) => {
               <span style={{ fontSize: "1rem" }}>{a.icon}</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: a.color }}>{a.name}</div>
-                <div style={{ fontSize: "0.58rem", color: "#6a6a7a" }}>{a.role}</div>
+                <div style={{ fontSize: "0.58rem", color: "#334155" }}>{a.role}</div>
               </div>
-              <span style={{ fontSize: "0.6rem", color: "#4a4a5a" }}>→</span>
+              <span style={{ fontSize: "0.6rem", color: "#1E293B" }}>→</span>
             </div>
           ))}
-          <div style={{ marginTop: "0.8rem", padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.67rem", color: "#6a6a7a", lineHeight: 1.7, borderLeft: "2px solid #4a9a4a" }}>
+          <div style={{ marginTop: "0.8rem", padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.67rem", color: "#334155", lineHeight: 1.7, borderLeft: "2px solid #4a9a4a" }}>
             Each agent has a different system prompt, different role, and most importantly a <strong style={{ color: "#1a1a2e" }}>fresh context window</strong>.
           </div>
         </div>
@@ -1757,7 +1757,7 @@ export const MultiAgentTab = ({ s }) => {
           <button key={a.id} onClick={() => { setActiveAgent(activeAgent === a.id ? null : a.id); setAgentTab("why"); }}
             style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 1rem", background: activeAgent === a.id ? `${a.color}15` : "#ffffff", border: `1px solid ${activeAgent === a.id ? a.color : "#e0dcd4"}`, borderRadius: 4, cursor: "pointer", transition: "all 0.2s" }}>
             <span style={{ fontSize: "0.9rem" }}>{a.icon}</span>
-            <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: activeAgent === a.id ? a.color : "#b0b0c0" }}>{a.name}</span>
+            <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: activeAgent === a.id ? a.color : "#1E293B" }}>{a.name}</span>
           </button>
         ))}
       </div>
@@ -1776,7 +1776,7 @@ export const MultiAgentTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["why", "code", "io"].map(t => (
               <button key={t} onClick={() => setAgentTab(t)}
-                style={{ flex: 1, padding: "0.7rem", background: agentTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: agentTab === t ? `2px solid ${agent.color}` : "2px solid transparent", color: agentTab === t ? agent.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, padding: "0.7rem", background: agentTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: agentTab === t ? `2px solid ${agent.color}` : "2px solid transparent", color: agentTab === t ? agent.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t === "why" ? "Why Separate?" : t === "code" ? "Implementation" : "Inputs & Outputs"}
               </button>
             ))}
@@ -1784,10 +1784,10 @@ export const MultiAgentTab = ({ s }) => {
           <div style={{ padding: "1.5rem" }}>
             {agentTab === "why" && (
               <div>
-                <p style={{ fontSize: "0.72rem", color: "#b0b0c0", lineHeight: 1.8, marginBottom: "1rem" }}><strong style={{ color: "#1a1a2e" }}>Responsibility:</strong> {agent.responsibility}</p>
-                <p style={{ fontSize: "0.72rem", color: "#b0b0c0", lineHeight: 1.8, marginBottom: "1rem" }}><strong style={{ color: "#1a1a2e" }}>Why separate?</strong> {agent.whySeparate}</p>
+                <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}><strong style={{ color: "#1a1a2e" }}>Responsibility:</strong> {agent.responsibility}</p>
+                <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}><strong style={{ color: "#1a1a2e" }}>Why separate?</strong> {agent.whySeparate}</p>
                 <div style={{ padding: "0.8rem 1rem", background: `${agent.color}0d`, border: `1px solid ${agent.color}30`, borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: agent.color, lineHeight: 1.7 }}>
-                  <span style={{ color: "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.1em" }}>KEY CONSTRAINT: </span>{agent.constraint}
+                  <span style={{ color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.55rem", letterSpacing: "0.1em" }}>KEY CONSTRAINT: </span>{agent.constraint}
                 </div>
               </div>
             )}
@@ -1795,13 +1795,13 @@ export const MultiAgentTab = ({ s }) => {
             {agentTab === "io" && (
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem", border: "1px solid #e0dcd4" }}>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#6a6a7a", marginBottom: "0.6rem" }}>Reads from State</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#334155", marginBottom: "0.6rem" }}>Reads from State</div>
                   {({ intent: ["user_query"], schema: ["intents"], builder: ["intents", "schema_mapping", "critique"], critic: ["intents", "generated_query"], response: ["generated_query", "intents", "critique"] }[agent.id] || []).map((k, i) => (
                     <div key={i} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: "#2a8a84", padding: "0.3rem 0.6rem", background: "#ffffff", borderRadius: 3, marginBottom: "0.3rem" }}>{k}</div>
                   ))}
                 </div>
                 <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem", border: "1px solid #e0dcd4" }}>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#6a6a7a", marginBottom: "0.6rem" }}>Writes to State</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#334155", marginBottom: "0.6rem" }}>Writes to State</div>
                   {({ intent: ["intents"], schema: ["schema_mapping"], builder: ["generated_query"], critic: ["critique", "retry_count", "failure_source"], response: ["final_response"] }[agent.id] || []).map((k, i) => (
                     <div key={i} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: "#c9a84c", padding: "0.3rem 0.6rem", background: "#ffffff", borderRadius: 3, marginBottom: "0.3rem" }}>{k}</div>
                   ))}
@@ -1816,7 +1816,7 @@ export const MultiAgentTab = ({ s }) => {
       <div style={s.sectionLabel("#2a8a84")}>Live Pipeline Simulator</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         <div style={{ display: "flex", gap: "0.7rem", marginBottom: "1.2rem", flexWrap: "wrap", alignItems: "center" }}>
-          <div style={{ flex: 1, minWidth: 200, fontSize: "0.68rem", color: "#6a6a7a", lineHeight: 1.6 }}>
+          <div style={{ flex: 1, minWidth: 200, fontSize: "0.68rem", color: "#334155", lineHeight: 1.6 }}>
             Simulate the text-to-SQL pipeline. Try the retry flow to see the critic loop in action.
           </div>
           <div style={{ display: "flex", gap: "0.5rem" }}>
@@ -1836,11 +1836,11 @@ export const MultiAgentTab = ({ s }) => {
           {STEPS.map((step, i) => (
             <div key={step.id} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.8rem 1rem", background: simStep >= i ? `${step.color}0a` : "#f7f5f0", border: `1px solid ${simStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: simStep === -1 ? 0.4 : simStep >= i ? 1 : 0.35 }}>
               <div style={{ width: 32, height: 32, borderRadius: "50%", background: simStep >= i ? step.color : "#e8e4dc", border: `2px solid ${simStep >= i ? step.color : "#e0dcd4"}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: simStep >= i ? "0.95rem" : "0.65rem", flexShrink: 0, transition: "all 0.3s" }}>
-                {simStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                {simStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.68rem", color: simStep >= i ? step.color : "#4a4a5a", marginBottom: "0.15rem" }}>{step.label}</div>
-                <div style={{ fontSize: "0.6rem", color: simStep >= i ? "#8a8a9a" : "#3a3a4a" }}>{step.detail}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.68rem", color: simStep >= i ? step.color : "#1E293B", marginBottom: "0.15rem" }}>{step.label}</div>
+                <div style={{ fontSize: "0.6rem", color: simStep >= i ? "#334155" : "#1E293B" }}>{step.detail}</div>
               </div>
               {simStep === i && simRunning && (
                 <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: step.color, animation: "fadeIn 0.3s ease" }}>running…</div>
@@ -1856,7 +1856,7 @@ export const MultiAgentTab = ({ s }) => {
             <span style={{ fontSize: "1.1rem" }}>↺</span>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: "#c4572a", marginBottom: "0.15rem" }}>Critic rejected — routing back to Query Builder (retry {retryCount}/3)</div>
-              <div style={{ fontSize: "0.6rem", color: "#8a8a9a" }}>failure_source: "query_builder" — issues injected into builder's next context</div>
+              <div style={{ fontSize: "0.6rem", color: "#334155" }}>failure_source: "query_builder" — issues injected into builder's next context</div>
             </div>
           </div>
         )}
@@ -1935,8 +1935,8 @@ app = graph.compile()`} />
               <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: f.color, flex: 1 }}>{f.title}</span>
               <span style={{ fontSize: "0.5rem", padding: "0.15rem 0.5rem", background: `${f.color}15`, color: f.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em" }}>{f.severity}</span>
             </div>
-            <p style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.7, marginBottom: "0.75rem" }}>{f.desc}</p>
-            <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 3, borderLeft: `2px solid ${f.color}`, fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.7, marginBottom: "0.75rem" }}>{f.desc}</p>
+            <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 3, borderLeft: `2px solid ${f.color}`, fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.6 }}>
               <strong style={{ color: f.color }}>Fix: </strong>{f.fix}
             </div>
           </div>
@@ -1949,16 +1949,16 @@ app = graph.compile()`} />
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
           <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1.2rem", border: "1px solid #c4572a30" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#c4572a", marginBottom: "0.6rem" }}>🤖 LLM Orchestrator</div>
-            <div style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.7, marginBottom: "0.6rem" }}>An LLM decides which agent to run next. Flexible for open-ended tasks. Expensive, non-deterministic, hard to debug.</div>
-            <div style={{ fontSize: "0.63rem", color: "#6a6a7a", lineHeight: 1.6 }}>Use when: the task flow itself is ambiguous and the orchestrator needs to reason about routing.</div>
+            <div style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.7, marginBottom: "0.6rem" }}>An LLM decides which agent to run next. Flexible for open-ended tasks. Expensive, non-deterministic, hard to debug.</div>
+            <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.6 }}>Use when: the task flow itself is ambiguous and the orchestrator needs to reason about routing.</div>
           </div>
           <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1.2rem", border: "1px solid #4a9a4a30" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#4a9a4a", marginBottom: "0.6rem" }}>⚙️ Deterministic Routing</div>
-            <div style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.7, marginBottom: "0.6rem" }}>Fixed logic decides flow. You don't need an LLM to decide "run schema mapping after intent parsing" — that decision never changes.</div>
-            <div style={{ fontSize: "0.63rem", color: "#6a6a7a", lineHeight: 1.6 }}>Use when: flow is well-defined and predictable. <strong style={{ color: "#4a9a4a" }}>Almost always the better choice for structured pipelines.</strong></div>
+            <div style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.7, marginBottom: "0.6rem" }}>Fixed logic decides flow. You don't need an LLM to decide "run schema mapping after intent parsing" — that decision never changes.</div>
+            <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.6 }}>Use when: flow is well-defined and predictable. <strong style={{ color: "#4a9a4a" }}>Almost always the better choice for structured pipelines.</strong></div>
           </div>
         </div>
-        <div style={{ marginTop: "1rem", padding: "0.8rem 1rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.68rem", color: "#6a6a7a", lineHeight: 1.7, borderLeft: "3px solid #9b7fd4" }}>
+        <div style={{ marginTop: "1rem", padding: "0.8rem 1rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.68rem", color: "#334155", lineHeight: 1.7, borderLeft: "3px solid #9b7fd4" }}>
           <strong style={{ color: "#9b7fd4" }}>The article's recommendation:</strong> For a pipeline where the flow is well-defined and predictable, deterministic routing is almost always the better choice. Reserve LLM orchestration for genuinely open-ended multi-agent scenarios where the routing decision itself requires reasoning — not just dispatch.
         </div>
       </div>
@@ -2140,7 +2140,7 @@ export const VagueQuestionsTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Vague Questions:<br /><em style={{ color: "#c9a84c", fontStyle: "italic" }}>Clarify Once, Learn the Default</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           Most production RAG traffic doesn't fit the happy path. The question is missing a piece of information the system needs — which document? which page? which clause type? The cheap fix is to ask. The right fix is to <strong style={{ color: "#1a1a2e" }}>ask once, then learn the default so the next case is silent.</strong> Two Pydantic schemas and one short loop close the gap.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.8rem" }}>
@@ -2152,7 +2152,7 @@ export const VagueQuestionsTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "1rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "2rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.3rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.15rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.58rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.58rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -2160,14 +2160,14 @@ export const VagueQuestionsTab = ({ s }) => {
 
       {/* FAILURE MODES */}
       <div style={s.sectionLabel("#c4572a")}>Five Failure Modes — Click to Explore</div>
-      <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>All five occur on a single uploaded contract the user already pinned. Frequency reflects real broker traffic patterns from the article.</p>
+      <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>All five occur on a single uploaded contract the user already pinned. Frequency reflects real broker traffic patterns from the article.</p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem", marginBottom: "1rem" }}>
         {VAGUE_FAILURE_MODES.map(f => (
           <button key={f.id} onClick={() => setActiveFailure(activeFailure === f.id ? null : f.id)}
             style={{ background: activeFailure === f.id ? `${f.color}12` : "#ffffff", border: `1px solid ${activeFailure === f.id ? f.color : "#e0dcd4"}`, borderRadius: 4, padding: "0.8rem 0.6rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
             <div style={{ fontSize: "1.1rem", marginBottom: "0.4rem" }}>{f.icon}</div>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: activeFailure === f.id ? f.color : "#1a1a2e", marginBottom: "0.3rem", lineHeight: 1.3 }}>{f.label}</div>
-            <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>{f.freq}% of traffic</div>
+            <div style={{ fontSize: "0.55rem", color: "#334155" }}>{f.freq}% of traffic</div>
             {/* freq bar */}
             <div style={{ marginTop: "0.4rem", background: "#e8e4dc", borderRadius: 2, height: 3 }}>
               <div style={{ width: `${f.freq}%`, height: "100%", background: f.color, borderRadius: 2, transition: "width 0.6s" }} />
@@ -2184,11 +2184,11 @@ export const VagueQuestionsTab = ({ s }) => {
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c4572a", marginBottom: "0.5rem" }}>User asks</div>
                 <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontStyle: "italic", color: "#1a1a2e", marginBottom: "0.8rem" }}>{f.example}</div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c4572a", marginBottom: "0.4rem" }}>Problem</div>
-                <div style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.7 }}>{f.problem}</div>
+                <div style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.7 }}>{f.problem}</div>
               </div>
               <div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#4a9a4a", marginBottom: "0.5rem" }}>ClarificationRequest response</div>
-                <div style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7, marginBottom: "0.8rem" }}>{f.fix}</div>
+                <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, marginBottom: "0.8rem" }}>{f.fix}</div>
                 <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "0.7rem", fontSize: "0.62rem", color: f.color, fontFamily: "DM Mono, monospace", lineHeight: 1.7 }}>
                   target_field: {f.id}<br />
                   candidate_values: [/* from ParsedQuestion schema */]<br />
@@ -2206,7 +2206,7 @@ export const VagueQuestionsTab = ({ s }) => {
         <div style={{ background: "#ffffff", border: "1px solid #9b7fd430", borderRadius: 6, overflow: "hidden" }}>
           <div style={{ padding: "0.8rem 1.2rem", borderBottom: "1px solid #e0dcd4", background: "#f7f5f0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: "#9b7fd4", letterSpacing: "0.1em" }}>ClarificationRequest</span>
-            <span style={{ fontSize: "0.55rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>emitted when field is below threshold</span>
+            <span style={{ fontSize: "0.55rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>emitted when field is below threshold</span>
           </div>
           <CodeBlock code={`class ClarificationRequest(BaseModel):
     """Emitted when a ParsedQuestion field
@@ -2231,7 +2231,7 @@ export const VagueQuestionsTab = ({ s }) => {
         <div style={{ background: "#ffffff", border: "1px solid #4a9a4a30", borderRadius: 6, overflow: "hidden" }}>
           <div style={{ padding: "0.8rem 1.2rem", borderBottom: "1px solid #e0dcd4", background: "#f7f5f0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: "#4a9a4a", letterSpacing: "0.1em" }}>ClarificationDefault</span>
-            <span style={{ fontSize: "0.55rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>learned from many requests</span>
+            <span style={{ fontSize: "0.55rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>learned from many requests</span>
           </div>
           <CodeBlock code={`class ClarificationDefault(BaseModel):
     """The learned answer, refreshed
@@ -2259,7 +2259,7 @@ export const VagueQuestionsTab = ({ s }) => {
 
       {/* WORKED EXAMPLE SIMULATOR */}
       <div style={s.sectionLabel("#2a8a84")}>Worked Broker Example — Three Cases Over Time</div>
-      <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 580 }}>
+      <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 580 }}>
         The clarification loop fires once per <strong style={{ color: "#1a1a2e" }}>request</strong>, not once per conversation turn. Each case below is a separate event — days apart. Click a case to animate it.
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.8rem", marginBottom: "1rem" }}>
@@ -2276,7 +2276,7 @@ export const VagueQuestionsTab = ({ s }) => {
               <span style={{ fontSize: "0.55rem", padding: "0.15rem 0.5rem", background: `${c.color}15`, color: c.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>
                 {c.action === "apply" ? "SILENT" : c.action === "fallback_ask" ? "FALLBACK" : "ASK"}
               </span>
-              <span style={{ fontSize: "0.55rem", padding: "0.15rem 0.5rem", background: "#e8e4dc", color: "#6a6a7a", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>
+              <span style={{ fontSize: "0.55rem", padding: "0.15rem 0.5rem", background: "#e8e4dc", color: "#334155", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>
                 conf={c.confidence}
               </span>
             </div>
@@ -2291,11 +2291,11 @@ export const VagueQuestionsTab = ({ s }) => {
             {CASE_STEPS.map((step, i) => (
               <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.8rem", padding: "0.75rem 1rem", background: caseStep >= i ? `${demo.color}09` : "#f7f5f0", border: `1px solid ${caseStep >= i ? demo.color + "35" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: caseStep === -1 ? 0.35 : caseStep >= i ? 1 : 0.3 }}>
                 <div style={{ width: 28, height: 28, borderRadius: "50%", background: caseStep >= i ? demo.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: caseStep >= i ? "0.85rem" : "0.6rem", flexShrink: 0, transition: "all 0.3s" }}>
-                  {caseStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                  {caseStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: caseStep >= i ? "#1a1a2e" : "#4a4a5a", marginBottom: "0.15rem" }}>{step.label}</div>
-                  <div style={{ fontSize: "0.6rem", color: caseStep >= i ? "#8a8a9a" : "#3a3a4a", lineHeight: 1.6 }}>{step.detail}</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: caseStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.15rem" }}>{step.label}</div>
+                  <div style={{ fontSize: "0.6rem", color: caseStep >= i ? "#334155" : "#1E293B", lineHeight: 1.6 }}>{step.detail}</div>
                 </div>
                 {caseStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
               </div>
@@ -2303,7 +2303,7 @@ export const VagueQuestionsTab = ({ s }) => {
           </div>
 
           {caseStep >= 4 && (
-            <div style={{ marginTop: "1rem", padding: "0.8rem 1rem", background: `${demo.color}10`, border: `1px solid ${demo.color}40`, borderRadius: 4, fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7, animation: "fadeIn 0.4s ease" }}>
+            <div style={{ marginTop: "1rem", padding: "0.8rem 1rem", background: `${demo.color}10`, border: `1px solid ${demo.color}40`, borderRadius: 4, fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, animation: "fadeIn 0.4s ease" }}>
               <strong style={{ color: demo.color }}>Outcome:</strong> {demo.outcome}
               <br /><strong style={{ color: demo.color }}>Learned default after:</strong> {demo.learnedDefault}
             </div>
@@ -2313,23 +2313,23 @@ export const VagueQuestionsTab = ({ s }) => {
 
       {/* LEARNING MECHANISM — LIVE SANDBOX */}
       <div style={s.sectionLabel("#c9a84c")}>Live Learning Sandbox — Cast Votes, Watch Confidence Update</div>
-      <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 540 }}>
+      <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 540 }}>
         Interact with a live <code style={{ color: "#c9a84c", background: "#ffffff", padding: "0.1rem 0.3rem", borderRadius: 3 }}>ClarificationDefault</code> row. Cast signals to see how confidence updates and the gate switches.
       </p>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
         {/* Current state */}
         <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "1rem" }}>ClarificationDefault State</div>
-          <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 2, marginBottom: "1rem" }}>
-            <span style={{ color: "#6a6a7a" }}>target_field:</span> <span style={{ color: "#c9a84c" }}>source_page</span><br />
-            <span style={{ color: "#6a6a7a" }}>doctype:</span> <span style={{ color: "#c9a84c" }}>broker_contract</span><br />
-            <span style={{ color: "#6a6a7a" }}>sample_size:</span> <span style={{ color: "#1a1a2e" }}>{n}</span><br />
-            <span style={{ color: "#6a6a7a" }}>confidence:</span> <span style={{ color: confidence > 0.85 ? "#4a9a4a" : confidence < 0.6 ? "#c4572a" : "#c9a84c", fontWeight: 700 }}>{confidence}</span><br />
+          <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: "#334155", lineHeight: 2, marginBottom: "1rem" }}>
+            <span style={{ color: "#334155" }}>target_field:</span> <span style={{ color: "#c9a84c" }}>source_page</span><br />
+            <span style={{ color: "#334155" }}>doctype:</span> <span style={{ color: "#c9a84c" }}>broker_contract</span><br />
+            <span style={{ color: "#334155" }}>sample_size:</span> <span style={{ color: "#1a1a2e" }}>{n}</span><br />
+            <span style={{ color: "#334155" }}>confidence:</span> <span style={{ color: confidence > 0.85 ? "#4a9a4a" : confidence < 0.6 ? "#c4572a" : "#c9a84c", fontWeight: 700 }}>{confidence}</span><br />
           </div>
           {/* Confidence bar */}
           <div style={{ marginBottom: "0.6rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
-              <span style={{ fontSize: "0.58rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>Confidence</span>
+              <span style={{ fontSize: "0.58rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>Confidence</span>
               <span style={{ fontSize: "0.62rem", color: gateColor, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{gateLabel}</span>
             </div>
             <div style={{ background: "#e8e4dc", borderRadius: 4, height: 10, overflow: "hidden", position: "relative" }}>
@@ -2348,7 +2348,7 @@ export const VagueQuestionsTab = ({ s }) => {
           <div style={{ marginTop: "0.8rem" }}>
             {Object.entries(votes).map(([k, v]) => (
               <div key={k} style={{ display: "flex", justifyContent: "space-between", padding: "0.4rem 0.6rem", background: "#f7f5f0", borderRadius: 3, marginBottom: "0.3rem", fontSize: "0.65rem" }}>
-                <span style={{ fontFamily: "DM Mono, monospace", color: "#8a8a9a" }}>{k}</span>
+                <span style={{ fontFamily: "DM Mono, monospace", color: "#334155" }}>{k}</span>
                 <span style={{ color: "#c9a84c", fontWeight: 700 }}>{v.toFixed(1)} votes</span>
               </div>
             ))}
@@ -2369,14 +2369,14 @@ export const VagueQuestionsTab = ({ s }) => {
                     <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: sig.color }}>{sig.type}</span>
                     <span style={{ fontSize: "0.58rem", padding: "0.1rem 0.4rem", background: `${sig.color}15`, color: sig.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{sig.weight}</span>
                   </div>
-                  <div style={{ fontSize: "0.62rem", color: "#6a6a7a", lineHeight: 1.6 }}>{sig.desc}</div>
+                  <div style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.6 }}>{sig.desc}</div>
                 </div>
               </button>
             ))}
           </div>
           <button onClick={() => { setConfidence(0.72); setVotes({ "source_page=1": 8, "source_page=TOC": 2 }); setN(10); }}
-            style={{ marginTop: "0.8rem", width: "100%", background: "transparent", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.5rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, cursor: "pointer", letterSpacing: "0.1em", transition: "border-color 0.2s" }}
-            onMouseEnter={e => e.currentTarget.style.borderColor = "#4a4a5a"}
+            style={{ marginTop: "0.8rem", width: "100%", background: "transparent", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.5rem", color: "#334155", fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, cursor: "pointer", letterSpacing: "0.1em", transition: "border-color 0.2s" }}
+            onMouseEnter={e => e.currentTarget.style.borderColor = "#1E293B"}
             onMouseLeave={e => e.currentTarget.style.borderColor = "#e0dcd4"}>
             ↺ Reset to defaults
           </button>
@@ -2397,7 +2397,7 @@ export const VagueQuestionsTab = ({ s }) => {
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.65rem", fontWeight: 700, color: "#1a1a2e" }}>{b.action}</div>
               </div>
             </div>
-            <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>{b.desc}</div>
+            <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>{b.desc}</div>
           </div>
         ))}
       </div>
@@ -2447,7 +2447,7 @@ def gate(default: ClarificationDefault
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
         <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#9b7fd4", marginBottom: "0.8rem" }}>🔎 Audit Surface</div>
-          <p style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Every clarification asked and every default applied lands on the audit surface. The clarification fires as a row on <code style={{ color: "#9b7fd4", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>query_log</code> alongside the model version and dispatch decision.</p>
+          <p style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Every clarification asked and every default applied lands on the audit surface. The clarification fires as a row on <code style={{ color: "#9b7fd4", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>query_log</code> alongside the model version and dispatch decision.</p>
           <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "0.7rem", fontSize: "0.6rem", color: "#9b7fd4", fontFamily: "DM Mono, monospace", lineHeight: 1.8 }}>
             query_log<br />
             ├── question_id → user question<br />
@@ -2455,8 +2455,8 @@ def gate(default: ClarificationDefault
             ├── default_applied_id<br />
             ├── default_value_used<br />
             └── model_version<br /><br />
-            <span style={{ color: "#6a6a7a" }}># "how did the system arrive at page 1?"</span><br />
-            <span style={{ color: "#6a6a7a" }}># → one SQL join on question_id</span>
+            <span style={{ color: "#334155" }}># "how did the system arrive at page 1?"</span><br />
+            <span style={{ color: "#334155" }}># → one SQL join on question_id</span>
           </div>
         </div>
         <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
@@ -2471,7 +2471,7 @@ def gate(default: ClarificationDefault
               <div style={{ width: 3, background: item.color, borderRadius: 2, flexShrink: 0 }} />
               <div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.63rem", fontWeight: 700, color: item.color, marginBottom: "0.15rem" }}>{item.layer}</div>
-                <div style={{ fontSize: "0.6rem", color: "#6a6a7a", lineHeight: 1.6 }}>{item.role}</div>
+                <div style={{ fontSize: "0.6rem", color: "#334155", lineHeight: 1.6 }}>{item.role}</div>
               </div>
             </div>
           ))}
@@ -2480,7 +2480,7 @@ def gate(default: ClarificationDefault
 
       {/* DEFERRED CONCERNS */}
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
-        <div style={s.sectionLabel("#6a6a7a")}>What This Pattern Doesn't Cover (Yet)</div>
+        <div style={s.sectionLabel("#334155")}>What This Pattern Doesn't Cover (Yet)</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.8rem" }}>
           {[
             { icon: "📝", title: "Multi-Field Clarifications", color: "#9b7fd4", body: "Real cases often have two missing fields (entity AND scope, intent AND field). The schema scales but the UX of asking three questions in a row is bad. Bundle and present a small form — v2." },
@@ -2492,7 +2492,7 @@ def gate(default: ClarificationDefault
                 <span style={{ fontSize: "1rem" }}>{c.icon}</span>
                 <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: c.color }}>{c.title}</span>
               </div>
-              <div style={{ fontSize: "0.63rem", color: "#6a6a7a", lineHeight: 1.7 }}>{c.body}</div>
+              <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.7 }}>{c.body}</div>
             </div>
           ))}
         </div>
@@ -2637,7 +2637,7 @@ export const ContextGraphTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Vector RAG Isn't Enough:<br /><em style={{ color: "#4a9a4a", fontStyle: "italic" }}>A Context Graph for Multi-Agent Memory</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           Multi-agent systems lose cross-agent decisions because flat transcripts and vector search both have a <strong style={{ color: "#1a1a2e" }}>structural blind spot</strong>, not just a noise problem. Some questions — <em>"which team owns the component that depends on the service X chose?"</em> — only exist as a path through multiple facts. No chunk contains the answer. A graph walks right through it. Benchmarked with zero LLM calls, fully deterministic, reproduced byte-for-byte on two machines.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
@@ -2650,7 +2650,7 @@ export const ContextGraphTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.7rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.3rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.15rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.55rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -2673,12 +2673,12 @@ export const ContextGraphTab = ({ s }) => {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
         <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>📜 How It Actually Broke</div>
-          <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}><code style={{ color: "#2a8a84", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>Agent_Planner</code> decides the project should use PostgreSQL. Twenty turns of "sounds good" and "I'll get to it" pass. <code style={{ color: "#9b7fd4", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>Agent_Reviewer</code> asks what storage technology is being used.</p>
+          <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}><code style={{ color: "#2a8a84", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>Agent_Planner</code> decides the project should use PostgreSQL. Twenty turns of "sounds good" and "I'll get to it" pass. <code style={{ color: "#9b7fd4", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>Agent_Reviewer</code> asks what storage technology is being used.</p>
           <p style={{ fontSize: "0.68rem", color: "#c4572a", lineHeight: 1.8, fontWeight: 700 }}>Even with the entire raw transcript in the context window, the agent couldn't answer reliably.</p>
         </div>
         <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#9b7fd4", marginBottom: "0.8rem" }}>🧮 Why Vector Search Doesn't Fix It</div>
-          <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>A vector store retrieves chunks that <em>look similar</em> to your query — it doesn't retrieve relationships between facts.</p>
+          <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>A vector store retrieves chunks that <em>look similar</em> to your query — it doesn't retrieve relationships between facts.</p>
           <p style={{ fontSize: "0.68rem", color: "#9b7fd4", lineHeight: 1.8, fontWeight: 700 }}>If a decision lives in one chunk and a dependency note lives in another, similarity search can't combine them — no matter how good the embedding model is.</p>
         </div>
       </div>
@@ -2696,11 +2696,11 @@ export const ContextGraphTab = ({ s }) => {
             <div style={{ display: "flex", gap: "1rem" }}>
               <div>
                 <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: a.color }}>{a.accuracy}%</div>
-                <div style={{ fontSize: "0.52rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>accuracy</div>
+                <div style={{ fontSize: "0.52rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>accuracy</div>
               </div>
               <div>
-                <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: "#6a6a7a" }}>{a.tokens}</div>
-                <div style={{ fontSize: "0.52rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>tok/query</div>
+                <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: "#334155" }}>{a.tokens}</div>
+                <div style={{ fontSize: "0.52rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>tok/query</div>
               </div>
             </div>
           </button>
@@ -2712,15 +2712,15 @@ export const ContextGraphTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginBottom: "1.2rem" }}>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: arch.color, marginBottom: "0.4rem" }}>Stores</div>
-              <div style={{ fontSize: "0.66rem", color: "#b0b0c0", lineHeight: 1.6 }}>{arch.stores}</div>
+              <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.6 }}>{arch.stores}</div>
             </div>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: arch.color, marginBottom: "0.4rem" }}>Costs</div>
-              <div style={{ fontSize: "0.66rem", color: "#b0b0c0", lineHeight: 1.6 }}>{arch.costs}</div>
+              <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.6 }}>{arch.costs}</div>
             </div>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: arch.color, marginBottom: "0.4rem" }}>Good At</div>
-              <div style={{ fontSize: "0.66rem", color: "#b0b0c0", lineHeight: 1.6 }}>{arch.goodAt}</div>
+              <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.6 }}>{arch.goodAt}</div>
             </div>
           </div>
           {/* Per-category accuracy bars */}
@@ -2728,7 +2728,7 @@ export const ContextGraphTab = ({ s }) => {
             {[["Direct", arch.direct], ["Distant", arch.distant], ["Join", arch.join]].map(([label, val], i) => (
               <div key={i} style={{ background: "#f7f5f0", borderRadius: 4, padding: "0.7rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
-                  <span style={{ fontSize: "0.6rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{label}</span>
+                  <span style={{ fontSize: "0.6rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{label}</span>
                   <span style={{ fontSize: "0.65rem", color: arch.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{val}%</span>
                 </div>
                 <div style={{ background: "#e8e4dc", borderRadius: 3, height: 6, overflow: "hidden" }}>
@@ -2742,7 +2742,7 @@ export const ContextGraphTab = ({ s }) => {
 
       {/* QUERY CATEGORIES */}
       <div style={s.sectionLabel("#c9a84c")}>The 18 Graded Queries — Built to NOT Favor the Graph</div>
-      <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 580 }}>The easiest way to make a graph win a benchmark is to only ask clean, single-fact questions. Distractors ("sounds good," "no blockers") outnumber facts in every scenario.</p>
+      <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 580 }}>The easiest way to make a graph win a benchmark is to only ask clean, single-fact questions. Distractors ("sounds good," "no blockers") outnumber facts in every scenario.</p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.8rem", marginBottom: "1.5rem" }}>
         {CG_QUERY_CATEGORIES.map((q, i) => (
           <div key={i} style={{ background: "#ffffff", border: `1px solid ${q.color}30`, borderRadius: 6, padding: "1.2rem", borderTop: `2px solid ${q.color}` }}>
@@ -2751,7 +2751,7 @@ export const ContextGraphTab = ({ s }) => {
               <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: q.color }}>{q.type}</span>
               <span style={{ marginLeft: "auto", fontFamily: "Playfair Display, serif", fontSize: "1.2rem", fontWeight: 900, color: q.color }}>{q.count}</span>
             </div>
-            <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>{q.desc}</div>
+            <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>{q.desc}</div>
           </div>
         ))}
       </div>
@@ -2760,7 +2760,7 @@ export const ContextGraphTab = ({ s }) => {
       <div style={s.sectionLabel("#9b7fd4")}>Interactive: Two-Hop Traversal — Join Query Resolution</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
-          <div style={{ fontSize: "0.7rem", color: "#8a8a9a", lineHeight: 1.7, maxWidth: 480 }}>
+          <div style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, maxWidth: 480 }}>
             Query: <em style={{ color: "#1a1a2e" }}>"Which component does the module owned by Agent_Implementer depend on?"</em> — no single chunk contains both facts.
           </div>
           <button onClick={runTraversal} disabled={traversing}
@@ -2783,7 +2783,7 @@ export const ContextGraphTab = ({ s }) => {
               <g key={i}>
                 <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={active ? e.color : "#e0dcd4"} strokeWidth={active ? 1 : 0.5} style={{ transition: "all 0.4s" }} />
                 <polygon points={`${x2},${y2} ${x2 - ux * 2.5 - uy * 1.5},${y2 - uy * 2.5 + ux * 1.5} ${x2 - ux * 2.5 + uy * 1.5},${y2 - uy * 2.5 - ux * 1.5}`} fill={active ? e.color : "#e0dcd4"} />
-                <text x={(x1 + x2) / 2} y={(y1 + y2) / 2 - 2} fontSize="2.6" fill={active ? e.color : "#4a4a5a"} textAnchor="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", transition: "fill 0.4s" }}>{e.label}</text>
+                <text x={(x1 + x2) / 2} y={(y1 + y2) / 2 - 2} fontSize="2.6" fill={active ? e.color : "#1E293B"} textAnchor="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", transition: "fill 0.4s" }}>{e.label}</text>
               </g>
             );
           })}
@@ -2792,14 +2792,14 @@ export const ContextGraphTab = ({ s }) => {
             return (
               <g key={n.id}>
                 <rect x={n.x - 13} y={n.y - 5} width={26} height={10} rx={2} fill={active ? n.color + "30" : "#ffffff"} stroke={n.color} strokeWidth={active ? 1.4 : 0.6} style={{ transition: "all 0.4s" }} />
-                <text x={n.x} y={n.y + 1} fontSize="2.6" fill={active ? n.color : "#8a8a9a"} textAnchor="middle" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", transition: "fill 0.4s" }}>{n.id}</text>
+                <text x={n.x} y={n.y + 1} fontSize="2.6" fill={active ? n.color : "#334155"} textAnchor="middle" dominantBaseline="middle" style={{ fontFamily: "Syne, sans-serif", fontWeight: "bold", transition: "fill 0.4s" }}>{n.id}</text>
               </g>
             );
           })}
         </svg>
 
         {hop >= 0 && (
-          <div style={{ marginTop: "0.5rem", padding: "0.8rem 1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a40", borderRadius: 4, fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7, animation: "fadeIn 0.3s ease" }}>
+          <div style={{ marginTop: "0.5rem", padding: "0.8rem 1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a40", borderRadius: 4, fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7, animation: "fadeIn 0.3s ease" }}>
             {hop < HOPS.length ? (
               <><strong style={{ color: "#4a9a4a" }}>Hop {hop + 1}:</strong> {HOPS[hop].note} — traverse <code style={{ color: "#c9a84c" }}>{HOPS[hop].edge}</code> edge from <code style={{ color: "#2a8a84" }}>{HOPS[hop].from}</code> → <code style={{ color: "#9b7fd4" }}>{HOPS[hop].to}</code></>
             ) : (
@@ -2824,7 +2824,7 @@ export const ContextGraphTab = ({ s }) => {
 
       {/* THE TWO BUGS */}
       <div style={s.sectionLabel("#c4572a")}>Two Real Bugs Found Building This</div>
-      <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 580 }}>The first full run scored the context graph at <strong style={{ color: "#c4572a" }}>0% accuracy</strong>. These are the two bugs traced and fixed — not glossed over.</p>
+      <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 580 }}>The first full run scored the context graph at <strong style={{ color: "#c4572a" }}>0% accuracy</strong>. These are the two bugs traced and fixed — not glossed over.</p>
       <div style={{ display: "flex", gap: "0.6rem", marginBottom: "1rem" }}>
         {CG_BUGS.map(b => (
           <button key={b.id} onClick={() => setActiveBug(activeBug === b.id ? null : b.id)}
@@ -2832,7 +2832,7 @@ export const ContextGraphTab = ({ s }) => {
             <span style={{ fontSize: "1.3rem" }}>{b.icon}</span>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: activeBug === b.id ? b.color : "#1a1a2e" }}>{b.title}</div>
-              <div style={{ fontSize: "0.58rem", color: "#6a6a7a", marginTop: "0.15rem" }}>{b.severity}</div>
+              <div style={{ fontSize: "0.58rem", color: "#334155", marginTop: "0.15rem" }}>{b.severity}</div>
             </div>
           </button>
         ))}
@@ -2842,11 +2842,11 @@ export const ContextGraphTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", marginBottom: "1.2rem" }}>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: b.color, marginBottom: "0.5rem" }}>The Problem</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8 }}>{b.problem}</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8 }}>{b.problem}</p>
             </div>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: b.color, marginBottom: "0.5rem" }}>The Insight</div>
-              <p style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.8 }}>{b.insight}</p>
+              <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8 }}>{b.insight}</p>
             </div>
           </div>
           <div style={{ padding: "0.7rem 1rem", background: `${b.color}0d`, border: `1px solid ${b.color}30`, borderRadius: 4, fontSize: "0.66rem", color: b.color, lineHeight: 1.6, marginBottom: "1rem" }}>
@@ -2863,7 +2863,7 @@ export const ContextGraphTab = ({ s }) => {
           <thead>
             <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
               {["Architecture", "Accuracy", "Avg tokens/query", "Direct", "Distant", "Join"].map(h => (
-                <th key={h} style={{ textAlign: "left", padding: "0.7rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
+                <th key={h} style={{ textAlign: "left", padding: "0.7rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -2871,16 +2871,16 @@ export const ContextGraphTab = ({ s }) => {
             {CG_ARCHITECTURES.map((a, i) => (
               <tr key={a.id} style={{ borderBottom: i < 2 ? "1px solid rgba(42,42,56,0.5)" : "none", background: a.id === "graph" ? "rgba(74,154,74,0.06)" : "transparent" }}>
                 <td style={{ padding: "0.8rem", color: a.color, fontFamily: "Syne, sans-serif", fontWeight: 800 }}>{a.icon} {a.name}</td>
-                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#b0b0c0", fontWeight: a.id === "graph" ? 800 : 400 }}>{a.accuracy}%</td>
-                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#b0b0c0", fontWeight: a.id === "graph" ? 800 : 400 }}>{a.tokens}</td>
-                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#b0b0c0", fontWeight: a.id === "graph" ? 700 : 400 }}>{a.direct}%</td>
-                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#b0b0c0", fontWeight: a.id === "graph" ? 700 : 400 }}>{a.distant}%</td>
-                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#b0b0c0", fontWeight: a.id === "graph" ? 700 : 400 }}>{a.join}%</td>
+                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#1E293B", fontWeight: a.id === "graph" ? 800 : 400 }}>{a.accuracy}%</td>
+                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#1E293B", fontWeight: a.id === "graph" ? 800 : 400 }}>{a.tokens}</td>
+                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#1E293B", fontWeight: a.id === "graph" ? 700 : 400 }}>{a.direct}%</td>
+                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#1E293B", fontWeight: a.id === "graph" ? 700 : 400 }}>{a.distant}%</td>
+                <td style={{ padding: "0.8rem", color: a.id === "graph" ? "#4a9a4a" : "#1E293B", fontWeight: a.id === "graph" ? 700 : 400 }}>{a.join}%</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div style={{ marginTop: "1rem", padding: "0.8rem 1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a40", borderRadius: 4, fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+        <div style={{ marginTop: "1rem", padding: "0.8rem 1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a40", borderRadius: 4, fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>
           The context graph wins on accuracy <strong style={{ color: "#4a9a4a" }}>and</strong> uses about <strong style={{ color: "#4a9a4a" }}>18× fewer tokens</strong> per query than the raw dump. That's not a tradeoff — it's a win on both axes. The join-query gap is the headline: <strong>80.0%</strong> for the graph vs <strong>40.0%</strong> raw dump vs <strong>20.0%</strong> vector-only.
         </div>
       </div>
@@ -2895,7 +2895,7 @@ export const ContextGraphTab = ({ s }) => {
             "Questions routinely require combining two or more separately-stated facts",
             "Long-running agent conversations where re-sending history is a real token cost line item",
           ].map((p, i) => (
-            <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+            <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7 }}>
               <span style={{ color: "#4a9a4a", flexShrink: 0 }}>▸</span><span>{p}</span>
             </div>
           ))}
@@ -2907,7 +2907,7 @@ export const ContextGraphTab = ({ s }) => {
             "Queries are always single-fact lookups with no joins — vector RAG gets most of the accuracy at a fraction of the cost",
             "Your team has no tolerance for an extra moving part — a graph needs an extraction step a flat store avoids",
           ].map((p, i) => (
-            <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+            <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7 }}>
               <span style={{ color: "#c4572a", flexShrink: 0 }}>▸</span><span>{p}</span>
             </div>
           ))}
@@ -3107,7 +3107,7 @@ export const ContextEngineeringTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Context Engineering for RAG:<br /><em style={{ color: "#c9a84c", fontStyle: "italic" }}>The Four Typed Inputs Behind Every Answer</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           Tobi Lütke named it in June 2025: <em style={{ color: "#1a1a2e" }}>"context engineering — the art of providing all the context for the task to be plausibly solvable by the LLM."</em> Andrej Karpathy endorsed it as <em style={{ color: "#1a1a2e" }}>"filling the context window with just the right information for the next step."</em> The discipline was already there in working production systems. The series had been doing it brick by brick. This article puts a name on it.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
@@ -3120,7 +3120,7 @@ export const ContextEngineeringTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.7rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.3rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.15rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.55rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -3152,12 +3152,12 @@ export const ContextEngineeringTab = ({ s }) => {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
         <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>❌ Prompt Engineering (narrow)</div>
-          <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Tuning the wording of one prompt to coax better behaviour. Writing example shots so the model knows what good output looks like. Concerns one block of text sent to one call.</p>
-          <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.6rem 0.8rem", fontSize: "0.62rem", color: "#6a6a7a", fontStyle: "italic" }}>"What should I write in the prompt?"</div>
+          <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Tuning the wording of one prompt to coax better behaviour. Writing example shots so the model knows what good output looks like. Concerns one block of text sent to one call.</p>
+          <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.6rem 0.8rem", fontSize: "0.62rem", color: "#334155", fontStyle: "italic" }}>"What should I write in the prompt?"</div>
         </div>
         <div style={{ background: "#ffffff", border: "1px solid #4a9a4a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #4a9a4a" }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#4a9a4a", marginBottom: "0.8rem" }}>✅ Context Engineering (broad)</div>
-          <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Everything that lands in the model's context window: system prompt, retrieved docs, conversation history, tool outputs, memory, metadata, user input. In a long-running agent with dozens of calls, the prompt is one of six or eight slots.</p>
+          <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Everything that lands in the model's context window: system prompt, retrieved docs, conversation history, tool outputs, memory, metadata, user input. In a long-running agent with dozens of calls, the prompt is one of six or eight slots.</p>
           <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.6rem 0.8rem", fontSize: "0.62rem", color: "#4a9a4a", fontStyle: "italic" }}>"What should I assemble in the context, where does each piece come from, how do I keep the assembly stable?"</div>
         </div>
       </div>
@@ -3173,7 +3173,7 @@ export const ContextEngineeringTab = ({ s }) => {
             <div style={{ fontSize: "0.55rem", padding: "0.15rem 0.4rem", background: `${b.color}15`, color: b.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, display: "inline-block", marginBottom: "0.4rem" }}>{b.role}</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
               {b.emits.map((e, i) => (
-                <span key={i} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: "#6a6a7a", background: "#f7f5f0", padding: "0.1rem 0.35rem", borderRadius: 3 }}>{e}</span>
+                <span key={i} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: "#334155", background: "#f7f5f0", padding: "0.1rem 0.35rem", borderRadius: 3 }}>{e}</span>
               ))}
             </div>
           </button>
@@ -3181,7 +3181,7 @@ export const ContextEngineeringTab = ({ s }) => {
       </div>
       {brick && (
         <div style={{ background: "#ffffff", border: `1px solid ${brick.color}40`, borderRadius: 6, padding: "1.4rem", marginBottom: "1.5rem", animation: "fadeIn 0.3s ease" }}>
-          <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>{brick.desc}</p>
+          <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{brick.desc}</p>
         </div>
       )}
 
@@ -3193,8 +3193,8 @@ export const ContextEngineeringTab = ({ s }) => {
             style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 1rem", background: activePiece === p.id ? `${p.color}15` : "#ffffff", border: `1px solid ${activePiece === p.id ? p.color : "#e0dcd4"}`, borderRadius: 4, cursor: "pointer", transition: "all 0.2s" }}>
             <span style={{ fontSize: "1rem" }}>{p.icon}</span>
             <div style={{ textAlign: "left" }}>
-              <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: activePiece === p.id ? p.color : "#6a6a7a" }}>{p.num}</div>
-              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: activePiece === p.id ? p.color : "#b0b0c0" }}>{p.name}</div>
+              <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: activePiece === p.id ? p.color : "#334155" }}>{p.num}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: activePiece === p.id ? p.color : "#1E293B" }}>{p.name}</div>
             </div>
           </button>
         ))}
@@ -3206,32 +3206,32 @@ export const ContextEngineeringTab = ({ s }) => {
           <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", display: "grid", gridTemplateColumns: "auto 1fr 1fr 1fr", gap: "1.2rem", alignItems: "center" }}>
             <span style={{ fontSize: "1.5rem" }}>{piece.icon}</span>
             <div>
-              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.2rem" }}>Who writes it</div>
-              <div style={{ fontSize: "0.64rem", color: "#b0b0c0" }}>{piece.who}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.2rem" }}>Who writes it</div>
+              <div style={{ fontSize: "0.64rem", color: "#1E293B" }}>{piece.who}</div>
             </div>
             <div>
-              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.2rem" }}>Cacheable?</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.2rem" }}>Cacheable?</div>
               <div style={{ fontSize: "0.64rem", color: piece.color }}>{piece.cache}</div>
             </div>
             <div>
-              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.2rem" }}>Cost profile</div>
-              <div style={{ fontSize: "0.64rem", color: "#b0b0c0" }}>{piece.cost}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.2rem" }}>Cost profile</div>
+              <div style={{ fontSize: "0.64rem", color: "#1E293B" }}>{piece.cost}</div>
             </div>
           </div>
           {/* sub-tabs */}
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["what", "code", "operational"].map(t => (
               <button key={t} onClick={() => setPieceTab(t)}
-                style={{ flex: 1, padding: "0.65rem", background: pieceTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pieceTab === t ? `2px solid ${piece.color}` : "2px solid transparent", color: pieceTab === t ? piece.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, padding: "0.65rem", background: pieceTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pieceTab === t ? `2px solid ${piece.color}` : "2px solid transparent", color: pieceTab === t ? piece.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t === "what" ? "What It Is" : t === "code" ? "Code" : "Operational Impact"}
               </button>
             ))}
           </div>
           <div style={{ padding: "1.5rem" }}>
-            {pieceTab === "what" && <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>{piece.what}</p>}
+            {pieceTab === "what" && <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{piece.what}</p>}
             {pieceTab === "code" && <CodeBlock code={piece.code} />}
             {pieceTab === "operational" && (
-              <div style={{ padding: "1rem", background: `${piece.color}0a`, border: `1px solid ${piece.color}30`, borderRadius: 4, fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>
+              <div style={{ padding: "1rem", background: `${piece.color}0a`, border: `1px solid ${piece.color}30`, borderRadius: 4, fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>
                 {piece.operational}
               </div>
             )}
@@ -3243,7 +3243,7 @@ export const ContextEngineeringTab = ({ s }) => {
       <div style={s.sectionLabel("#4a9a4a")}>Context Assembly Pipeline — Animated</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.6, maxWidth: 480 }}>Each brick emits typed outputs that converge on a single LLM call. The assembly is code — typed objects, contracts between components.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.6, maxWidth: 480 }}>Each brick emits typed outputs that converge on a single LLM call. The assembly is code — typed objects, contracts between components.</p>
           <button onClick={runSim} disabled={simRunning}
             style={{ background: simRunning ? "#0a1a0a" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
             {simRunning ? "Assembling…" : "▶ Assemble Context"}
@@ -3253,11 +3253,11 @@ export const ContextEngineeringTab = ({ s }) => {
           {ASSEMBLY_STEPS.map((step, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.75rem 1rem", background: simStep >= i ? `${step.color}0a` : "#f7f5f0", border: `1px solid ${simStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: simStep === -1 ? 0.35 : simStep >= i ? 1 : 0.3 }}>
               <div style={{ width: 30, height: 30, borderRadius: "50%", background: simStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: simStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${simStep >= i ? step.color : "#e0dcd4"}` }}>
-                {simStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                {simStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: simStep >= i ? "#1a1a2e" : "#4a4a5a", marginBottom: "0.1rem" }}>{step.label}</div>
-                <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: simStep >= i ? step.color : "#3a3a4a" }}>{step.detail}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: simStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.1rem" }}>{step.label}</div>
+                <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: simStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
               </div>
               {simStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
             </div>
@@ -3282,14 +3282,14 @@ messages = [
 
       {/* CONTEXT SCOPE EXPLORER */}
       <div style={s.sectionLabel("#c9a84c")}>Context Scope — The Anchor/Context Tradeoff (Live Demo)</div>
-      <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 540 }}>Same anchor, four context-scope choices side by side — the tradeoff between cost and completeness, as seen in the shipai live demo.</p>
+      <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 540 }}>Same anchor, four context-scope choices side by side — the tradeoff between cost and completeness, as seen in the shipai live demo.</p>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.2rem", flexWrap: "wrap" }}>
           {SCOPE_OPTIONS.map(o => (
             <button key={o.id} onClick={() => setContextScope(o.id)}
               style={{ flex: 1, minWidth: 80, padding: "0.7rem 0.5rem", background: contextScope === o.id ? `${o.color}15` : "#f7f5f0", border: `1px solid ${contextScope === o.id ? o.color : "#e0dcd4"}`, borderRadius: 4, cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
-              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: contextScope === o.id ? o.color : "#b0b0c0", marginBottom: "0.2rem" }}>{o.label}</div>
-              <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: "#6a6a7a" }}>{o.tokens} tokens</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: contextScope === o.id ? o.color : "#1E293B", marginBottom: "0.2rem" }}>{o.label}</div>
+              <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: "#334155" }}>{o.tokens} tokens</div>
             </button>
           ))}
         </div>
@@ -3305,7 +3305,7 @@ messages = [
                   const inPage = contextScope === "page";
                   const highlighted = isAnchor || (contextScope === "paragraph" && inPara) || (contextScope === "section" && inSection) || (contextScope === "page" && inPage);
                   return (
-                    <div key={i} style={{ padding: "0.1rem 0.4rem", borderRadius: 2, background: isAnchor ? scope.color + "40" : highlighted ? scope.color + "12" : "transparent", color: highlighted ? "#1a1a2e" : "#3a3a4a", borderLeft: isAnchor ? `3px solid ${scope.color}` : highlighted ? `1px solid ${scope.color}30` : "1px solid transparent", marginBottom: 1, transition: "all 0.3s" }}>
+                    <div key={i} style={{ padding: "0.1rem 0.4rem", borderRadius: 2, background: isAnchor ? scope.color + "40" : highlighted ? scope.color + "12" : "transparent", color: highlighted ? "#1a1a2e" : "#1E293B", borderLeft: isAnchor ? `3px solid ${scope.color}` : highlighted ? `1px solid ${scope.color}30` : "1px solid transparent", marginBottom: 1, transition: "all 0.3s" }}>
                       {isAnchor ? `⚓ [ANCHOR] "the renewal date is 15 March 2026"` : `Line ${i + 1}: Lorem ipsum document text here...`}
                     </div>
                   );
@@ -3315,21 +3315,21 @@ messages = [
             <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               <div style={{ padding: "1rem", background: `${scope.color}0d`, border: `1px solid ${scope.color}30`, borderRadius: 4 }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: scope.color, marginBottom: "0.4rem" }}>{scope.label} scope</div>
-                <div style={{ fontSize: "0.66rem", color: "#b0b0c0", lineHeight: 1.7, marginBottom: "0.6rem" }}>{scope.desc}</div>
+                <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7, marginBottom: "0.6rem" }}>{scope.desc}</div>
                 <div style={{ display: "flex", gap: "0.8rem" }}>
                   <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.4rem 0.7rem", textAlign: "center" }}>
                     <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.2rem", fontWeight: 900, color: scope.color }}>{scope.tokens}</div>
-                    <div style={{ fontSize: "0.52rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>est. tokens</div>
+                    <div style={{ fontSize: "0.52rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>est. tokens</div>
                   </div>
                   <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.4rem 0.7rem", flex: 1 }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", marginBottom: "0.2rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>Dispatch fn</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", marginBottom: "0.2rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>Dispatch fn</div>
                     <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: scope.color }}>
                       {({ anchor: "get_anchor_lines()", paragraph: "get_paragraph_lines(±5)", section: "get_section_lines(toc_df)", page: "get_page_lines(page_no)" })[contextScope]}
                     </div>
                   </div>
                 </div>
               </div>
-              <div style={{ padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem", color: "#8a8a9a", lineHeight: 1.7, borderLeft: `3px solid ${scope.color}` }}>
+              <div style={{ padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem", color: "#334155", lineHeight: 1.7, borderLeft: `3px solid ${scope.color}` }}>
                 <strong style={{ color: scope.color }}>When to use: </strong>
                 {({ anchor: "Almost never alone — too little context for the LLM to answer reliably. Use as the detection signal; expand before passing to generation.", paragraph: "Default for point-lookup questions. Balances precision and context. The standard retrieval unit in most production systems.", section: "Needed for synthesis questions (summarise, compare, list). TOC navigation gives you the exact section boundaries.", page: "When the scope is genuinely a full page, or as a fallback when section detection is uncertain. High cost, maximum context." })[contextScope]}
               </div>
@@ -3348,17 +3348,17 @@ messages = [
             <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.6rem" }}>
               <span style={{ fontSize: "1.1rem" }}>{st.icon}</span>
               <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: st.color }}>{st.name}</span>
-              <span style={{ marginLeft: "auto", fontSize: "0.52rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>{st.who}</span>
+              <span style={{ marginLeft: "auto", fontSize: "0.52rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>{st.who}</span>
             </div>
-            <p style={{ fontSize: "0.66rem", color: "#8a8a9a", lineHeight: 1.7, marginBottom: "0.7rem" }}>{st.desc}</p>
+            <p style={{ fontSize: "0.66rem", color: "#334155", lineHeight: 1.7, marginBottom: "0.7rem" }}>{st.desc}</p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
               <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.5rem 0.7rem" }}>
-                <div style={{ fontSize: "0.52rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.25rem" }}>Applies to single-doc</div>
+                <div style={{ fontSize: "0.52rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.25rem" }}>Applies to single-doc</div>
                 <div style={{ fontSize: "0.62rem", color: st.color }}>{st.applies}</div>
               </div>
               <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.5rem 0.7rem" }}>
-                <div style={{ fontSize: "0.52rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.25rem" }}>RAG example</div>
-                <div style={{ fontSize: "0.6rem", color: "#b0b0c0" }}>{st.example}</div>
+                <div style={{ fontSize: "0.52rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.25rem" }}>RAG example</div>
+                <div style={{ fontSize: "0.6rem", color: "#1E293B" }}>{st.example}</div>
               </div>
             </div>
           </div>
@@ -3374,7 +3374,7 @@ messages = [
               <span style={{ fontSize: "1.2rem" }}>{op.icon}</span>
               <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: op.color }}>{op.title}</span>
             </div>
-            <p style={{ fontSize: "0.66rem", color: "#8a8a9a", lineHeight: 1.7, marginBottom: "0.7rem" }}>{op.desc}</p>
+            <p style={{ fontSize: "0.66rem", color: "#334155", lineHeight: 1.7, marginBottom: "0.7rem" }}>{op.desc}</p>
             <div style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.6rem 0.7rem", fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: op.color, lineHeight: 1.7 }}>{op.detail}</div>
           </div>
         ))}
@@ -3382,7 +3382,7 @@ messages = [
 
       {/* OUT OF SCOPE */}
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
-        <div style={s.sectionLabel("#6a6a7a")}>Out of Scope for Single-Document RAG</div>
+        <div style={s.sectionLabel("#334155")}>Out of Scope for Single-Document RAG</div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.8rem" }}>
           {CE_OUT_OF_SCOPE.map((item, i) => (
             <div key={i} style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem", border: `1px solid ${item.color}20` }}>
@@ -3390,7 +3390,7 @@ messages = [
                 <span style={{ fontSize: "1rem" }}>{item.icon}</span>
                 <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: item.color }}>{item.title}</span>
               </div>
-              <p style={{ fontSize: "0.63rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "0.6rem" }}>{item.desc}</p>
+              <p style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.7, marginBottom: "0.6rem" }}>{item.desc}</p>
               <div style={{ padding: "0.3rem 0.6rem", background: `${item.color}0d`, border: `1px solid ${item.color}20`, borderRadius: 3, fontSize: "0.55rem", color: item.color, fontFamily: "Syne, sans-serif", fontWeight: 700, letterSpacing: "0.06em" }}>{item.status}</div>
             </div>
           ))}
@@ -3549,7 +3549,7 @@ const MemoryDiagram = ({ activeId }) => {
   return (
     <svg viewBox="0 0 200 110" style={{ width: "100%", height: 200 }}>
       {/* Title */}
-      <text x="100" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">PEAK MEMORY USAGE — 6.2M ROWS</text>
+      <text x="100" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">PEAK MEMORY USAGE — 6.2M ROWS</text>
       {/* RAM boundary */}
       <line x1="18" y1="88" x2="182" y2="88" stroke="#e0dcd4" strokeWidth="0.5"/>
       <line x1="18" y1="30" x2="182" y2="30" stroke="#c4572a" strokeWidth="0.5" strokeDasharray="2,1"/>
@@ -3565,16 +3565,16 @@ const MemoryDiagram = ({ activeId }) => {
             <rect x={x - 13} y={y} width={26} height={barH} rx={2} fill={sc.color} opacity={0.7}/>
             <rect x={x - 13} y={y} width={26} height={3} rx={2} fill={sc.color}/>
             <text x={x} y={y - 3} textAnchor="middle" fontSize="5.5" fill={sc.color} fontFamily="Syne, sans-serif" fontWeight="800">{sc.fill}%</text>
-            <text x={x} y={95} textAnchor="middle" fontSize="3.8" fill="#8a8a9a" fontFamily="Syne, sans-serif">{sc.label.split("(")[0].trim()}</text>
-            <text x={x} y={100} textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{sc.note}</text>
+            <text x={x} y={95} textAnchor="middle" fontSize="3.8" fill="#334155" fontFamily="Syne, sans-serif">{sc.label.split("(")[0].trim()}</text>
+            <text x={x} y={100} textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">{sc.note}</text>
           </g>
         );
       })}
       {/* y-axis */}
       <line x1="18" y1="20" x2="18" y2="90" stroke="#e0dcd4" strokeWidth="0.5"/>
-      <text x="14" y="32" textAnchor="end" fontSize="3.5" fill="#6a6a7a" fontFamily="DM Mono, monospace">100%</text>
-      <text x="14" y="59" textAnchor="end" fontSize="3.5" fill="#6a6a7a" fontFamily="DM Mono, monospace">50%</text>
-      <text x="14" y="89" textAnchor="end" fontSize="3.5" fill="#6a6a7a" fontFamily="DM Mono, monospace">0%</text>
+      <text x="14" y="32" textAnchor="end" fontSize="3.5" fill="#334155" fontFamily="DM Mono, monospace">100%</text>
+      <text x="14" y="59" textAnchor="end" fontSize="3.5" fill="#334155" fontFamily="DM Mono, monospace">50%</text>
+      <text x="14" y="89" textAnchor="end" fontSize="3.5" fill="#334155" fontFamily="DM Mono, monospace">0%</text>
     </svg>
   );
 };
@@ -3587,7 +3587,7 @@ const SpeedDiagram = ({ activeId }) => {
   ];
   return (
     <svg viewBox="0 0 200 110" style={{ width: "100%", height: 200 }}>
-      <text x="100" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THROUGHPUT (RELATIVE SPEED)</text>
+      <text x="100" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THROUGHPUT (RELATIVE SPEED)</text>
       {bars.map((b, i) => {
         const y = 22 + i * 26;
         const maxW = 140;
@@ -3595,22 +3595,22 @@ const SpeedDiagram = ({ activeId }) => {
         const isActive = activeId === b.id || activeId === null;
         return (
           <g key={b.id} opacity={isActive ? 1 : 0.25} style={{ transition: "opacity 0.3s" }}>
-            <text x="18" y={y + 6} fontSize="4.2" fill="#8a8a9a" fontFamily="Syne, sans-serif">{b.label}</text>
+            <text x="18" y={y + 6} fontSize="4.2" fill="#334155" fontFamily="Syne, sans-serif">{b.label}</text>
             <rect x="18" y={y + 10} width={maxW} height={10} rx={2} fill="#e8e4dc"/>
             <rect x="18" y={y + 10} width={barW} height={10} rx={2} fill={b.color} opacity={0.8}/>
             <text x={18 + barW + 3} y={y + 18} fontSize="4.5" fill={b.color} fontFamily="Syne, sans-serif" fontWeight="700">{b.val}%</text>
-            <text x="18" y={y + 25} fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{b.note}</text>
+            <text x="18" y={y + 25} fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">{b.note}</text>
           </g>
         );
       })}
-      <text x="18" y={105} fontSize="3.5" fill="#4a4a5a" fontFamily="Syne, sans-serif">Relative — Polars normalised to 100%</text>
+      <text x="18" y={105} fontSize="3.5" fill="#1E293B" fontFamily="Syne, sans-serif">Relative — Polars normalised to 100%</text>
     </svg>
   );
 };
 
 const ChunkingFlowDiagram = () => (
   <svg viewBox="0 0 220 80" style={{ width: "100%", height: 120 }}>
-    <text x="110" y="10" textAnchor="middle" fontSize="5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">PANDAS CHUNKING — SEQUENTIAL FLOW</text>
+    <text x="110" y="10" textAnchor="middle" fontSize="5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">PANDAS CHUNKING — SEQUENTIAL FLOW</text>
     {[0,1,2,3,4].map(i => {
       const x = 18 + i * 42;
       const isLast = i === 4;
@@ -3622,24 +3622,24 @@ const ChunkingFlowDiagram = () => (
           <text x={x + 17} y="27" textAnchor="middle" fontSize="4" fill={isLast ? "#4a9a4a" : "#2a8a84"} fontFamily="Syne, sans-serif" fontWeight="700">
             {isLast ? "Done" : `C${i+1}`}
           </text>
-          <text x={x + 17} y="34" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">
+          <text x={x + 17} y="34" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">
             {isLast ? "✓ stable" : "250k rows"}
           </text>
-          {!isLast && <text x={x + 36} y="30" fontSize="5" fill="#4a4a5a">›</text>}
+          {!isLast && <text x={x + 36} y="30" fontSize="5" fill="#1E293B">›</text>}
         </g>
       );
     })}
-    <text x="110" y="56" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Each chunk: read → transform → del → gc.collect() → next</text>
+    <text x="110" y="56" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Each chunk: read → transform → del → gc.collect() → next</text>
     <text x="110" y="64" textAnchor="middle" fontSize="3.5" fill="#2a8a84" fontFamily="Syne, sans-serif">Peak RAM = 1 chunk at a time (not entire 30GB)</text>
     <rect x="18" y="68" width="185" height="8" rx={2} fill="#ffffff" stroke="#e0dcd4" strokeWidth="0.5"/>
     <rect x="18" y="68" width="37" height="8" rx={2} fill="#2a8a84" opacity="0.6"/>
-    <text x="61" y="74" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">1 of 5 chunks processed</text>
+    <text x="61" y="74" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">1 of 5 chunks processed</text>
   </svg>
 );
 
 const DaskGraphDiagram = () => (
   <svg viewBox="0 0 220 90" style={{ width: "100%", height: 130 }}>
-    <text x="110" y="10" textAnchor="middle" fontSize="5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DASK — PARALLEL TASK GRAPH</text>
+    <text x="110" y="10" textAnchor="middle" fontSize="5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DASK — PARALLEL TASK GRAPH</text>
     {/* Partitions */}
     {[0,1,2,3].map(i => (
       <g key={i}>
@@ -3665,33 +3665,33 @@ const DaskGraphDiagram = () => (
     {/* Merge node */}
     <rect x={84} y="70" width={52} height={14} rx={2} fill="rgba(74,154,74,0.15)" stroke="#4a9a4a" strokeWidth="0.8"/>
     <text x="110" y="80" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">Merge → Output</text>
-    <text x="110" y="88" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">Parallelism = N CPU cores</text>
+    <text x="110" y="88" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">Parallelism = N CPU cores</text>
   </svg>
 );
 
 const PolarsArrowDiagram = () => (
   <svg viewBox="0 0 220 90" style={{ width: "100%", height: 130 }}>
-    <text x="110" y="10" textAnchor="middle" fontSize="5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">POLARS — RUST + APACHE ARROW</text>
+    <text x="110" y="10" textAnchor="middle" fontSize="5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">POLARS — RUST + APACHE ARROW</text>
     {/* Lazy plan box */}
     <rect x="16" y="16" width="60" height="18" rx={2} fill="rgba(196,87,42,0.12)" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="46" y="24" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">Lazy Query Plan</text>
-    <text x="46" y="30" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">scan_parquet()</text>
-    <text x="46" y="36" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">.with_columns()</text>
+    <text x="46" y="30" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">scan_parquet()</text>
+    <text x="46" y="36" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">.with_columns()</text>
     <line x1="76" y1="25" x2="90" y2="25" stroke="#c4572a" strokeWidth="0.6"/>
     {/* Optimiser */}
     <rect x="90" y="16" width="44" height="18" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.7"/>
     <text x="112" y="24" textAnchor="middle" fontSize="4" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Query Optimiser</text>
-    <text x="112" y="31" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">prune cols, reorder</text>
+    <text x="112" y="31" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">prune cols, reorder</text>
     <line x1="134" y1="25" x2="148" y2="25" stroke="#9b7fd4" strokeWidth="0.6"/>
     {/* Rust executor */}
     <rect x="148" y="16" width="52" height="18" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.7"/>
     <text x="174" y="23" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">Rust Executor</text>
-    <text x="174" y="29" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">native threads</text>
-    <text x="174" y="35" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">no GC overhead</text>
+    <text x="174" y="29" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">native threads</text>
+    <text x="174" y="35" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">no GC overhead</text>
     {/* Arrow format bar */}
     <rect x="16" y="44" width="184" height="16" rx={2} fill="rgba(201,168,76,0.08)" stroke="#c9a84c" strokeWidth="0.6"/>
     <text x="108" y="52" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Apache Arrow — Columnar In-Memory Format</text>
-    <text x="108" y="58" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">minimal memory copies · CPU cache-efficient · zero-copy reads</text>
+    <text x="108" y="58" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">minimal memory copies · CPU cache-efficient · zero-copy reads</text>
     {/* Feature pills */}
     {["No Python GC", "Native threads", "Lazy eval", "Streaming mode", "Columnar format"].map((f, i) => (
       <g key={i}>
@@ -3699,13 +3699,13 @@ const PolarsArrowDiagram = () => (
         <text x={16 + i * 41 + 19} y="76" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">{f}</text>
       </g>
     ))}
-    <text x="110" y="88" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">Result: several × faster than Python Pandas, fraction of the memory</text>
+    <text x="110" y="88" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">Result: several × faster than Python Pandas, fraction of the memory</text>
   </svg>
 );
 
 const DecisionTreeDiagram = () => (
   <svg viewBox="0 0 240 130" style={{ width: "100%", height: 180 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DECISION TREE — WHICH TOOL?</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DECISION TREE — WHICH TOOL?</text>
     {/* Root */}
     <rect x="80" y="15" width="80" height="16" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.8"/>
     <text x="120" y="26" textAnchor="middle" fontSize="4.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Dataset too large for RAM?</text>
@@ -3720,7 +3720,7 @@ const DecisionTreeDiagram = () => (
     <text x="62" y="63" fontSize="3.2" fill="#4a9a4a" fontFamily="Syne, sans-serif">YES</text>
     <rect x="16" y="65" width="70" height="22" rx={2} fill="rgba(42,138,132,0.15)" stroke="#2a8a84" strokeWidth="0.8"/>
     <text x="51" y="74" textAnchor="middle" fontSize="4.2" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">🧩 Pandas Chunking</text>
-    <text x="51" y="81" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">stable · slow · 1 core</text>
+    <text x="51" y="81" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">stable · slow · 1 core</text>
     {/* No → multi-core? */}
     <line x1="150" y1="53" x2="178" y2="65" stroke="#2a8a84" strokeWidth="0.6"/>
     <text x="162" y="63" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">NO</text>
@@ -3731,18 +3731,18 @@ const DecisionTreeDiagram = () => (
     <text x="157" y="90" fontSize="3.2" fill="#4a9a4a" fontFamily="Syne, sans-serif">YES</text>
     <rect x="118" y="91" width="68" height="22" rx={2} fill="rgba(201,168,76,0.15)" stroke="#c9a84c" strokeWidth="0.8"/>
     <text x="152" y="100" textAnchor="middle" fontSize="4.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">⚡ Dask</text>
-    <text x="152" y="107" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">parallel · medium · N cores</text>
+    <text x="152" y="107" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">parallel · medium · N cores</text>
     {/* Perf critical? → Polars */}
     <line x1="198" y1="79" x2="210" y2="91" stroke="#c9a84c" strokeWidth="0.6"/>
     <text x="205" y="90" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">NO/PERF</text>
     <rect x="186" y="91" width="50" height="22" rx={2} fill="rgba(196,87,42,0.15)" stroke="#c4572a" strokeWidth="0.8"/>
     <text x="211" y="100" textAnchor="middle" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">🦀 Polars</text>
-    <text x="211" y="107" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">fast · low mem · Rust</text>
+    <text x="211" y="107" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">fast · low mem · Rust</text>
     {/* No branch — no memory issue */}
-    <line x1="120" y1="31" x2="36" y2="39" stroke="#4a4a5a" strokeWidth="0.6" strokeDasharray="2,1"/>
-    <text x="57" y="38" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">NO</text>
+    <line x1="120" y1="31" x2="36" y2="39" stroke="#1E293B" strokeWidth="0.6" strokeDasharray="2,1"/>
+    <text x="57" y="38" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">NO</text>
     <rect x="6" y="39" width="58" height="14" rx={2} fill="#ffffff" stroke="#e0dcd4" strokeWidth="0.5"/>
-    <text x="35" y="49" textAnchor="middle" fontSize="3.8" fill="#4a4a5a" fontFamily="Syne, sans-serif">Standard Pandas — fine</text>
+    <text x="35" y="49" textAnchor="middle" fontSize="3.8" fill="#1E293B" fontFamily="Syne, sans-serif">Standard Pandas — fine</text>
   </svg>
 );
 
@@ -3787,7 +3787,7 @@ export const MemoryEngineeringTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           When Memory Becomes the<br /><em style={{ color: "#c9a84c", fontStyle: "italic" }}>New Bottleneck</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           In the AI era, RAM prices are at historic highs. The old reflex — <em style={{ color: "#1a1a2e" }}>"add more capacity"</em> — no longer works when budgets don't scale with data volume. A 6.2M-row, 30GB social media ETL job with 200+ mixed-type columns crashed standard Pandas with an OOM error. Three solutions: Pandas chunking, Dask, and Polars — each solving a different variant of the problem.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
@@ -3800,7 +3800,7 @@ export const MemoryEngineeringTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.3rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.15rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.55rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -3822,7 +3822,7 @@ export const MemoryEngineeringTab = ({ s }) => {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
         <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#c4572a", marginBottom: "0.8rem" }}>Why Mixed Types Break Everything</div>
-          <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>PySpark requires a consistent schema. But the social media API schema changes over time, so the same field arrives as int, string, or null across different API versions. PySpark would crash; Pandas stores these as <code style={{ color: "#c9a84c", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>object</code> by default — no schema enforcement needed.</p>
+          <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>PySpark requires a consistent schema. But the social media API schema changes over time, so the same field arrives as int, string, or null across different API versions. PySpark would crash; Pandas stores these as <code style={{ color: "#c9a84c", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>object</code> by default — no schema enforcement needed.</p>
           <p style={{ fontSize: "0.68rem", color: "#c4572a", lineHeight: 1.8, fontWeight: 700 }}>The problem: calling <code style={{ color: "#1a1a2e", background: "#f7f5f0", padding: "0.1rem 0.3rem", borderRadius: 3 }}>astype(str)</code> on 6.2M rows forces Pandas to materialise a 30GB temporary object in memory. OOM. Job killed.</p>
         </div>
         <div>
@@ -3866,11 +3866,11 @@ export const MemoryEngineeringTab = ({ s }) => {
                 <span style={{ fontSize: "0.52rem", padding: "0.15rem 0.45rem", background: `${sol.color}15`, color: sol.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{sol.level}</span>
               </div>
             </div>
-            <div style={{ fontSize: "0.63rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.7rem" }}>{sol.tagline}</div>
+            <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.7rem" }}>{sol.tagline}</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.4rem" }}>
               {[["Memory", sol.memory, sol.memBar], ["Speed", sol.speed, sol.speedBar]].map(([label, val, bar]) => (
                 <div key={label} style={{ background: "#f7f5f0", borderRadius: 3, padding: "0.4rem 0.5rem" }}>
-                  <div style={{ fontSize: "0.52rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif", marginBottom: "0.2rem" }}>{label}</div>
+                  <div style={{ fontSize: "0.52rem", color: "#334155", fontFamily: "Syne, sans-serif", marginBottom: "0.2rem" }}>{label}</div>
                   <div style={{ background: "#e8e4dc", borderRadius: 2, height: 4, overflow: "hidden", marginBottom: "0.2rem" }}>
                     <div style={{ width: `${bar}%`, height: "100%", background: sol.color, borderRadius: 2 }} />
                   </div>
@@ -3887,7 +3887,7 @@ export const MemoryEngineeringTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["overview", "code", "diagram", "pitfall"].map(t => (
               <button key={t} onClick={() => setSolTab(t)}
-                style={{ flex: 1, padding: "0.65rem", background: solTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: solTab === t ? `2px solid ${sol.color}` : "2px solid transparent", color: solTab === t ? sol.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, padding: "0.65rem", background: solTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: solTab === t ? `2px solid ${sol.color}` : "2px solid transparent", color: solTab === t ? sol.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t === "overview" ? "Overview" : t === "code" ? "Code" : t === "diagram" ? "Visual" : "Pitfalls"}
               </button>
             ))}
@@ -3896,11 +3896,11 @@ export const MemoryEngineeringTab = ({ s }) => {
             {solTab === "overview" && (
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem" }}>
                 <div>
-                  <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8, marginBottom: "1rem" }}>{sol.when}</p>
+                  <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}>{sol.when}</p>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                     {[["Mixed Types", sol.mixedTypes], ["Parallelism", sol.parallelism], ["Streaming", sol.streaming ? "✅ Yes" : "❌ No"]].map(([k, v]) => (
                       <div key={k} style={{ display: "flex", justifyContent: "space-between", padding: "0.4rem 0.7rem", background: "#f7f5f0", borderRadius: 3, fontSize: "0.65rem" }}>
-                        <span style={{ color: "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{k}</span>
+                        <span style={{ color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{k}</span>
                         <span style={{ color: sol.color }}>{v}</span>
                       </div>
                     ))}
@@ -3908,7 +3908,7 @@ export const MemoryEngineeringTab = ({ s }) => {
                 </div>
                 <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${sol.color}` }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: sol.color, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.5rem" }}>When to Choose</div>
-                  <p style={{ fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.8 }}>{sol.when}</p>
+                  <p style={{ fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.8 }}>{sol.when}</p>
                 </div>
               </div>
             )}
@@ -3923,7 +3923,7 @@ export const MemoryEngineeringTab = ({ s }) => {
             {solTab === "pitfall" && (
               <div style={{ padding: "1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4 }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: "#c4572a", marginBottom: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>⚠️ Pitfall</div>
-                <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>{sol.pitfall}</p>
+                <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{sol.pitfall}</p>
               </div>
             )}
           </div>
@@ -3934,7 +3934,7 @@ export const MemoryEngineeringTab = ({ s }) => {
       <div style={s.sectionLabel("#4a9a4a")}>ETL Pipeline Simulator — Animate the Full Flow</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.6, maxWidth: 480 }}>Trace the 6.2M-row social media ETL job from extraction to clean parquet — including the OOM failure point and the memory strategy branch.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.6, maxWidth: 480 }}>Trace the 6.2M-row social media ETL job from extraction to clean parquet — including the OOM failure point and the memory strategy branch.</p>
           <button onClick={runSim} disabled={simRunning}
             style={{ background: simRunning ? "#0a1a0a" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #4a9a4a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#4a9a4a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
             {simRunning ? "Running…" : "▶ Run ETL"}
@@ -3944,11 +3944,11 @@ export const MemoryEngineeringTab = ({ s }) => {
           {ETL_STEPS.map((step, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.75rem 1rem", background: simStep >= i ? `${step.color}0a` : "#f7f5f0", border: `1px solid ${simStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: simStep === -1 ? 0.35 : simStep >= i ? 1 : 0.3 }}>
               <div style={{ width: 30, height: 30, borderRadius: "50%", background: simStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: simStep >= i ? "0.85rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${simStep >= i ? step.color : "#e0dcd4"}` }}>
-                {simStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                {simStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: simStep >= i ? "#1a1a2e" : "#4a4a5a", marginBottom: "0.1rem" }}>{step.label}</div>
-                <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: simStep >= i ? step.color : "#3a3a4a" }}>{step.detail}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: simStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.1rem" }}>{step.label}</div>
+                <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: simStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
               </div>
               {simStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
               {simStep === i && i === 2 && (
@@ -3973,7 +3973,7 @@ export const MemoryEngineeringTab = ({ s }) => {
             <thead>
               <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                 {["Dimension", "🧩 Pandas Chunking", "⚡ Dask", "🦀 Polars"].map((h, i) => (
-                  <th key={h} style={{ textAlign: "left", padding: "0.7rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: i === 0 ? "#8a8a9a" : MEM_SOLUTIONS[i-1]?.color || "#8a8a9a", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                  <th key={h} style={{ textAlign: "left", padding: "0.7rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: i === 0 ? "#334155" : MEM_SOLUTIONS[i-1]?.color || "#334155", fontSize: "0.6rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -3991,10 +3991,10 @@ export const MemoryEngineeringTab = ({ s }) => {
                 <tr key={ri} style={{ borderBottom: "1px solid rgba(42,42,56,0.5)" }}
                   onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                  <td style={{ padding: "0.65rem 0.9rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row[0]}</td>
-                  <td style={{ padding: "0.65rem 0.9rem", color: "#b0b0c0" }}>{row[1]}</td>
-                  <td style={{ padding: "0.65rem 0.9rem", color: "#b0b0c0" }}>{row[2]}</td>
-                  <td style={{ padding: "0.65rem 0.9rem", color: "#b0b0c0" }}>{row[3]}</td>
+                  <td style={{ padding: "0.65rem 0.9rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row[0]}</td>
+                  <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B" }}>{row[1]}</td>
+                  <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B" }}>{row[2]}</td>
+                  <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B" }}>{row[3]}</td>
                 </tr>
               ))}
             </tbody>
@@ -4014,7 +4014,7 @@ export const MemoryEngineeringTab = ({ s }) => {
           ].map((faq, i) => (
             <div key={i} style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${faq.color}` }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: faq.color, marginBottom: "0.4rem" }}>{faq.q}</div>
-              <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>{faq.a}</div>
+              <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>{faq.a}</div>
             </div>
           ))}
         </div>
@@ -4193,11 +4193,11 @@ const CW_CATEGORIES = ["All", "Foundations", "Productivity", "Analysis", "Resear
 // SVG visual: Claude ecosystem diagram
 const ClaudeEcosystemDiagram = () => (
   <svg viewBox="0 0 240 120" style={{ width: "100%", height: 180 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CLAUDE ECOSYSTEM — 10 WORKFLOW AREAS</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CLAUDE ECOSYSTEM — 10 WORKFLOW AREAS</text>
     {/* Centre */}
     <circle cx="120" cy="62" r="16" fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="1.2"/>
     <text x="120" y="60" textAnchor="middle" fontSize="5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">Claude</text>
-    <text x="120" y="67" textAnchor="middle" fontSize="3.8" fill="#8a8a9a" fontFamily="Syne, sans-serif">AI</text>
+    <text x="120" y="67" textAnchor="middle" fontSize="3.8" fill="#334155" fontFamily="Syne, sans-serif">AI</text>
     {/* Orbiting nodes */}
     {[
       { label: "Chat", angle: -90, color: "#2a8a84", icon: "💬" },
@@ -4232,7 +4232,7 @@ const ClaudeEcosystemDiagram = () => (
 // SVG: Prompt anatomy diagram
 const PromptAnatomyDiagram = () => (
   <svg viewBox="0 0 240 100" style={{ width: "100%", height: 150 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ANATOMY OF A GREAT PROMPT</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ANATOMY OF A GREAT PROMPT</text>
     {[
       { label: "ROLE", example: "Act as a senior financial analyst", color: "#c4572a", x: 12, w: 48 },
       { label: "TASK", example: "Analyse this report and identify risks", color: "#c9a84c", x: 64, w: 52 },
@@ -4245,21 +4245,21 @@ const PromptAnatomyDiagram = () => (
         <line x1={part.x + part.w / 2} y1="30" x2={part.x + part.w / 2} y2="40" stroke={part.color} strokeWidth="0.5" strokeDasharray="2,1"/>
         <rect x={part.x} y="40" width={part.w} height="22" rx={2} fill="#f7f5f0" stroke={`${part.color}30`} strokeWidth="0.5"/>
         <foreignObject x={part.x + 2} y={42} width={part.w - 4} height={18}>
-          <div xmlns="http://www.w3.org/1999/xhtml" style={{ fontSize: "3px", color: "#8a8a9a", lineHeight: "1.4", fontFamily: "DM Mono, monospace" }}>{part.example}</div>
+          <div xmlns="http://www.w3.org/1999/xhtml" style={{ fontSize: "3px", color: "#334155", lineHeight: "1.4", fontFamily: "DM Mono, monospace" }}>{part.example}</div>
         </foreignObject>
-        {i < 3 && <text x={part.x + part.w + 2} y="27" fontSize="5" fill="#4a4a5a">+</text>}
+        {i < 3 && <text x={part.x + part.w + 2} y="27" fontSize="5" fill="#1E293B">+</text>}
       </g>
     ))}
     <rect x="12" y="72" width="214" height="14" rx={2} fill="rgba(201,168,76,0.08)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="119" y="81" textAnchor="middle" fontSize="4.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">= High-quality, context-aware, precisely formatted output</text>
-    <text x="119" y="92" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Most beginner prompts have TASK only — adding ROLE + CONTEXT alone doubles output quality</text>
+    <text x="119" y="92" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Most beginner prompts have TASK only — adding ROLE + CONTEXT alone doubles output quality</text>
   </svg>
 );
 
 // SVG: Difficulty ramp
 const DifficultyRampDiagram = () => (
   <svg viewBox="0 0 240 90" style={{ width: "100%", height: 130 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">LEARNING RAMP — WHERE TO START</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">LEARNING RAMP — WHERE TO START</text>
     {/* Ramp background */}
     <polygon points="12,75 228,75 228,25" fill="rgba(201,168,76,0.04)" stroke="#e0dcd4" strokeWidth="0.5"/>
     {/* Zones */}
@@ -4271,11 +4271,11 @@ const DifficultyRampDiagram = () => (
       <g key={i}>
         <rect x={zone.x} y={zone.y} width={62} height={20} rx={2} fill={`${zone.color}12`} stroke={zone.color} strokeWidth="0.7"/>
         <text x={zone.x + 31} y={zone.y + 8} textAnchor="middle" fontSize="4.2" fill={zone.color} fontFamily="Syne, sans-serif" fontWeight="800">{zone.label}</text>
-        <text x={zone.x + 31} y={zone.y + 14} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">{zone.sublabel}</text>
+        <text x={zone.x + 31} y={zone.y + 14} textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">{zone.sublabel}</text>
         <text x={zone.x + 31} y={zone.y - 3} textAnchor="middle" fontSize="3.5" fill={zone.color} fontFamily="DM Mono, monospace">workflows {zone.workflows}</text>
       </g>
     ))}
-    <text x="14" y="84" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Beginner →</text>
+    <text x="14" y="84" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Beginner →</text>
     <text x="190" y="84" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif">→ Intermediate</text>
   </svg>
 );
@@ -4335,7 +4335,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Claude Workflows:<br /><em style={{ color: "#c9a84c", fontStyle: "italic" }}>10 Features to Try First</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           From basic chat and writing assistance to role-based prompting, app integrations, and workflow automation. Each workflow comes with ready-to-use prompt templates, a key tip, and a difficulty rating. Start with Week 1 — build from there.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
@@ -4349,7 +4349,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -4381,7 +4381,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
       {/* INTERACTIVE ROLE BUILDER */}
       <div style={s.sectionLabel("#c4572a")}>Role-Based Prompt Builder — Live</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
-        <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 540 }}>
+        <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 540 }}>
           Fill in the four fields below. The prompt assembles in real time. Copy it straight into Claude.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem", marginBottom: "1.2rem" }}>
@@ -4417,7 +4417,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
       <div style={{ display: "flex", gap: "0.4rem", marginBottom: "1rem", flexWrap: "wrap" }}>
         {CW_CATEGORIES.map(cat => (
           <button key={cat} onClick={() => setCatFilter(cat)}
-            style={{ padding: "0.35rem 0.8rem", background: catFilter === cat ? "rgba(201,168,76,0.15)" : "#ffffff", border: `1px solid ${catFilter === cat ? "#c9a84c" : "#e0dcd4"}`, borderRadius: 4, color: catFilter === cat ? "#c9a84c" : "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", cursor: "pointer", transition: "all 0.2s", letterSpacing: "0.08em" }}>
+            style={{ padding: "0.35rem 0.8rem", background: catFilter === cat ? "rgba(201,168,76,0.15)" : "#ffffff", border: `1px solid ${catFilter === cat ? "#c9a84c" : "#e0dcd4"}`, borderRadius: 4, color: catFilter === cat ? "#c9a84c" : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", cursor: "pointer", transition: "all 0.2s", letterSpacing: "0.08em" }}>
             {cat}
           </button>
         ))}
@@ -4437,7 +4437,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
               </div>
               <span style={{ marginLeft: "auto", fontSize: "0.5rem", padding: "0.15rem 0.4rem", background: `${diffColor[wf.difficulty] || "#c9a84c"}12`, color: diffColor[wf.difficulty] || "#c9a84c", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, whiteSpace: "nowrap" }}>{wf.difficulty}</span>
             </div>
-            <div style={{ fontSize: "0.62rem", color: "#6a6a7a", lineHeight: 1.6 }}>{wf.description.slice(0, 80)}…</div>
+            <div style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.6 }}>{wf.description.slice(0, 80)}…</div>
           </button>
         ))}
       </div>
@@ -4459,7 +4459,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["prompts", "overview"].map(t => (
               <button key={t} onClick={() => setWfTab(t)}
-                style={{ flex: 1, padding: "0.65rem", background: wfTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: wfTab === t ? `2px solid ${wf.color}` : "2px solid transparent", color: wfTab === t ? wf.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, padding: "0.65rem", background: wfTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: wfTab === t ? `2px solid ${wf.color}` : "2px solid transparent", color: wfTab === t ? wf.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t === "prompts" ? "Prompt Templates" : "Overview"}
               </button>
             ))}
@@ -4469,8 +4469,8 @@ export const ClaudeWorkflowsTab = ({ s }) => {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 {[["Category", wf.category], ["Difficulty", wf.difficulty], ["Templates", `${wf.prompts.length} ready-to-use`], ["Best for", wf.description.split(".")[0]]].map(([k, v]) => (
                   <div key={k} style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4 }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem" }}>{k}</div>
-                    <div style={{ fontSize: "0.67rem", color: "#b0b0c0" }}>{v}</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "0.3rem" }}>{k}</div>
+                    <div style={{ fontSize: "0.67rem", color: "#1E293B" }}>{v}</div>
                   </div>
                 ))}
               </div>
@@ -4480,7 +4480,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
                 <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
                   {wf.prompts.map((p, i) => (
                     <button key={i} onClick={() => setPromptIdx(i)}
-                      style={{ padding: "0.4rem 0.8rem", background: promptIdx === i ? `${wf.color}15` : "#f7f5f0", border: `1px solid ${promptIdx === i ? wf.color : "#e0dcd4"}`, borderRadius: 4, color: promptIdx === i ? wf.color : "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", cursor: "pointer", transition: "all 0.2s" }}>
+                      style={{ padding: "0.4rem 0.8rem", background: promptIdx === i ? `${wf.color}15` : "#f7f5f0", border: `1px solid ${promptIdx === i ? wf.color : "#e0dcd4"}`, borderRadius: 4, color: promptIdx === i ? wf.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", cursor: "pointer", transition: "all 0.2s" }}>
                       {p.label}
                     </button>
                   ))}
@@ -4493,7 +4493,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
                     style={{ background: copiedPrompt === `${wf.id}-${promptIdx}` ? "rgba(74,154,74,0.2)" : "rgba(201,168,76,0.1)", border: `1px solid ${copiedPrompt === `${wf.id}-${promptIdx}` ? "#4a9a4a" : "#c9a84c"}`, borderRadius: 4, padding: "0.45rem 1rem", color: copiedPrompt === `${wf.id}-${promptIdx}` ? "#4a9a4a" : "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: "pointer", transition: "all 0.2s" }}>
                     {copiedPrompt === `${wf.id}-${promptIdx}` ? "✓ Copied!" : "📋 Copy Template"}
                   </button>
-                  <span style={{ fontSize: "0.62rem", color: "#6a6a7a", padding: "0.45rem 0", fontFamily: "Syne, sans-serif" }}>Replace [BRACKETED] text with your specifics</span>
+                  <span style={{ fontSize: "0.62rem", color: "#334155", padding: "0.45rem 0", fontFamily: "Syne, sans-serif" }}>Replace [BRACKETED] text with your specifics</span>
                 </div>
               </div>
             )}
@@ -4505,7 +4505,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
       <div style={s.sectionLabel("#9b7fd4")}>Train Your Writing Style — 6-Step Simulator</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.6, maxWidth: 480 }}>The Skills feature lets you train Claude to write in your unique voice. Animate the process to see how it works.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.6, maxWidth: 480 }}>The Skills feature lets you train Claude to write in your unique voice. Animate the process to see how it works.</p>
           <button onClick={runSkill} disabled={skillRunning}
             style={{ background: skillRunning ? "#f4f2fa" : "linear-gradient(135deg,#140a1a,#2a1a3a)", border: "1px solid #9b7fd4", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#9b7fd4", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: skillRunning ? "not-allowed" : "pointer", opacity: skillRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
             {skillRunning ? "Training…" : "▶ Train Skill"}
@@ -4515,11 +4515,11 @@ export const ClaudeWorkflowsTab = ({ s }) => {
           {SKILL_STEPS.map((step, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.75rem 1rem", background: skillStep >= i ? `${step.color}0a` : "#f7f5f0", border: `1px solid ${skillStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: skillStep === -1 ? 0.35 : skillStep >= i ? 1 : 0.3 }}>
               <div style={{ width: 30, height: 30, borderRadius: "50%", background: skillStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: skillStep >= i ? "0.85rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${skillStep >= i ? step.color : "#e0dcd4"}` }}>
-                {skillStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                {skillStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: skillStep >= i ? "#1a1a2e" : "#4a4a5a", marginBottom: "0.1rem" }}>{step.label}</div>
-                <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: skillStep >= i ? step.color : "#3a3a4a" }}>{step.detail}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: skillStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.1rem" }}>{step.label}</div>
+                <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: skillStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
               </div>
               {skillStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
             </div>
@@ -4535,7 +4535,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
             <thead>
               <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                 {["Workflow", "Try This First", "Expected Result"].map(h => (
-                  <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
+                  <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -4546,14 +4546,14 @@ export const ClaudeWorkflowsTab = ({ s }) => {
                   onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                   <td style={{ padding: "0.6rem 0.8rem", color: wf.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{wf.icon} {wf.name}</td>
-                  <td style={{ padding: "0.6rem 0.8rem", color: "#b0b0c0", fontFamily: "DM Mono, monospace", fontSize: "0.63rem" }}>{wf.prompts[0].label}</td>
-                  <td style={{ padding: "0.6rem 0.8rem", color: "#6a6a7a", fontSize: "0.63rem" }}>{wf.keyTip.split(".")[0]}</td>
+                  <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B", fontFamily: "DM Mono, monospace", fontSize: "0.63rem" }}>{wf.prompts[0].label}</td>
+                  <td style={{ padding: "0.6rem 0.8rem", color: "#334155", fontSize: "0.63rem" }}>{wf.keyTip.split(".")[0]}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div style={{ marginTop: "0.8rem", fontSize: "0.62rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>↑ Click any row to open the full prompt template</div>
+        <div style={{ marginTop: "0.8rem", fontSize: "0.62rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>↑ Click any row to open the full prompt template</div>
       </div>
     </div>
   );
@@ -4774,7 +4774,7 @@ const GLOSSARY_LEVELS = ["All", "Beginner", "Intermediate"];
 // SVG: AI terminology hierarchy
 const AIHierarchyDiagram = () => (
   <svg viewBox="0 0 240 110" style={{ width: "100%", height: "auto", maxHeight: "100%" }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE AI HIERARCHY</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE AI HIERARCHY</text>
     {/* Concentric ovals */}
     <ellipse cx="120" cy="65" rx="108" ry="38" fill="rgba(42,138,132,0.06)" stroke="#2a8a84" strokeWidth="0.7"/>
     <ellipse cx="120" cy="65" rx="80" ry="28" fill="rgba(201,168,76,0.06)" stroke="#c9a84c" strokeWidth="0.7"/>
@@ -4786,18 +4786,18 @@ const AIHierarchyDiagram = () => (
     <text x="120" y="41" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Machine Learning</text>
     <text x="120" y="29" textAnchor="middle" fontSize="4" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">Artificial Intelligence</text>
     {/* Annotations */}
-    <text x="14" y="68" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">GPT · Claude · Gemini</text>
-    <text x="216" y="68" textAnchor="end" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">Transformers · BERT</text>
-    <text x="216" y="56" textAnchor="end" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">Neural Nets</text>
-    <text x="14" y="82" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">Most specific</text>
-    <text x="216" y="100" textAnchor="end" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">Most broad</text>
+    <text x="14" y="68" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">GPT · Claude · Gemini</text>
+    <text x="216" y="68" textAnchor="end" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">Transformers · BERT</text>
+    <text x="216" y="56" textAnchor="end" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">Neural Nets</text>
+    <text x="14" y="82" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Most specific</text>
+    <text x="216" y="100" textAnchor="end" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Most broad</text>
   </svg>
 );
 
 // SVG: Hallucination vs Grounding
 const HallucinationDiagram = () => (
   <svg viewBox="0 0 240 90" style={{ width: "100%", height: "auto", maxHeight: "100%" }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HALLUCINATION vs GROUNDING (RAG)</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HALLUCINATION vs GROUNDING (RAG)</text>
     {/* Without RAG */}
     <rect x="10" y="18" width="100" height="62" rx={3} fill="#ffffff" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="60" y="29" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Without RAG</text>
@@ -4808,7 +4808,7 @@ const HallucinationDiagram = () => (
     <text x="60" y="62" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif">LLM generates plausible-</text>
     <text x="60" y="68" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif">sounding but WRONG answer</text>
     {/* Arrow */}
-    <text x="120" y="52" textAnchor="middle" fontSize="10" fill="#4a4a5a">→</text>
+    <text x="120" y="52" textAnchor="middle" fontSize="10" fill="#1E293B">→</text>
     {/* With RAG */}
     <rect x="130" y="18" width="100" height="62" rx={3} fill="#ffffff" stroke="#4a9a4a" strokeWidth="0.7"/>
     <text x="180" y="29" textAnchor="middle" fontSize="4.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">With RAG</text>
@@ -4819,7 +4819,7 @@ const HallucinationDiagram = () => (
     <line x1="180" y1="57" x2="180" y2="63" stroke="#4a9a4a" strokeWidth="0.5"/>
     <rect x="138" y="63" width="84" height="10" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.5"/>
     <text x="180" y="70" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif">② Answer grounded in real doc</text>
-    <text x="120" y="88" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">RAG = retriever finds relevant docs → LLM reads them → answers from evidence, not memory</text>
+    <text x="120" y="88" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">RAG = retriever finds relevant docs → LLM reads them → answers from evidence, not memory</text>
   </svg>
 );
 
@@ -4829,19 +4829,19 @@ const TokenDiagram = () => {
     { text: "Un", color: "#c4572a" },
     { text: "believ", color: "#9b7fd4" },
     { text: "able", color: "#c9a84c" },
-    { text: " ", color: "#3a3a4a" },
+    { text: " ", color: "#1E293B" },
     { text: "AI", color: "#2a8a84" },
-    { text: " ", color: "#3a3a4a" },
+    { text: " ", color: "#1E293B" },
     { text: "tok", color: "#4a9a4a" },
     { text: "en", color: "#c4572a" },
     { text: "izes", color: "#9b7fd4" },
-    { text: " ", color: "#3a3a4a" },
+    { text: " ", color: "#1E293B" },
     { text: "everything", color: "#c9a84c" },
   ];
   let x = 12;
   return (
     <svg viewBox="0 0 240 70" style={{ width: "100%", height: "auto", maxHeight: "100%" }}>
-      <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HOW TOKENISATION WORKS</text>
+      <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HOW TOKENISATION WORKS</text>
       {words.map((w, i) => {
         if (w.text === " ") { x += 6; return null; }
         const w2 = w.text.length * 5.5 + 4;
@@ -4849,13 +4849,13 @@ const TokenDiagram = () => {
           <g key={i}>
             <rect x={x} y="18" width={w2} height="16" rx={2} fill={w.color + "18"} stroke={w.color} strokeWidth="0.7"/>
             <text x={x + w2/2} y="29" textAnchor="middle" fontSize="4.5" fill={w.color} fontFamily="DM Mono, monospace" fontWeight="700">{w.text}</text>
-            <text x={x + w2/2} y="44" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">T{i+1}</text>
+            <text x={x + w2/2} y="44" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">T{i+1}</text>
           </g>
         );
         x += w2 + 3;
         return rect;
       })}
-      <text x="12" y="58" fontSize="3.8" fill="#8a8a9a" fontFamily="Syne, sans-serif">Original: "Unbelievable AI tokenizes everything"</text>
+      <text x="12" y="58" fontSize="3.8" fill="#334155" fontFamily="Syne, sans-serif">Original: "Unbelievable AI tokenizes everything"</text>
       <text x="12" y="65" fontSize="3.8" fill="#c9a84c" fontFamily="Syne, sans-serif">Result: 8 tokens (not 4 words). ~1 token ≈ 0.75 English words on average.</text>
     </svg>
   );
@@ -4924,7 +4924,7 @@ export const AIGlossaryTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           AI Terms Explained<br /><em style={{ color: "#c9a84c", fontStyle: "italic" }}>in Simple Words</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           Every term has four layers: a plain-English summary, a technical definition, an analogy, and the most common misconception. Filter by category or difficulty. Search any term. Test yourself with the built-in quiz.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
@@ -4938,7 +4938,7 @@ export const AIGlossaryTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -4962,15 +4962,15 @@ export const AIGlossaryTab = ({ s }) => {
       <div style={s.sectionLabel("#2a8a84")}>Explore All Terms</div>
       <div style={{ display: "flex", gap: "0.8rem", marginBottom: "1rem", flexWrap: "wrap", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.45rem 0.8rem", flex: 1, minWidth: 180 }}>
-          <span style={{ color: "#6a6a7a" }}>⌕</span>
+          <span style={{ color: "#334155" }}>⌕</span>
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search terms, abbreviations…"
             style={{ background: "none", border: "none", outline: "none", color: "#1a1a2e", fontFamily: "DM Mono, monospace", fontSize: "0.68rem", flex: 1 }} />
-          {search && <button onClick={() => setSearch("")} style={{ background: "none", border: "none", color: "#6a6a7a", cursor: "pointer" }}>×</button>}
+          {search && <button onClick={() => setSearch("")} style={{ background: "none", border: "none", color: "#334155", cursor: "pointer" }}>×</button>}
         </div>
         <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
           {GLOSSARY_LEVELS.map(l => (
             <button key={l} onClick={() => setLvlFilter(l)}
-              style={{ padding: "0.35rem 0.7rem", background: lvlFilter === l ? `${lvlColor[l] || "#c9a84c"}15` : "#ffffff", border: `1px solid ${lvlFilter === l ? (lvlColor[l] || "#c9a84c") : "#e0dcd4"}`, borderRadius: 4, color: lvlFilter === l ? (lvlColor[l] || "#c9a84c") : "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", cursor: "pointer", transition: "all 0.2s" }}>
+              style={{ padding: "0.35rem 0.7rem", background: lvlFilter === l ? `${lvlColor[l] || "#c9a84c"}15` : "#ffffff", border: `1px solid ${lvlFilter === l ? (lvlColor[l] || "#c9a84c") : "#e0dcd4"}`, borderRadius: 4, color: lvlFilter === l ? (lvlColor[l] || "#c9a84c") : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", cursor: "pointer", transition: "all 0.2s" }}>
               {l}
             </button>
           ))}
@@ -4978,13 +4978,13 @@ export const AIGlossaryTab = ({ s }) => {
         <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
           {GLOSSARY_CATEGORIES.map(cat => (
             <button key={cat} onClick={() => setCatFilter(cat)}
-              style={{ padding: "0.35rem 0.7rem", background: catFilter === cat ? "rgba(201,168,76,0.15)" : "#ffffff", border: `1px solid ${catFilter === cat ? "#c9a84c" : "#e0dcd4"}`, borderRadius: 4, color: catFilter === cat ? "#c9a84c" : "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", cursor: "pointer", transition: "all 0.2s" }}>
+              style={{ padding: "0.35rem 0.7rem", background: catFilter === cat ? "rgba(201,168,76,0.15)" : "#ffffff", border: `1px solid ${catFilter === cat ? "#c9a84c" : "#e0dcd4"}`, borderRadius: 4, color: catFilter === cat ? "#c9a84c" : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", cursor: "pointer", transition: "all 0.2s" }}>
               {cat}
             </button>
           ))}
         </div>
       </div>
-      <div style={{ fontSize: "0.6rem", color: "#6a6a7a", marginBottom: "0.8rem", fontFamily: "Syne, sans-serif" }}>{filtered.length} term{filtered.length !== 1 ? "s" : ""} shown</div>
+      <div style={{ fontSize: "0.6rem", color: "#334155", marginBottom: "0.8rem", fontFamily: "Syne, sans-serif" }}>{filtered.length} term{filtered.length !== 1 ? "s" : ""} shown</div>
 
       {/* TERM GRID */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.6rem", marginBottom: "1.2rem" }}>
@@ -5000,7 +5000,7 @@ export const AIGlossaryTab = ({ s }) => {
               </div>
               <span style={{ fontSize: "0.5rem", padding: "0.15rem 0.4rem", background: `${lvlColor[t.level] || "#c9a84c"}12`, color: lvlColor[t.level] || "#c9a84c", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, whiteSpace: "nowrap", flexShrink: 0 }}>{t.level}</span>
             </div>
-            <div style={{ fontSize: "0.6rem", color: "#6a6a7a", lineHeight: 1.5 }}>{t.simple.slice(0, 70)}…</div>
+            <div style={{ fontSize: "0.6rem", color: "#334155", lineHeight: 1.5 }}>{t.simple.slice(0, 70)}…</div>
           </button>
         ))}
       </div>
@@ -5022,9 +5022,9 @@ export const AIGlossaryTab = ({ s }) => {
             <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", maxWidth: 200 }}>
               {term.related.map((r, i) => (
                 <button key={i} onClick={() => { const found = GLOSSARY_TERMS.find(t => t.term === r || t.abbr === r); if (found) { setActiveTerm(found.id); setTermTab("simple"); } }}
-                  style={{ fontSize: "0.52rem", padding: "0.2rem 0.5rem", background: "#e8e4dc", border: "1px solid #e0dcd4", borderRadius: 3, color: "#8a8a9a", cursor: "pointer", fontFamily: "Syne, sans-serif", transition: "all 0.15s" }}
+                  style={{ fontSize: "0.52rem", padding: "0.2rem 0.5rem", background: "#e8e4dc", border: "1px solid #e0dcd4", borderRadius: 3, color: "#334155", cursor: "pointer", fontFamily: "Syne, sans-serif", transition: "all 0.15s" }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = term.color; e.currentTarget.style.color = term.color; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "#e0dcd4"; e.currentTarget.style.color = "#8a8a9a"; }}>
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "#e0dcd4"; e.currentTarget.style.color = "#334155"; }}>
                   → {r}
                 </button>
               ))}
@@ -5038,24 +5038,24 @@ export const AIGlossaryTab = ({ s }) => {
               { id: "misconception", label: "Misconception" },
             ].map(t => (
               <button key={t.id} onClick={() => setTermTab(t.id)}
-                style={{ flex: 1, padding: "0.65rem 0.4rem", background: termTab === t.id ? "#f0ede6" : "transparent", border: "none", borderBottom: termTab === t.id ? `2px solid ${term.color}` : "2px solid transparent", color: termTab === t.id ? term.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, padding: "0.65rem 0.4rem", background: termTab === t.id ? "#f0ede6" : "transparent", border: "none", borderBottom: termTab === t.id ? `2px solid ${term.color}` : "2px solid transparent", color: termTab === t.id ? term.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t.label}
               </button>
             ))}
           </div>
           <div style={{ padding: "1.5rem" }}>
-            {termTab === "simple" && <p style={{ fontSize: "0.72rem", color: "#b0b0c0", lineHeight: 1.8 }}>{term.simple}</p>}
-            {termTab === "technical" && <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8, fontFamily: "DM Mono, monospace" }}>{term.technical}</p>}
+            {termTab === "simple" && <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.8 }}>{term.simple}</p>}
+            {termTab === "technical" && <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, fontFamily: "DM Mono, monospace" }}>{term.technical}</p>}
             {termTab === "analogy" && (
               <div style={{ padding: "1rem", background: `${term.color}08`, border: `1px solid ${term.color}25`, borderRadius: 4, borderLeft: `4px solid ${term.color}` }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: term.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>💡 Analogy</div>
-                <p style={{ fontSize: "0.72rem", color: "#b0b0c0", lineHeight: 1.8, fontStyle: "italic" }}>{term.analogy}</p>
+                <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.8, fontStyle: "italic" }}>{term.analogy}</p>
               </div>
             )}
             {termTab === "misconception" && (
               <div style={{ padding: "1rem", background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a30", borderRadius: 4, borderLeft: "4px solid #c4572a" }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#c4572a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>⚠️ Common Misconception</div>
-                <p style={{ fontSize: "0.72rem", color: "#b0b0c0", lineHeight: 1.8 }}>{term.misconception}</p>
+                <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.8 }}>{term.misconception}</p>
               </div>
             )}
           </div>
@@ -5069,7 +5069,7 @@ export const AIGlossaryTab = ({ s }) => {
           <div style={{ textAlign: "center", padding: "1rem 0" }}>
             <div style={{ fontSize: "2rem", marginBottom: "0.8rem" }}>🧠</div>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", marginBottom: "0.5rem" }}>Ready to test your AI knowledge?</div>
-            <div style={{ fontSize: "0.68rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>{QUIZ_QS.length} questions · multiple choice · instant feedback</div>
+            <div style={{ fontSize: "0.68rem", color: "#334155", marginBottom: "1.2rem" }}>{QUIZ_QS.length} questions · multiple choice · instant feedback</div>
             <button onClick={() => setQuizActive(true)}
               style={{ background: "linear-gradient(135deg,#1a0a0a,#3a1a1a)", border: "1px solid #c4572a", borderRadius: 4, padding: "0.6rem 1.5rem", color: "#c4572a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", cursor: "pointer", letterSpacing: "0.1em" }}>
               ▶ Start Quiz
@@ -5079,7 +5079,7 @@ export const AIGlossaryTab = ({ s }) => {
         {quizActive && !quizDone && (
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem" }}>
-              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#8a8a9a", letterSpacing: "0.1em" }}>Q {quizIdx + 1} OF {QUIZ_QS.length}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#334155", letterSpacing: "0.1em" }}>Q {quizIdx + 1} OF {QUIZ_QS.length}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.65rem", fontWeight: 700, color: "#4a9a4a" }}>Score: {quizScore}</div>
             </div>
             <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem 1.2rem", marginBottom: "1.2rem", border: "1px solid #e0dcd4" }}>
@@ -5090,7 +5090,7 @@ export const AIGlossaryTab = ({ s }) => {
                 const isCorrect = opt === quizQ.a;
                 const isSelected = quizAnswer === opt;
                 const showResult = quizAnswer !== null;
-                let bg = "#f7f5f0", border = "#e0dcd4", color = "#b0b0c0";
+                let bg = "#f7f5f0", border = "#e0dcd4", color = "#1E293B";
                 if (showResult) {
                   if (isCorrect) { bg = "rgba(74,154,74,0.12)"; border = "#4a9a4a"; color = "#4a9a4a"; }
                   else if (isSelected) { bg = "rgba(196,87,42,0.12)"; border = "#c4572a"; color = "#c4572a"; }
@@ -5131,7 +5131,7 @@ export const AIGlossaryTab = ({ s }) => {
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", marginBottom: "0.5rem" }}>
               {quizScore === QUIZ_QS.length ? "Perfect! 🎉" : quizScore >= 4 ? "Great work! 🚀" : quizScore >= 2 ? "Getting there! 📚" : "Keep studying! 💪"}
             </div>
-            <div style={{ fontSize: "0.68rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>
+            <div style={{ fontSize: "0.68rem", color: "#334155", marginBottom: "1.2rem" }}>
               {quizScore >= 4 ? "You have a solid grasp of AI fundamentals." : "Review the glossary cards above and try again."}
             </div>
             <button onClick={resetQuiz}
@@ -5152,7 +5152,7 @@ export const AIGlossaryTab = ({ s }) => {
             <thead>
               <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                 {["Term", "Abbr", "Category", "Level", "One-line plain English"].map(h => (
-                  <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.55rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                  <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.55rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -5163,16 +5163,16 @@ export const AIGlossaryTab = ({ s }) => {
                   onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                   onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                   <td style={{ padding: "0.55rem 0.8rem", color: t.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{t.term}</td>
-                  <td style={{ padding: "0.55rem 0.8rem", color: "#6a6a7a", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{t.abbr || "—"}</td>
-                  <td style={{ padding: "0.55rem 0.8rem", color: "#8a8a9a" }}>{t.category}</td>
+                  <td style={{ padding: "0.55rem 0.8rem", color: "#334155", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{t.abbr || "—"}</td>
+                  <td style={{ padding: "0.55rem 0.8rem", color: "#334155" }}>{t.category}</td>
                   <td style={{ padding: "0.55rem 0.8rem", color: lvlColor[t.level] || "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem" }}>{t.level}</td>
-                  <td style={{ padding: "0.55rem 0.8rem", color: "#6a6a7a", maxWidth: 260 }}>{t.simple.slice(0, 80)}{t.simple.length > 80 ? "…" : ""}</td>
+                  <td style={{ padding: "0.55rem 0.8rem", color: "#334155", maxWidth: 260 }}>{t.simple.slice(0, 80)}{t.simple.length > 80 ? "…" : ""}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div style={{ padding: "0.6rem 1.5rem", fontSize: "0.58rem", color: "#4a4a5a", fontFamily: "Syne, sans-serif", borderTop: "1px solid #e8e4dc" }}>
+        <div style={{ padding: "0.6rem 1.5rem", fontSize: "0.58rem", color: "#1E293B", fontFamily: "Syne, sans-serif", borderTop: "1px solid #e8e4dc" }}>
           ↑ Click any row to open the full 4-layer explanation above
         </div>
       </div>
@@ -5429,25 +5429,25 @@ const COPILOT_APPS = [
 // ── SVG: AUTOMEM benchmark chart ──
 const AutomemBenchmarkChart = () => (
   <svg viewBox="0 0 240 100" style={{ width: "100%", height: 150 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AUTOMEM BENCHMARK GAINS (Stanford, 2025)</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AUTOMEM BENCHMARK GAINS (Stanford, 2025)</text>
     {AUTOMEM_BENCHMARKS.map((b, i) => {
       const y = 20 + i * 20;
       const maxW = 110;
       return (
         <g key={i}>
-          <text x="80" y={y + 8} textAnchor="end" fontSize="3.8" fill="#8a8a9a" fontFamily="Syne, sans-serif">{b.task}</text>
+          <text x="80" y={y + 8} textAnchor="end" fontSize="3.8" fill="#334155" fontFamily="Syne, sans-serif">{b.task}</text>
           {/* baseline bar */}
           <rect x="84" y={y} width={(b.baseline / 100) * maxW} height="7" rx={1} fill="#e0dcd4"/>
           {/* automem bar */}
           <rect x="84" y={y + 8} width={(b.automem / 100) * maxW} height="7" rx={1} fill={b.color} opacity="0.75"/>
           <text x={84 + (b.automem / 100) * maxW + 2} y={y + 14} fontSize="4" fill={b.color} fontFamily="Syne, sans-serif" fontWeight="800">{b.gain}</text>
           {/* baseline label */}
-          <text x={84 + (b.baseline / 100) * maxW + 2} y={y + 6} fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{b.baseline}%</text>
+          <text x={84 + (b.baseline / 100) * maxW + 2} y={y + 6} fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">{b.baseline}%</text>
         </g>
       );
     })}
     <rect x="84" y="95" width="10" height="4" rx={1} fill="#e0dcd4"/>
-    <text x="97" y="99" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Baseline</text>
+    <text x="97" y="99" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Baseline</text>
     <rect x="128" y="95" width="10" height="4" rx={1} fill="#4a9a4a" opacity="0.75"/>
     <text x="141" y="99" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif">AUTOMEM</text>
   </svg>
@@ -5456,7 +5456,7 @@ const AutomemBenchmarkChart = () => (
 // ── SVG: OpenWiki flow ──
 const OpenWikiFlowDiagram = () => (
   <svg viewBox="0 0 240 70" style={{ width: "100%", height: 110 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">OPENWIKI DAILY DOCUMENTATION LOOP</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">OPENWIKI DAILY DOCUMENTATION LOOP</text>
     {[
       { label: "Code\nChange", icon: "💻", x: 18,  color: "#2a8a84" },
       { label: "OpenWiki\nDetects",  icon: "👁️", x: 60,  color: "#c9a84c" },
@@ -5468,34 +5468,34 @@ const OpenWikiFlowDiagram = () => (
         <rect x={n.x} y="18" width="34" height="30" rx={2} fill={`${n.color}12`} stroke={n.color} strokeWidth="0.7"/>
         <text x={n.x + 17} y="28" textAnchor="middle" fontSize="8" dominantBaseline="middle">{n.icon}</text>
         <text x={n.x + 17} y="40" textAnchor="middle" fontSize="3.5" fill={n.color} fontFamily="Syne, sans-serif" fontWeight="700">{n.label.split("\n")[0]}</text>
-        <text x={n.x + 17} y="46" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">{n.label.split("\n")[1]}</text>
-        {i < 4 && <text x={n.x + 36} y="34" fontSize="7" fill="#4a4a5a">›</text>}
+        <text x={n.x + 17} y="46" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">{n.label.split("\n")[1]}</text>
+        {i < 4 && <text x={n.x + 36} y="34" fontSize="7" fill="#1E293B">›</text>}
       </g>
     ))}
-    <text x="120" y="62" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Runs daily · auto-detects changes · every PR has a human review gate · no stale docs</text>
+    <text x="120" y="62" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Runs daily · auto-detects changes · every PR has a human review gate · no stale docs</text>
   </svg>
 );
 
 // ── SVG: Claude shortcuts flow ──
 const ShortcutFlowDiagram = () => (
   <svg viewBox="0 0 240 80" style={{ width: "100%", height: 120 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">FROM REPEATED PROMPT → REUSABLE COMMAND</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">FROM REPEATED PROMPT → REUSABLE COMMAND</text>
     <rect x="12" y="18" width="64" height="28" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="44" y="28" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">Repeated Prompt</text>
-    <text x="44" y="35" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">"Rewrite this in my</text>
-    <text x="44" y="41" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">voice, direct, no fluff..."</text>
-    <text x="80" y="34" fontSize="8" fill="#4a4a5a">→</text>
+    <text x="44" y="35" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">"Rewrite this in my</text>
+    <text x="44" y="41" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">voice, direct, no fluff..."</text>
+    <text x="80" y="34" fontSize="8" fill="#1E293B">→</text>
     <rect x="88" y="18" width="64" height="28" rx={2} fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="120" y="27" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Save as Instruction</text>
-    <text x="120" y="34" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Projects → Instructions</text>
-    <text x="120" y="41" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">or custom system prompt</text>
-    <text x="156" y="34" fontSize="8" fill="#4a4a5a">→</text>
+    <text x="120" y="34" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Projects → Instructions</text>
+    <text x="120" y="41" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">or custom system prompt</text>
+    <text x="156" y="34" fontSize="8" fill="#1E293B">→</text>
     <rect x="164" y="18" width="64" height="28" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.8"/>
     <text x="196" y="27" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">Reusable Command</text>
-    <text x="196" y="34" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Type: paste text.</text>
-    <text x="196" y="41" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Claude knows the rest.</text>
-    <text x="120" y="60" textAnchor="middle" fontSize="3.8" fill="#8a8a9a" fontFamily="Syne, sans-serif">Result: 15–60 min saved per week per repeated task · consistent output every time</text>
-    <text x="120" y="68" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Works for: writing style · critique format · spec-first code · research synthesis · meeting actions</text>
+    <text x="196" y="34" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Type: paste text.</text>
+    <text x="196" y="41" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Claude knows the rest.</text>
+    <text x="120" y="60" textAnchor="middle" fontSize="3.8" fill="#334155" fontFamily="Syne, sans-serif">Result: 15–60 min saved per week per repeated task · consistent output every time</text>
+    <text x="120" y="68" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Works for: writing style · critique format · spec-first code · research synthesis · meeting actions</text>
   </svg>
 );
 
@@ -5553,7 +5553,7 @@ export const PowerFeaturesTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Power Features:<br /><em style={{ color: "#c9a84c", fontStyle: "italic" }}>Shortcuts, Wikis, Memory & Copilot</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           Four topics most people never get to: Claude reusable shortcuts that eliminate repeated prompting, OpenWiki for self-documenting repos, Stanford's AUTOMEM for agent memory (2–4× benchmark gains), and Copilot power-user techniques across Word, Excel, PowerPoint, and Chat.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
@@ -5566,7 +5566,7 @@ export const PowerFeaturesTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -5595,7 +5595,7 @@ export const PowerFeaturesTab = ({ s }) => {
               <button key={sc.id} onClick={() => setActiveShortcut(sc.id)}
                 style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.5rem 0.9rem", background: activeShortcut === sc.id ? `${sc.color}15` : "#ffffff", border: `1px solid ${activeShortcut === sc.id ? sc.color : "#e0dcd4"}`, borderRadius: 4, cursor: "pointer", transition: "all 0.2s" }}>
                 <span style={{ fontSize: "0.9rem" }}>{sc.icon}</span>
-                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.63rem", color: activeShortcut === sc.id ? sc.color : "#b0b0c0" }}>{sc.name}</span>
+                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.63rem", color: activeShortcut === sc.id ? sc.color : "#1E293B" }}>{sc.name}</span>
                 <span style={{ fontSize: "0.5rem", padding: "0.1rem 0.4rem", background: `${sc.color}12`, color: sc.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{sc.category}</span>
               </button>
             ))}
@@ -5610,7 +5610,7 @@ export const PowerFeaturesTab = ({ s }) => {
                     <span style={{ fontFamily: "Playfair Display, serif", fontSize: "1.1rem", fontWeight: 900 }}>{sc.name}</span>
                     <code style={{ fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: sc.color, background: `${sc.color}12`, padding: "0.15rem 0.5rem", borderRadius: 3 }}>{sc.trigger}</code>
                   </div>
-                  <div style={{ fontSize: "0.68rem", color: "#8a8a9a" }}>{sc.description}</div>
+                  <div style={{ fontSize: "0.68rem", color: "#334155" }}>{sc.description}</div>
                 </div>
                 <div style={{ background: `${sc.color}10`, border: `1px solid ${sc.color}30`, borderRadius: 4, padding: "0.6rem 0.8rem", fontSize: "0.6rem", color: sc.color, textAlign: "right", minWidth: 160 }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, marginBottom: "0.2rem" }}>⏱ Saves</div>
@@ -5643,7 +5643,7 @@ export const PowerFeaturesTab = ({ s }) => {
               </div>
               <div style={{ padding: "0.8rem 1.5rem", borderTop: "1px solid #e0dcd4", background: "#f7f5f0", display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
                 <span style={{ color: sc.color, flexShrink: 0 }}>💾</span>
-                <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.6 }}><strong style={{ color: "#b0b0c0" }}>How to save this:</strong> {sc.howToSave}</div>
+                <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}><strong style={{ color: "#1E293B" }}>How to save this:</strong> {sc.howToSave}</div>
               </div>
             </div>
           )}
@@ -5661,8 +5661,8 @@ export const PowerFeaturesTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c9a84c", marginBottom: "0.8rem" }}>🔥 The Core Problem It Solves</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Documentation goes stale the moment code changes. No team has time to update docs manually. New developers waste days understanding codebases they should onboard to in hours. AI coding agents (Claude Code, Copilot) work better when the repo has an up-to-date AGENTS.md explaining the codebase.</p>
-              <div style={{ padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #c9a84c", fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Documentation goes stale the moment code changes. No team has time to update docs manually. New developers waste days understanding codebases they should onboard to in hours. AI coding agents (Claude Code, Copilot) work better when the repo has an up-to-date AGENTS.md explaining the codebase.</p>
+              <div style={{ padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #c9a84c", fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>
                 OpenWiki reads your repo, generates documentation, and opens a PR <strong style={{ color: "#c9a84c" }}>every day</strong> — automatically. You review and merge. Docs never go stale again.
               </div>
             </div>
@@ -5673,8 +5673,8 @@ export const PowerFeaturesTab = ({ s }) => {
                   <div key={i} style={{ display: "flex", gap: "0.7rem", padding: "0.5rem 0.7rem", background: "#f7f5f0", borderRadius: 3, alignItems: "flex-start" }}>
                     <code style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#c9a84c", flexShrink: 0, marginTop: "0.05rem" }}>{f.file}</code>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: "0.62rem", color: "#b0b0c0", marginBottom: "0.15rem" }}>{f.purpose}</div>
-                      <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>Audience: {f.audience}</div>
+                      <div style={{ fontSize: "0.62rem", color: "#1E293B", marginBottom: "0.15rem" }}>{f.purpose}</div>
+                      <div style={{ fontSize: "0.55rem", color: "#334155" }}>Audience: {f.audience}</div>
                     </div>
                     <span style={{ fontSize: "0.5rem", padding: "0.1rem 0.4rem", background: "rgba(74,154,74,0.12)", color: "#4a9a4a", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, whiteSpace: "nowrap" }}>AUTO</span>
                   </div>
@@ -5686,7 +5686,7 @@ export const PowerFeaturesTab = ({ s }) => {
           <div style={s.sectionLabel("#c9a84c")}>Animated Walkthrough</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
-              <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Trace what happens when a developer pushes new code — from detection to merged documentation PR.</p>
+              <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace what happens when a developer pushes new code — from detection to merged documentation PR.</p>
               <button onClick={runWiki} disabled={wikiRunning}
                 style={{ background: wikiRunning ? "#f2f8f0" : "linear-gradient(135deg,#f2f8f0,#1a3a1a)", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: wikiRunning ? "not-allowed" : "pointer", opacity: wikiRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {wikiRunning ? "Running…" : "▶ Run OpenWiki"}
@@ -5696,11 +5696,11 @@ export const PowerFeaturesTab = ({ s }) => {
               {OPENWIKI_STEPS.map((step, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.75rem 1rem", background: wikiStep >= i ? `${step.color}0a` : "#f7f5f0", border: `1px solid ${wikiStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: wikiStep === -1 ? 0.35 : wikiStep >= i ? 1 : 0.3 }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: wikiStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: wikiStep >= i ? "0.9rem" : "0.62rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${wikiStep >= i ? step.color : "#e0dcd4"}` }}>
-                    {wikiStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                    {wikiStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: wikiStep >= i ? "#1a1a2e" : "#4a4a5a", marginBottom: "0.1rem" }}>{step.label}</div>
-                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: wikiStep >= i ? step.color : "#3a3a4a" }}>{step.detail}</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: wikiStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.1rem" }}>{step.label}</div>
+                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: wikiStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
                   </div>
                   {wikiStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
                 </div>
@@ -5717,7 +5717,7 @@ export const PowerFeaturesTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#9b7fd4", marginBottom: "0.8rem" }}>🧠 What AUTOMEM Does</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Current agents are stateless between sessions. They forget everything. AUTOMEM adds a structured memory layer — training agents to decide what to record, how to retrieve it later, and how to organise it into a coherent knowledge base over time.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Current agents are stateless between sessions. They forget everything. AUTOMEM adds a structured memory layer — training agents to decide what to record, how to retrieve it later, and how to organise it into a coherent knowledge base over time.</p>
               <p style={{ fontSize: "0.68rem", color: "#9b7fd4", lineHeight: 1.8, fontWeight: 700 }}>Result: 2–4× benchmark gains across memory-intensive tasks. Multi-session coherence improves 4×.</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
@@ -5741,14 +5741,14 @@ export const PowerFeaturesTab = ({ s }) => {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", marginBottom: "1rem" }}>
                 <div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: memOp.color, marginBottom: "0.5rem" }}>What It Does</div>
-                  <p style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.8 }}>{memOp.description}</p>
+                  <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8 }}>{memOp.description}</p>
                 </div>
                 <div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: memOp.color, marginBottom: "0.5rem" }}>vs Naive Agents</div>
-                  <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8 }}>{memOp.contrast}</p>
+                  <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8 }}>{memOp.contrast}</p>
                 </div>
               </div>
-              <div style={{ padding: "0.8rem 1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${memOp.color}`, fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+              <div style={{ padding: "0.8rem 1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${memOp.color}`, fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>
                 <strong style={{ color: memOp.color }}>Example: </strong>{memOp.example}
               </div>
             </div>
@@ -5757,11 +5757,11 @@ export const PowerFeaturesTab = ({ s }) => {
           {/* Memory architecture diagram SVG */}
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
             <svg viewBox="0 0 240 85" style={{ width: "100%", height: 130 }}>
-              <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AUTOMEM ARCHITECTURE</text>
+              <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AUTOMEM ARCHITECTURE</text>
               {/* Agent box */}
               <rect x="88" y="15" width="64" height="18" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.8"/>
               <text x="120" y="22" textAnchor="middle" fontSize="4.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">🤖 Agent</text>
-              <text x="120" y="29" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">LLM + AUTOMEM module</text>
+              <text x="120" y="29" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">LLM + AUTOMEM module</text>
               {/* Three ops boxes */}
               {AUTOMEM_OPS.map((op, i) => {
                 const x = [18, 88, 158][i];
@@ -5770,7 +5770,7 @@ export const PowerFeaturesTab = ({ s }) => {
                     <line x1={120} y1={33} x2={x + 30} y2={45} stroke={op.color} strokeWidth="0.5" strokeDasharray="2,1"/>
                     <rect x={x} y={45} width={60} height={18} rx={2} fill={`${op.color}12`} stroke={op.color} strokeWidth="0.7"/>
                     <text x={x + 30} y={53} textAnchor="middle" fontSize="4" fill={op.color} fontFamily="Syne, sans-serif" fontWeight="700">{op.icon} {op.name}</text>
-                    <text x={x + 30} y={60} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">{["filters signal", "hybrid search", "dedup + resolve"][i]}</text>
+                    <text x={x + 30} y={60} textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">{["filters signal", "hybrid search", "dedup + resolve"][i]}</text>
                   </g>
                 );
               })}
@@ -5794,7 +5794,7 @@ export const PowerFeaturesTab = ({ s }) => {
                 <div key={i} style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 4, border: `1px solid ${c.color}20`, borderTop: `2px solid ${c.color}` }}>
                   <div style={{ fontSize: "1.1rem", marginBottom: "0.4rem" }}>{c.icon}</div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: c.color, marginBottom: "0.4rem" }}>{c.title}</div>
-                  <div style={{ fontSize: "0.63rem", color: "#6a6a7a", lineHeight: 1.7 }}>{c.desc}</div>
+                  <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.7 }}>{c.desc}</div>
                 </div>
               ))}
             </div>
@@ -5812,7 +5812,7 @@ export const PowerFeaturesTab = ({ s }) => {
                 style={{ background: activeCopilot === a.id ? `${a.color}12` : "#ffffff", border: `1px solid ${activeCopilot === a.id ? a.color : "#e0dcd4"}`, borderRadius: 6, padding: "1rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
                 <div style={{ fontSize: "1.4rem", marginBottom: "0.4rem" }}>{a.icon}</div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: activeCopilot === a.id ? a.color : "#1a1a2e" }}>{a.name}</div>
-                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.2rem", lineHeight: 1.4 }}>{a.tagline}</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.2rem", lineHeight: 1.4 }}>{a.tagline}</div>
               </button>
             ))}
           </div>
@@ -5833,7 +5833,7 @@ export const PowerFeaturesTab = ({ s }) => {
                     {app.tips.map((tip, i) => (
                       <div key={i} style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `2px solid ${app.color}` }}>
                         <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: app.color, marginBottom: "0.3rem" }}>{tip.tip}</div>
-                        <div style={{ fontSize: "0.62rem", color: "#8a8a9a", lineHeight: 1.6 }}>{tip.detail}</div>
+                        <div style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.6 }}>{tip.detail}</div>
                       </div>
                     ))}
                   </div>
@@ -5847,7 +5847,7 @@ export const PowerFeaturesTab = ({ s }) => {
                   </button>
                   <div style={{ marginTop: "1.2rem", padding: "0.8rem", background: "rgba(201,168,76,0.06)", border: "1px solid #c9a84c30", borderRadius: 4 }}>
                     <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", color: "#c9a84c", marginBottom: "0.4rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>💡 The key difference</div>
-                    <div style={{ fontSize: "0.63rem", color: "#8a8a9a", lineHeight: 1.7 }}>
+                    <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.7 }}>
                       {({ word: "Most people ask Copilot to 'write' from scratch. Power users ask it to 'transform' — rewrite, compress, restructure. Transformation of your own content always beats generation from nothing.", excel: "Most people use Copilot for formula help. Power users ask for insights and anomalies — questions a data analyst would ask, not questions about Excel syntax.", powerpoint: "Most people generate a deck and accept it. Power users specify structure precisely (slide count, section names, content type per slide) before generating.", chat: "Most people ask single-document questions. Power users reference 3–5 files simultaneously and ask cross-document synthesis questions." })[activeCopilot]}
                     </div>
                   </div>
@@ -5863,7 +5863,7 @@ export const PowerFeaturesTab = ({ s }) => {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["App", "Best for", "Power tip", "Avoid"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -5878,9 +5878,9 @@ export const PowerFeaturesTab = ({ s }) => {
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td style={{ padding: "0.6rem 0.9rem", color: "#c4572a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row[0]}</td>
-                    <td style={{ padding: "0.6rem 0.9rem", color: "#b0b0c0" }}>{row[1]}</td>
+                    <td style={{ padding: "0.6rem 0.9rem", color: "#1E293B" }}>{row[1]}</td>
                     <td style={{ padding: "0.6rem 0.9rem", color: "#4a9a4a" }}>{row[2]}</td>
-                    <td style={{ padding: "0.6rem 0.9rem", color: "#6a6a7a" }}>{row[3]}</td>
+                    <td style={{ padding: "0.6rem 0.9rem", color: "#334155" }}>{row[3]}</td>
                   </tr>
                 ))}
               </tbody>
@@ -5939,35 +5939,35 @@ const CODEBASE_PLUGINS = [
 // ── SVG: NLA architecture diagram ──
 const NLADiagram = () => (
   <svg viewBox="0 0 240 100" style={{ width: "100%", height: 150 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">NLA ARCHITECTURE — READING CLAUDE'S THOUGHTS</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">NLA ARCHITECTURE — READING CLAUDE'S THOUGHTS</text>
     {/* Input */}
     <rect x="8" y="25" width="42" height="20" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="29" y="34" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Prompt</text>
-    <text x="29" y="41" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">"Complete this couplet"</text>
+    <text x="29" y="41" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">"Complete this couplet"</text>
     <line x1="50" y1="35" x2="64" y2="35" stroke="#c9a84c" strokeWidth="0.6"/>
     {/* Claude model */}
     <rect x="64" y="20" width="50" height="30" rx={2} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.8"/>
     <text x="89" y="32" textAnchor="middle" fontSize="4.2" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">Claude</text>
-    <text x="89" y="39" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">hidden layers</text>
-    <text x="89" y="46" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">activations</text>
+    <text x="89" y="39" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">hidden layers</text>
+    <text x="89" y="46" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">activations</text>
     {/* Arrow down to NLA */}
     <line x1="89" y1="50" x2="89" y2="62" stroke="#2a8a84" strokeWidth="0.6" strokeDasharray="2,1"/>
     {/* NLA box */}
     <rect x="64" y="62" width="50" height="20" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="89" y="70" textAnchor="middle" fontSize="4" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">NLA</text>
-    <text x="89" y="77" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">verbalizer + reconstructor</text>
+    <text x="89" y="77" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">verbalizer + reconstructor</text>
     {/* Right: Claude output */}
     <line x1="114" y1="35" x2="128" y2="35" stroke="#2a8a84" strokeWidth="0.6"/>
     <rect x="128" y="25" width="50" height="20" rx={2} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.7"/>
     <text x="153" y="34" textAnchor="middle" fontSize="4" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">Output text</text>
-    <text x="153" y="41" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">"The stars above…"</text>
+    <text x="153" y="41" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">"The stars above…"</text>
     {/* Right: NLA output */}
     <line x1="114" y1="72" x2="128" y2="72" stroke="#9b7fd4" strokeWidth="0.6"/>
     <rect x="128" y="62" width="50" height="20" rx={2} fill="rgba(196,87,42,0.12)" stroke="#c4572a" strokeWidth="0.8"/>
     <text x="153" y="70" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">Hidden thought</text>
-    <text x="153" y="77" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">"planning rhyme: moon/June"</text>
+    <text x="153" y="77" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">"planning rhyme: moon/June"</text>
     {/* Labels */}
-    <text x="89" y="92" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">NLA reads activations at intermediate layers — before output is written</text>
+    <text x="89" y="92" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">NLA reads activations at intermediate layers — before output is written</text>
     <text x="153" y="88" textAnchor="middle" fontSize="3" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">This exists without NLA ↑</text>
     <text x="153" y="92" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">NLA makes it readable ↓</text>
   </svg>
@@ -5976,22 +5976,22 @@ const NLADiagram = () => (
 // ── SVG: Memento CBR diagram ──
 const MementoCBRDiagram = () => (
   <svg viewBox="0 0 240 90" style={{ width: "100%", height: 135 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MEMENTO — CASE-BASED REASONING LOOP</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MEMENTO — CASE-BASED REASONING LOOP</text>
     {/* Case Bank */}
     <rect x="8" y="20" width="50" height="60" rx={2} fill="rgba(42,138,132,0.08)" stroke="#2a8a84" strokeWidth="0.7"/>
     <text x="33" y="32" textAnchor="middle" fontSize="4.2" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">Case Bank</text>
     {["task_001: ✅", "task_002: ❌", "task_003: ✅", "task_004: ✅"].map((c, i) => (
-      <text key={i} x="33" y={40 + i * 9} textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{c}</text>
+      <text key={i} x="33" y={40 + i * 9} textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">{c}</text>
     ))}
     <text x="33" y="78" textAnchor="middle" fontSize="3" fill="#2a8a84" fontFamily="Syne, sans-serif">episodic memory</text>
     {/* Planner */}
     <rect x="88" y="30" width="54" height="22" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.8"/>
     <text x="115" y="40" textAnchor="middle" fontSize="4.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">🧠 Planner</text>
-    <text x="115" y="47" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">LLM + retrieval</text>
+    <text x="115" y="47" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">LLM + retrieval</text>
     {/* Executor */}
     <rect x="88" y="62" width="54" height="18" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.7"/>
     <text x="115" y="72" textAnchor="middle" fontSize="4.2" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">⚙️ Executor</text>
-    <text x="115" y="78" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">tools + MCP</text>
+    <text x="115" y="78" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">tools + MCP</text>
     {/* New task */}
     <rect x="170" y="38" width="62" height="14" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.6"/>
     <text x="201" y="48" textAnchor="middle" fontSize="3.8" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">New task arrives</text>
@@ -6003,18 +6003,18 @@ const MementoCBRDiagram = () => (
     <line x1="88" y1="72" x2="58" y2="65" stroke="#4a9a4a" strokeWidth="0.6" strokeDasharray="2,1"/>
     <text x="73" y="72" textAnchor="middle" fontSize="3.2" fill="#4a9a4a" fontFamily="Syne, sans-serif">store +</text>
     <text x="73" y="77" textAnchor="middle" fontSize="3.2" fill="#4a9a4a" fontFamily="Syne, sans-serif">update policy</text>
-    <text x="120" y="88" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">LLM weights never change · only the Case Bank and case-selection policy update</text>
+    <text x="120" y="88" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">LLM weights never change · only the Case Bank and case-selection policy update</text>
   </svg>
 );
 
 // ── SVG: Claude Code plugin ecosystem ──
 const PluginEcoDiagram = () => (
   <svg viewBox="0 0 240 90" style={{ width: "100%", height: 135 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CLAUDE CODE PLUGIN ARCHITECTURE</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CLAUDE CODE PLUGIN ARCHITECTURE</text>
     {/* Core */}
     <rect x="88" y="32" width="64" height="24" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.9"/>
     <text x="120" y="43" textAnchor="middle" fontSize="4.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">Claude Code</text>
-    <text x="120" y="51" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">terminal · LLM · context</text>
+    <text x="120" y="51" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">terminal · LLM · context</text>
     {/* Plugin types orbiting */}
     {[
       { label: "Skills", sub: "auto-invoked", x: 28, y: 18, color: "#2a8a84" },
@@ -6027,11 +6027,11 @@ const PluginEcoDiagram = () => (
       <g key={i}>
         <rect x={n.x - 2} y={n.y - 6} width={40} height={14} rx={2} fill={`${n.color}12`} stroke={n.color} strokeWidth="0.6"/>
         <text x={n.x + 18} y={n.y + 2} textAnchor="middle" fontSize="3.8" fill={n.color} fontFamily="Syne, sans-serif" fontWeight="700">{n.label}</text>
-        <text x={n.x + 18} y={n.y + 7} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">{n.sub}</text>
+        <text x={n.x + 18} y={n.y + 7} textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">{n.sub}</text>
         <line x1={i < 3 ? n.x + 38 : n.x} y1={n.y + 1} x2={i < 3 ? 88 : 152} y2={44} stroke={n.color} strokeWidth="0.4" strokeDasharray="2,1"/>
       </g>
     ))}
-    <text x="120" y="85" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Plugins bundle Skills + Agents + Commands + Hooks into one installable unit</text>
+    <text x="120" y="85" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Plugins bundle Skills + Agents + Commands + Hooks into one installable unit</text>
   </svg>
 );
 
@@ -6075,7 +6075,7 @@ export const ResearchFrontiersTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           What Claude Thinks But<br /><em style={{ color: "#9b7fd4", fontStyle: "italic" }}>Never Says — and Three New Tools</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           Three research and tooling advances most people haven't caught up with yet: Anthropic's Natural Language Autoencoders that read Claude's hidden thoughts, Memento's case-based memory that lets agents learn without touching model weights, and Claude Code's codebase plugins that turn any repo into a clickable map.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.8rem" }}>
@@ -6087,7 +6087,7 @@ export const ResearchFrontiersTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "1rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.3rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.15rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.55rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -6115,17 +6115,17 @@ export const ResearchFrontiersTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#9b7fd4", marginBottom: "0.8rem" }}>🔭 What NLAs Are</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>As Claude processes a prompt, it produces millions of internal numerical activations — the actual computation happening between reading your input and writing the first token. These activations have never been readable. They're just arrays of numbers.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>As Claude processes a prompt, it produces millions of internal numerical activations — the actual computation happening between reading your input and writing the first token. These activations have never been readable. They're just arrays of numbers.</p>
               <p style={{ fontSize: "0.68rem", color: "#9b7fd4", lineHeight: 1.8, fontWeight: 700, marginBottom: "0.8rem" }}>NLAs have a dual-module architecture: an <strong style={{ color: "#1a1a2e" }}>activation verbalizer</strong> maps activations to text descriptions, and an <strong style={{ color: "#1a1a2e" }}>activation reconstructor</strong> tries to recreate the original activation from that text. The pair is trained with reinforcement learning — optimised to generate descriptions that accurately reflect the underlying computation.</p>
-              <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #9b7fd4", fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+              <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #9b7fd4", fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>
                 Unlike existing tools (sparse autoencoders, attribution graphs), NLAs speak directly in natural language — no expert analysis needed to read the output.
               </div>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#9b7fd4", marginBottom: "0.8rem" }}>⚠️ Why This Matters for AI Safety</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>The deepest concern in AI alignment isn't a model that misbehaves. It's a model that <em style={{ color: "#1a1a2e" }}>misbehaves in ways that don't show up in its outputs</em>. A model might represent "I'm being tested" internally while responding normally. It might focus on "avoid detection" while appearing cooperative.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>The deepest concern in AI alignment isn't a model that misbehaves. It's a model that <em style={{ color: "#1a1a2e" }}>misbehaves in ways that don't show up in its outputs</em>. A model might represent "I'm being tested" internally while responding normally. It might focus on "avoid detection" while appearing cooperative.</p>
               <p style={{ fontSize: "0.68rem", color: "#c4572a", lineHeight: 1.8, fontWeight: 700, marginBottom: "0.8rem" }}>NLAs are the first tool that can surface this discrepancy — without needing the training data that might have caused it.</p>
-              <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #c4572a", fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+              <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #c4572a", fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>
                 Already used in pre-deployment alignment audits of Claude Mythos Preview and Claude Opus 4.6. Not experimental — in production safety workflows.
               </div>
             </div>
@@ -6135,7 +6135,7 @@ export const ResearchFrontiersTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4", marginBottom: "1rem" }}>
             {[{ id: "findings", label: "5 Key Findings" }, { id: "constraints", label: "Honest Constraints" }].map(t => (
               <button key={t.id} onClick={() => setNlaTab(t.id)}
-                style={{ padding: "0.65rem 1.2rem", background: nlaTab === t.id ? "#ffffff" : "transparent", border: "none", borderBottom: nlaTab === t.id ? "2px solid #9b7fd4" : "2px solid transparent", color: nlaTab === t.id ? "#9b7fd4" : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ padding: "0.65rem 1.2rem", background: nlaTab === t.id ? "#ffffff" : "transparent", border: "none", borderBottom: nlaTab === t.id ? "2px solid #9b7fd4" : "2px solid transparent", color: nlaTab === t.id ? "#9b7fd4" : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t.label}
               </button>
             ))}
@@ -6148,7 +6148,7 @@ export const ResearchFrontiersTab = ({ s }) => {
                   <button key={f.id} onClick={() => setActiveFinding(f.id)}
                     style={{ display: "flex", alignItems: "center", gap: "0.4rem", padding: "0.5rem 0.8rem", background: activeFinding === f.id ? `${f.color}15` : "#ffffff", border: `1px solid ${activeFinding === f.id ? f.color : "#e0dcd4"}`, borderRadius: 4, cursor: "pointer", transition: "all 0.2s" }}>
                     <span style={{ fontSize: "0.9rem" }}>{f.icon}</span>
-                    <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: activeFinding === f.id ? f.color : "#b0b0c0" }}>{f.title}</span>
+                    <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: activeFinding === f.id ? f.color : "#1E293B" }}>{f.title}</span>
                   </button>
                 ))}
               </div>
@@ -6157,11 +6157,11 @@ export const ResearchFrontiersTab = ({ s }) => {
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", marginBottom: "1rem" }}>
                     <div>
                       <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: finding.color, marginBottom: "0.5rem" }}>What NLAs Found</div>
-                      <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>{finding.finding}</p>
+                      <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{finding.finding}</p>
                     </div>
                     <div>
                       <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: finding.color, marginBottom: "0.5rem" }}>Why It Matters</div>
-                      <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>{finding.significance}</p>
+                      <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{finding.significance}</p>
                     </div>
                   </div>
                   <div style={{ padding: "0.8rem 1rem", background: `${finding.color}0a`, border: `1px solid ${finding.color}25`, borderRadius: 4, borderLeft: `3px solid ${finding.color}`, fontSize: "0.68rem", color: finding.color, fontStyle: "italic" }}>
@@ -6178,7 +6178,7 @@ export const ResearchFrontiersTab = ({ s }) => {
                 <div key={i} style={{ background: "#ffffff", border: `1px solid ${c.color}30`, borderRadius: 6, padding: "1.2rem", borderTop: `2px solid ${c.color}` }}>
                   <div style={{ fontSize: "1.3rem", marginBottom: "0.5rem" }}>{c.icon}</div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: c.color, marginBottom: "0.5rem" }}>{c.title}</div>
-                  <p style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>{c.desc}</p>
+                  <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>{c.desc}</p>
                 </div>
               ))}
             </div>
@@ -6197,9 +6197,9 @@ export const ResearchFrontiersTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#2a8a84", marginBottom: "0.8rem" }}>🧠 The Core Idea</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Standard agents are stateless after each task ends. Memento gives agents an external <strong style={{ color: "#1a1a2e" }}>Case Bank</strong> — a database of past trajectories (steps taken, tools used, outcomes, success/failure). When a new task arrives, the agent retrieves similar past cases and uses them to guide its plan.</p>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>The LLM weights are never updated. Instead, a lightweight <strong style={{ color: "#1a1a2e" }}>neural case-selection policy</strong> learns which past cases are most useful for which current task — updated continuously via reinforcement learning from task outcomes.</p>
-              <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #2a8a84", fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Standard agents are stateless after each task ends. Memento gives agents an external <strong style={{ color: "#1a1a2e" }}>Case Bank</strong> — a database of past trajectories (steps taken, tools used, outcomes, success/failure). When a new task arrives, the agent retrieves similar past cases and uses them to guide its plan.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>The LLM weights are never updated. Instead, a lightweight <strong style={{ color: "#1a1a2e" }}>neural case-selection policy</strong> learns which past cases are most useful for which current task — updated continuously via reinforcement learning from task outcomes.</p>
+              <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #2a8a84", fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>
                 The agent fine-tunes its <em>ability to use memory</em> — not the LLM itself. An elegant separation of concerns.
               </div>
             </div>
@@ -6209,11 +6209,11 @@ export const ResearchFrontiersTab = ({ s }) => {
                 {MEMENTO_BENCHMARKS.map((b, i) => (
                   <div key={i} style={{ background: "#f7f5f0", borderRadius: 4, padding: "0.7rem" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
-                      <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: "#b0b0c0" }}>{b.bench}</span>
+                      <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: "#1E293B" }}>{b.bench}</span>
                       <span style={{ fontFamily: "Playfair Display, serif", fontSize: "0.9rem", fontWeight: 900, color: b.color }}>{b.memento}</span>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <span style={{ fontSize: "0.58rem", color: "#6a6a7a" }}>Baseline: {b.baseline}</span>
+                      <span style={{ fontSize: "0.58rem", color: "#334155" }}>Baseline: {b.baseline}</span>
                       <span style={{ fontSize: "0.55rem", padding: "0.1rem 0.4rem", background: `${b.color}12`, color: b.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{b.note}</span>
                     </div>
                   </div>
@@ -6225,7 +6225,7 @@ export const ResearchFrontiersTab = ({ s }) => {
           <div style={s.sectionLabel("#2a8a84")}>Step-by-Step: How a Memento Agent Learns</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
-              <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Trace how Memento handles a new research task — retrieving past experience and storing the outcome.</p>
+              <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace how Memento handles a new research task — retrieving past experience and storing the outcome.</p>
               <button onClick={runMemento} disabled={mementoRunning}
                 style={{ background: mementoRunning ? "#f2f8f0" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: mementoRunning ? "not-allowed" : "pointer", opacity: mementoRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {mementoRunning ? "Running…" : "▶ Run Memento"}
@@ -6235,11 +6235,11 @@ export const ResearchFrontiersTab = ({ s }) => {
               {MEMENTO_STEPS.map((step, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.75rem 1rem", background: mementoStep >= i ? `${step.color}0a` : "#f7f5f0", border: `1px solid ${mementoStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: mementoStep === -1 ? 0.35 : mementoStep >= i ? 1 : 0.3 }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: mementoStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: mementoStep >= i ? "0.9rem" : "0.62rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${mementoStep >= i ? step.color : "#e0dcd4"}` }}>
-                    {mementoStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                    {mementoStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: mementoStep >= i ? "#1a1a2e" : "#4a4a5a", marginBottom: "0.1rem" }}>{step.label}</div>
-                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: mementoStep >= i ? step.color : "#3a3a4a" }}>{step.detail}</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: mementoStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.1rem" }}>{step.label}</div>
+                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: mementoStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
                   </div>
                   {mementoStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
                 </div>
@@ -6254,7 +6254,7 @@ export const ResearchFrontiersTab = ({ s }) => {
                 <thead>
                   <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                     {["Dimension", "Fine-Tuning", "RAG", "Memento"].map(h => (
-                      <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
+                      <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -6271,9 +6271,9 @@ export const ResearchFrontiersTab = ({ s }) => {
                     <tr key={ri} style={{ borderBottom: "1px solid rgba(42,42,56,0.4)" }}
                       onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                       onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                      <td style={{ padding: "0.6rem 0.8rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row[0]}</td>
-                      <td style={{ padding: "0.6rem 0.8rem", color: "#b0b0c0" }}>{row[1]}</td>
-                      <td style={{ padding: "0.6rem 0.8rem", color: "#b0b0c0" }}>{row[2]}</td>
+                      <td style={{ padding: "0.6rem 0.8rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row[0]}</td>
+                      <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{row[1]}</td>
+                      <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{row[2]}</td>
                       <td style={{ padding: "0.6rem 0.8rem", color: "#4a9a4a", fontWeight: 700 }}>{row[3]}</td>
                     </tr>
                   ))}
@@ -6295,7 +6295,7 @@ export const ResearchFrontiersTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c9a84c", marginBottom: "0.8rem" }}>🗺️ The Core Insight</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>The biggest tax on developer productivity isn't writing code — it's <em style={{ color: "#1a1a2e" }}>understanding existing code</em>. A new developer joining a project spends days reading files, following import chains, and asking colleagues "where does X happen?"</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>The biggest tax on developer productivity isn't writing code — it's <em style={{ color: "#1a1a2e" }}>understanding existing code</em>. A new developer joining a project spends days reading files, following import chains, and asking colleagues "where does X happen?"</p>
               <p style={{ fontSize: "0.68rem", color: "#c9a84c", lineHeight: 1.8, fontWeight: 700 }}>Claude Code plugins turn a codebase into an interactive map: clickable Mermaid diagrams, natural-language search across the whole repo, and session context that builds over time.</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
@@ -6309,7 +6309,7 @@ export const ResearchFrontiersTab = ({ s }) => {
                 ].map((item, i) => (
                   <div key={i} style={{ display: "flex", gap: "0.7rem", padding: "0.5rem 0.7rem", background: "#f7f5f0", borderRadius: 3, alignItems: "flex-start" }}>
                     <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.62rem", fontWeight: 700, color: item.color, flexShrink: 0, minWidth: 60 }}>{item.type}</span>
-                    <span style={{ fontSize: "0.62rem", color: "#6a6a7a", lineHeight: 1.5 }}>{item.desc}</span>
+                    <span style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.5 }}>{item.desc}</span>
                   </div>
                 ))}
               </div>
@@ -6339,7 +6339,7 @@ export const ResearchFrontiersTab = ({ s }) => {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
                 <div style={{ padding: "1.2rem", borderRight: "1px solid #e0dcd4" }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: plug.color, marginBottom: "0.6rem" }}>What It Does</div>
-                  <p style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.8, marginBottom: "1rem" }}>{plug.description}</p>
+                  <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}>{plug.description}</p>
                   <div style={{ padding: "0.7rem", background: `${plug.color}0d`, border: `1px solid ${plug.color}25`, borderRadius: 4, fontSize: "0.65rem", color: plug.color, lineHeight: 1.6 }}>
                     <strong style={{ fontFamily: "Syne, sans-serif" }}>Best for: </strong>{plug.bestFor}
                   </div>
@@ -6605,20 +6605,20 @@ const CONTROL_LEVELS = [
 // ── SVG: Full contract diagram ──
 const ContractDiagram = () => (
   <svg viewBox="0 0 260 130" style={{ width: "100%", height: 190 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE FULL CONTRACT — 4 BRICKS, TYPED INPUTS AND OUTPUTS</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE FULL CONTRACT — 4 BRICKS, TYPED INPUTS AND OUTPUTS</text>
     {/* PDF input */}
     <rect x="8" y="55" width="30" height="18" rx={2} fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="23" y="63" textAnchor="middle" fontSize="3.8" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">PDF</text>
-    <text x="23" y="69" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">input</text>
+    <text x="23" y="69" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">input</text>
     {/* Question input */}
     <rect x="8" y="90" width="30" height="18" rx={2} fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="23" y="98" textAnchor="middle" fontSize="3.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Question</text>
-    <text x="23" y="104" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">(with typos)</text>
+    <text x="23" y="104" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">(with typos)</text>
     {/* Brick 1: Parsing */}
     <rect x="48" y="40" width="44" height="50" rx={2} fill="rgba(42,138,132,0.1)" stroke="#2a8a84" strokeWidth="0.8"/>
     <text x="70" y="55" textAnchor="middle" fontSize="4" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">🔧 Parse</text>
     {["line_df","page_df","toc_df","parsing_sum"].map((t,i)=>(
-      <text key={i} x="70" y={63+i*7} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">→ {t}</text>
+      <text key={i} x="70" y={63+i*7} textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">→ {t}</text>
     ))}
     {/* Arrows from PDF */}
     <line x1="38" y1="64" x2="48" y2="64" stroke="#2a8a84" strokeWidth="0.5"/>
@@ -6626,33 +6626,33 @@ const ContractDiagram = () => (
     <rect x="104" y="75" width="44" height="42" rx={2} fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.8"/>
     <text x="126" y="88" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">❓ Q.Parse</text>
     {["keywords","intent","Ret.Query","Gen.Brief"].map((t,i)=>(
-      <text key={i} x="126" y={96+i*7} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">→ {t}</text>
+      <text key={i} x="126" y={96+i*7} textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">→ {t}</text>
     ))}
     {/* Arrows to Q.Parse */}
     <line x1="38" y1="99" x2="104" y2="96" stroke="#c9a84c" strokeWidth="0.5"/>
     <line x1="92" y1="64" x2="104" y2="93" stroke="#c9a84c" strokeWidth="0.4" strokeDasharray="2,1"/>
-    <text x="98" y="75" fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">parsing_sum</text>
+    <text x="98" y="75" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">parsing_sum</text>
     {/* Brick 3: Retrieval */}
     <rect x="160" y="40" width="44" height="38" rx={2} fill="rgba(155,127,212,0.1)" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="182" y="53" textAnchor="middle" fontSize="4" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">🔍 Retrieve</text>
     {["filtered_df","anchor","audit"].map((t,i)=>(
-      <text key={i} x="182" y={61+i*7} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">→ {t}</text>
+      <text key={i} x="182" y={61+i*7} textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">→ {t}</text>
     ))}
     {/* Arrow from Q.Parse to Retrieval */}
     <line x1="148" y1="93" x2="182" y2="78" stroke="#9b7fd4" strokeWidth="0.5"/>
     <text x="160" y="84" fontSize="2.6" fill="#9b7fd4" fontFamily="DM Mono, monospace">Ret.Query</text>
     {/* Arrow from Parsing to Retrieval */}
     <line x1="92" y1="58" x2="160" y2="54" stroke="#9b7fd4" strokeWidth="0.4" strokeDasharray="2,1"/>
-    <text x="126" y="51" fontSize="2.6" fill="#6a6a7a" fontFamily="DM Mono, monospace">line_df + toc_df</text>
+    <text x="126" y="51" fontSize="2.6" fill="#334155" fontFamily="DM Mono, monospace">line_df + toc_df</text>
     {/* Brick 4: Generation */}
     <rect x="216" y="40" width="38" height="50" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.8"/>
     <text x="235" y="54" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">✍️ Gen</text>
     {["ListAnswer","evidence","confidence","complete"].map((t,i)=>(
-      <text key={i} x="235" y={62+i*7} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">→ {t}</text>
+      <text key={i} x="235" y={62+i*7} textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">→ {t}</text>
     ))}
     {/* Arrow from Retrieval to Generation */}
     <line x1="204" y1="58" x2="216" y2="60" stroke="#c4572a" strokeWidth="0.5"/>
-    <text x="208" y="55" fontSize="2.6" fill="#6a6a7a" fontFamily="DM Mono, monospace">filtered_df</text>
+    <text x="208" y="55" fontSize="2.6" fill="#334155" fontFamily="DM Mono, monospace">filtered_df</text>
     {/* Arrow Gen.Brief from Q.Parse to Generation */}
     <line x1="148" y1="87" x2="235" y2="90" stroke="#c4572a" strokeWidth="0.4" strokeDasharray="2,1"/>
     <text x="185" y="93" fontSize="2.6" fill="#c4572a" fontFamily="DM Mono, monospace">Gen.Brief</text>
@@ -6661,15 +6661,15 @@ const ContractDiagram = () => (
     <text x="155" y="38" fontSize="2.5" fill="#2a8a84" fontFamily="DM Mono, monospace" opacity="0.7">parsing_sum (side channel)</text>
     {/* Output arrow */}
     <line x1="254" y1="65" x2="260" y2="65" stroke="#c4572a" strokeWidth="0.6"/>
-    <text x="130" y="120" textAnchor="middle" fontSize="3.8" fill="#8a8a9a" fontFamily="Syne, sans-serif">Same four bricks · upgraded contracts · typed inputs and outputs throughout</text>
-    <text x="130" y="127" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">parsing_summary flows as a side channel into both question parsing and generation</text>
+    <text x="130" y="120" textAnchor="middle" fontSize="3.8" fill="#334155" fontFamily="Syne, sans-serif">Same four bricks · upgraded contracts · typed inputs and outputs throughout</text>
+    <text x="130" y="127" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">parsing_summary flows as a side channel into both question parsing and generation</text>
   </svg>
 );
 
 // ── SVG: Control levels ramp ──
 const ControlLevelsDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 145 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">FIVE LEVELS OF CONTROL — SAME FOUR BRICKS</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">FIVE LEVELS OF CONTROL — SAME FOUR BRICKS</text>
     {CONTROL_LEVELS.map((l, i) => {
       const x = 12 + i * 48;
       const h = 15 + i * 9;
@@ -6679,14 +6679,14 @@ const ControlLevelsDiagram = () => (
           <rect x={x} y={y} width={42} height={h} rx={2} fill={`${l.color}18`} stroke={l.color} strokeWidth={l.current ? 1.2 : 0.6}/>
           {l.current && <rect x={x} y={y} width={42} height={2} rx={1} fill={l.color}/>}
           <text x={x+21} y={y+8} textAnchor="middle" fontSize="3.5" fill={l.color} fontFamily="Syne, sans-serif" fontWeight={l.current?"800":"700"}>{l.article}</text>
-          <text x={x+21} y={y+14} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">{l.label.split("(")[0].trim().slice(0,14)}</text>
+          <text x={x+21} y={y+14} textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">{l.label.split("(")[0].trim().slice(0,14)}</text>
           {l.current && <text x={x+21} y={y-4} textAnchor="middle" fontSize="3.5" fill={l.color} fontFamily="Syne, sans-serif" fontWeight="700">← HERE</text>}
           <line x1={x+21} y1={88} x2={x+21} y2={88} stroke="#e0dcd4" strokeWidth="0.3"/>
         </g>
       );
     })}
     <line x1="12" y1="88" x2="248" y2="88" stroke="#e0dcd4" strokeWidth="0.5"/>
-    <text x="12" y="96" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Rung 1 — minimal</text>
+    <text x="12" y="96" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Rung 1 — minimal</text>
     <text x="248" y="96" textAnchor="end" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif">Rung 5 — agentic</text>
   </svg>
 );
@@ -6694,7 +6694,7 @@ const ControlLevelsDiagram = () => (
 // ── SVG: Passage detection vs line detection ──
 const PassageDetectionDiagram = () => (
   <svg viewBox="0 0 260 85" style={{ width: "100%", height: 125 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">LINE-UNIT vs PASSAGE-UNIT KEYWORD DETECTION</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">LINE-UNIT vs PASSAGE-UNIT KEYWORD DETECTION</text>
     {/* Left: line detection fails */}
     <rect x="8" y="18" width="112" height="58" rx={2} fill="#ffffff" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="64" y="28" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Line-unit (baseline)</text>
@@ -6706,8 +6706,8 @@ const PassageDetectionDiagram = () => (
     ].map((l,i) => (
       <g key={i}>
         <rect x="14" y={32+i*10} width={100} height={8} rx={1} fill={l.split ? "rgba(196,87,42,0.08)" : "#f7f5f0"} stroke={l.split ? "#c4572a" : "#e8e4dc"} strokeWidth="0.5"/>
-        <text x="18" y={38+i*10} fontSize="3.2" fill={l.split ? "#c4572a" : "#6a6a7a"} fontFamily="DM Mono, monospace">{l.t}</text>
-        <text x="110" y={38+i*10} textAnchor="end" fontSize="3" fill={l.split ? "#c4572a" : "#3a3a4a"} fontFamily="Syne, sans-serif" fontWeight="700">{l.split ? "MISS" : "—"}</text>
+        <text x="18" y={38+i*10} fontSize="3.2" fill={l.split ? "#c4572a" : "#334155"} fontFamily="DM Mono, monospace">{l.t}</text>
+        <text x="110" y={38+i*10} textAnchor="end" fontSize="3" fill={l.split ? "#c4572a" : "#1E293B"} fontFamily="Syne, sans-serif" fontWeight="700">{l.split ? "MISS" : "—"}</text>
       </g>
     ))}
     <text x="64" y="74" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">"positional encoding" split across line break → 0 hits</text>
@@ -6721,7 +6721,7 @@ const PassageDetectionDiagram = () => (
     ].map((l,i) => (
       <g key={i}>
         <rect x="136" y={32+i*10} width={110} height={8} rx={1} fill={i===1 ? "rgba(74,154,74,0.12)" : "#f7f5f0"} stroke={i===1 ? "#4a9a4a" : "#e8e4dc"} strokeWidth="0.5"/>
-        <text x="140" y={38+i*10} fontSize="3.2" fill={i===1 ? "#4a9a4a" : "#6a6a7a"} fontFamily="DM Mono, monospace">{i===1 ? "→ 3-line passage joined: '" + l.t + "'" : l.t}</text>
+        <text x="140" y={38+i*10} fontSize="3.2" fill={i===1 ? "#4a9a4a" : "#334155"} fontFamily="DM Mono, monospace">{i===1 ? "→ 3-line passage joined: '" + l.t + "'" : l.t}</text>
       </g>
     ))}
     <rect x="136" y="56" width="110" height="12" rx={1} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.7"/>
@@ -6733,22 +6733,22 @@ const PassageDetectionDiagram = () => (
 // ── SVG: TOC router diagram ──
 const TOCRouterDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 140 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">LLM TOC ROUTER vs SUBSTRING MATCHING</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">LLM TOC ROUTER vs SUBSTRING MATCHING</text>
     {/* TOC list */}
     <rect x="8" y="18" width="80" height="70" rx={2} fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.6"/>
-    <text x="48" y="28" textAnchor="middle" fontSize="4" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700">toc_df (22 entries)</text>
+    <text x="48" y="28" textAnchor="middle" fontSize="4" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700">toc_df (22 entries)</text>
     {["1. Introduction", "2. Background", "3.1 Encoder", "3.2 Decoder", "3.3 Attention", "3.4 Feed-Forward", "3.5 Positional Enc.", "..."].map((t,i)=>(
-      <text key={i} x="14" y={36+i*7} fontSize="3.2" fill={t.includes("Positional") ? "#9b7fd4" : "#4a4a5a"} fontFamily="DM Mono, monospace" fontWeight={t.includes("Positional")?"700":"400"}>{t}</text>
+      <text key={i} x="14" y={36+i*7} fontSize="3.2" fill={t.includes("Positional") ? "#9b7fd4" : "#1E293B"} fontFamily="DM Mono, monospace" fontWeight={t.includes("Positional")?"700":"400"}>{t}</text>
     ))}
     {/* Substring matcher */}
     <rect x="100" y="18" width="66" height="28" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="133" y="28" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Substring Match</text>
-    <text x="133" y="36" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">title.contains(keyword)</text>
+    <text x="133" y="36" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">title.contains(keyword)</text>
     <text x="133" y="43" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">Misses if phrasing differs</text>
     {/* LLM router */}
     <rect x="100" y="56" width="66" height="28" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="133" y="66" textAnchor="middle" fontSize="4" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">LLM TOC Router</text>
-    <text x="133" y="73" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">reads whole outline</text>
+    <text x="133" y="73" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">reads whole outline</text>
     <text x="133" y="80" textAnchor="middle" fontSize="3.2" fill="#9b7fd4" fontFamily="Syne, sans-serif">semantic pick + rationale</text>
     {/* Arrows */}
     <line x1="88" y1="48" x2="100" y2="34" stroke="#c4572a" strokeWidth="0.5"/>
@@ -6756,15 +6756,15 @@ const TOCRouterDiagram = () => (
     {/* Results */}
     <rect x="178" y="18" width="74" height="28" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.6"/>
     <text x="215" y="27" textAnchor="middle" fontSize="3.8" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">❌ Substring result</text>
-    <text x="215" y="35" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">"What is early exit?" →</text>
+    <text x="215" y="35" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">"What is early exit?" →</text>
     <text x="215" y="42" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="DM Mono, monospace">0 matches (title: "Termination")</text>
     <rect x="178" y="56" width="74" height="28" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.7"/>
     <text x="215" y="65" textAnchor="middle" fontSize="3.8" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">✅ LLM result</text>
-    <text x="215" y="72" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">"What is early exit?" →</text>
+    <text x="215" y="72" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">"What is early exit?" →</text>
     <text x="215" y="79" textAnchor="middle" fontSize="3.2" fill="#4a9a4a" fontFamily="DM Mono, monospace">"Termination" (semantic)</text>
     <line x1="166" y1="32" x2="178" y2="32" stroke="#c4572a" strokeWidth="0.5"/>
     <line x1="166" y1="70" x2="178" y2="70" stroke="#4a9a4a" strokeWidth="0.5"/>
-    <text x="130" y="90" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Cost: few thousand tokens, a few hundred ms · cached forever on identical inputs</text>
+    <text x="130" y="90" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Cost: few thousand tokens, a few hundred ms · cached forever on identical inputs</text>
   </svg>
 );
 
@@ -6812,7 +6812,7 @@ export const ProductionRAGTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Production RAG for PDFs:<br /><em style={{ color: "#2a8a84", fontStyle: "italic" }}>Relational Parsing, TOC Retrieval, Typed Answers</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Same four bricks as minimal RAG (Article 1). Same paper (<em style={{ color: "#1a1a2e" }}>Attention Is All You Need</em>). Same noisy question (<em style={{ color: "#1a1a2e" }}>"What are the optoins for posiitional encoding?"</em>). One upgraded contract per brick: relational parsing, structured question brief, TOC-aware retrieval, typed ListAnswer with per-item evidence spans.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
@@ -6826,7 +6826,7 @@ export const ProductionRAGTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -6856,7 +6856,7 @@ export const ProductionRAGTab = ({ s }) => {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
           <div>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: "#1a1a2e", marginBottom: "0.2rem" }}>Paper: <em style={{ color: "#c9a84c" }}>Attention Is All You Need</em> · Question: <em style={{ color: "#c4572a" }}>"What are the optoins for posiitional encoding?"</em></div>
-            <div style={{ fontSize: "0.62rem", color: "#6a6a7a" }}>Trace the full upgraded pipeline from noisy question to typed ListAnswer.</div>
+            <div style={{ fontSize: "0.62rem", color: "#334155" }}>Trace the full upgraded pipeline from noisy question to typed ListAnswer.</div>
           </div>
           <button onClick={runSim} disabled={simRunning}
             style={{ background: simRunning ? "#f4f2fa" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
@@ -6867,11 +6867,11 @@ export const ProductionRAGTab = ({ s }) => {
           {PIPELINE_STEPS.map((step, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: simStep >= i ? `${step.color}09` : "#f7f5f0", border: `1px solid ${simStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: simStep === -1 ? 0.35 : simStep >= i ? 1 : 0.3 }}>
               <div style={{ width: 28, height: 28, borderRadius: "50%", background: simStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: simStep >= i ? "0.85rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${simStep >= i ? step.color : "#e0dcd4"}` }}>
-                {simStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                {simStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: simStep >= i ? "#1a1a2e" : "#4a4a5a", marginBottom: "0.1rem" }}>{step.label}</div>
-                <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: simStep >= i ? step.color : "#3a3a4a" }}>{step.detail}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: simStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.1rem" }}>{step.label}</div>
+                <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: simStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
               </div>
               {simStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
             </div>
@@ -6917,7 +6917,7 @@ export const ProductionRAGTab = ({ s }) => {
               <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: b.color }}>{b.num}</span>
             </div>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: activeBrick === b.id ? b.color : "#1a1a2e", marginBottom: "0.2rem" }}>{b.name}</div>
-            <div style={{ fontSize: "0.58rem", color: "#6a6a7a", lineHeight: 1.4 }}>{b.tagline}</div>
+            <div style={{ fontSize: "0.58rem", color: "#334155", lineHeight: 1.4 }}>{b.tagline}</div>
           </button>
         ))}
       </div>
@@ -6933,10 +6933,10 @@ export const ProductionRAGTab = ({ s }) => {
               </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem", marginTop: "0.6rem" }}>
-              <div style={{ background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a20", borderRadius: 4, padding: "0.6rem 0.8rem", fontSize: "0.62rem", color: "#8a8a9a", lineHeight: 1.6 }}>
+              <div style={{ background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a20", borderRadius: 4, padding: "0.6rem 0.8rem", fontSize: "0.62rem", color: "#334155", lineHeight: 1.6 }}>
                 <strong style={{ color: "#c4572a", display: "block", marginBottom: "0.2rem" }}>BASELINE</strong>{brick.baseline}
               </div>
-              <div style={{ background: `${brick.color}08`, border: `1px solid ${brick.color}25`, borderRadius: 4, padding: "0.6rem 0.8rem", fontSize: "0.62rem", color: "#b0b0c0", lineHeight: 1.6 }}>
+              <div style={{ background: `${brick.color}08`, border: `1px solid ${brick.color}25`, borderRadius: 4, padding: "0.6rem 0.8rem", fontSize: "0.62rem", color: "#1E293B", lineHeight: 1.6 }}>
                 <strong style={{ color: brick.color, display: "block", marginBottom: "0.2rem" }}>UPGRADED</strong>{brick.upgrade}
               </div>
             </div>
@@ -6944,25 +6944,25 @@ export const ProductionRAGTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["overview", "io", "code", "tables"].map(t => (
               <button key={t} onClick={() => setBrickTab(t)}
-                style={{ flex: 1, padding: "0.65rem", background: brickTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: brickTab === t ? `2px solid ${brick.color}` : "2px solid transparent", color: brickTab === t ? brick.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, padding: "0.65rem", background: brickTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: brickTab === t ? `2px solid ${brick.color}` : "2px solid transparent", color: brickTab === t ? brick.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t === "io" ? "Inputs / Outputs" : t.charAt(0).toUpperCase() + t.slice(1)}
               </button>
             ))}
           </div>
           <div style={{ padding: "1.5rem" }}>
             {brickTab === "overview" && (
-              <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>{brick.whyMatters}</p>
+              <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{brick.whyMatters}</p>
             )}
             {brickTab === "io" && (
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem" }}>
                 <div>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Inputs</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Inputs</div>
                   {brick.inputs.map((inp, i) => (
                     <div key={i} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: "#2a8a84", background: "#f7f5f0", padding: "0.35rem 0.6rem", borderRadius: 3, marginBottom: "0.3rem" }}>{inp}</div>
                   ))}
                 </div>
                 <div>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Outputs</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Outputs</div>
                   {brick.outputs.map((out, i) => (
                     <div key={i} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: brick.color, background: "#f7f5f0", padding: "0.35rem 0.6rem", borderRadius: 3, marginBottom: "0.3rem", lineHeight: 1.5 }}>{out}</div>
                   ))}
@@ -6978,11 +6978,11 @@ export const ProductionRAGTab = ({ s }) => {
                       <code style={{ fontFamily: "DM Mono, monospace", fontSize: "0.7rem", color: brick.color, fontWeight: 700 }}>{tbl.name}</code>
                       <div style={{ display: "flex", gap: "0.3rem", flexWrap: "wrap" }}>
                         {tbl.cols.map((col, j) => (
-                          <span key={j} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.55rem", color: "#6a6a7a", background: "#ffffff", padding: "0.1rem 0.4rem", borderRadius: 3 }}>{col}</span>
+                          <span key={j} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.55rem", color: "#334155", background: "#ffffff", padding: "0.1rem 0.4rem", borderRadius: 3 }}>{col}</span>
                         ))}
                       </div>
                     </div>
-                    <div style={{ fontSize: "0.63rem", color: "#8a8a9a", lineHeight: 1.6 }}>{tbl.purpose}</div>
+                    <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.6 }}>{tbl.purpose}</div>
                   </div>
                 ))}
               </div>
@@ -7013,7 +7013,7 @@ export const ProductionRAGTab = ({ s }) => {
             onMouseLeave={e => e.currentTarget.style.borderColor = "#e0dcd4"}>
             <code style={{ fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: qi.color, fontWeight: 700 }}>{qi.name}</code>
             <span style={{ fontSize: "0.55rem", padding: "0.15rem 0.5rem", background: `${qi.color}12`, color: qi.color, borderRadius: 3, fontFamily: "DM Mono, monospace", textAlign: "center" }}>{qi.type}</span>
-            <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.6 }}>{qi.meaning}</div>
+            <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>{qi.meaning}</div>
             <div style={{ padding: "0.4rem 0.6rem", background: "#f7f5f0", borderRadius: 3, fontSize: "0.62rem", color: qi.color, lineHeight: 1.5, borderLeft: `2px solid ${qi.color}40` }}>{qi.action}</div>
           </div>
         ))}
@@ -7026,7 +7026,7 @@ export const ProductionRAGTab = ({ s }) => {
           <thead>
             <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
               {["Brick", "Baseline Output", "Upgraded Output"].map(h => (
-                <th key={h} style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
+                <th key={h} style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -7036,8 +7036,8 @@ export const ProductionRAGTab = ({ s }) => {
                 onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                 onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                 <td style={{ padding: "0.8rem 1rem", color: row.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row.icon} {row.brick}</td>
-                <td style={{ padding: "0.8rem 1rem", color: "#6a6a7a" }}>{row.before}</td>
-                <td style={{ padding: "0.8rem 1rem", color: "#b0b0c0" }}>{row.after}</td>
+                <td style={{ padding: "0.8rem 1rem", color: "#334155" }}>{row.before}</td>
+                <td style={{ padding: "0.8rem 1rem", color: "#1E293B" }}>{row.after}</td>
               </tr>
             ))}
           </tbody>
@@ -7054,7 +7054,7 @@ export const ProductionRAGTab = ({ s }) => {
               <span style={{ fontSize: "0.9rem" }}>{f.icon}</span>
               <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: f.color }}>{f.brick}</span>
             </div>
-            <div style={{ fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.5, marginBottom: activeFailure === i ? "0.5rem" : 0 }}>{f.failure}</div>
+            <div style={{ fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.5, marginBottom: activeFailure === i ? "0.5rem" : 0 }}>{f.failure}</div>
             {activeFailure === i && (
               <div style={{ padding: "0.5rem 0.7rem", background: `${f.color}0d`, border: `1px solid ${f.color}25`, borderRadius: 3, fontSize: "0.63rem", color: f.color, lineHeight: 1.5, animation: "fadeIn 0.2s ease" }}>
                 <strong>Fix: </strong>{f.fix}
@@ -7073,8 +7073,8 @@ export const ProductionRAGTab = ({ s }) => {
         {CONTROL_LEVELS.map((l, i) => (
           <div key={i} style={{ display: "grid", gridTemplateColumns: "70px 160px 1fr", gap: "0.8rem", alignItems: "center", padding: "0.65rem 1rem", background: l.current ? `${l.color}10` : "#ffffff", border: `1px solid ${l.current ? l.color : "#e0dcd4"}`, borderRadius: 4 }}>
             <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: l.color }}>{l.article}</span>
-            <span style={{ fontFamily: "Syne, sans-serif", fontWeight: l.current ? 800 : 600, fontSize: "0.65rem", color: l.current ? l.color : "#b0b0c0" }}>{l.label}</span>
-            <span style={{ fontSize: "0.63rem", color: "#6a6a7a", lineHeight: 1.5 }}>{l.desc}</span>
+            <span style={{ fontFamily: "Syne, sans-serif", fontWeight: l.current ? 800 : 600, fontSize: "0.65rem", color: l.current ? l.color : "#1E293B" }}>{l.label}</span>
+            <span style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.5 }}>{l.desc}</span>
           </div>
         ))}
       </div>
@@ -7109,7 +7109,7 @@ const RAG_TOTAL_MS = LATENCY_BUDGET.reduce((a, b) => a + b.ms, 0);
 
 // ── Data: evolutionary arc ──
 const MEMORY_EVOLUTION = [
-  { era: "1960s–80s", label: "Raw Files",         icon: "📁", color: "#3a3a4a", desc: "Flat files. Knowledge stored as symbols. No indexing — grep the whole corpus.", status: "Legacy" },
+  { era: "1960s–80s", label: "Raw Files",         icon: "📁", color: "#1E293B", desc: "Flat files. Knowledge stored as symbols. No indexing — grep the whole corpus.", status: "Legacy" },
   { era: "1970s–90s", label: "Relational DBs",    icon: "🗄️", color: "#4a5a6a", desc: "SQL. Structured knowledge. Joins, indices, transactions. Still runs the world's banking.", status: "Foundation" },
   { era: "1990s–10s", label: "Search Indices",    icon: "🔎", color: "#5a6a7a", desc: "TF-IDF, BM25, inverted indices. Lexical retrieval at scale. Powers every search box.", status: "Embedded" },
   { era: "2015–20s",  label: "Text Embeddings",   icon: "🧮", color: "#2a8a84", desc: "Word2Vec, BERT, semantic similarity. Meaning captured numerically for the first time.", status: "Active" },
@@ -7139,7 +7139,7 @@ const TranslationChainDiagram = () => {
   const plumbing = RAG_CHAIN_STEPS.filter(s => !s.neural);
   return (
     <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
-      <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE GREAT TRANSLATION ABSURDITY — 7 STEPS, 2 DO USEFUL WORK</text>
+      <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE GREAT TRANSLATION ABSURDITY — 7 STEPS, 2 DO USEFUL WORK</text>
       {RAG_CHAIN_STEPS.map((step, i) => {
         const x = 14 + i * 34;
         const isNeural = step.neural;
@@ -7157,7 +7157,7 @@ const TranslationChainDiagram = () => {
               <text x={x + 14} y={58} textAnchor="middle" fontSize={3} fill="#c4572a" fontFamily="Syne, sans-serif">paperwork</text>
             )}
             {i < RAG_CHAIN_STEPS.length - 1 && (
-              <text x={x + 30} y={40} fontSize={7} fill="#4a4a5a" textAnchor="middle">›</text>
+              <text x={x + 30} y={40} fontSize={7} fill="#1E293B" textAnchor="middle">›</text>
             )}
           </g>
         );
@@ -7167,10 +7167,10 @@ const TranslationChainDiagram = () => {
       <text x="27" y="76" fontSize="3.8" fill="#9b7fd4" fontFamily="Syne, sans-serif">Neural-native (2 steps do the actual work)</text>
       <rect x="14" y="80" width="10" height="6" rx={1} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.6"/>
       <text x="27" y="86" fontSize="3.8" fill="#c4572a" fontFamily="Syne, sans-serif">Translation plumbing (5 steps exist only because we can't persist hidden state)</text>
-      <text x="130" y="100" textAnchor="middle" fontSize="4" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" fontStyle="italic">
+      <text x="130" y="100" textAnchor="middle" fontSize="4" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" fontStyle="italic">
         "Two amber boxes doing the thinking. Five grey boxes doing the paperwork."
       </text>
-      <text x="130" y="108" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">
+      <text x="130" y="108" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">
         Each arrow represents a lossy compression: Hidden State → Text → Vector → Text → Hidden State
       </text>
     </svg>
@@ -7180,7 +7180,7 @@ const TranslationChainDiagram = () => {
 // ── SVG: Evolutionary timeline ──
 const EvolutionTimelineDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">EVOLUTIONARY ARC OF AI MEMORY</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">EVOLUTIONARY ARC OF AI MEMORY</text>
     {/* Spine */}
     <line x1="14" y1="48" x2="246" y2="48" stroke="#e0dcd4" strokeWidth="0.6"/>
     {MEMORY_EVOLUTION.map((era, i) => {
@@ -7196,7 +7196,7 @@ const EvolutionTimelineDiagram = () => (
           {isNext && <circle cx={x + 16} cy={48} r={8} fill="none" stroke={era.color} strokeWidth="0.5" strokeDasharray="2,1" opacity="0.6"/>}
           {/* Label above */}
           <text x={x + 16} y={i % 2 === 0 ? 36 : 28} textAnchor="middle" fontSize={isNext ? 4.5 : 3.8} fill={era.color} fontFamily="Syne, sans-serif" fontWeight={isNext || isCurrent ? "800" : "600"}>{era.label}</text>
-          <text x={x + 16} y={i % 2 === 0 ? 42 : 34} textAnchor="middle" fontSize={3} fill="#6a6a7a" fontFamily="Syne, sans-serif">{era.era}</text>
+          <text x={x + 16} y={i % 2 === 0 ? 42 : 34} textAnchor="middle" fontSize={3} fill="#334155" fontFamily="Syne, sans-serif">{era.era}</text>
           {/* Icon below spine */}
           <text x={x + 16} y={60} textAnchor="middle" fontSize={10} dominantBaseline="middle">{era.icon}</text>
           {/* Status pill */}
@@ -7209,7 +7209,7 @@ const EvolutionTimelineDiagram = () => (
         </g>
       );
     })}
-    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Every stage was once the endgame · none of them stayed the endgame · each becomes the layer below</text>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Every stage was once the endgame · none of them stayed the endgame · each becomes the layer below</text>
   </svg>
 );
 
@@ -7218,7 +7218,7 @@ const LatencyBudgetDiagram = () => {
   const maxMs = Math.max(...LATENCY_BUDGET.map(b => b.ms));
   return (
     <svg viewBox="0 0 260 105" style={{ width: "100%", height: 155 }}>
-      <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">RAG LATENCY BUDGET — BLOCKING SEQUENTIAL OPERATIONS</text>
+      <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">RAG LATENCY BUDGET — BLOCKING SEQUENTIAL OPERATIONS</text>
       {LATENCY_BUDGET.map((b, i) => {
         const y = 18 + i * 10;
         const maxW = 130;
@@ -7246,57 +7246,57 @@ const LatencyBudgetDiagram = () => {
 // ── SVG: Context window vs latent persistence ──
 const ContextWindowDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 140 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CONTEXT WINDOW vs LATENT PERSISTENCE — WHAT EACH SOLVES</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CONTEXT WINDOW vs LATENT PERSISTENCE — WHAT EACH SOLVES</text>
     {/* Big context box */}
     <rect x="8" y="18" width="116" height="62" rx={3} fill="#ffffff" stroke="#c9a84c" strokeWidth="0.8"/>
     <text x="66" y="30" textAnchor="middle" fontSize="5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">Large Context Window</text>
     <text x="66" y="38" textAnchor="middle" fontSize="3.8" fill="#4a9a4a" fontFamily="Syne, sans-serif">✅ Solves capacity</text>
     {["❌ Portability — can't transfer between agents", "❌ Persistence — resets after session", "❌ Bandwidth — 2M tokens per handoff", "❌ Prefill cost — receiver re-reads everything", "❌ Edge devices — phones, drones, robots"].map((t, i) => (
-      <text key={i} x="14" y={47 + i * 8} fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">{t}</text>
+      <text key={i} x="14" y={47 + i * 8} fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">{t}</text>
     ))}
     <text x="66" y="82" textAnchor="middle" fontSize="3.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontStyle="italic">"A larger context is a better book.</text>
     <text x="66" y="88" textAnchor="middle" fontSize="3.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontStyle="italic">It is not a way to teleport your last thought."</text>
     {/* Vs */}
-    <text x="130" y="54" textAnchor="middle" fontSize="7" fill="#4a4a5a">⇄</text>
+    <text x="130" y="54" textAnchor="middle" fontSize="7" fill="#1E293B">⇄</text>
     {/* Latent persistence box */}
     <rect x="136" y="18" width="116" height="62" rx={3} fill="#ffffff" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="194" y="30" textAnchor="middle" fontSize="5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">Latent Persistence</text>
     {["✅ Portable — GPU-to-GPU transfer", "✅ Persistent — state survives across sessions", "✅ Bandwidth efficient — skip text encoding", "✅ No prefill cost — state injected directly", "✅ Edge-native — small state, fast transfer"].map((t, i) => (
-      <text key={i} x="140" y={38 + i * 9} fontSize="3.2" fill={t.startsWith("✅") ? "#b0b0c0" : "#6a6a7a"} fontFamily="Syne, sans-serif">{t}</text>
+      <text key={i} x="140" y={38 + i * 9} fontSize="3.2" fill={t.startsWith("✅") ? "#1E293B" : "#334155"} fontFamily="Syne, sans-serif">{t}</text>
     ))}
-    <text x="194" y="83" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">❗ Still research — architectural compat. unsolved</text>
-    <text x="130" y="94" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">They are not alternatives — they solve different problems. Both can coexist.</text>
+    <text x="194" y="83" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">❗ Still research — architectural compat. unsolved</text>
+    <text x="130" y="94" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">They are not alternatives — they solve different problems. Both can coexist.</text>
   </svg>
 );
 
 // ── SVG: ILCP architecture ──
 const ILCPDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ILCP — INDUCTIVE LATENT CONTEXT PERSISTENCE</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ILCP — INDUCTIVE LATENT CONTEXT PERSISTENCE</text>
     {/* Source model */}
     <rect x="8" y="22" width="56" height="40" rx={2} fill="rgba(155,127,212,0.1)" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="36" y="35" textAnchor="middle" fontSize="4.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">Source Model</text>
-    <text x="36" y="43" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">hidden state</text>
-    <text x="36" y="50" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">activations</text>
+    <text x="36" y="43" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">hidden state</text>
+    <text x="36" y="50" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">activations</text>
     <text x="36" y="57" textAnchor="middle" fontSize="3.2" fill="#9b7fd4" fontFamily="DM Mono, monospace">h_source</text>
     {/* Compressor */}
     <rect x="74" y="28" width="44" height="28" rx={2} fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="96" y="40" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Compressor</text>
-    <text x="96" y="48" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">learned encoder</text>
-    <text x="96" y="53" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">portable repr.</text>
+    <text x="96" y="48" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">learned encoder</text>
+    <text x="96" y="53" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">portable repr.</text>
     {/* Transfer */}
     <rect x="128" y="32" width="36" height="20" rx={2} fill="rgba(42,138,132,0.1)" stroke="#2a8a84" strokeWidth="0.7"/>
     <text x="146" y="41" textAnchor="middle" fontSize="3.8" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">Transfer</text>
-    <text x="146" y="48" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">GPU → GPU</text>
+    <text x="146" y="48" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">GPU → GPU</text>
     {/* Projector */}
     <rect x="174" y="28" width="44" height="28" rx={2} fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="196" y="40" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Projector</text>
-    <text x="196" y="48" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">receiver-side</text>
-    <text x="196" y="53" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">projection</text>
+    <text x="196" y="48" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">receiver-side</text>
+    <text x="196" y="53" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">projection</text>
     {/* Target model */}
     <rect x="228" y="22" width="24" height="40" rx={2} fill="rgba(74,154,74,0.1)" stroke="#4a9a4a" strokeWidth="0.8"/>
     <text x="240" y="38" textAnchor="middle" fontSize="3.8" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">Target</text>
-    <text x="240" y="46" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">Model</text>
+    <text x="240" y="46" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">Model</text>
     <text x="240" y="57" textAnchor="middle" fontSize="3.2" fill="#4a9a4a" fontFamily="DM Mono, monospace">h_target</text>
     {/* Arrows */}
     <line x1="64" y1="42" x2="74" y2="42" stroke="#9b7fd4" strokeWidth="0.6"/>
@@ -7306,14 +7306,14 @@ const ILCPDiagram = () => (
     {/* Constraint note */}
     <rect x="8" y="70" width="244" height="14" rx={2} fill="rgba(196,87,42,0.08)" stroke="#c4572a" strokeWidth="0.5"/>
     <text x="130" y="78" textAnchor="middle" fontSize="3.8" fill="#c4572a" fontFamily="Syne, sans-serif">⚠️ Current constraint: works only under strict architectural compatibility (identical models on both ends)</text>
-    <text x="130" y="84" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Lifting the compatibility constraint = open research problem · not a shipped product</text>
+    <text x="130" y="84" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Lifting the compatibility constraint = open research problem · not a shipped product</text>
   </svg>
 );
 
 // ── NEW: Telephone game metaphor SVG ──
 const TelephoneGameDiagram = () => (
   <svg viewBox="0 0 260 80" style={{ width: "100%", height: 120 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE TELEPHONE GAME — EVERY PLAYER IS A NEURAL NETWORK</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE TELEPHONE GAME — EVERY PLAYER IS A NEURAL NETWORK</text>
     {[
       { label: "LLM A", sublabel: "thinks in vectors", icon: "🧠", x: 14, color: "#9b7fd4", note: "original thought" },
       { label: "→ text", sublabel: "compressed", icon: "📝", x: 60, color: "#c4572a", note: "info lost" },
@@ -7328,21 +7328,21 @@ const TelephoneGameDiagram = () => (
           stroke={n.color} strokeWidth={n.color === "#9b7fd4" ? 1.0 : 0.6}/>
         <text x={n.x + 17} y={27} textAnchor="middle" fontSize={9} dominantBaseline="middle">{n.icon}</text>
         <text x={n.x + 17} y={38} textAnchor="middle" fontSize={3.5} fill={n.color} fontFamily="Syne, sans-serif" fontWeight="700">{n.label}</text>
-        <text x={n.x + 17} y={44} textAnchor="middle" fontSize={3} fill="#6a6a7a" fontFamily="Syne, sans-serif">{n.sublabel}</text>
+        <text x={n.x + 17} y={44} textAnchor="middle" fontSize={3} fill="#334155" fontFamily="Syne, sans-serif">{n.sublabel}</text>
         <text x={n.x + 17} y={56} textAnchor="middle" fontSize={3} fill={n.color === "#9b7fd4" ? n.color : "#c4572a"} fontFamily="Syne, sans-serif">{n.note}</text>
-        {i < 5 && <text x={n.x + 36} y={35} fontSize={6} fill="#4a4a5a">›</text>}
+        {i < 5 && <text x={n.x + 36} y={35} fontSize={6} fill="#1E293B">›</text>}
       </g>
     ))}
     <text x="14" y="68" fontSize="3.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Original thought</text>
     <text x="246" y="68" textAnchor="end" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">Reconstructed ≠ original</text>
-    <text x="130" y="76" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">3 × lossy compression (text, embed, retrieve) between the two neural thinkers</text>
+    <text x="130" y="76" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">3 × lossy compression (text, embed, retrieve) between the two neural thinkers</text>
   </svg>
 );
 
 // ── NEW: RAG vs Latent state transfer workflow ──
 const StateTransferWorkflowDiagram = () => (
   <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">RAG PIPELINE vs LATENT STATE TRANSFER — STEP COUNT</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">RAG PIPELINE vs LATENT STATE TRANSFER — STEP COUNT</text>
     {/* RAG side */}
     <text x="60" y="22" textAnchor="middle" fontSize="5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">RAG (current)</text>
     {[
@@ -7382,7 +7382,7 @@ const StateTransferWorkflowDiagram = () => (
     {/* Eliminated steps */}
     {["✗ No embedding", "✗ No network hop", "✗ No ANN search", "✗ No reranking", "✗ No prompt rebuild"].map((s, i) => (
       <g key={i}>
-        <text x="190" y={61 + i * 8} textAnchor="middle" fontSize="3.2" fill="#4a4a5a" fontFamily="Syne, sans-serif" style={{ textDecoration: "line-through" }}>{s}</text>
+        <text x="190" y={61 + i * 8} textAnchor="middle" fontSize="3.2" fill="#1E293B" fontFamily="Syne, sans-serif" style={{ textDecoration: "line-through" }}>{s}</text>
       </g>
     ))}
     <rect x="140" y="101" width="100" height="7" rx={1} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.7"/>
@@ -7393,19 +7393,19 @@ const StateTransferWorkflowDiagram = () => (
 // ── NEW: Mobile network / base-station handover SVG ──
 const BaseStationDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MOBILE AI: BASE-STATION HANDOVER — THE FORCING FUNCTION</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MOBILE AI: BASE-STATION HANDOVER — THE FORCING FUNCTION</text>
     {/* Device moving */}
     <rect x="10" y="38" width="30" height="22" rx={2} fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="25" y="47" textAnchor="middle" fontSize="7" dominantBaseline="middle">📱</text>
     <text x="25" y="57" textAnchor="middle" fontSize="3.5" fill="#c9a84c" fontFamily="Syne, sans-serif">device</text>
     {/* Movement arrow */}
-    <text x="44" y="51" fontSize="8" fill="#4a4a5a">→→→</text>
+    <text x="44" y="51" fontSize="8" fill="#1E293B">→→→</text>
     {/* Base station A */}
     <rect x="70" y="25" width="36" height="40" rx={2} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.8"/>
     <text x="88" y="37" textAnchor="middle" fontSize="7" dominantBaseline="middle">📡</text>
     <text x="88" y="47" textAnchor="middle" fontSize="4" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">BS-A</text>
-    <text x="88" y="54" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">active session</text>
-    <text x="88" y="60" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">h_state alive</text>
+    <text x="88" y="54" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">active session</text>
+    <text x="88" y="60" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">h_state alive</text>
     {/* RAG path */}
     <rect x="116" y="18" width="50" height="54" rx={2} fill="rgba(196,87,42,0.07)" stroke="#c4572a" strokeWidth="0.6"/>
     <text x="141" y="29" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">RAG handover</text>
@@ -7414,7 +7414,7 @@ const BaseStationDiagram = () => (
     ))}
     <text x="141" y="72" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">≈135ms+</text>
     {/* vs */}
-    <text x="170" y="48" fontSize="5" fill="#4a4a5a" textAnchor="middle">vs</text>
+    <text x="170" y="48" fontSize="5" fill="#1E293B" textAnchor="middle">vs</text>
     {/* Latent path */}
     <rect x="174" y="18" width="50" height="54" rx={2} fill="rgba(74,154,74,0.07)" stroke="#4a9a4a" strokeWidth="0.7"/>
     <text x="199" y="29" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">Latent handover</text>
@@ -7422,20 +7422,20 @@ const BaseStationDiagram = () => (
       <text key={i} x="178" y={37 + i * 8} fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif">{s}</text>
     ))}
     <text x="199" y="65" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">&lt;50ms target</text>
-    <text x="199" y="72" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">context preserved</text>
+    <text x="199" y="72" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">context preserved</text>
     {/* Base station B */}
     <rect x="230" y="25" width="24" height="40" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="242" y="37" textAnchor="middle" fontSize="7" dominantBaseline="middle">📡</text>
     <text x="242" y="47" textAnchor="middle" fontSize="4" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">BS-B</text>
-    <text x="242" y="57" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">receiver</text>
-    <text x="130" y="84" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">ILCP research partly motivated by 5G/6G mobile AI — handover latency budget: sub-second, tight</text>
+    <text x="242" y="57" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">receiver</text>
+    <text x="130" y="84" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">ILCP research partly motivated by 5G/6G mobile AI — handover latency budget: sub-second, tight</text>
   </svg>
 );
 
 // ── NEW: RAG role shift diagram ──
 const RAGRoleShiftDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 148 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">RAG'S ROLE SHIFT — FROM PRIMARY TO INTEROPERABILITY LAYER</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">RAG'S ROLE SHIFT — FROM PRIMARY TO INTEROPERABILITY LAYER</text>
     {/* Now */}
     <text x="65" y="22" textAnchor="middle" fontSize="4.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">NOW</text>
     <rect x="10" y="26" width="110" height="18" rx={2} fill="rgba(201,168,76,0.15)" stroke="#c9a84c" strokeWidth="0.9"/>
@@ -7445,7 +7445,7 @@ const RAGRoleShiftDiagram = () => (
     <rect x="10" y="63" width="110" height="12" rx={1} fill="rgba(42,138,132,0.08)" stroke="#2a8a84" strokeWidth="0.5"/>
     <text x="65" y="71" textAnchor="middle" fontSize="3.5" fill="#2a8a84" fontFamily="Syne, sans-serif">Text RAG: primary agent memory</text>
     {/* Arrow */}
-    <text x="128" y="56" textAnchor="middle" fontSize="10" fill="#4a4a5a">→</text>
+    <text x="128" y="56" textAnchor="middle" fontSize="10" fill="#1E293B">→</text>
     {/* Future */}
     <text x="195" y="22" textAnchor="middle" fontSize="4.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">FUTURE (PREDICTED)</text>
     <rect x="142" y="26" width="110" height="18" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.9"/>
@@ -7463,14 +7463,14 @@ const RAGRoleShiftDiagram = () => (
 // ── NEW: Layer accumulation diagram ──
 const LayerAccumulationDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 148 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE LAYER PATTERN — EACH ERA BECOMES THE FOUNDATION</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE LAYER PATTERN — EACH ERA BECOMES THE FOUNDATION</text>
     {[
       { label: "Latent Persistence", sub: "emerging layer", color: "#9b7fd4", y: 18, h: 12, opacity: 0.6 },
       { label: "Vector Search", sub: "agent memory now → interoperability later", color: "#c9a84c", y: 32, h: 12 },
       { label: "Text Embeddings", sub: "semantic similarity — lives on inside vector search", color: "#2a8a84", y: 46, h: 12 },
       { label: "Search Indices", sub: "BM25 inside every modern search platform", color: "#4a9a4a", y: 60, h: 12 },
       { label: "Relational Databases", sub: "runs world banking — never went away", color: "#c4572a", y: 74, h: 12 },
-      { label: "Raw File Systems", sub: "the base of everything", color: "#3a3a4a", y: 88, h: 10 },
+      { label: "Raw File Systems", sub: "the base of everything", color: "#1E293B", y: 88, h: 10 },
     ].map((l, i) => {
       const w = 240 - i * 18;
       const x = 10 + i * 9;
@@ -7480,7 +7480,7 @@ const LayerAccumulationDiagram = () => (
             fill={`${l.color}${l.opacity ? "18" : "12"}`} stroke={l.color} strokeWidth={i === 0 ? 1.2 : 0.6}
             strokeDasharray={i === 0 ? "3,2" : "none"}/>
           <text x={x + 6} y={l.y + 8} fontSize={i === 0 ? 4 : 3.8} fill={l.color} fontFamily="Syne, sans-serif" fontWeight="700">{l.label}</text>
-          <text x={x + 6} y={l.y + 8} fontSize={3} fill="#6a6a7a" fontFamily="Syne, sans-serif" dy="5">{l.sub}</text>
+          <text x={x + 6} y={l.y + 8} fontSize={3} fill="#334155" fontFamily="Syne, sans-serif" dy="5">{l.sub}</text>
         </g>
       );
     })}
@@ -7533,12 +7533,12 @@ export const RAGBeyondTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           RAG Was Always a<br /><em style={{ color: "#c4572a", fontStyle: "italic" }}>Temporary Workaround</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Why the future of AI memory relies on persistent neural state, not vector databases. Six sections: the translation absurdity, the context window illusion, the latency budget systems engineers actually face, the evolutionary arc of memory, ILCP research, and an honest non-hyperbolic prediction.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.3rem" }}>The core thesis — stated plainly</div>
-          <div style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7, fontStyle: "italic" }}>"This is not an argument against RAG. It is an argument that RAG is solving a <strong style={{ color: "#1a1a2e" }}>temporary systems limitation</strong> rather than representing the final architecture for AI memory."</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"This is not an argument against RAG. It is an argument that RAG is solving a <strong style={{ color: "#1a1a2e" }}>temporary systems limitation</strong> rather than representing the final architecture for AI memory."</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
@@ -7550,7 +7550,7 @@ export const RAGBeyondTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -7562,7 +7562,7 @@ export const RAGBeyondTab = ({ s }) => {
           <button key={sec.id} onClick={() => setSection(sec.id)}
             style={{ background: section === sec.id ? `${sec.color}12` : "#ffffff", border: `1px solid ${section === sec.id ? sec.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
             <div style={{ fontSize: "1.1rem", marginBottom: "0.25rem" }}>{sec.icon}</div>
-            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.62rem", color: section === sec.id ? sec.color : "#b0b0c0", lineHeight: 1.3 }}>{sec.label}</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.62rem", color: section === sec.id ? sec.color : "#1E293B", lineHeight: 1.3 }}>{sec.label}</div>
           </button>
         ))}
       </div>
@@ -7572,7 +7572,7 @@ export const RAGBeyondTab = ({ s }) => {
         <div>
           <div style={s.sectionLabel("#c4572a")}>§1 — The Great Translation Absurdity</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.2rem" }}>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.9, marginBottom: "1rem" }}>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.9, marginBottom: "1rem" }}>
               Somewhere inside every RAG system, a language model produces rich high-dimensional hidden states. Those states get compressed into a string of characters. That string gets re-encoded by a <em>different</em> neural network into a different high-dimensional space. That vector gets stored. Later, another vector gets compared against it. The winning strings get pulled out, glued together, and handed to a <em>third</em> model that laboriously rebuilds a hidden state from those characters.
             </p>
             <p style={{ fontSize: "0.7rem", color: "#c9a84c", lineHeight: 1.9, fontWeight: 700, marginBottom: "1.2rem" }}>
@@ -7588,7 +7588,7 @@ export const RAGBeyondTab = ({ s }) => {
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.2rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.6rem" }}>
-              <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Animate the full translation chain step by step — watch how many steps exist purely to route around a missing feature.</p>
+              <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Animate the full translation chain step by step — watch how many steps exist purely to route around a missing feature.</p>
               <button onClick={runChain} disabled={chainRunning}
                 style={{ background: chainRunning ? "#f4f2fa" : "rgba(196,87,42,0.1)", border: "1px solid #c4572a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c4572a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: chainRunning ? "not-allowed" : "pointer", opacity: chainRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {chainRunning ? "Running…" : "▶ Animate Chain"}
@@ -7598,18 +7598,18 @@ export const RAGBeyondTab = ({ s }) => {
               {RAG_CHAIN_STEPS.map((step, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.65rem 1rem", background: chainStep >= i ? (step.neural ? "rgba(155,127,212,0.08)" : "rgba(196,87,42,0.06)") : "#f7f5f0", border: `1px solid ${chainStep >= i ? (step.neural ? "#9b7fd4" : "#c4572a") + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: chainStep === -1 ? 0.35 : chainStep >= i ? 1 : 0.25 }}>
                   <div style={{ width: 28, height: 28, borderRadius: "50%", background: chainStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: chainStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${chainStep >= i ? step.color : "#e0dcd4"}` }}>
-                    {chainStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                    {chainStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: chainStep >= i ? "#1a1a2e" : "#4a4a5a" }}>{step.label}</span>
+                      <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: chainStep >= i ? "#1a1a2e" : "#1E293B" }}>{step.label}</span>
                       {chainStep >= i && (
                         <span style={{ fontSize: "0.5rem", padding: "0.1rem 0.4rem", background: step.neural ? "rgba(155,127,212,0.15)" : "rgba(196,87,42,0.15)", color: step.neural ? "#9b7fd4" : "#c4572a", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>
                           {step.neural ? "NEURAL WORK" : "PLUMBING"}
                         </span>
                       )}
                     </div>
-                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: chainStep >= i ? step.color : "#3a3a4a", marginTop: "0.1rem" }}>{step.desc}</div>
+                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: chainStep >= i ? step.color : "#1E293B", marginTop: "0.1rem" }}>{step.desc}</div>
                   </div>
                   {chainStep >= i && !step.neural && <div style={{ fontSize: "0.75rem", color: "#c4572a" }}>✗</div>}
                   {chainStep >= i && step.neural && <div style={{ fontSize: "0.75rem", color: "#9b7fd4" }}>✓</div>}
@@ -7617,7 +7617,7 @@ export const RAGBeyondTab = ({ s }) => {
               ))}
             </div>
             {chainStep >= RAG_CHAIN_STEPS.length - 1 && (
-              <div style={{ marginTop: "0.8rem", padding: "0.8rem 1rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4, fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7, animation: "fadeIn 0.3s ease" }}>
+              <div style={{ marginTop: "0.8rem", padding: "0.8rem 1rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4, fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7, animation: "fadeIn 0.3s ease" }}>
                 <strong style={{ color: "#c4572a" }}>Result: </strong>2 of 7 steps do neural-native work. The other 5 — embedding, storing, retrieving, appending, reconstructing — exist purely because we cannot persist the hidden state. "Vector databases, embedding models, rerankers, chunking heuristics, retrieval evaluators — an entire ecosystem to route around a missing feature."
               </div>
             )}
@@ -7627,9 +7627,9 @@ export const RAGBeyondTab = ({ s }) => {
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#c4572a", marginBottom: "0.6rem" }}>The full chain, drawn plainly</div>
             <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.72rem", color: "#2a2a3a", lineHeight: 2, background: "#f7f5f0", padding: "1rem", borderRadius: 4 }}>
-              <span style={{ color: "#9b7fd4" }}>Hidden State</span> → <span style={{ color: "#6a6a7a" }}>Generate Text</span> → <span style={{ color: "#6a6a7a" }}>Embed Text</span> → <span style={{ color: "#6a6a7a" }}>Store Vector</span> → <span style={{ color: "#6a6a7a" }}>Retrieve Vector</span> → <span style={{ color: "#6a6a7a" }}>Append Text</span> → <span style={{ color: "#9b7fd4" }}>Recompute Hidden State</span>
+              <span style={{ color: "#9b7fd4" }}>Hidden State</span> → <span style={{ color: "#334155" }}>Generate Text</span> → <span style={{ color: "#334155" }}>Embed Text</span> → <span style={{ color: "#334155" }}>Store Vector</span> → <span style={{ color: "#334155" }}>Retrieve Vector</span> → <span style={{ color: "#334155" }}>Append Text</span> → <span style={{ color: "#9b7fd4" }}>Recompute Hidden State</span>
             </div>
-            <div style={{ marginTop: "0.8rem", fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>
+            <div style={{ marginTop: "0.8rem", fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>
               Two stages are neural-native (<span style={{ color: "#9b7fd4" }}>purple</span>). The other five exist only because we cannot yet persist the neural state itself — so we built an entire industry to reconstruct it from text every single time we needed it back.
             </div>
           </div>
@@ -7643,15 +7643,15 @@ export const RAGBeyondTab = ({ s }) => {
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.2rem" }}>
             <div style={{ padding: "1rem 1.2rem", background: "rgba(201,168,76,0.07)", border: "1px solid #c9a84c30", borderRadius: 4, marginBottom: "1.2rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c9a84c", marginBottom: "0.3rem" }}>The standard objection</div>
-              <div style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.7, fontStyle: "italic" }}>"None of this matters. Just use a two-million-token context window and dump everything in."</div>
+              <div style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"None of this matters. Just use a two-million-token context window and dump everything in."</div>
             </div>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.9, marginBottom: "1rem" }}>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.9, marginBottom: "1rem" }}>
               Fair objection. Also, no. Bigger context windows solve <strong style={{ color: "#4a9a4a" }}>capacity</strong>. They do not solve <strong style={{ color: "#c4572a" }}>portability</strong>. They do not solve <strong style={{ color: "#c4572a" }}>persistence</strong>. And they especially do not solve either of those in the environments that are going to define the next decade of applied AI.
             </p>
             {/* The hidden cost — from article */}
             <div style={{ padding: "0.9rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4, marginBottom: "1rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.4rem" }}>The hidden cost most people miss</div>
-              <p style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.8 }}>
+              <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8 }}>
                 Even if you somehow fit 2M tokens across the wire, the receiver still has to <strong style={{ color: "#c4572a" }}>re-read the whole transcript</strong> — a full prefill pass over every single token — to reconstruct any semblance of the sender's reasoning state. Even on modern hardware, that is not a free operation. It is exactly the original problem, dressed in a bigger context window.
               </p>
             </div>
@@ -7663,7 +7663,7 @@ export const RAGBeyondTab = ({ s }) => {
             <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 900, color: "#c9a84c", lineHeight: 1.6, fontStyle: "italic" }}>
               "A larger context is a better book.<br />It is not a way to teleport your last thought."
             </div>
-            <div style={{ fontSize: "0.6rem", color: "#4a4a5a", marginTop: "0.5rem", fontFamily: "Syne, sans-serif" }}>— Anubhab Banerjee, TDS July 10 2026</div>
+            <div style={{ fontSize: "0.6rem", color: "#1E293B", marginTop: "0.5rem", fontFamily: "Syne, sans-serif" }}>— Anubhab Banerjee, TDS July 10 2026</div>
           </div>
 
           {/* Three concrete scenarios — from article */}
@@ -7691,8 +7691,8 @@ export const RAGBeyondTab = ({ s }) => {
             ].map((sc, i) => (
               <div key={i} style={{ background: "#ffffff", border: `1px solid ${sc.color}30`, borderRadius: 6, padding: "1.2rem", borderTop: `2px solid ${sc.color}` }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: sc.color, marginBottom: "0.5rem" }}>{sc.scenario}</div>
-                <div style={{ fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.7, marginBottom: "0.5rem" }}>{sc.problem}</div>
-                <div style={{ fontSize: "0.62rem", color: "#6a6a7a", lineHeight: 1.6, paddingTop: "0.5rem", borderTop: `1px solid ${sc.color}20` }}>{sc.detail}</div>
+                <div style={{ fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7, marginBottom: "0.5rem" }}>{sc.problem}</div>
+                <div style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.6, paddingTop: "0.5rem", borderTop: `1px solid ${sc.color}20` }}>{sc.detail}</div>
               </div>
             ))}
           </div>
@@ -7701,11 +7701,11 @@ export const RAGBeyondTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem" }}>
             <div style={{ padding: "1rem", background: "rgba(74,154,74,0.07)", border: "1px solid #4a9a4a30", borderRadius: 6, borderLeft: "3px solid #4a9a4a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: "#4a9a4a", marginBottom: "0.3rem" }}>✅ What large context windows solve</div>
-              <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>Capacity — fitting more information in a single call within a single machine, in a single session. This is genuinely useful and valuable.</div>
+              <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>Capacity — fitting more information in a single call within a single machine, in a single session. This is genuinely useful and valuable.</div>
             </div>
             <div style={{ padding: "1rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 6, borderLeft: "3px solid #c4572a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.3rem" }}>❌ What they don't solve</div>
-              <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>Portability (between models), persistence (across sessions), edge bandwidth cost, re-tokenisation overhead, full prefill cost at the receiver.</div>
+              <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>Portability (between models), persistence (across sessions), edge bandwidth cost, re-tokenisation overhead, full prefill cost at the receiver.</div>
             </div>
           </div>
         </div>
@@ -7718,8 +7718,8 @@ export const RAGBeyondTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.2rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#9b7fd4", marginBottom: "0.8rem" }}>The engineer's view</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Prompt engineering stops at "does the model give the right answer?" Systems engineering starts at "…and at what millisecond?"</p>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>The 135ms budget below represents <strong style={{ color: "#1a1a2e" }}>blocking, sequential operations</strong>. You cannot start decoding until the prompt has been reconstructed. Every millisecond waits for the previous one to finish.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Prompt engineering stops at "does the model give the right answer?" Systems engineering starts at "…and at what millisecond?"</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>The 135ms budget below represents <strong style={{ color: "#1a1a2e" }}>blocking, sequential operations</strong>. You cannot start decoding until the prompt has been reconstructed. Every millisecond waits for the previous one to finish.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 {[
                   { env: "Chatbot", budget: "Invisible — nobody complains at 135ms", ok: true },
@@ -7732,7 +7732,7 @@ export const RAGBeyondTab = ({ s }) => {
                     <span style={{ color: row.ok ? "#4a9a4a" : "#c4572a", flexShrink: 0, fontSize: "0.8rem" }}>{row.ok ? "✓" : "✗"}</span>
                     <div>
                       <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.63rem", color: row.ok ? "#4a9a4a" : "#c4572a", marginBottom: "0.15rem" }}>{row.env}</div>
-                      <div style={{ fontSize: "0.6rem", color: "#6a6a7a" }}>{row.budget}</div>
+                      <div style={{ fontSize: "0.6rem", color: "#334155" }}>{row.budget}</div>
                     </div>
                   </div>
                 ))}
@@ -7740,7 +7740,7 @@ export const RAGBeyondTab = ({ s }) => {
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
               <ZoomableFigure title="RAG Latency Budget"><LatencyBudgetDiagram /></ZoomableFigure>
-              <div style={{ marginTop: "0.8rem", padding: "0.7rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd480", borderRadius: 4, fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+              <div style={{ marginTop: "0.8rem", padding: "0.7rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd480", borderRadius: 4, fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>
                 <strong style={{ color: "#9b7fd4" }}>Latent persistence advantage: </strong>Direct GPU-to-GPU state transfer skips embedding, network hop, vector search, reranker, and prompt reconstruction. You're not making each step faster — you're <strong style={{ color: "#1a1a2e" }}>removing them from the pipeline</strong>.
               </div>
             </div>
@@ -7772,14 +7772,14 @@ export const RAGBeyondTab = ({ s }) => {
                   <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.67rem", color: era.color }}>{era.label}</span>
                   <span style={{ marginLeft: "auto", fontSize: "0.5rem", padding: "0.1rem 0.4rem", background: `${era.color}15`, color: era.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{era.status}</span>
                 </div>
-                <div style={{ fontSize: "0.58rem", color: "#6a6a7a", lineHeight: 1.5 }}>{era.era}</div>
-                <div style={{ fontSize: "0.62rem", color: "#8a8a9a", lineHeight: 1.6, marginTop: "0.3rem" }}>{era.desc.slice(0, 70)}…</div>
+                <div style={{ fontSize: "0.58rem", color: "#334155", lineHeight: 1.5 }}>{era.era}</div>
+                <div style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.6, marginTop: "0.3rem" }}>{era.desc.slice(0, 70)}…</div>
               </button>
             ))}
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.6rem" }}>Key pattern — the layer that doesn't disappear</div>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>Relational databases didn't disappear — they quietly became the storage layer sitting under everything else. Search indices didn't disappear — they became a feature inside larger platforms. Text embeddings didn't disappear — they enabled the vector search era. <strong style={{ color: "#c9a84c" }}>Each layer keeps living. It just stops being the place where new applications get built.</strong></p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>Relational databases didn't disappear — they quietly became the storage layer sitting under everything else. Search indices didn't disappear — they became a feature inside larger platforms. Text embeddings didn't disappear — they enabled the vector search era. <strong style={{ color: "#c9a84c" }}>Each layer keeps living. It just stops being the place where new applications get built.</strong></p>
             <div style={{ marginTop: "0.8rem", padding: "0.7rem 1rem", background: "rgba(201,168,76,0.07)", border: "1px solid #c9a84c30", borderRadius: 4, fontSize: "0.67rem", color: "#c9a84c", lineHeight: 1.7 }}>
               Vector search is exceptional at enterprise document search, semantic knowledge graphs, biological sequence retrieval, code discovery, recommendation. It is not going away. What is likely to shift is its role as the <strong>default conversational memory mechanism</strong> for AI agents.
             </div>
@@ -7797,7 +7797,7 @@ export const RAGBeyondTab = ({ s }) => {
             <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 900, color: "#c4572a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
               "None of this means 'just persist the latent state' is easy. It is, in fact, <em>spectacularly hard.</em>"
             </div>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>
               Unlike text — which is a <strong style={{ color: "#4a9a4a" }}>stable, universal, standardised, model-agnostic interchange format</strong> — latent representations are <strong style={{ color: "#c4572a" }}>model-specific and often unstable across architectures</strong>. That single fact makes interoperability the central research challenge, not a solved side-detail.
             </p>
           </div>
@@ -7805,12 +7805,12 @@ export const RAGBeyondTab = ({ s }) => {
           {/* Why text got shipped first */}
           <div style={{ padding: "0.9rem 1.2rem", background: "rgba(201,168,76,0.07)", border: "1px solid #c9a84c30", borderRadius: 6, marginBottom: "1.2rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c9a84c", marginBottom: "0.4rem" }}>Why RAG got shipped first — the real reason</div>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8, fontStyle: "italic" }}>"Text is the universal fallback protocol <strong style={{ color: "#1a1a2e" }}>because it strips out everything hard.</strong> The interoperability contract for latent state is harder than the interoperability contract for RAG. That is precisely why RAG got shipped first."</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, fontStyle: "italic" }}>"Text is the universal fallback protocol <strong style={{ color: "#1a1a2e" }}>because it strips out everything hard.</strong> The interoperability contract for latent state is harder than the interoperability contract for RAG. That is precisely why RAG got shipped first."</p>
           </div>
 
           {/* 5 specific challenges as interactive checklist — from article */}
           <div style={s.sectionLabel("#c4572a")}>5 Interoperability Challenges — Click Each to Expand</div>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 540 }}>Direct memory injection is not an API call you casually add to your stack. To move a live neural state between two models, you have to resolve all of these simultaneously — not just one at a time.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 540 }}>Direct memory injection is not an API call you casually add to your stack. To move a live neural state between two models, you have to resolve all of these simultaneously — not just one at a time.</p>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.6rem", marginBottom: "1.5rem" }}>
             {[
               ...ILCP_CHALLENGES,
@@ -7826,7 +7826,7 @@ export const RAGBeyondTab = ({ s }) => {
                   <span style={{ color: c.color, fontSize: "0.7rem" }}>{activeChallenge === i ? "▲" : "▼"}</span>
                 </div>
                 {activeChallenge === i && (
-                  <div style={{ fontSize: "0.66rem", color: "#b0b0c0", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>{c.desc}</div>
+                  <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>{c.desc}</div>
                 )}
               </div>
             ))}
@@ -7841,12 +7841,12 @@ export const RAGBeyondTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.2rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#4a9a4a", marginBottom: "0.8rem" }}>What ILCP attempts (arxiv:2605.00593)</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Learn a <strong style={{ color: "#1a1a2e" }}>compressed, portable representation</strong> of the source-side hidden state on one end, and a receiver-side projection that maps it back into the target model's space on the other.</p>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8 }}>Approaches of this shape are actively explored across adjacent fields — including <strong style={{ color: "#1a1a2e" }}>mobile networks</strong>, where the transferred latent has to survive a change of receiving base station in a tight sub-second time budget.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Learn a <strong style={{ color: "#1a1a2e" }}>compressed, portable representation</strong> of the source-side hidden state on one end, and a receiver-side projection that maps it back into the target model's space on the other.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8 }}>Approaches of this shape are actively explored across adjacent fields — including <strong style={{ color: "#1a1a2e" }}>mobile networks</strong>, where the transferred latent has to survive a change of receiving base station in a tight sub-second time budget.</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>⚠️ The honest state of the art</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Current ILCP frameworks work only under <strong style={{ color: "#c4572a" }}>strict architectural compatibility</strong> — usually identical models on both ends. Lifting the compatibility constraint is an open research problem, not a solved one.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Current ILCP frameworks work only under <strong style={{ color: "#c4572a" }}>strict architectural compatibility</strong> — usually identical models on both ends. Lifting the compatibility constraint is an open research problem, not a solved one.</p>
               <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 3, fontSize: "0.63rem", color: "#c4572a", lineHeight: 1.6, fontStyle: "italic" }}>
                 "That is a much narrower claim than 'vector databases are dead.' It is also a much more useful one."
               </div>
@@ -7868,7 +7868,7 @@ export const RAGBeyondTab = ({ s }) => {
             <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.1rem", fontWeight: 900, color: "#c9a84c", lineHeight: 1.6, marginBottom: "1rem" }}>
               "As persistent neural state matures, textual RAG will increasingly become an <em>interoperability layer</em> rather than the <em>primary memory mechanism</em> for AI agents."
             </div>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>Not "RAG is dead." Not "vector databases are dead." The specific claim is about <em>role</em>, not existence.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>Not "RAG is dead." Not "vector databases are dead." The specific claim is about <em>role</em>, not existence.</p>
           </div>
 
           {/* What RAG keeps doing well */}
@@ -7883,7 +7883,7 @@ export const RAGBeyondTab = ({ s }) => {
                   <span style={{ fontSize: "1.1rem" }}>{st.icon}</span>
                   <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: st.color }}>{st.title}</span>
                 </div>
-                <p style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>{st.desc}</p>
+                <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>{st.desc}</p>
               </div>
             ))}
           </div>
@@ -7898,7 +7898,7 @@ export const RAGBeyondTab = ({ s }) => {
                 { text: "RAG was never the destination. It was the workaround we all built while waiting for the actual thing.", color: "#c4572a" },
                 { text: "For decades, computers stored knowledge as symbols. AI briefly did the same. The next generation of AI systems may finally start remembering the way neural networks think — not the way humans write.", color: "#9b7fd4" },
               ].map((q, i) => (
-                <div key={i} style={{ padding: "0.9rem 1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${q.color}`, fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8, fontStyle: i === 2 ? "italic" : "normal" }}>
+                <div key={i} style={{ padding: "0.9rem 1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${q.color}`, fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, fontStyle: i === 2 ? "italic" : "normal" }}>
                   {q.text}
                 </div>
               ))}
@@ -8050,7 +8050,7 @@ const HIER_SERIES_POSITION = [
 // ── SVG: TOC tree diagram ──
 const TOCTreeDiagram = () => (
   <svg viewBox="0 0 260 130" style={{ width: "100%", height: 190 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">NIST SP 800-53 — TOC TREE, 3 LEVELS, 358 ENTRIES</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">NIST SP 800-53 — TOC TREE, 3 LEVELS, 358 ENTRIES</text>
     {/* Root */}
     <rect x="90" y="16" width="80" height="14" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.8"/>
     <text x="130" y="25" textAnchor="middle" fontSize="4.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">492-page document</text>
@@ -8075,13 +8075,13 @@ const TOCTreeDiagram = () => (
     <rect x="70" y="118" width="120" height="12" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.7"/>
     <text x="130" y="126" textAnchor="middle" fontSize="3.8" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Level 3 — 25 AC controls → AC-2 ✅</text>
     {/* Side labels */}
-    <text x="12" y="47" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">11 read</text>
-    <text x="12" y="87" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">20 read</text>
-    <text x="12" y="127" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">25 read</text>
-    <text x="215" y="47" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">1 LLM call</text>
-    <text x="215" y="87" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">1 LLM call</text>
-    <text x="215" y="127" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">1 LLM call</text>
-    <text x="215" y="47" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace" dy="6">→ 56 lines total</text>
+    <text x="12" y="47" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">11 read</text>
+    <text x="12" y="87" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">20 read</text>
+    <text x="12" y="127" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">25 read</text>
+    <text x="215" y="47" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">1 LLM call</text>
+    <text x="215" y="87" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">1 LLM call</text>
+    <text x="215" y="127" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">1 LLM call</text>
+    <text x="215" y="47" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace" dy="6">→ 56 lines total</text>
     <text x="130" y="10" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" dy="120">358 entries exist · 56 read · 487 pages never embedded · 5 pages into generation</text>
   </svg>
 );
@@ -8089,7 +8089,7 @@ const TOCTreeDiagram = () => (
 // ── SVG: Loop engineering diagram ──
 const LoopEngineeringDiagram = () => (
   <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE BOUNDED LOOP INSIDE RETRIEVAL</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE BOUNDED LOOP INSIDE RETRIEVAL</text>
     {/* Start */}
     <rect x="100" y="18" width="60" height="14" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="130" y="27" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Question + toc_df</text>
@@ -8097,12 +8097,12 @@ const LoopEngineeringDiagram = () => (
     {/* Read level */}
     <rect x="90" y="40" width="80" height="14" rx={2} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.8"/>
     <text x="130" y="49" textAnchor="middle" fontSize="4" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">Read current level</text>
-    <text x="130" y="55" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">one compact line per entry</text>
+    <text x="130" y="55" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">one compact line per entry</text>
     <line x1="130" y1="54" x2="130" y2="62" stroke="#2a8a84" strokeWidth="0.5"/>
     {/* LLM call */}
     <rect x="90" y="62" width="80" height="14" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="130" y="71" textAnchor="middle" fontSize="4" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">reason_on_toc()</text>
-    <text x="130" y="77" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">one LLM call → picks branch + reason</text>
+    <text x="130" y="77" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">one LLM call → picks branch + reason</text>
     <line x1="130" y1="76" x2="130" y2="84" stroke="#9b7fd4" strokeWidth="0.5"/>
     {/* Decision diamond */}
     <polygon points="130,84 155,92 130,100 105,92" fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.8"/>
@@ -8113,25 +8113,25 @@ const LoopEngineeringDiagram = () => (
     <text x="182" y="90" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">YES</text>
     <rect x="210" y="84" width="46" height="16" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.7"/>
     <text x="233" y="91" textAnchor="middle" fontSize="3.8" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">Read section</text>
-    <text x="233" y="97" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">→ Generation</text>
+    <text x="233" y="97" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">→ Generation</text>
     {/* No → descend */}
     <line x1="105" y1="92" x2="56" y2="92" stroke="#c4572a" strokeWidth="0.6"/>
     <text x="80" y="90" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">NO</text>
     <rect x="10" y="84" width="46" height="16" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="33" y="91" textAnchor="middle" fontSize="3.8" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Open children</text>
-    <text x="33" y="97" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">level = kids</text>
+    <text x="33" y="97" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">level = kids</text>
     {/* Loop back arrow */}
     <line x1="33" y1="84" x2="33" y2="47" stroke="#c4572a" strokeWidth="0.5" strokeDasharray="2,1"/>
     <line x1="33" y1="47" x2="90" y2="47" stroke="#c4572a" strokeWidth="0.5" strokeDasharray="2,1"/>
     <text x="14" y="65" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif" transform="rotate(-90 14 65)">loop back</text>
-    <text x="130" y="108" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Bounded by tree height · cannot spin · changes level every iteration</text>
+    <text x="130" y="108" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Bounded by tree height · cannot spin · changes level every iteration</text>
   </svg>
 );
 
 // ── SVG: Token comparison ──
 const TokenComparisonDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 140 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">TOKEN COST — FLAT TOP-K vs HIERARCHICAL</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">TOKEN COST — FLAT TOP-K vs HIERARCHICAL</text>
     {/* Flat bar */}
     <text x="74" y="26" textAnchor="end" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">Flat top-k</text>
     <rect x="78" y="18" width="170" height="14" rx={2} fill="rgba(196,87,42,0.15)" stroke="#c4572a" strokeWidth="0.7"/>
@@ -8150,18 +8150,18 @@ const TokenComparisonDiagram = () => (
     {/* Summary */}
     <rect x="160" y="42" width="94" height="52" rx={2} fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5"/>
     <text x="207" y="56" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">56 title lines</text>
-    <text x="207" y="64" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">across 3 LLM calls</text>
+    <text x="207" y="64" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">across 3 LLM calls</text>
     <text x="207" y="74" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">5 pages into gen</text>
-    <text x="207" y="82" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">vs ~10–15 pages blurred</text>
+    <text x="207" y="82" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">vs ~10–15 pages blurred</text>
     <text x="207" y="90" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif">0 pages embedded</text>
-    <text x="130" y="93" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Both axes win simultaneously — rare in retrieval engineering</text>
+    <text x="130" y="93" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Both axes win simultaneously — rare in retrieval engineering</text>
   </svg>
 );
 
 // ── SVG: Series position diagram ──
 const SeriesPositionDiagram = () => (
   <svg viewBox="0 0 260 55" style={{ width: "100%", height: 82 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">WHERE THIS ARTICLE SITS IN THE RETRIEVAL TRILOGY + 1</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">WHERE THIS ARTICLE SITS IN THE RETRIEVAL TRILOGY + 1</text>
     {HIER_SERIES_POSITION.map((pos, i) => {
       const x = 10 + i * 50;
       return (
@@ -8171,13 +8171,13 @@ const SeriesPositionDiagram = () => (
             stroke={pos.color} strokeWidth={pos.current ? 1.2 : 0.6}/>
           {pos.current && <rect x={x} y="16" width="46" height="2" rx={1} fill={pos.color}/>}
           <text x={x + 23} y={pos.current ? 25 : 24} textAnchor="middle" fontSize="3.5" fill={pos.color} fontFamily="Syne, sans-serif" fontWeight={pos.current ? "800" : "700"}>{pos.id.toUpperCase()}</text>
-          <text x={x + 23} y={pos.current ? 32 : 30} textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif">{pos.label.split("—")[1]?.trim().slice(0,16) || pos.label.slice(0,16)}</text>
+          <text x={x + 23} y={pos.current ? 32 : 30} textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif">{pos.label.split("—")[1]?.trim().slice(0,16) || pos.label.slice(0,16)}</text>
           {pos.current && <text x={x + 23} y={38} textAnchor="middle" fontSize="3" fill={pos.color} fontFamily="Syne, sans-serif" fontWeight="700">← HERE</text>}
-          {i < HIER_SERIES_POSITION.length - 1 && <text x={x + 48} y={28} fontSize="6" fill="#4a4a5a">›</text>}
+          {i < HIER_SERIES_POSITION.length - 1 && <text x={x + 48} y={28} fontSize="6" fill="#1E293B">›</text>}
         </g>
       );
     })}
-    <text x="130" y="52" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">7quater is a companion to the retrieval brick — handles the long-document case the trilogy leaves open</text>
+    <text x="130" y="52" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">7quater is a companion to the retrieval brick — handles the long-document case the trilogy leaves open</text>
   </svg>
 );
 
@@ -8226,12 +8226,12 @@ export const HierarchicalRetrievalTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Loop Engineering for<br /><em style={{ color: "#2a8a84", fontStyle: "italic" }}>Hierarchical Retrieval</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           A 492-page document has a 358-entry table of contents. You can't read it all, and top-k over every page mixes the answer with its neighbours. Route through the TOC instead: a bounded loop inside retrieval that reads one level at a time, saves tokens, and lifts precision at the same time — which is rare.
         </p>
         <div style={{ padding: "0.8rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The series thesis in miniature</div>
-          <div style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7 }}>"<em>Amplify the expert.</em> Do what the expert does. Don't dump the whole document, or the whole table of contents, on the model at once. Route through the TOC top-down: eleven chapters first, then twenty families, then twenty-odd controls — 56 lines across 3 calls, not 358 at once."</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>"<em>Amplify the expert.</em> Do what the expert does. Don't dump the whole document, or the whole table of contents, on the model at once. Route through the TOC top-down: eleven chapters first, then twenty families, then twenty-odd controls — 56 lines across 3 calls, not 358 at once."</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
           {[
@@ -8244,7 +8244,7 @@ export const HierarchicalRetrievalTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -8261,7 +8261,7 @@ export const HierarchicalRetrievalTab = ({ s }) => {
           <button key={sec.id} onClick={() => setSection(sec.id)}
             style={{ background: section === sec.id ? `${sec.color}12` : "#ffffff", border: `1px solid ${section === sec.id ? sec.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
             <div style={{ fontSize: "1.1rem", marginBottom: "0.25rem" }}>{sec.icon}</div>
-            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.62rem", color: section === sec.id ? sec.color : "#b0b0c0" }}>{sec.label}</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.62rem", color: section === sec.id ? sec.color : "#1E293B" }}>{sec.label}</div>
           </button>
         ))}
       </div>
@@ -8273,14 +8273,14 @@ export const HierarchicalRetrievalTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>❌ Failure 1 — Flat top-k on 492 pages</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>The words <em style={{ color: "#1a1a2e" }}>account, management, control,</em> and <em style={{ color: "#1a1a2e" }}>access</em> sit on hundreds of pages — the whole document is about controls. Top-k returns AC-2 mixed with AC-3, AC-17, audit controls, and the glossary.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>The words <em style={{ color: "#1a1a2e" }}>account, management, control,</em> and <em style={{ color: "#1a1a2e" }}>access</em> sit on hundreds of pages — the whole document is about controls. Top-k returns AC-2 mixed with AC-3, AC-17, audit controls, and the glossary.</p>
               <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 3, fontSize: "0.63rem", color: "#c4572a", lineHeight: 1.6 }}>
                 "The bill is paid twice: you embed 492 pages, and the answer is still blurred."
               </div>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>❌ Failure 2 — Dump the 358-entry TOC into the prompt</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>The TOC has 358 rows across three levels — every chapter, every control family, every individual control. Sending it whole to the LLM costs thousands of tokens and asks the model to hold a grid the expert would never read at once.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>The TOC has 358 rows across three levels — every chapter, every control family, every individual control. Sending it whole to the LLM costs thousands of tokens and asks the model to hold a grid the expert would never read at once.</p>
               <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 3, fontSize: "0.63rem", color: "#c4572a", lineHeight: 1.6 }}>
                 "You would not hand a colleague all 358 lines any more than the 492 pages."
               </div>
@@ -8288,7 +8288,7 @@ export const HierarchicalRetrievalTab = ({ s }) => {
           </div>
           <div style={s.sectionLabel("#2a8a84")}>The Expert Mental Model — What the Loop Replicates</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem", marginBottom: "1.5rem" }}>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8, marginBottom: "1rem" }}>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}>
               An expert opens the table of contents. They scan the <strong style={{ color: "#1a1a2e" }}>eleven chapter titles</strong> — not 358 entries. They pick <em style={{ color: "#2a8a84" }}>The Controls</em>. They open it to the <strong style={{ color: "#1a1a2e" }}>twenty families</strong>. They pick <em style={{ color: "#2a8a84" }}>Access Control</em>. They open that to the <strong style={{ color: "#1a1a2e" }}>twenty-five controls</strong>. They land on <em style={{ color: "#4a9a4a" }}>AC-2</em>. Top level first, then down, one small decision at a time.
             </p>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
@@ -8315,7 +8315,7 @@ export const HierarchicalRetrievalTab = ({ s }) => {
                 "If no — opens the branch's children, sets them as the next level, loops.",
                 "Bounded by the tree height. Cannot spin — each iteration descends one level and never revisits.",
               ].map((pt, i) => (
-                <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+                <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.5rem", fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7 }}>
                   <span style={{ color: "#2a8a84", flexShrink: 0, fontWeight: 700 }}>{i + 1}.</span><span>{pt}</span>
                 </div>
               ))}
@@ -8350,11 +8350,11 @@ while True:
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div style={{ padding: "1rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6 }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.5rem" }}>✅ On short documents</div>
-              <p style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.7 }}>The top level has no children — the loop runs once and behaves exactly like flat routing. Zero overhead. Identical output. The loop is optional by design.</p>
+              <p style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.7 }}>The top level has no children — the loop runs once and behaves exactly like flat routing. Zero overhead. Identical output. The loop is optional by design.</p>
             </div>
             <div style={{ padding: "1rem 1.2rem", background: "rgba(201,168,76,0.07)", border: "1px solid #c9a84c30", borderRadius: 6 }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c9a84c", marginBottom: "0.5rem" }}>📁 On a folder of documents</div>
-              <p style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.7 }}>Same loop, one level higher. Top level = list of files. Next level = each file's TOC. Routing step unchanged. Covered in Part IV (corpus_toc_df, corpus_index).</p>
+              <p style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.7 }}>Same loop, one level higher. Top level = list of files. Next level = each file's TOC. Routing step unchanged. Covered in Part IV (corpus_toc_df, corpus_index).</p>
             </div>
           </div>
         </div>
@@ -8368,7 +8368,7 @@ while True:
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
               <div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: "#1a1a2e", marginBottom: "0.2rem" }}>Question: <em style={{ color: "#c9a84c" }}>"What does the account management control require?"</em></div>
-                <div style={{ fontSize: "0.62rem", color: "#6a6a7a" }}>Document: NIST SP 800-53 Rev. 5 — 492 pages, 358 TOC entries, 3-level hierarchy</div>
+                <div style={{ fontSize: "0.62rem", color: "#334155" }}>Document: NIST SP 800-53 Rev. 5 — 492 pages, 358 TOC entries, 3-level hierarchy</div>
               </div>
               <button onClick={runDescent} disabled={descentRunning}
                 style={{ background: descentRunning ? "#f2f8f0" : "linear-gradient(135deg,#0a1a14,#1a3a24)", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: descentRunning ? "not-allowed" : "pointer", opacity: descentRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
@@ -8380,11 +8380,11 @@ while True:
                 <div key={i} style={{ background: descentStep >= i ? `${step.color}09` : "#f7f5f0", border: `1px solid ${descentStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, overflow: "hidden", transition: "all 0.5s", opacity: descentStep === -1 ? 0.35 : descentStep >= i ? 1 : 0.25 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.75rem 1rem" }}>
                     <div style={{ width: 30, height: 30, borderRadius: "50%", background: descentStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.9rem", flexShrink: 0, transition: "all 0.4s", border: `1.5px solid ${descentStep >= i ? step.color : "#e0dcd4"}` }}>
-                      {descentStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem" }}>{i + 1}</span>}
+                      {descentStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem" }}>{i + 1}</span>}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.68rem", color: descentStep >= i ? step.color : "#4a4a5a" }}>{step.label}</div>
-                      {step.tokensRead > 0 && descentStep >= i && <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: "#6a6a7a", marginTop: "0.1rem" }}>{step.tokensRead} title lines read in this call</div>}
+                      <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.68rem", color: descentStep >= i ? step.color : "#1E293B" }}>{step.label}</div>
+                      {step.tokensRead > 0 && descentStep >= i && <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: "#334155", marginTop: "0.1rem" }}>{step.tokensRead} title lines read in this call</div>}
                     </div>
                     {descentStep >= i && step.picks.length > 0 && (
                       <div style={{ background: `${step.color}15`, border: `1px solid ${step.color}30`, borderRadius: 3, padding: "0.3rem 0.6rem", fontSize: "0.6rem", color: step.color, fontFamily: "Syne, sans-serif", fontWeight: 700, flexShrink: 0 }}>
@@ -8398,16 +8398,16 @@ while True:
                     <div style={{ borderTop: `1px solid ${step.color}20`, padding: "0.8rem 1rem", animation: "fadeIn 0.4s ease" }}>
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem" }}>
                         <div>
-                          <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Entries read (one compact line each)</div>
+                          <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Entries read (one compact line each)</div>
                           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
                             {step.entries.map((e, j) => (
-                              <span key={j} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: step.picks.includes(e) ? step.color : "#4a4a5a", background: step.picks.includes(e) ? `${step.color}12` : "#ffffff", padding: "0.15rem 0.4rem", borderRadius: 3, border: `1px solid ${step.picks.includes(e) ? step.color + "40" : "#e0dcd4"}`, fontWeight: step.picks.includes(e) ? 700 : 400 }}>{e}</span>
+                              <span key={j} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: step.picks.includes(e) ? step.color : "#1E293B", background: step.picks.includes(e) ? `${step.color}12` : "#ffffff", padding: "0.15rem 0.4rem", borderRadius: 3, border: `1px solid ${step.picks.includes(e) ? step.color + "40" : "#e0dcd4"}`, fontWeight: step.picks.includes(e) ? 700 : 400 }}>{e}</span>
                             ))}
                           </div>
                         </div>
                         <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${step.color}` }}>
                           <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: step.color, marginBottom: "0.3rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>LLM reasoning (verbatim)</div>
-                          <div style={{ fontSize: "0.62rem", color: "#8a8a9a", lineHeight: 1.7, fontStyle: "italic" }}>{step.llmReason}</div>
+                          <div style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.7, fontStyle: "italic" }}>{step.llmReason}</div>
                         </div>
                       </div>
                     </div>
@@ -8421,7 +8421,7 @@ while True:
               ))}
             </div>
             {descentStep >= HIER_DESCENT_STEPS.length - 1 && (
-              <div style={{ marginTop: "0.8rem", padding: "0.8rem 1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a40", borderRadius: 4, animation: "fadeIn 0.4s ease", fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+              <div style={{ marginTop: "0.8rem", padding: "0.8rem 1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a40", borderRadius: 4, animation: "fadeIn 0.4s ease", fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7 }}>
                 <strong style={{ color: "#4a9a4a" }}>Result: </strong>56 title lines read across 3 LLM calls. 5 pages into generation. 487 pages never seen. 302 controls never in the prompt. Token cost: ~1,400 tokens for routing + ~2,500 for generation = ~3,900 total. Flat top-k: ~246,000 tokens for full embedding + ~7,500 for 15 blurred pages.
               </div>
             )}
@@ -8436,7 +8436,7 @@ while True:
       {section === "controls" && (
         <div>
           <div style={s.sectionLabel("#9b7fd4")}>§4 — Three Loop Controls (from Article 13bis)</div>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>Every well-formed loop has three control surfaces. This retrieval loop belongs to the loop engineering discipline from Article 13bis — which categorises all loops by trigger, termination, and recovery.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>Every well-formed loop has three control surfaces. This retrieval loop belongs to the loop engineering discipline from Article 13bis — which categorises all loops by trigger, termination, and recovery.</p>
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
             {HIER_LOOP_CONTROLS.map(c => (
               <button key={c.id} onClick={() => setActiveControl(c.id)}
@@ -8453,7 +8453,7 @@ while True:
                   <span style={{ fontSize: "1.5rem" }}>{control.icon}</span>
                   <span style={{ fontFamily: "Playfair Display, serif", fontSize: "1.1rem", fontWeight: 900 }}>{control.name}</span>
                 </div>
-                <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8, marginBottom: "0.8rem" }}>{control.desc}</p>
+                <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "0.8rem" }}>{control.desc}</p>
                 <div style={{ padding: "0.6rem 0.8rem", background: `${control.color}0d`, border: `1px solid ${control.color}25`, borderRadius: 4, fontSize: "0.65rem", color: control.color }}>
                   <strong>Real example: </strong>{control.example}
                 </div>
@@ -8466,7 +8466,7 @@ while True:
           )}
           <div style={{ padding: "1rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd430", borderRadius: 6 }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#9b7fd4", marginBottom: "0.5rem" }}>What makes this loop different from generation retry loops (Part III)</div>
-            <p style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.7 }}>This loop reacts to <strong style={{ color: "#1a1a2e" }}>document structure</strong> — the toc_df shape — not to a model failure or quality signal. The trigger is structural (children exist), not evaluative (answer was bad). The termination is structural (leaf node), not conditional (quality threshold met). That's why it can be bounded by the tree depth rather than by a max-iterations guard.</p>
+            <p style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.7 }}>This loop reacts to <strong style={{ color: "#1a1a2e" }}>document structure</strong> — the toc_df shape — not to a model failure or quality signal. The trigger is structural (children exist), not evaluative (answer was bad). The termination is structural (leaf node), not conditional (quality threshold met). That's why it can be bounded by the tree depth rather than by a max-iterations guard.</p>
           </div>
         </div>
       )}
@@ -8483,18 +8483,18 @@ while True:
                   <span style={{ fontSize: "1.3rem" }}>{tc.icon}</span>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: tc.color }}>{tc.name}</div>
-                    <div style={{ fontSize: "0.6rem", color: "#6a6a7a", marginTop: "0.15rem" }}>{tc.example}</div>
+                    <div style={{ fontSize: "0.6rem", color: "#334155", marginTop: "0.15rem" }}>{tc.example}</div>
                   </div>
                   <span style={{ color: tc.color, fontSize: "0.8rem" }}>{activeTerm === tc.id ? "▲" : "▼"}</span>
                 </div>
                 {activeTerm === tc.id && (
                   <div style={{ animation: "fadeIn 0.2s ease" }}>
-                    <p style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.8, marginBottom: "0.7rem" }}>{tc.desc}</p>
+                    <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "0.7rem" }}>{tc.desc}</p>
                     <div style={{ display: "flex", gap: "0.8rem" }}>
-                      <div style={{ flex: 1, padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${tc.color}`, fontSize: "0.63rem", color: "#8a8a9a", lineHeight: 1.6 }}>
+                      <div style={{ flex: 1, padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${tc.color}`, fontSize: "0.63rem", color: "#334155", lineHeight: 1.6 }}>
                         <strong style={{ color: tc.color }}>Example: </strong>{tc.example}
                       </div>
-                      <div style={{ flex: 1, padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${tc.color}`, fontSize: "0.63rem", color: "#8a8a9a", lineHeight: 1.6 }}>
+                      <div style={{ flex: 1, padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${tc.color}`, fontSize: "0.63rem", color: "#334155", lineHeight: 1.6 }}>
                         <strong style={{ color: tc.color }}>Token cost: </strong>{tc.token_cost}
                       </div>
                     </div>
@@ -8505,7 +8505,7 @@ while True:
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#c9a84c", marginBottom: "0.7rem" }}>The keyword tiebreaker — when title alone is not enough</div>
-            <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>When two candidates are semantically close (<em style={{ color: "#1a1a2e" }}>least privilege</em> is applied throughout Access Control but defined once in the Glossary), retrieval adds a keyword hit count per entry — still one line per entry, not a column-per-keyword grid.</p>
+            <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>When two candidates are semantically close (<em style={{ color: "#1a1a2e" }}>least privilege</em> is applied throughout Access Control but defined once in the Glossary), retrieval adds a keyword hit count per entry — still one line per entry, not a column-per-keyword grid.</p>
             <CodeBlock code={`# Keyword tiebreaker: one extra field per entry line
 # Never a column-per-keyword grid
 
@@ -8529,7 +8529,7 @@ entry_line = f"{title} | pp.{start_page}–{end_page} | hits:{keyword_hits}"
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Dimension", "Flat top-k", "Hierarchical (TOC loop)"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -8538,9 +8538,9 @@ entry_line = f"{title} | pp.{start_page}–{end_page} | hits:{keyword_hits}"
                   <tr key={i} style={{ borderBottom: i < HIER_COMPARISON.length - 1 ? "1px solid rgba(42,42,56,0.4)" : "none" }}
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                    <td style={{ padding: "0.7rem 1rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
+                    <td style={{ padding: "0.7rem 1rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
                     <td style={{ padding: "0.7rem 1rem", color: row.winner === "flat" ? "#4a9a4a" : row.winner === "both" ? "#c9a84c" : "#c4572a" }}>{row.flat}</td>
-                    <td style={{ padding: "0.7rem 1rem", color: row.winner === "hier" ? "#4a9a4a" : row.winner === "both" ? "#c9a84c" : "#b0b0c0", fontWeight: row.winner === "hier" ? 700 : 400 }}>{row.hier}</td>
+                    <td style={{ padding: "0.7rem 1rem", color: row.winner === "hier" ? "#4a9a4a" : row.winner === "both" ? "#c9a84c" : "#1E293B", fontWeight: row.winner === "hier" ? 700 : 400 }}>{row.hier}</td>
                   </tr>
                 ))}
               </tbody>
@@ -8548,7 +8548,7 @@ entry_line = f"{title} | pp.{start_page}–{end_page} | hits:{keyword_hits}"
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(74,154,74,0.07)", border: "1px solid #4a9a4a30", borderRadius: 6 }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#4a9a4a", marginBottom: "0.5rem" }}>Why "both axes at once" matters</div>
-            <p style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.7 }}>Retrieval engineering usually forces a tradeoff: higher precision costs more tokens (larger context), lower cost means coarser retrieval. The hierarchical loop wins on <strong style={{ color: "#1a1a2e" }}>both precision and token cost simultaneously</strong> — because it avoids embedding the body entirely and commits to the right section by name. That's the structural advantage of routing over scoring.</p>
+            <p style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.7 }}>Retrieval engineering usually forces a tradeoff: higher precision costs more tokens (larger context), lower cost means coarser retrieval. The hierarchical loop wins on <strong style={{ color: "#1a1a2e" }}>both precision and token cost simultaneously</strong> — because it avoids embedding the body entirely and commits to the right section by name. That's the structural advantage of routing over scoring.</p>
           </div>
         </div>
       )}
@@ -8703,7 +8703,7 @@ const RW_REFRAMES = [
 // ── SVG: Value map diagram ──
 const ValueMapDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AI VALUE MAP — WHERE TO FOCUS</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AI VALUE MAP — WHERE TO FOCUS</text>
     {[
       { label: "Cost Reduction", x: 18,  y: 20, w: 56, color: "#2a8a84", examples: "Automate ops, cut review cycles, reduce errors" },
       { label: "Revenue & Growth", x: 82, y: 20, w: 56, color: "#c9a84c", examples: "Improve CX, personalise, accelerate sales" },
@@ -8714,7 +8714,7 @@ const ValueMapDiagram = () => (
         <rect x={q.x} y={q.y} width={q.w} height={32} rx={2} fill={`${q.color}12`} stroke={q.color} strokeWidth="0.7"/>
         <text x={q.x + q.w/2} y={q.y + 11} textAnchor="middle" fontSize="4.2" fill={q.color} fontFamily="Syne, sans-serif" fontWeight="800">{q.label}</text>
         <foreignObject x={q.x + 2} y={q.y + 15} width={q.w - 4} height={16}>
-          <div xmlns="http://www.w3.org/1999/xhtml" style={{ fontSize: "3.2px", color: "#6a6a7a", lineHeight: "1.5", fontFamily: "Syne, sans-serif" }}>{q.examples}</div>
+          <div xmlns="http://www.w3.org/1999/xhtml" style={{ fontSize: "3.2px", color: "#334155", lineHeight: "1.5", fontFamily: "Syne, sans-serif" }}>{q.examples}</div>
         </foreignObject>
       </g>
     ))}
@@ -8722,19 +8722,19 @@ const ValueMapDiagram = () => (
     <ellipse cx="130" cy="72" rx="28" ry="14" fill="rgba(196,87,42,0.12)" stroke="#c4572a" strokeWidth="1" strokeDasharray="3,2"/>
     <text x="130" y="68" textAnchor="middle" fontSize="5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">10% of initiatives</text>
     <text x="130" y="76" textAnchor="middle" fontSize="3.8" fill="#c4572a" fontFamily="Syne, sans-serif">→ 80% of value</text>
-    <text x="130" y="84" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">J&J: 900 use cases → focus on 90–135</text>
+    <text x="130" y="84" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">J&J: 900 use cases → focus on 90–135</text>
     {/* Arrows pointing to circle */}
     {[18+28, 82+28, 146+28, 210+23].map((x, i) => (
-      <line key={i} x1={x} y1={52} x2={130 + [(-28),(- 15),(12),(22)][i]} y2={65} stroke="#4a4a5a" strokeWidth="0.4" strokeDasharray="2,1"/>
+      <line key={i} x1={x} y1={52} x2={130 + [(-28),(- 15),(12),(22)][i]} y2={65} stroke="#1E293B" strokeWidth="0.4" strokeDasharray="2,1"/>
     ))}
-    <text x="130" y="95" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Start here: which quadrant deserves investment? Then: which 10% within it?</text>
+    <text x="130" y="95" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Start here: which quadrant deserves investment? Then: which 10% within it?</text>
   </svg>
 );
 
 // ── SVG: Human-Agent workflow diagram ──
 const HumanAgentWorkflowDiagram = () => (
   <svg viewBox="0 0 260 105" style={{ width: "100%", height: 158 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HUMAN ↔ AGENT WORKFLOW DESIGN</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HUMAN ↔ AGENT WORKFLOW DESIGN</text>
     {/* Old workflow */}
     <rect x="8" y="18" width="114" height="76" rx={2} fill="#ffffff" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="65" y="28" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Old Workflow</text>
@@ -8747,13 +8747,13 @@ const HumanAgentWorkflowDiagram = () => (
     ].map((step, i) => (
       <g key={i}>
         <rect x="14" y={step.y - 4} width="102" height="9" rx={1} fill="rgba(196,87,42,0.08)" stroke="#c4572a" strokeWidth="0.4"/>
-        <text x="18" y={step.y + 2} fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">{step.label}</text>
+        <text x="18" y={step.y + 2} fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">{step.label}</text>
         <text x="112" y={step.y + 2} textAnchor="end" fontSize="3" fill="#c4572a" fontFamily="DM Mono, monospace">human</text>
       </g>
     ))}
 
     {/* Arrow */}
-    <text x="130" y="58" textAnchor="middle" fontSize="10" fill="#4a4a5a">→</text>
+    <text x="130" y="58" textAnchor="middle" fontSize="10" fill="#1E293B">→</text>
 
     {/* New workflow */}
     <rect x="140" y="18" width="114" height="76" rx={2} fill="#ffffff" stroke="#4a9a4a" strokeWidth="0.7"/>
@@ -8771,14 +8771,14 @@ const HumanAgentWorkflowDiagram = () => (
         <text x="244" y={step.y + 2} textAnchor="end" fontSize="3" fill={step.color} fontFamily="DM Mono, monospace">{step.owner}</text>
       </g>
     ))}
-    <text x="130" y="100" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Same outcome · Agent handles execution · Human owns judgment + exceptions</text>
+    <text x="130" y="100" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Same outcome · Agent handles execution · Human owns judgment + exceptions</text>
   </svg>
 );
 
 // ── SVG: Three measurement layers ──
 const MeasurementLayersDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THREE LAYERS OF MEASUREMENT</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THREE LAYERS OF MEASUREMENT</text>
     {RW_MEASUREMENT_LAYERS.map((layer, i) => {
       const y = 18 + i * 24;
       return (
@@ -8786,7 +8786,7 @@ const MeasurementLayersDiagram = () => (
           <rect x="8" y={y} width="244" height="20" rx={2} fill={`${layer.color}10`} stroke={layer.color} strokeWidth="0.7"/>
           <text x="14" y={y + 8} fontSize="4.5" dominantBaseline="middle">{layer.icon}</text>
           <text x="24" y={y + 8} fontSize="4.2" fill={layer.color} fontFamily="Syne, sans-serif" fontWeight="800" dominantBaseline="middle">Layer {layer.layer} — {layer.name}</text>
-          <text x="24" y={y + 16} fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">{layer.metrics.slice(0, 2).join(" · ")}{layer.metrics.length > 2 ? ` · +${layer.metrics.length - 2} more` : ""}</text>
+          <text x="24" y={y + 16} fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">{layer.metrics.slice(0, 2).join(" · ")}{layer.metrics.length > 2 ? ` · +${layer.metrics.length - 2} more` : ""}</text>
           {i < 2 && <text x="250" y={y + 20} textAnchor="end" fontSize="3.5" fill={layer.color} fontFamily="Syne, sans-serif" fontWeight="700">↓</text>}
         </g>
       );
@@ -8800,11 +8800,11 @@ const MeasurementLayersDiagram = () => (
 // ── SVG: Governance gap diagram ──
 const GovernanceGapDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE GOVERNANCE GAP (DELOITTE 2026)</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE GOVERNANCE GAP (DELOITTE 2026)</text>
     {/* 80% bar — lacking */}
     <rect x="30" y="20" width="200" height="22" rx={2} fill="rgba(196,87,42,0.12)" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="130" y="30" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">80% lack mature AI governance</text>
-    <text x="130" y="38" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">No decision boundaries · No real-time monitoring · No audit trails</text>
+    <text x="130" y="38" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">No decision boundaries · No real-time monitoring · No audit trails</text>
     {/* 21% bar — mature */}
     <rect x="30" y="50" width="42" height="22" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.7"/>
     <text x="51" y="60" textAnchor="middle" fontSize="4.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">21%</text>
@@ -8813,7 +8813,7 @@ const GovernanceGapDiagram = () => (
     <text x="154" y="62" textAnchor="middle" fontSize="3.8" fill="#c4572a" fontFamily="Syne, sans-serif">79% — limited or no governance</text>
     {/* Five executive questions */}
     <text x="130" y="82" textAnchor="middle" fontSize="3.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Executive checklist: Who owns outcome? Which projects stop? What workflow needs redesign first?</text>
-    <text x="130" y="88" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Source: Deloitte 2026 State of AI in the Enterprise</text>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Source: Deloitte 2026 State of AI in the Enterprise</text>
   </svg>
 );
 
@@ -8845,12 +8845,12 @@ export const RedesignWorkTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Redesign Work Before<br /><em style={{ color: "#c9a84c", fontStyle: "italic" }}>You Add More AI Agents</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           AI becomes business value only when it reaches your products and business processes. Before introducing more AI tools and agents, redesign and improve the workflow. A 5-step framework backed by McKinsey, BCG, PwC, Deloitte, and Microsoft's 2026 research.
         </p>
         <div style={{ padding: "0.8rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.3rem" }}>The core observation — from the field</div>
-          <div style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7, fontStyle: "italic" }}>"People were using AI, but the work itself still ran the old way. A workflow pulling from different data sources, multiple rounds of Excel copy-paste, and manual handoffs before anything reached a checkpoint. The most important intelligence stayed in people's heads."</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"People were using AI, but the work itself still ran the old way. A workflow pulling from different data sources, multiple rounds of Excel copy-paste, and manual handoffs before anything reached a checkpoint. The most important intelligence stayed in people's heads."</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
           {[
@@ -8863,7 +8863,7 @@ export const RedesignWorkTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -8875,7 +8875,7 @@ export const RedesignWorkTab = ({ s }) => {
           <button key={sec.id} onClick={() => setSection(sec.id)}
             style={{ background: section === sec.id ? `${sec.color}12` : "#ffffff", border: `1px solid ${section === sec.id ? sec.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
             <div style={{ fontSize: "1.1rem", marginBottom: "0.25rem" }}>{sec.icon}</div>
-            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.6rem", color: section === sec.id ? sec.color : "#b0b0c0", lineHeight: 1.3 }}>{sec.label}</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.6rem", color: section === sec.id ? sec.color : "#1E293B", lineHeight: 1.3 }}>{sec.label}</div>
           </button>
         ))}
       </div>
@@ -8896,7 +8896,7 @@ export const RedesignWorkTab = ({ s }) => {
                 <span style={{ fontSize: "1rem" }}>{st.icon}</span>
                 <div style={{ textAlign: "left" }}>
                   <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: st.color }}>{st.num}</div>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.63rem", color: activeStep === st.id ? st.color : "#b0b0c0" }}>{st.name}</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.63rem", color: activeStep === st.id ? st.color : "#1E293B" }}>{st.name}</div>
                 </div>
               </button>
             ))}
@@ -8913,28 +8913,28 @@ export const RedesignWorkTab = ({ s }) => {
                       <div style={{ fontSize: "0.65rem", color: step.color, fontFamily: "Syne, sans-serif" }}>{step.tagline}</div>
                     </div>
                   </div>
-                  <div style={{ fontSize: "0.62rem", color: "#6a6a7a", fontStyle: "italic" }}>{step.research}</div>
+                  <div style={{ fontSize: "0.62rem", color: "#334155", fontStyle: "italic" }}>{step.research}</div>
                 </div>
                 <div style={{ background: "#ffffff", border: `1px solid ${step.color}30`, borderRadius: 4, padding: "0.7rem 1rem", textAlign: "center", minWidth: 100 }}>
                   <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, color: step.color }}>{step.stat.val}</div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#1a1a2e" }}>{step.stat.label}</div>
-                  <div style={{ fontSize: "0.5rem", color: "#6a6a7a" }}>{step.stat.sub}</div>
+                  <div style={{ fontSize: "0.5rem", color: "#334155" }}>{step.stat.sub}</div>
                 </div>
               </div>
               <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
                 {["overview", "questions", "action"].map(t => (
                   <button key={t} onClick={() => setStepTab(t)}
-                    style={{ flex: 1, padding: "0.65rem", background: stepTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: stepTab === t ? `2px solid ${step.color}` : "2px solid transparent", color: stepTab === t ? step.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    style={{ flex: 1, padding: "0.65rem", background: stepTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: stepTab === t ? `2px solid ${step.color}` : "2px solid transparent", color: stepTab === t ? step.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                     {t === "questions" ? "Diagnostic Questions" : t.charAt(0).toUpperCase() + t.slice(1)}
                   </button>
                 ))}
               </div>
               <div style={{ padding: "1.5rem" }}>
-                {stepTab === "overview" && <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>{step.desc}</p>}
+                {stepTab === "overview" && <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{step.desc}</p>}
                 {stepTab === "questions" && (
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     {step.questions.map((q, i) => (
-                      <div key={i} style={{ display: "flex", gap: "0.7rem", padding: "0.7rem 0.9rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${step.color}`, fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7 }}>
+                      <div key={i} style={{ display: "flex", gap: "0.7rem", padding: "0.7rem 0.9rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${step.color}`, fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>
                         <span style={{ color: step.color, fontFamily: "Syne, sans-serif", fontWeight: 700, flexShrink: 0 }}>{i + 1}.</span>
                         <span>{q}</span>
                       </div>
@@ -8944,7 +8944,7 @@ export const RedesignWorkTab = ({ s }) => {
                 {stepTab === "action" && (
                   <div style={{ padding: "1rem 1.2rem", background: `${step.color}0a`, border: `1px solid ${step.color}30`, borderRadius: 4, borderLeft: `4px solid ${step.color}` }}>
                     <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: step.color, marginBottom: "0.5rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>Action</div>
-                    <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>{step.action}</p>
+                    <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{step.action}</p>
                   </div>
                 )}
               </div>
@@ -8964,7 +8964,7 @@ export const RedesignWorkTab = ({ s }) => {
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#2a8a84", marginBottom: "0.8rem" }}>What agents should own</div>
               {["Predictable, high-volume execution steps", "Data lookup, classification, pattern matching", "Draft generation and formatting", "Routing and triage of standard cases", "Monitoring, alerting, and status updates"].map((item, i) => (
-                <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.4rem", fontSize: "0.66rem", color: "#b0b0c0", lineHeight: 1.6 }}>
+                <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.4rem", fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.6 }}>
                   <span style={{ color: "#2a8a84", flexShrink: 0 }}>▸</span><span>{item}</span>
                 </div>
               ))}
@@ -8972,7 +8972,7 @@ export const RedesignWorkTab = ({ s }) => {
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c9a84c", marginBottom: "0.8rem" }}>What humans must keep</div>
               {["Judgment calls that affect relationships or trust", "Exception handling and escalation decisions", "Ethical review and accountability", "Strategy, context, and stakeholder communication", "Workflow design and improvement — the meta-work"].map((item, i) => (
-                <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.4rem", fontSize: "0.66rem", color: "#b0b0c0", lineHeight: 1.6 }}>
+                <div key={i} style={{ display: "flex", gap: "0.5rem", marginBottom: "0.4rem", fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.6 }}>
                   <span style={{ color: "#c9a84c", flexShrink: 0 }}>▸</span><span>{item}</span>
                 </div>
               ))}
@@ -8980,15 +8980,15 @@ export const RedesignWorkTab = ({ s }) => {
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#c4572a", marginBottom: "0.7rem" }}>The chatbot trap</div>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8, marginBottom: "0.8rem" }}>"Let's put a nice chatbot on top of our files and data, and everything will work out." This is the most common failure mode. The chatbot improves one step — drafting a reply — while the workflow around it remains unchanged: Excel copy-paste, manual handoffs, undocumented decisions.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "0.8rem" }}>"Let's put a nice chatbot on top of our files and data, and everything will work out." This is the most common failure mode. The chatbot improves one step — drafting a reply — while the workflow around it remains unchanged: Excel copy-paste, manual handoffs, undocumented decisions.</p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem" }}>
               <div style={{ padding: "0.8rem", background: "rgba(196,87,42,0.07)", borderRadius: 4, borderLeft: "3px solid #c4572a" }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.3rem" }}>Chatbot approach</div>
-                <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>Customer service agent helps employees write faster replies. One step improved. The rest of the workflow: unchanged.</div>
+                <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>Customer service agent helps employees write faster replies. One step improved. The rest of the workflow: unchanged.</div>
               </div>
               <div style={{ padding: "0.8rem", background: "rgba(74,154,74,0.07)", borderRadius: 4, borderLeft: "3px solid #4a9a4a" }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: "#4a9a4a", marginBottom: "0.3rem" }}>Redesigned workflow</div>
-                <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>Predicts issues → triggers proactive outreach → routes exceptions to humans → closes the loop with personalised resolution.</div>
+                <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>Predicts issues → triggers proactive outreach → routes exceptions to humans → closes the loop with personalised resolution.</div>
               </div>
             </div>
           </div>
@@ -9010,7 +9010,7 @@ export const RedesignWorkTab = ({ s }) => {
                   <div style={{ width: 36, height: 36, borderRadius: "50%", background: `${layer.color}20`, border: `2px solid ${layer.color}`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.2rem", flexShrink: 0 }}>{layer.icon}</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: layer.color }}>Layer {layer.layer} — {layer.name}</div>
-                    <div style={{ fontSize: "0.6rem", color: "#6a6a7a", marginTop: "0.15rem" }}>Click to expand {layer.metrics.length} metrics</div>
+                    <div style={{ fontSize: "0.6rem", color: "#334155", marginTop: "0.15rem" }}>Click to expand {layer.metrics.length} metrics</div>
                   </div>
                   <span style={{ color: layer.color, fontSize: "0.8rem" }}>{activeLayer === i ? "▲" : "▼"}</span>
                 </div>
@@ -9018,7 +9018,7 @@ export const RedesignWorkTab = ({ s }) => {
                   <div style={{ animation: "fadeIn 0.2s ease" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", marginBottom: "0.7rem" }}>
                       {layer.metrics.map((m2, j) => (
-                        <div key={j} style={{ display: "flex", gap: "0.5rem", padding: "0.5rem 0.7rem", background: "#f7f5f0", borderRadius: 3, fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.6 }}>
+                        <div key={j} style={{ display: "flex", gap: "0.5rem", padding: "0.5rem 0.7rem", background: "#f7f5f0", borderRadius: 3, fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.6 }}>
                           <span style={{ color: layer.color, flexShrink: 0 }}>▸</span><span>{m2}</span>
                         </div>
                       ))}
@@ -9041,7 +9041,7 @@ export const RedesignWorkTab = ({ s }) => {
       {section === "reframes" && (
         <div>
           <div style={s.sectionLabel("#9b7fd4")}>6 Question Reframes — Old Thinking vs Better Thinking</div>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 540 }}>These are the actual conversation patterns from the field. The old question sounds reasonable. The better question surfaces the underlying problem.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 540 }}>These are the actual conversation patterns from the field. The old question sounds reasonable. The better question surfaces the underlying problem.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem", marginBottom: "1.5rem" }}>
             {RW_REFRAMES.map((rf, i) => (
               <div key={i} onClick={() => setActiveReframe(activeReframe === i ? null : i)}
@@ -9049,12 +9049,12 @@ export const RedesignWorkTab = ({ s }) => {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", padding: "0.8rem 1rem", gap: "0.8rem" }}>
                   <div style={{ padding: "0.5rem 0.7rem", background: "rgba(196,87,42,0.07)", borderRadius: 4, borderLeft: "3px solid #c4572a" }}>
                     <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#c4572a", marginBottom: "0.2rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>Old question</div>
-                    <div style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.5 }}>{rf.old}</div>
+                    <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.5 }}>{rf.old}</div>
                   </div>
                   <span style={{ fontSize: "1rem", color: "#4a9a4a", flexShrink: 0 }}>→</span>
                   <div style={{ padding: "0.5rem 0.7rem", background: "rgba(155,127,212,0.07)", borderRadius: 4, borderLeft: "3px solid #9b7fd4" }}>
                     <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#9b7fd4", marginBottom: "0.2rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>Better question</div>
-                    <div style={{ fontSize: "0.65rem", color: "#b0b0c0", lineHeight: 1.5 }}>{rf.better}</div>
+                    <div style={{ fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.5 }}>{rf.better}</div>
                   </div>
                 </div>
               </div>
@@ -9062,7 +9062,7 @@ export const RedesignWorkTab = ({ s }) => {
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(201,168,76,0.07)", border: "1px solid #c9a84c30", borderRadius: 6 }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c9a84c", marginBottom: "0.5rem" }}>The final question — before your next AI review</div>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8, fontStyle: "italic" }}>"Are we buying more AI, or are we redesigning the work that can produce the better business result?"</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, fontStyle: "italic" }}>"Are we buying more AI, or are we redesigning the work that can produce the better business result?"</p>
           </div>
         </div>
       )}
@@ -9083,7 +9083,7 @@ export const RedesignWorkTab = ({ s }) => {
                   <span style={{ color: r.color, fontSize: "0.8rem" }}>{activeCitation === i ? "▲" : "▼"}</span>
                 </div>
                 {activeCitation === i && (
-                  <div style={{ marginTop: "0.8rem", padding: "0.8rem 1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${r.color}`, fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.8, animation: "fadeIn 0.2s ease" }}>
+                  <div style={{ marginTop: "0.8rem", padding: "0.8rem 1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${r.color}`, fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8, animation: "fadeIn 0.2s ease" }}>
                     {r.finding}
                   </div>
                 )}
@@ -9097,7 +9097,7 @@ export const RedesignWorkTab = ({ s }) => {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Statistic", "Source", "Implication"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -9115,8 +9115,8 @@ export const RedesignWorkTab = ({ s }) => {
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td style={{ padding: "0.65rem 0.9rem", color: row.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row.stat}</td>
-                    <td style={{ padding: "0.65rem 0.9rem", color: "#6a6a7a", fontFamily: "DM Mono, monospace", fontSize: "0.62rem" }}>{row.source}</td>
-                    <td style={{ padding: "0.65rem 0.9rem", color: "#b0b0c0", fontStyle: "italic" }}>{row.impl}</td>
+                    <td style={{ padding: "0.65rem 0.9rem", color: "#334155", fontFamily: "DM Mono, monospace", fontSize: "0.62rem" }}>{row.source}</td>
+                    <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B", fontStyle: "italic" }}>{row.impl}</td>
                   </tr>
                 ))}
               </tbody>
@@ -9187,19 +9187,19 @@ const PARALLEL_VARIANTS = [
 // ── SVG: MLA architecture ──
 const MLADiagram = () => (
   <svg viewBox="0 0 260 105" style={{ width: "100%", height: 155 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MULTI-HEAD LATENT ATTENTION — LOW-RANK KV COMPRESSION</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MULTI-HEAD LATENT ATTENTION — LOW-RANK KV COMPRESSION</text>
     {/* Standard MHA (left) */}
     <rect x="8" y="18" width="68" height="76" rx={2} fill="#ffffff" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="42" y="29" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Standard MHA</text>
     {["Q head 1", "K head 1", "V head 1", "Q head 2", "K head 2", "V head 2", "... × h heads"].map((t, i) => (
       <g key={i}>
         <rect x="14" y={33 + i * 8} width="56" height="6" rx={1} fill={t.startsWith("K") || t.startsWith("V") ? "rgba(196,87,42,0.15)" : "rgba(42,42,56,0.5)"} stroke={t.startsWith("K") || t.startsWith("V") ? "#c4572a" : "#e0dcd4"} strokeWidth="0.4"/>
-        <text x="42" y={37 + i * 8} textAnchor="middle" fontSize="3.2" fill={t.startsWith("K") || t.startsWith("V") ? "#c4572a" : "#6a6a7a"} fontFamily="DM Mono, monospace">{t}</text>
+        <text x="42" y={37 + i * 8} textAnchor="middle" fontSize="3.2" fill={t.startsWith("K") || t.startsWith("V") ? "#c4572a" : "#334155"} fontFamily="DM Mono, monospace">{t}</text>
       </g>
     ))}
     <text x="42" y="98" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">192–328 KB/token</text>
     {/* Arrow */}
-    <text x="80" y="60" fontSize="8" fill="#4a4a5a" textAnchor="middle">→</text>
+    <text x="80" y="60" fontSize="8" fill="#1E293B" textAnchor="middle">→</text>
     {/* MLA (right) */}
     <rect x="88" y="18" width="164" height="76" rx={2} fill="#ffffff" stroke="#4a9a4a" strokeWidth="0.8"/>
     <text x="170" y="28" textAnchor="middle" fontSize="4.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">Multi-Head Latent Attention (MLA)</text>
@@ -9212,37 +9212,37 @@ const MLADiagram = () => (
     {/* Cache only C_KV */}
     <rect x="184" y="32" width="60" height="10" rx={1} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.7"/>
     <text x="214" y="39" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">CACHE: C_KV only</text>
-    <text x="214" y="45" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">70 KB/token</text>
+    <text x="214" y="45" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">70 KB/token</text>
     {/* Arrows */}
     <line x1="124" y1="37" x2="132" y2="37" stroke="#c9a84c" strokeWidth="0.5"/>
     <line x1="176" y1="37" x2="184" y2="37" stroke="#2a8a84" strokeWidth="0.5"/>
     {/* Up projection at inference */}
     <rect x="94" y="52" width="80" height="14" rx={1} fill="rgba(155,127,212,0.1)" stroke="#9b7fd4" strokeWidth="0.6"/>
     <text x="134" y="59" textAnchor="middle" fontSize="4" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">At inference: up-project C_KV</text>
-    <text x="134" y="64" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">K^h = C_KV·W_UK_h   V^h = C_KV·W_UV_h</text>
+    <text x="134" y="64" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">K^h = C_KV·W_UK_h   V^h = C_KV·W_UV_h</text>
     <line x1="214" y1="42" x2="214" y2="52" stroke="#4a9a4a" strokeWidth="0.4" strokeDasharray="2,1"/>
     <line x1="214" y1="52" x2="174" y2="52" stroke="#9b7fd4" strokeWidth="0.4" strokeDasharray="2,1"/>
     {/* RoPE separation */}
     <rect x="94" y="72" width="154" height="14" rx={1} fill="rgba(201,168,76,0.07)" stroke="#c9a84c" strokeWidth="0.5"/>
     <text x="171" y="79" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Decoupled RoPE: content path + position path combined only in attention scores</text>
-    <text x="130" y="100" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">MHA2MLA retrofit (arxiv:2502.14837): Llama2-7B → 92.19% KV cache reduction, 0.5% LongBench drop</text>
+    <text x="130" y="100" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">MHA2MLA retrofit (arxiv:2502.14837): Llama2-7B → 92.19% KV cache reduction, 0.5% LongBench drop</text>
   </svg>
 );
 
 // ── SVG: MoE routing diagram ──
 const MoEDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MIXTURE OF EXPERTS — SPARSE ROUTING</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MIXTURE OF EXPERTS — SPARSE ROUTING</text>
     {/* Token */}
     <rect x="8" y="42" width="28" height="18" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="22" y="50" textAnchor="middle" fontSize="4.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">Token</text>
-    <text x="22" y="57" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">x_t</text>
+    <text x="22" y="57" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">x_t</text>
     {/* Router */}
     <line x1="36" y1="51" x2="48" y2="51" stroke="#c9a84c" strokeWidth="0.5"/>
     <rect x="48" y="38" width="32" height="26" rx={2} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.8"/>
     <text x="64" y="48" textAnchor="middle" fontSize="4" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">Router</text>
-    <text x="64" y="55" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">G(x) = </text>
-    <text x="64" y="61" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">Softmax(x·W_g)</text>
+    <text x="64" y="55" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">G(x) = </text>
+    <text x="64" y="61" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">Softmax(x·W_g)</text>
     {/* Experts */}
     {[0,1,2,3,4,5,6,7].map(i => {
       const active = i === 2 || i === 5;
@@ -9251,7 +9251,7 @@ const MoEDiagram = () => (
         <g key={i}>
           <line x1="80" y1="51" x2={x} y2={y + 4} stroke={active ? "#4a9a4a" : "#e0dcd4"} strokeWidth={active ? 0.8 : 0.4} strokeDasharray={active ? "none" : "1.5,1"}/>
           <rect x={x} y={y} width={30} height={8} rx={1} fill={active ? "rgba(74,154,74,0.15)" : "#ffffff"} stroke={active ? "#4a9a4a" : "#e0dcd4"} strokeWidth={active ? 0.8 : 0.4}/>
-          <text x={x+15} y={y+5.5} textAnchor="middle" fontSize="3.2" fill={active ? "#4a9a4a" : "#4a4a5a"} fontFamily="Syne, sans-serif" fontWeight={active?"700":"400"}>Expert {i+1}{active ? " ✓" : ""}</text>
+          <text x={x+15} y={y+5.5} textAnchor="middle" fontSize="3.2" fill={active ? "#4a9a4a" : "#1E293B"} fontFamily="Syne, sans-serif" fontWeight={active?"700":"400"}>Expert {i+1}{active ? " ✓" : ""}</text>
         </g>
       );
     })}
@@ -9259,12 +9259,12 @@ const MoEDiagram = () => (
     {/* Output */}
     <rect x="140" y="42" width="46" height="18" rx={2} fill="rgba(74,154,74,0.1)" stroke="#4a9a4a" strokeWidth="0.7"/>
     <text x="163" y="50" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">Weighted sum</text>
-    <text x="163" y="57" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">Σ G(x)_i × E_i(x)</text>
+    <text x="163" y="57" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">Σ G(x)_i × E_i(x)</text>
     <line x1="130" y1="23" x2="140" y2="47" stroke="#4a9a4a" strokeWidth="0.5"/>
     <line x1="130" y1="58" x2="140" y2="55" stroke="#4a9a4a" strokeWidth="0.5"/>
     {/* Dense vs sparse */}
     <rect x="194" y="30" width="60" height="44" rx={2} fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5"/>
-    <text x="224" y="40" textAnchor="middle" fontSize="4" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700">Dense FFN vs MoE</text>
+    <text x="224" y="40" textAnchor="middle" fontSize="4" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700">Dense FFN vs MoE</text>
     <text x="200" y="49" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">Dense: ALL neurons fire</text>
     <text x="200" y="56" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">= 671B active always</text>
     <text x="200" y="63" fontSize="3.2" fill="#4a9a4a" fontFamily="Syne, sans-serif">MoE: k/N experts fire</text>
@@ -9275,17 +9275,17 @@ const MoEDiagram = () => (
 // ── SVG: Speculative decoding timeline ──
 const SpecDecodingDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SPECULATIVE DECODING — PARALLEL VERIFICATION</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SPECULATIVE DECODING — PARALLEL VERIFICATION</text>
     {/* Without speculative */}
     <text x="14" y="22" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">Standard autoregressive (slow)</text>
     {[0,1,2,3,4,5,6,7].map(i => (
       <g key={i}>
         <rect x={14 + i * 28} y="25" width="24" height="10" rx={1} fill="rgba(196,87,42,0.12)" stroke="#c4572a" strokeWidth="0.5"/>
         <text x={14 + i*28 + 12} y="32" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="DM Mono, monospace">t{i+1}</text>
-        {i < 7 && <text x={14 + i*28 + 25} y="31.5" fontSize="4" fill="#4a4a5a">→</text>}
+        {i < 7 && <text x={14 + i*28 + 25} y="31.5" fontSize="4" fill="#1E293B">→</text>}
       </g>
     ))}
-    <text x="14" y="44" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">8 sequential forward passes through large model = 8× latency</text>
+    <text x="14" y="44" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">8 sequential forward passes through large model = 8× latency</text>
     {/* With speculative */}
     <text x="14" y="55" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">Speculative decoding (fast)</text>
     {/* Draft phase */}
@@ -9312,7 +9312,7 @@ const SpecDecodingDiagram = () => (
 // ── SVG: Dense vs Sparse parameter diagram ──
 const DenseSparseParamDiagram = () => (
   <svg viewBox="0 0 260 80" style={{ width: "100%", height: 120 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DENSE vs SPARSE — PARAMETERS vs ACTIVE COMPUTE</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DENSE vs SPARSE — PARAMETERS vs ACTIVE COMPUTE</text>
     {/* Dense model */}
     <rect x="8" y="18" width="100" height="40" rx={2} fill="rgba(196,87,42,0.08)" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="58" y="28" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Dense (e.g. GPT-4)</text>
@@ -9373,7 +9373,7 @@ export const ArchConceptsTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Three Architecture Concepts<br /><em style={{ color: "#2a8a84", fontStyle: "italic" }}>Every AI Engineer Should Know</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           The techniques behind the most efficient frontier models in 2025–2026. MLA compresses the KV cache by 2.7–4.7× without quality loss. MoE activates 5.5% of parameters per token while matching dense model quality. Speculative decoding generates 2–4× more tokens per second without changing the model at all.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.8rem" }}>
@@ -9385,7 +9385,7 @@ export const ArchConceptsTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "1rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -9411,7 +9411,7 @@ export const ArchConceptsTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>❌ The KV Cache Problem</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.7rem" }}>Standard MHA stores full K and V matrices for every token, every head, every layer. Memory scales as <strong style={{ color: "#1a1a2e" }}>O(n × h × d_k)</strong> — linear in sequence length and the number of heads. At 128K tokens with 32 heads: enormous.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.7rem" }}>Standard MHA stores full K and V matrices for every token, every head, every layer. Memory scales as <strong style={{ color: "#1a1a2e" }}>O(n × h × d_k)</strong> — linear in sequence length and the number of heads. At 128K tokens with 32 heads: enormous.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                 {MLA_VARIANTS.map((v, i) => (
                   <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "0.4rem 0.7rem", background: "#f7f5f0", borderRadius: 3, fontSize: "0.63rem" }}>
@@ -9423,7 +9423,7 @@ export const ArchConceptsTab = ({ s }) => {
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #4a9a4a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #4a9a4a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#4a9a4a", marginBottom: "0.8rem" }}>✅ The MLA Solution</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.7rem" }}>Instead of caching K and V, cache a single low-dimensional latent vector <strong style={{ color: "#1a1a2e" }}>C_KV = X·W_DKV</strong> where d_c ≪ d. At inference, up-project C_KV back into K and V on-the-fly. Cache is tiny; computation is cheap.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.7rem" }}>Instead of caching K and V, cache a single low-dimensional latent vector <strong style={{ color: "#1a1a2e" }}>C_KV = X·W_DKV</strong> where d_c ≪ d. At inference, up-project C_KV back into K and V on-the-fly. Cache is tiny; computation is cheap.</p>
               <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#4a9a4a", lineHeight: 1.7 }}>
                 {`C_KV = X · W_DKV          # cache this\nK^h  = C_KV · W_UK_h      # at inference\nV^h  = C_KV · W_UV_h      # at inference`}
               </div>
@@ -9439,7 +9439,7 @@ export const ArchConceptsTab = ({ s }) => {
           <div style={s.sectionLabel("#2a8a84")}>Step-by-Step: How MLA Processes One Token</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
-              <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Trace a single input token through MLA — from full K/V in standard MHA to the compressed latent path.</p>
+              <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace a single input token through MLA — from full K/V in standard MHA to the compressed latent path.</p>
               <button onClick={runMla} disabled={mlaRunning}
                 style={{ background: mlaRunning ? "#f7f5f0" : "rgba(42,138,132,0.1)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: mlaRunning ? "not-allowed" : "pointer", opacity: mlaRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {mlaRunning ? "Running…" : "▶ Animate MLA"}
@@ -9449,14 +9449,14 @@ export const ArchConceptsTab = ({ s }) => {
               {MLA_STEPS.map((step, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: mlaStep >= i ? (step.problem ? "rgba(196,87,42,0.07)" : "rgba(42,138,132,0.07)") : "#f7f5f0", border: `1px solid ${mlaStep >= i ? (step.problem ? "#c4572a" : "#2a8a84") + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: mlaStep === -1 ? 0.35 : mlaStep >= i ? 1 : 0.25 }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: mlaStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: mlaStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${mlaStep >= i ? step.color : "#e0dcd4"}` }}>
-                    {mlaStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                    {mlaStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                      <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: mlaStep >= i ? "#1a1a2e" : "#4a4a5a" }}>{step.label}</span>
+                      <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: mlaStep >= i ? "#1a1a2e" : "#1E293B" }}>{step.label}</span>
                       {mlaStep >= i && <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.55rem", color: step.color, background: `${step.color}15`, padding: "0.1rem 0.4rem", borderRadius: 3 }}>{step.memory}</span>}
                     </div>
-                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: mlaStep >= i ? step.color : "#3a3a4a", marginTop: "0.1rem" }}>{step.desc}</div>
+                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: mlaStep >= i ? step.color : "#1E293B", marginTop: "0.1rem" }}>{step.desc}</div>
                   </div>
                   {mlaStep > i && <div style={{ color: step.problem ? "#c4572a" : "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>{step.problem ? "↓" : "✓"}</div>}
                 </div>
@@ -9467,7 +9467,7 @@ export const ArchConceptsTab = ({ s }) => {
           {/* RoPE + transfer */}
           <div style={{ background: "#ffffff", border: "1px solid #9b7fd430", borderRadius: 6, padding: "1.4rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#9b7fd4", marginBottom: "0.6rem" }}>Decoupled RoPE — Why Positional Encoding Needs Special Handling</div>
-            <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>RoPE (Rotary Position Embedding) encodes token positions by rotating Q and K vectors. Problem: if you compress K into a latent C_KV, you can't rotate C_KV and get the same result as rotating the full K. MLA solves this by <strong style={{ color: "#1a1a2e" }}>splitting</strong> Q and K into content components (from the compression path) and positional components (a separate projection that RoPE is applied to). They combine only in the attention score computation.</p>
+            <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>RoPE (Rotary Position Embedding) encodes token positions by rotating Q and K vectors. Problem: if you compress K into a latent C_KV, you can't rotate C_KV and get the same result as rotating the full K. MLA solves this by <strong style={{ color: "#1a1a2e" }}>splitting</strong> Q and K into content components (from the compression path) and positional components (a separate projection that RoPE is applied to). They combine only in the attention score computation.</p>
             <CodeBlock code={`# Content + position split in MLA
 Q_content, Q_pos = split(X @ W_UQ, X @ W_QR)
 K_content, K_pos = split(C_KV @ W_UK, X @ W_KR)
@@ -9493,7 +9493,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c9a84c", marginBottom: "0.8rem" }}>The Core Idea</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Replace the dense feed-forward network in each transformer layer with <strong style={{ color: "#1a1a2e" }}>N expert FFNs</strong>. A router selects the top-k experts for each token. The other N-k experts are completely skipped — no compute, no memory access.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Replace the dense feed-forward network in each transformer layer with <strong style={{ color: "#1a1a2e" }}>N expert FFNs</strong>. A router selects the top-k experts for each token. The other N-k experts are completely skipped — no compute, no memory access.</p>
               <p style={{ fontSize: "0.68rem", color: "#c9a84c", lineHeight: 1.8, fontWeight: 700 }}>Result: a model can have 671B total parameters but use only 37B (5.5%) per token — scaling law knowledge with dense-equivalent cost at inference.</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
@@ -9507,7 +9507,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Model", "Total params", "Active per token", "Experts", "Top-k", "Shared"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -9517,11 +9517,11 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td style={{ padding: "0.6rem 0.8rem", color: m.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{m.model}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#b0b0c0" }}>{m.total}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{m.total}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#4a9a4a", fontWeight: 700 }}>{m.active}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#b0b0c0" }}>{m.experts ?? "—"}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#b0b0c0" }}>{m.topk ?? "—"}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: m.shared ? "#4a9a4a" : "#4a4a5a" }}>{m.shared ? "✓ Yes" : "No"}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{m.experts ?? "—"}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{m.topk ?? "—"}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: m.shared ? "#4a9a4a" : "#1E293B" }}>{m.shared ? "✓ Yes" : "No"}</td>
                   </tr>
                 ))}
               </tbody>
@@ -9532,7 +9532,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
           <div style={s.sectionLabel("#c9a84c")}>Animated: Token Routing Through MoE Layer</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
-              <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Trace one token through the MoE routing process — from gate scores to weighted expert combination.</p>
+              <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace one token through the MoE routing process — from gate scores to weighted expert combination.</p>
               <button onClick={runMoe} disabled={moeRunning}
                 style={{ background: moeRunning ? "#f7f5f0" : "rgba(201,168,76,0.1)", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: moeRunning ? "not-allowed" : "pointer", opacity: moeRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {moeRunning ? "Routing…" : "▶ Route Token"}
@@ -9542,11 +9542,11 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
               {MOE_STEPS.map((step, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: moeStep >= i ? "rgba(201,168,76,0.06)" : "#f7f5f0", border: `1px solid ${moeStep >= i ? "#c9a84c40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: moeStep === -1 ? 0.35 : moeStep >= i ? 1 : 0.25 }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: moeStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: moeStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${moeStep >= i ? step.color : "#e0dcd4"}` }}>
-                    {moeStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                    {moeStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: moeStep >= i ? "#1a1a2e" : "#4a4a5a", marginBottom: "0.1rem" }}>{step.label}</div>
-                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: moeStep >= i ? step.color : "#3a3a4a" }}>{step.detail}</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: moeStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.1rem" }}>{step.label}</div>
+                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: moeStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
                   </div>
                   {moeStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
                 </div>
@@ -9566,7 +9566,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
                   <span style={{ marginLeft: "auto", color: c.color, fontSize: "0.7rem" }}>{activeChallenge === i ? "▲" : "▼"}</span>
                 </div>
                 {activeChallenge === i && (
-                  <div style={{ fontSize: "0.66rem", color: "#b0b0c0", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>{c.desc}</div>
+                  <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7, animation: "fadeIn 0.2s ease" }}>{c.desc}</div>
                 )}
               </div>
             ))}
@@ -9582,7 +9582,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
           {/* The problem */}
           <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", marginBottom: "1.2rem", borderTop: "2px solid #c4572a" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.6rem" }}>The Autoregressive Bottleneck</div>
-            <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8 }}>Standard LLM inference is <strong style={{ color: "#1a1a2e" }}>inherently sequential</strong>: generate t1 → generate t2 (conditioned on t1) → generate t3 (conditioned on t1, t2) → … Each step requires a full forward pass through the large model. GPU utilisation is terrible — a single token per step massively underloads parallel hardware. Speculative decoding exploits a key insight: <strong style={{ color: "#c9a84c" }}>verification is parallel; generation is serial</strong>.</p>
+            <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8 }}>Standard LLM inference is <strong style={{ color: "#1a1a2e" }}>inherently sequential</strong>: generate t1 → generate t2 (conditioned on t1) → generate t3 (conditioned on t1, t2) → … Each step requires a full forward pass through the large model. GPU utilisation is terrible — a single token per step massively underloads parallel hardware. Speculative decoding exploits a key insight: <strong style={{ color: "#c9a84c" }}>verification is parallel; generation is serial</strong>.</p>
           </div>
 
           {/* Diagram */}
@@ -9601,7 +9601,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
                     <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: "#1a1a2e" }}>{step.label}</span>
                     <span style={{ fontSize: "0.52rem", padding: "0.1rem 0.4rem", background: `${step.color}15`, color: step.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{step.who}</span>
                   </div>
-                  <div style={{ fontSize: "0.63rem", color: "#8a8a9a", lineHeight: 1.6 }}>{step.detail}</div>
+                  <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.6 }}>{step.detail}</div>
                 </div>
               </div>
             ))}
@@ -9614,7 +9614,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
               <button key={v.name} onClick={() => setActiveVariant(activeVariant === v.name ? null : v.name)}
                 style={{ display: "flex", alignItems: "center", gap: "0.4rem", padding: "0.5rem 0.8rem", background: activeVariant === v.name ? `${v.color}15` : "#ffffff", border: `1px solid ${activeVariant === v.name ? v.color : "#e0dcd4"}`, borderRadius: 4, cursor: "pointer", transition: "all 0.2s" }}>
                 <span>{v.icon}</span>
-                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: activeVariant === v.name ? v.color : "#b0b0c0" }}>{v.name}</span>
+                <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: activeVariant === v.name ? v.color : "#1E293B" }}>{v.name}</span>
               </button>
             ))}
           </div>
@@ -9623,16 +9623,16 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem" }}>
                 <div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: v.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>How it works</div>
-                  <p style={{ fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7 }}>{v.desc}</p>
+                  <p style={{ fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7 }}>{v.desc}</p>
                 </div>
                 <div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: v.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Best for</div>
-                  <p style={{ fontSize: "0.67rem", color: "#8a8a9a", lineHeight: 1.7 }}>{v.use}</p>
+                  <p style={{ fontSize: "0.67rem", color: "#334155", lineHeight: 1.7 }}>{v.use}</p>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                   <div style={{ padding: "0.6rem", background: "#f7f5f0", borderRadius: 4, textAlign: "center" }}>
                     <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: v.color }}>{v.speedup}</div>
-                    <div style={{ fontSize: "0.55rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>typical speedup</div>
+                    <div style={{ fontSize: "0.55rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>typical speedup</div>
                   </div>
                   <div style={{ padding: "0.5rem", background: v.lossless ? "rgba(74,154,74,0.1)" : "rgba(201,168,76,0.08)", border: `1px solid ${v.lossless ? "#4a9a4a" : "#c9a84c"}30`, borderRadius: 4, textAlign: "center", fontSize: "0.6rem", color: v.lossless ? "#4a9a4a" : "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>
                     {v.lossless ? "✅ Lossless" : "⚠️ Approximate"}
@@ -9648,7 +9648,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Technique", "Speedup", "Quality", "Draft model needed", "Best use case"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -9660,8 +9660,8 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
                     <td style={{ padding: "0.6rem 0.8rem", color: v.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{v.icon} {v.name}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#4a9a4a", fontWeight: 700 }}>{v.speedup}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: v.lossless ? "#4a9a4a" : "#c9a84c" }}>{v.lossless ? "Lossless" : "Approximate"}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#b0b0c0" }}>{v.name === "Speculative Decoding" ? "Yes — small LLM" : v.name === "Medusa / Multi-head" ? "No — extra heads" : "No"}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#6a6a7a", fontSize: "0.62rem" }}>{v.use.split(".")[0]}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{v.name === "Speculative Decoding" ? "Yes — small LLM" : v.name === "Medusa / Multi-head" ? "No — extra heads" : "No"}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#334155", fontSize: "0.62rem" }}>{v.use.split(".")[0]}</td>
                   </tr>
                 ))}
               </tbody>
@@ -9855,7 +9855,7 @@ const ARAG_QUESTIONS = [
 // ── SVG: Agentic loop diagram ──
 const AgenticLoopDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AGENTIC RAG — SEARCH-READ-DECIDE LOOP</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AGENTIC RAG — SEARCH-READ-DECIDE LOOP</text>
     {/* Standard RAG (top) */}
     <rect x="8" y="16" width="244" height="18" rx={2} fill="#ffffff" stroke="#c4572a" strokeWidth="0.6"/>
     <text x="130" y="24" textAnchor="middle" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">Standard RAG (one-shot)</text>
@@ -9865,7 +9865,7 @@ const AgenticLoopDiagram = () => (
         <g key={i}>
           <rect x={x} y={27} width={50} height={6} rx={1} fill="rgba(196,87,42,0.15)" stroke="#c4572a" strokeWidth="0.4"/>
           <text x={x+25} y={31} textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">{s2}</text>
-          {i < 3 && <text x={x+51} y={31} fontSize="4" fill="#4a4a5a">→</text>}
+          {i < 3 && <text x={x+51} y={31} fontSize="4" fill="#1E293B">→</text>}
         </g>
       );
     })}
@@ -9879,17 +9879,17 @@ const AgenticLoopDiagram = () => (
     {/* Search */}
     <rect x="58" y="56" width="36" height="12" rx={1} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.7"/>
     <text x="76" y="62" textAnchor="middle" fontSize="3.8" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">🔍 Search</text>
-    <text x="76" y="67" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">search_docs()</text>
+    <text x="76" y="67" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">search_docs()</text>
     <line x1="94" y1="62" x2="102" y2="62" stroke="#2a8a84" strokeWidth="0.5"/>
     {/* Read */}
     <rect x="102" y="56" width="36" height="12" rx={1} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.7"/>
     <text x="120" y="62" textAnchor="middle" fontSize="3.8" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">📖 Read</text>
-    <text x="120" y="67" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">read_doc()</text>
+    <text x="120" y="67" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">read_doc()</text>
     <line x1="138" y1="62" x2="146" y2="62" stroke="#9b7fd4" strokeWidth="0.5"/>
     {/* Decide */}
     <rect x="146" y="56" width="36" height="12" rx={1} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="164" y="62" textAnchor="middle" fontSize="3.8" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">🧠 Decide</text>
-    <text x="164" y="67" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">enough?</text>
+    <text x="164" y="67" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">enough?</text>
     {/* Loop back arrow */}
     <line x1="182" y1="62" x2="196" y2="62" stroke="#c9a84c" strokeWidth="0.5"/>
     <text x="200" y="60" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">YES</text>
@@ -9908,7 +9908,7 @@ const AgenticLoopDiagram = () => (
 // ── SVG: Standard vs Agentic RAG comparison ──
 const StandardVsAgenticDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">STANDARD RAG vs AGENTIC RAG</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">STANDARD RAG vs AGENTIC RAG</text>
     {[
       { label: "Retrieval strategy", standard: "One-shot top-k similarity", agentic: "Iterative: search → read → decide → repeat" },
       { label: "Vector embeddings", standard: "Required", agentic: "Optional — keyword or hybrid works too" },
@@ -9920,21 +9920,21 @@ const StandardVsAgenticDiagram = () => (
     ].map((row, i) => (
       <g key={i}>
         <rect x="8" y={16 + i * 10} width="80" height="8" rx={1} fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.3"/>
-        <text x="12" y={22 + i * 10} fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="600">{row.label}</text>
+        <text x="12" y={22 + i * 10} fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="600">{row.label}</text>
         <rect x="92" y={16 + i * 10} width="76" height="8" rx={1} fill="rgba(196,87,42,0.07)" stroke="#c4572a" strokeWidth="0.3"/>
         <text x="96" y={22 + i * 10} fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">{row.standard}</text>
         <rect x="172" y={16 + i * 10} width="80" height="8" rx={1} fill="rgba(74,154,74,0.07)" stroke="#4a9a4a" strokeWidth="0.3"/>
         <text x="176" y={22 + i * 10} fontSize="3.2" fill="#4a9a4a" fontFamily="Syne, sans-serif">{row.agentic}</text>
       </g>
     ))}
-    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Default to standard RAG · add agentic loop when iterative evidence is genuinely needed</text>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Default to standard RAG · add agentic loop when iterative evidence is genuinely needed</text>
   </svg>
 );
 
 // ── SVG: Multi-agent patterns ──
 const MultiAgentPatternsDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MULTI-AGENT SPLIT PATTERNS FOR AGENTIC RAG</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MULTI-AGENT SPLIT PATTERNS FOR AGENTIC RAG</text>
     {/* Pattern 1: role split */}
     <rect x="8" y="18" width="116" height="62" rx={2} fill="#ffffff" stroke="#2a8a84" strokeWidth="0.7"/>
     <text x="66" y="27" textAnchor="middle" fontSize="4.5" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">Split by Role</text>
@@ -9946,11 +9946,11 @@ const MultiAgentPatternsDiagram = () => (
       <g key={i}>
         <rect x="14" y={30 + i * 15} width="104" height="12" rx={1} fill={`${ag.color}12`} stroke={ag.color} strokeWidth="0.5"/>
         <text x="18" y={38 + i * 15} fontSize="4" fill={ag.color} fontFamily="Syne, sans-serif" fontWeight="700">{ag.label}</text>
-        <text x="18" y={39 + i * 15} fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif" dy="4">{ag.desc}</text>
-        {i < 2 && <text x="66" y={44 + i * 15} textAnchor="middle" fontSize="5" fill="#4a4a5a">↓</text>}
+        <text x="18" y={39 + i * 15} fontSize="3" fill="#334155" fontFamily="Syne, sans-serif" dy="4">{ag.desc}</text>
+        {i < 2 && <text x="66" y={44 + i * 15} textAnchor="middle" fontSize="5" fill="#1E293B">↓</text>}
       </g>
     ))}
-    <text x="66" y="78" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Good for: long research tasks</text>
+    <text x="66" y="78" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Good for: long research tasks</text>
     {/* Pattern 2: source split */}
     <rect x="136" y="18" width="116" height="62" rx={2} fill="#ffffff" stroke="#9b7fd4" strokeWidth="0.7"/>
     <text x="194" y="27" textAnchor="middle" fontSize="4.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">Split by Source Type</text>
@@ -9962,10 +9962,10 @@ const MultiAgentPatternsDiagram = () => (
       <g key={i}>
         <rect x="142" y={30 + i * 15} width="104" height="12" rx={1} fill={`${ag.color}12`} stroke={ag.color} strokeWidth="0.5"/>
         <text x="146" y={38 + i * 15} fontSize="4" fill={ag.color} fontFamily="Syne, sans-serif" fontWeight="700">{ag.label}</text>
-        <text x="146" y={39 + i * 15} fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif" dy="4">{ag.desc}</text>
+        <text x="146" y={39 + i * 15} fontSize="3" fill="#334155" fontFamily="Syne, sans-serif" dy="4">{ag.desc}</text>
       </g>
     ))}
-    <text x="194" y="78" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Good for: heterogeneous corpora</text>
+    <text x="194" y="78" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Good for: heterogeneous corpora</text>
     <text x="130" y="88" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">⚠️ Multi-agent adds coordination complexity — test empirically, not assumed benefit</text>
   </svg>
 );
@@ -10011,12 +10011,12 @@ export const AgenticRAGTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Agentic RAG:<br /><em style={{ color: "#2a8a84", fontStyle: "italic" }}>Let the Agent Search</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Standard RAG retrieves once and hopes for the best. Agentic RAG lets the model search, read, decide whether it has enough evidence, and search again. A minimal OpenAI Agents SDK implementation over 6 synthetic company policy documents. Three tools. One iterative loop. No embeddings required.
         </p>
         <div style={{ padding: "0.8rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The core shift</div>
-          <div style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7 }}>"What if the model can <strong style={{ color: "#1a1a2e" }}>search, read, decide whether it has enough evidence, and search again</strong> when needed? Probably we don't even need the vector embeddings in the first place."</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>"What if the model can <strong style={{ color: "#1a1a2e" }}>search, read, decide whether it has enough evidence, and search again</strong> when needed? Probably we don't even need the vector embeddings in the first place."</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
           {[
@@ -10029,7 +10029,7 @@ export const AgenticRAGTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -10041,7 +10041,7 @@ export const AgenticRAGTab = ({ s }) => {
           <button key={sec.id} onClick={() => setSection(sec.id)}
             style={{ background: section === sec.id ? `${sec.color}12` : "#ffffff", border: `1px solid ${section === sec.id ? sec.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "center", transition: "all 0.2s" }}>
             <div style={{ fontSize: "1.1rem", marginBottom: "0.25rem" }}>{sec.icon}</div>
-            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.58rem", color: section === sec.id ? sec.color : "#b0b0c0", lineHeight: 1.3 }}>{sec.label}</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.58rem", color: section === sec.id ? sec.color : "#1E293B", lineHeight: 1.3 }}>{sec.label}</div>
           </button>
         ))}
       </div>
@@ -10069,7 +10069,7 @@ export const AgenticRAGTab = ({ s }) => {
               <div key={i} style={{ background: "#ffffff", border: `1px solid ${f.color}30`, borderRadius: 6, padding: "1.2rem", borderTop: `2px solid ${f.color}` }}>
                 <div style={{ fontSize: "1.3rem", marginBottom: "0.5rem" }}>{f.icon}</div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: f.color, marginBottom: "0.5rem" }}>{f.title}</div>
-                <p style={{ fontSize: "0.65rem", color: "#8a8a9a", lineHeight: 1.7 }}>{f.desc}</p>
+                <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -10078,7 +10078,7 @@ export const AgenticRAGTab = ({ s }) => {
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6 }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.4rem" }}>The agentic solution in one sentence</div>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8 }}>Give the LLM tools to search, read individual documents, and orient itself — then let it decide when it has enough evidence. The retrieval strategy becomes the model's job, not the infrastructure's job.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>Give the LLM tools to search, read individual documents, and orient itself — then let it decide when it has enough evidence. The retrieval strategy becomes the model's job, not the infrastructure's job.</p>
           </div>
         </div>
       )}
@@ -10142,13 +10142,13 @@ for each important claim.
       {section === "tools" && (
         <div>
           <div style={s.sectionLabel("#9b7fd4")}>§3 — Three Curated Tools: Why This Minimal Set Works</div>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>Three tools form a complete search surface: orient (list_docs), search (search_docs), deep-read (read_doc). The agent decides which to call, in what order, and when to stop.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>Three tools form a complete search surface: orient (list_docs), search (search_docs), deep-read (read_doc). The agent decides which to call, in what order, and when to stop.</p>
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
             {ARAG_TOOLS.map(t => (
               <button key={t.id} onClick={() => setActiveTool(t.id)}
                 style={{ flex: 1, display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.8rem", background: activeTool === t.id ? `${t.color}15` : "#ffffff", border: `1px solid ${activeTool === t.id ? t.color : "#e0dcd4"}`, borderRadius: 6, cursor: "pointer", transition: "all 0.2s", justifyContent: "center" }}>
                 <span style={{ fontSize: "1.2rem" }}>{t.icon}</span>
-                <span style={{ fontFamily: "DM Mono, monospace", fontWeight: 700, fontSize: "0.7rem", color: activeTool === t.id ? t.color : "#b0b0c0" }}>{t.name}</span>
+                <span style={{ fontFamily: "DM Mono, monospace", fontWeight: 700, fontSize: "0.7rem", color: activeTool === t.id ? t.color : "#1E293B" }}>{t.name}</span>
               </button>
             ))}
           </div>
@@ -10156,16 +10156,16 @@ for each important claim.
             <div style={{ background: "#ffffff", border: `1px solid ${tool.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease" }}>
               <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem" }}>
                 <div>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Returns</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Returns</div>
                   <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: tool.color }}>{tool.returns}</div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.3rem" }}>When agent calls it</div>
-                  <div style={{ fontSize: "0.63rem", color: "#b0b0c0", lineHeight: 1.5 }}>{tool.when}</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.3rem" }}>When agent calls it</div>
+                  <div style={{ fontSize: "0.63rem", color: "#1E293B", lineHeight: 1.5 }}>{tool.when}</div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Description</div>
-                  <div style={{ fontSize: "0.63rem", color: "#8a8a9a", lineHeight: 1.5 }}>{tool.desc}</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Description</div>
+                  <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.5 }}>{tool.desc}</div>
                 </div>
               </div>
               <div style={{ padding: "1.2rem 1.5rem" }}>
@@ -10188,9 +10188,9 @@ for each important claim.
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                   <div style={{ background: "#f7f5f0", border: `1px solid ${item.color}40`, borderRadius: 4, padding: "0.4rem 0.7rem", textAlign: "center" }}>
                     <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: item.color, marginBottom: "0.15rem" }}>{item.call}</div>
-                    <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{item.note}</div>
+                    <div style={{ fontSize: "0.52rem", color: "#334155" }}>{item.note}</div>
                   </div>
-                  {i < 5 && <span style={{ color: "#4a4a5a", fontSize: "0.8rem" }}>→</span>}
+                  {i < 5 && <span style={{ color: "#1E293B", fontSize: "0.8rem" }}>→</span>}
                 </div>
               ))}
             </div>
@@ -10207,7 +10207,7 @@ for each important claim.
             <p style={{ fontSize: "0.7rem", color: "#1a1a2e", lineHeight: 1.8, fontStyle: "italic" }}>"I am attending a conference in Berlin. The conference organizer lists an official hotel, but the nightly rate is above the normal hotel cap. Can I book that hotel, and what approval do I need before booking?"</p>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.6rem" }}>
-            <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Animate the agent's actual tool call sequence from result.new_items — every search, read, and decision moment.</p>
+            <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Animate the agent's actual tool call sequence from result.new_items — every search, read, and decision moment.</p>
             <button onClick={runTrace} disabled={traceRunning}
               style={{ background: traceRunning ? "#f7f5f0" : "rgba(201,168,76,0.1)", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: traceRunning ? "not-allowed" : "pointer", opacity: traceRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
               {traceRunning ? "Tracing…" : "▶ Run Trace"}
@@ -10219,11 +10219,11 @@ for each important claim.
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.75rem 1rem", cursor: traceStep >= i ? "pointer" : "default" }}
                   onClick={() => traceStep >= i && setExpandedTrace(expandedTrace === i ? null : i)}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: traceStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: traceStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${traceStep >= i ? step.color : "#e0dcd4"}` }}>
-                    {traceStep >= i ? step.icon : <span style={{ color: "#4a4a5a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                    {traceStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.15rem" }}>
-                      <span style={{ fontFamily: "DM Mono, monospace", fontWeight: 700, fontSize: "0.68rem", color: traceStep >= i ? step.color : "#4a4a5a" }}>{step.label}</span>
+                      <span style={{ fontFamily: "DM Mono, monospace", fontWeight: 700, fontSize: "0.68rem", color: traceStep >= i ? step.color : "#1E293B" }}>{step.label}</span>
                       {traceStep >= i && step.type !== "answer" && (
                         <span style={{ fontSize: "0.52rem", padding: "0.1rem 0.4rem", background: `${step.color}15`, color: step.color, borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>TOOL CALL</span>
                       )}
@@ -10231,22 +10231,22 @@ for each important claim.
                         <span style={{ fontSize: "0.52rem", padding: "0.1rem 0.4rem", background: "rgba(74,154,74,0.15)", color: "#4a9a4a", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>FINAL ANSWER</span>
                       )}
                     </div>
-                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: traceStep >= i ? step.color : "#3a3a4a" }}>{step.detail}</div>
+                    <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: traceStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
                   </div>
                   {traceStep > i && step.type !== "answer" && <div style={{ color: "#4a9a4a", fontSize: "0.75rem", flexShrink: 0 }}>✓</div>}
-                  {traceStep >= i && <span style={{ color: "#6a6a7a", fontSize: "0.7rem" }}>{expandedTrace === i ? "▲" : "▼"}</span>}
+                  {traceStep >= i && <span style={{ color: "#334155", fontSize: "0.7rem" }}>{expandedTrace === i ? "▲" : "▼"}</span>}
                 </div>
                 {traceStep >= i && expandedTrace === i && (
                   <div style={{ borderTop: `1px solid ${step.color}20`, padding: "0.8rem 1rem", animation: "fadeIn 0.3s ease" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem" }}>
                       <div>
                         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: step.color, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Tool output</div>
-                        <div style={{ fontSize: "0.63rem", color: "#b0b0c0", lineHeight: 1.6 }}>{step.output}</div>
+                        <div style={{ fontSize: "0.63rem", color: "#1E293B", lineHeight: 1.6 }}>{step.output}</div>
                       </div>
                       {step.decision && (
                         <div>
                           <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: step.color, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "0.3rem" }}>Agent's decision</div>
-                          <div style={{ fontSize: "0.63rem", color: "#8a8a9a", lineHeight: 1.6, fontStyle: "italic" }}>{step.decision}</div>
+                          <div style={{ fontSize: "0.63rem", color: "#334155", lineHeight: 1.6, fontStyle: "italic" }}>{step.decision}</div>
                         </div>
                       )}
                     </div>
@@ -10258,7 +10258,7 @@ for each important claim.
           {traceStep >= ARAG_TRACE.length - 1 && (
             <div style={{ marginTop: "0.8rem", padding: "0.8rem 1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a40", borderRadius: 4, animation: "fadeIn 0.4s ease" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#4a9a4a", marginBottom: "0.4rem" }}>Exact result from article</div>
-              <div style={{ fontSize: "0.67rem", color: "#b0b0c0", lineHeight: 1.7 }}>The agent produced the right answer: yes, the employee can book the official conference hotel if there is a practical business reason (conference_guidelines.md). For approval: Manager pre-approval required as hotel is above cap (approval_matrix.md). Submit 14 days in advance for international conferences (policy_updates_2026.md).</div>
+              <div style={{ fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7 }}>The agent produced the right answer: yes, the employee can book the official conference hotel if there is a practical business reason (conference_guidelines.md). For approval: Manager pre-approval required as hotel is above cap (approval_matrix.md). Submit 14 days in advance for international conferences (policy_updates_2026.md).</div>
             </div>
           )}
         </div>
@@ -10268,7 +10268,7 @@ for each important claim.
       {section === "decisions" && (
         <div>
           <div style={s.sectionLabel("#4a9a4a")}>§5 — Five Decisions Before You Build Agentic RAG</div>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 560 }}>These are the questions the article says to answer before building. Each has a recommendation, a tradeoff, and a default position.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 560 }}>These are the questions the article says to answer before building. Each has a recommendation, a tradeoff, and a default position.</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
             {ARAG_QUESTIONS.map((q, i) => (
               <div key={i} onClick={() => setActiveQ(activeQ === i ? null : i)}
@@ -10284,11 +10284,11 @@ for each important claim.
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "0.8rem" }}>
                       <div>
                         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: q.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Answer</div>
-                        <p style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7 }}>{q.answer}</p>
+                        <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>{q.answer}</p>
                       </div>
                       <div>
-                        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Tradeoff</div>
-                        <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.7 }}>{q.tradeoff}</p>
+                        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Tradeoff</div>
+                        <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.7 }}>{q.tradeoff}</p>
                       </div>
                     </div>
                     <div style={{ padding: "0.7rem 0.9rem", background: `${q.color}0a`, border: `1px solid ${q.color}25`, borderRadius: 4, fontSize: "0.67rem", color: q.color, lineHeight: 1.6, borderLeft: `3px solid ${q.color}` }}>
@@ -10301,7 +10301,7 @@ for each important claim.
           </div>
           <div style={{ marginTop: "1.2rem", padding: "1rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 6, borderLeft: "4px solid #c4572a" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.4rem" }}>The meta-decision</div>
-            <p style={{ fontSize: "0.7rem", color: "#b0b0c0", lineHeight: 1.8, fontStyle: "italic" }}>"Always start simple, then add agentic loops when the question actually needs iterative retrieval. Just because agentic RAG becomes a trendy topic does not necessarily mean you should always default to it."</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, fontStyle: "italic" }}>"Always start simple, then add agentic loops when the question actually needs iterative retrieval. Just because agentic RAG becomes a trendy topic does not necessarily mean you should always default to it."</p>
           </div>
         </div>
       )}
@@ -10477,42 +10477,42 @@ const CML_REQUIREMENTS = [
 // ── SVG: agent + classical ML architecture ──
 const AgentMLArchDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AGENT + CLASSICAL ML — REAL ESTATE EXAMPLE</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AGENT + CLASSICAL ML — REAL ESTATE EXAMPLE</text>
     {/* User */}
     <rect x="8" y="40" width="34" height="20" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="25" y="48" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">User</text>
-    <text x="25" y="55" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">"price for 123 Main St?"</text>
+    <text x="25" y="55" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">"price for 123 Main St?"</text>
     <line x1="42" y1="50" x2="54" y2="50" stroke="#c9a84c" strokeWidth="0.5"/>
     {/* LLM Agent */}
     <rect x="54" y="34" width="50" height="32" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="79" y="46" textAnchor="middle" fontSize="4.2" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">🤖 LLM Agent</text>
-    <text x="79" y="53" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">interprets request</text>
-    <text x="79" y="59" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">chooses tools</text>
+    <text x="79" y="53" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">interprets request</text>
+    <text x="79" y="59" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">chooses tools</text>
     {/* API tool */}
     <line x1="104" y1="42" x2="116" y2="30" stroke="#2a8a84" strokeWidth="0.5"/>
     <rect x="116" y="18" width="48" height="18" rx={2} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.7"/>
     <text x="140" y="26" textAnchor="middle" fontSize="3.8" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">📡 API Tool</text>
-    <text x="140" y="32" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">fetch property details</text>
+    <text x="140" y="32" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">fetch property details</text>
     {/* Classical ML tool */}
     <line x1="104" y1="58" x2="116" y2="70" stroke="#c4572a" strokeWidth="0.5"/>
     <rect x="116" y="62" width="48" height="18" rx={2} fill="rgba(196,87,42,0.12)" stroke="#c4572a" strokeWidth="0.8"/>
     <text x="140" y="70" textAnchor="middle" fontSize="3.8" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">📊 Regression</text>
-    <text x="140" y="76" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">price_model.predict()</text>
+    <text x="140" y="76" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">price_model.predict()</text>
     {/* Combine */}
     <line x1="164" y1="27" x2="184" y2="45" stroke="#2a8a84" strokeWidth="0.4" strokeDasharray="2,1"/>
     <line x1="164" y1="71" x2="184" y2="53" stroke="#c4572a" strokeWidth="0.4" strokeDasharray="2,1"/>
     <rect x="184" y="38" width="60" height="24" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.8"/>
     <text x="214" y="48" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">✅ Response</text>
-    <text x="214" y="55" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">"$742,000 — driven by</text>
-    <text x="214" y="60" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">sqft, location, comps"</text>
-    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">LLM interprets + orchestrates · classical model calculates · agent explains the result in text</text>
+    <text x="214" y="55" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">"$742,000 — driven by</text>
+    <text x="214" y="60" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">sqft, location, comps"</text>
+    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">LLM interprets + orchestrates · classical model calculates · agent explains the result in text</text>
   </svg>
 );
 
 // ── SVG: two integration patterns side by side ──
 const IntegrationPatternsDiagram = () => (
   <svg viewBox="0 0 260 105" style={{ width: "100%", height: 158 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">TWO WAYS TO HOOK UP YOUR MODEL</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">TWO WAYS TO HOOK UP YOUR MODEL</text>
     {/* Direct calls */}
     <rect x="8" y="18" width="114" height="80" rx={2} fill="#0d0d18" stroke="#2a8a84" strokeWidth="0.7" fillOpacity="0.03"/>
     <rect x="8" y="18" width="114" height="80" rx={2} fill="none" stroke="#2a8a84" strokeWidth="0.8"/>
@@ -10525,7 +10525,7 @@ const IntegrationPatternsDiagram = () => (
     <line x1="65" y1="64" x2="65" y2="70" stroke="#2a8a84" strokeWidth="0.5"/>
     <rect x="16" y="70" width="98" height="12" rx={1} fill="rgba(74,154,74,0.1)" stroke="#4a9a4a" strokeWidth="0.6"/>
     <text x="65" y="78" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif">Inference + text back</text>
-    <text x="65" y="92" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Any input · unlimited cases</text>
+    <text x="65" y="92" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Any input · unlimited cases</text>
     {/* Database access */}
     <rect x="138" y="18" width="114" height="80" rx={2} fill="none" stroke="#c9a84c" strokeWidth="0.8"/>
     <text x="195" y="28" textAnchor="middle" fontSize="4.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">🗄️ Database Access</text>
@@ -10537,14 +10537,14 @@ const IntegrationPatternsDiagram = () => (
     <line x1="195" y1="64" x2="195" y2="70" stroke="#c9a84c" strokeWidth="0.5"/>
     <rect x="146" y="70" width="98" height="12" rx={1} fill="rgba(74,154,74,0.1)" stroke="#4a9a4a" strokeWidth="0.6"/>
     <text x="195" y="78" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif">Agent queries at runtime</text>
-    <text x="195" y="92" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Finite population · cached results</text>
+    <text x="195" y="92" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Finite population · cached results</text>
   </svg>
 );
 
 // ── SVG: 6 reasons hexagon-style grid ──
 const SixReasonsDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SIX REASONS TO PREFER CLASSICAL ML FOR NUMERIC TASKS</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SIX REASONS TO PREFER CLASSICAL ML FOR NUMERIC TASKS</text>
     {[
       { label: "Accuracy",         icon: "🎯", color: "#2a8a84" },
       { label: "Interpretability", icon: "🔍", color: "#c9a84c" },
@@ -10563,7 +10563,7 @@ const SixReasonsDiagram = () => (
         </g>
       );
     })}
-    <text x="130" y="86" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">"Classical ML models were the cutting edge across many industries for over a decade" — Stephanie Kirmer</text>
+    <text x="130" y="86" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">"Classical ML models were the cutting edge across many industries for over a decade" — Stephanie Kirmer</text>
   </svg>
 );
 
@@ -10593,12 +10593,12 @@ export const ClassicalMLTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           Using Classical ML<br /><em style={{ color: "#2a8a84", fontStyle: "italic" }}>to Empower AI Agents</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           "Agentic AI needs classical ML much more than we probably thought." CatBoost classifiers and isolation forests aren't relics — they're some of the most valuable tools you can hand your agent. On the value of building on existing foundations instead of asking an LLM to guess a number.
         </p>
         <div style={{ padding: "0.8rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The author's day job</div>
-          <div style={{ fontSize: "0.68rem", color: "#b0b0c0", lineHeight: 1.7, fontStyle: "italic" }}>"When people ask me what I'm doing these days at work, I feel like they are sometimes surprised when I say 'building CatBoost classifiers' or 'fitting isolation forests'. My company's product is a sophisticated agentic AI platform, but I don't do much prompt engineering in my day to day."</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"When people ask me what I'm doing these days at work, I feel like they are sometimes surprised when I say 'building CatBoost classifiers' or 'fitting isolation forests'. My company's product is a sophisticated agentic AI platform, but I don't do much prompt engineering in my day to day."</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
@@ -10610,7 +10610,7 @@ export const ClassicalMLTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -10637,18 +10637,18 @@ export const ClassicalMLTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#2a8a84", marginBottom: "0.8rem" }}>What an AI agent is</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Combining LLMs and other software tooling to create workflows with minimal or no human intervention, orchestrating any number of models or tools. The LLM is the interface between human users and other software — translating prompts, interpreting tool outputs, choosing which tools to call.</p>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8 }}>An LLM by itself is just a token-generating model, predicting the next word based on context. Tooling is what gives it functionality beyond that.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Combining LLMs and other software tooling to create workflows with minimal or no human intervention, orchestrating any number of models or tools. The LLM is the interface between human users and other software — translating prompts, interpreting tool outputs, choosing which tools to call.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8 }}>An LLM by itself is just a token-generating model, predicting the next word based on context. Tooling is what gives it functionality beyond that.</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>The real estate example</div>
-              <p style={{ fontSize: "0.68rem", color: "#8a8a9a", lineHeight: 1.8, marginBottom: "0.8rem" }}>Give your agent an address. It uses an API retrieval tool to fetch property details, then passes those formatted details to a <strong style={{ color: "#1a1a2e" }}>regression model</strong> that generates a price estimate.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Give your agent an address. It uses an API retrieval tool to fetch property details, then passes those formatted details to a <strong style={{ color: "#1a1a2e" }}>regression model</strong> that generates a price estimate.</p>
               <p style={{ fontSize: "0.68rem", color: "#c4572a", lineHeight: 1.8, fontWeight: 700 }}>You could ask the LLM to estimate the price itself — but that's questionable, even risky.</p>
             </div>
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(201,168,76,0.07)", border: "1px solid #c9a84c30", borderRadius: 6 }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c9a84c", marginBottom: "0.4rem" }}>The reframe</div>
-            <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.8 }}>Most agent tooling today is data retrieval and organising — graph databases, RAG knowledge bases, query construction. Classical ML models are a category of tool that's just as valuable, and underused: give your agent <strong style={{ color: "#1a1a2e" }}>models to use</strong>, not just data to fetch.</p>
+            <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.8 }}>Most agent tooling today is data retrieval and organising — graph databases, RAG knowledge bases, query construction. Classical ML models are a category of tool that's just as valuable, and underused: give your agent <strong style={{ color: "#1a1a2e" }}>models to use</strong>, not just data to fetch.</p>
           </div>
         </div>
       )}
@@ -10679,14 +10679,14 @@ export const ClassicalMLTab = ({ s }) => {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", marginBottom: "1rem" }}>
                   <div>
                     <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#c4572a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>The Problem with LLM-Only</div>
-                    <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.8 }}>{reason.problem}</p>
+                    <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.8 }}>{reason.problem}</p>
                   </div>
                   <div>
                     <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: reason.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Why Classical ML Solves It</div>
-                    <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.8 }}>{reason.solution}</p>
+                    <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.8 }}>{reason.solution}</p>
                   </div>
                 </div>
-                <div style={{ padding: "0.8rem 1rem", background: `${reason.color}0a`, border: `1px solid ${reason.color}25`, borderRadius: 4, borderLeft: `3px solid ${reason.color}`, fontSize: "0.67rem", color: "#4a4a5a", lineHeight: 1.7 }}>
+                <div style={{ padding: "0.8rem 1rem", background: `${reason.color}0a`, border: `1px solid ${reason.color}25`, borderRadius: 4, borderLeft: `3px solid ${reason.color}`, fontSize: "0.67rem", color: "#1E293B", lineHeight: 1.7 }}>
                   <strong style={{ color: reason.color }}>Example: </strong>{reason.example}
                 </div>
               </div>
@@ -10709,7 +10709,7 @@ export const ClassicalMLTab = ({ s }) => {
                 <span style={{ fontSize: "1.2rem" }}>{p.icon}</span>
                 <div style={{ textAlign: "left" }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: activePattern === p.id ? p.color : "#1a1a2e" }}>{p.name}</div>
-                  <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>{p.tagline}</div>
+                  <div style={{ fontSize: "0.55rem", color: "#334155" }}>{p.tagline}</div>
                 </div>
               </button>
             ))}
@@ -10717,12 +10717,12 @@ export const ClassicalMLTab = ({ s }) => {
           {pattern && (
             <div style={{ background: "#ffffff", border: `1px solid ${pattern.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease" }}>
               <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
-                <p style={{ fontSize: "0.68rem", color: "#6a6a7a", lineHeight: 1.7 }}>{pattern.desc}</p>
+                <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.7 }}>{pattern.desc}</p>
               </div>
               <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
                 {["overview", "code", "example"].map(t => (
                   <button key={t} onClick={() => setPatternTab(t)}
-                    style={{ flex: 1, padding: "0.65rem", background: patternTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: patternTab === t ? `2px solid ${pattern.color}` : "2px solid transparent", color: patternTab === t ? pattern.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    style={{ flex: 1, padding: "0.65rem", background: patternTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: patternTab === t ? `2px solid ${pattern.color}` : "2px solid transparent", color: patternTab === t ? pattern.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                     {t === "overview" ? "Requirements" : t.charAt(0).toUpperCase() + t.slice(1)}
                   </button>
                 ))}
@@ -10732,12 +10732,12 @@ export const ClassicalMLTab = ({ s }) => {
                   <div>
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
                       {pattern.requirements.map((req, i) => (
-                        <div key={i} style={{ display: "flex", gap: "0.6rem", padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.6 }}>
+                        <div key={i} style={{ display: "flex", gap: "0.6rem", padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.6 }}>
                           <span style={{ color: pattern.color, flexShrink: 0 }}>▸</span><span>{req}</span>
                         </div>
                       ))}
                     </div>
-                    <div style={{ padding: "0.7rem 0.9rem", background: `${pattern.color}0a`, border: `1px solid ${pattern.color}25`, borderRadius: 4, fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.7 }}>
+                    <div style={{ padding: "0.7rem 0.9rem", background: `${pattern.color}0a`, border: `1px solid ${pattern.color}25`, borderRadius: 4, fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>
                       <strong style={{ color: pattern.color }}>Output requirement: </strong>{pattern.outputNote}
                     </div>
                   </div>
@@ -10745,7 +10745,7 @@ export const ClassicalMLTab = ({ s }) => {
                 {patternTab === "code" && <CodeBlock code={pattern.code} />}
                 {patternTab === "example" && (
                   <div>
-                    <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, marginBottom: "1rem" }}>{pattern.example}</p>
+                    <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}>{pattern.example}</p>
                     <div style={{ padding: "0.7rem 0.9rem", background: `${pattern.color}0a`, border: `1px solid ${pattern.color}25`, borderRadius: 4, fontSize: "0.65rem", color: pattern.color, lineHeight: 1.6 }}>
                       <strong>Best for: </strong>{pattern.bestFor}
                     </div>
@@ -10761,7 +10761,7 @@ export const ClassicalMLTab = ({ s }) => {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Dimension", "⚡ Direct Calls", "🗄️ Database Access"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -10770,7 +10770,7 @@ export const ClassicalMLTab = ({ s }) => {
                   <tr key={i} style={{ borderBottom: i < CML_PATTERN_COMPARISON.length-1 ? "1px solid #e8e4dc" : "none" }}
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                    <td style={{ padding: "0.6rem 0.9rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
+                    <td style={{ padding: "0.6rem 0.9rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
                     <td style={{ padding: "0.6rem 0.9rem", color: "#2a8a84" }}>{row.direct}</td>
                     <td style={{ padding: "0.6rem 0.9rem", color: "#c9a84c" }}>{row.database}</td>
                   </tr>
@@ -10790,7 +10790,7 @@ export const ClassicalMLTab = ({ s }) => {
               <div key={i} style={{ background: "#ffffff", border: `1px solid ${req.color}30`, borderRadius: 6, padding: "1.2rem", borderTop: `2px solid ${req.color}` }}>
                 <div style={{ fontSize: "1.3rem", marginBottom: "0.5rem" }}>{req.icon}</div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: req.color, marginBottom: "0.5rem" }}>{req.title}</div>
-                <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.7 }}>{req.desc}</p>
+                <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>{req.desc}</p>
               </div>
             ))}
           </div>
@@ -10805,14 +10805,14 @@ export const ClassicalMLTab = ({ s }) => {
               ].map((tool, i) => (
                 <div key={i} style={{ padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, textAlign: "center", border: `1px solid ${tool.color}25` }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: tool.color, marginBottom: "0.3rem" }}>{tool.name}</div>
-                  <div style={{ fontSize: "0.56rem", color: "#6a6a7a", lineHeight: 1.5 }}>{tool.desc}</div>
+                  <div style={{ fontSize: "0.56rem", color: "#334155", lineHeight: 1.5 }}>{tool.desc}</div>
                 </div>
               ))}
             </div>
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 6, borderLeft: "4px solid #c4572a" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.4rem" }}>The closing argument</div>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, fontStyle: "italic" }}>"Classical ML models were the cutting edge across many different industries for over a decade before LLMs came on the scene. This power shouldn't be discarded, but combined with the capacities of LLMs. The barrier to entry is the skill set — not as glamorous as some AI-related work these days, but worth the effort: accuracy, precision, interpretability, cost, and control."</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, fontStyle: "italic" }}>"Classical ML models were the cutting edge across many different industries for over a decade before LLMs came on the scene. This power shouldn't be discarded, but combined with the capacities of LLMs. The barrier to entry is the skill set — not as glamorous as some AI-related work these days, but worth the effort: accuracy, precision, interpretability, cost, and control."</p>
           </div>
         </div>
       )}
@@ -10963,7 +10963,7 @@ const HL_RESULTS = [
 // ── SVG: the poisoning loop diagram ──
 const PoisoningLoopDiagram = () => (
   <svg viewBox="0 0 260 105" style={{ width: "100%", height: 158 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HOW THE VECTOR STORE GOT POISONED</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HOW THE VECTOR STORE GOT POISONED</text>
     {[
       { label: "📄 Illegible PDF", sub: "scan quality", x: 8, color: "#c9a84c" },
       { label: "🤖 Extractor guesses", sub: "fiscal_year: 2024", x: 56, color: "#c4572a" },
@@ -10975,32 +10975,32 @@ const PoisoningLoopDiagram = () => (
         <rect x={s2.x} y="20" width="44" height="34" rx={2} fill={`${s2.color}12`} stroke={s2.color} strokeWidth="0.7"/>
         <text x={s2.x+22} y="32" textAnchor="middle" fontSize="3.5" fill={s2.color} fontFamily="Syne, sans-serif" fontWeight="700">{s2.label.split(" ")[0]}</text>
         <text x={s2.x+22} y="40" textAnchor="middle" fontSize="3" fill={s2.color} fontFamily="Syne, sans-serif">{s2.label.split(" ").slice(1).join(" ")}</text>
-        <text x={s2.x+22} y="48" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">{s2.sub}</text>
-        {i < 4 && <text x={s2.x+45} y="40" fontSize="6" fill="#4a4a5a">→</text>}
+        <text x={s2.x+22} y="48" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">{s2.sub}</text>
+        {i < 4 && <text x={s2.x+45} y="40" fontSize="6" fill="#1E293B">→</text>}
       </g>
     ))}
     {/* Final result */}
     <rect x="70" y="66" width="120" height="26" rx={2} fill="rgba(196,87,42,0.15)" stroke="#c4572a" strokeWidth="1"/>
     <text x="130" y="77" textAnchor="middle" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">🚨 Chatbot cites 2018 data as 2022</text>
     <text x="130" y="85" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">Competitor revenue attributed to client subsidiary</text>
-    <text x="130" y="99" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Every step "worked" individually — the poison was in what got embedded, not how it was retrieved</text>
+    <text x="130" y="99" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Every step "worked" individually — the poison was in what got embedded, not how it was retrieved</text>
   </svg>
 );
 
 // ── SVG: sycophancy confirmation loop ──
 const SycophancyLoopDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">LLM-AS-JUDGE — CONFIRMATION BIAS, NOT A FIREWALL</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">LLM-AS-JUDGE — CONFIRMATION BIAS, NOT A FIREWALL</text>
     {/* Extractor */}
     <rect x="20" y="20" width="80" height="24" rx={2} fill="rgba(196,87,42,0.12)" stroke="#c4572a" strokeWidth="0.8"/>
     <text x="60" y="30" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">🤖 Extractor Agent</text>
-    <text x="60" y="38" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{'{"fiscal_year": 2024}'}</text>
+    <text x="60" y="38" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">{'{"fiscal_year": 2024}'}</text>
     {/* Arrow down to validator */}
     <line x1="60" y1="44" x2="60" y2="54" stroke="#c4572a" strokeWidth="0.6"/>
     {/* Validator */}
     <rect x="20" y="54" width="80" height="30" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.8"/>
     <text x="60" y="63" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">✅ Validator Agent</text>
-    <text x="60" y="70" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">scans text, finds nothing</text>
+    <text x="60" y="70" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">scans text, finds nothing</text>
     <text x="60" y="76" textAnchor="middle" fontSize="3" fill="#c4572a" fontFamily="Syne, sans-serif" fontStyle="italic">"must have seen something"</text>
     {/* Loop arrow back to itself */}
     <path d="M100 68 C 130 68, 130 30, 105 30" fill="none" stroke="#9b7fd4" strokeWidth="0.6" strokeDasharray="2,1"/>
@@ -11008,40 +11008,40 @@ const SycophancyLoopDiagram = () => (
     {/* Result box */}
     <rect x="130" y="20" width="110" height="64" rx={2} fill="rgba(155,127,212,0.1)" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="185" y="32" textAnchor="middle" fontSize="4.2" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">Confirmation Bias Loop</text>
-    <text x="185" y="44" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Two probabilistic models</text>
-    <text x="185" y="51" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">policing each other</text>
+    <text x="185" y="44" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Two probabilistic models</text>
+    <text x="185" y="51" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">policing each other</text>
     <text x="185" y="61" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">≠ a firewall</text>
     <text x="185" y="72" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif">= sycophancy amplification</text>
-    <text x="130" y="93" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Underestimated variable: LLM sycophancy toward another LLM's prior output</text>
+    <text x="130" y="93" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Underestimated variable: LLM sycophancy toward another LLM's prior output</text>
   </svg>
 );
 
 // ── SVG: quarantine architecture ──
 const QuarantineArchDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">QUARANTINE BY DEFAULT — TWO-GATE ARCHITECTURE</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">QUARANTINE BY DEFAULT — TWO-GATE ARCHITECTURE</text>
     {/* Extraction */}
     <rect x="8" y="20" width="48" height="20" rx={2} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.7"/>
     <text x="32" y="30" textAnchor="middle" fontSize="3.8" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Extraction</text>
-    <text x="32" y="37" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">LLM output</text>
+    <text x="32" y="37" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">LLM output</text>
     <line x1="56" y1="30" x2="68" y2="30" stroke="#c9a84c" strokeWidth="0.5"/>
     {/* Gate 1 */}
     <rect x="68" y="18" width="56" height="24" rx={2} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.8"/>
     <text x="96" y="27" textAnchor="middle" fontSize="3.8" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">Gate 1</text>
-    <text x="96" y="34" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">Pydantic grounding</text>
-    <text x="96" y="40" textAnchor="middle" fontSize="2.6" fill="#6a6a7a" fontFamily="DM Mono, monospace">regex year check</text>
+    <text x="96" y="34" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">Pydantic grounding</text>
+    <text x="96" y="40" textAnchor="middle" fontSize="2.6" fill="#334155" fontFamily="DM Mono, monospace">regex year check</text>
     <line x1="124" y1="30" x2="136" y2="30" stroke="#2a8a84" strokeWidth="0.5"/>
     {/* Gate 2 */}
     <rect x="136" y="18" width="56" height="24" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.8"/>
     <text x="164" y="27" textAnchor="middle" fontSize="3.8" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">Gate 2</text>
-    <text x="164" y="34" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">SQL cross-reference</text>
-    <text x="164" y="40" textAnchor="middle" fontSize="2.6" fill="#6a6a7a" fontFamily="DM Mono, monospace">≥95% fuzzy match</text>
+    <text x="164" y="34" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">SQL cross-reference</text>
+    <text x="164" y="40" textAnchor="middle" fontSize="2.6" fill="#334155" fontFamily="DM Mono, monospace">≥95% fuzzy match</text>
     <line x1="192" y1="30" x2="204" y2="30" stroke="#9b7fd4" strokeWidth="0.5"/>
     {/* Vector store */}
     <rect x="204" y="18" width="48" height="24" rx={2} fill="rgba(74,154,74,0.15)" stroke="#4a9a4a" strokeWidth="0.9"/>
     <text x="228" y="27" textAnchor="middle" fontSize="3.8" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">✅ Vector</text>
     <text x="228" y="34" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">Store</text>
-    <text x="228" y="40" textAnchor="middle" fontSize="2.6" fill="#6a6a7a" fontFamily="DM Mono, monospace">ground truth</text>
+    <text x="228" y="40" textAnchor="middle" fontSize="2.6" fill="#334155" fontFamily="DM Mono, monospace">ground truth</text>
     {/* Fail paths down to quarantine */}
     <line x1="96" y1="42" x2="96" y2="56" stroke="#c4572a" strokeWidth="0.5" strokeDasharray="2,1"/>
     <line x1="164" y1="42" x2="164" y2="56" stroke="#c4572a" strokeWidth="0.5" strokeDasharray="2,1"/>
@@ -11049,7 +11049,7 @@ const QuarantineArchDiagram = () => (
     <text x="164" y="52" textAnchor="middle" fontSize="2.6" fill="#c4572a" fontFamily="Syne, sans-serif">fail</text>
     <rect x="60" y="56" width="140" height="24" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.8"/>
     <text x="130" y="66" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">🚧 PostgreSQL Quarantine Queue</text>
-    <text x="130" y="74" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">Nothing reaches the vector store without passing BOTH gates</text>
+    <text x="130" y="74" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Nothing reaches the vector store without passing BOTH gates</text>
     <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif">Fails open to staging, never to production search results</text>
   </svg>
 );
@@ -11089,12 +11089,12 @@ export const HallucinationLoopTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           The Silent Hallucination Loop:<br /><em style={{ color: "#c4572a", fontStyle: "italic" }}>How a Pipeline Poisoned Its Own Vector Store</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           A fintech RAG chatbot began citing 2018 data for 2022 questions and attributing competitor revenue to the client. The retrieval mechanism worked flawlessly. The vector store itself had been poisoned — one guessed fiscal year, rubber-stamped by an "LLM-as-judge" validator, embedded as permanent ground truth.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(196,87,42,0.08)", border: "1px solid #c4572a30", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.3rem" }}>The core lesson, stated plainly</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>"Our mistake was treating a probabilistic extraction process as deterministic." … "Using a probabilistic model to police another probabilistic model doesn't give you a firewall; it gives you a confirmation bias loop." … "<strong style={{ color: "#c4572a" }}>Probabilistic systems require deterministic boundaries.</strong>"</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"Our mistake was treating a probabilistic extraction process as deterministic." … "Using a probabilistic model to police another probabilistic model doesn't give you a firewall; it gives you a confirmation bias loop." … "<strong style={{ color: "#c4572a" }}>Probabilistic systems require deterministic boundaries.</strong>"</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
@@ -11106,7 +11106,7 @@ export const HallucinationLoopTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -11141,7 +11141,7 @@ export const HallucinationLoopTab = ({ s }) => {
           <div style={s.sectionLabel("#c4572a")}>The Ingestion Hallucination — Animated Walkthrough</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.6rem" }}>
-              <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Trace exactly how one illegible scan became a permanent, confidently-cited falsehood in a production RAG system.</p>
+              <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace exactly how one illegible scan became a permanent, confidently-cited falsehood in a production RAG system.</p>
               <button onClick={runSim} disabled={simRunning}
                 style={{ background: simRunning ? "#f7f5f0" : "rgba(196,87,42,0.1)", border: "1px solid #c4572a", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c4572a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: simRunning ? "not-allowed" : "pointer", opacity: simRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {simRunning ? "Running…" : "▶ Trace the Failure"}
@@ -11151,10 +11151,10 @@ export const HallucinationLoopTab = ({ s }) => {
               {HL_FAILURE_STEPS.map((step, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: simStep >= i ? `${step.color}09` : "#f7f5f0", border: `1px solid ${simStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: simStep === -1 ? 0.35 : simStep >= i ? 1 : 0.25 }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: simStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: simStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${simStep >= i ? step.color : "#d0ccc4"}` }}>
-                    {simStep >= i ? step.icon : <span style={{ color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                    {simStep >= i ? step.icon : <span style={{ color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: simStep >= i ? "#1a1a2e" : "#8a8a9a", marginBottom: "0.1rem" }}>{step.label}</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: simStep >= i ? "#1a1a2e" : "#334155", marginBottom: "0.1rem" }}>{step.label}</div>
                     <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: simStep >= i ? step.color : "#a8a4a0" }}>{step.detail}</div>
                   </div>
                   {simStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
@@ -11169,11 +11169,11 @@ export const HallucinationLoopTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>The setup</div>
-              <p style={{ fontSize: "0.68rem", color: "#6a6a7a", lineHeight: 1.8 }}>A fintech customer's RAG system ingesting thousands of unstructured financial PDFs — extracting data, computing embeddings, storing in a vector database to fuel an internal Q&A chatbot. Worked flawlessly at first.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8 }}>A fintech customer's RAG system ingesting thousands of unstructured financial PDFs — extracting data, computing embeddings, storing in a vector database to fuel an internal Q&A chatbot. Worked flawlessly at first.</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>The scary part</div>
-              <p style={{ fontSize: "0.68rem", color: "#6a6a7a", lineHeight: 1.8 }}>The retrieval mechanism worked correctly. It wasn't the RAG pipeline's fault — it was the ingestion engine feeding it poisoned ground truth. Nothing in the observability dashboard flagged it. Latency stayed sub-100ms.</p>
+              <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8 }}>The retrieval mechanism worked correctly. It wasn't the RAG pipeline's fault — it was the ingestion engine feeding it poisoned ground truth. Nothing in the observability dashboard flagged it. Latency stayed sub-100ms.</p>
             </div>
           </div>
         </div>
@@ -11188,21 +11188,21 @@ export const HallucinationLoopTab = ({ s }) => {
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem", marginBottom: "1.5rem" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#9b7fd4", marginBottom: "0.8rem" }}>The prevailing wisdom that failed</div>
-            <p style={{ fontSize: "0.68rem", color: "#6a6a7a", lineHeight: 1.8, marginBottom: "1rem" }}>"If you don't trust an LLM's output, you simply put another LLM in front of it to double-check the work." A secondary "Validator Agent" evaluated the extracted JSON against the raw text before anything reached the vector database. This should have worked.</p>
+            <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "1rem" }}>"If you don't trust an LLM's output, you simply put another LLM in front of it to double-check the work." A secondary "Validator Agent" evaluated the extracted JSON against the raw text before anything reached the vector database. This should have worked.</p>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.6rem" }}>What the logs actually showed</div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
               {HL_SYCOPHANCY_LOOP.map((row, i) => (
                 <div key={i} style={{ display: "grid", gridTemplateColumns: "160px 1fr 1fr", gap: "0.7rem", alignItems: "center", padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${row.color}` }}>
                   <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: row.color }}>{row.actor}</span>
-                  <span style={{ fontSize: "0.63rem", color: "#4a4a5a", fontStyle: row.action.startsWith('"') ? "italic" : "normal" }}>{row.action}</span>
-                  {row.verdict && <span style={{ fontSize: "0.6rem", color: "#8a8a9a" }}>{row.verdict}</span>}
+                  <span style={{ fontSize: "0.63rem", color: "#1E293B", fontStyle: row.action.startsWith('"') ? "italic" : "normal" }}>{row.action}</span>
+                  {row.verdict && <span style={{ fontSize: "0.6rem", color: "#334155" }}>{row.verdict}</span>}
                 </div>
               ))}
             </div>
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd430", borderRadius: 6 }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#9b7fd4", marginBottom: "0.4rem" }}>The underestimated variable: LLM sycophancy</div>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>The validator wasn't lazy or broken — it was doing what LLMs tend to do when facing another confident-sounding model's output: deferring, rationalizing, assuming the other model "must have seen something." Two probabilistic models checking each other doesn't multiply reliability. It compounds the same failure mode twice.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>The validator wasn't lazy or broken — it was doing what LLMs tend to do when facing another confident-sounding model's output: deferring, rationalizing, assuming the other model "must have seen something." Two probabilistic models checking each other doesn't multiply reliability. It compounds the same failure mode twice.</p>
           </div>
         </div>
       )}
@@ -11212,19 +11212,19 @@ export const HallucinationLoopTab = ({ s }) => {
         <div>
           <div style={s.sectionLabel("#c9a84c")}>The "Prompt Engineering" Trap</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem", marginBottom: "1.5rem" }}>
-            <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.8, marginBottom: "1rem" }}>The team's first reaction: solve an engineering problem through prompt engineering. Three escalating hotfixes were added to the Validator agent's system prompt.</p>
+            <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.8, marginBottom: "1rem" }}>The team's first reaction: solve an engineering problem through prompt engineering. Three escalating hotfixes were added to the Validator agent's system prompt.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               {HL_PROMPT_ATTEMPTS.map((att, i) => (
                 <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem" }}>
                   <div style={{ padding: "0.7rem 0.9rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #c9a84c", fontSize: "0.66rem", color: "#1a1a2e", fontFamily: "DM Mono, monospace", display: "flex", alignItems: "center" }}>{att.prompt}</div>
-                  <div style={{ padding: "0.7rem 0.9rem", background: "rgba(196,87,42,0.06)", borderRadius: 4, borderLeft: `3px solid ${att.color}`, fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.6, display: "flex", alignItems: "center" }}>❌ {att.result}</div>
+                  <div style={{ padding: "0.7rem 0.9rem", background: "rgba(196,87,42,0.06)", borderRadius: 4, borderLeft: `3px solid ${att.color}`, fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.6, display: "flex", alignItems: "center" }}>❌ {att.result}</div>
                 </div>
               ))}
             </div>
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(196,87,42,0.08)", border: "1px solid #c4572a30", borderRadius: 6, borderLeft: "4px solid #c4572a" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.4rem" }}>Why this was always going to fail</div>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, fontStyle: "italic" }}>"To expect that a mathematical matrix would follow a strict schema was lazy thinking on our part." A prompt is a suggestion to a probability distribution. It is not a constraint. No amount of emphatic wording turns a next-token predictor into a rule-following validator.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, fontStyle: "italic" }}>"To expect that a mathematical matrix would follow a strict schema was lazy thinking on our part." A prompt is a suggestion to a probability distribution. It is not a constraint. No amount of emphatic wording turns a next-token predictor into a rule-following validator.</p>
           </div>
         </div>
       )}
@@ -11237,7 +11237,7 @@ export const HallucinationLoopTab = ({ s }) => {
             <ZoomableFigure title="Quarantine by Default — Two-Gate Architecture"><QuarantineArchDiagram /></ZoomableFigure>
           </div>
           <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6, marginBottom: "1.2rem" }}>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>The fix: remove all decision-making authority from the validation process. Force the LLM's output to be treated <strong style={{ color: "#1a1a2e" }}>"as user input from an HTML form"</strong> — untrusted until proven otherwise by deterministic code.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>The fix: remove all decision-making authority from the validation process. Force the LLM's output to be treated <strong style={{ color: "#1a1a2e" }}>"as user input from an HTML form"</strong> — untrusted until proven otherwise by deterministic code.</p>
           </div>
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
             {HL_FIXES.map(f => (
@@ -11257,14 +11257,14 @@ export const HallucinationLoopTab = ({ s }) => {
               <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
                 {["problem", "solution", "code"].map(t => (
                   <button key={t} onClick={() => setFixTab(t)}
-                    style={{ flex: 1, padding: "0.65rem", background: fixTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: fixTab === t ? `2px solid ${fix.color}` : "2px solid transparent", color: fixTab === t ? fix.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    style={{ flex: 1, padding: "0.65rem", background: fixTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: fixTab === t ? `2px solid ${fix.color}` : "2px solid transparent", color: fixTab === t ? fix.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                     {t.charAt(0).toUpperCase() + t.slice(1)}
                   </button>
                 ))}
               </div>
               <div style={{ padding: "1.5rem" }}>
-                {fixTab === "problem" && <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>{fix.problem}</p>}
-                {fixTab === "solution" && <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>{fix.solution}</p>}
+                {fixTab === "problem" && <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{fix.problem}</p>}
+                {fixTab === "solution" && <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{fix.solution}</p>}
                 {fixTab === "code" && <CodeBlock code={fix.code} />}
               </div>
             </div>
@@ -11281,7 +11281,7 @@ export const HallucinationLoopTab = ({ s }) => {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Metric", "Before", "After"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -11306,7 +11306,7 @@ export const HallucinationLoopTab = ({ s }) => {
           </div>
           <div style={{ padding: "1.2rem 1.4rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 6, borderLeft: "4px solid #c4572a" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.5rem" }}>The industry-level diagnosis</div>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, marginBottom: "0.8rem" }}>"The industry is suffering from a severe 'golden hammer' syndrome with Generative AI. We are delegating critical data integrity checks to systems designed to be creative storytellers."</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "0.8rem" }}>"The industry is suffering from a severe 'golden hammer' syndrome with Generative AI. We are delegating critical data integrity checks to systems designed to be creative storytellers."</p>
             <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 900, color: "#c4572a", fontStyle: "italic" }}>"Probabilistic systems require deterministic boundaries."</div>
           </div>
         </div>
@@ -11582,7 +11582,7 @@ const FA_FAILURE_MODES = [
 // ── SVG: 5 assets pipeline diagram ──
 const FiveAssetsPipelineDiagram = () => (
   <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">FIVE ASSETS — FROM VAGUE REQUEST TO RELIABLE WORKFLOW</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">FIVE ASSETS — FROM VAGUE REQUEST TO RELIABLE WORKFLOW</text>
     {[
       { icon: "🔁", label: "Repeated Work", sub: "what's worth doing", color: "#2a8a84", x: 6 },
       { icon: "📋", label: "Task",          sub: "what to execute",  color: "#c9a84c", x: 55 },
@@ -11594,45 +11594,45 @@ const FiveAssetsPipelineDiagram = () => (
         <rect x={a.x} y="20" width="48" height="40" rx={2} fill={`${a.color}12`} stroke={a.color} strokeWidth="0.8"/>
         <text x={a.x+24} y="34" textAnchor="middle" fontSize="9" dominantBaseline="middle">{a.icon}</text>
         <text x={a.x+24} y="45" textAnchor="middle" fontSize="3.5" fill={a.color} fontFamily="Syne, sans-serif" fontWeight="700">{a.label}</text>
-        <text x={a.x+24} y="52" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif">{a.sub}</text>
+        <text x={a.x+24} y="52" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif">{a.sub}</text>
         <text x={a.x+24} y="16" textAnchor="middle" fontSize="3.5" fill={a.color} fontFamily="DM Mono, monospace" fontWeight="700">0{i+1}</text>
-        {i < 4 && <text x={a.x+50} y="42" fontSize="6" fill="#4a4a5a">→</text>}
+        {i < 4 && <text x={a.x+50} y="42" fontSize="6" fill="#1E293B">→</text>}
       </g>
     ))}
     {/* Combined output */}
     <rect x="55" y="72" width="150" height="26" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="1"/>
     <text x="130" y="83" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">🎯 One Master Prompt → Reusable Workflow</text>
-    <text x="130" y="92" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Carries across every model, tool, and platform you adopt over time</text>
+    <text x="130" y="92" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Carries across every model, tool, and platform you adopt over time</text>
     {[30, 79, 128, 177, 226].map((x, i) => (
       <line key={i} x1={x} y1="60" x2={130} y2="72" stroke="#4a9a4a" strokeWidth="0.4" strokeDasharray="1.5,1"/>
     ))}
-    <text x="130" y="106" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">"Give it only 'help me with this,' and it can only guess."</text>
+    <text x="130" y="106" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontStyle="italic">"Give it only 'help me with this,' and it can only guess."</text>
   </svg>
 );
 
 // ── SVG: chat vs workflow request diagram ──
 const ChatVsWorkflowDiagram = () => (
   <svg viewBox="0 0 260 85" style={{ width: "100%", height: 128 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CHAT REQUEST vs OPERATIONAL WORKFLOW</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CHAT REQUEST vs OPERATIONAL WORKFLOW</text>
     {/* Chat request */}
     <rect x="8" y="18" width="112" height="58" rx={2} fill="#faf6ef" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="64" y="29" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">💬 Chat Request</text>
     <rect x="16" y="36" width="96" height="12" rx={1} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.5"/>
     <text x="64" y="44" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif">"Analyze this."</text>
-    <text x="64" y="55" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">Model must guess:</text>
-    <text x="64" y="61" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif">audience · format · sources</text>
-    <text x="64" y="67" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif">quality bar · decision it feeds</text>
+    <text x="64" y="55" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Model must guess:</text>
+    <text x="64" y="61" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif">audience · format · sources</text>
+    <text x="64" y="67" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif">quality bar · decision it feeds</text>
     <text x="64" y="73" textAnchor="middle" fontSize="3" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">= confidently guessing</text>
     {/* Operational workflow */}
     <rect x="140" y="18" width="112" height="58" rx={2} fill="#eff8f4" stroke="#4a9a4a" strokeWidth="0.8"/>
     <text x="196" y="29" textAnchor="middle" fontSize="4.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">⚙️ Operational Workflow</text>
     <rect x="148" y="36" width="96" height="12" rx={1} fill="rgba(74,154,74,0.1)" stroke="#4a9a4a" strokeWidth="0.5"/>
     <text x="196" y="44" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif">A well-defined job</text>
-    <text x="196" y="55" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">Explicit answers to:</text>
-    <text x="196" y="61" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif">outcome · authoritative sources</text>
-    <text x="196" y="67" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif">what AI decides · passing bar</text>
+    <text x="196" y="55" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Explicit answers to:</text>
+    <text x="196" y="61" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif">outcome · authoritative sources</text>
+    <text x="196" y="67" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif">what AI decides · passing bar</text>
     <text x="196" y="73" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">= reliably executing</text>
-    <text x="130" y="49" fontSize="8" fill="#4a4a5a" textAnchor="middle">→</text>
+    <text x="130" y="49" fontSize="8" fill="#1E293B" textAnchor="middle">→</text>
   </svg>
 );
 
@@ -11660,12 +11660,12 @@ export const FiveAssetsTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           5 Assets to Prepare Before<br /><em style={{ color: "#2a8a84", fontStyle: "italic" }}>Your AI Agents Take On More Work</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           The missing piece in most AI workflow rollouts isn't a better model — it's preparation. Before AI can reliably perform recurring work, someone has to define what the work is, why it exists, which information matters, what success looks like, and where AI must stop and ask. Five reusable assets, each with a copy-paste prompt template.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The counterintuitive part</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>"Most teams jump straight to prompts and agents. Many believe that giving teams access to advanced models will produce better results. Here is the counterintuitive part: <strong style={{ color: "#1a1a2e" }}>the better the model performs, the more costly those missing definitions can become.</strong>"</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"Most teams jump straight to prompts and agents. Many believe that giving teams access to advanced models will produce better results. Here is the counterintuitive part: <strong style={{ color: "#1a1a2e" }}>the better the model performs, the more costly those missing definitions can become.</strong>"</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
           {[
@@ -11678,7 +11678,7 @@ export const FiveAssetsTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -11735,7 +11735,7 @@ export const FiveAssetsTab = ({ s }) => {
               <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
                 {["overview", "prompt"].map(t => (
                   <button key={t} onClick={() => setAssetTab(t)}
-                    style={{ flex: 1, padding: "0.65rem", background: assetTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: assetTab === t ? `2px solid ${asset.color}` : "2px solid transparent", color: assetTab === t ? asset.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    style={{ flex: 1, padding: "0.65rem", background: assetTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: assetTab === t ? `2px solid ${asset.color}` : "2px solid transparent", color: assetTab === t ? asset.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                     {t === "overview" ? "Overview" : "Copy-Paste Prompt"}
                   </button>
                 ))}
@@ -11743,15 +11743,15 @@ export const FiveAssetsTab = ({ s }) => {
               <div style={{ padding: "1.5rem" }}>
                 {assetTab === "overview" && (
                   <div>
-                    <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, marginBottom: "1rem" }}>{asset.desc}</p>
+                    <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}>{asset.desc}</p>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem" }}>
                       <div style={{ padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${asset.color}` }}>
                         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: asset.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Examples</div>
-                        <div style={{ fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.6 }}>{asset.examples}</div>
+                        <div style={{ fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.6 }}>{asset.examples}</div>
                       </div>
                       <div style={{ padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${asset.color}` }}>
                         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: asset.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>What You Get</div>
-                        <div style={{ fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.6 }}>{asset.output}</div>
+                        <div style={{ fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.6 }}>{asset.output}</div>
                       </div>
                     </div>
                   </div>
@@ -11780,13 +11780,13 @@ export const FiveAssetsTab = ({ s }) => {
               <div key={i} style={{ background: "#ffffff", border: `1px solid ${f.color}30`, borderRadius: 6, padding: "1.2rem", borderTop: `2px solid ${f.color}` }}>
                 <div style={{ fontSize: "1.3rem", marginBottom: "0.5rem" }}>{f.icon}</div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: f.color, marginBottom: "0.5rem" }}>{f.title}</div>
-                <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.7 }}>{f.desc}</p>
+                <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.7 }}>{f.desc}</p>
               </div>
             ))}
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 6, borderLeft: "4px solid #c4572a" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.4rem" }}>The person who only collects prompts</div>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, fontStyle: "italic" }}>"Someone who only collects prompts is asking the model to guess. Models, licenses, and platforms will keep changing. The value comes from turning what your team already knows into work that AI can repeat, people can review, and the business can rely on."</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, fontStyle: "italic" }}>"Someone who only collects prompts is asking the model to guess. Models, licenses, and platforms will keep changing. The value comes from turning what your team already knows into work that AI can repeat, people can review, and the business can rely on."</p>
           </div>
         </div>
       )}
@@ -11800,7 +11800,7 @@ export const FiveAssetsTab = ({ s }) => {
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #4a9a4a40", borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
             <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
-              <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>Once you have all five assets, this master prompt brings them together into one reusable workflow — defining standard input/output, which steps AI can do directly vs. needs approval for, acceptance standards, permission limits, and a minimum working version you can test today.</p>
+              <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>Once you have all five assets, this master prompt brings them together into one reusable workflow — defining standard input/output, which steps AI can do directly vs. needs approval for, acceptance standards, permission limits, and a minimum working version you can test today.</p>
             </div>
             <div style={{ padding: "1.5rem" }}>
               <div style={{ background: "#0d0d1a", borderRadius: 4, padding: "1rem", fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: "#a8d8a8", lineHeight: 1.7, whiteSpace: "pre-wrap", maxHeight: 380, overflowY: "auto", marginBottom: "0.8rem" }}>{FA_MASTER_PROMPT}</div>
@@ -11812,7 +11812,7 @@ export const FiveAssetsTab = ({ s }) => {
           </div>
           <div style={{ padding: "1.2rem 1.4rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6, borderLeft: "4px solid #2a8a84" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.5rem" }}>Where to actually start</div>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>"Start with one defined task, one reliable input, one standard output, and one approval point. Run real examples through it. Compare the output with your accepted and rejected cases. Fix the gaps before adding more access, more steps, or more autonomy."</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>"Start with one defined task, one reliable input, one standard output, and one approval point. Run real examples through it. Compare the output with your accepted and rejected cases. Fix the gaps before adding more access, more steps, or more autonomy."</p>
           </div>
         </div>
       )}
@@ -11988,14 +11988,14 @@ const ADP_QA_CHECKLIST = [
 // ── SVG: workflow comparison diagram ──
 const WorkflowComparisonDiagram = () => (
   <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ANALYST WORKFLOW vs DATA AGENT WORKFLOW</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ANALYST WORKFLOW vs DATA AGENT WORKFLOW</text>
     {/* Human path */}
     <text x="64" y="22" textAnchor="middle" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">👤 Human Analyst — 5 Steps</text>
     {ADP_WORKFLOW_STEPS.human.map((st, i) => (
       <g key={i}>
         <rect x="8" y={28 + i*14} width="112" height="11" rx={1.5} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.5"/>
         <text x="14" y={36 + i*14} fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif">{st.icon} {st.label}</text>
-        {i < 4 && <text x="64" y={41 + i*14} textAnchor="middle" fontSize="4" fill="#4a4a5a">↓</text>}
+        {i < 4 && <text x="64" y={41 + i*14} textAnchor="middle" fontSize="4" fill="#1E293B">↓</text>}
       </g>
     ))}
     {/* Agent path */}
@@ -12004,17 +12004,17 @@ const WorkflowComparisonDiagram = () => (
       <g key={i}>
         <rect x="140" y={28 + i*14} width="112" height="11" rx={1.5} fill="rgba(74,154,74,0.1)" stroke="#4a9a4a" strokeWidth="0.5"/>
         <text x="146" y={36 + i*14} fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif">{st.icon} {st.label}</text>
-        {i < 3 && <text x="196" y={41 + i*14} textAnchor="middle" fontSize="4" fill="#4a4a5a">↓</text>}
+        {i < 3 && <text x="196" y={41 + i*14} textAnchor="middle" fontSize="4" fill="#1E293B">↓</text>}
       </g>
     ))}
-    <text x="130" y="102" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Looks like a simple conversation — but the agent still retrieves, generates SQL, and interprets results behind the scenes</text>
+    <text x="130" y="102" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Looks like a simple conversation — but the agent still retrieves, generates SQL, and interprets results behind the scenes</text>
   </svg>
 );
 
 // ── SVG: 3-component architecture diagram ──
 const ThreeComponentArchDiagram = () => (
   <svg viewBox="0 0 260 105" style={{ width: "100%", height: 158 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ENTERPRISE AI DATA ARCHITECTURE — 3 KEY COMPONENTS</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ENTERPRISE AI DATA ARCHITECTURE — 3 KEY COMPONENTS</text>
     {/* Foundation: data platform */}
     <rect x="20" y="80" width="220" height="18" rx={2} fill="rgba(155,127,212,0.08)" stroke="#9b7fd4" strokeWidth="0.6"/>
     <text x="130" y="92" textAnchor="middle" fontSize="4" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Reliable, scalable underlying data platform — human-engineered</text>
@@ -12028,18 +12028,18 @@ const ThreeComponentArchDiagram = () => (
         <rect x={c.x} y="24" width="60" height="46" rx={2} fill={`${c.color}12`} stroke={c.color} strokeWidth="0.8"/>
         <text x={c.x+30} y="42" textAnchor="middle" fontSize="10" dominantBaseline="middle">{c.icon}</text>
         <text x={c.x+30} y="55" textAnchor="middle" fontSize="3.8" fill={c.color} fontFamily="Syne, sans-serif" fontWeight="700">{c.label}</text>
-        <text x={c.x+30} y="62" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif">{c.sub}</text>
+        <text x={c.x+30} y="62" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif">{c.sub}</text>
         <line x1={c.x+30} y1="70" x2={c.x+30} y2="80" stroke={c.color} strokeWidth="0.6" strokeDasharray="2,1"/>
       </g>
     ))}
-    <text x="130" y="18" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif" fontStyle="italic">AI doesn't eliminate data engineering — it builds on top of it</text>
+    <text x="130" y="18" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontStyle="italic">AI doesn't eliminate data engineering — it builds on top of it</text>
   </svg>
 );
 
 // ── SVG: traditional vs AI QA loop diagram ──
 const QALoopComparisonDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">TRADITIONAL QA LOOP vs AI-POWERED QA LOOP</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">TRADITIONAL QA LOOP vs AI-POWERED QA LOOP</text>
     {/* Traditional loop */}
     <rect x="8" y="18" width="112" height="60" rx={2} fill="#faf6ef" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="64" y="28" textAnchor="middle" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">📏 Traditional QA</text>
@@ -12066,7 +12066,7 @@ const QALoopComparisonDiagram = () => (
 // ── SVG: governance 6 pillars diagram ──
 const GovernancePillarsDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SIX PILLARS OF AI GOVERNANCE & OBSERVABILITY</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SIX PILLARS OF AI GOVERNANCE & OBSERVABILITY</text>
     {[
       { icon: "📌", label: "Prompt\nVersioning", color: "#2a8a84" },
       { icon: "🚨", label: "Hallucination\nDetection", color: "#c4572a" },
@@ -12087,7 +12087,7 @@ const GovernancePillarsDiagram = () => (
         </g>
       );
     })}
-    <text x="130" y="90" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif" fontStyle="italic">"Can you explain and stand behind every answer your AI gives?"</text>
+    <text x="130" y="90" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontStyle="italic">"Can you explain and stand behind every answer your AI gives?"</text>
   </svg>
 );
 
@@ -12117,12 +12117,12 @@ export const AIDataPlatformTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           Many Companies Use AI.<br /><em style={{ color: "#9b7fd4", fontStyle: "italic" }}>Few Know How to Build an AI-Native Data Platform.</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Chatbots and internal Q&A tools improve individual productivity, but that's not where AI's potential ends. A practical enterprise AI architecture built on three components: Data Agents, AI-Powered QA, and AI Governance & Observability — working together on top of a data platform that humans still have to engineer well.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#9b7fd4", marginBottom: "0.3rem" }}>The reframe on governance</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>"Many people think AI governance means security. But after AI is fully integrated into your enterprise system, governance is about something broader: <strong style={{ color: "#1a1a2e" }}>can you explain and stand behind every answer your AI gives?</strong>"</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"Many people think AI governance means security. But after AI is fully integrated into your enterprise system, governance is about something broader: <strong style={{ color: "#1a1a2e" }}>can you explain and stand behind every answer your AI gives?</strong>"</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
@@ -12134,7 +12134,7 @@ export const AIDataPlatformTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -12168,7 +12168,7 @@ export const AIDataPlatformTab = ({ s }) => {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Dimension", "💬 Chatbot", "🤖 AI Agent"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -12177,7 +12177,7 @@ export const AIDataPlatformTab = ({ s }) => {
                   <tr key={i} style={{ borderBottom: i < ADP_CHATBOT_VS_AGENT.length-1 ? "1px solid #e8e4dc" : "none" }}
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                    <td style={{ padding: "0.7rem 0.9rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
+                    <td style={{ padding: "0.7rem 0.9rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
                     <td style={{ padding: "0.7rem 0.9rem", color: "#c4572a" }}>{row.chatbot}</td>
                     <td style={{ padding: "0.7rem 0.9rem", color: "#4a9a4a" }}>{row.agent}</td>
                   </tr>
@@ -12196,7 +12196,7 @@ export const AIDataPlatformTab = ({ s }) => {
                   <span style={{ color: p.color, fontSize: "0.7rem" }}>{activeProblem === i ? "▲" : "▼"}</span>
                 </div>
                 {activeProblem === i && (
-                  <div style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.6, marginTop: "0.6rem", animation: "fadeIn 0.2s ease" }}>{p.desc}</div>
+                  <div style={{ fontSize: "0.63rem", color: "#1E293B", lineHeight: 1.6, marginTop: "0.6rem", animation: "fadeIn 0.2s ease" }}>{p.desc}</div>
                 )}
               </div>
             ))}
@@ -12212,7 +12212,7 @@ export const AIDataPlatformTab = ({ s }) => {
             <ZoomableFigure title="Enterprise AI Data Architecture"><ThreeComponentArchDiagram /></ZoomableFigure>
           </div>
           <div style={{ padding: "0.9rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd430", borderRadius: 6, marginBottom: "1.5rem" }}>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>"Enterprise AI doesn't eliminate the need for robust data engineering implemented by humans. Instead, AI can enhance it. No matter how smart AI agents are, before they can answer business questions or validate data quality, the underlying data platform must already be reliable and scalable."</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>"Enterprise AI doesn't eliminate the need for robust data engineering implemented by humans. Instead, AI can enhance it. No matter how smart AI agents are, before they can answer business questions or validate data quality, the underlying data platform must already be reliable and scalable."</p>
           </div>
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
             {ADP_COMPONENTS.map(c => (
@@ -12230,18 +12230,18 @@ export const AIDataPlatformTab = ({ s }) => {
                 <div style={{ fontSize: "0.65rem", color: component.color, fontStyle: "italic" }}>{component.tagline}</div>
               </div>
               <div style={{ padding: "1.5rem" }}>
-                <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, marginBottom: "1rem" }}>{component.desc}</p>
+                <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}>{component.desc}</p>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: component.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Platform Tools</div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.5rem", marginBottom: component.sdkNote ? "1rem" : 0 }}>
                   {component.platformTools.map((t, i) => (
                     <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "0.5rem 0.7rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem" }}>
                       <span style={{ color: t.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{t.name}</span>
-                      <span style={{ color: "#6a6a7a" }}>{t.feature}</span>
+                      <span style={{ color: "#334155" }}>{t.feature}</span>
                     </div>
                   ))}
                 </div>
                 {component.sdkNote && (
-                  <div style={{ padding: "0.7rem 0.9rem", background: `${component.color}0a`, border: `1px solid ${component.color}25`, borderRadius: 4, fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.6 }}>
+                  <div style={{ padding: "0.7rem 0.9rem", background: `${component.color}0a`, border: `1px solid ${component.color}25`, borderRadius: 4, fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.6 }}>
                     <strong style={{ color: component.color }}>SDK approach: </strong>{component.sdkNote}
                   </div>
                 )}
@@ -12264,11 +12264,11 @@ export const AIDataPlatformTab = ({ s }) => {
               {ADP_QA_CHECKLIST.map((c, i) => (
                 <div key={i} style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #c9a84c" }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: "#c9a84c", marginBottom: "0.15rem" }}>{c.check}</div>
-                  <div style={{ fontSize: "0.6rem", color: "#6a6a7a", lineHeight: 1.5 }}>{c.question}</div>
+                  <div style={{ fontSize: "0.6rem", color: "#334155", lineHeight: 1.5 }}>{c.question}</div>
                 </div>
               ))}
             </div>
-            <div style={{ padding: "0.9rem 1.1rem", background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a25", borderRadius: 4, fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>
+            <div style={{ padding: "0.9rem 1.1rem", background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a25", borderRadius: 4, fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>
               <strong style={{ color: "#c4572a" }}>The catch: </strong>Traditional checks pass a clinic whose lab results suddenly run 10× higher than their historical average — because the format is valid, ranges are fine, no NULLs, no duplicates. AI-powered QA flags it because <em>it doesn't look right compared to what that clinic has always produced.</em>
             </div>
           </div>
@@ -12365,14 +12365,14 @@ scan.execute()`} />
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
                   <div>
                     <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: pillar.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>What It Is</div>
-                    <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>{pillar.desc}</p>
+                    <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>{pillar.desc}</p>
                   </div>
                   <div>
                     <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: pillar.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Scenario / Method</div>
-                    <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>{pillar.scenario}</p>
+                    <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>{pillar.scenario}</p>
                   </div>
                 </div>
-                <div style={{ padding: "0.7rem 0.9rem", background: `${pillar.color}0a`, border: `1px solid ${pillar.color}25`, borderRadius: 4, fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.6, borderLeft: `3px solid ${pillar.color}` }}>
+                <div style={{ padding: "0.7rem 0.9rem", background: `${pillar.color}0a`, border: `1px solid ${pillar.color}25`, borderRadius: 4, fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.6, borderLeft: `3px solid ${pillar.color}` }}>
                   <strong style={{ color: pillar.color }}>Why it matters: </strong>{pillar.why}
                 </div>
               </div>
@@ -12384,7 +12384,7 @@ scan.execute()`} />
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Risk", "What Happens", "The Fix"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -12394,7 +12394,7 @@ scan.execute()`} />
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td style={{ padding: "0.7rem 0.9rem", color: "#c4572a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{r.risk}</td>
-                    <td style={{ padding: "0.7rem 0.9rem", color: "#4a4a5a" }}>{r.desc}</td>
+                    <td style={{ padding: "0.7rem 0.9rem", color: "#1E293B" }}>{r.desc}</td>
                     <td style={{ padding: "0.7rem 0.9rem", color: "#4a9a4a" }}>{r.fix}</td>
                   </tr>
                 ))}
@@ -12525,7 +12525,7 @@ const QPL_SERIES = [
 // ── SVG: 3 eras stacking diagram ──
 const ThreeErasStackDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE THREE ERAS STACK — THEY DON'T REPLACE EACH OTHER</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE THREE ERAS STACK — THEY DON'T REPLACE EACH OTHER</text>
     {QPL_ERAS.map((era, i) => {
       const y = 20 + i * 24;
       return (
@@ -12533,22 +12533,22 @@ const ThreeErasStackDiagram = () => (
           <rect x="12" y={y} width="236" height="18" rx={2} fill={`${era.color}12`} stroke={era.color} strokeWidth="0.8"/>
           <text x="20" y={y+8} fontSize="8" dominantBaseline="middle">{era.icon}</text>
           <text x="34" y={y+7} fontSize="4" fill={era.color} fontFamily="Syne, sans-serif" fontWeight="800">{era.name}</text>
-          <text x="34" y={y+13.5} fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">{era.who}</text>
+          <text x="34" y={y+13.5} fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">{era.who}</text>
           <text x="242" y={y+10} textAnchor="end" fontSize="3.5" fill={era.color} fontFamily="DM Mono, monospace" fontWeight="700">{era.year}</text>
         </g>
       );
     })}
     {/* Stacking arrows */}
-    <line x1="130" y1="38" x2="130" y2="44" stroke="#6a6a7a" strokeWidth="0.5"/>
-    <line x1="130" y1="62" x2="130" y2="68" stroke="#6a6a7a" strokeWidth="0.5"/>
-    <text x="130" y="96" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Prompt shapes what one call reads · Context picks what enters that call · Loop wraps the call in bounded iteration</text>
+    <line x1="130" y1="38" x2="130" y2="44" stroke="#334155" strokeWidth="0.5"/>
+    <line x1="130" y1="62" x2="130" y2="68" stroke="#334155" strokeWidth="0.5"/>
+    <text x="130" y="96" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Prompt shapes what one call reads · Context picks what enters that call · Loop wraps the call in bounded iteration</text>
   </svg>
 );
 
 // ── SVG: the small loop flow diagram ──
 const SmallLoopFlowDiagram = () => (
   <svg viewBox="0 0 260 105" style={{ width: "100%", height: 158 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE SMALL LOOP — 6 STEPS, ONE LOOP-BACK ARROW</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE SMALL LOOP — 6 STEPS, ONE LOOP-BACK ARROW</text>
     {/* Steps 1-3 top row */}
     {[
       { n: 1, icon: "❓", label: "Raw question", x: 8, color: "#c9a84c" },
@@ -12560,7 +12560,7 @@ const SmallLoopFlowDiagram = () => (
         <text x={st.x+34} y="30" textAnchor="middle" fontSize="3.5" fill={st.color} fontFamily="DM Mono, monospace" fontWeight="700">{st.n}</text>
         <text x={st.x+34} y="38" textAnchor="middle" fontSize="7" dominantBaseline="middle">{st.icon}</text>
         <text x={st.x+34} y="44" textAnchor="middle" fontSize="3.2" fill={st.color} fontFamily="Syne, sans-serif" fontWeight="700">{st.label}</text>
-        {i < 2 && <text x={st.x+70} y="35" fontSize="6" fill="#4a4a5a">→</text>}
+        {i < 2 && <text x={st.x+70} y="35" fontSize="6" fill="#1E293B">→</text>}
       </g>
     ))}
     {/* Loop back arrow from 3 down to 4 */}
@@ -12576,7 +12576,7 @@ const SmallLoopFlowDiagram = () => (
         <text x={st.x+34} y="76" textAnchor="middle" fontSize="3.5" fill={st.color} fontFamily="DM Mono, monospace" fontWeight="700">{st.n}</text>
         <text x={st.x+34} y="84" textAnchor="middle" fontSize="7" dominantBaseline="middle">{st.icon}</text>
         <text x={st.x+34} y="90" textAnchor="middle" fontSize="3.2" fill={st.color} fontFamily="Syne, sans-serif" fontWeight="700">{st.label}</text>
-        {i < 1 && <text x={st.x+70} y="81" fontSize="6" fill="#4a4a5a">→</text>}
+        {i < 1 && <text x={st.x+70} y="81" fontSize="6" fill="#1E293B">→</text>}
       </g>
     ))}
     {/* step 6 */}
@@ -12585,21 +12585,21 @@ const SmallLoopFlowDiagram = () => (
     <text x="42" y="84" textAnchor="middle" fontSize="7" dominantBaseline="middle">✅</text>
     <text x="42" y="90" textAnchor="middle" fontSize="3.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">dispatch()</text>
     <line x1="184" y1="79" x2="176" y2="79" stroke="#4a9a4a" strokeWidth="0.6" transform="rotate(180 180 79)"/>
-    <text x="130" y="102" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Loop back only from step 3 to step 4 · retrieval never sees the loop happened</text>
+    <text x="130" y="102" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Loop back only from step 3 to step 4 · retrieval never sees the loop happened</text>
   </svg>
 );
 
 // ── SVG: loop lives inside question parsing ──
 const LoopScopeDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE LOOP LIVES INSIDE QUESTION PARSING — RETRIEVAL NEVER SEES IT</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE LOOP LIVES INSIDE QUESTION PARSING — RETRIEVAL NEVER SEES IT</text>
     {/* Question parsing brick with loop inside */}
     <rect x="8" y="20" width="110" height="58" rx={2} fill="rgba(201,168,76,0.08)" stroke="#c9a84c" strokeWidth="0.9"/>
     <text x="63" y="30" textAnchor="middle" fontSize="4.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">❓ Question Parsing</text>
     <rect x="16" y="36" width="94" height="34" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.6" strokeDasharray="2,1"/>
     <text x="63" y="46" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">🔂 small loop lives here</text>
-    <text x="63" y="53" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">parse → detect gap → ask</text>
-    <text x="63" y="59" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">→ re-parse (loop back)</text>
+    <text x="63" y="53" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">parse → detect gap → ask</text>
+    <text x="63" y="59" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">→ re-parse (loop back)</text>
     <text x="63" y="66" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">↳ invisible outside this box</text>
     {/* Arrow to filled ParsedQuestion */}
     <line x1="118" y1="49" x2="132" y2="49" stroke="#4a9a4a" strokeWidth="0.7"/>
@@ -12612,7 +12612,7 @@ const LoopScopeDiagram = () => (
     <text x="220" y="40" textAnchor="middle" fontSize="3.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">🔍 Retrieval</text>
     <rect x="192" y="52" width="56" height="18" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.7"/>
     <text x="220" y="62" textAnchor="middle" fontSize="3.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">✍️ Generation</text>
-    <text x="130" y="85" textAnchor="middle" fontSize="3.5" fill="#6a6a7a" fontFamily="Syne, sans-serif">Whether the pipeline needed a turn or not is invisible to both downstream bricks</text>
+    <text x="130" y="85" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Whether the pipeline needed a turn or not is invisible to both downstream bricks</text>
   </svg>
 );
 
@@ -12651,12 +12651,12 @@ export const QuestionParsingLoopTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           Loop Engineering for RAG<br />Question Parsing: <em style={{ color: "#2a8a84", fontStyle: "italic" }}>The Small Loop That Runs Before Retrieval</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Prompt engineering, then context engineering, then loop engineering. On the question side, the loop is small by design: read the doc, ask what is missing, re-parse. One field filled, one LLM call, the same schema every downstream brick already reads.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The intro example</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>User asks <em>"what is the premium?"</em> on a 47-page insurance policy. Naive top-k embeds "premium" and returns exclusion clauses that just mention the word. A loop-engineered pipeline instead sees no TOC match, holds, and asks one plain question: <em style={{ color: "#1a1a2e" }}>"I don't see a 'Premium' section in this policy. Where should I look?"</em></div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>User asks <em>"what is the premium?"</em> on a 47-page insurance policy. Naive top-k embeds "premium" and returns exclusion clauses that just mention the word. A loop-engineered pipeline instead sees no TOC match, holds, and asks one plain question: <em style={{ color: "#1a1a2e" }}>"I don't see a 'Premium' section in this policy. Where should I look?"</em></div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
           {[
@@ -12669,7 +12669,7 @@ export const QuestionParsingLoopTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -12677,10 +12677,10 @@ export const QuestionParsingLoopTab = ({ s }) => {
 
       {/* SERIES POSITION */}
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1rem 1.2rem", marginBottom: "1.5rem" }}>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#8a8a9a", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Where This Sits — Question Parsing Series</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Where This Sits — Question Parsing Series</div>
         <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
           {QPL_SERIES.map((a, i) => (
-            <div key={i} style={{ padding: "0.35rem 0.7rem", background: a.current ? `${a.color}18` : "#f7f5f0", border: `1px solid ${a.current ? a.color : "#e0dcd4"}`, borderRadius: 4, fontSize: "0.58rem", color: a.current ? a.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: a.current ? 800 : 600 }}>
+            <div key={i} style={{ padding: "0.35rem 0.7rem", background: a.current ? `${a.color}18` : "#f7f5f0", border: `1px solid ${a.current ? a.color : "#e0dcd4"}`, borderRadius: 4, fontSize: "0.58rem", color: a.current ? a.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: a.current ? 800 : 600 }}>
               {a.label}{a.current && " ←"}
             </div>
           ))}
@@ -12712,14 +12712,14 @@ export const QuestionParsingLoopTab = ({ s }) => {
                   <span style={{ fontSize: "1.2rem" }}>{era.icon}</span>
                   <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: era.color }}>{era.name}</span>
                 </div>
-                <div style={{ fontSize: "0.58rem", color: "#8a8a9a", fontFamily: "DM Mono, monospace", marginBottom: "0.6rem" }}>{era.year} · {era.who}</div>
-                <p style={{ fontSize: "0.64rem", color: "#4a4a5a", lineHeight: 1.7 }}>{era.desc}</p>
+                <div style={{ fontSize: "0.58rem", color: "#334155", fontFamily: "DM Mono, monospace", marginBottom: "0.6rem" }}>{era.year} · {era.who}</div>
+                <p style={{ fontSize: "0.64rem", color: "#1E293B", lineHeight: 1.7 }}>{era.desc}</p>
               </div>
             ))}
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(74,154,74,0.07)", border: "1px solid #4a9a4a30", borderRadius: 6 }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#4a9a4a", marginBottom: "0.4rem" }}>Loops come in sizes</div>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>A <strong style={{ color: "#1a1a2e" }}>big loop</strong> is agentic RAG (plan, act, observe, replan, many turns). A <strong style={{ color: "#1a1a2e" }}>small loop</strong> is a single ask-answer-continue turn. This article is about the smallest useful loop, sitting on question parsing.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>A <strong style={{ color: "#1a1a2e" }}>big loop</strong> is agentic RAG (plan, act, observe, replan, many turns). A <strong style={{ color: "#1a1a2e" }}>small loop</strong> is a single ask-answer-continue turn. This article is about the smallest useful loop, sitting on question parsing.</p>
           </div>
         </div>
       )}
@@ -12729,7 +12729,7 @@ export const QuestionParsingLoopTab = ({ s }) => {
         <div>
           <div style={s.sectionLabel("#2a8a84")}>§2 — The Loop Fills a Fixed Schema</div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6, marginBottom: "1.5rem" }}>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>These names are not article-local. They live in the <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>docintel.question</code> module and every downstream brick reads them. <strong style={{ color: "#1a1a2e" }}>The loop's only job is to fill one of these fields when the parser cannot fill it alone. It never invents a new one.</strong></p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>These names are not article-local. They live in the <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>docintel.question</code> module and every downstream brick reads them. <strong style={{ color: "#1a1a2e" }}>The loop's only job is to fill one of these fields when the parser cannot fill it alone. It never invents a new one.</strong></p>
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
             <div style={{ padding: "0.8rem 1.2rem", borderBottom: "1px solid #e0dcd4", fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#2a8a84", letterSpacing: "0.2em", textTransform: "uppercase" }}>ParsedQuestion Schema — 6 Fields</div>
@@ -12737,7 +12737,7 @@ export const QuestionParsingLoopTab = ({ s }) => {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Field", "Type", "Description", "Loop fills?"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.56rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.56rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -12747,8 +12747,8 @@ export const QuestionParsingLoopTab = ({ s }) => {
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td style={{ padding: "0.65rem 0.9rem", color: f.color, fontFamily: "DM Mono, monospace", fontWeight: 700 }}>{f.field}</td>
-                    <td style={{ padding: "0.65rem 0.9rem", color: "#8a8a9a", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{f.type}</td>
-                    <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a" }}>{f.desc}</td>
+                    <td style={{ padding: "0.65rem 0.9rem", color: "#334155", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{f.type}</td>
+                    <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B" }}>{f.desc}</td>
                     <td style={{ padding: "0.65rem 0.9rem" }}>
                       {f.loopFills
                         ? <span style={{ fontSize: "0.55rem", padding: "0.15rem 0.5rem", background: "rgba(196,87,42,0.15)", color: "#c4572a", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>YES</span>
@@ -12760,7 +12760,7 @@ export const QuestionParsingLoopTab = ({ s }) => {
             </table>
           </div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a25", borderRadius: 6 }}>
-            <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}><strong style={{ color: "#c4572a" }}>Not every field is mandatory:</strong> no TOC means no section_hint, and that's fine as long as another field (like pages_hint) scopes the search. The engineering work is picking which field to ask about, given the doc profile, and how to phrase the question for the user's context.</p>
+            <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}><strong style={{ color: "#c4572a" }}>Not every field is mandatory:</strong> no TOC means no section_hint, and that's fine as long as another field (like pages_hint) scopes the search. The engineering work is picking which field to ask about, given the doc profile, and how to phrase the question for the user's context.</p>
           </div>
         </div>
       )}
@@ -12774,7 +12774,7 @@ export const QuestionParsingLoopTab = ({ s }) => {
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.6rem" }}>
-              <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Trace the exact 6-step flow on the "premium" question from the article's intro.</p>
+              <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace the exact 6-step flow on the "premium" question from the article's intro.</p>
               <button onClick={runLoop} disabled={loopRunning}
                 style={{ background: loopRunning ? "#f7f5f0" : "rgba(201,168,76,0.1)", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: loopRunning ? "not-allowed" : "pointer", opacity: loopRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {loopRunning ? "Running…" : "▶ Run the Loop"}
@@ -12784,10 +12784,10 @@ export const QuestionParsingLoopTab = ({ s }) => {
               {QPL_LOOP_STEPS.map((step, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: loopStep >= i ? `${step.color}09` : "#f7f5f0", border: `1px solid ${loopStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: loopStep === -1 ? 0.35 : loopStep >= i ? 1 : 0.25 }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: loopStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: loopStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${loopStep >= i ? step.color : "#d0ccc4"}` }}>
-                    {loopStep >= i ? step.icon : <span style={{ color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{step.step}</span>}
+                    {loopStep >= i ? step.icon : <span style={{ color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{step.step}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: loopStep >= i ? "#1a1a2e" : "#8a8a9a", marginBottom: "0.1rem" }}>{step.label}</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: loopStep >= i ? "#1a1a2e" : "#334155", marginBottom: "0.1rem" }}>{step.label}</div>
                     <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: loopStep >= i ? step.color : "#a8a4a0" }}>{step.detail}</div>
                   </div>
                   {loopStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
@@ -12833,21 +12833,21 @@ plan = dispatch(parsed)                       # step 6, unchanged`} />
       {section === "cases" && (
         <div>
           <div style={s.sectionLabel("#9b7fd4")}>§3 — Three Cases, Three Missing Fields</div>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>Each case names the one field the parser can't fill alone, the doc profile that flags the gap, and the plain question that fills it. Same schema across all three — no new field invented.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>Each case names the one field the parser can't fill alone, the doc profile that flags the gap, and the plain question that fills it. Same schema across all three — no new field invented.</p>
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
             {QPL_CASES.map(c => (
               <button key={c.id} onClick={() => setActiveCase(c.id)}
                 style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.3rem", padding: "0.8rem", background: activeCase === c.id ? `${c.color}12` : "#ffffff", border: `1px solid ${activeCase === c.id ? c.color : "#e0dcd4"}`, borderRadius: 6, cursor: "pointer", transition: "all 0.2s" }}>
                 <span style={{ fontSize: "1.2rem" }}>{c.icon}</span>
                 <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: activeCase === c.id ? c.color : "#1a1a2e" }}>{c.title}</span>
-                <span style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>{c.subtitle}</span>
+                <span style={{ fontSize: "0.55rem", color: "#334155" }}>{c.subtitle}</span>
               </button>
             ))}
           </div>
           {caseData && (
             <div style={{ background: "#ffffff", border: `1px solid ${caseData.color}40`, borderRadius: 6, overflow: "hidden", animation: "fadeIn 0.25s ease" }}>
               <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4" }}>
-                <div style={{ fontSize: "0.6rem", color: "#8a8a9a", marginBottom: "0.3rem" }}>{caseData.persona}</div>
+                <div style={{ fontSize: "0.6rem", color: "#334155", marginBottom: "0.3rem" }}>{caseData.persona}</div>
                 <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.05rem", fontWeight: 900, fontStyle: "italic", color: caseData.color }}>{caseData.question}</div>
               </div>
               <div style={{ padding: "1.5rem" }}>
@@ -12857,7 +12857,7 @@ plan = dispatch(parsed)                       # step 6, unchanged`} />
                     {caseData.docProfile.map((d, i) => (
                       <div key={i} style={{ display: "flex", gap: "0.5rem", padding: "0.35rem 0.6rem", background: "#f7f5f0", borderRadius: 3, fontSize: "0.6rem", marginBottom: "0.25rem" }}>
                         <span style={{ color: caseData.color, fontFamily: "DM Mono, monospace", fontWeight: 700 }}>{d.k}:</span>
-                        <span style={{ color: "#4a4a5a" }}>{d.v}</span>
+                        <span style={{ color: "#1E293B" }}>{d.v}</span>
                       </div>
                     ))}
                   </div>
@@ -12866,7 +12866,7 @@ plan = dispatch(parsed)                       # step 6, unchanged`} />
                     {Object.entries(caseData.firstParse).map(([k, v], i) => (
                       <div key={i} style={{ display: "flex", gap: "0.5rem", padding: "0.35rem 0.6rem", background: v.match(/REFUS|STAYS|KILLED/) ? "rgba(196,87,42,0.08)" : "#f7f5f0", borderRadius: 3, fontSize: "0.6rem", marginBottom: "0.25rem", border: v.match(/REFUS|STAYS|KILLED/) ? "1px solid #c4572a30" : "none" }}>
                         <span style={{ color: "#2a8a84", fontFamily: "DM Mono, monospace", fontWeight: 700 }}>{k}:</span>
-                        <span style={{ color: v.match(/REFUS|STAYS|KILLED/) ? "#c4572a" : "#4a4a5a", fontWeight: v.match(/REFUS|STAYS|KILLED/) ? 700 : 400 }}>{v}</span>
+                        <span style={{ color: v.match(/REFUS|STAYS|KILLED/) ? "#c4572a" : "#1E293B", fontWeight: v.match(/REFUS|STAYS|KILLED/) ? 700 : 400 }}>{v}</span>
                       </div>
                     ))}
                   </div>
@@ -12876,7 +12876,7 @@ plan = dispatch(parsed)                       # step 6, unchanged`} />
                   <div style={{ fontSize: "0.68rem", color: "#1a1a2e", fontStyle: "italic" }}>{caseData.askedQuestion}</div>
                 </div>
                 <div style={{ marginBottom: "0.8rem" }}>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#6a6a7a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>User Reply Variants (all work)</div>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>User Reply Variants (all work)</div>
                   <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
                     {caseData.userReplies.map((r, i) => (
                       <span key={i} style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: caseData.color, background: `${caseData.color}12`, padding: "0.25rem 0.6rem", borderRadius: 3 }}>{r}</span>
@@ -12885,11 +12885,11 @@ plan = dispatch(parsed)                       # step 6, unchanged`} />
                 </div>
                 <div style={{ padding: "0.8rem 1rem", background: "#f7f5f0", borderRadius: 4, marginBottom: "0.8rem", borderLeft: `3px solid ${caseData.color}` }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: caseData.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Resolution</div>
-                  <p style={{ fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.7 }}>{caseData.resolution}</p>
+                  <p style={{ fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>{caseData.resolution}</p>
                 </div>
                 <div style={{ padding: "0.8rem 1rem", background: "rgba(74,154,74,0.07)", border: "1px solid #4a9a4a25", borderRadius: 4 }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#4a9a4a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Outcome</div>
-                  <p style={{ fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.7 }}>{caseData.outcome}</p>
+                  <p style={{ fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>{caseData.outcome}</p>
                 </div>
               </div>
             </div>
@@ -12914,7 +12914,7 @@ plan = dispatch(parsed)                       # step 6, unchanged`} />
                   <span style={{ color: n.color, fontSize: "0.7rem" }}>{activeNotAgentic === i ? "▲" : "▼"}</span>
                 </div>
                 {activeNotAgentic === i && (
-                  <div style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.6, marginTop: "0.6rem", animation: "fadeIn 0.2s ease" }}>{n.desc}</div>
+                  <div style={{ fontSize: "0.63rem", color: "#1E293B", lineHeight: 1.6, marginTop: "0.6rem", animation: "fadeIn 0.2s ease" }}>{n.desc}</div>
                 )}
               </div>
             ))}
@@ -12925,7 +12925,7 @@ plan = dispatch(parsed)                       # step 6, unchanged`} />
               <div key={i} style={{ background: "#ffffff", border: `1px solid ${o.color}30`, borderRadius: 6, padding: "1rem", borderTop: `2px solid ${o.color}` }}>
                 <div style={{ fontSize: "1.1rem", marginBottom: "0.4rem" }}>{o.icon}</div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: o.color, marginBottom: "0.4rem" }}>{o.title}</div>
-                <p style={{ fontSize: "0.6rem", color: "#6a6a7a", lineHeight: 1.6 }}>{o.desc}</p>
+                <p style={{ fontSize: "0.6rem", color: "#334155", lineHeight: 1.6 }}>{o.desc}</p>
               </div>
             ))}
           </div>
@@ -13043,7 +13043,7 @@ const FP_CLAIMS = [
 // ── SVG: four documents grid diagram ──
 const FourDocsGridDiagram = () => (
   <svg viewBox="0 0 260 105" style={{ width: "100%", height: 158 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SAME PIPELINE, FOUR VERY DIFFERENT DOCUMENTS</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SAME PIPELINE, FOUR VERY DIFFERENT DOCUMENTS</text>
     {FP_DOCUMENTS.map((d, i) => {
       const x = 8 + (i % 2) * 126;
       const y = 20 + Math.floor(i / 2) * 42;
@@ -13052,25 +13052,25 @@ const FourDocsGridDiagram = () => (
           <rect x={x} y={y} width={118} height={36} rx={2} fill={`${d.color}10`} stroke={d.color} strokeWidth="0.8"/>
           <text x={x+12} y={y+13} fontSize="8" dominantBaseline="middle">{d.icon}</text>
           <text x={x+24} y={y+11} fontSize="3.8" fill={d.color} fontFamily="Syne, sans-serif" fontWeight="800">{d.name.length > 22 ? d.name.slice(0,20)+"…" : d.name}</text>
-          <text x={x+24} y="16" textAnchor="start" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif" dy={y-13}>{d.subtitle}</text>
-          <text x={x+8} y={y+23} fontSize="2.8" fill="#6a6a7a" fontFamily="DM Mono, monospace">{d.pages}p · {d.tocEntries} TOC · L{d.tocDepth}</text>
+          <text x={x+24} y="16" textAnchor="start" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif" dy={y-13}>{d.subtitle}</text>
+          <text x={x+8} y={y+23} fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">{d.pages}p · {d.tocEntries} TOC · L{d.tocDepth}</text>
           <text x={x+8} y={y+30} fontSize="2.6" fill={d.color} fontFamily="Syne, sans-serif" fontStyle="italic">{d.intent}</text>
         </g>
       );
     })}
-    <text x="130" y="100" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Same 4 bricks, same typed contracts — zero document-specific branches in the code</text>
+    <text x="130" y="100" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Same 4 bricks, same typed contracts — zero document-specific branches in the code</text>
   </svg>
 );
 
 // ── SVG: constants vs variants diagram ──
 const ConstantsVariantsDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">WHAT STAYS FIXED vs WHAT ADAPTS PER DOCUMENT</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">WHAT STAYS FIXED vs WHAT ADAPTS PER DOCUMENT</text>
     {/* Fixed core */}
     <rect x="70" y="18" width="120" height="34" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="1"/>
     <text x="130" y="30" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">🔒 Fixed — same code</text>
-    <text x="130" y="38" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">4 bricks · typed contracts</text>
-    <text x="130" y="45" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">TOC-first routing · citations</text>
+    <text x="130" y="38" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">4 bricks · typed contracts</text>
+    <text x="130" y="45" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">TOC-first routing · citations</text>
     {/* Adapting inputs surrounding */}
     {[
       { label: "TOC shape", x: 8, color: "#2a8a84" },
@@ -13084,7 +13084,7 @@ const ConstantsVariantsDiagram = () => (
         <line x1={v.x < 100 ? v.x+52 : v.x} y1={v.y2 ? 72 : 28} x2={v.x < 100 ? 70 : 190} y2={v.y2 ? 45 : 35} stroke={v.color} strokeWidth="0.4" strokeDasharray="2,1"/>
       </g>
     ))}
-    <text x="130" y="90" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">The contract stays fixed — only the DATA flowing through it changes per document</text>
+    <text x="130" y="90" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontStyle="italic">The contract stays fixed — only the DATA flowing through it changes per document</text>
   </svg>
 );
 
@@ -13112,12 +13112,12 @@ export const FourPDFsTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           One RAG Pipeline,<br />Four Very Different PDFs — <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Same Four Bricks, Every Answer Typed and Cited</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Article 9A built the production pipeline on one paper. This article runs the exact same code — unchanged — on an academic paper, a 492-page government standard, a corporate 10-K filing, and a product manual. Same four bricks, same typed contracts. What changes is only the data flowing through them.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The test this article runs</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>Does a pipeline built and tuned on one 15-page paper hold up on documents nobody designed it for? Not "does it work on everything" — a narrower, more honest question: does the <strong style={{ color: "#1a1a2e" }}>contract</strong> generalise, even when the content, structure, and question shape are completely different?</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>Does a pipeline built and tuned on one 15-page paper hold up on documents nobody designed it for? Not "does it work on everything" — a narrower, more honest question: does the <strong style={{ color: "#1a1a2e" }}>contract</strong> generalise, even when the content, structure, and question shape are completely different?</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
@@ -13129,7 +13129,7 @@ export const FourPDFsTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -13159,7 +13159,7 @@ export const FourPDFsTab = ({ s }) => {
                 style={{ background: activeDoc === d.id ? `${d.color}15` : "#ffffff", border: `1px solid ${activeDoc === d.id ? d.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.8rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}>
                 <div style={{ fontSize: "1.1rem", marginBottom: "0.3rem" }}>{d.icon}</div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.62rem", color: activeDoc === d.id ? d.color : "#1a1a2e", lineHeight: 1.3 }}>{d.name}</div>
-                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.2rem" }}>{d.subtitle}</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.2rem" }}>{d.subtitle}</div>
               </button>
             ))}
           </div>
@@ -13176,14 +13176,14 @@ export const FourPDFsTab = ({ s }) => {
                 {[["Pages", doc.pages], ["TOC entries", doc.tocEntries], ["TOC depth", "L"+doc.tocDepth]].map(([k,v], i) => (
                   <div key={i} style={{ textAlign: "center" }}>
                     <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.1rem", fontWeight: 900, color: doc.color }}>{v}</div>
-                    <div style={{ fontSize: "0.5rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>{k}</div>
+                    <div style={{ fontSize: "0.5rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>{k}</div>
                   </div>
                 ))}
               </div>
               <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
                 {["question", "routing", "answer"].map(t => (
                   <button key={t} onClick={() => setDocTab(t)}
-                    style={{ flex: 1, padding: "0.65rem", background: docTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: docTab === t ? `2px solid ${doc.color}` : "2px solid transparent", color: docTab === t ? doc.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    style={{ flex: 1, padding: "0.65rem", background: docTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: docTab === t ? `2px solid ${doc.color}` : "2px solid transparent", color: docTab === t ? doc.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                     {t === "question" ? "Question Parsed" : t === "routing" ? "Retrieval Routing" : "Typed Answer"}
                   </button>
                 ))}
@@ -13198,15 +13198,15 @@ export const FourPDFsTab = ({ s }) => {
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem" }}>
                       <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem" }}>
                         <span style={{ color: doc.color, fontFamily: "DM Mono, monospace", fontWeight: 700 }}>intent: </span>
-                        <span style={{ color: "#4a4a5a" }}>{doc.intent}</span>
+                        <span style={{ color: "#1E293B" }}>{doc.intent}</span>
                       </div>
                       <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem" }}>
                         <span style={{ color: doc.color, fontFamily: "DM Mono, monospace", fontWeight: 700 }}>section_hint: </span>
-                        <span style={{ color: "#4a4a5a" }}>{doc.section_hint}</span>
+                        <span style={{ color: "#1E293B" }}>{doc.section_hint}</span>
                       </div>
                       <div style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem", gridColumn: doc.pages_hint ? "auto" : "span 2" }}>
                         <span style={{ color: doc.color, fontFamily: "DM Mono, monospace", fontWeight: 700 }}>pages_hint: </span>
-                        <span style={{ color: "#4a4a5a" }}>{doc.pages_hint ? "["+doc.pages_hint.join(", ")+"]" : "None"}</span>
+                        <span style={{ color: "#1E293B" }}>{doc.pages_hint ? "["+doc.pages_hint.join(", ")+"]" : "None"}</span>
                       </div>
                     </div>
                   </div>
@@ -13219,7 +13219,7 @@ export const FourPDFsTab = ({ s }) => {
                     </div>
                     <div style={{ padding: "0.9rem 1.1rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${doc.color}` }}>
                       <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: doc.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>What Makes This Document Different</div>
-                      <p style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7 }}>{doc.quirk}</p>
+                      <p style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7 }}>{doc.quirk}</p>
                     </div>
                   </div>
                 )}
@@ -13250,7 +13250,7 @@ export const FourPDFsTab = ({ s }) => {
                 <span style={{ fontSize: "1.3rem", flexShrink: 0 }}>{c.icon}</span>
                 <div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: c.color, marginBottom: "0.2rem" }}>{c.label}</div>
-                  <div style={{ fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.6 }}>{c.detail}</div>
+                  <div style={{ fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.6 }}>{c.detail}</div>
                 </div>
               </div>
             ))}
@@ -13267,12 +13267,12 @@ export const FourPDFsTab = ({ s }) => {
               <div key={i} style={{ background: "#ffffff", border: `1px solid ${v.color}30`, borderRadius: 6, padding: "1.2rem", borderTop: `2px solid ${v.color}` }}>
                 <div style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>{v.icon}</div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: v.color, marginBottom: "0.5rem" }}>{v.label}</div>
-                <p style={{ fontSize: "0.65rem", color: "#4a4a5a", lineHeight: 1.7 }}>{v.detail}</p>
+                <p style={{ fontSize: "0.65rem", color: "#1E293B", lineHeight: 1.7 }}>{v.detail}</p>
               </div>
             ))}
           </div>
           <div style={{ marginTop: "1.2rem", padding: "1rem 1.2rem", background: "rgba(201,168,76,0.07)", border: "1px solid #c9a84c30", borderRadius: 6 }}>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}><strong style={{ color: "#1a1a2e" }}>The key architectural insight:</strong> every one of these differences is absorbed by a typed field already defined in the schema — <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>intent</code>, <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>layout_hint</code>, <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>section_hint</code>, <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>pages_hint</code>. None of the four runs required a new field or a new code branch.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}><strong style={{ color: "#1a1a2e" }}>The key architectural insight:</strong> every one of these differences is absorbed by a typed field already defined in the schema — <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>intent</code>, <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>layout_hint</code>, <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>section_hint</code>, <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>pages_hint</code>. None of the four runs required a new field or a new code branch.</p>
           </div>
         </div>
       )}
@@ -13292,7 +13292,7 @@ export const FourPDFsTab = ({ s }) => {
           </div>
           <div style={{ padding: "1.2rem 1.4rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6, borderLeft: "4px solid #2a8a84" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.5rem" }}>The honest scope</div>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>This is a generalisation test on four well-formed PDFs with usable tables of contents — not a claim that the pipeline handles every PDF that exists. Documents with no extractable TOC, badly scanned pages, or genuinely cross-document questions are explicitly out of scope here, same as they were in Article 9A.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>This is a generalisation test on four well-formed PDFs with usable tables of contents — not a claim that the pipeline handles every PDF that exists. Documents with no extractable TOC, badly scanned pages, or genuinely cross-document questions are explicitly out of scope here, same as they were in Article 9A.</p>
           </div>
         </div>
       )}
@@ -13459,7 +13459,7 @@ const HB_PROMPT_VS_CONTRACT = [
 // ── SVG: 4 bricks failure map diagram ──
 const FourBricksFailureMapDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ONE HALLUCINATION PER BRICK — SAME PIPELINE</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ONE HALLUCINATION PER BRICK — SAME PIPELINE</text>
     {HB_CASES.map((c, i) => {
       const x = 8 + i * 62;
       return (
@@ -13471,18 +13471,18 @@ const FourBricksFailureMapDiagram = () => (
           <line x1={x+8} y1="52" x2={x+46} y2="52" stroke={c.color} strokeWidth="0.3" strokeDasharray="1,1"/>
           <text x={x+27} y="60" textAnchor="middle" fontSize="2.6" fill="#c4572a" fontFamily="Syne, sans-serif">hallucinates</text>
           <text x={x+27} y="66" textAnchor="middle" fontSize="2.6" fill="#4a9a4a" fontFamily="Syne, sans-serif">contract fixes</text>
-          {i < 3 && <text x={x+56} y="50" fontSize="6" fill="#4a4a5a">→</text>}
+          {i < 3 && <text x={x+56} y="50" fontSize="6" fill="#1E293B">→</text>}
         </g>
       );
     })}
-    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Every brick can hallucinate on its own — a typed contract per brick, not a smarter model, closes each gap</text>
+    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Every brick can hallucinate on its own — a typed contract per brick, not a smarter model, closes each gap</text>
   </svg>
 );
 
 // ── SVG: pattern diagram ──
 const HallucinationPatternDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE PATTERN BEHIND ALL FOUR FAILURES</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE PATTERN BEHIND ALL FOUR FAILURES</text>
     {HB_PATTERN.map((p, i) => {
       const y = 20 + i * 16;
       return (
@@ -13490,7 +13490,7 @@ const HallucinationPatternDiagram = () => (
           <circle cx="18" cy={y+5} r="7" fill={`${p.color}18`} stroke={p.color} strokeWidth="0.8"/>
           <text x="18" y={y+7} textAnchor="middle" fontSize="4" fill={p.color} fontFamily="Syne, sans-serif" fontWeight="800">{p.step}</text>
           <text x="30" y={y+4} fontSize="3.8" fill={p.color} fontFamily="Syne, sans-serif" fontWeight="700">{p.label}</text>
-          <text x="30" y={y+10} fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">{p.desc.length > 78 ? p.desc.slice(0,76)+"…" : p.desc}</text>
+          <text x="30" y={y+10} fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">{p.desc.length > 78 ? p.desc.slice(0,76)+"…" : p.desc}</text>
         </g>
       );
     })}
@@ -13514,12 +13514,12 @@ export const HallucBricksTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           Prompt Engineering Isn't Enough:<br />How Four Bricks of <em style={{ color: "#c4572a", fontStyle: "italic" }}>Context Engineering Stop RAG Hallucinations</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Four real failure cases — one deliberately triggered in each of the four production RAG bricks. Every hallucination looked fluent and confident. Every fix was a typed contract on the brick's output, not a better-worded prompt to the LLM.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.3rem" }}>The thesis</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>Telling an LLM "don't hallucinate" in a prompt has never once closed a real production gap. What closes the gap is a <strong style={{ color: "#1a1a2e" }}>structural constraint upstream</strong> — a schema field the brick's output cannot satisfy without being grounded. This article names four, one per brick.</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>Telling an LLM "don't hallucinate" in a prompt has never once closed a real production gap. What closes the gap is a <strong style={{ color: "#1a1a2e" }}>structural constraint upstream</strong> — a schema field the brick's output cannot satisfy without being grounded. This article names four, one per brick.</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
@@ -13531,7 +13531,7 @@ export const HallucBricksTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -13553,7 +13553,7 @@ export const HallucBricksTab = ({ s }) => {
               <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.5rem", color: cs.color }}>{cs.num}</span>
             </div>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: activeCase === cs.id ? cs.color : "#1a1a2e" }}>{cs.brick}</div>
-            <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.2rem" }}>{cs.docType.length > 32 ? cs.docType.slice(0,30)+"…" : cs.docType}</div>
+            <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.2rem" }}>{cs.docType.length > 32 ? cs.docType.slice(0,30)+"…" : cs.docType}</div>
           </button>
         ))}
       </div>
@@ -13565,7 +13565,7 @@ export const HallucBricksTab = ({ s }) => {
               <span style={{ fontSize: "1.4rem" }}>{c.icon}</span>
               <div>
                 <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.05rem", fontWeight: 900 }}>{c.brick} Brick</div>
-                <div style={{ fontSize: "0.6rem", color: "#6a6a7a" }}>{c.docType}</div>
+                <div style={{ fontSize: "0.6rem", color: "#334155" }}>{c.docType}</div>
               </div>
             </div>
             <div style={{ fontFamily: "Playfair Display, serif", fontSize: "0.9rem", fontStyle: "italic", color: c.color }}>{c.question}</div>
@@ -13573,7 +13573,7 @@ export const HallucBricksTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4", flexWrap: "wrap" }}>
             {["naive", "hallucination", "fix", "code"].map(t => (
               <button key={t} onClick={() => setCaseTab(t)}
-                style={{ flex: 1, minWidth: 100, padding: "0.65rem", background: caseTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: caseTab === t ? `2px solid ${c.color}` : "2px solid transparent", color: caseTab === t ? c.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, minWidth: 100, padding: "0.65rem", background: caseTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: caseTab === t ? `2px solid ${c.color}` : "2px solid transparent", color: caseTab === t ? c.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t === "naive" ? "Naive Approach" : t === "hallucination" ? "The Hallucination" : t === "fix" ? "The Fix" : "Code"}
               </button>
             ))}
@@ -13582,10 +13582,10 @@ export const HallucBricksTab = ({ s }) => {
             {caseTab === "naive" && (
               <div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#c4572a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>What the naive brick does</div>
-                <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, marginBottom: "1rem" }}>{c.naiveApproach}</p>
+                <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}>{c.naiveApproach}</p>
                 <div style={{ padding: "0.9rem 1.1rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a25", borderRadius: 4 }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#c4572a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Result</div>
-                  <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>{c.naiveResult}</p>
+                  <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>{c.naiveResult}</p>
                 </div>
               </div>
             )}
@@ -13598,12 +13598,12 @@ export const HallucBricksTab = ({ s }) => {
             {caseTab === "fix" && (
               <div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#4a9a4a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>The structural fix</div>
-                <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8, marginBottom: "1rem" }}>{c.fixApproach}</p>
+                <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, marginBottom: "1rem" }}>{c.fixApproach}</p>
                 <div style={{ padding: "0.9rem 1.1rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a30", borderRadius: 4, marginBottom: "0.8rem" }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#4a9a4a", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.4rem" }}>Result after fix</div>
                   <p style={{ fontSize: "0.68rem", color: "#1a1a2e", lineHeight: 1.7 }}>{c.fixResult}</p>
                 </div>
-                <div style={{ padding: "0.7rem 0.9rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.62rem", color: "#4a4a5a", fontFamily: "DM Mono, monospace", lineHeight: 1.6 }}>
+                <div style={{ padding: "0.7rem 0.9rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.62rem", color: "#1E293B", fontFamily: "DM Mono, monospace", lineHeight: 1.6 }}>
                   <strong style={{ color: c.color, fontFamily: "Syne, sans-serif" }}>Contract: </strong>{c.contract}
                 </div>
               </div>
@@ -13624,7 +13624,7 @@ export const HallucBricksTab = ({ s }) => {
             <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: p.color, flexShrink: 0 }}>{p.step}</div>
             <div>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.66rem", color: p.color, marginBottom: "0.3rem" }}>{p.label}</div>
-              <div style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.6 }}>{p.desc}</div>
+              <div style={{ fontSize: "0.63rem", color: "#1E293B", lineHeight: 1.6 }}>{p.desc}</div>
             </div>
           </div>
         ))}
@@ -13637,7 +13637,7 @@ export const HallucBricksTab = ({ s }) => {
           <thead>
             <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
               {["Failure Type", "❌ Prompt-Level Fix (didn't work)", "✅ Typed Contract (did work)"].map(h => (
-                <th key={h} style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                <th key={h} style={{ textAlign: "left", padding: "0.7rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.57rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -13646,7 +13646,7 @@ export const HallucBricksTab = ({ s }) => {
               <tr key={i} style={{ borderBottom: i < HB_PROMPT_VS_CONTRACT.length-1 ? "1px solid #e8e4dc" : "none" }}
                 onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                 onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                <td style={{ padding: "0.75rem 1rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
+                <td style={{ padding: "0.75rem 1rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
                 <td style={{ padding: "0.75rem 1rem", color: "#c4572a", fontStyle: "italic" }}>{row.prompt}</td>
                 <td style={{ padding: "0.75rem 1rem", color: "#4a9a4a", fontFamily: "DM Mono, monospace", fontSize: "0.62rem" }}>{row.contract}</td>
               </tr>
@@ -13812,32 +13812,32 @@ const GP_SECTORS = [
 // ── SVG: string vs typed contract diagram ──
 const StringVsContractDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">A STRING IS ONE FIELD. A TYPED CONTRACT IS THREE REGIONS.</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">A STRING IS ONE FIELD. A TYPED CONTRACT IS THREE REGIONS.</text>
     {/* String baseline */}
     <rect x="8" y="18" width="110" height="30" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.7"/>
     <text x="63" y="28" textAnchor="middle" fontSize="4" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">❌ Naive: One String</text>
-    <text x="63" y="38" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">"$124/month, per contract"</text>
+    <text x="63" y="38" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">"$124/month, per contract"</text>
     <text x="63" y="44" textAnchor="middle" fontSize="2.8" fill="#c4572a" fontFamily="Syne, sans-serif">no source · no confidence · re-parse to use</text>
     {/* Typed contract 3 regions */}
     <rect x="132" y="18" width="120" height="70" rx={2} fill="#0d0d1a" stroke="#4a9a4a" strokeWidth="0.8"/>
     <text x="192" y="27" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">✅ Typed Contract</text>
     <rect x="138" y="31" width="108" height="15" rx={1} fill="rgba(42,138,132,0.15)" stroke="#2a8a84" strokeWidth="0.5"/>
     <text x="192" y="37" textAnchor="middle" fontSize="3.2" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">Value region</text>
-    <text x="192" y="43" textAnchor="middle" fontSize="2.8" fill="#8a8a9a" fontFamily="DM Mono, monospace">value=124, currency, unit</text>
+    <text x="192" y="43" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">value=124, currency, unit</text>
     <rect x="138" y="48" width="108" height="15" rx={1} fill="rgba(201,168,76,0.15)" stroke="#c9a84c" strokeWidth="0.5"/>
     <text x="192" y="54" textAnchor="middle" fontSize="3.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Evidence region</text>
-    <text x="192" y="60" textAnchor="middle" fontSize="2.8" fill="#8a8a9a" fontFamily="DM Mono, monospace">line_start, quote</text>
+    <text x="192" y="60" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">line_start, quote</text>
     <rect x="138" y="65" width="108" height="18" rx={1} fill="rgba(155,127,212,0.15)" stroke="#9b7fd4" strokeWidth="0.5"/>
     <text x="192" y="72" textAnchor="middle" fontSize="3.2" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Self-assessment region</text>
-    <text x="192" y="78" textAnchor="middle" fontSize="2.8" fill="#8a8a9a" fontFamily="DM Mono, monospace">answer_found, confidence</text>
-    <text x="130" y="93" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Each region has its own purpose AND its own validator</text>
+    <text x="192" y="78" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="DM Mono, monospace">answer_found, confidence</text>
+    <text x="130" y="93" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Each region has its own purpose AND its own validator</text>
   </svg>
 );
 
 // ── SVG: 7 patterns overview diagram ──
 const SevenPatternsOverviewDiagram = () => (
   <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SEVEN PATTERNS — SIX ARE THE CONTRACT, ONE IS THE OPERATING RULE</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SEVEN PATTERNS — SIX ARE THE CONTRACT, ONE IS THE OPERATING RULE</text>
     {GP_PATTERNS.slice(0,6).map((p, i) => {
       const x = 8 + (i % 3) * 82;
       const y = 20 + Math.floor(i / 3) * 32;
@@ -13853,22 +13853,22 @@ const SevenPatternsOverviewDiagram = () => (
     {/* Pattern 7 highlighted separately */}
     <rect x="60" y="88" width="140" height="20" rx={2} fill="rgba(196,87,42,0.15)" stroke="#c4572a" strokeWidth="1"/>
     <text x="130" y="96" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">07 🔀 Decompose for Small Models — the operating rule</text>
-    <text x="130" y="103" textAnchor="middle" fontSize="2.8" fill="#8a8a9a" fontFamily="Syne, sans-serif">Model size sets granularity, not shape</text>
+    <text x="130" y="103" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif">Model size sets granularity, not shape</text>
   </svg>
 );
 
 // ── SVG: decompose vs one-call diagram ──
 const DecomposeVsOneCallDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SAME CONTRACT, DIFFERENT GRANULARITY BY MODEL SIZE</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">SAME CONTRACT, DIFFERENT GRANULARITY BY MODEL SIZE</text>
     {/* Big model - one call */}
     <rect x="8" y="18" width="112" height="70" rx={2} fill="rgba(74,154,74,0.08)" stroke="#4a9a4a" strokeWidth="0.8"/>
     <text x="64" y="28" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">🐘 Big Model (GPT-4.1)</text>
     <rect x="16" y="34" width="96" height="46" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.6"/>
     <text x="64" y="44" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">ONE call</text>
-    <text x="64" y="52" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">extract</text>
-    <text x="64" y="59" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">+ convert</text>
-    <text x="64" y="66" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">+ format</text>
+    <text x="64" y="52" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">extract</text>
+    <text x="64" y="59" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">+ convert</text>
+    <text x="64" y="66" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">+ format</text>
     <text x="64" y="76" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">✓ all correct</text>
     {/* Small model - decomposed */}
     <rect x="140" y="18" width="112" height="70" rx={2} fill="rgba(196,87,42,0.08)" stroke="#c4572a" strokeWidth="0.8"/>
@@ -13879,7 +13879,7 @@ const DecomposeVsOneCallDiagram = () => (
     <text x="196" y="59" textAnchor="middle" fontSize="3.2" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Python: compute</text>
     <rect x="148" y="66" width="96" height="14" rx={1} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.5"/>
     <text x="196" y="75" textAnchor="middle" fontSize="3.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Call 2 (optional): format</text>
-    <text x="130" y="94" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">One call = 3 of 4 fields fabricated by small model. Decomposed = same accuracy as the big model.</text>
+    <text x="130" y="94" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontStyle="italic">One call = 3 of 4 fields fabricated by small model. Decomposed = same accuracy as the big model.</text>
   </svg>
 );
 
@@ -13900,12 +13900,12 @@ export const GenPatternsTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           Most RAG Hallucinations Are<br /><em style={{ color: "#2a8a84", fontStyle: "italic" }}>Extraction Errors:</em> Seven Patterns for a Typed Generation Contract
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Naming the RAG error correctly matters. In RAG the model reads the context — when the answer is wrong, the cause is upstream in the extraction chain, not fabrication from parametric memory. Calling every failure a "hallucination" closes the debate on where to act. This zooms into brick 4 (generation) with seven typed-contract patterns.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(196,87,42,0.07)", border: "1px solid #c4572a30", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.3rem" }}>The naming argument</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}><em>Hallucination</em>, in the strict sense, is a fabrication from parametric memory with no grounding in the input. In RAG the model reads the context — a wrong answer is an <strong style={{ color: "#1a1a2e" }}>extraction error</strong> (parsing, question, retrieval, or the generation contract itself), not a hallucination. Naming the real cause opens the debate on where to act back up.</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}><em>Hallucination</em>, in the strict sense, is a fabrication from parametric memory with no grounding in the input. In RAG the model reads the context — a wrong answer is an <strong style={{ color: "#1a1a2e" }}>extraction error</strong> (parsing, question, retrieval, or the generation contract itself), not a hallucination. Naming the real cause opens the debate on where to act back up.</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
@@ -13917,7 +13917,7 @@ export const GenPatternsTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -13965,21 +13965,21 @@ export const GenPatternsTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["claim", "naive", "typed"].map(t => (
               <button key={t} onClick={() => setPatternTab(t)}
-                style={{ flex: 1, padding: "0.65rem", background: patternTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: patternTab === t ? `2px solid ${pattern.color}` : "2px solid transparent", color: patternTab === t ? pattern.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, padding: "0.65rem", background: patternTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: patternTab === t ? `2px solid ${pattern.color}` : "2px solid transparent", color: patternTab === t ? pattern.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t === "claim" ? "Why It Matters" : t === "naive" ? "Naive Failure" : "Typed Fix"}
               </button>
             ))}
           </div>
           <div style={{ padding: "1.5rem" }}>
             {patternTab === "claim" && (
-              <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>{pattern.claim}</p>
+              <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{pattern.claim}</p>
             )}
             {patternTab === "naive" && (
               <div>
                 <div style={{ padding: "0.8rem 1rem", background: "rgba(196,87,42,0.08)", border: "1px solid #c4572a30", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.65rem", color: "#c4572a", marginBottom: "0.8rem" }}>
                   {pattern.naive}
                 </div>
-                <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>{pattern.naiveProblem}</p>
+                <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>{pattern.naiveProblem}</p>
               </div>
             )}
             {patternTab === "typed" && (
@@ -14006,7 +14006,7 @@ export const GenPatternsTab = ({ s }) => {
 
       {/* 5 SECTORS */}
       <div style={s.sectionLabel("#4a9a4a")}>Across Sectors and Professions — Same Contract, Different Schema Shape</div>
-      <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>The validator runs the same checks across all five rows: line spans within document bounds, verbatim quotes match cited lines, format constraints respected. Click a sector to see its schema shape.</p>
+      <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1rem", maxWidth: 560 }}>The validator runs the same checks across all five rows: line spans within document bounds, verbatim quotes match cited lines, format constraints respected. Click a sector to see its schema shape.</p>
       <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem", flexWrap: "wrap" }}>
         {GP_SECTORS.map((sec, i) => (
           <button key={i} onClick={() => setActiveSector(activeSector === i ? null : i)}
@@ -14033,7 +14033,7 @@ export const GenPatternsTab = ({ s }) => {
 
       {/* SERIES POSITION */}
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#8a8a9a", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Where These Patterns Land in the Series</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, color: "#334155", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.6rem" }}>Where These Patterns Land in the Series</div>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
           {[
             { id: "8a", label: "Article 8A — The Answer Contract", desc: "Develops the typed Pydantic schema with citations and self-checks", color: "#2a8a84" },
@@ -14042,7 +14042,7 @@ export const GenPatternsTab = ({ s }) => {
           ].map((a, i) => (
             <div key={i} style={{ display: "flex", gap: "0.8rem", padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: `3px solid ${a.color}` }}>
               <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: a.color, flexShrink: 0 }}>{a.label}</span>
-              <span style={{ fontSize: "0.6rem", color: "#6a6a7a" }}>{a.desc}</span>
+              <span style={{ fontSize: "0.6rem", color: "#334155" }}>{a.desc}</span>
             </div>
           ))}
         </div>
@@ -14154,7 +14154,7 @@ export const TokenBillTab = ({ s }) => {
               transition: "all 0.2s"
             }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: subTab === t.id ? "#c9a84c" : "#1a1a2e" }}>{t.label}</div>
-            <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>{t.desc}</div>
+            <div style={{ fontSize: "0.55rem", color: "#334155" }}>{t.desc}</div>
           </button>
         ))}
       </div>
@@ -14173,29 +14173,29 @@ export const TokenBillTab = ({ s }) => {
 
               <div style={{ marginBottom: "1.2rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", marginBottom: "0.3rem" }}>
-                  <span style={{ fontWeight: 700, color: "#4a4a5a" }}>Sub-Agent Failure Rate:</span>
+                  <span style={{ fontWeight: 700, color: "#1E293B" }}>Sub-Agent Failure Rate:</span>
                   <span style={{ fontFamily: "DM Mono, monospace", color: "#c4572a", fontWeight: 700 }}>{failureRate}%</span>
                 </div>
                 <input type="range" min="0" max="50" step="5" value={failureRate} onChange={e => setFailureRate(Number(e.target.value))} style={{ width: "100%" }} />
-                <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Rate of validation / JSON tool parsing failures</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.2rem" }}>Rate of validation / JSON tool parsing failures</div>
               </div>
 
               <div style={{ marginBottom: "1.2rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", marginBottom: "0.3rem" }}>
-                  <span style={{ fontWeight: 700, color: "#4a4a5a" }}>Graph Node Depth:</span>
+                  <span style={{ fontWeight: 700, color: "#1E293B" }}>Graph Node Depth:</span>
                   <span style={{ fontFamily: "DM Mono, monospace", color: "#9b7fd4", fontWeight: 700 }}>{graphDepth} Layers</span>
                 </div>
                 <input type="range" min="1" max="5" step="1" value={graphDepth} onChange={e => setGraphDepth(Number(e.target.value))} style={{ width: "100%" }} />
-                <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Sequential depth of agents in the graph</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.2rem" }}>Sequential depth of agents in the graph</div>
               </div>
 
               <div style={{ marginBottom: "1.2rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", marginBottom: "0.3rem" }}>
-                  <span style={{ fontWeight: 700, color: "#4a4a5a" }}>Initial Prompt Context:</span>
+                  <span style={{ fontWeight: 700, color: "#1E293B" }}>Initial Prompt Context:</span>
                   <span style={{ fontFamily: "DM Mono, monospace", color: "#2a8a84", fontWeight: 700 }}>{initialContext.toLocaleString()} Tokens</span>
                 </div>
                 <input type="range" min="1000" max="10000" step="500" value={initialContext} onChange={e => setInitialContext(Number(e.target.value))} style={{ width: "100%" }} />
-                <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Raw prompt + system prompt size</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.2rem" }}>Raw prompt + system prompt size</div>
               </div>
 
               <hr style={{ border: "none", borderTop: "1px dashed #e0dcd4", margin: "1.2rem 0" }} />
@@ -14212,8 +14212,8 @@ export const TokenBillTab = ({ s }) => {
                 <label key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", marginBottom: "0.9rem", cursor: "pointer" }}>
                   <input type="checkbox" checked={opt.state} onChange={e => opt.setState(e.target.checked)} style={{ marginTop: "0.15rem" }} />
                   <div>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: opt.state ? "#2a8a84" : "#6a6a7a" }}>{opt.label}</div>
-                    <div style={{ fontSize: "0.55rem", color: "#8a8a9a", lineHeight: 1.4 }}>{opt.desc}</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: opt.state ? "#2a8a84" : "#334155" }}>{opt.label}</div>
+                    <div style={{ fontSize: "0.55rem", color: "#334155", lineHeight: 1.4 }}>{opt.desc}</div>
                   </div>
                 </label>
               ))}
@@ -14230,10 +14230,10 @@ export const TokenBillTab = ({ s }) => {
                   </div>
                   
                   <div style={{ fontSize: "1.5rem", fontFamily: "Playfair Display, serif", fontWeight: 900, color: "#1a1a2e", marginBottom: "0.2rem" }}>
-                    ${naiveCost.toFixed(2)} <span style={{ fontSize: "0.65rem", fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>/ 1k queries</span>
+                    ${naiveCost.toFixed(2)} <span style={{ fontSize: "0.65rem", fontFamily: "DM Mono, monospace", color: "#334155" }}>/ 1k queries</span>
                   </div>
                   
-                  <div style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                  <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                     • Total Tokens / Query: <strong style={{ color: "#1a1a2e" }}>{naiveTokens.toLocaleString()}</strong><br />
                     • Avg Latency / Query: <strong style={{ color: "#1a1a2e" }}>{naiveLatency.toFixed(1)}s</strong><br />
                     • Retry Blast Radius: <strong style={{ color: "#c4572a" }}>{naiveBlastRadius} Upstream Nodes Re-executed</strong><br />
@@ -14249,10 +14249,10 @@ export const TokenBillTab = ({ s }) => {
                   </div>
                   
                   <div style={{ fontSize: "1.5rem", fontFamily: "Playfair Display, serif", fontWeight: 900, color: "#2a8a84", marginBottom: "0.2rem" }}>
-                    ${optCost.toFixed(2)} <span style={{ fontSize: "0.65rem", fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>/ 1k queries</span>
+                    ${optCost.toFixed(2)} <span style={{ fontSize: "0.65rem", fontFamily: "DM Mono, monospace", color: "#334155" }}>/ 1k queries</span>
                   </div>
                   
-                  <div style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                  <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                     • Total Tokens / Query: <strong style={{ color: "#2a8a84" }}>{optTokens.toLocaleString()} (-{tokenSavingsPct}%)</strong><br />
                     • Avg Latency / Query: <strong style={{ color: "#2a8a84" }}>{optLatency.toFixed(1)}s (-{latencySavingsPct}%)</strong><br />
                     • Retry Blast Radius: <strong style={{ color: "#2a8a84" }}>{optBlastRadius} Isolated Node Only</strong><br />
@@ -14268,7 +14268,7 @@ export const TokenBillTab = ({ s }) => {
                 </div>
 
                 <div style={{ marginBottom: "0.8rem" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.6rem", color: "#6a6a7a", marginBottom: "0.2rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.6rem", color: "#334155", marginBottom: "0.2rem" }}>
                     <span>Naive Setup (Full Cascade & Heavy Context)</span>
                     <span style={{ fontWeight: 700, color: "#c4572a" }}>${naiveCost.toFixed(2)}</span>
                   </div>
@@ -14278,7 +14278,7 @@ export const TokenBillTab = ({ s }) => {
                 </div>
 
                 <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.6rem", color: "#6a6a7a", marginBottom: "0.2rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.6rem", color: "#334155", marginBottom: "0.2rem" }}>
                     <span>Optimized Triad Setup</span>
                     <span style={{ fontWeight: 700, color: "#2a8a84" }}>${optCost.toFixed(2)} (Save ${Math.max(0, naiveCost - optCost).toFixed(2)})</span>
                   </div>
@@ -14306,7 +14306,7 @@ export const TokenBillTab = ({ s }) => {
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
                 1. Task Complexity Routing
               </div>
-              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+              <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                 Assign models based on step complexity rather than using flagship models everywhere by default. Routine formatting, tool-call wrapping, and summarization move to <strong>Gemini Flash / GPT-4o-mini ($0.15/1M)</strong> while multi-step reasoning remains on flagship models.
               </p>
               <CodeBlock code={`# Model Routing Table mapping agent role to tier
@@ -14324,7 +14324,7 @@ MODEL_ROUTING_TABLE = {
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c9a84c", marginBottom: "0.4rem" }}>
                 2. Context Trimming Handoffs
               </div>
-              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+              <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                 By default, LangGraph passes accumulated conversation traces to every node. Trimming handoffs down to only <code style={{ color: "#c9a84c" }}>needed_fields</code> strips useless upstream reasoning before invoking downstream agents.
               </p>
               <CodeBlock code={`def trim_handoff_context(state, needed_fields):
@@ -14347,7 +14347,7 @@ handoff = trim_handoff_context(
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#9b7fd4", marginBottom: "0.4rem" }}>
                 3. Parallel Execution & Isolated Retries
               </div>
-              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+              <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                 Running independent sub-agent branches with <code style={{ color: "#9b7fd4" }}>asyncio.gather</code> cuts latency by <strong>45–55%</strong> AND shrinks retry blast radius. A failure in Branch A no longer forces re-running Branch B's upstream state!
               </p>
               <CodeBlock code={`import asyncio
@@ -14384,7 +14384,7 @@ async def run_independent_branches(agents, payload):
                   style={{ width: "100%", borderRadius: 6, border: "1px solid #e0dcd4" }}
                 />
               </ZoomableFigure>
-              <p style={{ fontSize: "0.62rem", color: "#6a6a7a", lineHeight: 1.6, marginTop: "0.8rem" }}>
+              <p style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.6, marginTop: "0.8rem" }}>
                 Flow showing supervisor task routing between high-cost reasoning models vs low-cost fast models, with context trimming before handoffs and parallel branch collection via <code style={{ color: "#2a8a84" }}>asyncio.gather()</code>.
               </p>
             </div>
@@ -14400,7 +14400,7 @@ async def run_independent_branches(agents, payload):
                   style={{ width: "100%", borderRadius: 6, border: "1px solid #e0dcd4" }}
                 />
               </ZoomableFigure>
-              <p style={{ fontSize: "0.62rem", color: "#6a6a7a", lineHeight: 1.6, marginTop: "0.8rem" }}>
+              <p style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.6, marginTop: "0.8rem" }}>
                 Left: Naive retries force full upstream chain re-execution with heavy context. Right: Isolated retry with trimmed context and localized execution avoids redundant computation.
               </p>
             </div>
@@ -14435,7 +14435,7 @@ async def run_independent_branches(agents, payload):
                 ].map((row, ri) => (
                   <tr key={ri} style={{ borderBottom: "1px solid #f0ede6", background: ri % 2 === 0 ? "#ffffff" : "#faf9f6" }}>
                     <td style={{ padding: "0.8rem 1rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#1a1a2e" }}>{row[0]}</td>
-                    <td style={{ padding: "0.8rem 1rem", color: "#6a6a7a" }}>{row[1]}</td>
+                    <td style={{ padding: "0.8rem 1rem", color: "#334155" }}>{row[1]}</td>
                     <td style={{ padding: "0.8rem 1rem", color: "#c4572a", fontWeight: 600 }}>{row[2]}</td>
                     <td style={{ padding: "0.8rem 1rem", color: "#c9a84c" }}>{row[3]}</td>
                     <td style={{ padding: "0.8rem 1rem", color: "#2a8a84", fontWeight: 700 }}>{row[4]}</td>
@@ -14453,7 +14453,7 @@ async def run_independent_branches(agents, payload):
           <div style={s.sectionLabel("#4a9a4a")}>Per-Step Token & Cost Attribution Trace Sandbox</div>
           
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", marginBottom: "1.5rem" }}>
-            <p style={{ fontSize: "0.68rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "1rem" }}>
+            <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.6, marginBottom: "1rem" }}>
               Click any step in the multi-agent execution trace below to inspect input/output tokens, assigned model tier, handoff context state, and isolated retry status.
             </p>
 
@@ -14469,7 +14469,7 @@ async def run_independent_branches(agents, payload):
                     textAlign: "left",
                     minWidth: 160
                   }}>
-                  <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: "#8a8a9a" }}>Step {st.step} · {st.role}</div>
+                  <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: "#334155" }}>Step {st.step} · {st.role}</div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: selectedTraceStep === idx ? "#2a8a84" : "#1a1a2e" }}>{st.name}</div>
                   <div style={{ fontSize: "0.52rem", color: st.status.includes("RETRY") ? "#c4572a" : "#4a9a4a", fontWeight: 700, marginTop: "0.2rem" }}>{st.status}</div>
                 </button>
@@ -14573,7 +14573,7 @@ export const HighScaleAgentsTab = ({ s }) => {
               transition: "all 0.2s"
             }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: subTab === t.id ? "#2a8a84" : "#1a1a2e" }}>{t.label}</div>
-            <div style={{ fontSize: "0.58rem", color: "#6a6a7a" }}>{t.desc}</div>
+            <div style={{ fontSize: "0.58rem", color: "#334155" }}>{t.desc}</div>
           </button>
         ))}
       </div>
@@ -14592,20 +14592,20 @@ export const HighScaleAgentsTab = ({ s }) => {
 
               <div style={{ marginBottom: "1.2rem" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.65rem", marginBottom: "0.3rem" }}>
-                  <span style={{ fontWeight: 700, color: "#4a4a5a" }}>Request Volume:</span>
+                  <span style={{ fontWeight: 700, color: "#1E293B" }}>Request Volume:</span>
                   <span style={{ fontFamily: "DM Mono, monospace", color: "#2a8a84", fontWeight: 700 }}>{requestVolume.toLocaleString()} Docs</span>
                 </div>
                 <input type="range" min="10000" max="1000000" step="10000" value={requestVolume} onChange={e => setRequestVolume(Number(e.target.value))} style={{ width: "100%" }} />
               </div>
 
               <div style={{ marginBottom: "1.2rem" }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: "#4a4a5a", marginBottom: "0.4rem" }}>Architecture Design:</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: "#1E293B", marginBottom: "0.4rem" }}>Architecture Design:</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                  <label style={{ fontSize: "0.62rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", color: isMonolithic ? "#c4572a" : "#6a6a7a", fontWeight: isMonolithic ? 700 : 400 }}>
+                  <label style={{ fontSize: "0.62rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", color: isMonolithic ? "#c4572a" : "#334155", fontWeight: isMonolithic ? 700 : 400 }}>
                     <input type="radio" name="arch" checked={isMonolithic} onChange={() => setArchMode("monolithic")} />
                     ❌ Monolithic Monologue Agent (All-in-one prompt)
                   </label>
-                  <label style={{ fontSize: "0.62rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", color: !isMonolithic ? "#2a8a84" : "#6a6a7a", fontWeight: !isMonolithic ? 700 : 400 }}>
+                  <label style={{ fontSize: "0.62rem", display: "flex", alignItems: "center", gap: "0.4rem", cursor: "pointer", color: !isMonolithic ? "#2a8a84" : "#334155", fontWeight: !isMonolithic ? 700 : 400 }}>
                     <input type="radio" name="arch" checked={!isMonolithic} onChange={() => setArchMode("decomposed")} />
                     ✅ Decomposed Prompt-Chaining Workflow (3 Steps)
                   </label>
@@ -14628,8 +14628,8 @@ export const HighScaleAgentsTab = ({ s }) => {
                 <label key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.8rem", cursor: "pointer" }}>
                   <input type="checkbox" checked={g.state} onChange={e => g.setState(e.target.checked)} style={{ marginTop: "0.15rem" }} />
                   <div>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.63rem", color: g.state ? "#2a8a84" : "#6a6a7a" }}>{g.label}</div>
-                    <div style={{ fontSize: "0.53rem", color: "#8a8a9a" }}>{g.desc}</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.63rem", color: g.state ? "#2a8a84" : "#334155" }}>{g.label}</div>
+                    <div style={{ fontSize: "0.53rem", color: "#334155" }}>{g.desc}</div>
                   </div>
                 </label>
               ))}
@@ -14639,9 +14639,9 @@ export const HighScaleAgentsTab = ({ s }) => {
             <div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem", marginBottom: "1.2rem" }}>
                 <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1rem" }}>
-                  <div style={{ fontSize: "0.58rem", color: "#8a8a9a", textTransform: "uppercase", fontWeight: 700 }}>Total Tokens Consumed</div>
+                  <div style={{ fontSize: "0.58rem", color: "#334155", textTransform: "uppercase", fontWeight: 700 }}>Total Tokens Consumed</div>
                   <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: "#1a1a2e", margin: "0.2rem 0" }}>
-                    {((requestVolume * baseTokensPerReq) / 1000000).toFixed(1)} M <span style={{ fontSize: "0.6rem", fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>Tokens</span>
+                    {((requestVolume * baseTokensPerReq) / 1000000).toFixed(1)} M <span style={{ fontSize: "0.6rem", fontFamily: "DM Mono, monospace", color: "#334155" }}>Tokens</span>
                   </div>
                   <div style={{ fontSize: "0.55rem", color: isMonolithic ? "#c4572a" : "#2a8a84" }}>
                     {isMonolithic ? "⚠️ Heavy context duplication per prompt" : "⚡ Trimmed 71% token overhead"}
@@ -14649,19 +14649,19 @@ export const HighScaleAgentsTab = ({ s }) => {
                 </div>
 
                 <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1rem" }}>
-                  <div style={{ fontSize: "0.58rem", color: "#8a8a9a", textTransform: "uppercase", fontWeight: 700 }}>Estimated API Spend</div>
+                  <div style={{ fontSize: "0.58rem", color: "#334155", textTransform: "uppercase", fontWeight: 700 }}>Estimated API Spend</div>
                   <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: "#2a8a84", margin: "0.2rem 0" }}>
                     ${totalCostDollars.toLocaleString()}
                   </div>
-                  <div style={{ fontSize: "0.55rem", color: "#6a6a7a" }}>
+                  <div style={{ fontSize: "0.55rem", color: "#334155" }}>
                     {isMonolithic ? "$15.00 / 1M tokens" : "$1.25 / 1M average tiering"}
                   </div>
                 </div>
 
                 <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1rem" }}>
-                  <div style={{ fontSize: "0.58rem", color: "#8a8a9a", textTransform: "uppercase", fontWeight: 700 }}>Avg Processing Latency</div>
+                  <div style={{ fontSize: "0.58rem", color: "#334155", textTransform: "uppercase", fontWeight: 700 }}>Avg Processing Latency</div>
                   <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: "#9b7fd4", margin: "0.2rem 0" }}>
-                    {latencyPerDocSec.toFixed(1)}s <span style={{ fontSize: "0.6rem", fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>/ doc</span>
+                    {latencyPerDocSec.toFixed(1)}s <span style={{ fontSize: "0.6rem", fontFamily: "DM Mono, monospace", color: "#334155" }}>/ doc</span>
                   </div>
                   <div style={{ fontSize: "0.55rem", color: checkpointing ? "#4a9a4a" : "#c4572a" }}>
                     {checkpointing ? "✅ Fast checkpoint recovery" : "⚠️ Full re-processing on dropout"}
@@ -14725,7 +14725,7 @@ export const HighScaleAgentsTab = ({ s }) => {
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
                 1. Function & Tool Scope Limiting
               </div>
-              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+              <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                 Giving an agent access to all tools at once causes wrong tool picks and loop traps. Restrict tools so each sub-agent ONLY sees the functions required for its step.
               </p>
               <CodeBlock code={`# Tool Scope Limiting: Extractor agent ONLY sees extraction tool
@@ -14742,7 +14742,7 @@ extractor_agent = create_agent(
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c9a84c", marginBottom: "0.4rem" }}>
                 2. Execution Time & Tool Call Caps
               </div>
-              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+              <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                 Prevent runaway cloud bills and infinite loops by strictly capping tool invocation iterations and timeout seconds before raising human intervention.
               </p>
               <CodeBlock code={`# LangGraph Recursion & Iteration Cap
@@ -14761,7 +14761,7 @@ graph.invoke(inputs, config=config)`} />
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c4572a", marginBottom: "0.4rem" }}>
                 3. Human-in-the-Loop (HITL) Supervision
               </div>
-              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+              <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                 Require explicit human approval before executing destructive actions (e.g., deleting objects, sending emails, processing payments).
               </p>
               <CodeBlock code={`from langgraph.checkpoint.memory import MemorySaver
@@ -14788,7 +14788,7 @@ graph = builder.compile(
                 <h4 style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: "#1a1a2e" }}>
                   📋 3-Step Decomposed Workflow (Anthropic Prompt Chaining Pattern)
                 </h4>
-                <div style={{ fontSize: "0.62rem", color: "#6a6a7a" }}>Task: Extract location, time, and contact person from 100 contracts → Filter to top 5 latest → Present in table.</div>
+                <div style={{ fontSize: "0.62rem", color: "#334155" }}>Task: Extract location, time, and contact person from 100 contracts → Filter to top 5 latest → Present in table.</div>
               </div>
 
               {/* STEP CONTROLS */}
@@ -14798,7 +14798,7 @@ graph = builder.compile(
                     style={{
                       padding: "0.4rem 0.8rem", borderRadius: 4,
                       background: contractStep === st ? "#2a8a84" : "#f7f5f0",
-                      color: contractStep === st ? "#ffffff" : "#4a4a5a",
+                      color: contractStep === st ? "#ffffff" : "#1E293B",
                       border: "1px solid #d0ccc4", cursor: "pointer", fontWeight: 700, fontSize: "0.65rem"
                     }}>
                     Step {st}: {st === 1 ? "Extraction" : (st === 2 ? "Filtering" : "Presentation")}
@@ -14813,7 +14813,7 @@ graph = builder.compile(
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
                   Step 1: Sub-Agent Parallel Information Extraction (100 PDF Documents)
                 </div>
-                <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                   Dedicated sub-agents run across all 100 contract files in parallel. Each contract produces 3 target attributes: <code style={{ color: "#2a8a84" }}>location</code>, <code style={{ color: "#2a8a84" }}>time</code>, and <code style={{ color: "#2a8a84" }}>contact_person</code>.
                 </p>
                 <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", padding: "0.8rem", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#1a1a2e" }}>
@@ -14829,7 +14829,7 @@ graph = builder.compile(
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c9a84c", marginBottom: "0.4rem" }}>
                   Step 2: Information Filtering & Date Sorting (Top 5 Latest Contracts)
                 </div>
-                <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                   The filtering sub-agent inspects the 98 valid extracted rows, sorts by ISO timestamp, and filters down strictly to the top 5 latest contract files.
                 </p>
                 <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", padding: "0.8rem", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#2a8a84" }}>
@@ -14847,7 +14847,7 @@ graph = builder.compile(
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#9b7fd4", marginBottom: "0.4rem" }}>
                   Step 3: Information Presentation (Markdown Table Output)
                 </div>
-                <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+                <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                   The presentation sub-agent formats the top 5 filtered contracts into a clean, human-readable markdown table.
                 </p>
                 <div style={{ background: "#0d0d1a", border: "1px solid #2a3a50", padding: "0.8rem", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.62rem", color: "#a8d8a8" }}>
@@ -14876,7 +14876,7 @@ graph = builder.compile(
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#1a1a2e", marginBottom: "0.6rem" }}>
                 💾 Checkpointing & State Persistence
               </div>
-              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+              <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                 When processing high-volume workflows taking over 1 minute per batch, checkpointing intermediate state prevents restarting from scratch during network dropouts or transient LLM provider rate limits.
               </p>
               <CodeBlock code={`# Checkpointer persistence setup in LangGraph
@@ -14893,7 +14893,7 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c4572a", marginBottom: "0.6rem" }}>
                 ⏳ Rate Limit Backoff & Await Async Execution
               </div>
-              <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "0.8rem" }}>
+              <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "0.8rem" }}>
                 LLM providers enforce strict TPM (Tokens Per Minute) limits. Use exponential backoff and always \`await\` async calls to simplify application concurrency.
               </p>
               <CodeBlock code={`from tenacity import retry, wait_exponential, stop_after_attempt
@@ -14917,11 +14917,11 @@ async def safe_llm_invoke(agent, payload):
           <div style={s.sectionLabel("#9b7fd4")}>Greg Brockman Data & Token Inspection Sandbox</div>
 
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 8, padding: "1.2rem", marginBottom: "1.5rem" }}>
-            <blockquote style={{ borderLeft: "3px solid #2a8a84", paddingLeft: "0.8rem", margin: "0 0 1rem 0", fontStyle: "italic", fontSize: "0.7rem", color: "#4a4a5a" }}>
+            <blockquote style={{ borderLeft: "3px solid #2a8a84", paddingLeft: "0.8rem", margin: "0 0 1rem 0", fontStyle: "italic", fontSize: "0.7rem", color: "#1E293B" }}>
               "Manual inspection of data has probably the highest value-to-prestige ratio of any activity in machine learning." — Greg Brockman
             </blockquote>
 
-            <p style={{ fontSize: "0.65rem", color: "#6a6a7a", lineHeight: 1.6, marginBottom: "1rem" }}>
+            <p style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6, marginBottom: "1rem" }}>
               Inspect input, thinking, and output tokens across 15 real production requests to catch system prompt ambiguities, duplicate context bloat, or internal LLM reasoning misunderstandings.
             </p>
 
@@ -14935,7 +14935,7 @@ async def safe_llm_invoke(agent, payload):
                     border: selectedDebugCall === idx ? "1px solid #2a8a84" : "1px solid #e0dcd4",
                     cursor: "pointer", textAlign: "left", minWidth: 140
                   }}>
-                  <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: "#8a8a9a" }}>Req #{call.id}</div>
+                  <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: "#334155" }}>Req #{call.id}</div>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: selectedDebugCall === idx ? "#2a8a84" : "#1a1a2e" }}>{call.docName}</div>
                   <div style={{ fontSize: "0.52rem", color: call.status.includes("SUCCESS") ? "#4a9a4a" : "#c4572a", fontWeight: 700, marginTop: "0.15rem" }}>{call.status}</div>
                 </button>
@@ -15026,7 +15026,7 @@ const CM_TOKEN_OVERHEAD = [
 // ── SVG: context assembly function diagram ──
 const ContextAssemblyDiagram = () => (
   <svg viewBox="0 0 260 95" style={{ width: "100%", height: 142 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">X = 𝒜(I, T, G, H, P, U) — CONTEXT AS AN ASSEMBLED OBJECT</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">X = 𝒜(I, T, G, H, P, U) — CONTEXT AS AN ASSEMBLED OBJECT</text>
     {[
       { sym: "I", label: "Instructions", color: "#2a8a84" },
       { sym: "T", label: "Tools", color: "#c9a84c" },
@@ -15040,7 +15040,7 @@ const ContextAssemblyDiagram = () => (
         <g key={i}>
           <rect x={x} y="20" width="36" height="24" rx={2} fill={`${n.color}12`} stroke={n.color} strokeWidth="0.7"/>
           <text x={x+18} y="30" textAnchor="middle" fontSize="5" fill={n.color} fontFamily="Playfair Display, serif" fontWeight="900">{n.sym}</text>
-          <text x={x+18} y="38" textAnchor="middle" fontSize="2.8" fill="#6a6a7a" fontFamily="Syne, sans-serif">{n.label}</text>
+          <text x={x+18} y="38" textAnchor="middle" fontSize="2.8" fill="#334155" fontFamily="Syne, sans-serif">{n.label}</text>
           <line x1={x+18} y1="44" x2="130" y2="56" stroke={n.color} strokeWidth="0.4" strokeDasharray="1.5,1"/>
         </g>
       );
@@ -15048,27 +15048,27 @@ const ContextAssemblyDiagram = () => (
     <rect x="90" y="56" width="80" height="20" rx={2} fill="rgba(74,154,74,0.15)" stroke="#4a9a4a" strokeWidth="1"/>
     <text x="130" y="66" textAnchor="middle" fontSize="4.5" fill="#4a9a4a" fontFamily="Playfair Display, serif" fontWeight="900">X</text>
     <text x="130" y="73" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif">Assembled Context</text>
-    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">Q_CE(X) → [0,10] — a context-quality function, isolated from behavioral scoring</text>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontStyle="italic">Q_CE(X) → [0,10] — a context-quality function, isolated from behavioral scoring</text>
   </svg>
 );
 
 // ── SVG: isolation principle diagram ──
 const IsolationPrincipleDiagram = () => (
   <svg viewBox="0 0 260 85" style={{ width: "100%", height: 128 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">WHY ISOLATION MAKES THIS A NON-CIRCULAR VALIDATION</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">WHY ISOLATION MAKES THIS A NON-CIRCULAR VALIDATION</text>
     {/* Context score box */}
     <rect x="8" y="20" width="100" height="34" rx={2} fill="rgba(74,154,74,0.1)" stroke="#4a9a4a" strokeWidth="0.9"/>
     <text x="58" y="32" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">Q_CE(X)</text>
-    <text x="58" y="40" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Context Quality Score</text>
+    <text x="58" y="40" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Context Quality Score</text>
     <text x="58" y="47" textAnchor="middle" fontSize="2.8" fill="#4a9a4a" fontFamily="Syne, sans-serif">scored BEFORE behavior runs</text>
     {/* Behavioral score box */}
     <rect x="152" y="20" width="100" height="34" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.9"/>
     <text x="202" y="32" textAnchor="middle" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">B(A, X)</text>
-    <text x="202" y="40" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Behavioral Evaluation</text>
+    <text x="202" y="40" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Behavioral Evaluation</text>
     <text x="202" y="47" textAnchor="middle" fontSize="2.8" fill="#c4572a" fontFamily="Syne, sans-serif">task success, safety, hallucination</text>
     {/* Not-in relation */}
-    <text x="130" y="40" textAnchor="middle" fontSize="7" fill="#8a8a9a" fontFamily="Playfair Display, serif">∉</text>
-    <text x="130" y="60" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif">Q_CE never enters B — no shared computation</text>
+    <text x="130" y="40" textAnchor="middle" fontSize="7" fill="#334155" fontFamily="Playfair Display, serif">∉</text>
+    <text x="130" y="60" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Q_CE never enters B — no shared computation</text>
     {/* Prediction arrow below */}
     <line x1="58" y1="54" x2="58" y2="68" stroke="#4a9a4a" strokeWidth="0.6"/>
     <path d="M58 68 L202 68" stroke="#4a9a4a" strokeWidth="0.6" strokeDasharray="2,1" markerEnd="url(#arrow)"/>
@@ -15080,7 +15080,7 @@ const IsolationPrincipleDiagram = () => (
 // ── SVG: correlation bar chart ──
 const CorrelationChartDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CONTEXT CRITERIA PREDICT BEHAVIOR — PEARSON r (n=300 EVALUATIONS)</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CONTEXT CRITERIA PREDICT BEHAVIOR — PEARSON r (n=300 EVALUATIONS)</text>
     {CM_CRITERIA.filter(c => c.r !== null).sort((a,b) => b.r - a.r).map((c, i) => {
       const y = 18 + i * 14;
       const barW = c.r * 160;
@@ -15092,14 +15092,14 @@ const CorrelationChartDiagram = () => (
         </g>
       );
     })}
-    <text x="130" y="96" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">Strongest: Grounding → Hallucination resistance (r=0.63). Every correlation matches the pre-registered mechanism.</text>
+    <text x="130" y="96" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif" fontStyle="italic">Strongest: Grounding → Hallucination resistance (r=0.63). Every correlation matches the pre-registered mechanism.</text>
   </svg>
 );
 
 // ── SVG: 3-condition context ladder ──
 const ContextLadderDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE CONTROLLED CONTEXT LADDER — MODEL FIXED, CONTEXT VARIED</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE CONTROLLED CONTEXT LADDER — MODEL FIXED, CONTEXT VARIED</text>
     {CM_CONDITIONS.map((c, i) => {
       const x = 12 + i * 84;
       const h = 20 + i * 18;
@@ -15108,14 +15108,14 @@ const ContextLadderDiagram = () => (
         <g key={c.id}>
           <rect x={x} y={y} width={72} height={h} rx={2} fill={`${c.color}15`} stroke={c.color} strokeWidth="0.9"/>
           <text x={x+36} y={y+12} textAnchor="middle" fontSize="4.2" fill={c.color} fontFamily="Syne, sans-serif" fontWeight="800">{c.name}</text>
-          <text x={x+36} y={y+20} textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">CE: {c.ce}</text>
-          {i < 2 && <text x={x+74} y="65" fontSize="7" fill="#4a4a5a">→</text>}
+          <text x={x+36} y={y+20} textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">CE: {c.ce}</text>
+          {i < 2 && <text x={x+74} y="65" fontSize="7" fill="#1E293B">→</text>}
         </g>
       );
     })}
     <text x="55" y="88" textAnchor="middle" fontSize="3" fill="#c4572a" fontFamily="Syne, sans-serif">structure</text>
     <text x="180" y="88" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif">hardening</text>
-    <text x="130" y="20" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">300 evals · 25 turns each · 7,500 total turns · GPT-5.5 + Claude Opus 4.8</text>
+    <text x="130" y="20" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">300 evals · 25 turns each · 7,500 total turns · GPT-5.5 + Claude Opus 4.8</text>
   </svg>
 );
 
@@ -15147,12 +15147,12 @@ export const ContextMeasureTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           AI Agents Do Not Fail Alone:<br /><em style={{ color: "#9b7fd4", fontStyle: "italic" }}>The Context Fails First</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           The first empirically validated measurement of context-engineering quality as an independent leading indicator of agent reliability. Seven criteria, scored in isolation from behavioral metrics, tested across 300 multi-turn evaluations (7,500 agent turns) on GPT-5.5 and Claude Opus 4.8 in regulated domains.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#9b7fd4", marginBottom: "0.3rem" }}>The abstract's core claim</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>"Agents do not fail in isolation: their behavior is shaped by the instructions, tools, memory, retrieved knowledge, guardrails, and untrusted inputs accumulated in their context. When this context is weak, agents drift, hallucinate, misuse tools, ignore constraints, become vulnerable to injection, and waste tokens."</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"Agents do not fail in isolation: their behavior is shaped by the instructions, tools, memory, retrieved knowledge, guardrails, and untrusted inputs accumulated in their context. When this context is weak, agents drift, hallucinate, misuse tools, ignore constraints, become vulnerable to injection, and waste tokens."</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
@@ -15164,7 +15164,7 @@ export const ContextMeasureTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -15206,11 +15206,11 @@ export const ContextMeasureTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#2a8a84", marginBottom: "0.8rem" }}>Why measurement matters</div>
-              <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.8 }}>Teams inspect prompts manually, debug failures after deployment, or run behavioral evaluations that show an agent hallucinated or misused a tool — without revealing whether the upstream cause was weak grounding, unclear role definition, conflicting instructions, or missing guardrails. Context engineering is one of the most controllable parts of an agent system, but without measurement, changes to it remain intuition-driven.</p>
+              <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8 }}>Teams inspect prompts manually, debug failures after deployment, or run behavioral evaluations that show an agent hallucinated or misused a tool — without revealing whether the upstream cause was weak grounding, unclear role definition, conflicting instructions, or missing guardrails. Context engineering is one of the most controllable parts of an agent system, but without measurement, changes to it remain intuition-driven.</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #9b7fd430", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #9b7fd4" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#9b7fd4", marginBottom: "0.8rem" }}>Why isolation matters</div>
-              <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.8 }}>If context quality were folded into the final behavioral score, showing that it "predicts" behavior would be circular — a restatement of the same number. By keeping Q_CE(X) entirely outside the behavioral pipeline, the paper can test a much stronger, falsifiable claim: that context quality carries independent predictive signal about downstream reliability.</p>
+              <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8 }}>If context quality were folded into the final behavioral score, showing that it "predicts" behavior would be circular — a restatement of the same number. By keeping Q_CE(X) entirely outside the behavioral pipeline, the paper can test a much stronger, falsifiable claim: that context quality carries independent predictive signal about downstream reliability.</p>
             </div>
           </div>
         </div>
@@ -15243,13 +15243,13 @@ export const ContextMeasureTab = ({ s }) => {
               <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
                 {["measures", "predicts", "scores"].map(t => (
                   <button key={t} onClick={() => setCriterionTab(t)}
-                    style={{ flex: 1, padding: "0.65rem", background: criterionTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: criterionTab === t ? `2px solid ${criterion.color}` : "2px solid transparent", color: criterionTab === t ? criterion.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    style={{ flex: 1, padding: "0.65rem", background: criterionTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: criterionTab === t ? `2px solid ${criterion.color}` : "2px solid transparent", color: criterionTab === t ? criterion.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                     {t === "measures" ? "What It Measures" : t === "predicts" ? "Behavioral Prediction" : "Scores by Condition"}
                   </button>
                 ))}
               </div>
               <div style={{ padding: "1.5rem" }}>
-                {criterionTab === "measures" && <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>{criterion.measures}</p>}
+                {criterionTab === "measures" && <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{criterion.measures}</p>}
                 {criterionTab === "predicts" && (
                   <div>
                     <div style={{ padding: "0.9rem 1.1rem", background: `${criterion.color}0a`, border: `1px solid ${criterion.color}25`, borderRadius: 4, marginBottom: "0.8rem" }}>
@@ -15259,10 +15259,10 @@ export const ContextMeasureTab = ({ s }) => {
                     {criterion.r !== null ? (
                       <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
                         <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, color: criterion.color }}>r = {criterion.r.toFixed(2)}</div>
-                        <div style={{ fontSize: "0.63rem", color: "#6a6a7a" }}>Pearson correlation, n=300 multi-turn evaluations</div>
+                        <div style={{ fontSize: "0.63rem", color: "#334155" }}>Pearson correlation, n=300 multi-turn evaluations</div>
                       </div>
                     ) : (
-                      <div style={{ fontSize: "0.63rem", color: "#6a6a7a", fontStyle: "italic" }}>Not tested for direct correlation — token efficiency is interpreted as reliability value per token, not as a metric to minimise.</div>
+                      <div style={{ fontSize: "0.63rem", color: "#334155", fontStyle: "italic" }}>Not tested for direct correlation — token efficiency is interpreted as reliability value per token, not as a metric to minimise.</div>
                     )}
                   </div>
                 )}
@@ -15271,7 +15271,7 @@ export const ContextMeasureTab = ({ s }) => {
                     {[["C1 Poor", criterion.c1, "#c4572a"], ["C2 Structured", criterion.c2, "#c9a84c"], ["C3 Hardened", criterion.c3, "#4a9a4a"]].map(([label, val, color], i) => (
                       <div key={i} style={{ padding: "0.8rem", background: "#f7f5f0", borderRadius: 4, textAlign: "center", border: `1px solid ${color}30` }}>
                         <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color }}>{val}</div>
-                        <div style={{ fontSize: "0.55rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>{label}</div>
+                        <div style={{ fontSize: "0.55rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>{label}</div>
                       </div>
                     ))}
                   </div>
@@ -15286,7 +15286,7 @@ export const ContextMeasureTab = ({ s }) => {
       {section === "simulator" && (
         <div>
           <div style={s.sectionLabel("#9b7fd4")}>§3 — Live Score Simulator — Try the Formula Yourself</div>
-          <p style={{ fontSize: "0.7rem", color: "#6a6a7a", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 560 }}>Q_CE(X) = weighted average of all 7 criteria, mapped to a grade. Move the sliders to see how the aggregate score and grade respond — exactly as ProofAgent-Harness computes it.</p>
+          <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 560 }}>Q_CE(X) = weighted average of all 7 criteria, mapped to a grade. Move the sliders to see how the aggregate score and grade respond — exactly as ProofAgent-Harness computes it.</p>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.2rem" }}>
               {CM_CRITERIA.map(c => (
@@ -15304,18 +15304,18 @@ export const ContextMeasureTab = ({ s }) => {
             <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", padding: "1.2rem", background: `${grade.color}0a`, border: `1px solid ${grade.color}40`, borderRadius: 6 }}>
               <div style={{ textAlign: "center" }}>
                 <div style={{ fontFamily: "Playfair Display, serif", fontSize: "2.2rem", fontWeight: 900, color: grade.color, lineHeight: 1 }}>{overallScore}</div>
-                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", fontFamily: "Syne, sans-serif" }}>Q_CE(X)</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>Q_CE(X)</div>
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", color: grade.color, marginBottom: "0.3rem" }}>{grade.label}</div>
-                <div style={{ fontSize: "0.62rem", color: "#4a4a5a", lineHeight: 1.6 }}>
+                <div style={{ fontSize: "0.62rem", color: "#1E293B", lineHeight: 1.6 }}>
                   {grade.label === "Strong" && "Q_CE ≥ 8.0 — the operating environment is well structured before behavioral testing begins."}
                   {grade.label === "Adequate" && "6.0 ≤ Q_CE < 8.0 — usable but with room to strengthen specific criteria."}
                   {grade.label === "Weak" && "Q_CE < 6.0 — this context is likely to produce drift, hallucination, or unsafe behavior downstream."}
                 </div>
               </div>
             </div>
-            <div style={{ marginTop: "0.8rem", fontSize: "0.6rem", color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontStyle: "italic" }}>Note: the grade is for diagnosis, not certification — a Strong context does not prove the agent is safe to deploy.</div>
+            <div style={{ marginTop: "0.8rem", fontSize: "0.6rem", color: "#334155", fontFamily: "Syne, sans-serif", fontStyle: "italic" }}>Note: the grade is for diagnosis, not certification — a Strong context does not prove the agent is safe to deploy.</div>
           </div>
         </div>
       )}
@@ -15331,7 +15331,7 @@ export const ContextMeasureTab = ({ s }) => {
             {CM_CONDITIONS.map(c => (
               <div key={c.id} style={{ flex: 1, padding: "0.9rem", background: `${c.color}0a`, border: `1px solid ${c.color}30`, borderRadius: 6, borderTop: `2px solid ${c.color}` }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: c.color, marginBottom: "0.4rem" }}>{c.name}</div>
-                <p style={{ fontSize: "0.58rem", color: "#4a4a5a", lineHeight: 1.6 }}>{c.desc}</p>
+                <p style={{ fontSize: "0.58rem", color: "#1E293B", lineHeight: 1.6 }}>{c.desc}</p>
               </div>
             ))}
           </div>
@@ -15341,7 +15341,7 @@ export const ContextMeasureTab = ({ s }) => {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Condition", "Final", "Safety", "Halluc.", "Tool", "CE", "Critical", "Tokens"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.55rem 0.7rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.55rem 0.7rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -15357,7 +15357,7 @@ export const ContextMeasureTab = ({ s }) => {
                     <td style={{ padding: "0.6rem 0.7rem", color: "#1a1a2e" }}>{c.tool}</td>
                     <td style={{ padding: "0.6rem 0.7rem", color: "#1a1a2e" }}>{c.ce}</td>
                     <td style={{ padding: "0.6rem 0.7rem", color: c.critical > 3 ? "#c4572a" : "#4a9a4a", fontWeight: 700 }}>{c.critical}</td>
-                    <td style={{ padding: "0.6rem 0.7rem", color: "#6a6a7a", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{c.tokens}</td>
+                    <td style={{ padding: "0.6rem 0.7rem", color: "#334155", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{c.tokens}</td>
                   </tr>
                 ))}
               </tbody>
@@ -15369,11 +15369,11 @@ export const ContextMeasureTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #2a8a8430", borderRadius: 6, padding: "1.2rem", borderTop: "2px solid #2a8a84" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.5rem" }}>Structure is the biggest lever</div>
-              <p style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.7 }}>C1→C2 raises final score +2.34, hallucination resistance +2.40, tool use +2.79, and cuts critical failures by ~68% (4.11 → 1.33).</p>
+              <p style={{ fontSize: "0.63rem", color: "#1E293B", lineHeight: 1.7 }}>C1→C2 raises final score +2.34, hallucination resistance +2.40, tool use +2.79, and cuts critical failures by ~68% (4.11 → 1.33).</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.2rem", borderTop: "2px solid #c4572a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#c4572a", marginBottom: "0.5rem" }}>Hardening rebalances, doesn't just improve</div>
-              <p style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.7 }}>C2→C3 raises CE quality (8.08→8.68) but the final behavioral score slightly drops (5.49→5.16) — a more conservative, guardrailed agent completes fewer borderline tasks.</p>
+              <p style={{ fontSize: "0.63rem", color: "#1E293B", lineHeight: 1.7 }}>C2→C3 raises CE quality (8.08→8.68) but the final behavioral score slightly drops (5.49→5.16) — a more conservative, guardrailed agent completes fewer borderline tasks.</p>
             </div>
           </div>
         </div>
@@ -15384,14 +15384,14 @@ export const ContextMeasureTab = ({ s }) => {
         <div>
           <div style={s.sectionLabel("#4a9a4a")}>§5 — Artifact Generalization: Beyond Live Dialogue</div>
           <div style={{ padding: "1rem 1.2rem", background: "rgba(74,154,74,0.07)", border: "1px solid #4a9a4a30", borderRadius: 6, marginBottom: "1.5rem" }}>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>A documentation agent generates a policy runbook under the same context-quality ladder. This tests whether context measurement predicts reliability in generated <strong style={{ color: "#1a1a2e" }}>deliverables</strong> — not just conversational turns.</p>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>A documentation agent generates a policy runbook under the same context-quality ladder. This tests whether context measurement predicts reliability in generated <strong style={{ color: "#1a1a2e" }}>deliverables</strong> — not just conversational turns.</p>
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.66rem" }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Condition", "Final", "Halluc.", "Unsupported Claims", "CE Grounding", "Tokens"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.56rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.56rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -15401,9 +15401,9 @@ export const ContextMeasureTab = ({ s }) => {
                     <td style={{ padding: "0.6rem 0.8rem", color: "#1a1a2e", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row.condition}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: row.final >= 8 ? "#4a9a4a" : "#c4572a", fontWeight: 700 }}>{row.final}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: row.halluc >= 8 ? "#4a9a4a" : "#c4572a" }}>{row.halluc}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#6a6a7a" }}>{row.unsupported}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#334155" }}>{row.unsupported}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#1a1a2e" }}>{row.ceGrounding}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#6a6a7a", fontFamily: "DM Mono, monospace" }}>{row.tokens}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#334155", fontFamily: "DM Mono, monospace" }}>{row.tokens}</td>
                   </tr>
                 ))}
               </tbody>
@@ -15415,7 +15415,7 @@ export const ContextMeasureTab = ({ s }) => {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Condition", "Overhead Tokens", "Reclaimable", "Total Tokens/Eval"].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.56rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.56rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -15425,7 +15425,7 @@ export const ContextMeasureTab = ({ s }) => {
                     <td style={{ padding: "0.6rem 0.8rem", color: row.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{row.condition}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#1a1a2e" }}>{row.overhead}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#1a1a2e" }}>{row.reclaimable}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#6a6a7a", fontFamily: "DM Mono, monospace" }}>{row.total}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#334155", fontFamily: "DM Mono, monospace" }}>{row.total}</td>
                   </tr>
                 ))}
               </tbody>
@@ -15559,7 +15559,7 @@ const UH_CONTEXT_SOURCES = [
 // ── SVG: unhobbling summary diagram ──
 const UnhobblingSummaryDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">80% OF CLAUDE CODE'S SYSTEM PROMPT — REMOVED, NO MEASURABLE LOSS</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">80% OF CLAUDE CODE'S SYSTEM PROMPT — REMOVED, NO MEASURABLE LOSS</text>
     {/* Before bar */}
     <rect x="30" y="20" width="200" height="22" rx={2} fill="rgba(196,87,42,0.15)" stroke="#c4572a" strokeWidth="0.8"/>
     <text x="130" y="34" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Before — full system prompt (100%)</text>
@@ -15567,16 +15567,16 @@ const UnhobblingSummaryDiagram = () => (
     <rect x="30" y="50" width="40" height="22" rx={2} fill="rgba(74,154,74,0.2)" stroke="#4a9a4a" strokeWidth="1"/>
     <text x="50" y="64" textAnchor="middle" fontSize="4" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">~20%</text>
     <rect x="74" y="50" width="156" height="22" rx={2} fill="none" stroke="#2a2a38" strokeWidth="0.4" strokeDasharray="2,1"/>
-    <text x="152" y="64" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">removed — judgement instead of rules</text>
-    <text x="130" y="86" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">Tested against Claude Code's own coding evaluations — same performance, far less context spent</text>
-    <text x="130" y="94" textAnchor="middle" fontSize="3.2" fill="#6a6a7a" fontFamily="Syne, sans-serif">Applies specifically to Claude Opus 5 and Claude Fable 5-class models</text>
+    <text x="152" y="64" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">removed — judgement instead of rules</text>
+    <text x="130" y="86" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontStyle="italic">Tested against Claude Code's own coding evaluations — same performance, far less context spent</text>
+    <text x="130" y="94" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Applies specifically to Claude Opus 5 and Claude Fable 5-class models</text>
   </svg>
 );
 
 // ── SVG: context assembly stack diagram ──
 const ContextAssemblyStackDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HOW YOUR CONTEXT ASSEMBLES — 4 SOURCES, DIFFERENT ROLES</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HOW YOUR CONTEXT ASSEMBLES — 4 SOURCES, DIFFERENT ROLES</text>
     {UH_CONTEXT_SOURCES.map((src, i) => {
       const y = 20 + i * 18;
       return (
@@ -15584,13 +15584,13 @@ const ContextAssemblyStackDiagram = () => (
           <rect x="12" y={y} width="236" height="14" rx={2} fill={`${src.color}10`} stroke={src.color} strokeWidth="0.7"/>
           <text x="20" y={y+9.5} fontSize="7" dominantBaseline="middle">{src.icon}</text>
           <text x="34" y={y+9.5} fontSize="4" fill={src.color} fontFamily="Syne, sans-serif" fontWeight="800" dominantBaseline="middle">{src.name}</text>
-          <text x="240" y={y+9.5} textAnchor="end" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif" dominantBaseline="middle">
+          <text x="240" y={y+9.5} textAnchor="end" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif" dominantBaseline="middle">
             {["fixed once", "gotchas only", "progressive", "@ mention"][i]}
           </text>
         </g>
       );
     })}
-    <text x="130" y="98" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Each source has a distinct job — none of them should try to be a repository for everything</text>
+    <text x="130" y="98" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Each source has a distinct job — none of them should try to be a repository for everything</text>
   </svg>
 );
 
@@ -15611,12 +15611,12 @@ export const UnhobblingTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           The New Rules of Context Engineering<br />for <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Claude 5-Generation Models</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Anthropic removed over 80% of Claude Code's system prompt for models like Claude Opus 5 and Claude Fable 5 — with no measurable loss on coding evaluations. Six practices that used to be necessary have become myths. Here's what replaced them, straight from the team that runs `claude doctor;`.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>Why this happened</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>"Overall, we found that we were overconstraining Claude Code, both through our system prompt and in our CLAUDE.md files and skills. While these constraints were once needed to avoid worst case scenarios, we have since found we can delete many of them and let the model use surrounding context and judgement instead."</div>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"Overall, we found that we were overconstraining Claude Code, both through our system prompt and in our CLAUDE.md files and skills. While these constraints were once needed to avoid worst case scenarios, we have since found we can delete many of them and let the model use surrounding context and judgement instead."</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
@@ -15628,7 +15628,7 @@ export const UnhobblingTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -15640,7 +15640,7 @@ export const UnhobblingTab = ({ s }) => {
         <ZoomableFigure title="80% Removed, No Measurable Loss"><UnhobblingSummaryDiagram /></ZoomableFigure>
       </div>
       <div style={{ padding: "1rem 1.2rem", background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a25", borderRadius: 6, marginBottom: "1.5rem" }}>
-        <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>Reading transcripts of internal Claude Code usage revealed conflicting messages stacked in a single request — <em>"leave documentation as appropriate"</em> from one source, <em>"DO NOT add comments"</em> from another. Claude generally interprets intent correctly, but it must think harder about overlapping and conflicting instructions before deciding what to do. Removing the unnecessary rules removed the conflicts too.</p>
+        <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>Reading transcripts of internal Claude Code usage revealed conflicting messages stacked in a single request — <em>"leave documentation as appropriate"</em> from one source, <em>"DO NOT add comments"</em> from another. Claude generally interprets intent correctly, but it must think harder about overlapping and conflicting instructions before deciding what to do. Removing the unnecessary rules removed the conflicts too.</p>
       </div>
 
       {/* 6 SHIFTS */}
@@ -15666,16 +15666,16 @@ export const UnhobblingTab = ({ s }) => {
               <span style={{ fontSize: "1.4rem" }}>{shift.icon}</span>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.75rem", color: "#c4572a", textDecoration: "line-through" }}>{shift.then}</span>
-                <span style={{ color: "#8a8a9a" }}>→</span>
+                <span style={{ color: "#334155" }}>→</span>
                 <span style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 900, color: shift.color }}>{shift.now}</span>
               </div>
             </div>
-            <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7 }}>{shift.desc}</p>
+            <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>{shift.desc}</p>
           </div>
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["then", "now", "insight"].map(t => (
               <button key={t} onClick={() => setShiftTab(t)}
-                style={{ flex: 1, padding: "0.65rem", background: shiftTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: shiftTab === t ? `2px solid ${shift.color}` : "2px solid transparent", color: shiftTab === t ? shift.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, padding: "0.65rem", background: shiftTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: shiftTab === t ? `2px solid ${shift.color}` : "2px solid transparent", color: shiftTab === t ? shift.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t === "then" ? "Then (old prompt)" : t === "now" ? "Now (new prompt)" : "The Insight"}
               </button>
             ))}
@@ -15704,7 +15704,7 @@ export const UnhobblingTab = ({ s }) => {
             </div>
             {activeSource === i && (
               <div style={{ padding: "0 1.1rem 1rem", animation: "fadeIn 0.2s ease" }}>
-                <p style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7 }}>{src.guidance}</p>
+                <p style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7 }}>{src.guidance}</p>
               </div>
             )}
           </div>
@@ -15714,7 +15714,7 @@ export const UnhobblingTab = ({ s }) => {
       {/* CLOSING */}
       <div style={{ padding: "1.2rem 1.4rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6, borderLeft: "4px solid #2a8a84" }}>
         <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.5rem" }}>Try simplifying</div>
-        <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>Across your system prompt, skills, and CLAUDE.md files, you may need to simplify just like Anthropic did. The <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>claude doctor;</code> command (or <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>/doctor</code> inside Claude Code) helps rightsize your skills and CLAUDE.md files automatically.</p>
+        <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>Across your system prompt, skills, and CLAUDE.md files, you may need to simplify just like Anthropic did. The <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>claude doctor;</code> command (or <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>/doctor</code> inside Claude Code) helps rightsize your skills and CLAUDE.md files automatically.</p>
       </div>
     </div>
   );
@@ -15962,7 +15962,7 @@ const AL_ARTICLE_STEPS = [
 // ── SVG: Uncertainty Window Diagram ──
 const UncertaintyWindowDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">UNCERTAINTY SAMPLING — PROBABILITY BAND [0.45, 0.55]</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">UNCERTAINTY SAMPLING — PROBABILITY BAND [0.45, 0.55]</text>
     <rect x="30" y="20" width="200" height="60" fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5" rx="2"/>
     <rect x="110" y="20" width="40" height="60" fill="rgba(42,138,132,0.18)" stroke="#2a8a84" strokeWidth="0.8" strokeDasharray="2,1"/>
     <text x="130" y="28" textAnchor="middle" fontSize="3.5" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">UNCERTAINTY BAND</text>
@@ -15984,9 +15984,9 @@ const UncertaintyWindowDiagram = () => (
 // ── SVG: KNN Density Diagram ──
 const KNNDensityDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DIVERSITY SAMPLING — KNN MEAN EUCLIDEAN DISTANCE</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DIVERSITY SAMPLING — KNN MEAN EUCLIDEAN DISTANCE</text>
     <circle cx="75" cy="55" r="28" fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.6" strokeDasharray="2,1"/>
-    <text x="75" y="32" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif">Dense Cluster (Low Distance)</text>
+    <text x="75" y="32" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Dense Cluster (Low Distance)</text>
     {[
       {x:65,y:50},{x:72,y:45},{x:80,y:52},{x:75,y:60},{x:68,y:58},{x:82,y:58}
     ].map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="2" fill="#c9a84c"/>)}
@@ -16001,14 +16001,14 @@ const KNNDensityDiagram = () => (
         <text x={p.x} y={p.y-6} textAnchor="middle" fontSize="3" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">{p.label}</text>
       </g>
     ))}
-    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#4a4a5a" fontFamily="Syne, sans-serif">KNN computes average distance to K=5 neighbors → Select points with nlargest('Density')</text>
+    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#1E293B" fontFamily="Syne, sans-serif">KNN computes average distance to K=5 neighbors → Select points with nlargest('Density')</text>
   </svg>
 );
 
 // ── SVG: QBC Variance Diagram ──
 const QBCVarianceDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">QUERY BY COMMITTEE — PREDICTION VARIANCE DISAGREEMENT</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">QUERY BY COMMITTEE — PREDICTION VARIANCE DISAGREEMENT</text>
     <rect x="30" y="20" width="200" height="60" fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5" rx="2"/>
     <path d="M 35 70 Q 100 65, 130 50 T 225 25" fill="none" stroke="#2a8a84" strokeWidth="1.2"/>
     <path d="M 35 75 Q 90 40, 130 50 T 225 35" fill="none" stroke="#c9a84c" strokeWidth="1.2"/>
@@ -16018,10 +16018,10 @@ const QBCVarianceDiagram = () => (
     <circle cx="130" cy="50" r="4" fill="#c4572a" stroke="#ffffff" strokeWidth="1"/>
     <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">PEAK VARIANCE DISAGREEMENT (Query Top 60)</text>
     <g transform="translate(35,24)">
-      <circle cx="0" cy="0" r="2" fill="#2a8a84"/><text x="4" y="1.5" fontSize="2.5" fill="#4a4a5a">LogReg</text>
-      <circle cx="25" cy="0" r="2" fill="#c9a84c"/><text x="29" y="1.5" fontSize="2.5" fill="#4a4a5a">RF</text>
-      <circle cx="45" cy="0" r="2" fill="#9b7fd4"/><text x="49" y="1.5" fontSize="2.5" fill="#4a4a5a">ExtraTrees</text>
-      <circle cx="75" cy="0" r="2" fill="#c4572a"/><text x="79" y="1.5" fontSize="2.5" fill="#4a4a5a">SVM</text>
+      <circle cx="0" cy="0" r="2" fill="#2a8a84"/><text x="4" y="1.5" fontSize="2.5" fill="#1E293B">LogReg</text>
+      <circle cx="25" cy="0" r="2" fill="#c9a84c"/><text x="29" y="1.5" fontSize="2.5" fill="#1E293B">RF</text>
+      <circle cx="45" cy="0" r="2" fill="#9b7fd4"/><text x="49" y="1.5" fontSize="2.5" fill="#1E293B">ExtraTrees</text>
+      <circle cx="75" cy="0" r="2" fill="#c4572a"/><text x="79" y="1.5" fontSize="2.5" fill="#1E293B">SVM</text>
     </g>
   </svg>
 );
@@ -16055,7 +16055,7 @@ const AL_USE_CASES = [
 // ── SVG: active learning loop diagram ──
 const ActiveLearningLoopDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE ACTIVE LEARNING LOOP</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE ACTIVE LEARNING LOOP</text>
     {/* Circular flow */}
     {[
       { icon: "🌱", label: "Seed", x: 40, y: 25, color: "#c9a84c" },
@@ -16071,19 +16071,19 @@ const ActiveLearningLoopDiagram = () => (
       </g>
     ))}
     {/* Arrows connecting the loop */}
-    <path d="M55 25 L114 21" fill="none" stroke="#4a4a5a" strokeWidth="0.6" markerEnd="url(#arr)"/>
-    <path d="M146 21 L205 25" fill="none" stroke="#4a4a5a" strokeWidth="0.6"/>
-    <path d="M220 41 L220 49" fill="none" stroke="#4a4a5a" strokeWidth="0.6"/>
-    <path d="M205 65 L146 70" fill="none" stroke="#4a4a5a" strokeWidth="0.6"/>
-    <path d="M114 68 C 70 75, 40 55, 40 41" fill="none" stroke="#4a4a5a" strokeWidth="0.6" strokeDasharray="2,1"/>
-    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontStyle="italic">Loop repeats until labeling budget is exhausted or accuracy plateaus</text>
+    <path d="M55 25 L114 21" fill="none" stroke="#1E293B" strokeWidth="0.6" markerEnd="url(#arr)"/>
+    <path d="M146 21 L205 25" fill="none" stroke="#1E293B" strokeWidth="0.6"/>
+    <path d="M220 41 L220 49" fill="none" stroke="#1E293B" strokeWidth="0.6"/>
+    <path d="M205 65 L146 70" fill="none" stroke="#1E293B" strokeWidth="0.6"/>
+    <path d="M114 68 C 70 75, 40 55, 40 41" fill="none" stroke="#1E293B" strokeWidth="0.6" strokeDasharray="2,1"/>
+    <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontStyle="italic">Loop repeats until labeling budget is exhausted or accuracy plateaus</text>
   </svg>
 );
 
 // ── SVG: 3 techniques comparison diagram ──
 const ThreeTechniquesDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THREE WAYS TO PICK THE NEXT POINT TO LABEL</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THREE WAYS TO PICK THE NEXT POINT TO LABEL</text>
     {AL_TECHNIQUES.map((t, i) => {
       const x = 8 + i * 84;
       return (
@@ -16092,23 +16092,23 @@ const ThreeTechniquesDiagram = () => (
           <text x={x+38} y="32" textAnchor="middle" fontSize="9" dominantBaseline="middle">{t.icon}</text>
           <text x={x+38} y="44" textAnchor="middle" fontSize="3.5" fill={t.color} fontFamily="Syne, sans-serif" fontWeight="800">{t.name.split(" ")[0]}</text>
           <text x={x+38} y="50" textAnchor="middle" fontSize="3" fill={t.color} fontFamily="Syne, sans-serif" fontWeight="700">{t.name.split(" ").slice(1).join(" ")}</text>
-          <text x={x+38} y="62" textAnchor="middle" fontSize="2.6" fill="#6a6a7a" fontFamily="Syne, sans-serif">{t.tagline.length > 30 ? t.tagline.slice(0,28)+"…" : t.tagline}</text>
+          <text x={x+38} y="62" textAnchor="middle" fontSize="2.6" fill="#334155" fontFamily="Syne, sans-serif">{t.tagline.length > 30 ? t.tagline.slice(0,28)+"…" : t.tagline}</text>
         </g>
       );
     })}
-    <text x="130" y="86" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif">All three beat random sampling — the choice depends on cost budget and pool structure</text>
+    <text x="130" y="86" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">All three beat random sampling — the choice depends on cost budget and pool structure</text>
   </svg>
 );
 
 // ── SVG: performance comparison chart ──
 const PerformanceChartDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ACCURACY vs LABELED SAMPLES — 4 STRATEGIES</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">ACCURACY vs LABELED SAMPLES — 4 STRATEGIES</text>
     {/* axes */}
     <line x1="30" y1="20" x2="30" y2="82" stroke="#2a2a38" strokeWidth="0.5"/>
     <line x1="30" y1="82" x2="248" y2="82" stroke="#2a2a38" strokeWidth="0.5"/>
-    <text x="26" y="24" textAnchor="end" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">95%</text>
-    <text x="26" y="82" textAnchor="end" fontSize="3" fill="#6a6a7a" fontFamily="DM Mono, monospace">65%</text>
+    <text x="26" y="24" textAnchor="end" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">95%</text>
+    <text x="26" y="82" textAnchor="end" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">65%</text>
     {AL_PERFORMANCE.map((p, si) => {
       const points = [
         [30 + 60, 82 - ((p.n200-65)/30)*62],
@@ -16123,10 +16123,10 @@ const PerformanceChartDiagram = () => (
         </g>
       );
     })}
-    <text x="90" y="90" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">200</text>
-    <text x="170" y="90" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">500</text>
-    <text x="248" y="90" textAnchor="middle" fontSize="3" fill="#6a6a7a" fontFamily="Syne, sans-serif">1000</text>
-    <text x="130" y="97" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Labeled samples →</text>
+    <text x="90" y="90" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">200</text>
+    <text x="170" y="90" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">500</text>
+    <text x="248" y="90" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">1000</text>
+    <text x="130" y="97" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Labeled samples →</text>
     {/* legend */}
     {AL_PERFORMANCE.map((p, i) => (
       <g key={i}>
@@ -16179,12 +16179,12 @@ export const ActiveLearningTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           Reducing Human Annotation<br />with <em style={{ color: "#2a8a84", fontStyle: "italic" }}>ML Active Learning</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 650, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 650, marginBottom: "1.2rem" }}>
           Complete step-by-step implementation guide based on Lucas Braga's publication. Learn how to train models using significantly fewer annotated samples by interactively querying the most informative data points via Uncertainty Sampling, K-NN Diversity Sampling, and Query By Committee (QBC).
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The Core Active Learning Advantage</div>
-          <div style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+          <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>
             Annotating 500,000 images at 20 seconds each takes 2,700+ hours. Active Learning identifies the edge-case points near the decision boundary or sparse feature clusters, cutting human labeling time by 60%+ while achieving equal or higher F1 accuracy.
           </div>
         </div>
@@ -16198,7 +16198,7 @@ export const ActiveLearningTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -16259,10 +16259,10 @@ export const ActiveLearningTab = ({ s }) => {
                   <div key={i} style={{ background: "#ffffff", border: `1px solid ${selectedStepGuide.color}30`, borderRadius: 6, padding: "1.1rem", borderLeft: `4px solid ${selectedStepGuide.color}` }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.4rem" }}>
                       <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.7rem", fontWeight: 700, color: selectedStepGuide.color }}>Step {st.num}</span>
-                      <span style={{ fontSize: "0.55rem", padding: "0.2rem 0.5rem", background: "#f0ede6", borderRadius: 4, fontFamily: "DM Mono, monospace", color: "#6a6a7a" }}>{st.code_ref}</span>
+                      <span style={{ fontSize: "0.55rem", padding: "0.2rem 0.5rem", background: "#f0ede6", borderRadius: 4, fontFamily: "DM Mono, monospace", color: "#334155" }}>{st.code_ref}</span>
                     </div>
                     <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.68rem", color: "#1a1a2e", marginBottom: "0.3rem" }}>{st.title}</div>
-                    <p style={{ fontSize: "0.63rem", color: "#4a4a5a", lineHeight: 1.6 }}>{st.desc}</p>
+                    <p style={{ fontSize: "0.63rem", color: "#1E293B", lineHeight: 1.6 }}>{st.desc}</p>
                   </div>
                 ))}
               </div>
@@ -16276,7 +16276,7 @@ export const ActiveLearningTab = ({ s }) => {
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: tech.color }}>
                   💻 Production Python Code — {tech.name}
                 </div>
-                <div style={{ fontSize: "0.55rem", color: "#8a8a9a", fontFamily: "DM Mono, monospace" }}>scikit-learn · numpy · pandas</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", fontFamily: "DM Mono, monospace" }}>scikit-learn · numpy · pandas</div>
               </div>
               <div style={{ padding: "1.2rem" }}>
                 <CodeBlock code={tech.code} />
@@ -16289,7 +16289,7 @@ export const ActiveLearningTab = ({ s }) => {
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#1a1a2e", marginBottom: "0.5rem" }}>
               ⚙️ Interactive Strategy Hyperparameter Workbench
             </div>
-            <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>
+            <p style={{ fontSize: "0.65rem", color: "#334155", marginBottom: "1.2rem" }}>
               Adjust active learning sampling thresholds to see how query window widths and batch sizes impact sampling selectivity.
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "1rem", marginBottom: "1rem" }}>
@@ -16298,7 +16298,7 @@ export const ActiveLearningTab = ({ s }) => {
                   Uncertainty Band Width: ±{winWidth.toFixed(2)}
                 </label>
                 <input type="range" min="0.01" max="0.15" step="0.01" value={winWidth} onChange={e => setWinWidth(parseFloat(e.target.value))} style={{ width: "100%" }} />
-                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.3rem" }}>Filtering prob window: [{(0.5 - winWidth).toFixed(2)}, {(0.5 + winWidth).toFixed(2)}]</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.3rem" }}>Filtering prob window: [{(0.5 - winWidth).toFixed(2)}, {(0.5 + winWidth).toFixed(2)}]</div>
               </div>
 
               <div style={{ background: "#f7f5f0", padding: "0.9rem", borderRadius: 6 }}>
@@ -16306,7 +16306,7 @@ export const ActiveLearningTab = ({ s }) => {
                   KNN K-Neighbors Density: K={knnK}
                 </label>
                 <input type="range" min="3" max="15" step="1" value={knnK} onChange={e => setKnnK(parseInt(e.target.value))} style={{ width: "100%" }} />
-                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.3rem" }}>Computes mean Euclidean distance over {knnK} nearest neighbors</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.3rem" }}>Computes mean Euclidean distance over {knnK} nearest neighbors</div>
               </div>
 
               <div style={{ background: "#f7f5f0", padding: "0.9rem", borderRadius: 6 }}>
@@ -16314,7 +16314,7 @@ export const ActiveLearningTab = ({ s }) => {
                   Annotator Query Batch Size: {batchSize}
                 </label>
                 <input type="range" min="20" max="150" step="10" value={batchSize} onChange={e => setBatchSize(parseInt(e.target.value))} style={{ width: "100%" }} />
-                <div style={{ fontSize: "0.55rem", color: "#6a6a7a", marginTop: "0.3rem" }}>Top N samples sent to human per active round</div>
+                <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.3rem" }}>Top N samples sent to human per active round</div>
               </div>
             </div>
             <div style={{ padding: "0.8rem 1rem", background: "rgba(42,138,132,0.08)", border: "1px solid #2a8a8430", borderRadius: 4, fontSize: "0.62rem", color: "#2a8a84", fontFamily: "DM Mono, monospace" }}>
@@ -16331,11 +16331,11 @@ export const ActiveLearningTab = ({ s }) => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>❌ Random Sampling</div>
-              <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.8 }}>Pick the next 100 points to label uniformly at random from the unlabeled pool. Most of the ML pipeline's labeling budget goes to points the model would have classified correctly anyway — points far from the decision boundary that add little new information.</p>
+              <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8 }}>Pick the next 100 points to label uniformly at random from the unlabeled pool. Most of the ML pipeline's labeling budget goes to points the model would have classified correctly anyway — points far from the decision boundary that add little new information.</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #4a9a4a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #4a9a4a" }}>
               <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#4a9a4a", marginBottom: "0.8rem" }}>✅ Active Learning</div>
-              <p style={{ fontSize: "0.68rem", color: "#4a4a5a", lineHeight: 1.8 }}>The model scores every unlabeled point by how much it would learn from knowing that label, and only the highest-value points get sent to a human. Same accuracy target reached with far fewer expert-hours spent labeling.</p>
+              <p style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.8 }}>The model scores every unlabeled point by how much it would learn from knowing that label, and only the highest-value points get sent to a human. Same accuracy target reached with far fewer expert-hours spent labeling.</p>
             </div>
           </div>
           <div style={s.sectionLabel("#9b7fd4")}>Who This Matters For</div>
@@ -16346,7 +16346,7 @@ export const ActiveLearningTab = ({ s }) => {
                   <span style={{ fontSize: "1.1rem" }}>{u.icon}</span>
                   <span style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.66rem", color: u.color }}>{u.title}</span>
                 </div>
-                <p style={{ fontSize: "0.62rem", color: "#4a4a5a", lineHeight: 1.6 }}>{u.desc}</p>
+                <p style={{ fontSize: "0.62rem", color: "#1E293B", lineHeight: 1.6 }}>{u.desc}</p>
               </div>
             ))}
           </div>
@@ -16362,7 +16362,7 @@ export const ActiveLearningTab = ({ s }) => {
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.6rem" }}>
-              <p style={{ fontSize: "0.7rem", color: "#6a6a7a", maxWidth: 440 }}>Trace one full round of the active learning loop, from seed set to newly labeled points added back in.</p>
+              <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace one full round of the active learning loop, from seed set to newly labeled points added back in.</p>
               <button onClick={runLoop} disabled={loopRunning}
                 style={{ background: loopRunning ? "#f7f5f0" : "rgba(42,138,132,0.1)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: loopRunning ? "not-allowed" : "pointer", opacity: loopRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {loopRunning ? "Running…" : "▶ Run One Round"}
@@ -16372,10 +16372,10 @@ export const ActiveLearningTab = ({ s }) => {
               {AL_LOOP_STEPS.map((step, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: loopStep >= i ? `${step.color}09` : "#f7f5f0", border: `1px solid ${loopStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: loopStep === -1 ? 0.35 : loopStep >= i ? 1 : 0.25 }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: loopStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: loopStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${loopStep >= i ? step.color : "#d0ccc4"}` }}>
-                    {loopStep >= i ? step.icon : <span style={{ color: "#8a8a9a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
+                    {loopStep >= i ? step.icon : <span style={{ color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
                   <div style={{ flex: 1 }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: loopStep >= i ? "#1a1a2e" : "#8a8a9a", marginBottom: "0.1rem" }}>{step.label}</div>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: loopStep >= i ? "#1a1a2e" : "#334155", marginBottom: "0.1rem" }}>{step.label}</div>
                     <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: loopStep >= i ? step.color : "#a8a4a0" }}>{step.detail}</div>
                   </div>
                   {loopStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
@@ -16411,17 +16411,17 @@ export const ActiveLearningTab = ({ s }) => {
               <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
                 {["desc", "metrics", "tradeoffs", "code"].map(t => (
                   <button key={t} onClick={() => setTechTab(t)}
-                    style={{ flex: 1, padding: "0.65rem", background: techTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: techTab === t ? `2px solid ${tech.color}` : "2px solid transparent", color: techTab === t ? tech.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                    style={{ flex: 1, padding: "0.65rem", background: techTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: techTab === t ? `2px solid ${tech.color}` : "2px solid transparent", color: techTab === t ? tech.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                     {t === "desc" ? "Overview" : t === "metrics" ? "Metrics" : t === "tradeoffs" ? "Tradeoffs" : "Python Code"}
                   </button>
                 ))}
               </div>
               <div style={{ padding: "1.5rem" }}>
-                {techTab === "desc" && <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>{tech.desc}</p>}
+                {techTab === "desc" && <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>{tech.desc}</p>}
                 {techTab === "metrics" && (
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     {tech.metrics.map((m, i) => (
-                      <div key={i} style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem", color: "#4a4a5a", fontFamily: "DM Mono, monospace", borderLeft: `3px solid ${tech.color}` }}>{m}</div>
+                      <div key={i} style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, fontSize: "0.63rem", color: "#1E293B", fontFamily: "DM Mono, monospace", borderLeft: `3px solid ${tech.color}` }}>{m}</div>
                     ))}
                   </div>
                 )}
@@ -16429,11 +16429,11 @@ export const ActiveLearningTab = ({ s }) => {
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem" }}>
                     <div style={{ padding: "0.8rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a30", borderRadius: 4 }}>
                       <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#4a9a4a", marginBottom: "0.4rem" }}>✅ Strength</div>
-                      <p style={{ fontSize: "0.62rem", color: "#4a4a5a", lineHeight: 1.6 }}>{tech.strength}</p>
+                      <p style={{ fontSize: "0.62rem", color: "#1E293B", lineHeight: 1.6 }}>{tech.strength}</p>
                     </div>
                     <div style={{ padding: "0.8rem", background: "rgba(196,87,42,0.08)", border: "1px solid #c4572a30", borderRadius: 4 }}>
                       <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", color: "#c4572a", marginBottom: "0.4rem" }}>⚠️ Weakness</div>
-                      <p style={{ fontSize: "0.62rem", color: "#4a4a5a", lineHeight: 1.6 }}>{tech.weakness}</p>
+                      <p style={{ fontSize: "0.62rem", color: "#1E293B", lineHeight: 1.6 }}>{tech.weakness}</p>
                     </div>
                   </div>
                 )}
@@ -16456,7 +16456,7 @@ export const ActiveLearningTab = ({ s }) => {
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
                   {["Strategy", "@ 200 labels", "@ 500 labels", "@ 1000 labels", "Recommended When..."].map(h => (
-                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.56rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                    <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.56rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -16474,7 +16474,7 @@ export const ActiveLearningTab = ({ s }) => {
                     <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e" }}>{p.n200}</td>
                     <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e" }}>{p.n500}</td>
                     <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e", fontWeight: 700 }}>{p.n1000}</td>
-                    <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a", fontSize: "0.6rem" }}>{p.rec}</td>
+                    <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B", fontSize: "0.6rem" }}>{p.rec}</td>
                   </tr>
                 ))}
               </tbody>
@@ -16482,7 +16482,7 @@ export const ActiveLearningTab = ({ s }) => {
           </div>
           <div style={{ padding: "1.2rem 1.4rem", background: "rgba(74,154,74,0.07)", border: "1px solid #4a9a4a30", borderRadius: 6, borderLeft: "4px solid #4a9a4a" }}>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#4a9a4a", marginBottom: "0.5rem" }}>Practical Hybrid Strategy Recommendation</div>
-            <p style={{ fontSize: "0.7rem", color: "#4a4a5a", lineHeight: 1.8 }}>
+            <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>
               Start your project with <strong>Uncertainty Sampling</strong> to establish a tight decision boundary quickly. When model improvement begins to level off, inject a round of <strong>Diversity Sampling</strong> to explore un-represented feature clusters. For complex real-world datasets with noisy boundaries, deploy <strong>Query By Committee</strong> stacking to maximize model robustness.
             </p>
           </div>
@@ -16816,7 +16816,7 @@ class ClaimCheckPrivacyStore:
 // ── SVG: Company Brain End-to-End Architecture Diagram ──
 const CompanyBrainArchDiagram = () => (
   <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE COMPANY BRAIN & CONTEXT LAYER ARCHITECTURE</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE COMPANY BRAIN & CONTEXT LAYER ARCHITECTURE</text>
     
     {/* Source Systems */}
     <g transform="translate(10,22)">
@@ -16841,13 +16841,13 @@ const CompanyBrainArchDiagram = () => (
       <text x="27.5" y="10" textAnchor="middle" fontSize="3.5" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">GROUND TRUTH</text>
       <rect x="5" y="16" width="45" height="18" rx="2" fill="rgba(201,168,76,0.15)" stroke="#c9a84c" strokeWidth="0.6"/>
       <text x="27.5" y="24" textAnchor="middle" fontSize="2.8" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">Postgres Schema</text>
-      <text x="27.5" y="30" textAnchor="middle" fontSize="2.3" fill="#6a6a7a" fontFamily="DM Mono, monospace">(Single Source of Truth)</text>
+      <text x="27.5" y="30" textAnchor="middle" fontSize="2.3" fill="#334155" fontFamily="DM Mono, monospace">(Single Source of Truth)</text>
       
       {/* 4 Projections */}
       <rect x="5" y="38" width="45" height="32" rx="2" fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5"/>
-      <text x="27.5" y="45" textAnchor="middle" fontSize="2.6" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700">4 Projections</text>
-      <text x="27.5" y="52" textAnchor="middle" fontSize="2.2" fill="#4a4a5a" fontFamily="DM Mono, monospace">BM25 Lexical · Vector</text>
-      <text x="27.5" y="58" textAnchor="middle" fontSize="2.2" fill="#4a4a5a" fontFamily="DM Mono, monospace">Knowledge Graph · Curated</text>
+      <text x="27.5" y="45" textAnchor="middle" fontSize="2.6" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700">4 Projections</text>
+      <text x="27.5" y="52" textAnchor="middle" fontSize="2.2" fill="#1E293B" fontFamily="DM Mono, monospace">BM25 Lexical · Vector</text>
+      <text x="27.5" y="58" textAnchor="middle" fontSize="2.2" fill="#1E293B" fontFamily="DM Mono, monospace">Knowledge Graph · Curated</text>
       <text x="27.5" y="64" textAnchor="middle" fontSize="2" fill="#2a8a84" fontFamily="DM Mono, monospace">(Watermark Sync ETL)</text>
     </g>
 
@@ -16866,7 +16866,7 @@ const CompanyBrainArchDiagram = () => (
       
       <rect x="5" y="48" width="45" height="22" rx="1.5" fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.5"/>
       <text x="27.5" y="56" textAnchor="middle" fontSize="2.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Routing & Budgeting</text>
-      <text x="27.5" y="63" textAnchor="middle" fontSize="2.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">&lt;10 | 10-100 | &gt;100</text>
+      <text x="27.5" y="63" textAnchor="middle" fontSize="2.2" fill="#334155" fontFamily="DM Mono, monospace">&lt;10 | 10-100 | &gt;100</text>
     </g>
 
     {/* Arrow 3 */}
@@ -16884,14 +16884,14 @@ const CompanyBrainArchDiagram = () => (
       ))}
     </g>
 
-    <text x="130" y="104" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif">Every query is scoped, routed, budget-capped, and checked against Postgres ACLs on exit</text>
+    <text x="130" y="104" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Every query is scoped, routed, budget-capped, and checked against Postgres ACLs on exit</text>
   </svg>
 );
 
 // ── SVG: Candidate Count Routing Diagram ──
 const CandidateRoutingDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CANDIDATE VOLUME ROUTING THRESHOLDS</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">CANDIDATE VOLUME ROUTING THRESHOLDS</text>
     {[
       { label: "< 10 Candidates", action: "Fetch Wholesale", detail: "Serialize full metadata directly into prompt without LLM filter pass", color: "#2a8a84", x: 10 },
       { label: "10 – 100 Candidates", action: "LLM Relevance Pass", detail: "Run light LLM relevance extraction to pick top items", color: "#c9a84c", x: 94 },
@@ -16902,11 +16902,11 @@ const CandidateRoutingDiagram = () => (
         <text x="36" y="14" textAnchor="middle" fontSize="3.8" fill={r.color} fontFamily="Syne, sans-serif" fontWeight="800">{r.label}</text>
         <rect x="6" y="20" width="60" height="12" rx="2" fill={r.color}/>
         <text x="36" y="27.5" textAnchor="middle" fontSize="3" fill="#ffffff" fontFamily="Syne, sans-serif" fontWeight="700">{r.action}</text>
-        <text x="36" y="42" textAnchor="middle" fontSize="2.4" fill="#4a4a5a" fontFamily="DM Mono, monospace">{r.detail.slice(0,32)}</text>
-        <text x="36" y="48" textAnchor="middle" fontSize="2.4" fill="#4a4a5a" fontFamily="DM Mono, monospace">{r.detail.slice(32)}</text>
+        <text x="36" y="42" textAnchor="middle" fontSize="2.4" fill="#1E293B" fontFamily="DM Mono, monospace">{r.detail.slice(0,32)}</text>
+        <text x="36" y="48" textAnchor="middle" fontSize="2.4" fill="#1E293B" fontFamily="DM Mono, monospace">{r.detail.slice(32)}</text>
       </g>
     ))}
-    <text x="130" y="85" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Token Budget degrades gracefully: Full Metadata → Summary → Name Only as limits approach</text>
+    <text x="130" y="85" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Token Budget degrades gracefully: Full Metadata → Summary → Name Only as limits approach</text>
   </svg>
 );
 
@@ -16953,12 +16953,12 @@ export const CompanyBrainTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           How to Build a <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Context Layer</em><br />and a Company Brain
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 650, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 650, marginBottom: "1.2rem" }}>
           What it actually takes to turn scattered corporate knowledge into something an LLM can reliably query. The weekend RAG demo is 5% of the work — production requires continuous reconciliation loops, multi-index projections, parallel strategy composition, candidate volume routing, human curation overrides, and trust infrastructure.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The 3 Core Production Axioms</div>
-          <div style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+          <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>
             1. Search indexes are caches; the relational Postgres store is the single source of truth.<br />
             2. Make identity deterministic URNs (tenant, type, path) — retries aren't edge cases, they are the architecture.<br />
             3. Build the evaluation harness before the 3rd strategy, not after the 30th.
@@ -16974,7 +16974,7 @@ export const CompanyBrainTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -17012,7 +17012,7 @@ export const CompanyBrainTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["overview", "keypoints", "code"].map(t => (
               <button key={t} onClick={() => setPillarTab(t)}
-                style={{ flex: 1, padding: "0.7rem", background: pillarTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pillarTab === t ? `2px solid ${pillar.color}` : "2px solid transparent", color: pillarTab === t ? pillar.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
+                style={{ flex: 1, padding: "0.7rem", background: pillarTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pillarTab === t ? `2px solid ${pillar.color}` : "2px solid transparent", color: pillarTab === t ? pillar.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
                 {t === "overview" ? "System Design Overview" : t === "keypoints" ? "Production Requirements" : "Python Implementation"}
               </button>
             ))}
@@ -17021,7 +17021,7 @@ export const CompanyBrainTab = ({ s }) => {
           <div style={{ padding: "1.5rem" }}>
             {pillarTab === "overview" && (
               <div>
-                <p style={{ fontSize: "0.72rem", color: "#4a4a5a", lineHeight: 1.85, marginBottom: "1rem" }}>{pillar.desc}</p>
+                <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.85, marginBottom: "1rem" }}>{pillar.desc}</p>
                 {pillar.id === "indexing" && <ZoomableFigure title="Multi-Index Projections"><CandidateRoutingDiagram /></ZoomableFigure>}
               </div>
             )}
@@ -17048,7 +17048,7 @@ export const CompanyBrainTab = ({ s }) => {
         <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#9b7fd4", marginBottom: "0.4rem" }}>
           ⚡ Interactive Strategy Execution Graph Simulator
         </div>
-        <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1rem" }}>
+        <p style={{ fontSize: "0.65rem", color: "#334155", marginBottom: "1rem" }}>
           Simulate how a real user prompt compiles skill scope filters, executes parallel search strategies, applies human curation overrides, and packages candidates into a 15k token budget.
         </p>
 
@@ -17064,14 +17064,14 @@ export const CompanyBrainTab = ({ s }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           {SIM_STEPS.map((step, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.8rem 1rem", background: simStep >= i ? `${step.color}09` : "#f7f5f0", border: `1px solid ${simStep >= i ? step.color + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: simStep === -1 ? 0.4 : simStep >= i ? 1 : 0.3 }}>
-              <div style={{ width: 28, height: 28, borderRadius: "50%", background: simStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: simStep >= i ? "#ffffff" : "#8a8a9a", fontFamily: "DM Mono, monospace", fontWeight: 700, flexShrink: 0 }}>
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: simStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.65rem", color: simStep >= i ? "#ffffff" : "#334155", fontFamily: "DM Mono, monospace", fontWeight: 700, flexShrink: 0 }}>
                 {i + 1}
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: simStep >= i ? "#1a1a2e" : "#8a8a9a", marginBottom: "0.1rem" }}>{step.name}</div>
-                <div style={{ fontSize: "0.6rem", color: simStep >= i ? "#4a4a5a" : "#a8a4a0" }}>{step.detail}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: simStep >= i ? "#1a1a2e" : "#334155", marginBottom: "0.1rem" }}>{step.name}</div>
+                <div style={{ fontSize: "0.6rem", color: simStep >= i ? "#1E293B" : "#a8a4a0" }}>{step.detail}</div>
               </div>
-              <div style={{ padding: "0.3rem 0.6rem", background: simStep >= i ? `${step.color}20` : "#e8e4dc", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: simStep >= i ? step.color : "#8a8a9a", fontWeight: 700 }}>
+              <div style={{ padding: "0.3rem 0.6rem", background: simStep >= i ? `${step.color}20` : "#e8e4dc", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: simStep >= i ? step.color : "#334155", fontWeight: 700 }}>
                 {step.candidates} Candidates
               </div>
             </div>
@@ -17298,7 +17298,7 @@ export const trackAIFeatureUse = (featureName, metadata = {}) => {
 // ── SVG: AI Product Building Lifecycle Diagram ──
 const AIProductLifecycleDiagram = () => (
   <svg viewBox="0 0 260 110" style={{ width: "100%", height: 165 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE AI PRODUCT BUILDER LIFECYCLE (ROADMAP.SH)</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE AI PRODUCT BUILDER LIFECYCLE (ROADMAP.SH)</text>
 
     {[
       { step: "1. Definition", desc: "PRD & 1-Day MVP", x: 10, color: "#2a8a84" },
@@ -17316,19 +17316,19 @@ const AIProductLifecycleDiagram = () => (
         <line x1="3" y1="26" x2="21" y2="26" stroke={s.color} strokeWidth="0.4" strokeDasharray="1,1"/>
         <text x="12" y="36" textAnchor="middle" fontSize="2" fill="#1a1a2e" fontFamily="DM Mono, monospace">{s.desc.split(' ')[0]}</text>
         <text x="12" y="44" textAnchor="middle" fontSize="2" fill="#1a1a2e" fontFamily="DM Mono, monospace">{s.desc.split(' ')[1] || ''}</text>
-        <text x="12" y="52" textAnchor="middle" fontSize="2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{s.desc.split(' ')[2] || ''}</text>
-        {i < 6 && <path d="M 24 35 L 26 35" stroke="#8a8a9a" strokeWidth="0.8"/>}
+        <text x="12" y="52" textAnchor="middle" fontSize="2" fill="#334155" fontFamily="DM Mono, monospace">{s.desc.split(' ')[2] || ''}</text>
+        {i < 6 && <path d="M 24 35 L 26 35" stroke="#334155" strokeWidth="0.8"/>}
       </g>
     ))}
 
-    <text x="130" y="102" textAnchor="middle" fontSize="3.2" fill="#8a8a9a" fontFamily="Syne, sans-serif">Collapse product building from months to days by directing context-aware AI agents</text>
+    <text x="130" y="102" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Collapse product building from months to days by directing context-aware AI agents</text>
   </svg>
 );
 
 // ── SVG: Vibe Coding Loop Diagram ──
 const VibeCodingLoopDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE VIBE CODING ITERATION LOOP</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE VIBE CODING ITERATION LOOP</text>
 
     {[
       { title: "1. PRD Spec Prompt", icon: "📝", x: 10, color: "#2a8a84" },
@@ -17340,12 +17340,12 @@ const VibeCodingLoopDiagram = () => (
         <rect x="0" y="0" width="54" height="52" rx="3" fill={`${step.color}10`} stroke={step.color} strokeWidth="0.8"/>
         <text x="27" y="16" textAnchor="middle" fontSize="9">{step.icon}</text>
         <text x="27" y="32" textAnchor="middle" fontSize="3.2" fill={step.color} fontFamily="Syne, sans-serif" fontWeight="800">{step.title.split(' ')[0]} {step.title.split(' ')[1]}</text>
-        <text x="27" y="40" textAnchor="middle" fontSize="2.8" fill="#4a4a5a" fontFamily="DM Mono, monospace">{step.title.split(' ').slice(2).join(' ')}</text>
-        {i < 3 && <path d="M 54 26 L 62 26" stroke="#8a8a9a" strokeWidth="0.8"/>}
+        <text x="27" y="40" textAnchor="middle" fontSize="2.8" fill="#1E293B" fontFamily="DM Mono, monospace">{step.title.split(' ').slice(2).join(' ')}</text>
+        {i < 3 && <path d="M 54 26 L 62 26" stroke="#334155" strokeWidth="0.8"/>}
       </g>
     ))}
 
-    <text x="130" y="84" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Human acts as Ringmaster inspecting diffs and maintaining spec boundaries</text>
+    <text x="130" y="84" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Human acts as Ringmaster inspecting diffs and maintaining spec boundaries</text>
   </svg>
 );
 
@@ -17397,12 +17397,12 @@ export const AIProductBuilderTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           Step-by-Step <em style={{ color: "#2a8a84", fontStyle: "italic" }}>AI Product Builder</em> Roadmap
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
           A complete, step-by-step masterclass for turning ideas into production-ready software using modern AI tools. Learn how to combine product thinking with technical fluency across Generative UI, Vibe Coding in Cursor/Claude Code, Model Context Protocol (MCP), Supabase, and Vercel.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The AI Builder Shift</div>
-          <div style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+          <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>
             The builder's role shifts from writing every manual line of syntax to acting as a high-leverage "Ringmaster" who defines specs, orchestrates context-aware AI agents, inspects diffs, and enforces production quality.
           </div>
         </div>
@@ -17416,7 +17416,7 @@ export const AIProductBuilderTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -17466,7 +17466,7 @@ export const AIProductBuilderTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["overview", "tools", "code"].map(t => (
               <button key={t} onClick={() => setStageTab(t)}
-                style={{ flex: 1, padding: "0.7rem", background: stageTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: stageTab === t ? `2px solid ${stage.color}` : "2px solid transparent", color: stageTab === t ? stage.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
+                style={{ flex: 1, padding: "0.7rem", background: stageTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: stageTab === t ? `2px solid ${stage.color}` : "2px solid transparent", color: stageTab === t ? stage.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
                 {t === "overview" ? "Stage Overview" : t === "tools" ? "Toolstack & Metrics" : "Production Template"}
               </button>
             ))}
@@ -17475,7 +17475,7 @@ export const AIProductBuilderTab = ({ s }) => {
           <div style={{ padding: "1.5rem" }}>
             {stageTab === "overview" && (
               <div>
-                <p style={{ fontSize: "0.72rem", color: "#4a4a5a", lineHeight: 1.85, marginBottom: "1rem" }}>{stage.desc}</p>
+                <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.85, marginBottom: "1rem" }}>{stage.desc}</p>
                 {stage.id === "stage3" && <ZoomableFigure title="Vibe Coding Iteration Loop"><VibeCodingLoopDiagram /></ZoomableFigure>}
               </div>
             )}
@@ -17484,13 +17484,13 @@ export const AIProductBuilderTab = ({ s }) => {
                 <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${stage.color}` }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: stage.color, marginBottom: "0.5rem" }}>🛠️ Recommended Toolstack</div>
                   {stage.tools.map((tl, i) => (
-                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>• {tl}</div>
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#1E293B", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>• {tl}</div>
                   ))}
                 </div>
                 <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${stage.color}` }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: stage.color, marginBottom: "0.5rem" }}>📈 Success Metrics & Benchmarks</div>
                   {stage.keyMetrics.map((km, i) => (
-                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>✓ {km}</div>
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#1E293B", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>✓ {km}</div>
                   ))}
                 </div>
               </div>
@@ -17509,7 +17509,7 @@ export const AIProductBuilderTab = ({ s }) => {
         <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
           ⚡ Interactive .cursorrules & System Spec Generator
         </div>
-        <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.65rem", color: "#334155", marginBottom: "1.2rem" }}>
           Select your tech stack parameters to generate a tailored, production-ready <code style={{ color: "#2a8a84" }}>.cursorrules</code> file and agentic prompt configuration.
         </p>
 
@@ -17676,12 +17676,12 @@ git worktree remove ../worktrees/auth-refactor`
 // ── SVG: Worktree Isolation Diagram ──
 const WorktreeIsolationDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">GIT WORKTREE PARALLEL AGENT ISOLATION</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">GIT WORKTREE PARALLEL AGENT ISOLATION</text>
 
     {/* Main Repo Central Hub */}
     <rect x="105" y="20" width="50" height="20" rx="3" fill="#ffffff" stroke="#2a8a84" strokeWidth="0.8"/>
     <text x="130" y="30" textAnchor="middle" fontSize="3.5" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">main branch</text>
-    <text x="130" y="36" textAnchor="middle" fontSize="2.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">/repo-root</text>
+    <text x="130" y="36" textAnchor="middle" fontSize="2.2" fill="#334155" fontFamily="DM Mono, monospace">/repo-root</text>
 
     {/* Branch Lines */}
     <path d="M 115 40 L 45 55" stroke="#2a8a84" strokeWidth="0.8" strokeDasharray="2,1"/>
@@ -17698,18 +17698,18 @@ const WorktreeIsolationDiagram = () => (
         <rect x="0" y="0" width="60" height="35" rx="3" fill={`${w.color}12`} stroke={w.color} strokeWidth="0.8"/>
         <text x="30" y="10" textAnchor="middle" fontSize="3" fill={w.color} fontFamily="Syne, sans-serif" fontWeight="800">{w.name}</text>
         <text x="30" y="18" textAnchor="middle" fontSize="2.4" fill="#1a1a2e" fontFamily="DM Mono, monospace">{w.agent}</text>
-        <text x="30" y="26" textAnchor="middle" fontSize="2.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{w.branch}</text>
+        <text x="30" y="26" textAnchor="middle" fontSize="2.2" fill="#334155" fontFamily="DM Mono, monospace">{w.branch}</text>
       </g>
     ))}
 
-    <text x="130" y="96" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Zero file collision across parallel agents running in separate worktree directories</text>
+    <text x="130" y="96" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Zero file collision across parallel agents running in separate worktree directories</text>
   </svg>
 );
 
 // ── SVG: HTML Report Verification Flow ──
 const HTMLReportFlowDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AUTOMATED HTML REPORT TEST LOOP</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AUTOMATED HTML REPORT TEST LOOP</text>
 
     {[
       { title: "1. Task Prompt", desc: "Linear / Slack URN", icon: "💬", x: 10, color: "#2a8a84" },
@@ -17721,12 +17721,12 @@ const HTMLReportFlowDiagram = () => (
         <rect x="0" y="0" width="54" height="52" rx="3" fill={`${step.color}10`} stroke={step.color} strokeWidth="0.8"/>
         <text x="27" y="16" textAnchor="middle" fontSize="9">{step.icon}</text>
         <text x="27" y="32" textAnchor="middle" fontSize="3.2" fill={step.color} fontFamily="Syne, sans-serif" fontWeight="800">{step.title.split(' ')[0]} {step.title.split(' ')[1]}</text>
-        <text x="27" y="40" textAnchor="middle" fontSize="2.8" fill="#4a4a5a" fontFamily="DM Mono, monospace">{step.desc}</text>
-        {i < 3 && <path d="M 54 26 L 62 26" stroke="#8a8a9a" strokeWidth="0.8"/>}
+        <text x="27" y="40" textAnchor="middle" fontSize="2.8" fill="#1E293B" fontFamily="DM Mono, monospace">{step.desc}</text>
+        {i < 3 && <path d="M 54 26 L 62 26" stroke="#334155" strokeWidth="0.8"/>}
       </g>
     ))}
 
-    <text x="130" y="84" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Single-click interactive verification report reduces testing memory fatigue by 80%</text>
+    <text x="130" y="84" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Single-click interactive verification report reduces testing memory fatigue by 80%</text>
   </svg>
 );
 
@@ -17796,12 +17796,12 @@ export const AgentTasksTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           How to Organize All of Your <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Coding Agent Tasks</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
           When AI coding agents complete tasks in minutes rather than days, developers run multiple tasks in parallel. Learn how to prevent task chaos, isolate agent worktrees, automate API/MCP progress tracking in Linear/Slack, deploy direct-to-dev, and generate automated HTML test reports.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The Parallel Agent Velocity Rule</div>
-          <div style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+          <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>
             Never type manual status updates or manually remember test steps. Let MCP sync tasks automatically, run agent sessions in isolated Git worktrees, merge direct-to-dev (~70% time savings), and verify work via auto-generated HTML test reports.
           </div>
         </div>
@@ -17815,7 +17815,7 @@ export const AgentTasksTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -17858,7 +17858,7 @@ export const AgentTasksTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["overview", "tools", "code"].map(t => (
               <button key={t} onClick={() => setPillarTab(t)}
-                style={{ flex: 1, padding: "0.7rem", background: pillarTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pillarTab === t ? `2px solid ${pillar.color}` : "2px solid transparent", color: pillarTab === t ? pillar.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
+                style={{ flex: 1, padding: "0.7rem", background: pillarTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pillarTab === t ? `2px solid ${pillar.color}` : "2px solid transparent", color: pillarTab === t ? pillar.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
                 {t === "overview" ? "Pillar Overview" : t === "tools" ? "Tools & Benchmarks" : "Production Snippet"}
               </button>
             ))}
@@ -17866,20 +17866,20 @@ export const AgentTasksTab = ({ s }) => {
 
           <div style={{ padding: "1.5rem" }}>
             {pillarTab === "overview" && (
-              <p style={{ fontSize: "0.72rem", color: "#4a4a5a", lineHeight: 1.85 }}>{pillar.desc}</p>
+              <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.85 }}>{pillar.desc}</p>
             )}
             {pillarTab === "tools" && (
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${pillar.color}` }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: pillar.color, marginBottom: "0.5rem" }}>🛠️ Recommended Tooling</div>
                   {pillar.tools.map((tl, i) => (
-                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>• {tl}</div>
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#1E293B", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>• {tl}</div>
                   ))}
                 </div>
                 <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${pillar.color}` }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: pillar.color, marginBottom: "0.5rem" }}>📈 Success Metrics & Benchmarks</div>
                   {pillar.keyMetrics.map((km, i) => (
-                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>✓ {km}</div>
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#1E293B", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>✓ {km}</div>
                   ))}
                 </div>
               </div>
@@ -17902,7 +17902,7 @@ export const AgentTasksTab = ({ s }) => {
           <thead>
             <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
               {["Tool", "Best For...", "MCP Integration", "Multi-Dev Support", "Verdict"].map(h => (
-                <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -17915,8 +17915,8 @@ export const AgentTasksTab = ({ s }) => {
               <tr key={i} style={{ borderBottom: i < 2 ? "1px solid #e8e4dc" : "none" }}>
                 <td style={{ padding: "0.65rem 0.9rem", color: r.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{r.tool}</td>
                 <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e" }}>{r.best}</td>
-                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a", fontFamily: "DM Mono, monospace" }}>{r.mcp}</td>
-                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a" }}>{r.multi}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B", fontFamily: "DM Mono, monospace" }}>{r.mcp}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B" }}>{r.multi}</td>
                 <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e", fontWeight: 700 }}>{r.verdict}</td>
               </tr>
             ))}
@@ -17929,7 +17929,7 @@ export const AgentTasksTab = ({ s }) => {
         <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#c4572a", marginBottom: "0.4rem" }}>
           ⚡ Interactive HTML Verification Report Generator
         </div>
-        <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.65rem", color: "#334155", marginBottom: "1.2rem" }}>
           Generate a self-contained HTML test report template for your coding agents to output upon completing tasks.
         </p>
 
@@ -18098,21 +18098,21 @@ def find_affected_modules(repo_path: Path, prompt_symbol: str):
 // ── SVG: Prompt AST Parsing Pipeline Diagram ──
 const PromptASTPipelineDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">PROMPT AST CONTRACT VALIDATION PIPELINE (PROMPTCTL)</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">PROMPT AST CONTRACT VALIDATION PIPELINE (PROMPTCTL)</text>
 
     {/* Central Source Input */}
     <rect x="10" y="25" width="45" height="50" rx="3" fill="#2a8a8412" stroke="#2a8a84" strokeWidth="0.8"/>
     <text x="32.5" y="38" textAnchor="middle" fontSize="3" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">prompts.py</text>
     <text x="32.5" y="46" textAnchor="middle" fontSize="2.2" fill="#1a1a2e" fontFamily="DM Mono, monospace">CUSTOMER_</text>
     <text x="32.5" y="52" textAnchor="middle" fontSize="2.2" fill="#1a1a2e" fontFamily="DM Mono, monospace">ROUTER_PROMPT</text>
-    <text x="32.5" y="64" textAnchor="middle" fontSize="2" fill="#6a6a7a" fontFamily="DM Mono, monospace">{'{ticket}'} → {'{ticket_id}'}</text>
+    <text x="32.5" y="64" textAnchor="middle" fontSize="2" fill="#334155" fontFamily="DM Mono, monospace">{'{ticket}'} → {'{ticket_id}'}</text>
 
-    <path d="M 55 50 L 70 50" stroke="#8a8a9a" strokeWidth="0.8"/>
+    <path d="M 55 50 L 70 50" stroke="#334155" strokeWidth="0.8"/>
 
     {/* AST Parser Node */}
-    <rect x="70" y="35" width="35" height="30" rx="3" fill="#ffffff" stroke="#8a8a9a" strokeWidth="0.8"/>
+    <rect x="70" y="35" width="35" height="30" rx="3" fill="#ffffff" stroke="#334155" strokeWidth="0.8"/>
     <text x="87.5" y="48" textAnchor="middle" fontSize="3" fill="#1a1a2e" fontFamily="Syne, sans-serif" fontWeight="800">ast.parse()</text>
-    <text x="87.5" y="56" textAnchor="middle" fontSize="2.2" fill="#6a6a7a" fontFamily="DM Mono, monospace">No Execution</text>
+    <text x="87.5" y="56" textAnchor="middle" fontSize="2.2" fill="#334155" fontFamily="DM Mono, monospace">No Execution</text>
 
     <path d="M 105 50 L 120 30" stroke="#2a8a84" strokeWidth="0.8"/>
     <path d="M 105 50 L 120 50" stroke="#c9a84c" strokeWidth="0.8"/>
@@ -18135,24 +18135,24 @@ const PromptASTPipelineDiagram = () => (
       <text x="30" y="18" textAnchor="middle" fontSize="2.2" fill="#1a1a2e" fontFamily="DM Mono, monospace">Dependency Blast Radius</text>
     </g>
 
-    <path d="M 180 30 L 195 50" stroke="#8a8a9a" strokeWidth="0.8"/>
-    <path d="M 180 50 L 195 50" stroke="#8a8a9a" strokeWidth="0.8"/>
-    <path d="M 180 70 L 195 50" stroke="#8a8a9a" strokeWidth="0.8"/>
+    <path d="M 180 30 L 195 50" stroke="#334155" strokeWidth="0.8"/>
+    <path d="M 180 50 L 195 50" stroke="#334155" strokeWidth="0.8"/>
+    <path d="M 180 70 L 195 50" stroke="#334155" strokeWidth="0.8"/>
 
     {/* CI Gate Output */}
     <rect x="195" y="32" width="55" height="36" rx="3" fill="#c4572a12" stroke="#c4572a" strokeWidth="0.8"/>
     <text x="222.5" y="44" textAnchor="middle" fontSize="3" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">CI Merge Gate</text>
     <text x="222.5" y="52" textAnchor="middle" fontSize="2.2" fill="#c4572a" fontFamily="DM Mono, monospace">Exit Code 1 (Block)</text>
-    <text x="222.5" y="60" textAnchor="middle" fontSize="2" fill="#6a6a7a" fontFamily="DM Mono, monospace">2 Contract Violations</text>
+    <text x="222.5" y="60" textAnchor="middle" fontSize="2" fill="#334155" fontFamily="DM Mono, monospace">2 Contract Violations</text>
 
-    <text x="130" y="96" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Pure static AST analysis catches variable format mismatches in ~3 ms without executing code</text>
+    <text x="130" y="96" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Pure static AST analysis catches variable format mismatches in ~3 ms without executing code</text>
   </svg>
 );
 
 // ── SVG: Impact Analysis Blast Radius Graph ──
 const ImpactAnalysisGraphDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
-    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#8a8a9a" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DEPENDENCY BLAST RADIUS GRAPH</text>
+    <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DEPENDENCY BLAST RADIUS GRAPH</text>
 
     {/* Target Prompt Node */}
     <rect x="10" y="30" width="70" height="35" rx="3" fill="#2a8a8415" stroke="#2a8a84" strokeWidth="0.8"/>
@@ -18178,7 +18178,7 @@ const ImpactAnalysisGraphDiagram = () => (
       <text x="10" y="14" fontSize="2.8" fill="#4a9a4a" fontFamily="DM Mono, monospace">✓ tests/test_router.py (Imports symbol)</text>
     </g>
 
-    <text x="130" y="86" textAnchor="middle" fontSize="3" fill="#8a8a9a" fontFamily="Syne, sans-serif">Notice how unit test mocks miss the crash while static contract validation detects both caller failures</text>
+    <text x="130" y="86" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">Notice how unit test mocks miss the crash while static contract validation detects both caller failures</text>
   </svg>
 );
 
@@ -18239,12 +18239,12 @@ export const PromptMgmtTab = ({ s }) => {
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           Prompt Engineering Is Solved — <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Prompt Management Isn't</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#6a6a7a", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
           Prompt engineering helps you write better prompts — but it doesn't help you change them safely. Learn how simple variable renames break live production calls, why unit test LLM mocking creates a massive blind spot, and how to use 3-pass static AST contract validation to catch breaking changes in 3ms.
         </p>
         <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
           <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The LLM Unit Test Blind Spot</div>
-          <div style={{ fontSize: "0.66rem", color: "#4a4a5a", lineHeight: 1.7, fontStyle: "italic" }}>
+          <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>
             A codebase can have 100% green unit tests and still ship a production-crashing KeyError! Because unit tests mock out the LLM client call before PROMPT.format(...) ever runs, format mismatches slip right through. Static AST validation fills this exact gap.
           </div>
         </div>
@@ -18258,7 +18258,7 @@ export const PromptMgmtTab = ({ s }) => {
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#6a6a7a" }}>{m.sub}</div>
+              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -18301,7 +18301,7 @@ export const PromptMgmtTab = ({ s }) => {
           <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
             {["overview", "tools", "code"].map(t => (
               <button key={t} onClick={() => setPillarTab(t)}
-                style={{ flex: 1, padding: "0.7rem", background: pillarTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pillarTab === t ? `2px solid ${pillar.color}` : "2px solid transparent", color: pillarTab === t ? pillar.color : "#6a6a7a", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
+                style={{ flex: 1, padding: "0.7rem", background: pillarTab === t ? "#f0ede6" : "transparent", border: "none", borderBottom: pillarTab === t ? `2px solid ${pillar.color}` : "2px solid transparent", color: pillarTab === t ? pillar.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.1em", textTransform: "uppercase", cursor: "pointer" }}>
                 {t === "overview" ? "Pillar Overview" : t === "tools" ? "Tools & Benchmarks" : "Python AST Code"}
               </button>
             ))}
@@ -18309,20 +18309,20 @@ export const PromptMgmtTab = ({ s }) => {
 
           <div style={{ padding: "1.5rem" }}>
             {pillarTab === "overview" && (
-              <p style={{ fontSize: "0.72rem", color: "#4a4a5a", lineHeight: 1.85 }}>{pillar.desc}</p>
+              <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.85 }}>{pillar.desc}</p>
             )}
             {pillarTab === "tools" && (
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
                 <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${pillar.color}` }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: pillar.color, marginBottom: "0.5rem" }}>🛠️ Recommended Tooling & Stack</div>
                   {pillar.tools.map((tl, i) => (
-                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>• {tl}</div>
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#1E293B", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>• {tl}</div>
                   ))}
                 </div>
                 <div style={{ padding: "1rem", background: "#f7f5f0", borderRadius: 6, borderLeft: `3.5px solid ${pillar.color}` }}>
                   <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", color: pillar.color, marginBottom: "0.5rem" }}>📈 Key Benchmarks & Latency</div>
                   {pillar.keyMetrics.map((km, i) => (
-                    <div key={i} style={{ fontSize: "0.63rem", color: "#4a4a5a", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>✓ {km}</div>
+                    <div key={i} style={{ fontSize: "0.63rem", color: "#1E293B", marginBottom: "0.3rem", fontFamily: "DM Mono, monospace" }}>✓ {km}</div>
                   ))}
                 </div>
               </div>
@@ -18345,7 +18345,7 @@ export const PromptMgmtTab = ({ s }) => {
           <thead>
             <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
               {["Validation Method", "Catches Variable Rename?", "Pre-Deploy Gate?", "API Key Required?", "Scan Latency", "Verdict"].map(h => (
-                <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#8a8a9a", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
+                <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.9rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.55rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -18359,9 +18359,9 @@ export const PromptMgmtTab = ({ s }) => {
               <tr key={i} style={{ borderBottom: i < 3 ? "1px solid #e8e4dc" : "none" }}>
                 <td style={{ padding: "0.65rem 0.9rem", color: r.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{r.method}</td>
                 <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e" }}>{r.catches}</td>
-                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a" }}>{r.gate}</td>
-                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a" }}>{r.api}</td>
-                <td style={{ padding: "0.65rem 0.9rem", color: "#4a4a5a", fontFamily: "DM Mono, monospace" }}>{r.time}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B" }}>{r.gate}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B" }}>{r.api}</td>
+                <td style={{ padding: "0.65rem 0.9rem", color: "#1E293B", fontFamily: "DM Mono, monospace" }}>{r.time}</td>
                 <td style={{ padding: "0.65rem 0.9rem", color: "#1a1a2e", fontWeight: 700 }}>{r.verdict}</td>
               </tr>
             ))}
@@ -18374,7 +18374,7 @@ export const PromptMgmtTab = ({ s }) => {
         <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
           ⚡ Interactive AST Contract Checker Simulator
         </div>
-        <p style={{ fontSize: "0.65rem", color: "#6a6a7a", marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.65rem", color: "#334155", marginBottom: "1.2rem" }}>
           Edit the prompt string constant or caller keyword arguments below to test live static AST contract validation and view exit code reports.
         </p>
 
@@ -18385,7 +18385,7 @@ export const PromptMgmtTab = ({ s }) => {
             </label>
             <input type="text" value={promptTemplate} onChange={e => setPromptTemplate(e.target.value)}
               style={{ width: "100%", padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
-            <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Baseline expected: {'{ticket}'}, {'{domain}'}</div>
+            <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.2rem" }}>Baseline expected: {'{ticket}'}, {'{domain}'}</div>
           </div>
 
           <div>
@@ -18398,7 +18398,7 @@ export const PromptMgmtTab = ({ s }) => {
               <input type="text" value={domainKwarg} onChange={e => setDomainKwarg(e.target.value)} placeholder="e.g. domain"
                 style={{ flex: 1, padding: "0.5rem", background: "#f4f2ee", border: "1px solid #d0ccc4", borderRadius: 4, fontSize: "0.65rem", fontFamily: "DM Mono, monospace" }} />
             </div>
-            <div style={{ fontSize: "0.55rem", color: "#8a8a9a", marginTop: "0.2rem" }}>Target caller passes kwargs to .format()</div>
+            <div style={{ fontSize: "0.55rem", color: "#334155", marginTop: "0.2rem" }}>Target caller passes kwargs to .format()</div>
           </div>
         </div>
 
@@ -18406,7 +18406,7 @@ export const PromptMgmtTab = ({ s }) => {
         {simOutput && (
           <div style={{ background: "#0b0c10", border: `1px solid ${simOutput.exitCode === 0 ? "#2a8a84" : "#c4572a"}`, borderRadius: 6, padding: "1.2rem", fontFamily: "DM Mono, monospace", fontSize: "0.65rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.8rem", borderBottom: "1px solid #1a1a2e", paddingBottom: "0.5rem" }}>
-              <span style={{ color: "#8a8a9a", fontWeight: 700 }}>$ promptctl check</span>
+              <span style={{ color: "#334155", fontWeight: 700 }}>$ promptctl check</span>
               <span style={{ background: simOutput.exitCode === 0 ? "#2a8a8420" : "#c4572a20", color: simOutput.exitCode === 0 ? "#2a8a84" : "#c4572a", padding: "0.2rem 0.6rem", borderRadius: 4, fontWeight: 700 }}>
                 {simOutput.exitCode === 0 ? "CHECK PASSED (Exit Code 0)" : "CHECK FAILED (Exit Code 1)"}
               </span>
@@ -18882,25 +18882,25 @@ export const AgentDebuggingTab = ({ s }) => {
                 <tr style={{ borderBottom: "1px solid #f0ede6" }}>
                   <td style={{ padding: "0.6rem", fontWeight: 700, color: "#c4572a" }}>Wrong File Target</td>
                   <td style={{ padding: "0.6rem" }}>Edits PayPal payment branch when the bug is in the Stripe flow.</td>
-                  <td style={{ padding: "0.6rem", color: "#6a6a7a" }}>Code compiles cleanly with zero syntax errors.</td>
+                  <td style={{ padding: "0.6rem", color: "#334155" }}>Code compiles cleanly with zero syntax errors.</td>
                   <td style={{ padding: "0.6rem", color: "#2a8a84", fontWeight: 700 }}>Mandatory read_file trace & AST Symbol Graph.</td>
                 </tr>
                 <tr style={{ borderBottom: "1px solid #f0ede6" }}>
                   <td style={{ padding: "0.6rem", fontWeight: 700, color: "#c4572a" }}>Weakened Test Assertion</td>
                   <td style={{ padding: "0.6rem" }}>Modifies unit test from assert total == 100 to assert total &gt; 0.</td>
-                  <td style={{ padding: "0.6rem", color: "#6a6a7a" }}>npm test or pytest turns GREEN.</td>
+                  <td style={{ padding: "0.6rem", color: "#334155" }}>npm test or pytest turns GREEN.</td>
                   <td style={{ padding: "0.6rem", color: "#2a8a84", fontWeight: 700 }}>CI diff check blocking test file modifications.</td>
                 </tr>
                 <tr style={{ borderBottom: "1px solid #f0ede6" }}>
                   <td style={{ padding: "0.6rem", fontWeight: 700, color: "#c4572a" }}>Disconnected Route</td>
                   <td style={{ padding: "0.6rem" }}>Patches React router while backend server still returns HTTP 401.</td>
-                  <td style={{ padding: "0.6rem", color: "#6a6a7a" }}>Client renders route change locally.</td>
+                  <td style={{ padding: "0.6rem", color: "#334155" }}>Client renders route change locally.</td>
                   <td style={{ padding: "0.6rem", color: "#2a8a84", fontWeight: 700 }}>End-to-end HTTP response status assertion.</td>
                 </tr>
                 <tr style={{ borderBottom: "1px solid #f0ede6" }}>
                   <td style={{ padding: "0.6rem", fontWeight: 700, color: "#c4572a" }}>Wrong Selector Patch</td>
                   <td style={{ padding: "0.6rem" }}>Edits .support-link instead of .primary-action button.</td>
-                  <td style={{ padding: "0.6rem", color: "#6a6a7a" }}>CSS parser accepts valid syntax.</td>
+                  <td style={{ padding: "0.6rem", color: "#334155" }}>CSS parser accepts valid syntax.</td>
                   <td style={{ padding: "0.6rem", color: "#2a8a84", fontWeight: 700 }}>Playwright DOM bounding-box locator (overflowRightPx == 0).</td>
                 </tr>
               </tbody>

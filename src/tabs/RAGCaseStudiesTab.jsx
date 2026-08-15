@@ -35,26 +35,102 @@ const FINANCIAL_CASE_STUDY = {
     {
       id: "market_event",
       name: "1. Market Event Impact Analysis",
-      event: "Central bank raises interest rates by 25 basis points",
-      flow: ["Kafka stream receives rate decision", "Flink identifies duration-sensitive asset classes", "Hybrid retrieval fetches fixed income research notes", "Portfolio API identifies sensitive clients", "LLM generates grounded advisor talking points"]
+      event: "Central bank raises interest rates by 25 basis points (Policy Rate: 5.50%)",
+      eventPayload: {
+        event_id: "EVT-2026-FED-0814",
+        source: "Kafka:market.fed.events",
+        asset_class_impacted: ["Fixed Income", "Real Estate REITs", "Growth Tech"],
+        severity: "HIGH_REVENUE_IMPACT",
+        timestamp: "2026-08-15T14:30:00Z"
+      },
+      flow: [
+        "Kafka stream receives rate decision event JSON",
+        "Flink event engine identifies duration-sensitive asset classes",
+        "Hybrid retrieval fetches fixed income research notes and bond duration tables",
+        "Portfolio API queries book to find sensitive client portfolios (>35% bond allocation)",
+        "LLM generates personalized advisor talking points with exact research citations"
+      ],
+      simResult: {
+        latencyMs: 3820,
+        clientsAffected: "412 Portfolios",
+        complianceStatus: "✓ MAS / FINMA COMPLIANT",
+        generatedSummary: "Generated talking points for 412 duration-sensitive clients. Recommendation: Rotate from long-duration US Treasuries (10Y+) into 2Y floating-rate notes (FRNs) to mitigate duration drag.",
+        citations: ["ResearchNote_FixedIncome_2026_08.pdf#p4", "CentralBankPolicy_Aug2026.pdf#Clause_3"]
+      }
     },
     {
       id: "suitability",
       name: "2. Client Suitability Check",
-      event: "Advisor asks: 'Is Product X suitable for Client B in Singapore?'",
-      flow: ["Calls CRM API for Client B risk profile & jurisdiction", "Retrieves Product X term sheet & EU/SG suitability policies", "Evaluates concentration limits & minimum investment threshold", "Generates suitability recommendation with policy clause citations"]
+      event: "Advisor asks: 'Is Structured Product X suitable for Client B (Accredited Investor in SG)?'",
+      eventPayload: {
+        client_id: "SG-WM-88301",
+        risk_profile: "MODERATE",
+        jurisdiction: "Singapore (MAS FAA)",
+        product_isin: "XS2491029411",
+        notional_usd: 500000
+      },
+      flow: [
+        "Calls CRM API for Client B risk profile, net worth ($4.8M), and jurisdiction rules",
+        "Retrieves Product X term sheet, payout formula, and MAS suitability policies",
+        "Evaluates concentration limits (<15% structured products) & minimum investment threshold ($250k)",
+        "LLM generates suitability recommendation with mandatory policy clause citations"
+      ],
+      simResult: {
+        latencyMs: 2940,
+        clientsAffected: "Client SG-88301",
+        complianceStatus: "✓ SUITABLE WITH CONDITIONS",
+        generatedSummary: "Product X is SUITABLE for Client B under MAS FAA guidelines (Client qualifies as Accredited Investor, min threshold $250k met, portfolio structured product concentration remains at 10.4% <= 15% limit).",
+        citations: ["ProductX_TermSheet_v2.pdf#p2", "MAS_Suitability_Policy_2026.pdf#Clause_4.2"]
+      }
     },
     {
       id: "earnings",
       name: "3. Earnings Report Summarization",
-      event: "Advisor asks: 'Summarize latest XYZ Bank earnings & impact on equity view'",
-      flow: ["Retrieves earnings transcript, analyst notes, & historical rating", "Summarizes earnings surprise, key revenue drivers, and risk factors", "Aligns summary with bank's internal research stance"]
+      event: "Advisor asks: 'Summarize latest XYZ Bank Q2 earnings surprise & impact on internal equity stance'",
+      eventPayload: {
+        ticker: "XYZ.N",
+        quarter: "Q2 2026",
+        revenue_actual: "$12.4B (vs $11.9B exp)",
+        eps_actual: "$1.85 (vs $1.72 exp)",
+        internal_coverage_stance: "OVERWEIGHT"
+      },
+      flow: [
+        "Retrieves earnings transcript, analyst notes, and historical valuation multiples",
+        "Summarizes earnings surprise (+7.5% EPS beat), key revenue drivers, and credit loss provisions",
+        "Cross-references bank's internal research stance and target price ($142.00)"
+      ],
+      simResult: {
+        latencyMs: 2610,
+        clientsAffected: "1,208 Equity Portfolios",
+        complianceStatus: "✓ INTERNAL RESEARCH APPROVED",
+        generatedSummary: "XYZ Bank delivered strong Q2 results (+7.5% EPS beat driven by wealth management fee growth and net interest margin resilience). Maintained OVERWEIGHT rating with $142 target price.",
+        citations: ["XYZ_Q2_2026_Transcript.pdf#p8", "Global_Equity_Research_Daily_0814.pdf#p2"]
+      }
     },
     {
       id: "downgrade",
       name: "4. Downgraded Issuer Alert",
-      event: "Rating agency downgrades XYZ Corporation from BBB to BB",
-      flow: ["Flink receives rating stream & triggers entity resolution", "Queries Portfolio API to find all 37 affected clients in book", "Retrieves credit policy guidance on downgraded issuers", "Generates pre-approved client communication template for advisor"]
+      event: "Rating agency downgrades Acme Global Corp from BBB- to BB+ (Crossover to High Yield)",
+      eventPayload: {
+        issuer: "Acme Global Corp",
+        isin: "US004128AA92",
+        old_rating: "BBB- (Investment Grade)",
+        new_rating: "BB+ (High Yield / Fallen Angel)",
+        timestamp: "2026-08-15T11:15:00Z"
+      },
+      flow: [
+        "Flink receives rating downgrade stream & triggers issuer entity resolution",
+        "Queries Portfolio API to identify all 37 affected client portfolios holding Acme debt",
+        "Retrieves credit policy guidance on downgraded fallen angels and mandate constraints",
+        "Generates pre-approved client communication template for advisor outreach"
+      ],
+      simResult: {
+        latencyMs: 1980,
+        clientsAffected: "37 Portfolios",
+        complianceStatus: "⚠️ MANDATE REMEDIATION REQUIRED",
+        generatedSummary: "Found 37 client accounts holding $3.4M total exposure. 12 institutional mandates prohibit High Yield bonds and require portfolio rebalancing within 30 business days per Credit Policy Section 8.1.",
+        citations: ["CreditRiskPolicy_FallenAngels_2026.pdf#Clause_8.1", "AcmeCorp_RatingAction_0815.pdf#p1"]
+      }
     }
   ]
 };
@@ -79,12 +155,90 @@ const SDLC_CASE_STUDY_DATA = {
     { point: "Generic AI assistants unsafe", impact: "Hallucinated APIs, leaked credentials, client confidentiality breaches" }
   ],
   sdlcPhases: [
-    { phase: "1. Requirements", persona: "Product Owner / Analyst", query: '"Did we build KYC document verification for a banking client before? Show stories, estimates, and defects."', flow: "Ticket search (KYC, doc-verification) → retrieve 3 past epics, estimates, defect clusters → retrieve compliance reqs → output: prior-art summary, realistic estimate range, citations." },
-    { phase: "2. Design", persona: "Architect / Tech Lead", query: '"Which ADRs govern event sourcing for ledger services, and what is the dependency impact of schema changes?"', flow: "ADR retrieval → schema specs → graph traversal (consumers of ledger events) → output: governing decisions, 7 consumer services, compatibility risks, citations." },
-    { phase: "3. Development", persona: "Developer (IDE + ChatOps)", query: '"Where is refund idempotency validated, and show the pattern to reuse?"', flow: "Symbol lookup idempotency → semantic code search → rerank → return RefundService.java#L120-L148 + pattern explanation → sandbox compile validation." },
-    { phase: "4. Testing", persona: "QA Engineer", query: '"Generate edge-case tests for FX conversion service based on past defects."', flow: "Defect search (FX, rounding, timezone) → retrieve 12 historical defects → retrieve current impl → generate tests → run in sandbox; show only passing tests + citations." },
-    { phase: "5. Deployment", persona: "DevOps / Release Mgr", query: '"What changed in the last 3 deploys of payment-gateway, and what is the rollback runbook?"', flow: "Deploy events tool → commit/PR summaries → runbook retrieval → change-policy check → output: change list, risk flags, rollback steps with citations." },
-    { phase: "6. Operations", persona: "SRE / On-call", query: '"p99 latency spiked after deploy — find similar past incidents and the fix."', flow: "PagerDuty alert → automatic incident context pack within seconds: recent deploys, similar postmortems, runbook payment-latency.md, dependency health → draft cited summary to Slack." }
+    {
+      phase: "1. Requirements",
+      persona: "Product Owner / Analyst",
+      query: '"Did we build KYC document verification for a banking client before? Show stories, estimates, and defects."',
+      flow: "Ticket search (KYC, doc-verification) → retrieve 3 past epics, estimates, defect clusters → retrieve compliance reqs → output: prior-art summary, realistic estimate range, citations.",
+      simTrace: {
+        latencyMs: 640,
+        sourcesRetrieved: ["Jira Epic PROD-1420", "ADR-041 (KYC Doc Pipeline)", "Defect Cluster #241 (OCR rotation)"],
+        toolCalls: ["jira_search(jql='text ~ \"KYC verification\"')", "confluence_get_page('ADR-041')"],
+        sandboxStatus: "N/A (Documentation / Prior Art Search)",
+        resultSummary: "Found 3 past epics across 2 client deliveries. Estimated effort: 3 sprints (12-14 SP). Identified 2 common defect patterns in passport OCR rotation and MRZ checksum validation.",
+        citations: ["jira.corp/browse/PROD-1420", "wiki.corp/spaces/ARCH/pages/ADR-041", "jira.corp/browse/DEF-241"]
+      }
+    },
+    {
+      phase: "2. Design",
+      persona: "Architect / Tech Lead",
+      query: '"Which ADRs govern event sourcing for ledger services, and what is the dependency impact of schema changes?"',
+      flow: "ADR retrieval → schema specs → graph traversal (consumers of ledger events) → output: governing decisions, 7 consumer services, compatibility risks, citations.",
+      simTrace: {
+        latencyMs: 820,
+        sourcesRetrieved: ["ADR-019 (Event Sourcing with Kafka)", "Avro Schema ledger-events-v3.avsc", "Neo4j Dependency Graph"],
+        toolCalls: ["neo4j_traverse(node='LedgerEvents', rel='CONSUMED_BY')", "git_diff('ledger-events-v3.avsc')"],
+        sandboxStatus: "N/A (Graph Traversal & Schema Check)",
+        resultSummary: "Governed by ADR-019. 7 downstream consumer services identified (payment-gateway, audit-svc, reporting-pipeline, settlement-svc, fee-calc, fraud-detector, notify-svc). Schema backward-compatibility verified.",
+        citations: ["wiki.corp/spaces/ARCH/pages/ADR-019", "github.corp/ledger-service/schemas/ledger-events-v3.avsc", "graph.corp/nodes/LedgerEvents"]
+      }
+    },
+    {
+      phase: "3. Development",
+      persona: "Developer (IDE + ChatOps)",
+      query: '"Where is refund idempotency validated, and show the pattern to reuse?"',
+      flow: "Symbol lookup idempotency → semantic code search → rerank → return RefundService.java#L120-L148 + pattern explanation → sandbox compile validation.",
+      simTrace: {
+        latencyMs: 510,
+        sourcesRetrieved: ["RefundService.java#L120-L148", "IdempotencyValidator.java", "IdempotencyAspectTest.java"],
+        toolCalls: ["ctags_exact_symbol('validateIdempotencyKey')", "docker_sandbox_compile(target='RefundServiceTest')"],
+        sandboxStatus: "✓ COMPILE_SUCCESS (pass@1 sandbox in 380ms)",
+        resultSummary: "Refund idempotency is enforced via Redis distributed lock in RefundService.java#L120 using @IdempotentOperation annotation. Pattern reusable across all transactional endpoints.",
+        citations: ["github.corp/payment-gateway/src/main/java/RefundService.java#L120-L148", "github.corp/common-lib/IdempotencyValidator.java#L45"]
+      }
+    },
+    {
+      phase: "4. Testing",
+      persona: "QA Engineer",
+      query: '"Generate edge-case tests for FX conversion service based on past defects."',
+      flow: "Defect search (FX, rounding, timezone) → retrieve 12 historical defects → retrieve current impl → generate tests → run in sandbox; show only passing tests + citations.",
+      simTrace: {
+        latencyMs: 1140,
+        sourcesRetrieved: ["FX-902 (Rounding drift on JPY pairs)", "FX-941 (Leap year leap second)", "FXConversionService.java"],
+        toolCalls: ["jira_defect_search(component='FX', type='Bug')", "docker_sandbox_run_junit(testClass='FXConversionEdgeCaseTest')"],
+        sandboxStatus: "✓ 4/4 UNIT TESTS PASSED IN SANDBOX",
+        resultSummary: "Generated 4 parameterized test cases covering JPY 0-decimal rounding, negative FX spread handling, leap-year timezone jumps, and extreme currency volatility limits.",
+        citations: ["jira.corp/browse/FX-902", "jira.corp/browse/FX-941", "github.corp/fx-service/src/test/FXConversionEdgeCaseTest.java#L1-L85"]
+      }
+    },
+    {
+      phase: "5. Deployment",
+      persona: "DevOps / Release Mgr",
+      query: '"What changed in the last 3 deploys of payment-gateway, and what is the rollback runbook?"',
+      flow: "Deploy events tool → commit/PR summaries → runbook retrieval → change-policy check → output: change list, risk flags, rollback steps with citations.",
+      simTrace: {
+        latencyMs: 730,
+        sourcesRetrieved: ["ArgoCD Deployment Log (v2.4.1, v2.4.0, v2.3.9)", "PR #841, #852, #860", "runbook-payment-gateway-rollback.md"],
+        toolCalls: ["argocd_get_history(app='payment-gateway', limit=3)", "confluence_get_runbook('payment-gateway-rollback')"],
+        sandboxStatus: "N/A (Release History & Runbook Match)",
+        resultSummary: "Last 3 deploys: v2.4.1 (Kafka consumer retry fix), v2.4.0 (3DS2 authentication upgrade), v2.3.9 (db connection pool tuning). Rollback runbook: execute 'helm rollback payment-gateway 84' with zero-downtime drain.",
+        citations: ["argocd.corp/apps/payment-gateway/history", "github.corp/payment-gateway/pulls/860", "wiki.corp/spaces/SRE/pages/runbook-payment-gateway-rollback.md"]
+      }
+    },
+    {
+      phase: "6. Operations",
+      persona: "SRE / On-call",
+      query: '"p99 latency spiked after deploy — find similar past incidents and the fix."',
+      flow: "PagerDuty alert → automatic incident context pack within seconds: recent deploys, similar postmortems, runbook payment-latency.md, dependency health → draft cited summary to Slack.",
+      simTrace: {
+        latencyMs: 420,
+        sourcesRetrieved: ["PagerDuty Alert #PD-9921", "INC-4811 Postmortem (Connection Pool Exhaustion)", "payment-latency.md Runbook"],
+        toolCalls: ["pagerduty_get_alert('PD-9921')", "datadog_get_metrics(service='payment-gateway', metric='db.pool.wait_time')"],
+        sandboxStatus: "N/A (Real-Time Incident Pack)",
+        resultSummary: "Incident Context Pack generated in 420ms: Matched against INC-4811 (94% similarity). Root cause: HikariCP connection pool exhaustion after replica failover. Immediate mitigation: scale max_pool_size to 60 via dynamic config.",
+        citations: ["pagerduty.corp/incidents/PD-9921", "wiki.corp/spaces/INCIDENTS/pages/INC-4811-postmortem.md", "datadog.corp/apm/payment-gateway/db-wait"]
+      }
+    }
   ],
   successMetrics: [
     { metric: "Onboarding time to first PR", before: "6 wks", after: "3.2 wks", delta: "-46%" },
@@ -584,6 +738,8 @@ export default function RAGCaseStudiesTab() {
   const [simScenario, setSimScenario] = useState('sdlc');
   const [simCurrentStep, setSimCurrentStep] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(false);
+  const [isSdlcSimulating, setIsSdlcSimulating] = useState(false);
+  const [isFinSimulating, setIsFinSimulating] = useState(false);
 
   // Tuner Config state
   const [configChunking, setConfigChunking] = useState('ast');
@@ -808,20 +964,92 @@ export default function RAGCaseStudiesTab() {
                   {/* ACTIVE SDLC PHASE DETAILS */}
                   {(() => {
                     const activeP = SDLC_CASE_STUDY_DATA.sdlcPhases[activeSdlcPhase];
+                    const trace = activeP.simTrace;
                     return (
                       <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-                        <Stack gap={3}>
-                          <Flex justify="space-between" align="center">
+                        <Stack gap={4}>
+                          <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
                             <Badge variant="warning">{activeP.phase} — {activeP.persona}</Badge>
+                            <Button
+                              size="sm"
+                              variant={isSdlcSimulating ? "danger" : "primary"}
+                              onClick={() => {
+                                setIsSdlcSimulating(true);
+                                setTimeout(() => setIsSdlcSimulating(false), 900);
+                              }}
+                            >
+                              {isSdlcSimulating ? "⏳ Simulating Pipeline..." : "🚀 Run Live Query Simulation"}
+                            </Button>
                           </Flex>
+
                           <div>
                             <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>EXAMPLE DEVELOPER QUERY:</span>
                             <h3 style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-primary)' }}>{activeP.query}</h3>
                           </div>
+
                           <div>
                             <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>12-STEP QUERY PIPELINE FLOW:</span>
                             <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', lineHeight: '1.6' }}>{activeP.flow}</p>
                           </div>
+
+                          {/* INTERACTIVE TELEMETRY & SANDBOX STATUS CARD */}
+                          {trace && (
+                            <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-subtle)' }}>
+                              <Stack gap={3}>
+                                <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
+                                  <Badge variant="info">⚡ Live Query Telemetry Trace</Badge>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#2563EB', fontWeight: 'bold' }}>
+                                    p95 Latency: {trace.latencyMs}ms (Budget: &lt;2000ms)
+                                  </span>
+                                </Flex>
+
+                                <Grid columns={2} gap={3}>
+                                  <div>
+                                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>RETRIEVED ARTIFACTS:</span>
+                                    <ul style={{ margin: '4px 0 0 0', paddingLeft: 'var(--ds-space-4)', fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
+                                      {trace.sourcesRetrieved.map((s, i) => (
+                                        <li key={i}>{s}</li>
+                                      ))}
+                                    </ul>
+                                  </div>
+
+                                  <div>
+                                    <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>LIVE TOOL CALLS:</span>
+                                    <ul style={{ margin: '4px 0 0 0', paddingLeft: 'var(--ds-space-4)', fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-module-foundations-primary)', fontFamily: 'var(--ds-font-family-mono)' }}>
+                                      {trace.toolCalls.map((t, i) => (
+                                        <li key={i}>{t}</li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </Grid>
+
+                                <div style={{ background: 'var(--ds-color-bg-canvas)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>SANDBOX & COMPLIANCE GATE:</span>
+                                  <div style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: trace.sandboxStatus.includes('✓') ? '#10B981' : 'var(--ds-color-text-primary)', marginTop: '2px' }}>
+                                    {trace.sandboxStatus}
+                                  </div>
+                                </div>
+
+                                <div>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>GROUNDED ANSWER SYNTHESIS:</span>
+                                  <p style={{ margin: '4px 0 0 0', fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-primary)', lineHeight: '1.5' }}>
+                                    {trace.resultSummary}
+                                  </p>
+                                </div>
+
+                                <div>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>VERIFIED CITATIONS:</span>
+                                  <Flex gap={2} style={{ marginTop: '4px', flexWrap: 'wrap' }}>
+                                    {trace.citations.map((c, i) => (
+                                      <Badge key={i} variant="subtle" style={{ fontFamily: 'var(--ds-font-family-mono)', fontSize: '11px' }}>
+                                        📄 {c}
+                                      </Badge>
+                                    ))}
+                                  </Flex>
+                                </div>
+                              </Stack>
+                            </Card>
+                          )}
                         </Stack>
                       </Card>
                     );
@@ -1178,13 +1406,42 @@ export default function RAGCaseStudiesTab() {
                   {/* ACTIVE USE CASE DETAILS */}
                   {(() => {
                     const uc = FINANCIAL_CASE_STUDY.useCases.find(u => u.id === activeUseCase);
+                    const res = uc.simResult;
                     return (
                       <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
                         <Stack gap={4}>
-                          <div>
-                            <Badge variant="info">Triggering Event / Query</Badge>
-                            <h3 style={{ marginTop: 'var(--ds-space-2)', color: 'var(--ds-color-text-primary)' }}>{uc.event}</h3>
-                          </div>
+                          <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
+                            <div>
+                              <Badge variant="info">Triggering Event / Query</Badge>
+                              <h3 style={{ marginTop: 'var(--ds-space-2)', color: 'var(--ds-color-text-primary)' }}>{uc.event}</h3>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant={isFinSimulating ? "danger" : "primary"}
+                              onClick={() => {
+                                setIsFinSimulating(true);
+                                setTimeout(() => setIsFinSimulating(false), 900);
+                              }}
+                            >
+                              {isFinSimulating ? "⚡ Ingesting Kafka Event..." : "⚡ Stream Real-Time Event"}
+                            </Button>
+                          </Flex>
+
+                          {/* LIVE KAFKA EVENT JSON PAYLOAD */}
+                          {uc.eventPayload && (
+                            <Card style={{ padding: 'var(--ds-space-3)', background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-subtle)' }}>
+                              <Stack gap={1}>
+                                <Flex justify="space-between" align="center">
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>
+                                    📡 LIVE INGESTED EVENT PAYLOAD (KAFKA / FLINK JSON)
+                                  </span>
+                                  <Badge variant="subtle">Topic: market.events.v1</Badge>
+                                </Flex>
+                                <CodeBlock code={JSON.stringify(uc.eventPayload, null, 2)} language="json" />
+                              </Stack>
+                            </Card>
+                          )}
+
                           <div>
                             <h4 style={{ marginBottom: 'var(--ds-space-3)' }}>Step-by-Step Execution Sequence:</h4>
                             <Stepper
@@ -1197,6 +1454,7 @@ export default function RAGCaseStudiesTab() {
                               }))}
                             />
                           </div>
+
                           <Flex gap={3}>
                             <Button
                               size="sm"
@@ -1214,6 +1472,45 @@ export default function RAGCaseStudiesTab() {
                               Next Execution Step →
                             </Button>
                           </Flex>
+
+                          {/* LIVE ADVISOR CITED OUTPUT & COMPLIANCE VERIFICATION */}
+                          {res && (
+                            <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-module-foundations-primary)' }}>
+                              <Stack gap={3}>
+                                <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
+                                  <Badge variant="success">💼 Grounded Advisor Intelligence Output</Badge>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#2563EB', fontWeight: 'bold' }}>
+                                    Latency: {res.latencyMs}ms | Scope: {res.clientsAffected}
+                                  </span>
+                                </Flex>
+
+                                <div style={{ background: 'var(--ds-color-bg-canvas)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>REGULATORY COMPLIANCE VERIFICATION:</span>
+                                  <div style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: res.complianceStatus.includes('✓') ? '#10B981' : '#CA8A04', marginTop: '2px' }}>
+                                    {res.complianceStatus}
+                                  </div>
+                                </div>
+
+                                <div>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>SYNTHESIZED ADVISOR RECOMMENDATION:</span>
+                                  <p style={{ margin: '4px 0 0 0', fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-primary)', lineHeight: '1.5' }}>
+                                    {res.generatedSummary}
+                                  </p>
+                                </div>
+
+                                <div>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>POLICY & RESEARCH CITATIONS:</span>
+                                  <Flex gap={2} style={{ marginTop: '4px', flexWrap: 'wrap' }}>
+                                    {res.citations.map((c, i) => (
+                                      <Badge key={i} variant="subtle" style={{ fontFamily: 'var(--ds-font-family-mono)', fontSize: '11px' }}>
+                                        📜 {c}
+                                      </Badge>
+                                    ))}
+                                  </Flex>
+                                </div>
+                              </Stack>
+                            </Card>
+                          )}
                         </Stack>
                       </Card>
                     );

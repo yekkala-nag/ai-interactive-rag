@@ -21,9 +21,9 @@ ${generateCSSVariables({
       focus: '#0D9488',
     },
     text: {
-      primary: '#1C1917',
-      secondary: '#57534E',
-      tertiary: '#A8A29E',
+      primary: '#0F172A',
+      secondary: '#334155',
+      tertiary: '#475569',
       inverse: '#FAFAF9',
       link: '#0D9488',
       linkHover: '#0F766E',

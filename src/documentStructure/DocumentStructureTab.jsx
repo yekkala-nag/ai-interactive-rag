@@ -189,8 +189,8 @@ export default function DocumentStructureTab() {
     btnPrimary: { background: '#2563eb', color: '#fff' },
     btnDisabled: { opacity: 0.5, cursor: 'not-allowed' },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: '0.67rem' },
-    th: { textAlign: 'left', padding: '0.7rem 0.8rem', fontFamily: 'Syne, sans-serif', fontWeight: 700, color: '#8a8a9a', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', borderBottom: '1px solid #e0dcd4' },
-    td: { padding: '0.7rem 0.8rem', borderBottom: '1px solid rgba(42,42,56,0.05)', color: '#4a4a5a' },
+    th: { textAlign: 'left', padding: '0.7rem 0.8rem', fontFamily: 'Syne, sans-serif', fontWeight: 700, color: '#334155', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', borderBottom: '1px solid #e0dcd4' },
+    td: { padding: '0.7rem 0.8rem', borderBottom: '1px solid rgba(42,42,56,0.05)', color: '#1E293B' },
     badge: { display: 'inline-flex', alignItems: 'center', padding: '0.15rem 0.5rem', borderRadius: 999, fontSize: '0.6rem', fontWeight: 600 },
   };
 
@@ -213,7 +213,7 @@ export default function DocumentStructureTab() {
           { label: 'TOC Entries', value: tocDf.length, color: '#5c3d8f' },
         ].map((stat, i) => (
           <div key={i} style={{ ...s.card, padding: '1rem' }}>
-            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#8a8a9a', marginBottom: '0.5rem' }}>{stat.label}</div>
+            <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#334155', marginBottom: '0.5rem' }}>{stat.label}</div>
             <div style={{ fontSize: '1.5rem', fontWeight: 800, color: stat.color }}>{stat.value}</div>
           </div>
         ))}
@@ -308,7 +308,7 @@ export default function DocumentStructureTab() {
       <div style={{ ...s.card, overflow: 'hidden' }}>
         <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0' }}>
           <div style={s.sectionLabel('#c9a84c')}>Heading Candidates (Deterministic Pass)</div>
-          <p style={{ fontSize: '0.65rem', color: '#6a6a7a', marginTop: '0.3rem' }}>Lines scoring $\ge {threshold.toFixed(1)}$ before LLM validation</p>
+          <p style={{ fontSize: '0.65rem', color: '#334155', marginTop: '0.3rem' }}>Lines scoring $\ge {threshold.toFixed(1)}$ before LLM validation</p>
         </div>
         <div style={{ overflowX: 'auto', maxHeight: 400, overflowY: 'auto' }}>
           <table style={s.table}>
@@ -376,7 +376,7 @@ export default function DocumentStructureTab() {
 
   const renderWorkflowView = () => {
     if (!workflow) {
-      return <div style={{ ...s.card, padding: '2rem', textAlign: 'center', color: '#6a6a7a' }}>Generate content to see the workflow diagram.</div>;
+      return <div style={{ ...s.card, padding: '2rem', textAlign: 'center', color: '#334155' }}>Generate content to see the workflow diagram.</div>;
     }
 
     const mermaid = workflowToMermaid(workflow);
@@ -391,7 +391,7 @@ export default function DocumentStructureTab() {
           </pre>
           <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
             {workflow.nodes.map(node => (
-              <div key={node.id} style={{ display: 'flex', alignItems: 'center', paddingLeft: `${node.level * 16}px`, fontSize: '0.72rem', color: '#4a4a5a' }}>
+              <div key={node.id} style={{ display: 'flex', alignItems: 'center', paddingLeft: `${node.level * 16}px`, fontSize: '0.72rem', color: '#1E293B' }}>
                 <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', marginRight: 8, background: node.type === 'root' ? '#2563eb' : node.type === 'section' ? '#3b82f6' : '#93c5fd' }} />
                 <span>{node.label}</span>
                 {node.page && <span style={{ marginLeft: 8, fontSize: '0.6rem', color: '#9ca3af' }}>p.{node.page}</span>}
@@ -405,7 +405,7 @@ export default function DocumentStructureTab() {
 
   const renderTableView = () => {
     if (!table) {
-      return <div style={{ ...s.card, padding: '2rem', textAlign: 'center', color: '#6a6a7a' }}>Generate content to see the summary table.</div>;
+      return <div style={{ ...s.card, padding: '2rem', textAlign: 'center', color: '#334155' }}>Generate content to see the summary table.</div>;
     }
 
     return (
@@ -439,7 +439,7 @@ export default function DocumentStructureTab() {
 
   const renderFlashcardsView = () => {
     if (flashcards.length === 0) {
-      return <div style={{ ...s.card, padding: '2rem', textAlign: 'center', color: '#6a6a7a' }}>Generate content to see flashcards.</div>;
+      return <div style={{ ...s.card, padding: '2rem', textAlign: 'center', color: '#334155' }}>Generate content to see flashcards.</div>;
     }
 
     const card = flashcards[currentFlashcard];
@@ -449,7 +449,7 @@ export default function DocumentStructureTab() {
       <div style={{ ...s.card, overflow: 'hidden' }}>
         <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={s.sectionLabel('#5c3d8f')}>Flashcards</div>
-          <span style={{ fontSize: '0.65rem', color: '#8a8a9a' }}>{currentFlashcard + 1} / {flashcards.length}</span>
+          <span style={{ fontSize: '0.65rem', color: '#334155' }}>{currentFlashcard + 1} / {flashcards.length}</span>
         </div>
         <div style={{ padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div
@@ -486,11 +486,11 @@ export default function DocumentStructureTab() {
     <div style={{ ...s.card, overflow: 'hidden' }}>
       <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0' }}>
         <div style={s.sectionLabel('#7c3aed')}>Image Generation Prompts</div>
-        <p style={{ fontSize: '0.65rem', color: '#6a6a7a', marginTop: '0.3rem' }}>AI prompts to generate diagrams for each section</p>
+        <p style={{ fontSize: '0.65rem', color: '#334155', marginTop: '0.3rem' }}>AI prompts to generate diagrams for each section</p>
       </div>
       <div style={{ padding: '1rem', maxHeight: 400, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         {imagePrompts.length === 0 ? (
-          <p style={{ color: '#6a6a7a', fontSize: '0.72rem' }}>Generate content to see image prompts.</p>
+          <p style={{ color: '#334155', fontSize: '0.72rem' }}>Generate content to see image prompts.</p>
         ) : (
           imagePrompts.map((img, i) => (
             <div key={i} style={{ border: '1px solid #e5e7eb', borderRadius: 8, padding: '0.75rem' }}>
@@ -527,7 +527,7 @@ export default function DocumentStructureTab() {
           <div style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.5rem', fontWeight: 900, color: '#1a1a2e', marginBottom: '0.5rem' }}>
             Document Structure with Loop Engineering [Vol.1 #5octies]
           </div>
-          <p style={{ fontSize: '0.72rem', color: '#6a6a7a', lineHeight: 1.7, maxWidth: 800 }}>
+          <p style={{ fontSize: '0.72rem', color: '#334155', lineHeight: 1.7, maxWidth: 800 }}>
             Recovering a PDF’s outline from body typography for RAG (Case 4). Rules propose via 6 deterministic signals; bounded LLM loop validates kept entries.
           </p>
           <div style={{
@@ -606,7 +606,7 @@ export default function DocumentStructureTab() {
               type="file"
               accept="application/pdf"
               onChange={handleFileChange}
-              style={{ fontSize: '0.72rem', color: '#4a4a5a' }}
+              style={{ fontSize: '0.72rem', color: '#1E293B' }}
             />
             {parsing && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.72rem', color: '#2563eb' }}>
@@ -615,7 +615,7 @@ export default function DocumentStructureTab() {
               </div>
             )}
             {file && !parsing && (
-              <span style={{ fontSize: '0.72rem', color: '#6a6a7a' }}>{file.name}</span>
+              <span style={{ fontSize: '0.72rem', color: '#334155' }}>{file.name}</span>
             )}
 
             <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
