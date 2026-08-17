@@ -5058,9 +5058,19 @@ export const AIGlossaryTab = ({ s }) => {
       {/* TERM GRID */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.6rem", marginBottom: "1.2rem" }}>
         {filtered.map(t => (
-          <button key={t.id} onClick={() => { setActiveTerm(activeTerm === t.id ? null : t.id); setTermTab("simple"); }}
-            style={{ background: activeTerm === t.id ? `${t.color}12` : "#ffffff", border: `1px solid ${activeTerm === t.id ? t.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.9rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}
-            onMouseEnter={e => { if (activeTerm !== t.id) { e.currentTarget.style.borderColor = t.color + "40"; } }}
+          <button key={t.id} data-term={t.id} onClick={() => {
+            const next = activeTerm === t.id ? null : t.id;
+            setActiveTerm(next);
+            setTermTab("simple");
+            if (next) {
+              setTimeout(() => {
+                const el = document.getElementById(`term-detail-${t.id}`) || document.getElementById('term-detail-section');
+                el?.scrollIntoView({ behavior: "smooth", block: "center" });
+              }, 80);
+            }
+          }}
+            style={{ background: activeTerm === t.id ? `${t.color}18` : "#ffffff", border: `2px solid ${activeTerm === t.id ? t.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.9rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}
+            onMouseEnter={e => { if (activeTerm !== t.id) { e.currentTarget.style.borderColor = t.color + "60"; } }}
             onMouseLeave={e => { if (activeTerm !== t.id) { e.currentTarget.style.borderColor = "#e0dcd4"; } }}>
             <div style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.4rem" }}>
               <div style={{ flex: 1 }}>
@@ -5070,13 +5080,16 @@ export const AIGlossaryTab = ({ s }) => {
               <span style={{ fontSize: "0.5rem", padding: "0.15rem 0.4rem", background: `${lvlColor[t.level] || "#c9a84c"}12`, color: lvlColor[t.level] || "#c9a84c", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, whiteSpace: "nowrap", flexShrink: 0 }}>{t.level}</span>
             </div>
             <div style={{ fontSize: "0.6rem", color: "#334155", lineHeight: 1.5 }}>{t.simple.slice(0, 70)}…</div>
+            <div style={{ fontSize: "0.52rem", color: t.color, marginTop: "0.4rem", fontWeight: 700, fontFamily: "Syne, sans-serif" }}>
+              {activeTerm === t.id ? "▲ Viewing Detail Below" : "Click to View Detail →"}
+            </div>
           </button>
         ))}
       </div>
 
       {/* TERM DETAIL */}
       {term && (
-        <div style={{ background: "#ffffff", border: `1px solid ${term.color}40`, borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease" }}>
+        <div id="term-detail-section" style={{ background: "#ffffff", border: `2px solid ${term.color}`, borderRadius: 8, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease", scrollMarginTop: "100px" }}>
           <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", display: "flex", alignItems: "center", gap: "1rem" }}>
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.2rem" }}>
@@ -5227,10 +5240,20 @@ export const AIGlossaryTab = ({ s }) => {
             </thead>
             <tbody>
               {GLOSSARY_TERMS.map((t, i) => (
-                <tr key={t.id} style={{ borderBottom: i < GLOSSARY_TERMS.length - 1 ? "1px solid rgba(42,42,56,0.4)" : "none", cursor: "pointer" }}
-                  onClick={() => { setActiveTerm(t.id); setTermTab("simple"); setCatFilter("All"); setLvlFilter("All"); setSearch(""); setTimeout(() => document.querySelector(`[data-term="${t.id}"]`)?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 100); }}
-                  onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
-                  onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+                <tr key={t.id} style={{ borderBottom: i < GLOSSARY_TERMS.length - 1 ? "1px solid rgba(42,42,56,0.4)" : "none", cursor: "pointer", background: activeTerm === t.id ? `${t.color}15` : "transparent" }}
+                  onClick={() => {
+                    setActiveTerm(t.id);
+                    setTermTab("simple");
+                    setCatFilter("All");
+                    setLvlFilter("All");
+                    setSearch("");
+                    setTimeout(() => {
+                      const el = document.getElementById("term-detail-section") || document.querySelector(`[data-term="${t.id}"]`);
+                      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }, 80);
+                  }}
+                  onMouseEnter={e => { if (activeTerm !== t.id) e.currentTarget.style.background = "#f0ede6"; }}
+                  onMouseLeave={e => { if (activeTerm !== t.id) e.currentTarget.style.background = "transparent"; }}>
                   <td style={{ padding: "0.55rem 0.8rem", color: t.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{t.term}</td>
                   <td style={{ padding: "0.55rem 0.8rem", color: "#334155", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{t.abbr || "—"}</td>
                   <td style={{ padding: "0.55rem 0.8rem", color: "#334155" }}>{t.category}</td>

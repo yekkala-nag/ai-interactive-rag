@@ -21,6 +21,7 @@ const TabComponents = {
   unhobbling: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.UnhobblingTab }))),
   promptmgmt: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PromptMgmtTab }))),
   structuredoutputs: lazy(() => import('./structuredOutputs/StructuredOutputsTab.jsx')),
+  topicmodeling: lazy(() => import('./topicModeling/TopicModelingTab.jsx')),
 
   rag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.RAGTypesTab }))),
   pipeline: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PipelineTab }))),
@@ -69,6 +70,7 @@ const TabComponents = {
   aitestdatabottleneck: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AITestDataBottleneckTab }))),
   classicalml: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ClassicalMLTab }))),
   activelearn: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ActiveLearningTab }))),
+  goaltracker: lazy(() => import('./goalTracker/GoalTrackerTab.jsx')),
 
   powerfeatures: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PowerFeaturesTab }))),
   frontiers: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ResearchFrontiersTab }))),
@@ -79,16 +81,13 @@ const TabComponents = {
   progress: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ProgressTab }))),
 };
 
-function TabLoader({ tabId }) {
+function TabLoader({ tabId, onSelectTab }) {
   const Component = TabComponents[tabId];
-  // #region agent log
-  fetch('http://127.0.0.1:7939/ingest/11e91471-d03c-4845-97c7-dda683ded1d4',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'262cb1'},body:JSON.stringify({sessionId:'262cb1',runId:'post-fix',hypothesisId:'A',location:'AppNew.jsx:TabLoader',message:'TabLoader render props check',data:{tabId,hasComponent:!!Component,propsPassedToComponent:['s'],legacyStylesDefined:typeof legacyStyles,hasSectionLabel:typeof legacyStyles?.sectionLabel,passingS:true,componentName:Component?.displayName||Component?.name||'lazy'},timestamp:Date.now()})}).catch(()=>{});
-  // #endregion
   if (!Component) return <div style={{ padding: 'var(--ds-space-10)', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>Tab not found: {tabId}</div>;
   return (
     <Suspense fallback={<TabSkeleton />}>
       <ErrorBoundary key={tabId} fallback={<TabError tabId={tabId} />}>
-        <Component s={legacyStyles} />
+        <Component s={legacyStyles} onSelectTab={onSelectTab} setActiveTab={onSelectTab} />
       </ErrorBoundary>
     </Suspense>
   );
@@ -208,7 +207,7 @@ export default function App() {
         />
 
         <Container size="normal">
-          <TabLoader tabId={activeTab} />
+          <TabLoader tabId={activeTab} onSelectTab={handleTabSelect} />
         </Container>
 
         <CommandPalette

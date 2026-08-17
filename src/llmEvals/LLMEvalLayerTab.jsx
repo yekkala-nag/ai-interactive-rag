@@ -2,24 +2,35 @@ import React, { useState } from 'react';
 import * as Primitives from '../components/layout/Primitives.jsx';
 import { Hero, CodeBlock } from '../components/ui/Content.jsx';
 import { Card, Badge, Button, Callout } from '../components/ui/Core.jsx';
+import DiagramImage from '../components/ui/DiagramImage.jsx';
 import {
   EVAL_SCENARIOS,
   REGRESSION_TEST_SUITE,
-  EVALUATION_MATRICES
+  EVALUATION_MATRICES,
+  PM_EVAL_PARADIGMS,
+  PM_ARCHETYPES,
+  LAUNCH_GATE_FRAMEWORK,
+  GSM_SYMBOLIC_EXPERIMENTS,
+  MODEL_BENCHMARK_COMPARISON,
+  NEURO_SYMBOLIC_SOLUTIONS
 } from './evalEngine.js';
 
 const { Container, Section, Grid, Flex, Stack } = Primitives;
 
 export default function LLMEvalLayerTab() {
-  const [activeSubTab, setActiveSubTab] = useState('playground'); // 'playground' | 'matrix' | 'gates' | 'regression' | 'code'
+  const [activeSubTab, setActiveSubTab] = useState('playground'); // 'playground' | 'matrix' | 'gates' | 'regression' | 'code' | 'pm_eval' | 'gsm_symbolic'
   const [selectedScenarioId, setSelectedScenarioId] = useState('financial_hallucination');
   const [customQuery, setCustomQuery] = useState('');
   const [customContext, setCustomContext] = useState('');
   const [customResponse, setCustomResponse] = useState('');
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [regressionFilter, setRegressionFilter] = useState('ALL'); // 'ALL' | 'FAIL' | 'PASS'
+  const [selectedParadigmId, setSelectedParadigmId] = useState('classification_spam');
+  const [selectedExpId, setSelectedExpId] = useState('symbolic_mutation');
 
   const selectedScenario = EVAL_SCENARIOS.find(s => s.id === selectedScenarioId) || EVAL_SCENARIOS[0];
+  const activeParadigm = PM_EVAL_PARADIGMS.find(p => p.id === selectedParadigmId) || PM_EVAL_PARADIGMS[0];
+  const activeExp = GSM_SYMBOLIC_EXPERIMENTS.find(e => e.id === selectedExpId) || GSM_SYMBOLIC_EXPERIMENTS[0];
 
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
@@ -54,6 +65,8 @@ export default function LLMEvalLayerTab() {
             { id: 'matrix', icon: '📊', label: 'Attribution vs Specificity Matrix', desc: 'The Hallucination Signature quadrant' },
             { id: 'gates', icon: '🚦', label: '3 Production Quality Gates', desc: 'Decision rules & failure taxonomy' },
             { id: 'regression', icon: '🧪', label: 'CI/CD Prompt Regression Suite', desc: 'Catch quality drops before deployment' },
+            { id: 'pm_eval', icon: '👔', label: 'PM Eval Framework', desc: 'AI Evals for Product Managers' },
+            { id: 'gsm_symbolic', icon: '🔬', label: 'GSM-Symbolic & Reasoning', desc: 'Apple Study: Beyond Training Data' },
             { id: 'code', icon: '💻', label: 'Pure-Python Missing Layer', desc: 'Copyable production implementation' }
           ].map(tab => (
             <button
@@ -491,6 +504,399 @@ class DeterministicEvalLayer:
                 log_reason="Vague or partial answer. Trigger re-prompt."
             )`}
                 />
+              </Stack>
+            </Card>
+          </Stack>
+        )}
+
+        {/* ─── 6. AI EVALS FOR PRODUCT MANAGERS (PM CO-DESIGN) ─── */}
+        {activeSubTab === 'pm_eval' && (
+          <Stack gap={6}>
+            {/* ARCHITECTURAL DIAGRAM CARD */}
+            <DiagramImage
+              src="/assets/pm_eval_framework_arch.png"
+              alt="AI Evaluation Framework for Product Managers Diagram"
+              title="AI Evaluation Framework for Product Managers (PM Co-Design)"
+              caption="Overview: 1. Model Goal to Eval Translation across 3 AI Paradigms ➔ 2. The 3 AI PM Archetypes (Bad PM vs Better PM vs Best PM) ➔ 3. Eval to Launch Gate (Acceptable threshold bounds & post-launch flywheel)."
+              background="#090d16"
+              maxWidth={1050}
+            />
+
+            <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
+              <Stack gap={5}>
+                <div>
+                  <h3 style={{ margin: 0 }}>👔 AI Evaluation Framework for Product Managers</h3>
+                  <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+                    Based on <em>Towards Data Science</em> (Julia Winn, Product Management Leader). Why PMs—not just model developers—must co-design evaluation datasets, define product goals, set acceptable tradeoff bars, and inspect dataset edge cases.
+                  </p>
+                </div>
+
+                {/* 1. THREE PARADIGMS PICKER */}
+                <Stack gap={3}>
+                  <div style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>
+                    1. SELECT MODEL PARADIGM (GOAL → EVAL TRANSLATION):
+                  </div>
+
+                  <Grid columns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="var(--ds-space-3)">
+                    {PM_EVAL_PARADIGMS.map(p => (
+                      <button
+                        key={p.id}
+                        onClick={() => setSelectedParadigmId(p.id)}
+                        style={{
+                          padding: 'var(--ds-space-4)',
+                          borderRadius: 'var(--ds-radius-md)',
+                          border: selectedParadigmId === p.id ? '2px solid var(--ds-color-module-foundations-primary)' : '1px solid var(--ds-color-border-subtle)',
+                          background: selectedParadigmId === p.id ? 'rgba(42,138,132,0.08)' : 'var(--ds-color-bg-surface)',
+                          cursor: 'pointer',
+                          textAlign: 'left'
+                        }}
+                      >
+                        <Flex align="center" gap={2}>
+                          <span style={{ fontSize: '1.2rem' }}>{p.icon}</span>
+                          <span style={{ fontWeight: 'bold', fontSize: 'var(--ds-font-size-bodySm)' }}>{p.title}</span>
+                        </Flex>
+                        <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
+                          Type: {p.modelType}
+                        </div>
+                      </button>
+                    ))}
+                  </Grid>
+
+                  {/* ACTIVE PARADIGM INSPECTOR */}
+                  <Card style={{ padding: 'var(--ds-space-5)', borderLeft: '4px solid var(--ds-color-module-foundations-primary)' }}>
+                    <Stack gap={4}>
+                      <div>
+                        <Badge variant="primary" size="sm">{activeParadigm.modelType}</Badge>
+                        <h3 style={{ margin: '6px 0 4px 0' }}>{activeParadigm.title}</h3>
+                        <p style={{ margin: 0, fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)' }}>
+                          <strong>Product Goal:</strong> {activeParadigm.productGoal}
+                        </p>
+                      </div>
+
+                      <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
+                        <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
+                          <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>MODEL GOAL:</strong>
+                          <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '4px' }}>
+                            {activeParadigm.modelGoal}
+                          </div>
+                        </Card>
+                        <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
+                          <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>GOAL → EVAL TRANSLATION:</strong>
+                          <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '4px' }}>
+                            {activeParadigm.goalTranslation}
+                          </div>
+                        </Card>
+                      </Grid>
+
+                      {/* EVAL DATASET INSPECTOR */}
+                      <div>
+                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>Curated Eval Test Suite Dataset ({activeParadigm.evalDataset.length} Test Samples):</strong>
+                        <div style={{ marginTop: '8px', overflowX: 'auto' }}>
+                          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 'var(--ds-font-size-caption)' }}>
+                            <thead>
+                              <tr style={{ background: 'var(--ds-color-bg-surface)', textAlign: 'left', borderBottom: '2px solid var(--ds-color-border-subtle)' }}>
+                                <th style={{ padding: '8px' }}>ID</th>
+                                <th style={{ padding: '8px' }}>Sample Input / Query</th>
+                                <th style={{ padding: '8px' }}>True Grounding / Label</th>
+                                <th style={{ padding: '8px' }}>Model Prediction</th>
+                                <th style={{ padding: '8px' }}>PM Impact Analysis</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {activeParadigm.evalDataset.map(row => (
+                                <tr key={row.id} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
+                                  <td style={{ padding: '8px', fontWeight: 'bold' }}>{row.id}</td>
+                                  <td style={{ padding: '8px', maxWidth: '240px' }}>{row.snippet || row.query || row.purchaseHistory}</td>
+                                  <td style={{ padding: '8px' }}>
+                                    <Badge variant="info" size="sm">{row.trueLabel || row.trueOutcome || row.humanSenseCheck}</Badge>
+                                  </td>
+                                  <td style={{ padding: '8px' }}>
+                                    <Badge variant={row.v2Pred?.includes('FALSE') || row.evalResult?.includes('FAIL') ? 'danger' : 'success'} size="sm">
+                                      {row.v2Pred || row.evalResult || row.modelOutput?.slice(0, 40)}
+                                    </Badge>
+                                  </td>
+                                  <td style={{ padding: '8px', color: row.impactIfMislabeled?.includes('CATASTROPHIC') || row.evalResult?.includes('FAIL') ? '#ef4444' : 'var(--ds-color-text-secondary)' }}>
+                                    {row.impactIfMislabeled || row.evalResult || row.humanSenseCheck}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      {/* MODEL TRADEOFF COMPARISON (V1 vs V2) */}
+                      {activeParadigm.v1Model && (
+                        <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)' }}>
+                          <Stack gap={2}>
+                            <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>PM Launch Decision: Model v1 vs Model v2 Tradeoff Analysis</strong>
+                            <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
+                              <Card style={{ padding: '12px', borderLeft: '4px solid #10b981' }}>
+                                <Badge variant="success" size="sm">{activeParadigm.v1Model.name}</Badge>
+                                <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '4px' }}>
+                                  Overall Accuracy: <strong>{activeParadigm.v1Model.overallAccuracy}</strong>
+                                </div>
+                                <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
+                                  {activeParadigm.v1Model.falsePositiveRate || activeParadigm.v1Model.escalationAccuracy}
+                                </div>
+                                <Badge variant="success" size="sm" style={{ marginTop: '6px' }}>{activeParadigm.v1Model.decision}</Badge>
+                              </Card>
+
+                              <Card style={{ padding: '12px', borderLeft: '4px solid #ef4444' }}>
+                                <Badge variant="danger" size="sm">{activeParadigm.v2Model.name}</Badge>
+                                <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '4px' }}>
+                                  Overall Accuracy: <strong>{activeParadigm.v2Model.overallAccuracy}</strong>
+                                </div>
+                                <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#ef4444', fontWeight: 'bold' }}>
+                                  {activeParadigm.v2Model.falsePositiveRate || activeParadigm.v2Model.escalationAccuracy}
+                                </div>
+                                <Badge variant="danger" size="sm" style={{ marginTop: '6px' }}>{activeParadigm.v2Model.decision}</Badge>
+                              </Card>
+                            </Grid>
+                          </Stack>
+                        </Card>
+                      )}
+                    </Stack>
+                  </Card>
+                </Stack>
+
+                {/* 2. THE 3 AI PM ARCHETYPES */}
+                <Stack gap={3}>
+                  <div style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>
+                    2. THE 3 AI PRODUCT MANAGER ARCHETYPES:
+                  </div>
+                  <Grid columns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="var(--ds-space-3)">
+                    {PM_ARCHETYPES.map((arch, idx) => (
+                      <Card key={idx} style={{ padding: 'var(--ds-space-4)', borderTop: `4px solid ${arch.badgeVariant === 'danger' ? '#ef4444' : arch.badgeVariant === 'warning' ? '#f59e0b' : '#10b981'}` }}>
+                        <Stack gap={2}>
+                          <Flex align="center" justify="space-between">
+                            <span style={{ fontSize: '1.2rem' }}>{arch.icon}</span>
+                            <Badge variant={arch.badgeVariant} size="sm">{arch.role}</Badge>
+                          </Flex>
+                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', fontStyle: 'italic' }}>
+                            {arch.quote}
+                          </div>
+                          <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '4px' }}>
+                            <strong>Behavior:</strong> {arch.behavior}
+                          </div>
+                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', marginTop: '4px' }}>
+                            <strong>Product Outcome:</strong> {arch.outcome}
+                          </div>
+                        </Stack>
+                      </Card>
+                    ))}
+                  </Grid>
+                </Stack>
+
+                {/* 3. EVAL TO LAUNCH GATE FRAMEWORK */}
+                <Stack gap={3}>
+                  <div style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>
+                    3. EVAL TO LAUNCH: WHAT IS "GOOD ENOUGH" FRAMEWORK:
+                  </div>
+                  <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)' }}>
+                    <Grid columns={{ base: '1fr', md: 'repeat(5, 1fr)' }} gap="var(--ds-space-2)">
+                      {LAUNCH_GATE_FRAMEWORK.map((item, idx) => (
+                        <Card key={idx} style={{ padding: '12px', background: 'var(--ds-color-bg-canvas)' }}>
+                          <div style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-module-foundations-primary)' }}>
+                            {item.step}
+                          </div>
+                          <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
+                            {item.description}
+                          </div>
+                        </Card>
+                      ))}
+                    </Grid>
+                  </Card>
+                </Stack>
+              </Stack>
+            </Card>
+          </Stack>
+        )}
+
+        {/* ─── 7. GSM-SYMBOLIC & REASONING BENCHMARKS (APPLE STUDY) ─── */}
+        {activeSubTab === 'gsm_symbolic' && (
+          <Stack gap={6}>
+            {/* ARCHITECTURAL DIAGRAM CARD */}
+            <DiagramImage
+              src="/assets/gsm_symbolic_reasoning_arch.png"
+              alt="Rethinking LLM Benchmarks: Apple GSM-Symbolic Architecture Diagram"
+              title="Apple's GSM-Symbolic Benchmark — Measuring True Reasoning Beyond Training Data"
+              caption="Overview: 1. GSM-Symbolic Template Generator (Mutating numbers/names) ➔ 2. GSM-NoOp Irrelevant Noise Injection (Up to 65% accuracy drop) ➔ 3. Pattern Matching vs Neuro-Symbolic Reasoning Engine."
+              background="#090d16"
+              maxWidth={1050}
+            />
+
+            <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
+              <Stack gap={5}>
+                <div>
+                  <h3 style={{ margin: 0 }}>🔬 Rethinking LLM Benchmarks: GSM-Symbolic & Reasoning</h3>
+                  <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+                    Based on Apple's research paper (<em>GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in Large Language Models</em>, Mirzadeh et al., 2024 / Maxime Jabarian TDS analysis). Are models true reasoners or pattern matchers?
+                  </p>
+                </div>
+
+                {/* 1. EXPERIMENT PICKER */}
+                <Stack gap={3}>
+                  <div style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>
+                    1. SELECT APPLE BENCHMARK EXPERIMENT:
+                  </div>
+
+                  <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
+                    {GSM_SYMBOLIC_EXPERIMENTS.map(exp => (
+                      <button
+                        key={exp.id}
+                        onClick={() => setSelectedExpId(exp.id)}
+                        style={{
+                          padding: 'var(--ds-space-4)',
+                          borderRadius: 'var(--ds-radius-md)',
+                          border: selectedExpId === exp.id ? '2px solid var(--ds-color-module-foundations-primary)' : '1px solid var(--ds-color-border-subtle)',
+                          background: selectedExpId === exp.id ? 'rgba(42,138,132,0.08)' : 'var(--ds-color-bg-surface)',
+                          cursor: 'pointer',
+                          textAlign: 'left'
+                        }}
+                      >
+                        <Flex align="center" gap={2}>
+                          <span style={{ fontSize: '1.2rem' }}>{exp.icon}</span>
+                          <span style={{ fontWeight: 'bold', fontSize: 'var(--ds-font-size-bodySm)' }}>{exp.title}</span>
+                        </Flex>
+                        <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
+                          {exp.description}
+                        </div>
+                      </button>
+                    ))}
+                  </Grid>
+
+                  {/* ACTIVE EXPERIMENT DEMO */}
+                  <Card style={{ padding: 'var(--ds-space-5)', borderLeft: '4px solid var(--ds-color-module-foundations-primary)' }}>
+                    <Stack gap={4}>
+                      <Flex align="center" justify="space-between">
+                        <Badge variant="primary" size="md">{activeExp.title}</Badge>
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>
+                          Apple GSM-Symbolic Study
+                        </span>
+                      </Flex>
+
+                      {activeExp.id === 'symbolic_mutation' ? (
+                        <Stack gap={3}>
+                          <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
+                            <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>STANDARD GSM8K BASE PROBLEM:</strong>
+                            <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '4px', fontWeight: 'bold' }}>
+                              "{activeExp.baseProblem.question}"
+                            </div>
+                            <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#10b981', marginTop: '4px', fontFamily: 'var(--ds-font-family-mono)' }}>
+                              Equation: {activeExp.baseProblem.equation} ➔ Answer: {activeExp.baseProblem.answer}
+                            </div>
+                          </Card>
+
+                          <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>Symbolic Mutations & LLM Performance Drift:</strong>
+                          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
+                            {activeExp.mutatedProblems.map((mut, idx) => (
+                              <Card key={idx} style={{ padding: '12px', borderLeft: `4px solid ${mut.llmBehavior.includes('FAIL') ? '#ef4444' : '#10b981'}` }}>
+                                <Badge variant={mut.llmBehavior.includes('FAIL') ? 'danger' : 'success'} size="sm">{mut.mutationName}</Badge>
+                                <div style={{ fontSize: 'var(--ds-font-size-caption)', marginTop: '6px' }}>
+                                  "{mut.question}"
+                                </div>
+                                <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
+                                  Expected: {mut.equation} = {mut.answer}
+                                </div>
+                                <div style={{ fontSize: 'var(--ds-font-size-caption)', color: mut.llmBehavior.includes('FAIL') ? '#ef4444' : '#10b981', marginTop: '6px', fontWeight: 'bold' }}>
+                                  {mut.llmBehavior}
+                                </div>
+                              </Card>
+                            ))}
+                          </Grid>
+                        </Stack>
+                      ) : (
+                        <Stack gap={3}>
+                          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
+                            <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
+                              <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>1. CLEAN MATH PROBLEM (NO NOISE):</strong>
+                              <div style={{ fontSize: 'var(--ds-font-size-caption)', marginTop: '4px' }}>
+                                "{activeExp.noopProblem.cleanQuestion}"
+                              </div>
+                              <Badge variant="success" size="sm" style={{ marginTop: '8px' }}>Accuracy: 95.2%</Badge>
+                            </Card>
+
+                            <Card style={{ padding: '12px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
+                              <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#ef4444' }}>2. GSM-NOOP (IRRELEVANT DISTRACTOR INJECTED):</strong>
+                              <div style={{ fontSize: 'var(--ds-font-size-caption)', marginTop: '4px' }}>
+                                "{activeExp.noopProblem.noopQuestion}"
+                              </div>
+                              <Badge variant="danger" size="sm" style={{ marginTop: '8px' }}>Accuracy Collapsed to 41.2% (-54% drop!)</Badge>
+                            </Card>
+                          </Grid>
+
+                          <Callout type="danger">
+                            <strong>Why LLMs Fail GSM-NoOp:</strong> Autoregressive transformers lack abstract reasoning and noise filters. Instead of ignoring the zero-operation sentence (*"5 of the apples were smaller and green"*), LLMs blindly incorporate the number 5 into their arithmetic logic, proving they perform statistical pattern matching rather than formal logic execution.
+                          </Callout>
+                        </Stack>
+                      )}
+                    </Stack>
+                  </Card>
+                </Stack>
+
+                {/* 2. SOTA BENCHMARK COMPARISON TABLE */}
+                <Stack gap={3}>
+                  <div style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>
+                    2. SOTA LLM BENCHMARK PERFORMANCE & DEGRADATION COMPARISON:
+                  </div>
+
+                  <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)' }}>
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 'var(--ds-font-size-caption)' }}>
+                        <thead>
+                          <tr style={{ background: 'var(--ds-color-bg-canvas)', textAlign: 'left', borderBottom: '2px solid var(--ds-color-border-subtle)' }}>
+                            <th style={{ padding: '10px' }}>Model</th>
+                            <th style={{ padding: '10px' }}>Standard GSM8K Score</th>
+                            <th style={{ padding: '10px' }}>GSM-Symbolic Mean (Variance)</th>
+                            <th style={{ padding: '10px' }}>GSM-NoOp Accuracy</th>
+                            <th style={{ padding: '10px' }}>Noise Performance Drop</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {MODEL_BENCHMARK_COMPARISON.map((row, idx) => (
+                            <tr key={idx} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
+                              <td style={{ padding: '10px', fontWeight: 'bold' }}>{row.model}</td>
+                              <td style={{ padding: '10px' }}>
+                                <Badge variant="info" size="sm">{row.gsm8kStandard}</Badge>
+                              </td>
+                              <td style={{ padding: '10px' }}>
+                                {row.gsmSymbolicMean} <span style={{ color: 'var(--ds-color-text-tertiary)' }}>({row.gsmSymbolicStdDev})</span>
+                              </td>
+                              <td style={{ padding: '10px', fontWeight: 'bold', color: row.gsmNoopAccuracy.startsWith('2') || row.gsmNoopAccuracy.startsWith('4') ? '#ef4444' : '#f59e0b' }}>
+                                {row.gsmNoopAccuracy}
+                              </td>
+                              <td style={{ padding: '10px', color: '#ef4444', fontWeight: 'bold' }}>
+                                {row.accuracyDrop}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </Card>
+                </Stack>
+
+                {/* 3. NEURO-SYMBOLIC SOLUTIONS */}
+                <Stack gap={3}>
+                  <div style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>
+                    3. ARCHITECTURAL REMEDIES FOR TRUE REASONING BEYOND TRAINING DATA:
+                  </div>
+
+                  <Grid columns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="var(--ds-space-3)">
+                    {NEURO_SYMBOLIC_SOLUTIONS.map((sol, idx) => (
+                      <Card key={idx} style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', borderTop: '4px solid var(--ds-color-module-foundations-primary)' }}>
+                        <Flex align="center" gap={2} style={{ marginBottom: '8px' }}>
+                          <span style={{ fontSize: '1.2rem' }}>{sol.icon}</span>
+                          <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>{sol.title}</strong>
+                        </Flex>
+                        <p style={{ margin: 0, fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', lineHeight: 1.4 }}>
+                          {sol.description}
+                        </p>
+                      </Card>
+                    ))}
+                  </Grid>
+                </Stack>
               </Stack>
             </Card>
           </Stack>

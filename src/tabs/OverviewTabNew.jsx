@@ -49,10 +49,27 @@ const MODULE_CARDS = [
   { moduleId: 'frontiers_production', label: 'Production & Frontiers', count: 6, desc: 'Token bill optimization, power features & research frontiers', href: '#' },
 ];
 
-export function OverviewTab() {
+export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
   const [activeTab, setActiveTab] = useState('architectures');
   const [activeStep, setActiveStep] = useState(0);
   const [expandedUmbrella, setExpandedUmbrella] = useState(null);
+
+  const handleNavigate = (tabId) => {
+    if (onSelectTab) onSelectTab(tabId);
+    else if (setGlobalActiveTab) setGlobalActiveTab(tabId);
+  };
+
+  const typeTabMap = {
+    naive: 'rag',
+    advanced: 'rag',
+    hybrid: 'rag',
+    selfrag: 'prodrag',
+    crag: 'prodrag',
+    graphrag: 'agenticrag',
+    agentic: 'agenticrag',
+    multimodal: 'docstruct',
+    raptor: 'hierrag'
+  };
 
   return (
     <>
@@ -68,8 +85,8 @@ export function OverviewTab() {
           { label: 'Code Examples', value: '100+' },
         ]}
         actions={[
-          { label: 'Start Learning', variant: 'primary', onClick: () => setActiveTab('architectures') },
-          { label: 'View Progress', variant: 'secondary', onClick: () => setActiveTab('progress') },
+          { label: 'Start Learning', variant: 'primary', onClick: () => handleNavigate('rag') },
+          { label: 'View Progress', variant: 'secondary', onClick: () => handleNavigate('progress') },
         ]}
       />
 
@@ -115,7 +132,7 @@ export function OverviewTab() {
             {activeTab === 'architectures' && (
               <Grid columns={{ base: 1, md: 2, lg: 3 }} gap="md" style={{ marginTop: 'var(--ds-space-6)' }}>
                 {RAG_TYPES.map((type, i) => (
-                  <Card key={type.id} variant="interactive" padding="md" hover>
+                  <Card key={type.id} variant="interactive" padding="md" hover onClick={() => handleNavigate(typeTabMap[type.id] || 'rag')} style={{ cursor: 'pointer' }}>
                     <Flex gap="md" align="flex-start">
                       <span style={{ fontSize: '2rem', flexShrink: 0 }}>{type.icon}</span>
                       <div style={{ flex: 1 }}>
@@ -124,7 +141,7 @@ export function OverviewTab() {
                           <Badge variant="default" size="sm">{type.level}</Badge>
                         </Flex>
                         <p style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)', marginBottom: 'var(--ds-space-3)' }}>{type.tagline}</p>
-                        <Button variant="ghost" size="sm" onClick={() => { /* navigate */ }}>Explore →</Button>
+                        <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); handleNavigate(typeTabMap[type.id] || 'rag'); }}>Explore →</Button>
                       </div>
                     </Flex>
                   </Card>
@@ -197,7 +214,7 @@ export function OverviewTab() {
                 { id: 'moe', icon: '🎯', label: 'Mixture of Experts', color: '#CA8A04', metric: '5.5%', sub: 'Params active per token', desc: 'Routes each token to top-k experts; 671B total, 37B active — dense quality at sparse cost.' },
                 { id: 'spec', icon: '⚡', label: 'Speculative Decoding', color: '#9333EA', metric: '2–4×', sub: 'Throughput gain', desc: 'Small draft model proposes tokens; large model verifies in parallel. Lossless speedup.' },
               ].map(item => (
-                <Card key={item.id} variant="elevated" padding="lg" hover>
+                <Card key={item.id} variant="elevated" padding="lg" hover onClick={() => handleNavigate('archconcepts')} style={{ cursor: 'pointer' }}>
                   <Flex gap="md" align="flex-start" style={{ marginBottom: 'var(--ds-space-4)' }}>
                     <span style={{ fontSize: '2rem' }}>{item.icon}</span>
                     <div>
@@ -210,7 +227,7 @@ export function OverviewTab() {
                     <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)' }}>{item.sub}</div>
                   </div>
                   <p style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)', lineHeight: 'var(--ds-font-lineHeight-relaxed)' }}>{item.desc}</p>
-                  <Button variant="ghost" size="sm" style={{ marginTop: 'var(--ds-space-3)' }}>Explore →</Button>
+                  <Button variant="ghost" size="sm" style={{ marginTop: 'var(--ds-space-3)' }} onClick={(e) => { e.stopPropagation(); handleNavigate('archconcepts'); }}>Explore →</Button>
                 </Card>
               ))}
             </Grid>
@@ -238,7 +255,7 @@ export function OverviewTab() {
                 content: (
                   <Grid columns={{ base: 1, md: 2 }} gap="sm" style={{ marginTop: 'var(--ds-space-4)' }}>
                     {TABS_REGISTRY.filter(t => t.umbrellaId === m.moduleId).slice(0, 6).map(t => (
-                      <Card key={t.id} variant="interactive" padding="sm" hover style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)' }}>
+                      <Card key={t.id} variant="interactive" padding="sm" hover onClick={() => handleNavigate(t.id)} style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)', cursor: 'pointer' }}>
                         <span style={{ fontSize: '1.5rem' }}>{t.icon}</span>
                         <span style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>{t.label}</span>
                       </Card>
@@ -260,17 +277,17 @@ export function OverviewTab() {
               <Card variant="default" padding="lg">
                 <h3 style={{ marginBottom: 'var(--ds-space-2)' }}>📖 AI Glossary</h3>
                 <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', marginBottom: 'var(--ds-space-4)' }}>21 essential terms across 4 layers: Models, RAG, Agents, Production.</p>
-                <Button variant="ghost" size="sm">Open Glossary</Button>
+                <Button variant="ghost" size="sm" onClick={() => handleNavigate('glossary')}>Open Glossary</Button>
               </Card>
               <Card variant="default" padding="lg">
                 <h3 style={{ marginBottom: 'var(--ds-space-2)' }}>🎯 Best Practices</h3>
                 <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', marginBottom: 'var(--ds-space-4)' }}>13 emerging patterns from 2025–2026 production deployments.</p>
-                <Button variant="ghost" size="sm">View Practices</Button>
+                <Button variant="ghost" size="sm" onClick={() => handleNavigate('practices')}>View Practices</Button>
               </Card>
               <Card variant="default" padding="lg">
                 <h3 style={{ marginBottom: 'var(--ds-space-2)' }}>📊 Progress Tracker</h3>
                 <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', marginBottom: 'var(--ds-space-4)' }}>Track your learning across all 48 topics with completion checkpoints.</p>
-                <Button variant="ghost" size="sm">View Progress</Button>
+                <Button variant="ghost" size="sm" onClick={() => handleNavigate('progress')}>View Progress</Button>
               </Card>
             </Grid>
           </Section.Body>

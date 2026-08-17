@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "structuredoutputs", "workflows", "unhobbling"]
+    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling"]
   },
   {
     id: "rag_architecture",
@@ -48,7 +48,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🏗️",
     color: "#3b82f6",
     description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn", "goaltracker"]
   },
   {
     id: "frontiers_production",
@@ -106,6 +106,15 @@ export const TABS_REGISTRY = [
     icon: "📐",
     keywords: ["structured outputs", "json schema", "constrained decoding", "fsm", "outlines", "pydantic", "instructor", "grammars", "logit masking"],
     component: lazy(() => import("../structuredOutputs/StructuredOutputsTab.jsx"))
+  },
+  {
+    id: "topicmodeling",
+    label: "Topic Modeling 2026",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🌱",
+    keywords: ["topic modeling", "keynmf", "seeded topic modeling", "turftopic", "llm summarization", "trend tracking", "ecb speeches", "lda"],
+    component: lazy(() => import("../topicModeling/TopicModelingTab.jsx"))
   },
   {
     id: "workflows",
@@ -529,6 +538,15 @@ export const TABS_REGISTRY = [
     keywords: ["active learning", "annotation", "uncertainty"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.ActiveLearningTab })))
   },
+  {
+    id: "goaltracker",
+    label: "2026 Goal Tracker Lab",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🎯",
+    keywords: ["goal tracker", "vision board", "streamlit", "neon", "postgres", "sabrine bendimerad", "practical lab", "habits", "2026", "metrics"],
+    component: lazy(() => import("../goalTracker/GoalTrackerTab.jsx"))
+  },
 
   // ── Umbrella 6 — Production & Frontiers ─────────────────────
   {
@@ -546,7 +564,7 @@ export const TABS_REGISTRY = [
     umbrellaId: "frontiers_production",
     category: "Advanced & Frontiers",
     icon: "⚖️",
-    keywords: ["llm evals", "evals based on vibes", "missing layer", "attribution", "specificity", "quality gate", "serve retry block", "regression", "16"],
+    keywords: ["llm evals", "evals based on vibes", "missing layer", "attribution", "specificity", "quality gate", "serve retry block", "regression", "product manager", "pm eval", "julia winn", "spam filter", "tax chatbot", "recsys", "eval to launch", "gsm-symbolic", "gsm-noop", "apple benchmark", "true reasoning", "maxime jabarian", "benchmark contamination"],
     component: lazy(() => import("../llmEvals/LLMEvalLayerTab.jsx"))
   },
   {
