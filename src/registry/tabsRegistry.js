@@ -48,7 +48,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🏗️",
     color: "#3b82f6",
     description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn", "goaltracker"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression"]
   },
   {
     id: "frontiers_production",
@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["tokenbill", "llmevals", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress"]
+    tabs: ["tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress"]
   }
 ];
 
@@ -547,6 +547,69 @@ export const TABS_REGISTRY = [
     keywords: ["goal tracker", "vision board", "streamlit", "neon", "postgres", "sabrine bendimerad", "practical lab", "habits", "2026", "metrics"],
     component: lazy(() => import("../goalTracker/GoalTrackerTab.jsx"))
   },
+  {
+    id: "vaes",
+    label: "Variational Autoencoders (VAEs)",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🌀",
+    keywords: ["variational autoencoders", "vaes", "elbo", "reparameterization trick", "kl divergence", "latent space", "slava efimov", "generative ai"],
+    component: lazy(() => import("../vaes/VAETab.jsx"))
+  },
+  {
+    id: "keras3",
+    label: "Keras 3.0 Multi-Backend Lab",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "⚡",
+    keywords: ["keras 3.0", "pytorch backend", "jax backend", "tensorflow", "nmt", "encoder decoder", "peng qian", "multi-backend"],
+    component: lazy(() => import("../keras3/Keras3Tab.jsx"))
+  },
+  {
+    id: "byol",
+    label: "BYOL Self-Supervised Learning",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🧬",
+    keywords: ["bootstrap your own latent", "byol", "self-supervised learning", "grill et al", "deepmind", "ema", "no negative pairs", "online target network"],
+    component: lazy(() => import("../byol/BYOLTab.jsx"))
+  },
+  {
+    id: "xlstm",
+    label: "LSTMs & xLSTMs Deep Dive",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🌀",
+    keywords: ["lstm", "xlstm", "slstm", "mlstm", "exponential gating", "matrix memory", "hochreiter", "srijanie dey", "hand calculation"],
+    component: lazy(() => import("../xlstm/XLSTMTab.jsx"))
+  },
+  {
+    id: "timeseriesanomaly",
+    label: "Time Series Anomaly Autoencoder",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "📈",
+    keywords: ["time series anomaly", "autoencoders", "reconstruction error", "mse loss", "piero paialunga", "1d cnn", "percentile threshold"],
+    component: lazy(() => import("../tsAnomaly/TSAnomalyTab.jsx"))
+  },
+  {
+    id: "aiusecases",
+    label: "3 Enterprise AI Use Cases",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🚀",
+    keywords: ["3 ai use cases", "beyond chatbot", "shaw talebi", "feature engineering", "text embeddings", "lead scoring", "unstructured data"],
+    component: lazy(() => import("../aiUseCases/AIUseCasesTab.jsx"))
+  },
+  {
+    id: "linearregression",
+    label: "Linear Regression & Gradient Descent",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "📐",
+    keywords: ["linear regression", "cost function", "gradient descent", "shreya rao", "mse", "mae", "house pricing", "weight update"],
+    component: lazy(() => import("../linearRegression/LinearRegressionTab.jsx"))
+  },
 
   // ── Umbrella 6 — Production & Frontiers ─────────────────────
   {
@@ -566,6 +629,15 @@ export const TABS_REGISTRY = [
     icon: "⚖️",
     keywords: ["llm evals", "evals based on vibes", "missing layer", "attribution", "specificity", "quality gate", "serve retry block", "regression", "product manager", "pm eval", "julia winn", "spam filter", "tax chatbot", "recsys", "eval to launch", "gsm-symbolic", "gsm-noop", "apple benchmark", "true reasoning", "maxime jabarian", "benchmark contamination"],
     component: lazy(() => import("../llmEvals/LLMEvalLayerTab.jsx"))
+  },
+  {
+    id: "reasoningbench",
+    label: "LLM Reasoning & GSM-Symbolic",
+    umbrellaId: "frontiers_production",
+    category: "Production & Frontiers",
+    icon: "🔬",
+    keywords: ["gsm-symbolic", "gsm-noop", "apple benchmark", "true reasoning", "maxime jabarian", "benchmark contamination", "llm reasoning", "symbolic mutation", "noise collapse"],
+    component: lazy(() => import("../reasoningBench/ReasoningBenchTab.jsx"))
   },
   {
     id: "practices",

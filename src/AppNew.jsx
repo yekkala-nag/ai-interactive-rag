@@ -71,6 +71,13 @@ const TabComponents = {
   classicalml: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ClassicalMLTab }))),
   activelearn: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ActiveLearningTab }))),
   goaltracker: lazy(() => import('./goalTracker/GoalTrackerTab.jsx')),
+  vaes: lazy(() => import('./vaes/VAETab.jsx')),
+  keras3: lazy(() => import('./keras3/Keras3Tab.jsx')),
+  byol: lazy(() => import('./byol/BYOLTab.jsx')),
+  xlstm: lazy(() => import('./xlstm/XLSTMTab.jsx')),
+  timeseriesanomaly: lazy(() => import('./tsAnomaly/TSAnomalyTab.jsx')),
+  aiusecases: lazy(() => import('./aiUseCases/AIUseCasesTab.jsx')),
+  linearregression: lazy(() => import('./linearRegression/LinearRegressionTab.jsx')),
 
   powerfeatures: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PowerFeaturesTab }))),
   frontiers: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ResearchFrontiersTab }))),
@@ -78,6 +85,7 @@ const TabComponents = {
   practices: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PracticesTab }))),
   tokenbill: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.TokenBillTab }))),
   llmevals: lazy(() => import('./llmEvals/LLMEvalLayerTab.jsx')),
+  reasoningbench: lazy(() => import('./reasoningBench/ReasoningBenchTab.jsx')),
   progress: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ProgressTab }))),
 };
 
