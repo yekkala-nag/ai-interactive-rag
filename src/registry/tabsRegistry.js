@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling"]
+    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness"]
   },
   {
     id: "rag_architecture",
@@ -133,6 +133,15 @@ export const TABS_REGISTRY = [
     icon: "🔓",
     keywords: ["unhobbling", "claude 5", "capabilities", "reasoning"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.UnhobblingTab })))
+  },
+  {
+    id: "aiharness",
+    label: "AI Harness & Training Loops",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "⚙️",
+    keywords: ["ai harness", "training loops", "transformer architecture", "kv cache", "gqa", "rlhf", "dpo", "gradient descent", "chinchilla", "flash attention", "evals", "failure modes"],
+    component: lazy(() => import("../aiHarness/AIHarnessTab.jsx"))
   },
 
   // ── Umbrella 2 — RAG Architectures & Pipelines ──────────────────────────────
