@@ -47,6 +47,7 @@ const TabComponents = {
   vague: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.VagueQuestionsTab }))),
   hallucination: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HallucinationLoopTab }))),
   memeng: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.MemoryEngineeringTab }))),
+  contextlimits: lazy(() => import('./contextLimits/ContextLimitsTab.jsx')),
 
   cliagent: lazy(() => import('./cliAgents/CliAgentTab.jsx')),
   redesign: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.RedesignWorkTab }))),

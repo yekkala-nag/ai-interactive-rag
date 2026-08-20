@@ -32,7 +32,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🧠",
     color: "#9b7fd4",
     description: "Context curation, measuring quality, company brain & context graph",
-    tabs: ["ctxeng", "ctxmeasure", "vague", "hallucination", "contextgraph", "companybrain", "memeng"]
+    tabs: ["ctxeng", "ctxmeasure", "vague", "hallucination", "contextgraph", "companybrain", "memeng", "contextlimits"]
   },
   {
     id: "agents_frameworks",
@@ -344,6 +344,15 @@ export const TABS_REGISTRY = [
     icon: "⚡",
     keywords: ["memory engineering", "persistent memory", "long-term"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.MemoryEngineeringTab })))
+  },
+  {
+    id: "contextlimits",
+    label: "1M Context Limits & Working Memory",
+    umbrellaId: "context_memory",
+    category: "Context & Memory",
+    icon: "🧠",
+    keywords: ["1m context window", "working memory", "bapo model", "tobias schnabel", "microsoft research", "variable tracking", "bapo hard", "bapo easy"],
+    component: lazy(() => import("../contextLimits/ContextLimitsTab.jsx"))
   },
 
   // ── Umbrella 4 — Agent Systems & Frameworks ──────────────────────
