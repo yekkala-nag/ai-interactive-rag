@@ -80,6 +80,7 @@ const TabComponents = {
   timeseriesanomaly: lazy(() => import('./tsAnomaly/TSAnomalyTab.jsx')),
   aiusecases: lazy(() => import('./aiUseCases/AIUseCasesTab.jsx')),
   linearregression: lazy(() => import('./linearRegression/LinearRegressionTab.jsx')),
+  pandasdataframes: lazy(() => import('./pandasDataframes/PandasDataFrameTab.jsx')),
 
   powerfeatures: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PowerFeaturesTab }))),
   frontiers: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ResearchFrontiersTab }))),
@@ -89,6 +90,8 @@ const TabComponents = {
   llmevals: lazy(() => import('./llmEvals/LLMEvalLayerTab.jsx')),
   reasoningbench: lazy(() => import('./reasoningBench/ReasoningBenchTab.jsx')),
   progress: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ProgressTab }))),
+  guardrails: lazy(() => import('./guardrails/GuardrailsTab.jsx')),
+  llmreliability: lazy(() => import('./llmReliability/LLMReliabilityTab.jsx')),
 };
 
 function TabLoader({ tabId, onSelectTab }) {

@@ -48,7 +48,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🏗️",
     color: "#3b82f6",
     description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes"]
   },
   {
     id: "frontiers_production",
@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress"]
+    tabs: ["tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
@@ -598,7 +598,7 @@ export const TABS_REGISTRY = [
     umbrellaId: "data_platform",
     category: "Data & Platform Layers",
     icon: "🌀",
-    keywords: ["lstm", "xlstm", "slstm", "mlstm", "exponential gating", "matrix memory", "hochreiter", "srijanie dey", "hand calculation"],
+    keywords: ["lstm", "xlstm", "slstm", "mlstm", "exponential gating", "matrix memory", "hochreiter", "hand calculation", "recurrent neural networks"],
     component: lazy(() => import("../xlstm/XLSTMTab.jsx"))
   },
   {
@@ -607,7 +607,7 @@ export const TABS_REGISTRY = [
     umbrellaId: "data_platform",
     category: "Data & Platform Layers",
     icon: "📈",
-    keywords: ["time series anomaly", "autoencoders", "reconstruction error", "mse loss", "piero paialunga", "1d cnn", "percentile threshold"],
+    keywords: ["time series anomaly", "autoencoders", "reconstruction error", "mse loss", "1d cnn", "percentile threshold", "unsupervised anomaly detection"],
     component: lazy(() => import("../tsAnomaly/TSAnomalyTab.jsx"))
   },
   {
@@ -616,7 +616,7 @@ export const TABS_REGISTRY = [
     umbrellaId: "data_platform",
     category: "Data & Platform Layers",
     icon: "🚀",
-    keywords: ["3 ai use cases", "beyond chatbot", "shaw talebi", "feature engineering", "text embeddings", "lead scoring", "unstructured data"],
+    keywords: ["3 ai use cases", "beyond chatbot", "feature engineering", "text embeddings", "lead scoring", "unstructured data", "enterprise ai"],
     component: lazy(() => import("../aiUseCases/AIUseCasesTab.jsx"))
   },
   {
@@ -625,8 +625,17 @@ export const TABS_REGISTRY = [
     umbrellaId: "data_platform",
     category: "Data & Platform Layers",
     icon: "📐",
-    keywords: ["linear regression", "cost function", "gradient descent", "shreya rao", "mse", "mae", "house pricing", "weight update"],
+    keywords: ["linear regression", "cost function", "gradient descent", "mse", "mae", "house pricing", "weight update", "optimization"],
     component: lazy(() => import("../linearRegression/LinearRegressionTab.jsx"))
+  },
+  {
+    id: "pandasdataframes",
+    label: "Pandas DataFrames Fundamentals",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🐼",
+    keywords: ["pandas dataframes", "ibrahim salami", "wes mckinney", "numpy arrays", "ndarrays", "dataframe initialization", "read_csv", "dictionaries"],
+    component: lazy(() => import("../pandasDataframes/PandasDataFrameTab.jsx"))
   },
 
   // ── Umbrella 6 — Production & Frontiers ─────────────────────
@@ -701,6 +710,24 @@ export const TABS_REGISTRY = [
     icon: "🎯",
     keywords: ["progress", "tracking", "checklist"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.ProgressTab })))
+  },
+  {
+    id: "guardrails",
+    label: "Responsible AI & Security Guardrails",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "🛡️",
+    keywords: ["responsible ai", "guardrails", "pii redaction", "author redaction", "copyright protection", "ip leak defense", "prompt injection", "jailbreak defense", "llama guard", "nemo guardrails"],
+    component: lazy(() => import("../guardrails/GuardrailsTab.jsx"))
+  },
+  {
+    id: "llmreliability",
+    label: "LLM Reliability & Fault Tolerance",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "⚙️",
+    keywords: ["llm reliability", "fault tolerance", "xml tags", "markup tags", "pydantic validation", "exponential backoff", "multi-provider fallback", "fallback chain", "stochastic"],
+    component: lazy(() => import("../llmReliability/LLMReliabilityTab.jsx"))
   }
 ];
 
