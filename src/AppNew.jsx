@@ -23,6 +23,7 @@ const TabComponents = {
   structuredoutputs: lazy(() => import('./structuredOutputs/StructuredOutputsTab.jsx')),
   topicmodeling: lazy(() => import('./topicModeling/TopicModelingTab.jsx')),
   aiharness: lazy(() => import('./aiHarness/AIHarnessTab.jsx')),
+  promptlearning: lazy(() => import('./promptLearning/PromptLearningTab.jsx')),
 
   rag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.RAGTypesTab }))),
   pipeline: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PipelineTab }))),
@@ -39,6 +40,9 @@ const TabComponents = {
   agenticrag: lazy(() => import('./agenticRAG/AgenticRAGTab.jsx')),
   ragcasestudies: lazy(() => import('./tabs/RAGCaseStudiesTab.jsx')),
   interviewprep: lazy(() => import('./tabs/InterviewPrepTab.jsx')),
+  rowlevelrag: lazy(() => import('./rowLevelRAG/RowLevelRAGTab.jsx')),
+  graphtraversalknowledge: lazy(() => import('./graphTraversalKnowledge/GraphTraversalTab.jsx')),
+  ragcorpusshapes: lazy(() => import('./ragCorpusShapes/RAGCorpusShapesTab.jsx')),
 
   ctxeng: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ContextEngineeringTab }))),
   ctxmeasure: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ContextMeasureTab }))),
@@ -62,6 +66,7 @@ const TabComponents = {
   agentdebugging: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentDebuggingTab }))),
   agenttasks: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentTasksTab }))),
   aiproductbuilder: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIProductBuilderTab }))),
+  mcpclient: lazy(() => import('./mcpClient/MCPClientTab.jsx')),
 
   threelayers: lazy(() => import('./engineeringLayers/ThreeLayersTab.jsx')),
   docstruct: lazy(() => import('./documentStructure/DocumentStructureTab.jsx')),
@@ -81,6 +86,8 @@ const TabComponents = {
   aiusecases: lazy(() => import('./aiUseCases/AIUseCasesTab.jsx')),
   linearregression: lazy(() => import('./linearRegression/LinearRegressionTab.jsx')),
   pandasdataframes: lazy(() => import('./pandasDataframes/PandasDataFrameTab.jsx')),
+  datahumanization: lazy(() => import('./dataHumanization/DataHumanizationTab.jsx')),
+  llmfinetuning: lazy(() => import('./llmFinetuning/LLMFinetuningTab.jsx')),
 
   powerfeatures: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PowerFeaturesTab }))),
   frontiers: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ResearchFrontiersTab }))),

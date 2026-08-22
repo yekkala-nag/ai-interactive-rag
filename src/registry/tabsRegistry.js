@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness"]
+    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
   },
   {
     id: "rag_architecture",
@@ -24,7 +24,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
-    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep"]
+    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "graphtraversalknowledge", "ragcorpusshapes"]
   },
   {
     id: "context_memory",
@@ -40,7 +40,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🤖",
     color: "#c4572a",
     description: "ReAct loops, multi-agent orchestration, CLI agents, LangChain & LangGraph",
-    tabs: ["fiveassets", "redesign", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder"]
+    tabs: ["fiveassets", "redesign", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient"]
   },
   {
     id: "data_platform",
@@ -48,7 +48,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🏗️",
     color: "#3b82f6",
     description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "datahumanization", "llmfinetuning"]
   },
   {
     id: "frontiers_production",
@@ -142,6 +142,15 @@ export const TABS_REGISTRY = [
     icon: "⚙️",
     keywords: ["ai harness", "training loops", "transformer architecture", "kv cache", "gqa", "rlhf", "dpo", "gradient descent", "chinchilla", "flash attention", "evals", "failure modes"],
     component: lazy(() => import("../aiHarness/AIHarnessTab.jsx"))
+  },
+  {
+    id: "promptlearning",
+    label: "Prompt Learning & English Feedback",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🧠",
+    keywords: ["prompt learning", "english feedback", "voyager", "karpathy", "meta-prompt", "instruction management", "online optimization", "critique", "evals"],
+    component: lazy(() => import("../promptLearning/PromptLearningTab.jsx"))
   },
 
   // ── Umbrella 2 — RAG Architectures & Pipelines ──────────────────────────────
@@ -279,6 +288,33 @@ export const TABS_REGISTRY = [
     icon: "🎯",
     keywords: ["interview", "questions", "rag interview", "q&a", "study plan"],
     component: lazy(() => import("../tabs/InterviewPrepTab.jsx"))
+  },
+  {
+    id: "rowlevelrag",
+    label: "Row-Level Table Chunks for RAG",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "📊",
+    keywords: ["row level chunks", "table rag", "tabular retrieval", "serialize_table_rows", "pipe parser", "docling", "dual scale index"],
+    component: lazy(() => import("../rowLevelRAG/RowLevelRAGTab.jsx"))
+  },
+  {
+    id: "graphtraversalknowledge",
+    label: "Always-Fused Graph Traversal Knowledge Layer",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🌐",
+    keywords: ["graph traversal", "always fused pipeline", "bitemporal edges", "entity resolution", "two threshold", "valid_from", "valid_to", "discovered contradictions"],
+    component: lazy(() => import("../graphTraversalKnowledge/GraphTraversalTab.jsx"))
+  },
+  {
+    id: "ragcorpusshapes",
+    label: "Three Kinds of RAG Corpus & Selection",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🗂️",
+    keywords: ["rag corpus shapes", "flat pile failure modes", "unrelated pdfs", "homogeneous typed corpus", "case file bundles", "metadata table indexing", "baseline waste"],
+    component: lazy(() => import("../ragCorpusShapes/RAGCorpusShapesTab.jsx"))
   },
 
   // ── Umbrella 3 — Context & Memory Engineering ─────────────────────────
@@ -473,6 +509,15 @@ export const TABS_REGISTRY = [
     keywords: ["product builder", "prd", "cursorrules", "architecture", "system spec"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AIProductBuilderTab })))
   },
+  {
+    id: "mcpclient",
+    label: "MCP Client & Streamlit Apps",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "💻",
+    keywords: ["mcp client", "streamlit", "remote mcp server", "deepwiki", "huggingface", "json-rpc 2.0", "stdio", "sse", "tool calling"],
+    component: lazy(() => import("../mcpClient/MCPClientTab.jsx"))
+  },
 
   // ── Umbrella 5 — Data & Platform Layers ─────────────────────
   {
@@ -634,8 +679,26 @@ export const TABS_REGISTRY = [
     umbrellaId: "data_platform",
     category: "Data & Platform Layers",
     icon: "🐼",
-    keywords: ["pandas dataframes", "ibrahim salami", "wes mckinney", "numpy arrays", "ndarrays", "dataframe initialization", "read_csv", "dictionaries"],
+    keywords: ["pandas dataframes", "numpy arrays", "ndarrays", "dataframe initialization", "read_csv", "dictionaries", "in-memory analytics"],
     component: lazy(() => import("../pandasDataframes/PandasDataFrameTab.jsx"))
+  },
+  {
+    id: "datahumanization",
+    label: "Data Humanization & Storytelling",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "💡",
+    keywords: ["data humanization", "data storytelling", "scintillating grid", "data artisan", "aida", "scqa", "symptom kpi", "humanized insight", "roi", "data-rich action-poor"],
+    component: lazy(() => import("../dataHumanization/DataHumanizationTab.jsx"))
+  },
+  {
+    id: "llmfinetuning",
+    label: "LLM Fine-Tuning & QLoRA Guide",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🎯",
+    keywords: ["fine-tuning", "qlora", "lora", "peft", "4-bit nf4", "double quantization", "paged optimizers", "instruction backtranslation", "sfttrainer", "single gpu"],
+    component: lazy(() => import("../llmFinetuning/LLMFinetuningTab.jsx"))
   },
 
   // ── Umbrella 6 — Production & Frontiers ─────────────────────
