@@ -40,7 +40,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🤖",
     color: "#c4572a",
     description: "ReAct loops, multi-agent orchestration, CLI agents, LangChain & LangGraph",
-    tabs: ["fiveassets", "redesign", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient"]
+    tabs: ["fiveassets", "redesign", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
   },
   {
     id: "data_platform",
@@ -517,6 +517,15 @@ export const TABS_REGISTRY = [
     icon: "💻",
     keywords: ["mcp client", "streamlit", "remote mcp server", "deepwiki", "huggingface", "json-rpc 2.0", "stdio", "sse", "tool calling"],
     component: lazy(() => import("../mcpClient/MCPClientTab.jsx"))
+  },
+  {
+    id: "loopengineering",
+    label: "Loop Engineering",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "∞",
+    keywords: ["loop engineering", "ralph loop", "ralf", "ralphex", "addy osmani", "boris cherny", "peter steinberger", "goal loop", "loop library", "69 loops", "claude basics", "cross-model review", "autonomous agent loops"],
+    component: lazy(() => import("../loopEngineering/LoopEngineeringTab.jsx"))
   },
 
   // ── Umbrella 5 — Data & Platform Layers ─────────────────────

@@ -67,6 +67,7 @@ const TabComponents = {
   agenttasks: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentTasksTab }))),
   aiproductbuilder: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIProductBuilderTab }))),
   mcpclient: lazy(() => import('./mcpClient/MCPClientTab.jsx')),
+  loopengineering: lazy(() => import('./loopEngineering/LoopEngineeringTab.jsx')),
 
   threelayers: lazy(() => import('./engineeringLayers/ThreeLayersTab.jsx')),
   docstruct: lazy(() => import('./documentStructure/DocumentStructureTab.jsx')),

@@ -67,3 +67,4 @@ export { default as ProxyPointerTab } from './proxyPointer/ProxyPointerTab.jsx';
 export { default as AgenticRAGTab } from './agenticRAG/AgenticRAGTab.jsx';
 export { default as LLMEvalLayerTab } from './llmEvals/LLMEvalLayerTab.jsx';
 export { default as KnowledgeBaseTab } from './knowledgeBase/KnowledgeBaseTab.jsx';
+export { default as LoopEngineeringTab } from './loopEngineering/LoopEngineeringTab.jsx';
