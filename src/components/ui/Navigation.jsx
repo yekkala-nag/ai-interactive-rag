@@ -1,18 +1,25 @@
 /**
  * Navigation Components — Sidebar, TopBar, CommandPalette, ModuleSwitcher
+ * Apple Product Architecture & UI/UX Redesign (macOS Sequoia / Sonoma Aesthetic)
  */
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { UMBRELLA_TOPICS, getTabsForUmbrella, getUmbrellaForTab, getTabById } from '../../registry/tabsRegistry.js';
+import { UMBRELLA_TOPICS, getTabsForUmbrella, getUmbrellaForTab, getTabById, TABS_REGISTRY } from '../../registry/tabsRegistry.js';
 import { getModuleColors } from '../../design-system/tokens.js';
-import { Button, Badge, Input } from './Core.jsx';
-import { Flex, Stack } from '../layout/Primitives.jsx';
+import { Button, Badge } from './Core.jsx';
+
+// Category Accent Gradient Mapping (Apple-Style Vibrancy)
+const MODULE_ACCENTS = {
+  foundations: { primary: '#3b82f6', gradient: 'linear-gradient(135deg, #2563eb, #60a5fa)', lightBg: 'rgba(59, 130, 246, 0.12)', border: 'rgba(59, 130, 246, 0.3)' },
+  rag_architecture: { primary: '#f59e0b', gradient: 'linear-gradient(135deg, #d97706, #fbbf24)', lightBg: 'rgba(245, 158, 11, 0.12)', border: 'rgba(245, 158, 11, 0.3)' },
+  context_memory: { primary: '#ec4899', gradient: 'linear-gradient(135deg, #db2777, #f472b6)', lightBg: 'rgba(236, 72, 153, 0.12)', border: 'rgba(236, 72, 153, 0.3)' },
+  agents_frameworks: { primary: '#10b981', gradient: 'linear-gradient(135deg, #059669, #34d399)', lightBg: 'rgba(16, 185, 129, 0.12)', border: 'rgba(16, 185, 129, 0.3)' },
+  data_platform: { primary: '#8b5cf6', gradient: 'linear-gradient(135deg, #7c3aed, #a78bfa)', lightBg: 'rgba(139, 92, 246, 0.12)', border: 'rgba(139, 92, 246, 0.3)' },
+  frontiers_production: { primary: '#a855f7', gradient: 'linear-gradient(135deg, #9333ea, #c084fc)', lightBg: 'rgba(168, 85, 247, 0.12)', border: 'rgba(168, 85, 247, 0.3)' }
+};
 
 // ============================================
-// Sidebar — Collapsible, accordion navigation
-// ============================================
-// ============================================
-// Sidebar — Collapsible, accordion navigation
+// Sidebar — Apple macOS Sequoia Glass Sidebar
 // ============================================
 export function Sidebar({
   activeTab,
@@ -31,7 +38,7 @@ export function Sidebar({
     frontiers_production: false,
   });
 
-  // Auto-focus the module containing the currently active tab (single-accordion focus)
+  // Auto-focus the module containing the currently active tab
   useEffect(() => {
     const parentModule = getUmbrellaForTab(activeTab);
     if (parentModule?.id) {
@@ -51,7 +58,6 @@ export function Sidebar({
     setExpandedModules(prev => {
       const willOpen = !prev[moduleId];
       if (willOpen) {
-        // Single open accordion mode for clean, uncluttered navigation
         return {
           foundations: false,
           rag_architecture: false,
@@ -71,6 +77,7 @@ export function Sidebar({
   const queryStr = (typeof searchQuery === 'string' ? searchQuery : (searchQuery?.target?.value || '')).trim().toLowerCase();
 
   let totalVisibleTabs = 0;
+  const activeTabObj = getTabById(activeTab);
 
   return (
     <aside
@@ -81,114 +88,150 @@ export function Sidebar({
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif',
+        userSelect: 'none',
+        borderRight: '1px solid var(--ds-color-border-subtle)'
       }}
       aria-label="Main navigation"
     >
-      {/* BRAND HEADER */}
+      {/* 1. APPLE MACOS HEADER & TRAFFIC LIGHTS */}
       <div style={{
-        padding: collapsed ? '12px 6px' : '14px 16px',
+        padding: collapsed ? '12px 6px' : '12px 14px',
         borderBottom: '1px solid var(--ds-color-border-subtle)',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: collapsed ? 'center' : 'space-between',
-        minHeight: '60px',
-        background: 'var(--ds-color-bg-surface)',
+        flexDirection: 'column',
+        gap: '10px',
+        background: 'rgba(255, 255, 255, 0.02)',
         flexShrink: 0
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden', flex: 1 }}>
-          <div style={{
-            width: '34px', height: '34px', borderRadius: '8px',
-            background: 'linear-gradient(135deg, #10b981, #2563eb)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontWeight: 'bold', fontSize: '1.05rem', color: 'white', flexShrink: 0,
-            boxShadow: '0 2px 6px rgba(37, 99, 235, 0.25)'
-          }}>
-            ⚡
+        {/* macOS Traffic Lights (Desktop Decorative) */}
+        {!collapsed && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '2px' }}>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f56', border: '1px solid rgba(0,0,0,0.1)' }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffbd2e', border: '1px solid rgba(0,0,0,0.1)' }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#27c93f', border: '1px solid rgba(0,0,0,0.1)' }} />
           </div>
-          {!collapsed && (
-            <div style={{ minWidth: 0, display: 'flex', flexDirection: 'column' }}>
-              <span style={{
-                fontFamily: 'var(--ds-font-family-display)',
-                fontWeight: 800,
-                fontSize: '0.95rem',
-                color: 'var(--ds-color-text-primary)',
-                letterSpacing: '-0.01em',
-                lineHeight: 1.2,
-                whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
-              }}>
-                AI Systems
-              </span>
-              <span style={{
-                fontSize: '0.65rem',
-                color: 'var(--ds-color-text-tertiary)',
-                fontFamily: 'var(--ds-font-family-mono)',
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
-                fontWeight: 600,
-              }}>
-                Knowledge Base
-              </span>
+        )}
+
+        {/* Brand Icon & Title Row */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: collapsed ? 'center' : 'space-between',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden' }}>
+            {/* Apple Squircle Brand Icon */}
+            <div style={{
+              width: '32px', height: '32px', borderRadius: '9px',
+              background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontWeight: 800, fontSize: '0.95rem', color: 'white', flexShrink: 0,
+              boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4), 0 3px 8px rgba(37, 99, 235, 0.35)'
+            }}>
+              ⚡
             </div>
+
+            {!collapsed && (
+              <div style={{ minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+                <span style={{
+                  fontWeight: 700,
+                  fontSize: '0.92rem',
+                  color: 'var(--ds-color-text-primary)',
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.15,
+                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
+                }}>
+                  AI Systems
+                </span>
+                <span style={{
+                  fontSize: '0.62rem',
+                  color: 'var(--ds-color-text-tertiary)',
+                  fontFamily: 'SF Mono, Menlo, Monaco, monospace',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  fontWeight: 600,
+                  marginTop: '1px'
+                }}>
+                  KNOWLEDGE BASE
+                </span>
+              </div>
+            )}
+          </div>
+
+          {!collapsed && onToggleCollapse && (
+            <button
+              onClick={onToggleCollapse}
+              title="Collapse Sidebar (⌘[)"
+              style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid var(--ds-color-border-subtle)',
+                borderRadius: '7px',
+                color: 'var(--ds-color-text-secondary)',
+                cursor: 'pointer',
+                width: '26px', height: '26px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'all 0.15s ease',
+                fontSize: '0.75rem'
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; e.currentTarget.style.color = 'var(--ds-color-text-primary)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.color = 'var(--ds-color-text-secondary)'; }}
+              aria-label="Collapse sidebar"
+            >
+              ◂
+            </button>
           )}
         </div>
-
-        {!collapsed && onToggleCollapse && (
-          <button
-            onClick={onToggleCollapse}
-            title="Collapse sidebar"
-            style={{
-              background: 'transparent',
-              border: '1px solid var(--ds-color-border-subtle)',
-              borderRadius: '6px',
-              color: 'var(--ds-color-text-secondary)',
-              cursor: 'pointer',
-              padding: '4px 7px',
-              fontSize: '0.8rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'all 0.15s ease'
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; e.currentTarget.style.color = 'var(--ds-color-text-primary)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ds-color-text-secondary)'; }}
-            aria-label="Collapse sidebar"
-          >
-            ◂
-          </button>
-        )}
       </div>
 
-      {/* SEARCH INPUT */}
+      {/* 2. APPLE SPOTLIGHT SEARCH INPUT */}
       {!collapsed && (
-        <div style={{ padding: '10px 14px', borderBottom: '1px solid var(--ds-color-border-subtle)', background: 'var(--ds-color-bg-surface)', flexShrink: 0 }}>
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-            <span style={{ position: 'absolute', left: '10px', color: 'var(--ds-color-text-tertiary)', fontSize: '0.9rem', pointerEvents: 'none' }}>⌕</span>
+        <div style={{ padding: '10px 12px', borderBottom: '1px solid var(--ds-color-border-subtle)', flexShrink: 0 }}>
+          <div style={{
+            position: 'relative', display: 'flex', alignItems: 'center',
+            background: 'var(--ds-color-bg-canvas)',
+            border: '1px solid var(--ds-color-border-default)',
+            borderRadius: '8px',
+            padding: '5px 8px 5px 30px',
+            transition: 'all 0.15s ease'
+          }}>
+            <span style={{ position: 'absolute', left: '9px', color: 'var(--ds-color-text-tertiary)', fontSize: '0.85rem', pointerEvents: 'none' }}>
+              🔍
+            </span>
             <input
               type="text"
-              placeholder="Search topics (⌘K)..."
+              placeholder="Search topics..."
               value={typeof searchQuery === 'string' ? searchQuery : (searchQuery?.target?.value || '')}
               onChange={(e) => onSearchChange?.(e.target.value)}
               style={{
                 width: '100%',
-                padding: '7px 28px 7px 30px',
-                borderRadius: '6px',
-                border: '1px solid var(--ds-color-border-default)',
-                background: 'var(--ds-color-bg-canvas)',
+                background: 'transparent',
+                border: 'none',
                 color: 'var(--ds-color-text-primary)',
-                fontSize: '0.82rem',
+                fontSize: '0.8rem',
                 outline: 'none',
-                fontFamily: 'var(--ds-font-family-sans)',
-                transition: 'border-color 0.15s ease'
+                fontFamily: 'inherit'
               }}
-              onFocus={e => e.currentTarget.style.borderColor = 'var(--ds-color-border-focus)'}
-              onBlur={e => e.currentTarget.style.borderColor = 'var(--ds-color-border-default)'}
             />
-            {queryStr.length > 0 && (
+            {queryStr.length === 0 ? (
+              <kbd style={{
+                fontSize: '0.62rem',
+                padding: '1px 5px',
+                borderRadius: '4px',
+                background: 'rgba(255, 255, 255, 0.08)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                color: 'var(--ds-color-text-tertiary)',
+                fontFamily: 'SF Mono, monospace',
+                fontWeight: 600,
+                flexShrink: 0
+              }}>
+                ⌘K
+              </kbd>
+            ) : (
               <button
                 onClick={() => onSearchChange?.('')}
                 style={{
-                  position: 'absolute', right: '8px', background: 'none', border: 'none',
-                  color: 'var(--ds-color-text-tertiary)', cursor: 'pointer', fontSize: '0.8rem', padding: '2px'
+                  background: 'none', border: 'none',
+                  color: 'var(--ds-color-text-tertiary)', cursor: 'pointer', fontSize: '0.75rem', padding: '0 2px'
                 }}
                 aria-label="Clear search"
               >
@@ -199,11 +242,43 @@ export function Sidebar({
         </div>
       )}
 
-      {/* MODULE ACCORDIONS NAV */}
+      {/* 3. PINNED FAVORITES & TOPICS SUMMARY */}
+      {!collapsed && !queryStr && (
+        <div style={{ padding: '8px 12px 4px 12px', borderBottom: '1px solid var(--ds-color-border-subtle)', flexShrink: 0 }}>
+          <div style={{ fontSize: '0.62rem', fontWeight: 700, color: 'var(--ds-color-text-tertiary)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+            QUICK NAVIGATION
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            <button
+              onClick={() => onSelectTab('overview')}
+              style={{
+                display: 'flex', alignItems: 'center', justifyBetween: 'space-between',
+                padding: '5px 8px', borderRadius: '6px',
+                background: activeTab === 'overview' ? 'linear-gradient(135deg, #2563eb, #3b82f6)' : 'transparent',
+                color: activeTab === 'overview' ? '#ffffff' : 'var(--ds-color-text-secondary)',
+                border: 'none', cursor: 'pointer', textAlign: 'left', fontSize: '0.78rem',
+                fontWeight: activeTab === 'overview' ? 700 : 500,
+                transition: 'all 0.12s ease'
+              }}
+              onMouseEnter={e => { if (activeTab !== 'overview') e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+              onMouseLeave={e => { if (activeTab !== 'overview') e.currentTarget.style.background = 'transparent'; }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '0.85rem' }}>🌟</span>
+                <span>Overview & Roadmap</span>
+              </div>
+              <span style={{ fontSize: '0.65rem', opacity: 0.8, fontFamily: 'SF Mono, monospace' }}>77 Tabs</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 4. CATEGORY ACCORDIONS LIST */}
       <nav style={{
         flex: 1,
         overflowY: 'auto',
-        padding: collapsed ? '8px 4px' : '8px 8px',
+        padding: collapsed ? '8px 4px' : '8px 10px',
         display: 'flex',
         flexDirection: 'column',
         gap: '4px',
@@ -226,44 +301,58 @@ export function Sidebar({
           totalVisibleTabs += tabs.length;
           const isExpanded = queryStr.length > 0 ? true : (expandedModules[moduleId] ?? false);
           const hasActiveTab = rawTabs.some(t => t.id === activeTab);
-          const moduleColors = getModuleColors(moduleId);
+          const accent = MODULE_ACCENTS[moduleId] || MODULE_ACCENTS.foundations;
 
           return (
             <div key={moduleId} style={{
               borderRadius: '8px',
-              background: hasActiveTab ? 'rgba(0,0,0,0.02)' : 'transparent',
-              border: `1px solid ${hasActiveTab ? `${moduleColors.primary}30` : 'transparent'}`,
-              marginBottom: '2px',
               transition: 'all 0.15s ease'
             }}>
-              {/* MODULE HEADER */}
+              {/* ACCORDION HEADER CARD */}
               <button
                 onClick={() => collapsed ? onToggleCollapse?.() : toggleModule(moduleId)}
                 title={module.title}
                 style={{
                   width: '100%', display: 'flex', alignItems: 'center',
                   justifyContent: collapsed ? 'center' : 'space-between',
-                  padding: collapsed ? '8px' : '8px 10px',
-                  background: hasActiveTab ? `${moduleColors.light}40` : 'none',
-                  border: 'none',
-                  color: hasActiveTab ? moduleColors.primary : 'var(--ds-color-text-primary)',
+                  padding: collapsed ? '8px' : '7px 8px',
+                  background: hasActiveTab ? accent.lightBg : 'transparent',
+                  border: `1px solid ${hasActiveTab ? accent.border : 'transparent'}`,
+                  color: hasActiveTab ? accent.primary : 'var(--ds-color-text-primary)',
                   cursor: 'pointer', textAlign: 'left',
-                  fontSize: '0.84rem', fontWeight: 700,
-                  fontFamily: 'var(--ds-font-family-sans)',
-                  borderRadius: '6px',
+                  borderRadius: '7px',
                   transition: 'all 0.15s ease',
+                  boxShadow: hasActiveTab ? '0 2px 8px rgba(0,0,0,0.1)' : 'none'
                 }}
-                onMouseEnter={e => { if (!hasActiveTab) e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; }}
-                onMouseLeave={e => { if (!hasActiveTab) e.currentTarget.style.background = 'none'; }}
+                onMouseEnter={e => {
+                  if (!hasActiveTab) {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (!hasActiveTab) {
+                    e.currentTarget.style.background = 'transparent';
+                  }
+                }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
-                  <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>{module.icon}</span>
+                  {/* Category Squircle Icon */}
+                  <div style={{
+                    width: '26px', height: '26px', borderRadius: '7px',
+                    background: accent.gradient,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '0.85rem', flexShrink: 0, color: 'white',
+                    boxShadow: '0 2px 5px rgba(0,0,0,0.15)'
+                  }}>
+                    {module.icon}
+                  </div>
+
                   {!collapsed && (
                     <span style={{
-                      fontWeight: 700,
-                      color: hasActiveTab ? moduleColors.primary : 'inherit',
+                      fontWeight: 600,
+                      color: hasActiveTab ? accent.primary : 'var(--ds-color-text-primary)',
                       whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                      fontSize: '0.83rem',
+                      fontSize: '0.81rem', letterSpacing: '-0.01em'
                     }}>
                       {module.title}
                     </span>
@@ -271,32 +360,34 @@ export function Sidebar({
                 </div>
 
                 {!collapsed && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, marginLeft: '6px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, marginLeft: '4px' }}>
                     <span style={{
-                      fontSize: '0.68rem',
+                      fontSize: '0.65rem',
                       fontWeight: 600,
-                      background: hasActiveTab ? `${moduleColors.primary}20` : 'var(--ds-color-bg-surfaceHover)',
-                      color: hasActiveTab ? moduleColors.primary : 'var(--ds-color-text-tertiary)',
+                      fontFamily: 'SF Mono, monospace',
+                      background: hasActiveTab ? `${accent.primary}25` : 'rgba(255, 255, 255, 0.07)',
+                      color: hasActiveTab ? accent.primary : 'var(--ds-color-text-tertiary)',
                       padding: '1px 6px',
-                      borderRadius: '10px',
+                      borderRadius: '9999px',
+                      border: `1px solid ${hasActiveTab ? `${accent.primary}40` : 'rgba(255, 255, 255, 0.1)'}`
                     }}>
                       {tabs.length}
                     </span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)' }}>
-                      {isExpanded ? '▾' : '▸'}
+                    <span style={{ fontSize: '0.7rem', color: 'var(--ds-color-text-tertiary)', transition: 'transform 0.15s ease', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>
+                      ‣
                     </span>
                   </div>
                 )}
               </button>
 
-              {/* SUB-TABS */}
+              {/* NESTED SUB-TABS LIST */}
               {!collapsed && isExpanded && (
                 <div style={{
                   display: 'flex', flexDirection: 'column', gap: '2px',
-                  padding: '4px 6px 6px 10px',
-                  borderLeft: `2px solid ${moduleColors.primary}40`,
-                  marginLeft: '14px',
-                  marginTop: '2px',
+                  padding: '4px 4px 4px 10px',
+                  borderLeft: `1.5px solid ${hasActiveTab ? `${accent.primary}60` : 'rgba(255, 255, 255, 0.1)'}`,
+                  marginLeft: '18px',
+                  marginTop: '3px',
                   marginBottom: '4px'
                 }}>
                   {tabs.map(tab => {
@@ -310,27 +401,41 @@ export function Sidebar({
                           display: 'flex', alignItems: 'center', gap: '8px',
                           padding: '5px 8px',
                           borderRadius: '6px',
-                          background: isActive ? moduleColors.primary : 'transparent',
+                          background: isActive ? 'linear-gradient(135deg, #2563eb, #3b82f6)' : 'transparent',
                           color: isActive ? '#ffffff' : 'var(--ds-color-text-secondary)',
                           border: 'none', cursor: 'pointer', textAlign: 'left',
                           fontSize: '0.78rem',
                           fontWeight: isActive ? 700 : 500,
-                          fontFamily: 'var(--ds-font-family-sans)',
                           transition: 'all 0.12s ease',
                           width: '100%',
-                          position: 'relative'
+                          boxShadow: isActive ? '0 3px 10px rgba(37, 99, 235, 0.35)' : 'none'
                         }}
-                        onMouseEnter={e => { if (!isActive) { e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; e.currentTarget.style.color = 'var(--ds-color-text-primary)'; } }}
-                        onMouseLeave={e => { if (!isActive) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ds-color-text-secondary)'; } }}
+                        onMouseEnter={e => {
+                          if (!isActive) {
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+                            e.currentTarget.style.color = 'var(--ds-color-text-primary)';
+                            e.currentTarget.style.transform = 'translateX(2px)';
+                          }
+                        }}
+                        onMouseLeave={e => {
+                          if (!isActive) {
+                            e.currentTarget.style.background = 'transparent';
+                            e.currentTarget.style.color = 'var(--ds-color-text-secondary)';
+                            e.currentTarget.style.transform = 'translateX(0)';
+                          }
+                        }}
                       >
-                        <span style={{ fontSize: '0.95rem', flexShrink: 0 }}>{tab.icon}</span>
+                        <span style={{ fontSize: '0.85rem', flexShrink: 0 }}>{tab.icon}</span>
                         <span style={{
-                          lineHeight: 1.3,
+                          lineHeight: 1.25,
                           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                           flex: 1
                         }}>
                           {tab.label}
                         </span>
+                        {isActive && (
+                          <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'white', flexShrink: 0 }} />
+                        )}
                       </button>
                     );
                   })}
@@ -341,18 +446,18 @@ export function Sidebar({
         })}
 
         {queryStr && totalVisibleTabs === 0 && (
-          <div style={{ padding: 'var(--ds-space-6)', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>
-            <div style={{ fontSize: '1.5rem', marginBottom: '8px' }}>🔍</div>
-            <div style={{ fontSize: '0.85rem', marginBottom: '8px' }}>No tabs match "{queryStr}"</div>
+          <div style={{ padding: '24px 12px', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>
+            <div style={{ fontSize: '1.4rem', marginBottom: '6px' }}>🔍</div>
+            <div style={{ fontSize: '0.8rem', marginBottom: '8px' }}>No topics match "{queryStr}"</div>
             <button
               onClick={() => onSearchChange?.('')}
               style={{
-                padding: '4px 10px',
+                padding: '3px 10px',
                 borderRadius: '6px',
                 border: '1px solid var(--ds-color-border-default)',
-                background: 'var(--ds-color-bg-surface)',
+                background: 'rgba(255, 255, 255, 0.05)',
                 color: 'var(--ds-color-text-secondary)',
-                fontSize: '0.75rem',
+                fontSize: '0.72rem',
                 cursor: 'pointer',
               }}
             >
@@ -362,20 +467,20 @@ export function Sidebar({
         )}
       </nav>
 
-      {/* COLLAPSED EXPAND BUTTON */}
+      {/* 5. COLLAPSED EXPAND BUTTON */}
       {collapsed && (
-        <div style={{ padding: '10px', borderTop: '1px solid var(--ds-color-border-subtle)', textAlign: 'center' }}>
+        <div style={{ padding: '8px', borderTop: '1px solid var(--ds-color-border-subtle)', textAlign: 'center' }}>
           <button
             onClick={onToggleCollapse}
-            title="Expand sidebar"
+            title="Expand sidebar (⌘[)"
             style={{
-              background: 'var(--ds-color-bg-surfaceHover)',
+              background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid var(--ds-color-border-subtle)',
               borderRadius: '6px',
               color: 'var(--ds-color-text-primary)',
               cursor: 'pointer',
               padding: '6px',
-              fontSize: '0.85rem',
+              fontSize: '0.8rem',
               width: '100%'
             }}
             aria-label="Expand sidebar"
@@ -389,14 +494,14 @@ export function Sidebar({
 }
 
 // ============================================
-// TopBar — Clean contextual header (Desktop + Mobile)
+// TopBar — macOS Toolbar & Breadcrumb Navigation
 // ============================================
 export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, sidebarCollapsed }) {
   const currentModule = getUmbrellaForTab(activeTab);
   const currentTab = getTabById(activeTab);
   const siblingTabs = getTabsForUmbrella(currentModule.id);
   const activeIndex = siblingTabs.findIndex(t => t.id === activeTab);
-  const moduleColors = getModuleColors(currentModule.id);
+  const accent = MODULE_ACCENTS[currentModule.id] || MODULE_ACCENTS.foundations;
 
   const scrollRef = useRef(null);
 
@@ -412,7 +517,8 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
       background: 'var(--ds-color-bg-surface)',
       borderBottom: '1px solid var(--ds-color-border-subtle)',
       position: 'sticky', top: 0, zIndex: 'var(--ds-zIndex-sticky)',
-      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
+      backdropFilter: 'blur(20px) saturate(180%)',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif'
     }}>
       <style jsx>{`
         .topbar-mobile-menu-btn {
@@ -427,14 +533,13 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
 
       {/* BREADCRUMB ROW */}
       <div style={{
-        padding: '10px 18px',
+        padding: '8px 16px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         gap: '12px', flexWrap: 'wrap',
         borderBottom: '1px solid var(--ds-color-border-subtle)',
       }}>
         {/* Left: Mobile Toggle + Breadcrumb Path */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flexWrap: 'wrap' }}>
-          {/* Mobile hamburger button — ONLY on screen width <= 768px */}
           {onToggleSidebar && (
             <button
               className="topbar-mobile-menu-btn"
@@ -442,18 +547,17 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
               aria-label="Toggle mobile navigation menu"
               style={{
                 alignItems: 'center', gap: '4px',
-                padding: '5px 10px',
-                background: 'var(--ds-color-bg-canvas)',
+                padding: '4px 8px',
+                background: 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid var(--ds-color-border-default)',
                 borderRadius: '6px',
                 color: 'var(--ds-color-text-primary)',
-                fontSize: '0.82rem',
+                fontSize: '0.78rem',
                 fontWeight: 600,
                 cursor: 'pointer'
               }}
             >
-              <span>☰</span>
-              <span>Menu</span>
+              <span>☰ Menu</span>
             </button>
           )}
 
@@ -461,24 +565,23 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: '6px',
             padding: '3px 8px', borderRadius: '6px',
-            background: `${moduleColors.light}60`,
-            color: moduleColors.dark || moduleColors.primary,
-            fontSize: '0.8rem', fontWeight: 600,
-            border: `1px solid ${moduleColors.primary}30`
+            background: accent.lightBg,
+            color: accent.primary,
+            fontSize: '0.78rem', fontWeight: 600,
+            border: `1px solid ${accent.border}`
           }}>
             <span>{currentModule.icon}</span>
             <span>{currentModule.title}</span>
           </div>
 
-          <span style={{ color: 'var(--ds-color-text-tertiary)', fontSize: '0.85rem' }}>/</span>
+          <span style={{ color: 'var(--ds-color-text-tertiary)', fontSize: '0.8rem' }}>/</span>
 
           {/* Active Tab Name */}
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ fontSize: '1.1rem' }}>{currentTab.icon}</span>
+            <span style={{ fontSize: '1rem' }}>{currentTab.icon}</span>
             <span style={{
-              fontFamily: 'var(--ds-font-family-sans)',
               fontWeight: 700,
-              fontSize: '0.88rem',
+              fontSize: '0.85rem',
               color: 'var(--ds-color-text-primary)',
             }}>
               {currentTab.label}
@@ -489,9 +592,9 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
         {/* Right: Counter & Search Trigger */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span style={{
-            fontSize: '0.75rem',
+            fontSize: '0.72rem',
             color: 'var(--ds-color-text-tertiary)',
-            fontFamily: 'var(--ds-font-family-mono)',
+            fontFamily: 'SF Mono, monospace',
             fontWeight: 600,
           }}>
             {activeIndex + 1} of {siblingTabs.length}
@@ -501,8 +604,8 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
             title="Search knowledge base (⌘K)"
             style={{
               display: 'flex', alignItems: 'center', gap: '6px',
-              padding: '4px 8px',
-              background: 'var(--ds-color-bg-canvas)',
+              padding: '3px 8px',
+              background: 'rgba(255, 255, 255, 0.05)',
               border: '1px solid var(--ds-color-border-default)',
               borderRadius: '6px',
               color: 'var(--ds-color-text-secondary)',
@@ -510,17 +613,17 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
               cursor: 'pointer'
             }}
           >
-            <span>⌕ Search</span>
-            <kbd style={{ fontSize: '0.7rem', padding: '1px 4px', background: 'var(--ds-color-bg-surface)', borderRadius: '3px', border: '1px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-tertiary)' }}>⌘K</kbd>
+            <span>🔍 Search</span>
+            <kbd style={{ fontSize: '0.65rem', padding: '1px 5px', background: 'rgba(255,255,255,0.08)', borderRadius: '3px', border: '1px solid rgba(255,255,255,0.15)', color: 'var(--ds-color-text-tertiary)' }}>⌘K</kbd>
           </button>
         </div>
       </div>
 
-      {/* SIBLING TABS — Horizontal quick switcher */}
+      {/* SIBLING TABS — Horizontal Quick Switcher */}
       <div
         ref={scrollRef}
         style={{
-          padding: '6px 14px',
+          padding: '6px 12px',
           display: 'flex', gap: '6px',
           overflowX: 'auto', scrollSnapType: 'x mandatory',
           background: 'var(--ds-color-bg-canvas)',
@@ -543,21 +646,20 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
                 display: 'inline-flex', alignItems: 'center', gap: '6px',
                 padding: '4px 10px',
                 borderRadius: '16px',
-                background: isActive ? moduleColors.primary : 'var(--ds-color-bg-surface)',
+                background: isActive ? accent.primary : 'var(--ds-color-bg-surface)',
                 color: isActive ? '#ffffff' : 'var(--ds-color-text-secondary)',
-                border: `1px solid ${isActive ? moduleColors.primary : 'var(--ds-color-border-subtle)'}`,
-                fontFamily: 'var(--ds-font-family-sans)',
+                border: `1px solid ${isActive ? accent.primary : 'var(--ds-color-border-subtle)'}`,
                 fontWeight: isActive ? 700 : 500,
-                fontSize: '0.78rem',
+                fontSize: '0.76rem',
                 cursor: 'pointer', whiteSpace: 'nowrap',
                 scrollSnapAlign: 'center',
                 transition: 'all 0.15s ease',
-                boxShadow: isActive ? `0 2px 6px ${moduleColors.primary}35` : 'none',
+                boxShadow: isActive ? `0 2px 8px ${accent.primary}40` : 'none',
               }}
               onMouseEnter={e => {
                 if (!isActive) {
-                  e.currentTarget.style.borderColor = moduleColors.primary;
-                  e.currentTarget.style.color = moduleColors.primary;
+                  e.currentTarget.style.borderColor = accent.primary;
+                  e.currentTarget.style.color = accent.primary;
                 }
               }}
               onMouseLeave={e => {
@@ -578,7 +680,7 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
 }
 
 // ============================================
-// CommandPalette — Global search (⌘K)
+// CommandPalette — Global Search Modal (⌘K)
 // ============================================
 export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
   const [query, setQuery] = useState('');
@@ -626,31 +728,29 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
         position: 'fixed', top: '15%', left: '50%', transform: 'translateX(-50%)',
         width: 'min(640px, 90vw)', zIndex: 'var(--ds-zIndex-modal)',
         background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-default)',
-        borderRadius: 'var(--ds-radius-xl)', boxShadow: 'var(--ds-shadow-xl)',
-        animation: 'slideDown var(--ds-motion-duration-base) var(--ds-motion-easing-spring)',
+        borderRadius: '16px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
+        backdropFilter: 'blur(30px) saturate(180%)',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
       }}
       role="dialog" aria-modal="true" aria-label="Command palette"
     >
-      <style jsx>{`
-        @keyframes slideDown { from { opacity: 0; transform: translateX(-50%) translateY(-16px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
-      `}</style>
-      <div style={{ padding: 'var(--ds-space-4)', borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)', background: 'var(--ds-color-bg-canvas)', border: '1px solid var(--ds-color-border-default)', borderRadius: 'var(--ds-radius-lg)', padding: 'var(--ds-space-2) var(--ds-space-3)' }}>
-          <span style={{ color: 'var(--ds-color-text-tertiary)', fontSize: '1.1rem' }}>⌕</span>
+      <div style={{ padding: '12px', borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'var(--ds-color-bg-canvas)', border: '1px solid var(--ds-color-border-default)', borderRadius: '10px', padding: '8px 12px' }}>
+          <span style={{ color: 'var(--ds-color-text-tertiary)', fontSize: '1rem' }}>🔍</span>
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search tabs (e.g., langchain, langgraph, prompt, rag)..."
+            placeholder="Search topics (e.g., QLoRA, Graph RAG, Row Level, LangChain)..."
             value={query}
             onChange={e => { setQuery(e.target.value); setSelectedIndex(0); }}
-            style={{ background: 'none', border: 'none', outline: 'none', fontSize: 'var(--ds-font-size-body)', color: 'var(--ds-color-text-primary)', width: '100%', fontFamily: 'var(--ds-font-family-sans)' }}
+            style={{ background: 'none', border: 'none', outline: 'none', fontSize: '0.88rem', color: 'var(--ds-color-text-primary)', width: '100%', fontFamily: 'inherit' }}
           />
-          <kbd style={{ fontSize: 'var(--ds-font-size-caption)', padding: '2px 6px', background: 'var(--ds-color-bg-surface)', borderRadius: 'var(--ds-radius-sm)', border: '1px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-tertiary)' }}>⌘K</kbd>
+          <kbd style={{ fontSize: '0.65rem', padding: '2px 6px', background: 'rgba(255,255,255,0.08)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.15)', color: 'var(--ds-color-text-tertiary)', fontFamily: 'SF Mono, monospace' }}>⌘K</kbd>
         </div>
       </div>
-      <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+      <div style={{ maxHeight: '380px', overflowY: 'auto' }}>
         {filteredTabs.length === 0 ? (
-          <div style={{ padding: 'var(--ds-space-10)', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>
+          <div style={{ padding: '32px', textAlign: 'center', color: 'var(--ds-color-text-tertiary)', fontSize: '0.85rem' }}>
             No results for "{query}"
           </div>
         ) : (
@@ -659,24 +759,25 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
               key={tab.id}
               onClick={() => { onSelectTab(tab.id); onClose(); }}
               style={{
-                width: '100%', display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)',
-                padding: 'var(--ds-space-3) var(--ds-space-4)', background: i === selectedIndex ? 'var(--ds-color-module-foundations-light)' : 'transparent',
+                width: '100%', display: 'flex', alignItems: 'center', gap: '12px',
+                padding: '10px 16px', background: i === selectedIndex ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
                 border: 'none', textAlign: 'left', cursor: 'pointer',
+                transition: 'background 0.1s ease'
               }}
             >
-              <span style={{ fontSize: '1.25rem', width: '28px', textAlign: 'center' }}>{tab.icon}</span>
+              <span style={{ fontSize: '1.1rem', width: '24px', textAlign: 'center' }}>{tab.icon}</span>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 'var(--ds-font-weight-medium)', color: 'var(--ds-color-text-primary)' }}>{tab.label}</div>
-                <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>{tab.umbrellaId ? UMBRELLA_TOPICS.find(u => u.id === tab.umbrellaId)?.title : ''}</div>
+                <div style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--ds-color-text-primary)' }}>{tab.label}</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }}>{tab.umbrellaId ? UMBRELLA_TOPICS.find(u => u.id === t.umbrellaId)?.title : ''}</div>
               </div>
-              {i === selectedIndex && <span style={{ color: 'var(--ds-color-module-foundations-primary)' }}>→</span>}
+              {i === selectedIndex && <span style={{ color: '#3b82f6', fontSize: '0.85rem' }}>➔</span>}
             </button>
           ))
         )}
       </div>
-      <div style={{ padding: 'var(--ds-space-3) var(--ds-space-4)', borderTop: '1px solid var(--ds-color-border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>
-          {filteredTabs.length} matching tab{filteredTabs.length === 1 ? '' : 's'}
+      <div style={{ padding: '8px 16px', borderTop: '1px solid var(--ds-color-border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }}>
+          {filteredTabs.length} matching topic{filteredTabs.length === 1 ? '' : 's'}
         </span>
         <Button variant="ghost" size="sm" onClick={onClose}>Close (Esc)</Button>
       </div>
@@ -685,29 +786,29 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
 }
 
 // ============================================
-// ModuleSwitcher — Quick module jump
+// ModuleSwitcher — Quick Module Switcher
 // ============================================
 export function ModuleSwitcher({ activeModuleId, onSelectModule }) {
   return (
-    <div style={{ display: 'flex', gap: 'var(--ds-space-2)', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
       {UMBRELLA_TOPICS.map(module => {
         const isActive = module.id === activeModuleId;
-        const colors = getModuleColors(module.id);
+        const accent = MODULE_ACCENTS[module.id] || MODULE_ACCENTS.foundations;
         return (
           <button
             key={module.id}
             onClick={() => onSelectModule(module.id)}
             style={{
-              display: 'flex', alignItems: 'center', gap: 'var(--ds-space-2)',
-              padding: 'var(--ds-space-2) var(--ds-space-3)',
-              borderRadius: 'var(--ds-radius-md)',
-              background: isActive ? colors.primary : 'var(--ds-color-bg-surface)',
+              display: 'flex', alignItems: 'center', gap: '6px',
+              padding: '6px 12px',
+              borderRadius: '8px',
+              background: isActive ? accent.primary : 'var(--ds-color-bg-surface)',
               color: isActive ? 'white' : 'var(--ds-color-text-secondary)',
-              border: `1px solid ${isActive ? colors.primary : 'var(--ds-color-border-subtle)'}`,
-              fontSize: 'var(--ds-font-size-bodySm)',
-              fontWeight: 'var(--ds-font-weight-medium)',
+              border: `1px solid ${isActive ? accent.primary : 'var(--ds-color-border-subtle)'}`,
+              fontSize: '0.78rem',
+              fontWeight: 600,
               cursor: 'pointer',
-              transition: 'all var(--ds-motion-duration-fast)',
+              transition: 'all 0.15s ease',
             }}
           >
             <span>{module.icon}</span>
