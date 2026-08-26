@@ -43,6 +43,7 @@ const TabComponents = {
   rowlevelrag: lazy(() => import('./rowLevelRAG/RowLevelRAGTab.jsx')),
   graphtraversalknowledge: lazy(() => import('./graphTraversalKnowledge/GraphTraversalTab.jsx')),
   ragcorpusshapes: lazy(() => import('./ragCorpusShapes/RAGCorpusShapesTab.jsx')),
+  ragchunking: lazy(() => import('./ragChunkingStrategy/RAGChunkingStrategyTab.jsx')),
 
   ctxeng: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ContextEngineeringTab }))),
   ctxmeasure: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ContextMeasureTab }))),

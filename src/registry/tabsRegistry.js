@@ -24,7 +24,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
-    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "graphtraversalknowledge", "ragcorpusshapes"]
+    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "graphtraversalknowledge", "ragcorpusshapes", "ragchunking"]
   },
   {
     id: "context_memory",
@@ -315,6 +315,15 @@ export const TABS_REGISTRY = [
     icon: "🗂️",
     keywords: ["rag corpus shapes", "flat pile failure modes", "unrelated pdfs", "homogeneous typed corpus", "case file bundles", "metadata table indexing", "baseline waste"],
     component: lazy(() => import("../ragCorpusShapes/RAGCorpusShapesTab.jsx"))
+  },
+  {
+    id: "ragchunking",
+    label: "RAG Chunking Strategy",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "✂️",
+    keywords: ["chunking", "text splitting", "late chunking", "recursive character splitter", "semantic chunking", "sentence boundaries", "overlap", "parent child", "contextual retrieval", "fixed size"],
+    component: lazy(() => import("../ragChunkingStrategy/RAGChunkingStrategyTab.jsx"))
   },
 
   // ── Umbrella 3 — Context & Memory Engineering ─────────────────────────
