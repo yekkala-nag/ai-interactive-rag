@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
+    tabs: ["overview", "glossary", "modellandscape", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
   },
   {
     id: "rag_architecture",
@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
+    tabs: ["visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
@@ -79,6 +79,42 @@ export const TABS_REGISTRY = [
     icon: "📖",
     keywords: ["glossary", "terms", "definitions", "concepts"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AIGlossaryTab })))
+  },
+  {
+    id: "modellandscape",
+    label: "Model Landscape & Selection",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🏛️",
+    keywords: ["model landscape", "model selection", "decision engine", "open weights", "closed api", "deepseek-v3", "deepseek-r1", "llama 3.3", "claude 3.5", "gpt-4o", "slms", "small language models", "phi-4", "smollm", "test-time compute", "reasoning models", "litellm"],
+    component: lazy(() => import("../modelLandscape/ModelLandscapeTab.jsx"))
+  },
+  {
+    id: "promptfundamentals",
+    label: "Prompt Engineering & Cognitive Patterns",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "💡",
+    keywords: ["prompt engineering", "zero-shot", "few-shot", "in-context learning", "chain-of-thought", "cot", "tree-of-thoughts", "tot", "directional stimulus", "delimiters", "system prompt", "dspy", "declarative prompts"],
+    component: lazy(() => import("../promptEngineeringFundamentals/PromptFundamentalsTab.jsx"))
+  },
+  {
+    id: "llmsampling",
+    label: "LLM Generation & Sampling",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🎛️",
+    keywords: ["logits", "sampling", "temperature", "top-p", "top-k", "min-p", "nucleus sampling", "greedy decoding", "repetition penalty", "softmax", "beam search", "autoregressive", "generation mechanics", "llm generation"],
+    component: lazy(() => import("../llmSampling/LLMSamplingTab.jsx"))
+  },
+  {
+    id: "selfattention",
+    label: "Transformers & Self-Attention",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "👁️",
+    keywords: ["self-attention", "transformer", "query key value", "qkv", "scaled dot product", "mha", "gqa", "mqa", "mla", "multi-head attention", "grouped query attention", "rope", "rotary embeddings", "attention weights", "attention heatmap"],
+    component: lazy(() => import("../selfAttention/SelfAttentionTab.jsx"))
   },
   {
     id: "archconcepts",
@@ -715,11 +751,38 @@ export const TABS_REGISTRY = [
     umbrellaId: "data_platform",
     category: "Data & Platform Layers",
     icon: "🎯",
-    keywords: ["fine-tuning", "qlora", "lora", "peft", "4-bit nf4", "double quantization", "paged optimizers", "instruction backtranslation", "sfttrainer", "single gpu"],
+    keywords: ["model fine tuning", "fine-tuning", "fine tuning", "llm fine tuning", "qlora", "lora", "peft", "4-bit nf4", "double quantization", "paged optimizers", "instruction backtranslation", "sfttrainer", "single gpu", "dpo", "rlhf", "unsloth", "axolotl", "merge_and_unload"],
     component: lazy(() => import("../llmFinetuning/LLMFinetuningTab.jsx"))
   },
 
   // ── Umbrella 6 — Production & Frontiers ─────────────────────
+  {
+    id: "visionlanguage",
+    label: "Vision-Language Models (VLM)",
+    umbrellaId: "frontiers_production",
+    category: "Production & Frontiers",
+    icon: "🖼️",
+    keywords: ["vlm", "vision language models", "multimodal", "vit", "vision transformer", "llava", "paligemma", "clip", "siglip", "patches", "cross-modal connector", "q-former", "vqa", "visual question answering", "multimodal rag"],
+    component: lazy(() => import("../visionLanguageModels/VisionLanguageTab.jsx"))
+  },
+  {
+    id: "diffusionmodels",
+    label: "Diffusion Models & DiT",
+    umbrellaId: "frontiers_production",
+    category: "Production & Frontiers",
+    icon: "🎨",
+    keywords: ["diffusion", "diffusion models", "dit", "diffusion transformers", "stable diffusion", "flux", "sora", "cfg", "classifier free guidance", "latent diffusion", "ddpm", "ddim", "score matching", "flow matching", "denoising"],
+    component: lazy(() => import("../diffusionModels/DiffusionTab.jsx"))
+  },
+  {
+    id: "speechvoice",
+    label: "Speech AI & Voice Agents",
+    umbrellaId: "frontiers_production",
+    category: "Production & Frontiers",
+    icon: "🎙️",
+    keywords: ["speech", "voice", "whisper", "asr", "tts", "speech-to-speech", "voice agent", "mel-spectrogram", "encodec", "rvq", "audio codec", "silero vad", "audio tokenization"],
+    component: lazy(() => import("../speechVoiceAI/SpeechVoiceTab.jsx"))
+  },
   {
     id: "tokenbill",
     label: "3× Token Bill Fix",

@@ -16,6 +16,10 @@ import { s as legacyStyles } from './styles/legacyStyles.js';
 const TabComponents = {
   overview: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.OverviewTabNew }))),
   glossary: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIGlossaryTab }))),
+  modellandscape: lazy(() => import('./modelLandscape/ModelLandscapeTab.jsx')),
+  promptfundamentals: lazy(() => import('./promptEngineeringFundamentals/PromptFundamentalsTab.jsx')),
+  llmsampling: lazy(() => import('./llmSampling/LLMSamplingTab.jsx')),
+  selfattention: lazy(() => import('./selfAttention/SelfAttentionTab.jsx')),
   archconcepts: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ArchConceptsTab }))),
   workflows: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ClaudeWorkflowsTab }))),
   unhobbling: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.UnhobblingTab }))),
@@ -91,6 +95,9 @@ const TabComponents = {
   datahumanization: lazy(() => import('./dataHumanization/DataHumanizationTab.jsx')),
   llmfinetuning: lazy(() => import('./llmFinetuning/LLMFinetuningTab.jsx')),
 
+  visionlanguage: lazy(() => import('./visionLanguageModels/VisionLanguageTab.jsx')),
+  diffusionmodels: lazy(() => import('./diffusionModels/DiffusionTab.jsx')),
+  speechvoice: lazy(() => import('./speechVoiceAI/SpeechVoiceTab.jsx')),
   powerfeatures: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PowerFeaturesTab }))),
   frontiers: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ResearchFrontiersTab }))),
   ragbeyond: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.RAGBeyondTab }))),
