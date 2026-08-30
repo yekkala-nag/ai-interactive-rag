@@ -87,3 +87,4 @@ export { default as MoralAgencyTab } from './aiMoralAgency/MoralAgencyTab.jsx';
 export { default as DialogueLaMDATab } from './dialogueLaMDA/DialogueLaMDATab.jsx';
 export { default as PythonEngineeringTab } from './pythonEngineering/PythonEngineeringTab.jsx';
 export { default as FirstAIAppTab } from './firstAIApp/FirstAIAppTab.jsx';
+export { default as EnterpriseAIOpsTab } from './enterpriseAIOps/EnterpriseAIOpsTab.jsx';

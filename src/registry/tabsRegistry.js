@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
+    tabs: ["enterpriseaiops", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
@@ -971,6 +971,15 @@ export const TABS_REGISTRY = [
     icon: "⚙️",
     keywords: ["llm reliability", "fault tolerance", "xml tags", "markup tags", "pydantic validation", "exponential backoff", "multi-provider fallback", "fallback chain", "stochastic"],
     component: lazy(() => import("../llmReliability/LLMReliabilityTab.jsx"))
+  },
+  {
+    id: "enterpriseaiops",
+    label: "Enterprise AI Architecture & Operations",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "🏛️",
+    keywords: ["enterprise ai", "ai architecture", "ai operations", "token limits", "token governance", "ai gateway", "semantic cache", "model routing", "map reduce", "reranker", "token compression", "finops", "lost in the middle"],
+    component: lazy(() => import("../enterpriseAIOps/EnterpriseAIOpsTab.jsx"))
   }
 ];
 
