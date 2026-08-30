@@ -119,6 +119,7 @@ const TabComponents = {
   progress: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ProgressTab }))),
   guardrails: lazy(() => import('./guardrails/GuardrailsTab.jsx')),
   llmreliability: lazy(() => import('./llmReliability/LLMReliabilityTab.jsx')),
+  enterpriseaiops: lazy(() => import('./enterpriseAIOps/EnterpriseAIOpsTab.jsx')),
 };
 
 function TabLoader({ tabId, onSelectTab }) {
