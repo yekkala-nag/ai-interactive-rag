@@ -59,6 +59,37 @@ export const ENTERPRISE_PILLARS = [
   }
 ];
 
+// Executive Alignment & Guide for Architectural Visuals
+export const EXECUTIVE_VISUAL_GUIDES = [
+  {
+    id: "rag_pipeline_guide",
+    title: "1. Advanced RAG & Token Optimization Pipeline",
+    icon: "⚡",
+    audience: "For Engineers & Solution Architects",
+    tagline: "Minimizing token payload while maximizing semantic grounding",
+    description: "This diagram shows the ideal data flow for minimizing token usage while maximizing accuracy. It highlights how a user query is checked against a semantic cache first (saving tokens entirely if there's a match), then passed through hybrid search and a reranker to isolate only the most relevant text, compressed to remove noise, and finally sent to the LLM.",
+    keyTakeaway: "Eliminates duplicate calls via Redis cache and stops 90%+ of irrelevant noise from reaching the LLM."
+  },
+  {
+    id: "dynamic_routing_guide",
+    title: "2. Dynamic Model Routing (The Router Pattern)",
+    icon: "🔀",
+    audience: "For Tech Leads & FinOps Stakeholders",
+    tagline: "Cost and token governance through intelligent tier dispatch",
+    description: "This flowchart illustrates cost and token governance. Instead of sending every request to a massive, expensive model, an 'AI Router' evaluates the complexity of the incoming request. Simple tasks are routed to small, fast, low-token models, while complex reasoning tasks are routed to large models. This dramatically reduces overall token consumption across an organization.",
+    keyTakeaway: "Reduces organization-wide token spend by 60% - 75% without degrading complex reasoning accuracy."
+  },
+  {
+    id: "map_reduce_guide",
+    title: "3. Map-Reduce Pattern for Long Documents",
+    icon: "📑",
+    audience: "For Platform Teams & Compliance Architects",
+    tagline: "Handling oversized inputs that exceed any single context window",
+    description: "This infographic breaks down how to handle inputs that are simply too large for any single context window. It shows a massive document being split into manageable chunks (Map phase), processed in parallel by the LLM to generate intermediate summaries, and then combined into a single, cohesive final output (Reduce phase).",
+    keyTakeaway: "Enables 100% corpus coverage over 500+ page contracts with parallel horizontal scalability."
+  }
+];
+
 // 2. Enterprise Sample Document Corpora for Simulations
 export const SAMPLE_ENTERPRISE_DATASETS = [
   {
@@ -309,3 +340,580 @@ export function CALCULATE_ENTERPRISE_SAVINGS(monthlyRequests, avgRawTokens, cach
     frontierRoutedRequests: frontierCount.toLocaleString('en-US')
   };
 }
+
+// 7. Cost-Benefit Analysis Matrix
+export const COST_BENEFIT_MATRIX = [
+  {
+    strategy: "Semantic Cache",
+    effort: "Low",
+    tokenSavings: "20 - 40%",
+    accuracyImpact: "None (Exact/Cosine match)",
+    timeToProduction: "1 - 2 weeks",
+    techStack: "Redis Vector Store, Qdrant, LiteLLM",
+    capexOpex: "$50 - $200 / mo Redis instance",
+    keyRisk: "Stale cache invalidation"
+  },
+  {
+    strategy: "Reranking (Cross-Encoder)",
+    effort: "Medium",
+    tokenSavings: "30 - 50%",
+    accuracyImpact: "+15 - 25% (Higher MRR / NDCG)",
+    timeToProduction: "2 - 3 weeks",
+    techStack: "Cohere Rerank v3, BGE-Reranker, FlashRank",
+    capexOpex: "$1.00 / 1k queries or self-hosted GPU",
+    keyRisk: "Added 80-180ms P95 latency"
+  },
+  {
+    strategy: "Dynamic Routing (Classifier)",
+    effort: "High",
+    tokenSavings: "40 - 70%",
+    accuracyImpact: "+5 - 10% (SLA specialized models)",
+    timeToProduction: "4 - 6 weeks",
+    techStack: "Llama-3-8B / Haiku classifier, LiteLLM router",
+    capexOpex: "$0.05 / 1M classification tokens",
+    keyRisk: "Misclassification on edge-case queries"
+  },
+  {
+    strategy: "Map-Reduce Long Doc Pattern",
+    effort: "Medium",
+    tokenSavings: "60 - 85% (vs raw full-prompt)",
+    accuracyImpact: "+20 - 30% (Zero context truncation)",
+    timeToProduction: "3 - 4 weeks",
+    techStack: "LangChain / Celery / Ray parallel workers",
+    capexOpex: "Worker SLM concurrency costs",
+    keyRisk: "Intermediate JSON schema drift"
+  },
+  {
+    strategy: "Prompt Compression (LLMLingua)",
+    effort: "Low",
+    tokenSavings: "30 - 60%",
+    accuracyImpact: "99.2% accuracy retention",
+    timeToProduction: "1 - 2 weeks",
+    techStack: "LLMLingua-2, ONNX Runtime, HuggingFace",
+    capexOpex: "Minimal CPU overhead (~20ms)",
+    keyRisk: "Pruning rare domain acronyms"
+  }
+];
+
+// 8. Model Window & Context Engineering Comparison
+export const MODEL_WINDOW_COMPARISON = [
+  {
+    model: "Claude 3.5 Sonnet / Opus",
+    windowSize: "200,000 Tokens",
+    inputPrice: "$3.00 / $15.00 per M",
+    outputPrice: "$15.00 / $75.00 per M",
+    recallAt90Depth: "98.5%",
+    effectiveWorkingMemory: "120,000 Tokens",
+    bestWorkload: "Complex multi-file code editing, legal synthesis, long-horizon tool agents",
+    degradationWarning: "Attention softens beyond 150k tokens if queries lack clear grounding anchors."
+  },
+  {
+    model: "GPT-4o / GPT-4 Turbo",
+    windowSize: "128,000 Tokens",
+    inputPrice: "$2.50 / $5.00 per M",
+    outputPrice: "$10.00 / $15.00 per M",
+    recallAt90Depth: "96.2%",
+    effectiveWorkingMemory: "80,000 Tokens",
+    bestWorkload: "Structured JSON schema output, high-speed API workflows, function calling",
+    degradationWarning: "U-shaped attention dip in the 40-70% middle range for unstructured text."
+  },
+  {
+    model: "Gemini 1.5 Pro / Flash",
+    windowSize: "1,000,000 - 2,000,000 Tokens",
+    inputPrice: "$1.25 / $3.50 per M",
+    outputPrice: "$5.00 / $10.50 per M",
+    recallAt90Depth: "99.1% (Multimodal Needle)",
+    effectiveWorkingMemory: "800,000 Tokens",
+    bestWorkload: "1-hour video ingestion, multi-year audio transcripts, whole-codebase audits",
+    degradationWarning: "High prompt caching recommended; single raw 1M call incurs $3.50+ and 8-15s latency."
+  },
+  {
+    model: "Llama 3.1 70B / 8B (Self-Hosted)",
+    windowSize: "128,000 Tokens",
+    inputPrice: "$0.15 - $0.60 per M",
+    outputPrice: "$0.60 - $1.80 per M",
+    recallAt90Depth: "94.0%",
+    effectiveWorkingMemory: "64,000 Tokens",
+    bestWorkload: "Air-gapped on-premise RAG, PII sanitization, internal classification router",
+    degradationWarning: "Requires RoPE frequency scaling tuning on vLLM/TGI for stable 128k execution."
+  }
+];
+
+// 9. Vector Database Vendor Evaluation Checklist
+export const VECTOR_DB_EVALUATION = [
+  {
+    vendor: "Qdrant",
+    hosting: "Managed Cloud or Self-Hosted Docker / K8s",
+    hybridSearch: "Native BM25 Sparse + Dense Vector fusion",
+    filteringSpeed: "Ultra-Fast (Rust HNSW + Payload Indexing)",
+    costProfile: "Open-source free self-host; Cloud from $25/mo",
+    compliance: "SOC2 Type II, HIPAA, ISO27001, GDPR",
+    verdict: "Top choice for enterprise hybrid search, custom metadata filters, and low memory overhead."
+  },
+  {
+    vendor: "Pinecone",
+    hosting: "Fully Managed Serverless SaaS (AWS/GCP/Azure)",
+    hybridSearch: "Sparse-Dense vectors via Pinecone Serverless",
+    filteringSpeed: "High (Metadata filtering at index layer)",
+    costProfile: "Serverless pay-per-read/write ($0.33/1M RUs)",
+    compliance: "SOC2 Type II, HIPAA eligible, GDPR",
+    verdict: "Best for zero-ops managed scaling with predictable burst read/write workloads."
+  },
+  {
+    vendor: "Weaviate",
+    hosting: "Managed Cloud, BYOC, or Self-Hosted K8s",
+    hybridSearch: "Native Hybrid BM25 + Vector + GraphQL API",
+    filteringSpeed: "High (Inverted Index + Vector HNSW)",
+    costProfile: "Open-source free; Cloud from $0.085/hr cluster",
+    compliance: "SOC2 Type II, HIPAA, GDPR",
+    verdict: "Excellent for multi-modal vector search and complex graph-like object relationships."
+  },
+  {
+    vendor: "PostgreSQL + pgvector",
+    hosting: "AWS RDS / Supabase / Neon / Self-Hosted Postgres",
+    hybridSearch: "Full-text search (tsvector) + HNSW pgvector",
+    filteringSpeed: "Medium (Standard SQL WHERE + HNSW index)",
+    costProfile: "Zero additional database infrastructure cost",
+    compliance: "Inherits enterprise Postgres compliance",
+    verdict: "Ideal for teams with existing Postgres infrastructure wanting unified ACID relational + vector storage."
+  }
+];
+
+// 10. Performance Benchmarks: Reranking Models Compared
+export const RERANKER_BENCHMARKS = [
+  {
+    model: "Cohere Rerank v3",
+    latencyP50: "95ms",
+    latencyP95: "160ms",
+    ndcg10: "0.892",
+    maxTokens: "4,096 tokens / doc",
+    type: "Managed API (Cloud / Private VPC)",
+    cost: "$1.00 / 1,000 queries",
+    bestFor: "Enterprise multilingual accuracy and long-chunk document reranking"
+  },
+  {
+    model: "BGE-Reranker-Large (BAAI)",
+    latencyP50: "120ms (GPU)",
+    latencyP95: "210ms (GPU)",
+    ndcg10: "0.884",
+    maxTokens: "512 tokens / doc",
+    type: "Self-Hosted HuggingFace (PyTorch/Triton)",
+    cost: "Compute GPU cost ($0.40/hr)",
+    bestFor: "Air-gapped on-premise deployments with strict data sovereignty"
+  },
+  {
+    model: "Cross-Encoder/ms-marco-MiniLM-L-6-v2",
+    latencyP50: "35ms (CPU)",
+    latencyP95: "70ms (CPU)",
+    ndcg10: "0.841",
+    maxTokens: "512 tokens / doc",
+    type: "Self-Hosted Lightweight CPU / ONNX",
+    cost: "Negligible (Runs on worker CPU)",
+    bestFor: "Ultra-low latency microservices with high queries-per-second (QPS)"
+  },
+  {
+    model: "FlashRank (Pruned MiniLM)",
+    latencyP50: "18ms (CPU)",
+    latencyP95: "40ms (CPU)",
+    ndcg10: "0.825",
+    maxTokens: "512 tokens / doc",
+    type: "In-Process Python / Node.js Engine",
+    cost: "$0 (Zero extra API calls or GPU)",
+    bestFor: "Edge devices, local CLI tools, and sub-50ms latency SLAs"
+  }
+];
+
+// 11. Security & Compliance Data Handling Patterns
+export const SECURITY_COMPLIANCE_PATTERNS = [
+  {
+    title: "1. Client-Side PII/PHI Redaction Before Embedding",
+    pattern: "Named Entity Recognition (NER) + Regular Expression token anonymization",
+    benefit: "Guarantees that sensitive credit cards, SSNs, and patient names are never written to vector embeddings.",
+    implementation: "Microsoft Presidio or SpaCy pipeline replacing PII with salted synthetic tokens `<CUSTOMER_UUID_78>`."
+  },
+  {
+    title: "2. Tenant Namespace Partitioning in Vector Indices",
+    pattern: "Cryptographic tenant isolation with strict metadata ACL filtering",
+    benefit: "Prevents cross-tenant information leakage in multi-tenant SaaS environments.",
+    implementation: "Qdrant payload filter `tenant_id: 'org_982'` enforced at the API gateway layer before vector distance calculation."
+  },
+  {
+    title: "3. Chunk-Level Access Control Lists (ACLs)",
+    pattern: "Synchronized IAM permission bitmaps attached to individual chunk payloads",
+    benefit: "Ensures an executive-only confidential financial slide is invisible to unauthorized employees during RAG.",
+    implementation: "Filter vector search with `user_groups OVERLAPS chunk.allowed_groups` during dense index retrieval."
+  },
+  {
+    title: "4. Ephemeral Worker Sandbox Execution",
+    pattern: "Stateless container workers with zero local disk persistence",
+    benefit: "Complies with GDPR right-to-be-forgotten and prevents residual data leakage in temporary file caches.",
+    implementation: "Docker worker containers spawned with `read_only: true` root filesystems and in-memory tmpfs."
+  }
+];
+
+// 12. Pre-Flight Token Estimation & Safe Truncation Simulator
+export function RUN_PREFLIGHT_TOKEN_SIMULATION(userPrompt, retrievedContext, maxAllowedTokens) {
+  // Approximate cl100k_base tokenizer (average 3.8 chars per token for English text & code)
+  const estimateTokens = (text) => Math.max(1, Math.ceil((text || '').trim().length / 3.8));
+
+  const promptTokens = estimateTokens(userPrompt);
+  const contextTokens = estimateTokens(retrievedContext);
+  const totalRawTokens = promptTokens + contextTokens;
+
+  let warningMessage = "";
+  let finalContext = retrievedContext;
+  let truncationApplied = false;
+  let tokensTruncated = 0;
+
+  if (totalRawTokens > maxAllowedTokens) {
+    truncationApplied = true;
+    const overflowTokens = totalRawTokens - maxAllowedTokens;
+    tokensTruncated = overflowTokens;
+    
+    // Calculate characters to keep from the end of the context
+    const keepFraction = Math.max(0.1, 1 - (overflowTokens / Math.max(1, contextTokens)));
+    const contextCharsToKeep = Math.floor(retrievedContext.length * keepFraction);
+    
+    finalContext = retrievedContext.slice(-contextCharsToKeep);
+    warningMessage = `[SYSTEM NOTICE: Input payload exceeded ${maxAllowedTokens.toLocaleString()} token safety threshold. Older context was dynamically truncated to prevent context overflow crash.]`;
+  }
+
+  const safePayload = warningMessage 
+    ? `${warningMessage}\n\n=== RETAINED CONTEXT ===\n${finalContext}\n\n=== USER QUERY ===\n${userPrompt}`
+    : `=== CONTEXT ===\n${finalContext}\n\n=== USER QUERY ===\n${userPrompt}`;
+
+  const finalTokens = estimateTokens(safePayload);
+
+  return {
+    promptTokens,
+    contextTokens,
+    totalRawTokens,
+    maxAllowedTokens,
+    truncationApplied,
+    tokensTruncated,
+    warningMessage,
+    finalContext,
+    safePayload,
+    finalTokens,
+    safetyStatus: finalTokens <= maxAllowedTokens ? "SAFE_ENFORCED" : "TRUNCATED_MAX"
+  };
+}
+
+// 13. Advanced Chunking Strategies
+export const ADVANCED_CHUNKING_STRATEGIES = [
+  {
+    id: "parent_child",
+    title: "1. Parent-Child (Auto-Merging) Chunking",
+    bestFor: "Complex documents, technical manuals, and legal contracts",
+    howItWorks: "Creates two sets of chunks: small Child chunks (200 tokens) strictly for vector indexing and pinpoint retrieval, plus larger Parent chunks (1000 tokens) passed to the LLM upon child retrieval.",
+    whyItWins: "Pinpoint vector search accuracy combined with full surrounding semantic context to completely prevent fragmented hallucinations.",
+    tools: "LlamaIndex AutoMergingRetriever / LangChain ParentDocumentRetriever",
+    badge: "Most Popular in Enterprise"
+  },
+  {
+    id: "semantic_chunking",
+    title: "2. Semantic Chunking (Cosine Shift)",
+    bestFor: "Long-form text, research articles, and unstructured reports",
+    howItWorks: "Calculates embedding cosine distance between consecutive sentences. A new chunk boundary is triggered dynamically when semantic distance exceeds threshold (topic shift).",
+    whyItWins: "Guarantees a coherent single thought or analytical paragraph is never artificially severed across token boundaries.",
+    tools: "LangChain SemanticChunker / LlamaIndex SentenceWindowNodeParser",
+    badge: "100% Meaning Preserved"
+  },
+  {
+    id: "structural_chunking",
+    title: "3. Structural / Document-Aware Chunking",
+    bestFor: "PDFs, HTML web pages, financial filings, and Markdown docs",
+    howItWorks: "Uses AST and layout analysis (Markdown headers #/##, HTML tables <table>, PDF layout bounding boxes) to define boundaries. Crucial rule: Never split a table or list.",
+    whyItWins: "Maintains relational schema integrity and tabular context without breaking headers from data rows.",
+    tools: "Unstructured.io / LlamaParse / AWS Textract",
+    badge: "Essential for Tables & PDFs"
+  },
+  {
+    id: "sliding_window",
+    title: "4. Sliding Window with Overlap (Baseline)",
+    bestFor: "General-purpose text, quick MVP implementations",
+    howItWorks: "Fixed chunk window of 512 to 1024 tokens with 10% to 20% overlap (50-100 tokens) between consecutive chunks.",
+    whyItWins: "Prevents critical keywords or sentences sitting on exact boundary splits from being lost during dense retrieval.",
+    tools: "RecursiveCharacterTextSplitter",
+    badge: "Baseline Standard"
+  }
+];
+
+// 14. Enterprise Prompt Templates
+export const ENTERPRISE_PROMPT_TEMPLATES = [
+  {
+    id: "strict_qa",
+    title: "Template 1: Strict Zero-Hallucination Q&A",
+    useCase: "Customer support, internal compliance knowledge bases, legal lookups",
+    promptText: `You are an expert AI assistant for [Company Name]. Your task is to answer the user's question using ONLY the provided context. 
+
+### RULES:
+1. STRICTLY use only the provided context. Do not use your pre-existing knowledge.
+2. If the answer is not explicitly stated in the context, you MUST reply: "I do not have enough information in the provided documents to answer this question."
+3. You must cite your sources using bracketed numbers corresponding to the source document (e.g., [1], [2]).
+4. Do not make up facts, figures, or policies.
+
+### CONTEXT:
+{context}
+
+### USER QUESTION:
+{question}
+
+### ANSWER:`
+  },
+  {
+    id: "multi_source",
+    title: "Template 2: Multi-Source Synthesis & Conflict Resolution",
+    useCase: "Conflicting policies, version migrations, cross-departmental documentation",
+    promptText: `You are an analytical AI assistant. You have been provided with multiple excerpts from different documents to answer a user's question.
+
+### INSTRUCTIONS:
+1. Analyze all provided context blocks.
+2. If the sources agree, synthesize a comprehensive answer.
+3. If the sources conflict, explicitly state the conflict, identify which source is more recent (if dates are provided), and provide the answer based on the most current/authoritative source.
+4. If the context does not contain the answer, state clearly what information is missing.
+5. Always append a "Sources:" section at the end listing the titles of the documents used.
+
+### CONTEXT BLOCKS:
+{context}
+
+### USER QUESTION:
+{question}
+
+### SYNTHESIZED ANSWER:`
+  },
+  {
+    id: "query_decomp",
+    title: "Template 3: Pre-Retrieval Query Decomposition",
+    useCase: "Multi-part questions, comparative research, complex cross-topic user queries",
+    promptText: `You are a query decomposition engine. Your goal is to break down a complex user question into 2-4 simple, standalone search queries that can be used to retrieve relevant documents from a vector database.
+
+### RULES:
+1. Output ONLY the search queries, one per line.
+2. Do not include introductory text or explanations.
+3. Ensure each query is self-contained and makes sense without the original question.
+
+### ORIGINAL QUESTION:
+{question}
+
+### SEARCH QUERIES:`
+  }
+];
+
+// 15. RAG Accuracy Operational Pro-Tips
+export const RAG_ACCURACY_PRO_TIPS = [
+  {
+    title: "1. Enforce Metadata Filtering (Pre-Filtering)",
+    icon: "🏷️",
+    problem: "Vector similarity alone returns outdated 2022 policy instead of 2024 because semantics match.",
+    solution: "Extract structured metadata (year, tenant, dept) before search and pass payload filters `db.search(query, filter={'year': 2024, 'dept': 'HR'})` to eliminate 90% of irrelevant candidates."
+  },
+  {
+    title: "2. Implement 'Self-Querying' for Ambiguity",
+    icon: "❓",
+    problem: "Vague prompts ('Tell me about the project') waste vector and LLM tokens on hallucinated guesses.",
+    solution: "Use a lightweight SLM classifier before retrieval to verify required entities (project name, date). If missing, intercept and prompt user for clarification before searching."
+  },
+  {
+    title: "3. 'Lost in the Middle' Attention Mitigation",
+    icon: "🎯",
+    problem: "LLMs attend heavily to the top 10% and bottom 10% of prompts, dropping recall for evidence placed in the middle.",
+    solution: "Sort retrieved context chunks by relevance score in a U-shape: Rank 1 at prompt Top, Rank 2 at prompt Bottom, and lower ranks in the middle."
+  }
+];
+
+// 16. Fallback Scenarios & Multi-Tier Cascade Simulator
+export const FALLBACK_SCENARIOS = [
+  {
+    id: "standard_payload",
+    title: "Scenario 1: Normal Safe Payload (< 4,000 tokens)",
+    description: "Input payload is within safe context bounds. Proceeds directly via Green Path to Tier-1 Primary LLM.",
+    incomingTokens: 850,
+    maxThreshold: 4000,
+    expectedPath: "GREEN_PATH",
+    primaryModel: "OpenAI GPT-4o",
+    failoverTriggered: false
+  },
+  {
+    id: "moderate_overflow",
+    title: "Scenario 2: Moderate Overflow (4,920 tokens)",
+    description: "Exceeds 4k limit by 23%. Triggers Amber Path: automated tail context truncation & LLMLingua compression.",
+    incomingTokens: 4920,
+    maxThreshold: 4000,
+    expectedPath: "AMBER_PATH",
+    primaryModel: "OpenAI GPT-4o (with [SYSTEM NOTICE])",
+    failoverTriggered: false
+  },
+  {
+    id: "massive_spillover",
+    title: "Scenario 3: Severe Overload (38,500 tokens)",
+    description: "Exceeds threshold by 9.6x. Red Path trips circuit breaker and orchestrates Distributed Map-Reduce fallback.",
+    incomingTokens: 38500,
+    maxThreshold: 4000,
+    expectedPath: "RED_PATH_MAPREDUCE",
+    primaryModel: "Map-Reduce Workers (Llama-3-8B) -> Master Reducer",
+    failoverTriggered: true
+  },
+  {
+    id: "provider_429_outage",
+    title: "Scenario 4: Provider Outage / HTTP 429 Rate Limit",
+    description: "Primary provider fails or returns 429 quota exhaustion. Circuit breaker trips and seamlessly fails over to AWS Bedrock Claude 3.5 Sonnet.",
+    incomingTokens: 1850,
+    maxThreshold: 4000,
+    expectedPath: "TIER2_BEDROCK_FAILOVER",
+    primaryModel: "Anthropic Claude 3.5 Sonnet (AWS Bedrock)",
+    failoverTriggered: true
+  },
+  {
+    id: "complete_cloud_outage",
+    title: "Scenario 5: Multi-Cloud WAN Partition / Disaster",
+    description: "Both Azure and AWS Bedrock APIs are unreachable. Automatic Tier-3 failover to on-premise local vLLM Llama 3.1 70B.",
+    incomingTokens: 1400,
+    maxThreshold: 4000,
+    expectedPath: "TIER3_LOCAL_VLLM_FAILOVER",
+    primaryModel: "Local On-Prem vLLM (Llama 3.1 70B)",
+    failoverTriggered: true
+  }
+];
+
+export function RUN_FALLBACK_CASCADE_SIMULATION(scenarioId, manualCircuitTrip = false) {
+  const scenario = FALLBACK_SCENARIOS.find(s => s.id === scenarioId) || FALLBACK_SCENARIOS[0];
+
+  let circuitBreakerStatus = manualCircuitTrip ? "OPEN (TRIPPED)" : "CLOSED (HEALTHY)";
+  let activePath = scenario.expectedPath;
+  let activeProvider = scenario.primaryModel;
+  let latencyMs = 180;
+  let deliveryStatus = "200 OK (Delivered)";
+  let traceSteps = [];
+
+  // Step 1: Pre-Flight Token Ingestion
+  traceSteps.push({
+    node: "Pre-Flight Token Estimator",
+    detail: `Estimated payload at ${scenario.incomingTokens.toLocaleString()} tokens against max limit of ${scenario.maxThreshold.toLocaleString()} tokens.`,
+    time: "1.2ms",
+    status: "PASS"
+  });
+
+  if (scenarioId === "standard_payload" && !manualCircuitTrip) {
+    activePath = "GREEN_PATH";
+    activeProvider = "Tier-1: OpenAI GPT-4o";
+    latencyMs = 210;
+    traceSteps.push({
+      node: "Safety Threshold Gate",
+      detail: "Payload within safe 80% boundary. Proceeding via Green Path to Primary Model.",
+      time: "2.1ms",
+      status: "GREEN"
+    });
+    traceSteps.push({
+      node: "Primary Inference",
+      detail: "OpenAI GPT-4o responded with full grounded answer.",
+      time: "208ms",
+      status: "SUCCESS"
+    });
+  } else if (scenarioId === "moderate_overflow" && !manualCircuitTrip) {
+    activePath = "AMBER_PATH";
+    activeProvider = "Tier-1: OpenAI GPT-4o (Truncated Payload)";
+    latencyMs = 245;
+    const truncatedTokens = scenario.incomingTokens - scenario.maxThreshold;
+    traceSteps.push({
+      node: "Safety Threshold Gate",
+      detail: `Overflow detected (+${truncatedTokens} tokens). Triggering Amber Path graceful degradation.`,
+      time: "3.5ms",
+      status: "AMBER"
+    });
+    traceSteps.push({
+      node: "Auto-Truncation & System Notice",
+      detail: "Sliced older context tail; injected '[SYSTEM NOTICE: Input exceeded 4,000 token limit]'.",
+      time: "5.1ms",
+      status: "PROCESSED"
+    });
+    traceSteps.push({
+      node: "Primary Inference",
+      detail: "OpenAI GPT-4o completed inference on safe 3,950-token payload.",
+      time: "238ms",
+      status: "SUCCESS"
+    });
+  } else if (scenarioId === "massive_spillover" && !manualCircuitTrip) {
+    activePath = "RED_PATH_MAPREDUCE";
+    activeProvider = "Distributed Map-Reduce Cluster (4x SLM Workers + Master LLM)";
+    circuitBreakerStatus = "OPEN (DEVIATED)";
+    latencyMs = 620;
+    traceSteps.push({
+      node: "Safety Threshold Gate",
+      detail: "Massive 38,500 token payload detected (>9x safe threshold). Direct prompt rejected.",
+      time: "2.8ms",
+      status: "CIRCUIT_TRIP"
+    });
+    traceSteps.push({
+      node: "Map-Reduce Orchestrator",
+      detail: "Partitioned corpus into 8x 4.8k token chunks across concurrent Llama-3-8B workers.",
+      time: "320ms",
+      status: "PARALLEL_MAP"
+    });
+    traceSteps.push({
+      node: "Master Synthesis Reduce",
+      detail: "Combined 8 intermediate JSON schemas into unified executive compliance brief.",
+      time: "298ms",
+      status: "REDUCE_SUCCESS"
+    });
+  } else if (scenarioId === "provider_429_outage" || manualCircuitTrip) {
+    activePath = "TIER2_BEDROCK_FAILOVER";
+    activeProvider = "Tier-2 Failover: Anthropic Claude 3.5 Sonnet (AWS Bedrock)";
+    circuitBreakerStatus = "OPEN (FAILOVER ACTIVE)";
+    latencyMs = 380;
+    traceSteps.push({
+      node: "Primary Provider Gateway",
+      detail: "OpenAI API returned HTTP 429 Too Many Requests (Rate Limit / Quota Spikes).",
+      time: "45ms",
+      status: "FAIL"
+    });
+    traceSteps.push({
+      node: "Circuit Breaker Interceptor",
+      detail: "Circuit breaker tripped. Zero error thrown to client. Instant failover triggered.",
+      time: "48ms",
+      status: "CIRCUIT_TRIPPED"
+    });
+    traceSteps.push({
+      node: "Secondary Provider Failover",
+      detail: "Routed payload to Anthropic Claude 3.5 Sonnet on AWS Bedrock with 200 OK delivery.",
+      time: "332ms",
+      status: "FAILOVER_SUCCESS"
+    });
+  } else if (scenarioId === "complete_cloud_outage") {
+    activePath = "TIER3_LOCAL_VLLM_FAILOVER";
+    activeProvider = "Tier-3 Fallback: Local On-Premise vLLM (Llama 3.1 70B)";
+    circuitBreakerStatus = "OPEN (AIR-GAP MODE)";
+    latencyMs = 120;
+    traceSteps.push({
+      node: "Multi-Cloud Health Probes",
+      detail: "Azure OpenAI (Timeout > 5s) & AWS Bedrock (503 Service Unavailable).",
+      time: "65ms",
+      status: "FAIL"
+    });
+    traceSteps.push({
+      node: "Air-Gapped Local Interceptor",
+      detail: "Tripped disaster recovery failover to internal Kubernetes vLLM cluster.",
+      time: "68ms",
+      status: "AIR_GAP_ACTIVATED"
+    });
+    traceSteps.push({
+      node: "On-Premises Inference",
+      detail: "vLLM (Llama 3.1 70B) served request locally with zero external network dependency.",
+      time: "52ms",
+      status: "AIR_GAP_SUCCESS"
+    });
+  }
+
+  return {
+    scenario,
+    circuitBreakerStatus,
+    activePath,
+    activeProvider,
+    latencyMs,
+    deliveryStatus,
+    traceSteps,
+    simulatedResponse: `[SUCCESS: ${activeProvider}] Processed ${scenario.incomingTokens.toLocaleString()} tokens via ${activePath}. Grounded output generated with zero user-facing error.`
+  };
+}
+
+
