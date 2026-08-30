@@ -9,6 +9,9 @@ import {
   CALCULATE_SLSTM_STEP,
   PYTORCH_XLSTM_CODE
 } from './xlstmEngine.js';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Section, Grid, Flex, Stack } = Primitives;
 
@@ -304,6 +307,62 @@ export default function XLSTMTab() {
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: TABLE + WORKFLOW + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>🧬 Interactive xLSTM Lab</h3>
+            <Badge variant="module" moduleId="context">Compare · Trace</Badge>
+          </div>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <DataTable
+            caption="LSTM (1997) vs xLSTM (2024) — Architecture Matrix"
+            searchable
+            columns={[
+              { key: 'architecture', label: 'Architecture', sortable: false },
+              { key: 'memoryCell', label: 'Memory Cell', sortable: false },
+              { key: 'gatingMechanism', label: 'Gating', sortable: false },
+              { key: 'parallelization', label: 'Parallelization', sortable: false },
+              { key: 'contextHandling', label: 'Context Handling', sortable: false },
+            ]}
+            rows={LSTM_VS_XLSTM_MATRIX}
+            rowKey={(r) => r.architecture}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <Workflow
+            accent="context"
+            accentLabel="xLSTM Cell"
+            title="From Scalar LSTM to Matrix Memory"
+            description="How xLSTM extends classical recurrence. Hit ▶ Play to animate."
+            steps={[
+              { title: 'Classical LSTM (1997)', description: 'Scalar memory cell with sigmoid gating solves vanishing gradients but runs strictly sequentially.', icon: '🪙' },
+              { title: 'sLSTM (Scalar xLSTM)', description: 'Adds exponential gating + a normalizer state n_t for higher dynamic range and no memory saturation.', icon: '⚡' },
+              { title: 'mLSTM (Matrix xLSTM)', description: 'Matrix memory cell C_t ∈ ℝ^{d×d} with key/query/value projections — equivalent to linear attention.', icon: '🔷' },
+              { title: 'Full GPU Parallelism', description: 'mLSTM is fully parallelizable on XLA/CUDA, competing with Transformers on long sequences.', icon: '🚀' },
+            ]}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={180}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>mLSTM Parallelism</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-context-primary)' }}>
+                <AnimatedNumber value={100} suffix="%" />
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              The matrix-memory mLSTM is <strong>fully GPU parallelizable</strong> — the key advantage that lets xLSTM
+              match Transformers on long-context tasks while keeping RNN-style constant inference cost.
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );

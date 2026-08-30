@@ -12,6 +12,9 @@ import {
   PROCESS_STEPS,
   FAULTS
 } from './aiHarnessData.js';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Grid, Flex, Stack } = Primitives;
 
@@ -1118,6 +1121,59 @@ export default function AIHarnessTab() {
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: WORKFLOW + TABLE + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>🏗️ Interactive Training Harness</h3>
+            <Badge variant="module" moduleId="agents">Pipeline · Faults · Metrics</Badge>
+          </div>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <Workflow
+            accent="agents"
+            accentLabel="Build Pipeline"
+            title="From Objective to Aligned Model"
+            description="The eight-stage ML training lifecycle. Hit ▶ Play to animate the flow."
+            steps={PROCESS_STEPS.map((s) => ({
+              title: s.title, description: s.detail, icon: '⚙️',
+            }))}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <DataTable
+            caption="Common Training Faults — Severity, Cause & Remedy"
+            columns={[
+              { key: 'sev', label: 'Severity', sortable: false, render: (v) => (
+                <span style={{ fontWeight: 700, color: v === 'high' ? 'var(--ds-color-state-error-light)' : v === 'medium' ? 'var(--ds-color-state-warning-light)' : 'var(--ds-color-text-tertiary)' }}>{v.toUpperCase()}</span>
+              ) },
+              { key: 'name', label: 'Fault', sortable: false },
+              { key: 'cause', label: 'Cause', sortable: false },
+              { key: 'remedy', label: 'Remedy', sortable: false },
+            ]}
+            rows={FAULTS}
+            rowKey={(r) => r.name}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={180}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>Stages to Production</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-agents-primary)' }}>
+                <AnimatedNumber value={8} />
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              A reliable harness spans <strong>8 disciplined stages</strong> — misaligned objectives are the single most
+              common cause of models that train well but fail in deployment.
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );

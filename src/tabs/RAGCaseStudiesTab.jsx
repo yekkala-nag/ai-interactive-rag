@@ -3,6 +3,10 @@ import * as Primitives from '../components/layout/Primitives';
 import { Hero, CodeBlock, Stepper } from '../components/ui/Content';
 import { Card, Badge, Button, Callout } from '../components/ui/Core';
 import DiagramImage from '../components/ui/DiagramImage.jsx';
+import ZoomableImage from '../components/ui/ZoomableImage.jsx';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Section, Grid, Flex, Stack } = Primitives;
 
@@ -1949,6 +1953,77 @@ export default function RAGCaseStudiesTab() {
             </Section>
           </Stack>
         )}
+        {/* ─── INTERACTIVE ENHANCEMENTS SHOWCASE: IMAGE + WORKFLOW + TABLE + ANIMATION ─── */}
+        <Section style={{ marginTop: 'var(--ds-space-12)' }}>
+          <Reveal variant="rise">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-4)' }}>
+              <h2 style={{ margin: 0, fontSize: 'var(--ds-font-size-h1)' }}>🪄 Interactive RAG Showcase</h2>
+              <Badge variant="module" moduleId="rag">Image · Workflow · Table · Animation</Badge>
+            </div>
+            <p style={{ marginTop: 0, color: 'var(--ds-color-text-secondary)', maxWidth: 820 }}>
+              All four enhancement primitives in one place: a zoomable, hotspot-annotated architecture diagram; a step-through
+              workflow builder; a sortable, filterable challenge matrix; and scroll-reveal animation with animated counters.
+            </p>
+          </Reveal>
+
+          <Stack gap={6}>
+            <Reveal variant="rise" delay={60}>
+              <ZoomableImage
+                src="/assets/sdlc_ast_code_chunking_flow.png"
+                title="Tree-Sitter AST Code-Chunking Architecture"
+                caption="Tap the numbered hotspots to inspect each chunking stage; click the figure for a zoomable fullscreen view."
+                accent="rag"
+                hotspots={[
+                  { x: 14, y: 32, label: 'Source File', title: 'Raw Input', body: 'e.g. RefundService.java — parsed without losing structure.' },
+                  { x: 38, y: 30, label: 'Tree-Sitter AST', title: 'Parse', body: 'Splits the file into Class, Method and Import AST nodes.' },
+                  { x: 60, y: 42, label: 'Symbol Extraction', title: 'Extract', body: 'Pulls exact method names like validateIdempotencyKey().' },
+                  { x: 82, y: 36, label: 'Vector & Symbol Index', title: 'Index', body: 'Writes in parallel to a dense vector DB and a ctags symbol index.' },
+                ]}
+              />
+            </Reveal>
+
+            <Reveal variant="rise" delay={120}>
+              <Workflow
+                accent="rag"
+                accentLabel="9-Step Blueprint"
+                title="From Requirements to Production RAG"
+                description="The canonical enterprise RAG system-design flow. Hit ▶ Play to animate."
+                steps={SYSTEM_DESIGN_STEPS.map((s) => ({
+                  title: s.step, description: s.detail, icon: '🧩',
+                }))}
+              />
+            </Reveal>
+
+            <Reveal variant="rise" delay={180}>
+              <DataTable
+                caption="SDLC RAG Challenges & Mitigations"
+                columns={[
+                  { key: 'challenge', label: 'Challenge', sortable: false },
+                  { key: 'mitigation', label: 'Mitigation', sortable: false },
+                ]}
+                rows={SDLC_CHALLENGES_MATRIX}
+                rowKey={(r) => r.challenge}
+              />
+            </Reveal>
+
+            <Reveal variant="scale" delay={240}>
+              <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-4)">
+                {[
+                  { label: 'Retrieval Recall@10', value: 94.2, suffix: '%', decimals: 1, color: 'var(--ds-color-module-rag-primary)' },
+                  { label: 'Citation Accuracy', value: 96.5, suffix: '%', decimals: 1, color: 'var(--ds-color-module-rag-primary)' },
+                  { label: 'Hallucination Rate', value: 0.4, suffix: '%', decimals: 1, color: 'var(--ds-color-state-success-light)' },
+                ].map((m) => (
+                  <Card key={m.label} style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.68rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>{m.label}</div>
+                    <div style={{ fontSize: '2.2rem', fontWeight: 800, color: m.color }}>
+                      <AnimatedNumber value={m.value} decimals={m.decimals} suffix={m.suffix} />
+                    </div>
+                  </Card>
+                ))}
+              </Grid>
+            </Reveal>
+          </Stack>
+        </Section>
       </Container>
     </div>
   );

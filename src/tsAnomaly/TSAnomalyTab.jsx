@@ -9,6 +9,9 @@ import {
   SIMULATE_AUTOENCODER_RECONSTRUCTION,
   PYTORCH_1DCNN_AUTOENCODER_CODE
 } from './tsAnomalyEngine.js';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Section, Grid, Flex, Stack } = Primitives;
 
@@ -257,6 +260,57 @@ export default function TSAnomalyTab() {
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: WORKFLOW + TABLE + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>📡 Interactive Anomaly Detection</h3>
+            <Badge variant="module" moduleId="platform">Theory · Threshold</Badge>
+          </div>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <Workflow
+            accent="platform"
+            accentLabel="Autoencoder Pipeline"
+            title="From Normal Signal to Anomaly Alert"
+            description="The four-stage detection flow. Hit ▶ Play to animate."
+            steps={ANOMALY_DETECTION_THEORY.map((s) => ({
+              title: s.title, description: s.description, icon: '🔎',
+            }))}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <DataTable
+            caption="Anomaly Detection Theory — Stage Summary"
+            searchable={false}
+            columns={[
+              { key: 'step', label: 'Step', numeric: true },
+              { key: 'title', label: 'Stage', sortable: false },
+              { key: 'description', label: 'What Happens', sortable: false },
+            ]}
+            rows={ANOMALY_DETECTION_THEORY}
+            rowKey={(r) => r.step}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={180}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>Alert Threshold</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-platform-primary)' }}>
+                p<AnimatedNumber value={99} suffix="th" />
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              Anomalies fire when reconstruction <strong>MSE</strong> exceeds the <strong>99th percentile</strong> of normal
+              training-signal error — catching unlearned frequencies and spikes the autoencoder cannot reconstruct.
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );

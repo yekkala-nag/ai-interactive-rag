@@ -9,6 +9,9 @@ import {
   TWENTY_FIVE_YEAR_TRENDS,
   LLM_TOPIC_LABELS
 } from './topicEngine.js';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Section, Grid, Flex, Stack } = Primitives;
 
@@ -586,6 +589,92 @@ fig.show()`}
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: TABLES + WORKFLOW + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>📊 Interactive Comparison Tables</h3>
+            <Badge variant="module" moduleId="foundations">Sortable · Filterable</Badge>
+          </div>
+          <p style={{ marginTop: 0, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+            Click any column header to sort; type in the filter to search. These tables turn the static preprocessing
+            trade-offs and 25-year macro trends into queryable evidence.
+          </p>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <DataTable
+            caption="Preprocessing Strategy Comparison — Topic Quality vs Context Loss"
+            searchable={false}
+            initialSort={{ key: 'quality', dir: 'desc' }}
+            columns={[
+              { key: 'option', label: 'Strategy', sortable: false },
+              { key: 'tokenLen', label: 'Avg Tokens', numeric: true },
+              { key: 'fits', label: 'Transformer Fit', sortable: false },
+              { key: 'quality', label: 'Topic Quality', numeric: true, render: (v) => (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ flex: 1, height: 6, minWidth: 60, background: 'var(--ds-color-border-subtle)', borderRadius: 999, overflow: 'hidden' }}>
+                    <span style={{ display: 'block', height: '100%', width: `${v}%`, background: v >= 90 ? 'var(--ds-color-state-success-light)' : v >= 75 ? 'var(--ds-color-module-foundations-primary)' : 'var(--ds-color-state-warning-light)' }} />
+                  </span>
+                  <strong>{v}</strong>
+                </span>
+              ) },
+              { key: 'junk', label: 'Junk %', numeric: true, render: (v) => <span style={{ color: v <= 5 ? 'var(--ds-color-state-success-light)' : 'var(--ds-color-state-error-light)', fontWeight: 600 }}>{v}%</span> },
+            ]}
+            rows={Object.entries(PREPROCESSING_COMPARISON).map(([k, v]) => ({
+              option: v.label, tokenLen: v.avgTokenLength, fits: v.transformerFits, quality: v.topicQualityScore, junk: v.junkTopicsPct,
+            }))}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <DataTable
+            caption="25-Year Macro Topic Trend Tracking (share of discourse, %)"
+            searchable={false}
+            columns={[
+              { key: 'year', label: 'Year', numeric: true },
+              { key: 'eurozoneIntegration', label: 'Eurozone', numeric: true },
+              { key: 'monetaryPolicy', label: 'Monetary Policy', numeric: true },
+              { key: 'liquidityCrisis', label: 'Liquidity Crisis', numeric: true },
+              { key: 'inflationShock', label: 'Inflation Shock', numeric: true },
+            ]}
+            rows={TWENTY_FIVE_YEAR_TRENDS}
+            rowKey={(r) => r.year}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={180}>
+          <Workflow
+            accent="foundations"
+            accentLabel="KeyNMF Pipeline"
+            title="From Seed Phrase to 25-Year Trend"
+            description="Step through the 2026 topic-modeling pipeline. Hit ▶ Play to animate the end-to-end flow."
+            steps={[
+              { title: 'Seed KeyNMF', description: 'Condition Non-negative Matrix Factorization with a domain seed phrase (e.g. "Subprime Liquidity Crisis") and seed exponent to bias topic discovery.', icon: '🌱' },
+              { title: 'LLM Preprocess', description: 'Summarize each document into 5–8 crisp semantic bullet points with an Open LLM, stripping legal boilerplate and tokenization noise.', icon: '✂️' },
+              { title: 'Matrix Factorize', description: 'Run NMF on the summarized embedding matrix — runs ~4× faster with zero context loss versus raw text.', icon: '🧮' },
+              { title: 'Zero-Shot Label', description: 'An LLM assigns human-readable labels to each discovered topic cluster and prunes junk topics.', icon: '🏷️' },
+              { title: 'Track Trends', description: 'Aggregate topic shares year-over-year to surface 25-year macroeconomic narrative shifts.', icon: '📈' },
+            ]}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={220}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>LLM Preprocessing Quality</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-foundations-primary)' }}>
+                <AnimatedNumber value={96} suffix="%" />
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              LLM summarization preprocessing lifts topic quality from <strong>62</strong> (raw text) to <strong>96</strong> while
+              cutting junk topics from <strong>35%</strong> to <strong>2%</strong> — the single highest-leverage step in the pipeline.
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );

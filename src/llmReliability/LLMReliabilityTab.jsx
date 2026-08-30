@@ -9,6 +9,9 @@ import {
   SIMULATE_RETRY_FALLBACK,
   PYTHON_RELIABILITY_PIPELINE
 } from './reliabilityEngine.js';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Grid, Flex, Stack } = Primitives;
 
@@ -318,6 +321,68 @@ export default function LLMReliabilityTab() {
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: WORKFLOW + TABLE + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>🔁 Interactive Reliability Playground</h3>
+            <Badge variant="module" moduleId="platform">Retry · Fallback · Replay</Badge>
+          </div>
+          <p style={{ marginTop: 0, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+            Watch the fault-tolerant dispatch sequence step by step, then inspect every attempt in the table. Hit ▶ Play to animate the failover.
+          </p>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <Workflow
+            accent="platform"
+            accentLabel="Fault-Tolerant Dispatch"
+            title="Retry → Backoff → Provider Failover"
+            description="Simulated run: primary rate-limits, retry times out, then failover to a backup provider resolves."
+            orientation="vertical"
+            steps={SIMULATE_RETRY_FALLBACK(true, false).attempts.map((a) => ({
+              title: `Attempt ${a.attempt} · ${a.provider}`,
+              description: `${a.log} (temperature ${a.temperature})`,
+              icon: a.status === 'SUCCESS' ? '✅' : '⚠️',
+              detail: `Status: ${a.status}`,
+            }))}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <DataTable
+            caption="Per-Attempt Dispatch Log"
+            searchable={false}
+            columns={[
+              { key: 'attempt', label: '#', numeric: true },
+              { key: 'provider', label: 'Provider', sortable: false },
+              { key: 'temperature', label: 'Temp', numeric: true },
+              { key: 'status', label: 'Status', sortable: false, render: (v) => (
+                <span style={{ fontWeight: 700, color: v === 'SUCCESS' ? 'var(--ds-color-state-success-light)' : 'var(--ds-color-state-warning-light)' }}>{v}</span>
+              ) },
+              { key: 'log', label: 'Log', sortable: false },
+            ]}
+            rows={SIMULATE_RETRY_FALLBACK(true, false).attempts}
+            rowKey={(r) => r.attempt}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={180}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>Target Uptime</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-platform-primary)' }}>
+                <AnimatedNumber value={99.9} decimals={1} suffix="%" />
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              Multi-provider failover with exponential backoff keeps the application responsive even when the primary
+              API returns <strong>429</strong> rate limits or <strong>timeouts</strong> — the defining property of a reliable LLM system.
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );

@@ -10,6 +10,9 @@ import {
   PREDICT_LEAD_SCORE,
   PYTHON_AI_USECASES_CODE
 } from './aiUseCasesEngine.js';
+import ZoomableImage from '../components/ui/ZoomableImage.jsx';
+import DataTable from '../components/ui/DataTable.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Section, Grid, Flex, Stack } = Primitives;
 
@@ -283,6 +286,62 @@ export default function AIUseCasesTab() {
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: IMAGE + TABLE + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>💡 Interactive Use-Case Map</h3>
+            <Badge variant="module" moduleId="frontiers">Image · Table</Badge>
+          </div>
+          <p style={{ marginTop: 0, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+            Explore the sales-architecture diagram via hotspots, then compare the three enterprise use cases side by side.
+          </p>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <ZoomableImage
+            src="/assets/ai_use_cases_sales_arch.png"
+            title="Enterprise AI Sales Architecture"
+            caption="Tap the numbered hotspots to trace how raw resumes become scored, graded leads; click the figure for a zoomable fullscreen view."
+            accent="frontiers"
+            hotspots={[
+              { x: 16, y: 30, label: 'Unstructured Resumes', title: 'Raw Input', body: 'Free-text resumes & profiles enter the pipeline as unstructured documents.' },
+              { x: 42, y: 40, label: 'LLM Feature Extraction', title: 'Structure', body: 'LLMs extract Years-Exp, Industry, IT-Leader flag at ~$0.001/lead vs $0.10 from brokers.' },
+              { x: 66, y: 32, label: 'Embeddings (1536-d)', title: 'Vectorize', body: 'Text becomes mathematical points enabling cosine-similarity matching to the ICP.' },
+              { x: 86, y: 52, label: 'Lead Grading A/B/C/D', title: 'Predict', body: 'A trained model outputs grades that prioritize high-probability opportunities.' },
+            ]}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <DataTable
+            caption="Three Enterprise AI Use Cases Beyond Chatbots"
+            columns={[
+              { key: 'useCase', label: 'Use Case', sortable: false },
+              { key: 'problem', label: 'Problem', sortable: false },
+              { key: 'solution', label: 'Solution', sortable: false },
+              { key: 'businessValue', label: 'Business Value', sortable: false },
+            ]}
+            rows={THREE_USE_CASES_MATRIX}
+            rowKey={(r) => r.useCase}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={180}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>Cost Reduction</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-frontiers-primary)' }}>
+                <AnimatedNumber value={100} suffix="×" />
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              LLM structuring cuts lead-qualification cost from <strong>$0.10</strong> (data brokers) to <strong>~$0.001</strong> per lead — a <strong>100×</strong> saving.
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );

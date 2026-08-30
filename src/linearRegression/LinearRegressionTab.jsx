@@ -11,6 +11,9 @@ import {
   GRADIENT_DESCENT_STEP,
   PYTHON_LINEAR_REGRESSION_CODE
 } from './linearRegressionEngine.js';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Section, Grid, Flex, Stack } = Primitives;
 
@@ -258,6 +261,61 @@ export default function LinearRegressionTab() {
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: WORKFLOW + TABLE + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>📉 Interactive Regression Lab</h3>
+            <Badge variant="module" moduleId="foundations">Data · Gradient Descent</Badge>
+          </div>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <DataTable
+            caption="Mark's House Pricing Dataset (size → price in $1000s)"
+            searchable={false}
+            columns={[
+              { key: 'label', label: 'House', sortable: false },
+              { key: 'size', label: 'Size (sq ft)', numeric: true },
+              { key: 'price', label: 'Price ($k)', numeric: true },
+            ]}
+            rows={HOUSE_PRICE_DATASET}
+            rowKey={(r) => r.label}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <Workflow
+            accent="foundations"
+            accentLabel="Gradient Descent"
+            title="Fitting the Best Line, Step by Step"
+            description="How the model learns weights w and bias b. Hit ▶ Play to animate each iteration."
+            steps={[
+              { title: 'Initialize w, b', description: 'Start with random (or zero) slope w and intercept b. The initial line is a poor guess.', icon: '🎲' },
+              { title: 'Compute Predictions', description: 'For every house, compute ŷ = w·x + b and measure the residual (actual − predicted).', icon: '🔮' },
+              { title: 'Measure Loss (MSE)', description: 'Average the squared residuals. Lower MSE means a tighter fit to the data.', icon: '📏' },
+              { title: 'Compute Gradients', description: 'Take the derivative of the loss w.r.t. w and b to find the steepest descent direction.', icon: '🧭' },
+              { title: 'Update w, b', description: 'w ← w − α·∂L/∂w, b ← b − α·∂L/∂b with learning rate α. Repeat until convergence.', icon: '🔄' },
+            ]}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={180}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>Mark's 2400 sq ft Prediction</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-foundations-primary)' }}>
+                $<AnimatedNumber value={CALCULATE_LINE_FIT(0.069, 1.5).markPredPrice} decimals={0} />k
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              With the fitted line, Mark's <strong>2400 sq ft</strong> house is predicted near the regression estimate
+              (slope {CALCULATE_LINE_FIT(0.069, 1.5).slopeW}, bias {CALCULATE_LINE_FIT(0.069, 1.5).interceptB}, MSE {CALCULATE_LINE_FIT(0.069, 1.5).mse}).
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );

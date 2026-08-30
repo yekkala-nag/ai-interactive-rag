@@ -9,6 +9,10 @@ import {
   SIMULATE_VARIABLE_TRACKING,
   PYTHON_WORKING_MEMORY_CODE
 } from './contextLimitsEngine.js';
+import ZoomableImage from '../components/ui/ZoomableImage.jsx';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Grid, Flex, Stack } = Primitives;
 
@@ -251,6 +255,78 @@ export default function ContextLimitsTab() {
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: IMAGE + WORKFLOW + TABLE + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>🧠 Interactive Working-Memory Lab</h3>
+            <Badge variant="module" moduleId="context">Image · Workflow · Table</Badge>
+          </div>
+          <p style={{ marginTop: 0, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+            Tap the numbered hotspots on the architecture diagram, walk the BAPO theory steps, and query the task taxonomy.
+          </p>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <ZoomableImage
+            src="/assets/1m_context_limits_working_memory_arch.png"
+            title="1M+ Context Window & Working Memory Architecture"
+            caption="Click numbered hotspots to reveal how raw context capacity differs from effective working memory; click the figure for a zoomable fullscreen view."
+            accent="context"
+            hotspots={[
+              { x: 18, y: 28, label: 'Context Window (1M–2M tokens)', title: 'Raw Capacity', body: 'Frontier LLMs advertise 200k–2M token windows. This is storage, not usable memory.' },
+              { x: 50, y: 45, label: 'Prefix Bandwidth (a)', title: 'Compression While Reading', body: 'Bits of information compressed into contextual embeddings while ingesting text.' },
+              { x: 74, y: 38, label: 'Attention Bandwidth (b)', title: 'Look-Back Range', body: 'How many past token locations can be attended at the query token.' },
+              { x: 52, y: 74, label: 'Working Memory Boundary (N≈5–10)', title: 'Collapse Threshold', body: 'Beyond ~5–10 active variables, BAPO-Hard performance regresses toward random (50%).' },
+            ]}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <Workflow
+            accent="context"
+            accentLabel="BAPO Theory"
+            title="Why Big Context ≠ Good Memory"
+            description="Four steps from raw capacity to the working-memory boundary. Hit ▶ Play."
+            steps={BAPO_THEORY_STEPS.map((s) => ({
+              title: s.title, description: s.description, icon: '🔢',
+            }))}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={180}>
+          <DataTable
+            caption="BAPO Task Taxonomy — Memory Demand & Recommended Offload"
+            columns={[
+              { key: 'name', label: 'Task', sortable: false },
+              { key: 'type', label: 'Class', sortable: false, render: (v) => (
+                <span style={{ fontWeight: 700, color: v === 'BAPO-Hard' ? 'var(--ds-color-state-error-light)' : 'var(--ds-color-state-success-light)' }}>{v}</span>
+              ) },
+              { key: 'memoryDemand', label: 'Memory Demand', sortable: false },
+              { key: 'description', label: 'Description', sortable: false },
+              { key: 'recommendation', label: 'Recommendation', sortable: false },
+            ]}
+            rows={BAPO_TASK_TAXONOMY}
+            rowKey={(r) => r.name}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={240}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>Working Memory Ceiling</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-context-primary)' }}>
+                N ≈ <AnimatedNumber value={10} />
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              Once active-variable complexity exceeds <strong>5–10</strong>, even a 1M-token context collapses toward
+              random guessing on BAPO-Hard tasks — outsource tracking to Python or reasoning tokens.
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );

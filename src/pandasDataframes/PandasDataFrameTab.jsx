@@ -10,6 +10,9 @@ import {
   RUN_DATAFRAME_OPERATION,
   PYTHON_PANDAS_ADVANCED_CODE
 } from './pandasEngine.js';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Grid, Flex, Stack } = Primitives;
 
@@ -326,6 +329,73 @@ export default function PandasDataFrameTab() {
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: TABLE + WORKFLOW + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>🐼 Interactive Pandas Lab</h3>
+            <Badge variant="module" moduleId="foundations">Compare · Construct · Explore</Badge>
+          </div>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <DataTable
+            caption="Data Structure Comparison — List vs NumPy vs Pandas DataFrame"
+            searchable
+            initialSort={{ key: 'name', dir: 'asc' }}
+            columns={[
+              { key: 'name', label: 'Structure', sortable: false },
+              { key: 'type', label: 'Engine', sortable: false },
+              { key: 'homogeneity', label: 'Homogeneity', sortable: false },
+              { key: 'vectorizedOps', label: 'Vectorized Ops', sortable: false },
+              { key: 'bestFor', label: 'Best For', sortable: false },
+            ]}
+            rows={DATA_STRUCTURES_COMPARISON}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <DataTable
+            caption="Array Dimensions — Shape, Analogy & Vectorization"
+            searchable={false}
+            columns={[
+              { key: 'dim', label: 'Dimension', sortable: false },
+              { key: 'shape', label: 'Shape', sortable: false },
+              { key: 'analogy', label: 'Real-World Analogy', sortable: false },
+              { key: 'vectorizedExample', label: 'Vectorized Example', sortable: false },
+            ]}
+            rows={ARRAY_DIMENSIONS_DATA}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={180}>
+          <Workflow
+            accent="foundations"
+            accentLabel="Construction Patterns"
+            title="Four Ways to Build a DataFrame"
+            description="Step through the canonical construction paths. Hit ▶ Play to animate."
+            steps={DATAFRAME_CONSTRUCTION_WORKFLOWS.map((w) => ({
+              title: w.name, description: w.description, detail: w.code, icon: '🛠️',
+            }))}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={240}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>Columnar Ops Speedup</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-foundations-primary)' }}>
+                <AnimatedNumber value={4} suffix="×" />
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              Vectorized columnar operations on a Pandas DataFrame run up to <strong>4× faster</strong> than Python-loop
+              equivalents over the same data — the core reason tabular ML pipelines standardize on DataFrames.
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );

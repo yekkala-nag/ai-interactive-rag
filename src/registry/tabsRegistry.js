@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "modellandscape", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
+    tabs: ["overview", "glossary", "firstaiapp", "reinforcementlearning", "aimoralagency", "dialoguelamda", "modellandscape", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
   },
   {
     id: "rag_architecture",
@@ -40,7 +40,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🤖",
     color: "#c4572a",
     description: "ReAct loops, multi-agent orchestration, CLI agents, LangChain & LangGraph",
-    tabs: ["fiveassets", "redesign", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
+    tabs: ["fiveassets", "redesign", "claudecode100", "typedagentgate", "agentpairprogramming", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
   },
   {
     id: "data_platform",
@@ -48,7 +48,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🏗️",
     color: "#3b82f6",
     description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "datahumanization", "llmfinetuning"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "datahumanization", "llmfinetuning"]
   },
   {
     id: "frontiers_production",
@@ -79,6 +79,42 @@ export const TABS_REGISTRY = [
     icon: "📖",
     keywords: ["glossary", "terms", "definitions", "concepts"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AIGlossaryTab })))
+  },
+  {
+    id: "firstaiapp",
+    label: "Building Your First AI App",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🚀",
+    keywords: ["first ai app", "ai app", "api keys", "environment variables", "ibrahim salami", "summarizer", "json response", "error triaging", "map reduce chunking", "openai", "towards data science"],
+    component: lazy(() => import("../firstAIApp/FirstAIAppTab.jsx"))
+  },
+  {
+    id: "reinforcementlearning",
+    label: "Reinforcement Learning: 3 Baselines & MDPs",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🎮",
+    keywords: ["reinforcement learning", "rl", "baselines", "markov decision process", "mdp", "ppo", "dqn", "dynamic pricing", "consumer rl", "next-best-action", "ltv", "wouter van heeswijk", "raj", "gymnasium", "towards data science"],
+    component: lazy(() => import("../reinforcementLearning/ReinforcementLearningTab.jsx"))
+  },
+  {
+    id: "aimoralagency",
+    label: "AI Alignment & Moral Agency",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "⚖️",
+    keywords: ["moral agency", "ai alignment", "caring", "functional caring", "experiential caring", "constitutional ai", "qualia", "consciousness", "javier marin valenzuela", "ethics", "towards data science"],
+    component: lazy(() => import("../aiMoralAgency/MoralAgencyTab.jsx"))
+  },
+  {
+    id: "dialoguelamda",
+    label: "Open-Domain Dialogue & LaMDA",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "💬",
+    keywords: ["dialogue", "lamda", "google lamda", "ssi", "sensibleness", "specificity", "interestingness", "alberto romero", "gemini", "chatbots", "tool grounding", "towards data science"],
+    component: lazy(() => import("../dialogueLaMDA/DialogueLaMDATab.jsx"))
   },
   {
     id: "modellandscape",
@@ -456,6 +492,33 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.RedesignWorkTab })))
   },
   {
+    id: "claudecode100",
+    label: "Solving 100+ Tasks with Claude Code",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🚀",
+    keywords: ["claude code", "100 tasks", "sub-agents", "worktree", "git worktree", "task triage", "task bifurcation", "html report", "verification report", "eivind kjosbakken", "linear", "slack bot", "towards data science", "autonomous coding"],
+    component: lazy(() => import("../claudeCode100/ClaudeCode100Tab.jsx"))
+  },
+  {
+    id: "typedagentgate",
+    label: "Typed Tools, Hard Bounds & Gates",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🛡️",
+    keywords: ["typed tools", "hard bounds", "composer gate", "agent governance", "search box", "miodrag cekikj", "8 tools", "80-line loop", "contradiction refusal", "escalation architecture", "graph traversal", "time-valid edges", "towards data science"],
+    component: lazy(() => import("../typedAgentGate/TypedAgentGateTab.jsx"))
+  },
+  {
+    id: "agentpairprogramming",
+    label: "How to Work with AI Coding Agents",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🤝",
+    keywords: ["ai coding agents", "pair programming", "sara metwalli", "task decomposition", "test-driven", "context injection", "vibe coding", "human in the loop", "towards data science"],
+    component: lazy(() => import("../agentPairProgramming/AgentPairTab.jsx"))
+  },
+  {
     id: "agentsastools",
     label: "Agents as Tools",
     umbrellaId: "agents_frameworks",
@@ -645,6 +708,42 @@ export const TABS_REGISTRY = [
     icon: "📊",
     keywords: ["classical ml", "scikit-learn", "xgboost"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.ClassicalMLTab })))
+  },
+  {
+    id: "frauddetectionml",
+    label: "Production ML: 6 Fraud Models",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "💳",
+    keywords: ["fraud detection", "production ml", "benjamin nweke", "nairashield", "lightgbm", "xgboost", "catboost", "latency sla", "cost matrix", "treeshap", "explainability", "towards data science"],
+    component: lazy(() => import("../fraudDetectionML/FraudDetectionTab.jsx"))
+  },
+  {
+    id: "modernioformats",
+    label: "Fast Data I/O: Parquet, Arrow & DuckDB",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "⚡",
+    keywords: ["parquet", "arrow", "feather", "duckdb", "polars", "pd.read_csv", "csv", "data io", "avi chawla", "columnar", "predicate pushdown", "zero-copy", "towards data science"],
+    component: lazy(() => import("../modernIOFormats/ModernIOTab.jsx"))
+  },
+  {
+    id: "pythonprofiling",
+    label: "Python Performance Profiling",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "⏱️",
+    keywords: ["python profiling", "cprofile", "snakeviz", "line_profiler", "scalene", "performance", "vectorization", "thomas reid", "tottime", "cumtime", "towards data science"],
+    component: lazy(() => import("../pythonProfiling/PythonProfilingTab.jsx"))
+  },
+  {
+    id: "pythonengineering",
+    label: "5 Python Engineering Simulators",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "⚙️",
+    keywords: ["computational engineering", "fea", "finite element", "pid controller", "harmonic oscillator", "rankine cycle", "andrew joseph davies", "scipy", "solve_ivp", "towards data science"],
+    component: lazy(() => import("../pythonEngineering/PythonEngineeringTab.jsx"))
   },
   {
     id: "activelearn",

@@ -9,6 +9,10 @@ import {
   CALCULATE_EMA_UPDATE,
   PYTORCH_BYOL_CODE
 } from './byolEngine.js';
+import ZoomableImage from '../components/ui/ZoomableImage.jsx';
+import DataTable from '../components/ui/DataTable.jsx';
+import Workflow from '../components/ui/Workflow.jsx';
+import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 
 const { Container, Section, Grid, Flex, Stack } = Primitives;
 
@@ -332,6 +336,80 @@ export default function BYOLTab() {
             </Card>
           </Stack>
         )}
+      {/* ─── INTERACTIVE ENHANCEMENTS: IMAGE + TABLE + WORKFLOW + ANIMATION ─── */}
+      <Stack gap={6} style={{ marginTop: 'var(--ds-space-8)' }}>
+        <Reveal variant="rise">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: 'var(--ds-space-3)' }}>
+            <h3 style={{ margin: 0, fontSize: 'var(--ds-font-size-h2)' }}>🎯 Interactive BYOL Lab</h3>
+            <Badge variant="module" moduleId="rag">Image · Workflow · Table</Badge>
+          </div>
+          <p style={{ marginTop: 0, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+            Tap the architecture hotspots, walk the training loop, and compare self-supervised methods head-to-head.
+          </p>
+        </Reveal>
+
+        <Reveal variant="rise" delay={60}>
+          <ZoomableImage
+            src="/assets/byol_self_supervised_arch.png"
+            title="BYOL Self-Supervised Architecture"
+            caption="Tap the numbered hotspots to inspect the online/target networks and predictor; click the figure for a zoomable fullscreen view."
+            accent="rag"
+            hotspots={[
+              { x: 20, y: 30, label: 'Online Network (Encoder + Predictor)', title: 'Online Branch', body: 'Augmented view x′a feeds an encoder plus an extra predictor MLP q_θ — the only trainable predictor.' },
+              { x: 60, y: 30, label: 'Target Network (EMA)', title: 'Slow Target', body: 'Same encoder architecture updated via exponential moving average (τ≈0.99), with NO predictor and a stop-gradient.' },
+              { x: 40, y: 62, label: 'Predictor q_θ', title: 'Asymmetry', body: 'The predictor is what prevents representational collapse without needing negative pairs.' },
+              { x: 80, y: 62, label: 'EMA Update (τ≈0.99)', title: 'Momentum', body: 'Target weights drift slowly toward online weights, stabilizing training.' },
+            ]}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={120}>
+          <Workflow
+            accent="rag"
+            accentLabel="Training Loop"
+            title="BYOL Forward–Backward Loop"
+            description="One BYOL training step. Hit ▶ Play to animate."
+            steps={[
+              { title: 'Two Augmented Views', description: 'Sample two stochastic augmentations v and v′ of the same image.', icon: '🖼️' },
+              { title: 'Online Encode + Predict', description: 'Encoder f_θ(v) → projector → predictor q_θ yields prediction p_θ.', icon: '🟢' },
+              { title: 'Target Encode (SG)', description: 'Target network f_ξ(v′) with stop-gradient yields representation z′_ξ.', icon: '🟣' },
+              { title: 'Contrastive Loss', description: 'Minimize MSE between L2-normalized p_θ and z′_ξ (no negatives needed).', icon: '📉' },
+              { title: 'EMA Update Target', description: 'ξ ← τ·ξ + (1−τ)·θ keeps the target a slow, stable moving average.', icon: '🔄' },
+            ]}
+          />
+        </Reveal>
+
+        <Reveal variant="rise" delay={180}>
+          <DataTable
+            caption="Self-Supervised Learning Methods — Collapse Prevention & Accuracy"
+            columns={[
+              { key: 'architecture', label: 'Method', sortable: false },
+              { key: 'negativePairs', label: 'Negatives', sortable: false },
+              { key: 'targetMechanism', label: 'Target', sortable: false },
+              { key: 'collapsePrevention', label: 'Collapse Prevention', sortable: false },
+              { key: 'linearProbeAccuracy', label: 'Top-1', sortable: false },
+            ]}
+            rows={SSL_COMPARISON_MATRIX}
+            rowKey={(r) => r.architecture}
+          />
+        </Reveal>
+
+        <Reveal variant="scale" delay={240}>
+          <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)', display: 'flex', gap: 'var(--ds-space-6)', flexWrap: 'wrap', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>EMA Momentum τ</div>
+              <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-rag-primary)' }}>
+                <AnimatedNumber value={0.99} decimals={2} />
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+              A slow EMA target (τ≈<strong>0.99</strong>) plus the asymmetric predictor lets BYOL learn without negative
+              pairs — and still reach <strong>74.3%</strong> ImageNet Top-1 linear-probe accuracy.
+            </div>
+          </Card>
+        </Reveal>
+      </Stack>
+
       </Container>
     </div>
   );
