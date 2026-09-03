@@ -120,6 +120,7 @@ const TabComponents = {
   guardrails: lazy(() => import('./guardrails/GuardrailsTab.jsx')),
   llmreliability: lazy(() => import('./llmReliability/LLMReliabilityTab.jsx')),
   enterpriseaiops: lazy(() => import('./enterpriseAIOps/EnterpriseAIOpsTab.jsx')),
+  productionragops: lazy(() => import('./productionRAGOps/ProductionRAGOpsTab.jsx')),
 };
 
 function TabLoader({ tabId, onSelectTab }) {
@@ -249,6 +250,36 @@ export default function App() {
 
         <Container size="normal">
           <TabLoader tabId={activeTab} onSelectTab={handleTabSelect} />
+          <footer style={{
+            marginTop: 'var(--ds-space-12)',
+            paddingTop: 'var(--ds-space-6)',
+            paddingBottom: 'var(--ds-space-8)',
+            borderTop: '1px solid var(--ds-color-border-subtle)',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '12px',
+            fontSize: '12px',
+            color: 'var(--ds-color-text-tertiary)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>Nagaraj Y</span>
+              <span>•</span>
+              <span>Interactive AI & RAG Architecture Knowledge Base</span>
+            </div>
+            <div style={{
+              background: 'rgba(245, 158, 11, 0.1)',
+              border: '1px solid rgba(245, 158, 11, 0.3)',
+              color: '#f59e0b',
+              padding: '4px 10px',
+              borderRadius: '6px',
+              fontWeight: 500,
+              fontSize: '11px'
+            }}>
+              ⚠️ Disclaimer: This is only for Education purpose
+            </div>
+          </footer>
         </Container>
 
         <CommandPalette

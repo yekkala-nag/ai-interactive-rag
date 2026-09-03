@@ -467,6 +467,34 @@ export function Sidebar({
         )}
       </nav>
 
+      {/* FOOTER: AUTHOR ATTRIBUTION & DISCLAIMER */}
+      {!collapsed && (
+        <div style={{
+          padding: '10px 14px',
+          borderTop: '1px solid var(--ds-color-border-subtle)',
+          background: 'rgba(0, 0, 0, 0.25)',
+          flexShrink: 0
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+            <span style={{ fontSize: '13px' }}>👤</span>
+            <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>
+              Nagaraj Y
+            </span>
+          </div>
+          <div style={{
+            fontSize: '10.5px',
+            color: '#f59e0b',
+            lineHeight: '1.35',
+            background: 'rgba(245, 158, 11, 0.1)',
+            border: '1px solid rgba(245, 158, 11, 0.25)',
+            padding: '4px 8px',
+            borderRadius: '4px'
+          }}>
+            ⚠️ Disclaimer: This is only for Education purpose
+          </div>
+        </div>
+      )}
+
       {/* 5. COLLAPSED EXPAND BUTTON */}
       {collapsed && (
         <div style={{ padding: '8px', borderTop: '1px solid var(--ds-color-border-subtle)', textAlign: 'center' }}>
@@ -589,8 +617,24 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
           </div>
         </div>
 
-        {/* Right: Counter & Search Trigger */}
+        {/* Right: Author Badge, Counter & Search Trigger */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '3px 8px',
+            background: 'rgba(245, 158, 11, 0.08)',
+            border: '1px solid rgba(245, 158, 11, 0.25)',
+            borderRadius: '6px',
+            fontSize: '0.72rem',
+            color: '#f59e0b'
+          }}>
+            <span style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>Nagaraj Y</span>
+            <span style={{ color: 'rgba(245, 158, 11, 0.4)' }}>•</span>
+            <span>Education purpose only</span>
+          </div>
+
           <span style={{
             fontSize: '0.72rem',
             color: 'var(--ds-color-text-tertiary)',

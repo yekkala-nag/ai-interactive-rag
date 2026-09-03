@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["enterpriseaiops", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
+    tabs: ["productionragops", "enterpriseaiops", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
@@ -980,6 +980,15 @@ export const TABS_REGISTRY = [
     icon: "🏛️",
     keywords: ["enterprise ai", "ai architecture", "ai operations", "token limits", "token governance", "ai gateway", "semantic cache", "model routing", "map reduce", "reranker", "token compression", "finops", "lost in the middle"],
     component: lazy(() => import("../enterpriseAIOps/EnterpriseAIOpsTab.jsx"))
+  },
+  {
+    id: "productionragops",
+    label: "Production RAG & AgentOps",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "⚡",
+    keywords: ["agentops", "mlops", "earned complexity", "rag complexity", "faq as rag", "semantic cache", "noisy text", "ocr", "typos", "levenshtein", "symspell", "pass^k", "tau-bench", "compounding errors", "hard loop cap", "opentelemetry", "towards data science"],
+    component: lazy(() => import("../productionRAGOps/ProductionRAGOpsTab.jsx"))
   }
 ];
 
