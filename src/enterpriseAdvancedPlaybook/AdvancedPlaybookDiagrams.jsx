@@ -193,3 +193,108 @@ export function EndToEndEnterpriseArchitectureDiagram() {
     </div>
   );
 }
+
+// 4. Security, Compliance & Guardrails Pipeline Diagram
+export function SecurityGuardrailsPipelineDiagram() {
+  return (
+    <div style={{
+      background: '#090d16',
+      border: '1px solid #10b981',
+      borderRadius: '12px',
+      padding: '24px 20px',
+      color: '#f8fafc',
+      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
+    }}>
+      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#10b981' }}>
+          🛡️ Enterprise 3-Stage Security & Guardrails Pipeline
+        </h3>
+        <p style={{ margin: '6px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
+          Eliminating PII leaks, neutralizing prompt injections, and enforcing strict RBAC in vector retrieval.
+        </p>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+        {/* Stage 1 */}
+        <div style={{ background: '#0f172a', border: '1px solid #38bdf8', borderRadius: '10px', padding: '16px' }}>
+          <span style={{ fontSize: '10px', background: 'rgba(56, 189, 248, 0.2)', color: '#38bdf8', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>STAGE 1</span>
+          <h4 style={{ margin: '8px 0 4px 0', fontSize: '14px', color: '#ffffff' }}>Presidio PII Redaction</h4>
+          <p style={{ margin: '0 0 8px 0', fontSize: '11px', color: '#94a3b8' }}>Local NLP Sanitization</p>
+          <div style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
+            Replaces SSNs, emails, phone numbers, and full names with anonymized entity tokens prior to LLM dispatch.
+          </div>
+        </div>
+
+        {/* Stage 2 */}
+        <div style={{ background: '#0f172a', border: '1px solid #ef4444', borderRadius: '10px', padding: '16px' }}>
+          <span style={{ fontSize: '10px', background: 'rgba(239, 68, 68, 0.2)', color: '#ef4444', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>STAGE 2</span>
+          <h4 style={{ margin: '8px 0 4px 0', fontSize: '14px', color: '#ffffff' }}>Injection & Toxicity Defense</h4>
+          <p style={{ margin: '0 0 8px 0', fontSize: '11px', color: '#94a3b8' }}>LLM Guard / NeMo</p>
+          <div style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
+            Scans input prompts against jailbreak patterns and exfiltration triggers. Trips security alarm if score &gt; 0.50.
+          </div>
+        </div>
+
+        {/* Stage 3 */}
+        <div style={{ background: '#0f172a', border: '1px solid #10b981', borderRadius: '10px', padding: '16px' }}>
+          <span style={{ fontSize: '10px', background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>STAGE 3</span>
+          <h4 style={{ margin: '8px 0 4px 0', fontSize: '14px', color: '#ffffff' }}>RBAC Pre-Filtered Vector DB</h4>
+          <p style={{ margin: '0 0 8px 0', fontSize: '11px', color: '#94a3b8' }}>Security-Trimmed Search</p>
+          <div style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
+            Injects user role permissions directly into vector database filter clause, ensuring zero unauthorized chunk exposure.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 5. Tech Stack Adaptation Comparison Diagram
+export function StackAdaptationComparisonDiagram() {
+  return (
+    <div style={{
+      background: '#090d16',
+      border: '1px solid #f59e0b',
+      borderRadius: '12px',
+      padding: '24px 20px',
+      color: '#f8fafc',
+      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
+    }}>
+      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#f59e0b' }}>
+          ☕ Multi-Stack Architecture: Python vs Spring AI vs AWS Bedrock
+        </h3>
+        <p style={{ margin: '6px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
+          Translating LangChain and LangGraph paradigms into enterprise Java and cloud-native AWS services.
+        </p>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+        <div style={{ background: '#0f172a', border: '1px solid #38bdf8', borderRadius: '10px', padding: '16px' }}>
+          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#38bdf8' }}>PYTHON ECOSYSTEM</div>
+          <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff', margin: '4px 0 8px 0' }}>LangChain & LangGraph</div>
+          <p style={{ fontSize: '11px', color: '#cbd5e1', margin: 0, lineHeight: '1.4' }}>
+            Rapid AI research, StateGraph multi-agent cyclical loops, Qdrant/Chroma clients, and native LangSmith tracing.
+          </p>
+        </div>
+
+        <div style={{ background: '#0f172a', border: '1px solid #10b981', borderRadius: '10px', padding: '16px' }}>
+          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#10b981' }}>JAVA / SPRING AI</div>
+          <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff', margin: '4px 0 8px 0' }}>Spring AI & Micrometer</div>
+          <p style={{ fontSize: '11px', color: '#cbd5e1', margin: 0, lineHeight: '1.4' }}>
+            Enterprise Java Spring Boot services, ChatClient with advisors, pgvector store, and Micrometer OpenTelemetry.
+          </p>
+        </div>
+
+        <div style={{ background: '#0f172a', border: '1px solid #f59e0b', borderRadius: '10px', padding: '16px' }}>
+          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#f59e0b' }}>AWS CLOUD-NATIVE</div>
+          <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff', margin: '4px 0 8px 0' }}>Bedrock & Step Functions</div>
+          <p style={{ fontSize: '11px', color: '#cbd5e1', margin: 0, lineHeight: '1.4' }}>
+            Managed Bedrock Agents with OpenAPI action groups, OpenSearch Serverless RAG, and Step Functions Map-Reduce.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+

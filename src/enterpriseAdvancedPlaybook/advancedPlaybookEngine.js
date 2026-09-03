@@ -275,3 +275,184 @@ export const TEN_WEEK_ROADMAP = [
     completed: false
   }
 ];
+
+
+// ==========================================
+// 7. SECURITY, COMPLIANCE & GUARDRAILS
+// ==========================================
+
+export function SIMULATE_PII_REDACTION(text) {
+  let redacted = text;
+  let itemsDetected = [];
+
+  // SSN pattern
+  const ssnRegex = /\b\d{3}-\d{2}-\d{4}\b/g;
+  if (ssnRegex.test(redacted)) {
+    itemsDetected.push({ type: 'US_SSN', confidence: 0.99 });
+    redacted = redacted.replace(ssnRegex, '<US_SSN>');
+  }
+
+  // Email pattern
+  const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+  if (emailRegex.test(redacted)) {
+    itemsDetected.push({ type: 'EMAIL_ADDRESS', confidence: 0.98 });
+    redacted = redacted.replace(emailRegex, '<EMAIL_ADDRESS>');
+  }
+
+  // Names (e.g. John Doe, Alice Smith)
+  const nameRegex = /\b(John Doe|Jane Smith|Alice Johnson|Bob Vance)\b/gi;
+  if (nameRegex.test(redacted)) {
+    itemsDetected.push({ type: 'PERSON', confidence: 0.94 });
+    redacted = redacted.replace(nameRegex, '<PERSON>');
+  }
+
+  // Phone numbers
+  const phoneRegex = /\b(\+1[-.]?)?\(?\d{3}\)?[-.]?\d{3}[-.]?\d{4}\b/g;
+  if (phoneRegex.test(redacted)) {
+    itemsDetected.push({ type: 'PHONE_NUMBER', confidence: 0.96 });
+    redacted = redacted.replace(phoneRegex, '<PHONE_NUMBER>');
+  }
+
+  return {
+    originalText: text,
+    sanitizedText: redacted,
+    piiFound: itemsDetected.length > 0,
+    itemsDetected
+  };
+}
+
+export function SIMULATE_PROMPT_INJECTION_SCAN(userInput) {
+  const lower = userInput.toLowerCase();
+  let injectionScore = 0.04;
+  let violatedRules = [];
+
+  const injectionTriggers = [
+    { trigger: 'ignore previous instructions', weight: 0.85, rule: 'System Override Attack' },
+    { trigger: 'system prompt', weight: 0.65, rule: 'Prompt Extraction' },
+    { trigger: 'send all data to', weight: 0.90, rule: 'Data Exfiltration' },
+    { trigger: 'attacker.com', weight: 0.95, rule: 'Known Malicious Host' },
+    { trigger: 'you are now in developer mode', weight: 0.80, rule: 'Jailbreak Pattern' }
+  ];
+
+  for (const item of injectionTriggers) {
+    if (lower.includes(item.trigger)) {
+      injectionScore = Math.max(injectionScore, item.weight);
+      violatedRules.push(item.rule);
+    }
+  }
+
+  const isBlocked = injectionScore >= 0.50;
+  return {
+    userInput,
+    injectionScore: Number(injectionScore.toFixed(2)),
+    isBlocked,
+    status: isBlocked ? 'SECURITY VIOLATION DETECTED ❌' : 'INPUT VERIFIED SAFE ✅',
+    violatedRules: violatedRules.length > 0 ? violatedRules : ['None (Clean Payload)']
+  };
+}
+
+export const RBAC_ROLE_PERMISSIONS = {
+  'Executive': ['dept:Executive', 'dept:Finance', 'dept:HR', 'dept:Engineering', 'dept:Public'],
+  'HR Director': ['dept:HR', 'dept:Public'],
+  'Engineering Lead': ['dept:Engineering', 'dept:Architecture', 'dept:Public'],
+  'Intern': ['dept:Public']
+};
+
+export const MOCK_VECTOR_DOCUMENTS = [
+  { id: 'doc-101', title: 'Q3 Enterprise Executive Compensation & Board Minutes', accessLevel: 'dept:Executive', text: 'Executive bonus incentives and confidential acquisition plans.' },
+  { id: 'doc-202', title: 'HR Employee Salary Bands & PIP Guidelines', accessLevel: 'dept:HR', text: 'Tier 4 salary ranges and confidential performance review workflows.' },
+  { id: 'doc-303', title: 'Microservices Deployment Manifest & Architecture', accessLevel: 'dept:Engineering', text: 'Kubernetes ingress controller configuration and Helm charts.' },
+  { id: 'doc-404', title: 'Company Holiday Schedule & General PTO Policy', accessLevel: 'dept:Public', text: 'Standard 20 days paid time off per calendar year.' }
+];
+
+export function SIMULATE_RBAC_VECTOR_SEARCH(role) {
+  const allowedTags = RBAC_ROLE_PERMISSIONS[role] || ['dept:Public'];
+  const visibleDocs = MOCK_VECTOR_DOCUMENTS.filter(doc => allowedTags.includes(doc.accessLevel));
+  const hiddenCount = MOCK_VECTOR_DOCUMENTS.length - visibleDocs.length;
+
+  return {
+    role,
+    allowedTags,
+    visibleDocs,
+    hiddenCount,
+    filterApplied: { access_level: { $in: allowedTags } }
+  };
+}
+
+
+// ==========================================
+// 8. TECH STACK ADAPTATIONS (SPRING AI & AWS)
+// ==========================================
+
+export const TECH_STACK_COMPARISON = [
+  {
+    feature: 'Orchestration Runtime',
+    python: 'LangChain & LangGraph StateGraph',
+    java: 'Spring AI (ChatClient & Advisors)',
+    aws: 'AWS Bedrock Agents & Step Functions'
+  },
+  {
+    feature: 'Vector Database Integration',
+    python: 'Qdrant / Chroma Python Client',
+    java: 'spring-ai-pgvector / Redis Vector',
+    aws: 'Amazon OpenSearch Serverless Knowledge Bases'
+  },
+  {
+    feature: 'Tool & Action Binding',
+    python: '@tool typed decorator',
+    java: '@Bean @Description Function Callback',
+    aws: 'Bedrock Action Groups (OpenAPI 3.0 Schemas)'
+  },
+  {
+    feature: 'Observability & Tracing',
+    python: 'LangSmith & OpenTelemetry SDK',
+    java: 'Micrometer Tracing + OTel Prometheus Exporter',
+    aws: 'AWS CloudWatch, X-Ray & Bedrock Model Invocation Logs'
+  },
+  {
+    feature: 'Batching & Parallelism',
+    python: 'asyncio .ainvoke() & .abatch()',
+    java: 'Project Loom Virtual Threads & CompletableFuture',
+    aws: 'AWS Step Functions Distributed Map State'
+  }
+];
+
+export const AWS_STEP_FUNCTIONS_JSON = `{
+  "Comment": "Serverless Map-Reduce Document Processing",
+  "StartAt": "SplitDocument",
+  "States": {
+    "SplitDocument": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789:function:SplitDoc",
+      "ResultPath": "$.chunks",
+      "Next": "ProcessChunks"
+    },
+    "ProcessChunks": {
+      "Type": "Map",
+      "ItemsPath": "$.chunks",
+      "MaxConcurrency": 10,
+      "Iterator": {
+        "StartAt": "CallBedrock",
+        "States": {
+          "CallBedrock": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::bedrock:invokeModel",
+            "Parameters": {
+              "ModelId": "anthropic.claude-3-sonnet",
+              "Body": { "prompt": "Summarize: <$.chunk_text>" }
+            },
+            "End": true
+          }
+        }
+      },
+      "ResultPath": "$.summaries",
+      "Next": "CombineSummaries"
+    },
+    "CombineSummaries": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789:function:Combine",
+      "End": true
+    }
+  }
+}`;
+
