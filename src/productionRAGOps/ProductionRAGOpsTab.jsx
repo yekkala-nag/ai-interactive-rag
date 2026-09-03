@@ -78,38 +78,7 @@ export default function ProductionRAGOpsTab() {
         description="Moving beyond academic tutorials to battle-tested enterprise architectures. Discover why green MLOps dashboards fail in agentic loops, how to earn RAG complexity against measured failure modes, inverting pipelines with FAQ-as-RAG caching, conquering OCR & noisy text, proving document absence with 4-brick evidence, and defeating silent structured output failures."
       />
 
-      <Container style={{ marginTop: 'var(--ds-space-4)' }}>
-        {/* EDUCATIONAL DISCLAIMER BANNER */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          background: 'rgba(245, 158, 11, 0.08)',
-          border: '1px solid rgba(245, 158, 11, 0.3)',
-          borderRadius: '8px',
-          padding: '10px 16px',
-          marginBottom: '20px',
-          color: '#cbd5e1',
-          fontSize: '12px'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '14px' }}>👤</span>
-            <span style={{ fontWeight: 600, color: '#f8fafc' }}>Nagaraj Y</span>
-            <span style={{ color: 'rgba(255,255,255,0.2)' }}>|</span>
-            <span>Enterprise AI & Production RAG Architecture Research</span>
-          </div>
-          <div style={{
-            background: 'rgba(245, 158, 11, 0.2)',
-            color: '#fbbf24',
-            padding: '2px 8px',
-            borderRadius: '4px',
-            fontWeight: 600,
-            fontSize: '11px'
-          }}>
-            ⚠️ Disclaimer: This is only for Education purpose
-          </div>
-        </div>
-
+      <Container style={{ marginTop: 'var(--ds-space-6)' }}>
         {/* SUBTAB NAVIGATION */}
         <div style={{
           display: 'flex',

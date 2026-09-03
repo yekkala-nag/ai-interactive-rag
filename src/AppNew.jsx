@@ -121,6 +121,8 @@ const TabComponents = {
   llmreliability: lazy(() => import('./llmReliability/LLMReliabilityTab.jsx')),
   enterpriseaiops: lazy(() => import('./enterpriseAIOps/EnterpriseAIOpsTab.jsx')),
   productionragops: lazy(() => import('./productionRAGOps/ProductionRAGOpsTab.jsx')),
+  tokenorchestrationplaybook: lazy(() => import('./tokenOrchestrationPlaybook/TokenPlaybookTab.jsx')),
+  enterpriseadvancedplaybook: lazy(() => import('./enterpriseAdvancedPlaybook/EnterpriseAdvancedPlaybookTab.jsx')),
 };
 
 function TabLoader({ tabId, onSelectTab }) {
@@ -256,28 +258,19 @@ export default function App() {
             paddingBottom: 'var(--ds-space-8)',
             borderTop: '1px solid var(--ds-color-border-subtle)',
             display: 'flex',
-            justifyContent: 'space-between',
+            flexDirection: 'column',
             alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '12px',
-            fontSize: '12px',
-            color: 'var(--ds-color-text-tertiary)'
+            justifyContent: 'center',
+            gap: '6px',
+            textAlign: 'center',
+            fontSize: '13px',
+            color: 'var(--ds-color-text-secondary)'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>Nagaraj Y</span>
-              <span>•</span>
-              <span>Interactive AI & RAG Architecture Knowledge Base</span>
+            <div style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>
+              Curated by: Nagaraj Y
             </div>
-            <div style={{
-              background: 'rgba(245, 158, 11, 0.1)',
-              border: '1px solid rgba(245, 158, 11, 0.3)',
-              color: '#f59e0b',
-              padding: '4px 10px',
-              borderRadius: '6px',
-              fontWeight: 500,
-              fontSize: '11px'
-            }}>
-              ⚠️ Disclaimer: This is only for Education purpose
+            <div style={{ fontSize: '12px', color: '#f59e0b' }}>
+              Disclaimer: ⚠️ This is only for Education purpose.
             </div>
           </footer>
         </Container>
