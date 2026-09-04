@@ -1,14 +1,91 @@
 /**
- * Redesigned Overview Tab — Template for new design system
- * Demonstrates Hero, Section, Card, Diagram, CodeBlock, Callout, Accordion, Tabs, Stepper
+ * Redesigned Overview Tab — Adaptive Learning Hub
+ * 
+ * Replaces the RAG-only entry point with an adaptive, diagnostic-driven learning hub:
+ * 1. Adaptive Hero with intelligent "Start Learning" (defaults to Foundations: firstaiapp)
+ * 2. 3-Step Interactive Diagnostic Assessment with instant roadmap recommendation
+ * 3. 4 Curated Adaptive Learning Tracks with progress counters and track activation
+ * 4. 4 Balanced AI Engineering Pillars (Foundations, RAG, Agents, Enterprise AI Ops)
+ * 5. Architecture Concepts, Pipeline Explorer, and Key Resources
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TABS_REGISTRY } from '../registry/tabsRegistry.js';
 import { Container, Section, Grid, Flex, Stack } from '../components/layout/Primitives.jsx';
 import { Hero, Diagram, CodeBlock, Accordion, Tabs, Stepper } from '../components/ui/Content.jsx';
 import { Card, Badge, Button, Callout } from '../components/ui/Core.jsx';
-import { getModuleColors } from '../design-system/tokens.js';
+import {
+  ADAPTIVE_TRACKS,
+  getCurrentTrackId,
+  setCurrentTrackId,
+  getTrackById,
+  getTrackProgress,
+  diagnoseTrack,
+  subscribeToAdaptiveProgress
+} from '../services/adaptiveLearning.js';
+
+const FOUR_PILLARS = [
+  {
+    id: 'foundations',
+    title: 'Foundations & Attention Mechanisms',
+    icon: '🌱',
+    color: '#0D9488',
+    summary: 'Core LLM internals: building your first app, token sampling temperature/top-p, self-attention QKV, and structured outputs.',
+    tabs: [
+      { id: 'firstaiapp', label: 'First AI App', icon: '🚀', tag: 'Start Here' },
+      { id: 'promptfundamentals', label: 'Prompt Fundamentals', icon: '📝', tag: 'Core' },
+      { id: 'llmsampling', label: 'Sampling & Temp', icon: '🎲', tag: 'Internals' },
+      { id: 'selfattention', label: 'Self-Attention (QKV)', icon: '🔍', tag: 'Deep Dive' },
+      { id: 'structuredoutputs', label: 'Structured Outputs', icon: '📋', tag: 'Reliability' },
+      { id: 'archconcepts', label: 'MLA & MoE', icon: '🧠', tag: 'Cutting Edge' },
+    ]
+  },
+  {
+    id: 'rag',
+    title: 'RAG & Retrieval Architectures',
+    icon: '⚡',
+    color: '#2563eb',
+    summary: 'Vector embeddings, chunking strategies, question parsing loops, hierarchical retrieval, and production RAG pipelines.',
+    tabs: [
+      { id: 'rag', label: 'RAG Architectures', icon: '📄', tag: 'Overview' },
+      { id: 'ragchunking', label: 'Chunking Strategy', icon: '🧩', tag: 'Data Prep' },
+      { id: 'filtering', label: 'Metadata Filtering', icon: '🎯', tag: 'Precision' },
+      { id: 'hierrag', label: 'Hierarchical RAG', icon: '🌲', tag: 'Multi-level' },
+      { id: 'prodrag', label: 'Production RAG', icon: '🏭', tag: 'Enterprise' },
+      { id: 'workflowloop', label: 'Workflow Loops', icon: '🔄', tag: 'Verification' },
+    ]
+  },
+  {
+    id: 'agents',
+    title: 'Autonomous Agent Systems',
+    icon: '🤖',
+    color: '#7c3aed',
+    summary: 'ReAct agent loops, CLI agents, multi-agent collaboration, LangChain/LangGraph graphs, and stateful human-in-the-loop.',
+    tabs: [
+      { id: 'fiveassets', label: 'Five Agent Assets', icon: '🏛️', tag: 'Core Theory' },
+      { id: 'cliagent', label: 'CLI Coding Agents', icon: '💻', tag: 'Practical' },
+      { id: 'agentpairprogramming', label: 'Agent Pair Coding', icon: '👥', tag: 'Workflow' },
+      { id: 'agentsastools', label: 'Agents as Tools', icon: '🛠️', tag: 'Composition' },
+      { id: 'multiagent', label: 'Multi-Agent Swarms', icon: '🐝', tag: 'Coordination' },
+      { id: 'langgraph', label: 'LangGraph States', icon: '📊', tag: 'State Machine' },
+    ]
+  },
+  {
+    id: 'enterprise_ops',
+    title: 'Production Ops & Token FinOps',
+    icon: '🏢',
+    color: '#059669',
+    summary: 'Zero-model routers, token orchestration playbooks, LLM evaluations, high-concurrency guardrails, and enterprise SLA ops.',
+    tabs: [
+      { id: 'tokenorchestrationplaybook', label: 'Token Playbook', icon: '🪙', tag: 'FinOps' },
+      { id: 'routercheap', label: 'Zero-Model Router', icon: '🔀', tag: 'Cost / Latency' },
+      { id: 'llmevals', label: 'LLM Eval Harness', icon: '🧪', tag: 'Quality' },
+      { id: 'productionragops', label: 'RAG Ops & Observability', icon: '📡', tag: 'Telemetry' },
+      { id: 'enterpriseaiops', label: 'Enterprise AI Ops', icon: '🛡️', tag: 'Governance' },
+      { id: 'guardrails', label: 'Guardrails & Safety', icon: '🚦', tag: 'Defense' },
+    ]
+  }
+];
 
 const RAG_TYPES = [
   { id: 'naive', label: 'Naive RAG', level: 'Foundational', icon: '📄', color: '#0D9488', tagline: 'Chunk → embed → retrieve → generate' },
@@ -22,189 +99,516 @@ const RAG_TYPES = [
   { id: 'raptor', label: 'RAPTOR', level: 'Cutting Edge', icon: '🌲', color: '#9333EA', tagline: 'Recursive tree of summaries' },
 ];
 
-const PIPELINE_STEPS = [
-  { label: 'Query', icon: '💬', detail: 'User natural language input', color: '#CA8A04' },
-  { label: 'Rewrite', icon: '✏️', detail: 'HyDE / query expansion', color: '#0D9488' },
-  { label: 'Hybrid Search', icon: '🔀', detail: 'Dense + BM25, top-20', color: '#6366F1' },
-  { label: 'Re-rank', icon: '📐', detail: 'Cross-encoder, top-5', color: '#DC2626' },
-  { label: 'Compress', icon: '✂️', detail: 'Contextual extraction', color: '#0D9488' },
-  { label: 'Agent Loop', icon: '🤖', detail: 'ReAct multi-step retrieval', color: '#CA8A04' },
-  { label: 'Answer', icon: '✅', detail: 'Cited response', color: '#16A34A' },
-];
-
-const QUICK_START_STEPS = [
-  { label: 'Pick Your Architecture', detail: 'Start with Hybrid RAG for production', icon: '1' },
-  { label: 'Set Up Retrieval', detail: 'Vector DB + BM25 index', icon: '2' },
-  { label: 'Add Reranking', detail: 'Cross-encoder for precision', icon: '3' },
-  { label: 'Implement Compression', detail: 'Trim context before generation', icon: '4' },
-  { label: 'Add Evaluation', detail: 'Measure recall, latency, cost', icon: '5' },
-];
-
-const MODULE_CARDS = [
-  { moduleId: 'foundations', label: 'Foundations & Architecture', count: 6, desc: 'Core AI concepts, glossaries, prompt engineering', href: '#' },
-  { moduleId: 'rag_architecture', label: 'RAG Systems & Pipelines', count: 14, desc: 'Retrieval architectures, hybrid search, zero-model routing, workflow dispatchers & verification', href: '#' },
-  { moduleId: 'context_memory', label: 'Context & Memory', count: 7, desc: 'Context curation, evaluation, graphs & persistent memory', href: '#' },
-  { moduleId: 'agents_frameworks', label: 'Agent Systems & Frameworks', count: 13, desc: 'ReAct, multi-agent, CLI agents, LangChain & LangGraph', href: '#' },
-  { moduleId: 'data_platform', label: 'Data & Platform Layers', count: 8, desc: 'Prompt/Context/Loop layers, document structure & ML', href: '#' },
-  { moduleId: 'frontiers_production', label: 'Production & Frontiers', count: 6, desc: 'Token bill optimization, power features & research frontiers', href: '#' },
-];
-
 export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
-  const [activeTab, setActiveTab] = useState('architectures');
-  const [activeStep, setActiveStep] = useState(0);
-  const [expandedUmbrella, setExpandedUmbrella] = useState(null);
+  const [activeTrackId, setActiveTrackId] = useState(() => getCurrentTrackId());
+  const [progressMap, setProgressMap] = useState({});
+  const [activeSubTab, setActiveSubTab] = useState('pillars');
+
+  // Diagnostic state
+  const [diagExperience, setDiagExperience] = useState('beginner');
+  const [diagGoal, setDiagGoal] = useState('foundations');
+  const [diagRecommendation, setDiagRecommendation] = useState(null);
 
   const handleNavigate = (tabId) => {
     if (onSelectTab) onSelectTab(tabId);
     else if (setGlobalActiveTab) setGlobalActiveTab(tabId);
   };
 
-  const typeTabMap = {
-    naive: 'rag',
-    advanced: 'rag',
-    hybrid: 'rag',
-    selfrag: 'prodrag',
-    crag: 'prodrag',
-    graphrag: 'agenticrag',
-    agentic: 'agenticrag',
-    multimodal: 'docstruct',
-    raptor: 'hierrag'
+  const handleSelectTrack = (trackId, autoNavigate = false) => {
+    setCurrentTrackId(trackId);
+    setActiveTrackId(trackId);
+    if (autoNavigate) {
+      const track = getTrackById(trackId);
+      handleNavigate(track.startingTab || track.tabs[0]);
+    }
   };
+
+  const handleStartLearning = () => {
+    const currentTrack = getTrackById(activeTrackId);
+    // Navigate to track's starting tab (defaults to foundations -> firstaiapp)
+    const targetTab = currentTrack.startingTab || 'firstaiapp';
+    handleNavigate(targetTab);
+  };
+
+  const runDiagnostic = () => {
+    const result = diagnoseTrack({
+      experience: diagExperience,
+      goal: diagGoal
+    });
+    setDiagRecommendation(result);
+  };
+
+  // Sync track progress
+  useEffect(() => {
+    const refresh = () => {
+      const current = getCurrentTrackId();
+      setActiveTrackId(current);
+      const p = {};
+      ADAPTIVE_TRACKS.forEach(t => {
+        p[t.id] = getTrackProgress(t.id);
+      });
+      setProgressMap(p);
+    };
+
+    refresh();
+    const unsubscribe = subscribeToAdaptiveProgress(refresh);
+    return unsubscribe;
+  }, []);
+
+  const activeTrackObj = getTrackById(activeTrackId);
 
   return (
     <>
       <Hero
         moduleId="foundations"
-        moduleLabel="Module 1"
-        title="Modern AI Systems Architecture"
-        description="A comprehensive, interactive knowledge base for building production-grade RAG, agent, and context engineering systems. 48 deep-dive topics across 5 modules — from foundational concepts to cutting-edge frontiers."
+        moduleLabel="Adaptive Learning Engine"
+        title="Modern AI Systems & Engineering"
+        description="A tailored, interactive architecture curriculum. Diagnostic assessments evaluate your goals and chart an adaptive path from foundational AI principles to production RAG, autonomous agents, and enterprise FinOps."
         metrics={[
-          { label: 'Modules', value: '5' },
-          { label: 'Topics', value: '48' },
-          { label: 'Diagrams', value: '30+' },
-          { label: 'Code Examples', value: '100+' },
+          { label: 'Active Track', value: activeTrackObj.title.split(' ')[0] },
+          { label: 'Progress', value: `${progressMap[activeTrackId]?.percent || 0}%` },
+          { label: 'Curated Tracks', value: '4+1' },
+          { label: 'Topics', value: `${TABS_REGISTRY.length}` },
         ]}
         actions={[
-          { label: 'Start Learning', variant: 'primary', onClick: () => handleNavigate('rag') },
-          { label: 'View Progress', variant: 'secondary', onClick: () => handleNavigate('progress') },
+          { label: `Start Learning (${activeTrackObj.title})`, variant: 'primary', onClick: handleStartLearning },
+          { label: '🎯 Take 30s Diagnostic', variant: 'secondary', onClick: () => {
+            const diagEl = document.getElementById('adaptive-diagnostic-section');
+            diagEl?.scrollIntoView({ behavior: 'smooth' });
+          }},
+          { label: '📊 View Progress', variant: 'ghost', onClick: () => handleNavigate('progress') },
         ]}
       />
 
       <Container size="normal">
-        {/* QUICK START */}
+        {/* ============================================================ */}
+        {/* SECTION 1: INTERACTIVE ADAPTIVE DIAGNOSTIC */}
+        {/* ============================================================ */}
+        <div id="adaptive-diagnostic-section" style={{ scrollMarginTop: '80px' }}>
+          <Section variant="bordered">
+            <Section.Header>
+              <Flex justify="space-between" align="center" wrap gap="sm">
+                <div>
+                  <h2 style={{ fontSize: 'var(--ds-font-size-h2)', marginBottom: 'var(--ds-space-2)' }}>
+                    🎯 Adaptive Pathway Diagnostic
+                  </h2>
+                  <p style={{ color: 'var(--ds-color-text-secondary)' }}>
+                    Diagnose your background and engineering objective to generate your personalized learning sequence.
+                  </p>
+                </div>
+                <Badge variant="module" moduleId="foundations" size="md">Adaptive AI Engine</Badge>
+              </Flex>
+            </Section.Header>
+            <Section.Body>
+              <Grid columns={{ base: 1, md: 2 }} gap="lg">
+                {/* Left: Interactive Questions */}
+                <div style={{
+                  padding: '20px',
+                  background: 'var(--ds-color-bg-canvas)',
+                  borderRadius: 'var(--ds-radius-lg)',
+                  border: '1px solid var(--ds-color-border-subtle)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '16px'
+                }}>
+                  <div>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--ds-color-text-primary)', display: 'block', marginBottom: '8px' }}>
+                      1. What is your LLM engineering experience level?
+                    </label>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '8px' }}>
+                      {[
+                        { id: 'beginner', label: 'Beginner', sub: 'New to internals' },
+                        { id: 'intermediate', label: 'Practitioner', sub: 'Uses APIs / SDKs' },
+                        { id: 'advanced', label: 'Architect', sub: 'Production systems' },
+                      ].map(opt => (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          onClick={() => { setDiagExperience(opt.id); setDiagRecommendation(null); }}
+                          style={{
+                            padding: '10px 8px',
+                            borderRadius: '8px',
+                            border: `1px solid ${diagExperience === opt.id ? 'var(--ds-color-module-foundations-primary)' : 'var(--ds-color-border-default)'}`,
+                            background: diagExperience === opt.id ? 'rgba(13, 148, 136, 0.12)' : 'var(--ds-color-bg-surface)',
+                            color: 'var(--ds-color-text-primary)',
+                            cursor: 'pointer',
+                            textAlign: 'center',
+                            transition: 'all 0.15s ease'
+                          }}
+                        >
+                          <div style={{ fontSize: '0.8rem', fontWeight: 600 }}>{opt.label}</div>
+                          <div style={{ fontSize: '0.68rem', color: 'var(--ds-color-text-secondary)', marginTop: '2px' }}>{opt.sub}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--ds-color-text-primary)', display: 'block', marginBottom: '8px' }}>
+                      2. What is your primary engineering objective?
+                    </label>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                      {[
+                        { id: 'foundations', icon: '🌱', label: 'AI Foundations', desc: 'Prompts, sampling & QKV' },
+                        { id: 'rag', icon: '⚡', label: 'Production RAG', desc: 'Hybrid retrieval & chunking' },
+                        { id: 'agents', icon: '🤖', label: 'Autonomous Agents', desc: 'ReAct, swarms & LangGraph' },
+                        { id: 'enterprise', icon: '🏢', label: 'Enterprise FinOps', desc: 'Routing, latency & evals' },
+                      ].map(opt => (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          onClick={() => { setDiagGoal(opt.id); setDiagRecommendation(null); }}
+                          style={{
+                            padding: '10px',
+                            borderRadius: '8px',
+                            border: `1px solid ${diagGoal === opt.id ? 'var(--ds-color-module-foundations-primary)' : 'var(--ds-color-border-default)'}`,
+                            background: diagGoal === opt.id ? 'rgba(13, 148, 136, 0.12)' : 'var(--ds-color-bg-surface)',
+                            color: 'var(--ds-color-text-primary)',
+                            cursor: 'pointer',
+                            textAlign: 'left',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px'
+                          }}
+                        >
+                          <span style={{ fontSize: '1.2rem' }}>{opt.icon}</span>
+                          <div>
+                            <div style={{ fontSize: '0.8rem', fontWeight: 600 }}>{opt.label}</div>
+                            <div style={{ fontSize: '0.68rem', color: 'var(--ds-color-text-secondary)' }}>{opt.desc}</div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="primary"
+                    size="md"
+                    onClick={runDiagnostic}
+                    style={{ marginTop: '4px', width: '100%', justifyContent: 'center' }}
+                  >
+                    ⚡ Calculate Recommended Pathway
+                  </Button>
+                </div>
+
+                {/* Right: Recommendation Result Card */}
+                <div style={{
+                  padding: '20px',
+                  background: 'var(--ds-color-bg-canvas)',
+                  borderRadius: 'var(--ds-radius-lg)',
+                  border: '1px solid var(--ds-color-border-subtle)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  minHeight: '260px'
+                }}>
+                  {diagRecommendation ? (
+                    <div>
+                      {(() => {
+                        const recTrack = getTrackById(diagRecommendation.trackId);
+                        const startTabObj = TABS_REGISTRY.find(t => t.id === diagRecommendation.startingTab) || { label: 'First Topic', icon: '🚀' };
+                        return (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                              <Badge variant="default" size="sm">Recommended For You</Badge>
+                              <span style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)' }}>Estimated {recTrack.duration}</span>
+                            </div>
+
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                              <span style={{ fontSize: '2.2rem' }}>{recTrack.icon}</span>
+                              <div>
+                                <h3 style={{ fontSize: '1.15rem', color: 'var(--ds-color-text-primary)', margin: 0 }}>
+                                  {recTrack.title}
+                                </h3>
+                                <div style={{ fontSize: '0.8rem', color: 'var(--ds-color-text-secondary)', marginTop: '2px' }}>
+                                  {recTrack.tagline}
+                                </div>
+                              </div>
+                            </div>
+
+                            <p style={{ fontSize: '0.82rem', color: 'var(--ds-color-text-secondary)', lineHeight: 1.5 }}>
+                              {diagRecommendation.rationale}
+                            </p>
+
+                            <div style={{
+                              padding: '10px 12px',
+                              background: 'var(--ds-color-bg-surface)',
+                              borderRadius: '8px',
+                              border: '1px solid var(--ds-color-border-subtle)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between'
+                            }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <span style={{ fontSize: '1rem' }}>{startTabObj.icon}</span>
+                                <div>
+                                  <div style={{ fontSize: '0.68rem', color: 'var(--ds-color-text-tertiary)', textTransform: 'uppercase', fontWeight: 600 }}>Starting Topic</div>
+                                  <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>{startTabObj.label}</div>
+                                </div>
+                              </div>
+                              <Button
+                                variant="primary"
+                                size="sm"
+                                onClick={() => {
+                                  handleSelectTrack(recTrack.id);
+                                  handleNavigate(diagRecommendation.startingTab);
+                                }}
+                              >
+                                Launch Pathway →
+                              </Button>
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  ) : (
+                    <div style={{ textAlign: 'center', padding: '20px 10px', color: 'var(--ds-color-text-tertiary)' }}>
+                      <div style={{ fontSize: '2.5rem', marginBottom: '8px' }}>🧭</div>
+                      <div style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)', marginBottom: '4px' }}>
+                        Ready to Personalize Your Learning?
+                      </div>
+                      <p style={{ fontSize: '0.82rem', maxWidth: '300px', margin: '0 auto' }}>
+                        Select your experience level and primary objective on the left, then click "Calculate Recommended Pathway".
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </Grid>
+            </Section.Body>
+          </Section>
+        </div>
+
+        {/* ============================================================ */}
+        {/* SECTION 2: CURATED ADAPTIVE TRACKS */}
+        {/* ============================================================ */}
         <Section variant="bordered">
           <Section.Header>
-            <h2 style={{ fontSize: 'var(--ds-font-size-h2)', marginBottom: 'var(--ds-space-2)' }}>Quick Start Path</h2>
-            <p style={{ color: 'var(--ds-color-text-secondary)' }}>New here? Follow this 5-step path to build your first production RAG system.</p>
-          </Section.Header>
-          <Section.Body>
-            <Stepper
-              steps={QUICK_START_STEPS}
-              activeStep={activeStep}
-              onStepClick={setActiveStep}
-              autoPlay={false}
-            />
-          </Section.Body>
-        </Section>
-
-        {/* RAG ARCHITECTURES OVERVIEW */}
-        <Section>
-          <Section.Header>
-            <Flex justify="space-between" align="center" wrap gap="md">
+            <Flex justify="space-between" align="center" wrap gap="sm">
               <div>
-                <h2 style={{ fontSize: 'var(--ds-font-size-h2)' }}>RAG Architectures at a Glance</h2>
-                <p style={{ color: 'var(--ds-color-text-secondary)' }}>9 architectures from baseline to cutting edge — each with interactive explorer, code, and tradeoffs.</p>
+                <h2 style={{ fontSize: 'var(--ds-font-size-h2)', marginBottom: 'var(--ds-space-2)' }}>
+                  Curated Adaptive Tracks
+                </h2>
+                <p style={{ color: 'var(--ds-color-text-secondary)' }}>
+                  Choose your guided progression track or switch anytime. Completed topics and progress persist across tracks.
+                </p>
+              </div>
+              <div style={{ fontSize: '0.8rem', color: 'var(--ds-color-text-tertiary)' }}>
+                Active: <strong style={{ color: activeTrackObj.color }}>{activeTrackObj.title}</strong>
               </div>
             </Flex>
           </Section.Header>
           <Section.Body>
-            <Tabs
-              tabs={[
-                { id: 'architectures', label: 'Architectures', icon: '🏗️' },
-                { id: 'pipeline', label: 'Pipeline', icon: '▶' },
-                { id: 'patterns', label: 'Patterns', icon: '🧬' },
-              ]}
-              activeTab={activeTab}
-              onChange={setActiveTab}
-              variant="pills"
-            />
-
-            {activeTab === 'architectures' && (
-              <Grid columns={{ base: 1, md: 2, lg: 3 }} gap="md" style={{ marginTop: 'var(--ds-space-6)' }}>
-                {RAG_TYPES.map((type, i) => (
-                  <Card key={type.id} variant="interactive" padding="md" hover onClick={() => handleNavigate(typeTabMap[type.id] || 'rag')} style={{ cursor: 'pointer' }}>
-                    <Flex gap="md" align="flex-start">
-                      <span style={{ fontSize: '2rem', flexShrink: 0 }}>{type.icon}</span>
-                      <div style={{ flex: 1 }}>
-                        <Flex align="center" gap="sm" wrap style={{ marginBottom: 'var(--ds-space-2)' }}>
-                          <span style={{ fontWeight: 'var(--ds-font-weight-semibold)', fontSize: 'var(--ds-font-size-body)' }}>{type.label}</span>
-                          <Badge variant="default" size="sm">{type.level}</Badge>
-                        </Flex>
-                        <p style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)', marginBottom: 'var(--ds-space-3)' }}>{type.tagline}</p>
-                        <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); handleNavigate(typeTabMap[type.id] || 'rag'); }}>Explore →</Button>
-                      </div>
-                    </Flex>
-                  </Card>
-                ))}
-              </Grid>
-            )}
-
-            {activeTab === 'pipeline' && (
-              <div style={{ marginTop: 'var(--ds-space-6)' }}>
-                <Diagram
-                  src="/assets/pipeline_flow.svg"
-                  alt="7-stage RAG pipeline from query to answer"
-                  title="RAG Pipeline — Seven Stages"
-                  caption="Each stage progressively filters noise: hybrid fusion, reranking, and compression before generation."
-                />
-                <Stack gap="md" style={{ marginTop: 'var(--ds-space-6)' }}>
-                  {PIPELINE_STEPS.map((step, i) => (
-                    <Card key={step.label} variant="default" padding="sm" style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-4)' }}>
+            <Grid columns={{ base: 1, md: 2, lg: 4 }} gap="md">
+              {ADAPTIVE_TRACKS.filter(t => t.id !== 'full_mastery').map(track => {
+                const isActive = activeTrackId === track.id;
+                const p = progressMap[track.id] || { completed: 0, total: track.tabs.length, percent: 0 };
+                return (
+                  <Card
+                    key={track.id}
+                    variant={isActive ? 'elevated' : 'bordered'}
+                    padding="md"
+                    style={{
+                      border: isActive ? `2px solid ${track.color}` : '1px solid var(--ds-color-border-subtle)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      position: 'relative'
+                    }}
+                  >
+                    {isActive && (
                       <div style={{
-                        width: '40px', height: '40px', borderRadius: 'var(--ds-radius-full)',
-                        background: `${step.color}15`, border: `2px solid ${step.color}`,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        color: step.color, fontWeight: 'bold', flexShrink: 0
-                      }}>{step.icon}</div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 'var(--ds-font-weight-medium)', color: 'var(--ds-color-text-primary)' }}>{step.label}</div>
-                        <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)' }}>{step.detail}</div>
+                        position: 'absolute',
+                        top: '12px',
+                        right: '12px',
+                        background: track.color,
+                        color: 'white',
+                        fontSize: '10px',
+                        fontWeight: 700,
+                        padding: '2px 6px',
+                        borderRadius: '10px'
+                      }}>
+                        ACTIVE
                       </div>
-                    </Card>
-                  ))}
-                </Stack>
-              </div>
-            )}
+                    )}
+                    <div>
+                      <div style={{ fontSize: '2rem', marginBottom: '8px' }}>{track.icon}</div>
+                      <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--ds-color-text-primary)', marginBottom: '4px' }}>
+                        {track.title}
+                      </h3>
+                      <div style={{ fontSize: '0.72rem', color: track.color, fontWeight: 600, marginBottom: '8px' }}>
+                        {track.level} • {track.duration}
+                      </div>
+                      <p style={{ fontSize: '0.78rem', color: 'var(--ds-color-text-secondary)', lineHeight: 1.4, marginBottom: '14px' }}>
+                        {track.description}
+                      </p>
+                    </div>
 
-            {activeTab === 'patterns' && (
-              <Stack gap="md" style={{ marginTop: 'var(--ds-space-6)' }}>
-                <Card variant="bordered" padding="md">
-                  <h3 style={{ marginBottom: 'var(--ds-space-3)' }}>7 Generation Patterns</h3>
-                  <p style={{ color: 'var(--ds-color-text-secondary)', marginBottom: 'var(--ds-space-4)' }}>Contract-based generation with Pydantic schemas — the foundation of reliable structured output.</p>
-                  <Grid columns={{ base: 1, md: 2 }} gap="sm">
-                    {['Extract', 'Classify', 'Summarize', 'Generate', 'Transform', 'Validate', 'Route'].map(p => (
-                      <Badge key={p} variant="module" moduleId="rag" size="sm">{p}</Badge>
-                    ))}
-                  </Grid>
-                </Card>
-                <Card variant="bordered" padding="md">
-                  <h3 style={{ marginBottom: 'var(--ds-space-3)' }}>4 Verification Bricks</h3>
-                  <p style={{ color: 'var(--ds-color-text-secondary)', marginBottom: 'var(--ds-space-4)' }}>Grounding, citation, consistency, and factuality checks that stop hallucinations before they reach users.</p>
-                  <Grid columns={{ base: 1, md: 2 }} gap="sm">
-                    {['Grounding', 'Citation', 'Consistency', 'Factuality'].map(p => (
-                      <Badge key={p} variant="module" moduleId="rag" size="sm">{p}</Badge>
-                    ))}
-                  </Grid>
-                </Card>
-              </Stack>
-            )}
+                    <div>
+                      {/* Mini progress bar */}
+                      <div style={{ marginBottom: '12px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>
+                          <span>Mastery</span>
+                          <span>{p.completed}/{p.total} ({p.percent}%)</span>
+                        </div>
+                        <div style={{ width: '100%', height: '4px', background: 'var(--ds-color-bg-canvas)', borderRadius: '2px', overflow: 'hidden' }}>
+                          <div style={{ width: `${p.percent}%`, height: '100%', background: track.color, transition: 'width 0.3s ease' }} />
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <Button
+                          variant={isActive ? 'primary' : 'outline'}
+                          size="sm"
+                          style={{ flex: 1, justifyContent: 'center' }}
+                          onClick={() => handleSelectTrack(track.id, true)}
+                        >
+                          {isActive ? 'Continue Track →' : 'Set as Active'}
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </Grid>
+
+            {/* Comprehensive Track Card Banner */}
+            {(() => {
+              const fullTrack = getTrackById('full_mastery');
+              const isActive = activeTrackId === 'full_mastery';
+              const p = progressMap.full_mastery || { completed: 0, total: fullTrack.tabs.length, percent: 0 };
+              return (
+                <div style={{
+                  marginTop: 'var(--ds-space-4)',
+                  padding: '16px 20px',
+                  borderRadius: 'var(--ds-radius-lg)',
+                  background: 'var(--ds-color-bg-canvas)',
+                  border: `1px solid ${isActive ? '#d97706' : 'var(--ds-color-border-subtle)'}`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: '12px'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                    <span style={{ fontSize: '2rem' }}>👑</span>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>Full Systems Mastery</span>
+                        <Badge variant="default" size="sm">Comprehensive 33 Modules</Badge>
+                        {isActive && <Badge variant="module" moduleId="foundations" size="sm">ACTIVE</Badge>}
+                      </div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--ds-color-text-secondary)', marginTop: '2px' }}>
+                        The ultimate end-to-end curriculum: foundations, RAG, agents, context engineering, platform data layers, and token ops.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>
+                        {p.completed} / {p.total} Mastered
+                      </div>
+                      <div style={{ fontSize: '0.7rem', color: 'var(--ds-color-text-tertiary)' }}>
+                        {p.percent}% Overall Curriculum
+                      </div>
+                    </div>
+                    <Button
+                      variant={isActive ? 'primary' : 'outline'}
+                      size="sm"
+                      onClick={() => handleSelectTrack('full_mastery', true)}
+                    >
+                      {isActive ? 'Resume Journey →' : 'Start Full Track'}
+                    </Button>
+                  </div>
+                </div>
+              );
+            })()}
           </Section.Body>
         </Section>
 
-        {/* ARCHITECTURE CONCEPTS */}
+        {/* ============================================================ */}
+        {/* SECTION 3: 4 BALANCED AI ENGINEERING PILLARS */}
+        {/* ============================================================ */}
+        <Section>
+          <Section.Header>
+            <Flex justify="space-between" align="center" wrap gap="md">
+              <div>
+                <h2 style={{ fontSize: 'var(--ds-font-size-h2)' }}>Core Architecture Pillars</h2>
+                <p style={{ color: 'var(--ds-color-text-secondary)' }}>
+                  A balanced modern AI curriculum spanning fundamentals, retrieval, agent orchestration, and enterprise operations.
+                </p>
+              </div>
+            </Flex>
+          </Section.Header>
+          <Section.Body>
+            <Grid columns={{ base: 1, md: 2 }} gap="lg">
+              {FOUR_PILLARS.map(pillar => (
+                <Card key={pillar.id} variant="bordered" padding="lg">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+                    <div style={{
+                      width: '40px', height: '40px', borderRadius: '10px',
+                      background: `${pillar.color}18`, border: `1px solid ${pillar.color}40`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '1.4rem'
+                    }}>
+                      {pillar.icon}
+                    </div>
+                    <div>
+                      <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--ds-color-text-primary)', margin: 0 }}>
+                        {pillar.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p style={{ fontSize: '0.82rem', color: 'var(--ds-color-text-secondary)', lineHeight: 1.5, marginBottom: '14px' }}>
+                    {pillar.summary}
+                  </p>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                    {pillar.tabs.map(t => (
+                      <button
+                        key={t.id}
+                        type="button"
+                        onClick={() => handleNavigate(t.id)}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '8px 10px',
+                          borderRadius: '8px',
+                          background: 'var(--ds-color-bg-canvas)',
+                          border: '1px solid var(--ds-color-border-subtle)',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                          transition: 'all 0.15s ease'
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.borderColor = pillar.color}
+                        onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--ds-color-border-subtle)'}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0 }}>
+                          <span style={{ fontSize: '0.95rem' }}>{t.icon}</span>
+                          <span style={{ fontSize: '0.78rem', fontWeight: 500, color: 'var(--ds-color-text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {t.label}
+                          </span>
+                        </div>
+                        <span style={{ fontSize: '0.65rem', color: 'var(--ds-color-text-tertiary)', background: 'rgba(255,255,255,0.04)', padding: '1px 5px', borderRadius: '4px' }}>
+                          {t.tag}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </Card>
+              ))}
+            </Grid>
+          </Section.Body>
+        </Section>
+
+        {/* ============================================================ */}
+        {/* SECTION 4: ARCHITECTURE HIGHLIGHTS */}
+        {/* ============================================================ */}
         <Section variant="bordered">
           <Section.Header>
-            <h2 style={{ fontSize: 'var(--ds-font-size-h2)' }}>Core Architecture Concepts</h2>
+            <h2 style={{ fontSize: 'var(--ds-font-size-h2)' }}>Frontier Architecture Concepts</h2>
             <p style={{ color: 'var(--ds-color-text-secondary)' }}>The three techniques powering the most efficient frontier models in 2025–2026.</p>
           </Section.Header>
           <Section.Body>
@@ -219,7 +623,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                     <span style={{ fontSize: '2rem' }}>{item.icon}</span>
                     <div>
                       <div style={{ fontWeight: 'var(--ds-font-weight-semibold)', fontSize: 'var(--ds-font-size-body)' }}>{item.label}</div>
-                      <Badge variant="module" moduleId={item.id === 'mla' ? 'foundations' : item.id === 'moe' ? 'foundations' : 'foundations'} size="sm">DeepSeek / Llama 4 / Qwen3</Badge>
+                      <Badge variant="module" moduleId="foundations" size="sm">DeepSeek / Llama 4 / Qwen3</Badge>
                     </div>
                   </Flex>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--ds-space-3)', marginBottom: 'var(--ds-space-3)' }}>
@@ -234,59 +638,28 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
           </Section.Body>
         </Section>
 
-        {/* MODULE NAVIGATION */}
-        <Section>
-          <Section.Header>
-            <h2 style={{ fontSize: 'var(--ds-font-size-h2)' }}>All Modules</h2>
-            <p style={{ color: 'var(--ds-color-text-secondary)' }}>Click any module to explore its topics. Progress tracked automatically.</p>
-          </Section.Header>
-          <Section.Body>
-            <Accordion
-              items={MODULE_CARDS.map(m => ({
-                title: (
-                  <Flex justify="space-between" align="center">
-                    <Flex alignItems="center" gap="md">
-                      <Badge variant="module" moduleId={m.moduleId} size="md" dot>{m.label}</Badge>
-                      <span style={{ fontWeight: 'var(--ds-font-weight-medium)' }}>{m.desc}</span>
-                    </Flex>
-                    <Badge variant="default" size="sm">{m.count} topics</Badge>
-                  </Flex>
-                ),
-                content: (
-                  <Grid columns={{ base: 1, md: 2 }} gap="sm" style={{ marginTop: 'var(--ds-space-4)' }}>
-                    {TABS_REGISTRY.filter(t => t.umbrellaId === m.moduleId).slice(0, 6).map(t => (
-                      <Card key={t.id} variant="interactive" padding="sm" hover onClick={() => handleNavigate(t.id)} style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)', cursor: 'pointer' }}>
-                        <span style={{ fontSize: '1.5rem' }}>{t.icon}</span>
-                        <span style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>{t.label}</span>
-                      </Card>
-                    ))}
-                  </Grid>
-                ),
-              }))}
-            />
-          </Section.Body>
-        </Section>
-
-        {/* KEY RESOURCES */}
+        {/* ============================================================ */}
+        {/* SECTION 5: KEY RESOURCES & PROGRESS */}
+        {/* ============================================================ */}
         <Section variant="bordered">
           <Section.Header>
-            <h2 style={{ fontSize: 'var(--ds-font-size-h2)' }}>Key Resources</h2>
+            <h2 style={{ fontSize: 'var(--ds-font-size-h2)' }}>System Exploration Resources</h2>
           </Section.Header>
           <Section.Body>
             <Grid columns={{ base: 1, md: 3 }} gap="md">
               <Card variant="default" padding="lg">
                 <h3 style={{ marginBottom: 'var(--ds-space-2)' }}>📖 AI Glossary</h3>
-                <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', marginBottom: 'var(--ds-space-4)' }}>21 essential terms across 4 layers: Models, RAG, Agents, Production.</p>
+                <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', marginBottom: 'var(--ds-space-4)' }}>Essential terms across Models, Attention, RAG, Agents & Production Ops.</p>
                 <Button variant="ghost" size="sm" onClick={() => handleNavigate('glossary')}>Open Glossary</Button>
               </Card>
               <Card variant="default" padding="lg">
                 <h3 style={{ marginBottom: 'var(--ds-space-2)' }}>🎯 Best Practices</h3>
-                <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', marginBottom: 'var(--ds-space-4)' }}>13 emerging patterns from 2025–2026 production deployments.</p>
+                <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', marginBottom: 'var(--ds-space-4)' }}>Production patterns from real-world high-throughput AI engineering.</p>
                 <Button variant="ghost" size="sm" onClick={() => handleNavigate('practices')}>View Practices</Button>
               </Card>
               <Card variant="default" padding="lg">
                 <h3 style={{ marginBottom: 'var(--ds-space-2)' }}>📊 Progress Tracker</h3>
-                <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', marginBottom: 'var(--ds-space-4)' }}>Track your learning across all 48 topics with completion checkpoints.</p>
+                <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)', marginBottom: 'var(--ds-space-4)' }}>Track your completion checkpoints across all 6 umbrellas.</p>
                 <Button variant="ghost" size="sm" onClick={() => handleNavigate('progress')}>View Progress</Button>
               </Card>
             </Grid>

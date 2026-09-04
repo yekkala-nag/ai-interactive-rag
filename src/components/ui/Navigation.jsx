@@ -7,6 +7,12 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { UMBRELLA_TOPICS, getTabsForUmbrella, getUmbrellaForTab, getTabById, TABS_REGISTRY } from '../../registry/tabsRegistry.js';
 import { getModuleColors } from '../../design-system/tokens.js';
 import { Button, Badge } from './Core.jsx';
+import {
+  getCurrentTrackId,
+  getTrackById,
+  getTrackProgress,
+  subscribeToAdaptiveProgress
+} from '../../services/adaptiveLearning.js';
 
 // Category Accent Gradient Mapping (Apple-Style Vibrancy)
 const MODULE_ACCENTS = {
@@ -29,6 +35,21 @@ export function Sidebar({
   collapsed,
   onToggleCollapse,
 }) {
+  const [trackId, setTrackId] = useState(() => getCurrentTrackId());
+  const [trackProgress, setTrackProgress] = useState(() => getTrackProgress(trackId));
+
+  useEffect(() => {
+    const refresh = () => {
+      const t = getCurrentTrackId();
+      setTrackId(t);
+      setTrackProgress(getTrackProgress(t));
+    };
+    refresh();
+    return subscribeToAdaptiveProgress(refresh);
+  }, []);
+
+  const activeTrack = getTrackById(trackId);
+
   const [expandedModules, setExpandedModules] = useState({
     foundations: false,
     rag_architecture: true,
@@ -253,7 +274,7 @@ export function Sidebar({
             <button
               onClick={() => onSelectTab('overview')}
               style={{
-                display: 'flex', alignItems: 'center', justifyBetween: 'space-between',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '5px 8px', borderRadius: '6px',
                 background: activeTab === 'overview' ? 'linear-gradient(135deg, #2563eb, #3b82f6)' : 'transparent',
                 color: activeTab === 'overview' ? '#ffffff' : 'var(--ds-color-text-secondary)',
@@ -268,7 +289,43 @@ export function Sidebar({
                 <span style={{ fontSize: '0.85rem' }}>🌟</span>
                 <span>Overview & Roadmap</span>
               </div>
-              <span style={{ fontSize: '0.65rem', opacity: 0.8, fontFamily: 'SF Mono, monospace' }}>77 Tabs</span>
+              <span style={{ fontSize: '0.65rem', opacity: 0.8, fontFamily: 'SF Mono, monospace' }}>All Topics</span>
+            </button>
+
+            {/* Adaptive Track Quick Link */}
+            <button
+              onClick={() => onSelectTab('overview')}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '5px 8px', borderRadius: '6px',
+                background: 'rgba(255, 255, 255, 0.03)',
+                color: 'var(--ds-color-text-primary)',
+                border: '1px solid var(--ds-color-border-subtle)',
+                cursor: 'pointer', textAlign: 'left', fontSize: '0.76rem',
+                transition: 'all 0.12s ease',
+                marginTop: '2px'
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
+              title="Open Adaptive Learning Hub & Diagnostic"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0 }}>
+                <span style={{ fontSize: '0.85rem' }}>{activeTrack.icon}</span>
+                <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 600 }}>
+                  {activeTrack.title}
+                </span>
+              </div>
+              <span style={{
+                fontSize: '0.65rem',
+                padding: '1px 5px',
+                borderRadius: '4px',
+                background: activeTrack.color ? activeTrack.color + '20' : 'rgba(255,255,255,0.08)',
+                color: activeTrack.color || '#3b82f6',
+                fontWeight: 700,
+                flexShrink: 0
+              }}>
+                {trackProgress.percent}%
+              </span>
             </button>
           </div>
         </div>
@@ -503,6 +560,21 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
   const activeIndex = siblingTabs.findIndex(t => t.id === activeTab);
   const accent = MODULE_ACCENTS[currentModule.id] || MODULE_ACCENTS.foundations;
 
+  const [trackId, setTrackId] = useState(() => getCurrentTrackId());
+  const [trackProgress, setTrackProgress] = useState(() => getTrackProgress(trackId));
+
+  useEffect(() => {
+    const refresh = () => {
+      const t = getCurrentTrackId();
+      setTrackId(t);
+      setTrackProgress(getTrackProgress(t));
+    };
+    refresh();
+    return subscribeToAdaptiveProgress(refresh);
+  }, []);
+
+  const activeTrack = getTrackById(trackId);
+
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -587,6 +659,40 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
               {currentTab.label}
             </span>
           </div>
+
+          {/* Adaptive Track Badge */}
+          <button
+            onClick={() => onSelectTab('overview')}
+            title={`Active Track: ${activeTrack.title} (${trackProgress.completed}/${trackProgress.total} mastered). Click to view track.`}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '2px 8px',
+              borderRadius: '6px',
+              background: 'rgba(255, 255, 255, 0.04)',
+              border: `1px solid ${activeTrack.color ? activeTrack.color + '50' : 'var(--ds-color-border-subtle)'}`,
+              color: 'var(--ds-color-text-primary)',
+              fontSize: '0.74rem',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <span>{activeTrack.icon}</span>
+            <span style={{ fontWeight: 600, maxWidth: '120px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {activeTrack.title}
+            </span>
+            <span style={{
+              fontSize: '0.66rem',
+              fontWeight: 700,
+              color: activeTrack.color,
+              background: activeTrack.color ? activeTrack.color + '20' : 'transparent',
+              padding: '1px 4px',
+              borderRadius: '4px'
+            }}>
+              {trackProgress.percent}%
+            </span>
+          </button>
         </div>
 
         {/* Right: Counter & Search Trigger */}
