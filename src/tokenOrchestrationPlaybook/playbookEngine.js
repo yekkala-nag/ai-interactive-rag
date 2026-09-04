@@ -2,7 +2,7 @@
  * playbookEngine.js
  * Engine for Enterprise AI Token Management & Orchestration Playbook
  * Curated by: Nagaraj Y
- * Disclaimer: This is only for Education purpose
+ * Educational use only. No commercial use.
  */
 
 // ==========================================

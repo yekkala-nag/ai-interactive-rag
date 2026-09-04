@@ -237,6 +237,14 @@ img, video, iframe, canvas, svg {
 .ds-container-normal { max-width: 960px; margin: 0 auto; }
 .ds-container-wide { max-width: 1280px; margin: 0 auto; }
 .ds-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* Safe Area Insets for Mobile Notches and Home Indicator Bar */
+.bottom-nav {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.command-palette {
+  padding-bottom: env(safe-area-inset-bottom);
+}
 `;
 
 // Inject styles on import

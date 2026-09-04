@@ -252,25 +252,28 @@ export default function App() {
 
         <Container size="normal">
           <TabLoader tabId={activeTab} onSelectTab={handleTabSelect} />
-          <footer style={{
-            marginTop: 'var(--ds-space-12)',
-            paddingTop: 'var(--ds-space-6)',
-            paddingBottom: 'var(--ds-space-8)',
-            borderTop: '1px solid var(--ds-color-border-subtle)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '6px',
-            textAlign: 'center',
-            fontSize: '13px',
-            color: 'var(--ds-color-text-secondary)'
-          }}>
+          <footer
+            className="bottom-nav"
+            style={{
+              marginTop: 'var(--ds-space-12)',
+              paddingTop: 'var(--ds-space-6)',
+              paddingBottom: 'calc(var(--ds-space-8) + env(safe-area-inset-bottom, 0px))',
+              borderTop: '1px solid var(--ds-color-border-subtle)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              textAlign: 'center',
+              fontSize: '13px',
+              color: 'var(--ds-color-text-secondary)'
+            }}
+          >
             <div style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>
               Curated by: Nagaraj Y
             </div>
             <div style={{ fontSize: '12px', color: '#f59e0b' }}>
-              Disclaimer: ⚠️ This is only for Education purpose.
+              Educational use only. No commercial use.
             </div>
           </footer>
         </Container>

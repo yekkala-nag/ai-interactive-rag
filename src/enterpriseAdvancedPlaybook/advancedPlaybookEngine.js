@@ -3,7 +3,7 @@
  * Engine for Enterprise AI Playbook: Advanced Topics
  * (Agentic Patterns, Observability & Distributed Computing)
  * Curated by: Nagaraj Y
- * Disclaimer: This is only for Education purpose
+ * Educational use only. No commercial use.
  */
 
 // ==========================================

@@ -3,7 +3,7 @@
 export_playbook.py
 Enterprise AI Playbook Word (.docx) Generator
 Curated by: Nagaraj Y
-Disclaimer: This is only for Education purpose
+Educational use only. No commercial use.
 
 Generates a formatted Microsoft Word (.docx) document
 covering Enterprise AI Architecture, Token Governance, Agentic Patterns,
@@ -46,7 +46,7 @@ def create_enterprise_playbook_docx(output_filename="Enterprise_AI_Playbook.docx
     doc.add_paragraph('\n')
     author_p = doc.add_paragraph()
     author_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    author_run = author_p.add_run('Curated by: Nagaraj Y\nDisclaimer: ⚠️ This is only for Education purpose.')
+    author_run = author_p.add_run('Curated by: Nagaraj Y\nEducational use only. No commercial use.')
     author_run.font.size = Pt(11)
     author_run.font.italic = True
     author_run.font.color.rgb = RGBColor(180, 100, 20)

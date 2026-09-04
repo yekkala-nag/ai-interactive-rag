@@ -724,13 +724,15 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
 
   return (
     <div
+      className="command-palette"
       style={{
         position: 'fixed', top: '15%', left: '50%', transform: 'translateX(-50%)',
         width: 'min(640px, 90vw)', zIndex: 'var(--ds-zIndex-modal)',
         background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-default)',
         borderRadius: '16px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)',
         backdropFilter: 'blur(30px) saturate(180%)',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)'
       }}
       role="dialog" aria-modal="true" aria-label="Command palette"
     >
@@ -775,7 +777,17 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
           ))
         )}
       </div>
-      <div style={{ padding: '8px 16px', borderTop: '1px solid var(--ds-color-border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div
+        className="bottom-nav"
+        style={{
+          padding: '8px 16px',
+          paddingBottom: 'calc(8px + env(safe-area-inset-bottom, 0px))',
+          borderTop: '1px solid var(--ds-color-border-subtle)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
         <span style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }}>
           {filteredTabs.length} matching topic{filteredTabs.length === 1 ? '' : 's'}
         </span>
