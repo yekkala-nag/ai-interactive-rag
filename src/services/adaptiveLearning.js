@@ -168,7 +168,7 @@ export function getTrackById(trackId) {
 export function getCurrentTrackId() {
   if (typeof window === 'undefined') return 'foundations';
   const saved = localStorage.getItem(STORAGE_KEY_TRACK);
-  if (saved && ADAPTIVE_TRACKS.some(t => t.id === saved)) {
+  if (saved && saved !== 'rag' && ADAPTIVE_TRACKS.some(t => t.id === saved)) {
     return saved;
   }
   return 'foundations';
@@ -274,7 +274,7 @@ export function getPreviousTopic(currentTabId, trackId = getCurrentTrackId()) {
 export function getNextTopic(currentTabId, trackId = getCurrentTrackId()) {
   const track = getTrackById(trackId);
   if (currentTabId === 'overview') {
-    const startTabId = track.startingTab || track.tabs[0];
+    const startTabId = track.id === 'foundations' ? 'firstaiapp' : (track.startingTab || 'firstaiapp');
     return {
       tabId: startTabId,
       tab: getTabById(startTabId),

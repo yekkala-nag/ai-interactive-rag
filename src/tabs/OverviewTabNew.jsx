@@ -124,10 +124,10 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
   };
 
   const handleStartLearning = () => {
-    const currentTrack = getTrackById(activeTrackId);
-    // Navigate to track's starting tab (defaults to foundations -> firstaiapp)
-    const targetTab = currentTrack.startingTab || 'firstaiapp';
-    handleNavigate(targetTab);
+    // ALWAYS start at foundational AI principles (firstaiapp), never jump directly to RAG
+    setCurrentTrackId('foundations');
+    setActiveTrackId('foundations');
+    handleNavigate('firstaiapp');
   };
 
   const runDiagnostic = () => {
@@ -171,7 +171,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
           { label: 'Topics', value: `${TABS_REGISTRY.length}` },
         ]}
         actions={[
-          { label: `Start Learning (${activeTrackObj.title})`, variant: 'primary', onClick: handleStartLearning },
+          { label: '🚀 Start Learning (Foundations First)', variant: 'primary', onClick: handleStartLearning },
           { label: '🎯 Take 30s Diagnostic', variant: 'secondary', onClick: () => {
             const diagEl = document.getElementById('adaptive-diagnostic-section');
             diagEl?.scrollIntoView({ behavior: 'smooth' });

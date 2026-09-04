@@ -69,7 +69,7 @@ export const TABS_REGISTRY = [
     category: "Foundations",
     icon: "🗺️",
     keywords: ["overview", "introduction", "dashboard"],
-    component: lazy(() => import("../App.jsx").then(m => ({ default: m.OverviewTab })))
+    component: lazy(() => import("../tabs/OverviewTabNew.jsx").then(m => ({ default: m.OverviewTab })))
   },
   {
     id: "glossary",
