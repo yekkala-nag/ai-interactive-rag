@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "firstaiapp", "reinforcementlearning", "aimoralagency", "dialoguelamda", "modellandscape", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "promptdependencygraph", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
+    tabs: ["overview", "glossary", "firstaiapp", "reinforcementlearning", "aimoralagency", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
   },
   {
     id: "rag_architecture",
@@ -24,7 +24,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
-    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "ragchunking"]
+    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "ragchunking"]
   },
   {
     id: "context_memory",
@@ -32,7 +32,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🧠",
     color: "#9b7fd4",
     description: "Context curation, measuring quality, company brain & context graph",
-    tabs: ["ctxeng", "ctxmeasure", "vague", "hallucination", "contextgraph", "companybrain", "memeng", "contextlimits"]
+    tabs: ["ctxeng", "ctxmeasure", "memhierarchy", "longcontext", "vague", "hallucination", "contextgraph", "companybrain", "memeng", "contextlimits"]
   },
   {
     id: "agents_frameworks",
@@ -40,7 +40,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🤖",
     color: "#c4572a",
     description: "ReAct loops, multi-agent orchestration, CLI agents, LangChain & LangGraph",
-    tabs: ["fiveassets", "redesign", "projectprepframework", "claudecode100", "typedagentgate", "agentpairprogramming", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
+    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "claudecode100", "typedagentgate", "agentpairprogramming", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
   },
   {
     id: "data_platform",
@@ -48,7 +48,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🏗️",
     color: "#3b82f6",
     description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "datahumanization", "llmfinetuning"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "datahumanization", "llmfinetuning"]
   },
   {
     id: "frontiers_production",
@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
+    tabs: ["enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "finops", "observability", "slmedge", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
@@ -126,6 +126,24 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../modelLandscape/ModelLandscapeTab.jsx"))
   },
   {
+    id: "tokenization",
+    label: "Tokenization & Fertility",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🔤",
+    keywords: ["tokenization", "bpe", "unigram", "wordpiece", "fertility", "multilingual tokens", "tiktoken"],
+    component: lazy(() => import("../tokenization/TokenizationTab.jsx"))
+  },
+  {
+    id: "quantserve",
+    label: "Quantization & Model Serving",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🗜️",
+    keywords: ["quantization", "awq", "gptq", "gguf", "vllm", "tensorrt", "vram", "serving", "pagedattention"],
+    component: lazy(() => import("../quantServe/QuantServeTab.jsx"))
+  },
+  {
     id: "promptfundamentals",
     label: "Prompt Engineering & Cognitive Patterns",
     umbrellaId: "foundations",
@@ -169,6 +187,24 @@ export const TABS_REGISTRY = [
     icon: "📝",
     keywords: ["prompts", "prompt management", "versioning", "prompt engineering", "templates"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.PromptMgmtTab })))
+  },
+  {
+    id: "promptcontracts",
+    label: "Prompt Contracts & Version Gates",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "📜",
+    keywords: ["prompt contracts", "contract validation", "version pin", "breaking change", "section manifest", "capability flags", "prompt management"],
+    component: lazy(() => import("../promptContracts/PromptContractsTab.jsx"))
+  },
+  {
+    id: "promptregression",
+    label: "Prompt Regression Detection",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "📡",
+    keywords: ["prompt regression", "golden set", "behavioural diff", "canary", "rollback", "quiet failure", "evals"],
+    component: lazy(() => import("../promptRegression/PromptRegressionTab.jsx"))
   },
   {
     id: "promptdependencygraph",
@@ -380,6 +416,60 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../rowLevelRAG/RowLevelRAGTab.jsx"))
   },
   {
+    id: "rerankers",
+    label: "Rerankers & Late Interaction",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🪜",
+    keywords: ["reranker", "cross-encoder", "cohere rerank", "rankgpt", "colbert", "late interaction", "hyde", "query expansion", "bge-reranker"],
+    component: lazy(() => import("../rerankers/RerankersTab.jsx"))
+  },
+  {
+    id: "rageval",
+    label: "RAG Eval Triad & Ship Gates",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "📐",
+    keywords: ["rag eval", "ragas", "faithfulness", "context precision", "context recall", "answer relevance", "ship gate", "evals"],
+    component: lazy(() => import("../ragEvals/RagEvalTab.jsx"))
+  },
+  {
+    id: "multilingualrag",
+    label: "Multilingual RAG Routing",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🌍",
+    keywords: ["multilingual rag", "cross-lingual", "translate query", "mE5", "bge-m3", "fertility", "entity drift"],
+    component: lazy(() => import("../multilingualRAG/MultilingualRAGTab.jsx"))
+  },
+  {
+    id: "multimodalrag",
+    label: "Multimodal RAG & Vision",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🖼️",
+    keywords: ["multimodal rag", "vision rag", "clip", "siglip", "deplot", "chart qa", "vqa", "layout", "ocr"],
+    component: lazy(() => import("../multimodalRAG/MultimodalRAGTab.jsx"))
+  },
+  {
+    id: "texttosql",
+    label: "Text-to-SQL Agent Loop",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🔗",
+    keywords: ["text to sql", "sql agent", "schema linking", "guarded sql", "aggregate", "validity join", "read-only"],
+    component: lazy(() => import("../textToSQL/TextToSQLTab.jsx"))
+  },
+  {
+    id: "crossdocjoins",
+    label: "Cross-Document Table Joins",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🧩",
+    keywords: ["cross-doc joins", "schema alignment", "column mapping", "unified schedule", "validity join", "corpus aggregate"],
+    component: lazy(() => import("../crossDocJoins/CrossDocJoinsTab.jsx"))
+  },
+  {
     id: "tablegridrag",
     label: "Tables in PDFs: Don't Flatten the Grid",
     umbrellaId: "rag_architecture",
@@ -481,6 +571,24 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.MemoryEngineeringTab })))
   },
   {
+    id: "memhierarchy",
+    label: "Memory Hierarchy & Lifecycle",
+    umbrellaId: "context_memory",
+    category: "Context & Memory",
+    icon: "🗂️",
+    keywords: ["memory hierarchy", "working episodic semantic", "memgpt", "forgetting", "salience", "PII quarantine", "personalization", "cold archive"],
+    component: lazy(() => import("../memHierarchy/MemHierarchyTab.jsx"))
+  },
+  {
+    id: "longcontext",
+    label: "Long-Context Tactics",
+    umbrellaId: "context_memory",
+    category: "Context & Memory",
+    icon: "📏",
+    keywords: ["long context", "lost in the middle", "needle haystack", "context compression", "compaction", "retrieve then read", "anchors"],
+    component: lazy(() => import("../longContext/LongContextTab.jsx"))
+  },
+  {
     id: "contextlimits",
     label: "1M Context Limits & Working Memory",
     umbrellaId: "context_memory",
@@ -517,6 +625,51 @@ export const TABS_REGISTRY = [
     icon: "🧭",
     keywords: ["solve the right problem", "project preparation framework", "agentic ai", "PID", "discovery report", "functional requirements", "technical requirements", "governance RACI", "roadmap", "reversibility", "mike huls", "towards data science"],
     component: lazy(() => import("../projectPrepFramework/ProjectPrepFrameworkTab.jsx"))
+  },
+  {
+    id: "agentplanner",
+    label: "Agent Planning Patterns",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🔁",
+    keywords: ["planner", "react", "plan execute", "reflexion", "tree of thoughts", "step cap", "stall detection", "verifier"],
+    component: lazy(() => import("../agentPlanner/AgentPlannerTab.jsx"))
+  },
+  {
+    id: "agenthitl",
+    label: "Human-in-the-Loop Gates",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🛂",
+    keywords: ["human in the loop", "hitl", "approval gate", "autonomy ladder", "escalation", "audit", "risk score"],
+    component: lazy(() => import("../agentHITL/AgentHITLTab.jsx"))
+  },
+  {
+    id: "agenta2a",
+    label: "A2A & Agent Mesh",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "📡",
+    keywords: ["a2a", "agent to agent", "supervisor", "mesh", "handoff chain", "mcp", "blackboard", "registry"],
+    component: lazy(() => import("../agentA2A/AgentA2ATab.jsx"))
+  },
+  {
+    id: "agentsandbox",
+    label: "Agent Sandboxing & Tool Safety",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🏰",
+    keywords: ["sandbox", "tool safety", "deny by default", "confused deputy", "idempotency", "secrets broker", "gvisor", "firecracker"],
+    component: lazy(() => import("../agentSandbox/AgentSandboxTab.jsx"))
+  },
+  {
+    id: "agentevals",
+    label: "Agent Evals & Red-Teaming",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🧪",
+    keywords: ["agent evals", "tau bench", "pass^k", "red team", "prompt injection", "jailbreak", "goal drift", "refusal"],
+    component: lazy(() => import("../agentEvals/AgentEvalsTab.jsx"))
   },
   {
     id: "claudecode100",
@@ -701,6 +854,24 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../knowledgeBase/KnowledgeBaseTab.jsx"))
   },
   {
+    id: "vectordbops",
+    label: "Vector-DB Ops & Indexing",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🗜️",
+    keywords: ["vector db", "hnsw", "ivf", "pq", "flat index", "qdrant", "milvus", "pgvector", "recall@k", "ram sizing"],
+    component: lazy(() => import("../vectorDBOps/VectorDBOpsTab.jsx"))
+  },
+  {
+    id: "datapipeline",
+    label: "Streaming + Lineage + Versioning",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🌊",
+    keywords: ["streaming", "kafka", "flink", "lineage", "openlineage", "dvc", "lakefs", "partitions", "schema registry"],
+    component: lazy(() => import("../dataPipeline/DataPipelineTab.jsx"))
+  },
+  {
     id: "aidataplat",
     label: "AI-Native Data Platform",
     umbrellaId: "data_platform",
@@ -882,6 +1053,33 @@ export const TABS_REGISTRY = [
   },
 
   // ── Umbrella 6 — Production & Frontiers ─────────────────────
+  {
+    id: "finops",
+    label: "FinOps & Cost Governance",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "💸",
+    keywords: ["finops", "cost governance", "token bill", "semantic cache", "model routing", "budgets", "savings"],
+    component: lazy(() => import("../finOps/FinOpsTab.jsx"))
+  },
+  {
+    id: "observability",
+    label: "AI Observability & Tracing",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "📡",
+    keywords: ["observability", "tracing", "opentelemetry", "langsmith", "langfuse", "spans", "sampling", "monitoring"],
+    component: lazy(() => import("../aiObservability/AIObservabilityTab.jsx"))
+  },
+  {
+    id: "slmedge",
+    label: "Edge SLMs & Distillation",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "📱",
+    keywords: ["slm", "small language models", "distillation", "phi", "smollm", "qwen", "edge inference", "gguf", "speculative decoding"],
+    component: lazy(() => import("../slmEdge/SlmEdgeTab.jsx"))
+  },
   {
     id: "visionlanguage",
     label: "Vision-Language Models (VLM)",

@@ -13,6 +13,12 @@ import {
   getTrackProgress,
   subscribeToAdaptiveProgress
 } from '../../services/adaptiveLearning.js';
+import {
+  getGroupedTabsForUmbrella,
+  getTopicMeta,
+  getLevelInfo,
+  getChildLevelSpan
+} from '../../registry/curriculum.js';
 
 // Category Accent Gradient Mapping (Apple-Style Vibrancy)
 const MODULE_ACCENTS = {
@@ -447,13 +453,39 @@ export function Sidebar({
                   marginTop: '3px',
                   marginBottom: '4px'
                 }}>
-                  {tabs.map(tab => {
+                  {getGroupedTabsForUmbrella(moduleId, tabs).map(group => (
+                    <div key={group.child ? group.child.id : 'ungrouped'} style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: group.child ? '6px' : 0 }}>
+                      {group.child && (
+                        <div
+                          title={group.child.blurb}
+                          style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                            padding: '6px 8px 3px 8px',
+                            fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
+                            color: 'var(--ds-color-text-tertiary)'
+                          }}
+                        >
+                          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {group.child.title}
+                          </span>
+                          <span style={{
+                            fontFamily: 'SF Mono, monospace', fontWeight: 600, fontSize: '0.6rem',
+                            background: 'rgba(255, 255, 255, 0.06)',
+                            padding: '0px 6px', borderRadius: '9999px', flexShrink: 0, marginLeft: '6px'
+                          }}>
+                            {getChildLevelSpan(group.child.id, tabs)} · {group.tabs.length}
+                          </span>
+                        </div>
+                      )}
+                      {group.tabs.map(tab => {
+                    const meta = getTopicMeta(tab.id);
+                    const lvl = getLevelInfo(meta.l);
                     const isActive = activeTab === tab.id;
                     return (
                       <button
                         key={tab.id}
                         onClick={() => onSelectTab(tab.id)}
-                        title={tab.label}
+                        title={`${tab.label} — ${lvl.label}${meta.p && meta.p.length ? ` · needs: ${meta.p.join(', ')}` : ''}`}
                         style={{
                           display: 'flex', alignItems: 'center', gap: '8px',
                           padding: '5px 8px',
@@ -490,12 +522,26 @@ export function Sidebar({
                         }}>
                           {tab.label}
                         </span>
+                        <span
+                          title={lvl.label}
+                          style={{
+                            fontSize: '0.58rem', fontWeight: 700, fontFamily: 'SF Mono, monospace',
+                            color: isActive ? '#ffffff' : lvl.color,
+                            background: isActive ? 'rgba(255,255,255,0.25)' : `${lvl.color}1f`,
+                            border: `1px solid ${isActive ? 'rgba(255,255,255,0.4)' : `${lvl.color}55`}`,
+                            padding: '0px 5px', borderRadius: '9999px', flexShrink: 0
+                          }}
+                        >
+                          {lvl.short}
+                        </span>
                         {isActive && (
                           <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'white', flexShrink: 0 }} />
                         )}
                       </button>
                     );
-                  })}
+                      })}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

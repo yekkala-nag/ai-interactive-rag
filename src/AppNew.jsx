@@ -19,6 +19,8 @@ const TabComponents = {
   glossary: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIGlossaryTab }))),
   firstaiapp: lazy(() => import('./firstAIApp/FirstAIAppTab.jsx')),
   modellandscape: lazy(() => import('./modelLandscape/ModelLandscapeTab.jsx')),
+  tokenization: lazy(() => import('./tokenization/TokenizationTab.jsx')),
+  quantserve: lazy(() => import('./quantServe/QuantServeTab.jsx')),
   promptfundamentals: lazy(() => import('./promptEngineeringFundamentals/PromptFundamentalsTab.jsx')),
   reinforcementlearning: lazy(() => import('./reinforcementLearning/ReinforcementLearningTab.jsx')),
   aimoralagency: lazy(() => import('./aiMoralAgency/MoralAgencyTab.jsx')),
@@ -30,6 +32,8 @@ const TabComponents = {
   unhobbling: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.UnhobblingTab }))),
   promptmgmt: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PromptMgmtTab }))),
   promptdependencygraph: lazy(() => import('./promptDependencyGraph/PromptDependencyGraphTab.jsx')),
+  promptcontracts: lazy(() => import('./promptContracts/PromptContractsTab.jsx')),
+  promptregression: lazy(() => import('./promptRegression/PromptRegressionTab.jsx')),
   structuredoutputs: lazy(() => import('./structuredOutputs/StructuredOutputsTab.jsx')),
   topicmodeling: lazy(() => import('./topicModeling/TopicModelingTab.jsx')),
   aiharness: lazy(() => import('./aiHarness/AIHarnessTab.jsx')),
@@ -52,6 +56,12 @@ const TabComponents = {
   interviewprep: lazy(() => import('./tabs/InterviewPrepTab.jsx')),
   rowlevelrag: lazy(() => import('./rowLevelRAG/RowLevelRAGTab.jsx')),
   tablegridrag: lazy(() => import('./tableGridRAG/TableGridRAGTab.jsx')),
+  rerankers: lazy(() => import('./rerankers/RerankersTab.jsx')),
+  rageval: lazy(() => import('./ragEvals/RagEvalTab.jsx')),
+  multilingualrag: lazy(() => import('./multilingualRAG/MultilingualRAGTab.jsx')),
+  multimodalrag: lazy(() => import('./multimodalRAG/MultimodalRAGTab.jsx')),
+  texttosql: lazy(() => import('./textToSQL/TextToSQLTab.jsx')),
+  crossdocjoins: lazy(() => import('./crossDocJoins/CrossDocJoinsTab.jsx')),
   graphtraversalknowledge: lazy(() => import('./graphTraversalKnowledge/GraphTraversalTab.jsx')),
   ragcorpusshapes: lazy(() => import('./ragCorpusShapes/RAGCorpusShapesTab.jsx')),
   ragchunking: lazy(() => import('./ragChunkingStrategy/RAGChunkingStrategyTab.jsx')),
@@ -64,6 +74,8 @@ const TabComponents = {
   hallucination: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HallucinationLoopTab }))),
   memeng: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.MemoryEngineeringTab }))),
   contextlimits: lazy(() => import('./contextLimits/ContextLimitsTab.jsx')),
+  memhierarchy: lazy(() => import('./memHierarchy/MemHierarchyTab.jsx')),
+  longcontext: lazy(() => import('./longContext/LongContextTab.jsx')),
 
   cliagent: lazy(() => import('./cliAgents/CliAgentTab.jsx')),
   claudecode100: lazy(() => import('./claudeCode100/ClaudeCode100Tab.jsx')),
@@ -71,6 +83,11 @@ const TabComponents = {
   agentpairprogramming: lazy(() => import('./agentPairProgramming/AgentPairTab.jsx')),
   redesign: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.RedesignWorkTab }))),
   projectprepframework: lazy(() => import('./projectPrepFramework/ProjectPrepFrameworkTab.jsx')),
+  agentplanner: lazy(() => import('./agentPlanner/AgentPlannerTab.jsx')),
+  agenthitl: lazy(() => import('./agentHITL/AgentHITLTab.jsx')),
+  agenta2a: lazy(() => import('./agentA2A/AgentA2ATab.jsx')),
+  agentsandbox: lazy(() => import('./agentSandbox/AgentSandboxTab.jsx')),
+  agentevals: lazy(() => import('./agentEvals/AgentEvalsTab.jsx')),
   fiveassets: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.FiveAssetsTab }))),
   multiagent: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.MultiAgentTab }))),
   agentsastools: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentsAsToolsTab }))),
@@ -89,6 +106,8 @@ const TabComponents = {
   docstruct: lazy(() => import('./documentStructure/DocumentStructureTab.jsx')),
   agenticparsing: lazy(() => import('./agenticParsing/AgenticParsingTab.jsx')),
   knowledgebase: lazy(() => import('./knowledgeBase/KnowledgeBaseTab.jsx')),
+  vectordbops: lazy(() => import('./vectorDBOps/VectorDBOpsTab.jsx')),
+  datapipeline: lazy(() => import('./dataPipeline/DataPipelineTab.jsx')),
   aidataplat: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIDataPlatformTab }))),
   medallionarch: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.MedallionArchTab }))),
   aitestdatabottleneck: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AITestDataBottleneckTab }))),
@@ -124,12 +143,20 @@ const TabComponents = {
   guardrails: lazy(() => import('./guardrails/GuardrailsTab.jsx')),
   llmreliability: lazy(() => import('./llmReliability/LLMReliabilityTab.jsx')),
   enterpriseaiops: lazy(() => import('./enterpriseAIOps/EnterpriseAIOpsTab.jsx')),
+  finops: lazy(() => import('./finOps/FinOpsTab.jsx')),
+  observability: lazy(() => import('./aiObservability/AIObservabilityTab.jsx')),
+  slmedge: lazy(() => import('./slmEdge/SlmEdgeTab.jsx')),
   productionragops: lazy(() => import('./productionRAGOps/ProductionRAGOpsTab.jsx')),
   tokenorchestrationplaybook: lazy(() => import('./tokenOrchestrationPlaybook/TokenPlaybookTab.jsx')),
   enterpriseadvancedplaybook: lazy(() => import('./enterpriseAdvancedPlaybook/EnterpriseAdvancedPlaybookTab.jsx')),
 };
 
 function TabLoader({ tabId, onSelectTab }) {
+  useEffect(() => {
+    if (tabId) {
+      import('./services/mastery.js').then(m => m.recordVisit(tabId)).catch(() => {});
+    }
+  }, [tabId]);
   const Component = TabComponents[tabId];
   if (!Component) return <div style={{ padding: 'var(--ds-space-10)', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>Tab not found: {tabId}</div>;
   return (

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<defs><linearGradient id="sqbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#090d16"/><stop offset="100%" stop-color="#101a30"/></linearGradient>
+<linearGradient id="sqgrn" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+<marker id="sqarr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,1 L7,4 L0,7 Z" fill="#38bdf8"/></marker></defs>
+<rect width="1200" height="400" fill="url(#sqbg)" rx="12"/>
+<text x="40" y="48" fill="#fff" font-size="24" font-weight="800">Text-to-SQL — link, guard, execute+repair once, interpret</text>
+<text x="40" y="72" fill="#94a3b8" font-size="13">SELECT-only · allow-listed tables · LIMIT/timeout · PII masked. One repair, then escalate.</text>
+<g font-size="12" font-weight="700">
+<rect x="40" y="100" width="230" height="90" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="56" y="128" fill="#38bdf8">1 · Schema link</text><text x="56" y="150" fill="#e2e8f0" font-weight="400">terms → columns</text><text x="56" y="170" fill="#64748b" font-weight="400">premium→schedule</text>
+<rect x="290" y="100" width="230" height="90" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="306" y="128" fill="#38bdf8">2 · Guarded gen</text><text x="306" y="150" fill="#e2e8f0" font-weight="400">AST-checked SQL</text><text x="306" y="170" fill="#64748b" font-weight="400">SELECT-only</text>
+<rect x="540" y="100" width="230" height="90" rx="10" fill="url(#sqgrn)"/><text x="556" y="128" fill="#fff">3 · Execute+repair</text><text x="556" y="150" fill="#d1fae5" font-weight="400">run · fix once</text><text x="556" y="170" fill="#fff" font-weight="400">else escalate</text>
+<rect x="790" y="100" width="330" height="90" rx="10" fill="#0f172a" stroke="#c9a84c" stroke-width="2"/><text x="806" y="128" fill="#c9a84c">4 · Interpret + cite</text><text x="806" y="150" fill="#e2e8f0" font-weight="400">scalar/rows → answer</text><text x="806" y="170" fill="#e2e8f0" font-weight="400">cite SQL + hash</text>
+</g>
+<g stroke="#38bdf8" stroke-width="2" marker-end="url(#sqarr)"><line x1="270" y1="145" x2="288" y2="145"/><line x1="520" y1="145" x2="538" y2="145"/><line x1="770" y1="145" x2="788" y2="145"/></g>
+<rect x="40" y="215" width="560" height="75" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="60" y="241" fill="#fff" font-size="12" font-weight="700">Difficulty: lookup (low) · aggregate (grain!) · join (fan-out traps — validity dates)</text>
+<text x="60" y="263" fill="#94a3b8" font-size="11">Joins add valid_from&lt;=x&lt;=valid_to — never cross versions silently.</text>
+<rect x="620" y="215" width="540" height="75" rx="10" fill="#0f172a" stroke="#ef4444" stroke-width="2"/>
+<text x="640" y="241" fill="#ef4444" font-size="12" font-weight="800">Guards: read-only role · allow-list · LIMIT 200/10s · PII mask+log</text>
+<text x="640" y="263" fill="#e2e8f0" font-size="11">Guards run on AST, not vibes — parse, don't regex.</text>
+<rect x="40" y="310" width="1120" height="50" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="60" y="336" fill="#94a3b8" font-size="12">Simulator: intent × state × coverage → guarded SQL + grain warning + citation.</text>
+</svg>

@@ -5,143 +5,97 @@
  * mastery tracking, and cross-tab workflow progression.
  */
 
-import { getTabById, TABS_REGISTRY } from '../registry/tabsRegistry.js';
+import { getTabById, TABS_REGISTRY, UMBRELLA_TOPICS } from '../registry/tabsRegistry.js';
+import { CHILD_UMBRELLAS, getTopicMeta, getPrereqIds } from '../registry/curriculum.js';
+import { ROLE_PATHS } from '../registry/diagnostics.js';
 
-export const ADAPTIVE_TRACKS = [
-  {
-    id: 'foundations',
-    title: 'AI Foundations & Engineering',
-    tagline: 'From first API calls to prompt architectures & self-attention',
-    description: 'Recommended for all learners and engineers new to LLM internals. Master prompts, token sampling, attention mechanics, and structured outputs before diving into complex retrieval architectures.',
-    level: 'Beginner to Intermediate',
-    badgeVariant: 'module',
-    duration: '45 mins',
-    icon: '🌱',
-    color: '#0D9488',
-    startingTab: 'firstaiapp',
-    tabs: [
-      'firstaiapp',
-      'promptfundamentals',
-      'llmsampling',
-      'selfattention',
-      'structuredoutputs',
-      'archconcepts',
-      'workflows',
-      'rag'
-    ]
-  },
-  {
-    id: 'rag_specialist',
-    title: 'Production RAG Systems',
-    tagline: 'High-precision retrieval, chunking, reranking & hierarchical fusion',
-    description: 'Specialized track for building resilient retrieval augmented generation systems that scale with low latency, high context relevancy, and minimal hallucination.',
-    level: 'Intermediate to Advanced',
-    badgeVariant: 'primary',
-    duration: '60 mins',
-    icon: '⚡',
-    color: '#2563eb',
-    startingTab: 'rag',
-    tabs: [
-      'rag',
-      'ragchunking',
-      'qparseloop',
-      'filtering',
-      'hierrag',
-      'prodrag',
-      'workflowloop',
-      'ragcasestudies'
-    ]
-  },
-  {
-    id: 'agent_architect',
-    title: 'Autonomous Agent Architectures',
-    tagline: 'Tool use, multi-agent coordination, LangChain, LangGraph & ReAct loops',
-    description: 'Deep dive into orchestrating autonomous agents. Build CLI agents, typed gatekeepers, multi-agent swarms, and stateful graph workflows.',
-    level: 'Advanced',
-    badgeVariant: 'accent',
-    duration: '75 mins',
-    icon: '🤖',
-    color: '#7c3aed',
-    startingTab: 'fiveassets',
-    tabs: [
-      'fiveassets',
-      'cliagent',
-      'agentpairprogramming',
-      'agentsastools',
-      'multiagent',
-      'langchain',
-      'langgraph',
-      'loopengineering'
-    ]
-  },
-  {
-    id: 'enterprise_ops',
-    title: 'Enterprise AI Ops & FinOps',
-    tagline: 'Token orchestration, model routing, evaluations & zero-latency ops',
-    description: 'Architecting cost-effective, audited, and resilient production systems. Master LLM evals, zero-model routers, latency budgets, and token billing optimization.',
-    level: 'Enterprise Ready',
-    badgeVariant: 'success',
-    duration: '55 mins',
-    icon: '🏢',
-    color: '#059669',
-    startingTab: 'tokenorchestrationplaybook',
-    tabs: [
-      'tokenorchestrationplaybook',
-      'routercheap',
-      'llmevals',
-      'productionragops',
-      'enterpriseaiops',
-      'enterpriseadvancedplaybook'
-    ]
-  },
-  {
-    id: 'full_mastery',
-    title: 'Full Systems Mastery',
-    tagline: 'The complete end-to-end curriculum spanning all 6 core pillars',
-    description: 'A comprehensive journey through modern AI engineering: foundations, retrieval, memory, agents, platform data layers, and production operations.',
-    level: 'Comprehensive',
-    badgeVariant: 'warning',
-    duration: '3.5 hours',
-    icon: '👑',
-    color: '#d97706',
-    startingTab: 'firstaiapp',
-    tabs: [
-      'firstaiapp',
-      'promptfundamentals',
-      'llmsampling',
-      'selfattention',
-      'structuredoutputs',
-      'archconcepts',
-      'workflows',
-      'rag',
-      'ragchunking',
-      'qparseloop',
-      'filtering',
-      'hierrag',
-      'prodrag',
-      'workflowloop',
-      'ragcasestudies',
-      'ctxeng',
-      'memeng',
-      'fiveassets',
-      'cliagent',
-      'agentpairprogramming',
-      'multiagent',
-      'langchain',
-      'langgraph',
-      'loopengineering',
-      'threelayers',
-      'docstruct',
-      'modernioformats',
-      'tokenorchestrationplaybook',
-      'routercheap',
-      'llmevals',
-      'productionragops',
-      'enterpriseaiops',
-      'enterpriseadvancedplaybook'
-    ]
+/**
+ * Build an ordered tab list for a role spec: children in spec order,
+ * topics in registry order filtered by max level, then DAG repair so
+ * prerequisites always precede dependents (when both are in the track).
+ */
+export function buildTrackTabs(roleId) {
+  const spec = ROLE_PATHS[roleId];
+  if (!spec) return [];
+  const orderIndex = new Map();
+  TABS_REGISTRY.forEach((t, i) => orderIndex.set(t.id, i));
+  let children = spec.children;
+  if (!children) {
+    // full_mastery: every child umbrella in curriculum order, all levels
+    const umbOrder = new Map(UMBRELLA_TOPICS.map((u, i) => [u.id, i]));
+    children = [...CHILD_UMBRELLAS]
+      .sort((a, b) => (umbOrder.get(a.umbrellaId) - umbOrder.get(b.umbrellaId)) || (a.order - b.order))
+      .map(c => ({ child: c.id, max: 3 }));
   }
-];
+  const ids = [];
+  const SKIP = new Set(['overview', 'progress']); // hub / tracker pages, not learning topics
+  for (const { child, max } of children) {
+    const inChild = TABS_REGISTRY.filter(t => {
+      const m = getTopicMeta(t.id);
+      return m.c === child && m.l <= max;
+    }).sort((a, b) => orderIndex.get(a.id) - orderIndex.get(b.id));
+    for (const t of inChild) if (!ids.includes(t.id) && !SKIP.has(t.id)) ids.push(t.id);
+  }
+  // DAG repair: move prerequisites before dependents (stable, bounded)
+  const pos = new Map(ids.map((id, i) => [id, i]));
+  let changed = true, guard = 0;
+  while (changed && guard++ < 12) {
+    changed = false;
+    for (const id of [...ids]) {
+      for (const p of getPrereqIds(id)) {
+        if (pos.has(p) && pos.get(p) > pos.get(id)) {
+          ids.splice(ids.indexOf(p), 1);
+          ids.splice(ids.indexOf(id), 0, p);
+          ids.forEach((x, i) => pos.set(x, i));
+          changed = true;
+        }
+      }
+    }
+  }
+  return ids.filter(id => TABS_REGISTRY.some(t => t.id === id));
+}
+
+function estimateDuration(tabCount) {
+  const mins = tabCount * 7;
+  if (mins < 60) return `~${mins} mins`;
+  const h = Math.floor(mins / 60), m = mins % 60;
+  return m ? `~${h}h ${m}m` : `~${h} hours`;
+}
+
+function makeTrack(id) {
+  const spec = ROLE_PATHS[id];
+  const tabs = buildTrackTabs(id);
+  // On-ramp rule: hands-on first build opens foundations-flavored paths
+  if (tabs.includes('firstaiapp')) {
+    tabs.splice(tabs.indexOf('firstaiapp'), 1);
+    tabs.unshift('firstaiapp');
+  }
+  const startingTab = (spec.start && tabs.includes(spec.start)) ? spec.start : tabs[0];
+  return {
+    id,
+    title: spec.trackTitle,
+    tagline: spec.tagline,
+    description: spec.description,
+    level: spec.level,
+    badgeVariant: spec.badgeVariant,
+    duration: estimateDuration(tabs.length),
+    icon: spec.icon,
+    color: spec.color,
+    startingTab,
+    tabs
+  };
+}
+
+// Generated from the curriculum DAG — never hand-edit lists here;
+// change ROLE_PATHS (diagnostics.js) or TOPIC_META (curriculum.js).
+export const ADAPTIVE_TRACKS = [
+  'foundations',
+  'rag_specialist',
+  'agent_architect',
+  'enterprise_ops',
+  'data_engineer',
+  'full_mastery'
+].map(makeTrack);
 
 const STORAGE_KEY_TRACK = 'adaptive_current_track';
 const STORAGE_KEY_COMPLETED = 'adaptive_completed_tabs';
@@ -315,54 +269,108 @@ export function getNextTopic(currentTabId, trackId = getCurrentTrackId()) {
 }
 
 /**
- * Diagnostic logic to recommend a customized track
+ * Placement storage (quiz results): { levels: {umbrellaId: 1|2|3}, goal, date }
  */
-export function diagnoseTrack({ experience = 'beginner', goal = 'foundations', focus = 'concepts' } = {}) {
-  // Logic rules
-  if (experience === 'beginner' || goal === 'foundations') {
-    return {
-      trackId: 'foundations',
-      startingTab: 'firstaiapp',
-      rationale: 'Starting with core AI fundamentals will give you the deepest grounding in token sampling, prompting, and attention before moving to retrieval systems.'
-    };
-  }
+const STORAGE_KEY_PLACEMENT = 'adaptive_placement_v1';
 
-  if (goal === 'rag') {
-    return {
-      trackId: 'rag_specialist',
-      startingTab: 'rag',
-      rationale: 'Your goal is production retrieval. Jump straight into hybrid search, chunking strategies, and query decomposition loops.'
-    };
+export function savePlacement(placement) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(STORAGE_KEY_PLACEMENT, JSON.stringify({ ...placement, date: Date.now() }));
+    broadcastProgressChange();
+  } catch (e) {
+    console.error('Failed to save placement', e);
   }
+}
 
-  if (goal === 'agents') {
-    return {
-      trackId: 'agent_architect',
-      startingTab: 'fiveassets',
-      rationale: 'Focus on autonomous decision loops, multi-agent frameworks, tool dispatching, and LangGraph state machines.'
-    };
+export function getPlacement() {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_PLACEMENT);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    return null;
   }
+}
 
-  if (goal === 'enterprise') {
-    return {
-      trackId: 'enterprise_ops',
-      startingTab: 'tokenorchestrationplaybook',
-      rationale: 'Target high-scale production: routing token costs, evaluation harnesses, zero-model fallbacks, and SLA monitoring.'
-    };
+export function clearPlacement() {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.removeItem(STORAGE_KEY_PLACEMENT);
+    broadcastProgressChange();
+  } catch (e) { /* noop */ }
+}
+
+/**
+ * Apply a placement to a track's tab list: topics in an umbrella at levels
+ * strictly below the placed level are marked skippable. Returns the
+ * effective start tab (first non-skipped) plus skip statistics.
+ */
+export function applyPlacementToTrack(trackTabs, placement) {
+  if (!placement || !placement.levels) {
+    return { startTab: trackTabs[0], skipped: [], skippedCount: 0 };
   }
+  const skipped = trackTabs.filter(id => {
+    const tab = getTabById(id);
+    if (!tab) return false;
+    const placed = placement.levels[tab.umbrellaId];
+    if (!placed || placed <= 1) return false;
+    return getTopicMeta(id).l < placed;
+  });
+  const remaining = trackTabs.filter(id => !skipped.includes(id));
+  return { startTab: remaining[0] || trackTabs[0], skipped, skippedCount: skipped.length };
+}
 
-  if (experience === 'advanced') {
+/**
+ * Diagnostic logic to recommend a customized track.
+ * v2: when quiz placement exists, the start tab skips tested-out levels
+ * and the rationale reports exactly what was skipped.
+ */
+export function diagnoseTrack({ experience = 'beginner', goal = 'foundations', focus = 'concepts', placement = null } = {}) {
+  const quiz = placement || getPlacement();
+  const goalMap = {
+    foundations: 'foundations',
+    rag: 'rag_specialist',
+    agents: 'agent_architect',
+    enterprise: 'enterprise_ops',
+    data: 'data_engineer'
+  };
+
+  const fallbackRationale = {
+    foundations: 'Starting with core AI fundamentals will give you the deepest grounding in token sampling, prompting, and attention before moving to retrieval systems.',
+    rag_specialist: 'Your goal is production retrieval. The DAG-ordered path runs core pipeline → precision layer → advanced architectures → eval gates.',
+    agent_architect: 'Focus on agent assets and prep, then planners, safety gates and evals before orchestration frameworks and production.',
+    enterprise_ops: 'Target high-scale production: reliability gates first, then cost control, tracing, hardened safety, and scale-proof retrieval.',
+    data_engineer: 'Feed AI systems well: data foundations, document pipelines and vector search, ML breadth, then the eval discipline that proves the bytes.',
+    full_mastery: 'The comprehensive curriculum in DAG order across all six umbrellas.'
+  };
+
+  let trackId;
+  if (goal && goalMap[goal]) trackId = goalMap[goal];
+  else if (experience === 'advanced') trackId = 'full_mastery';
+  else trackId = 'foundations';
+
+  const track = getTrackById(trackId);
+  if (quiz && quiz.levels) {
+    const applied = applyPlacementToTrack(track.tabs, quiz);
+    const testedOut = Object.entries(quiz.levels)
+      .filter(([, lvl]) => lvl > 1)
+      .map(([u, lvl]) => `${(UMBRELLA_TOPICS.find(x => x.id === u) || { title: u }).title} → L${lvl}`)
+      .join('; ');
     return {
-      trackId: 'full_mastery',
-      startingTab: 'firstaiapp',
-      rationale: 'With your advanced background, conquer the comprehensive 33-step roadmap across all modern AI layers.'
+      trackId,
+      startingTab: applied.startTab,
+      skipped: applied.skipped,
+      rationale: testedOut
+        ? `Quiz placed you at ${testedOut}. Skipping ${applied.skippedCount} proven topic${applied.skippedCount === 1 ? '' : 's'} — you start at “${(getTabById(applied.startTab) || {}).label}”.`
+        : `Quiz confirms L1 starts across the board — the full path is yours, in dependency order.`
     };
   }
 
   return {
-    trackId: 'foundations',
-    startingTab: 'firstaiapp',
-    rationale: 'A balanced track covering the modern AI stack from the ground up.'
+    trackId,
+    startingTab: track.startingTab,
+    rationale: fallbackRationale[trackId] || fallbackRationale.foundations
   };
 }
 

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<defs><linearGradient id="mlbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#090d16"/><stop offset="100%" stop-color="#101a30"/></linearGradient>
+<linearGradient id="mlblu" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#6366f1"/></linearGradient>
+<linearGradient id="mlgrn" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs>
+<rect width="1200" height="400" fill="url(#mlbg)" rx="12"/>
+<text x="40" y="48" fill="#fff" font-size="24" font-weight="800">Multilingual RAG — route by corpus mix, latency, volume</text>
+<text x="40" y="72" fill="#94a3b8" font-size="13">hi/ar cost 1.8x fertility. Entities drift in MT — carry source spans, cite source language.</text>
+<g font-size="12" font-weight="700">
+<rect x="40" y="100" width="340" height="100" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="56" y="128" fill="#38bdf8">Translate query ($)</text><text x="56" y="150" fill="#e2e8f0" font-weight="400">EN-dominant + low volume</text><text x="56" y="170" fill="#e2e8f0" font-weight="400">+MT call per query</text><text x="56" y="190" fill="#64748b" font-weight="400">watch entity drift</text>
+<rect x="400" y="100" width="340" height="100" rx="10" fill="url(#mlgrn)"/><text x="416" y="128" fill="#fff">Native embed ($$) ★</text><text x="416" y="150" fill="#d1fae5" font-weight="400">mE5 / BGE-M3, no MT hop</text><text x="416" y="170" fill="#d1fae5" font-weight="400">latency-sensitive default</text><text x="416" y="190" fill="#fff" font-weight="400">lang-tag + filter first</text>
+<rect x="760" y="100" width="400" height="100" rx="10" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/><text x="776" y="128" fill="#f59e0b">Translate corpus ($$$)</text><text x="776" y="150" fill="#e2e8f0" font-weight="400">best retrieval, high volume</text><text x="776" y="170" fill="#e2e8f0" font-weight="400">upfront MT amortised</text><text x="776" y="190" fill="#64748b" font-weight="400">staleness risk — re-sync</text>
+</g>
+<rect x="40" y="220" width="560" height="70" rx="10" fill="#0f172a" stroke="#ef4444" stroke-width="2"/>
+<text x="60" y="246" fill="#ef4444" font-size="12" font-weight="800">Failures: fertility blow-up · entity drift · mixed-language chunks</text>
+<text x="60" y="268" fill="#e2e8f0" font-size="11">Fix: native models + cache · source spans · language-tagged chunks.</text>
+<rect x="620" y="220" width="540" height="70" rx="10" fill="url(#mlblu)"/>
+<text x="640" y="246" fill="#fff" font-size="12" font-weight="800">Citation rule: cite source-language span</text>
+<text x="640" y="268" fill="#e0f2fe" font-size="11">Translated answer, source-language evidence. Never cite MT output alone.</text>
+<rect x="40" y="310" width="1120" height="50" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="60" y="336" fill="#94a3b8" font-size="12">Simulator: corpus EN% × query lang × volume × latency → route + reason.</text>
+</svg>

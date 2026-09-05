@@ -21,8 +21,17 @@ import {
   getTrackById,
   getTrackProgress,
   diagnoseTrack,
+  getPlacement,
   subscribeToAdaptiveProgress
 } from '../services/adaptiveLearning.js';
+import { DiagnosticQuiz } from '../components/ui/DiagnosticQuiz.jsx';
+import { ExitCheck } from '../components/ui/ExitCheck.jsx';
+import {
+  getNextBest,
+  getReviewQueue,
+  getUmbrellaMastery,
+  hasAnyEvidence
+} from '../services/recommend.js';
 
 const FOUR_PILLARS = [
   {
@@ -108,6 +117,10 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
   const [diagExperience, setDiagExperience] = useState('beginner');
   const [diagGoal, setDiagGoal] = useState('foundations');
   const [diagRecommendation, setDiagRecommendation] = useState(null);
+  const [quizOpen, setQuizOpen] = useState(false);
+  const [placement, setPlacement] = useState(() => getPlacement());
+  const [recapTab, setRecapTab] = useState(null);
+  const [dashTick, setDashTick] = useState(0);
 
   const handleNavigate = (tabId) => {
     if (onSelectTab) onSelectTab(tabId);
@@ -133,12 +146,14 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
   const runDiagnostic = () => {
     const result = diagnoseTrack({
       experience: diagExperience,
-      goal: diagGoal
+      goal: diagGoal,
+      placement: getPlacement()
     });
+    setPlacement(getPlacement());
     setDiagRecommendation(result);
   };
 
-  // Sync track progress
+  // Sync track progress + dashboard snapshot
   useEffect(() => {
     const refresh = () => {
       const current = getCurrentTrackId();
@@ -148,6 +163,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
         p[t.id] = getTrackProgress(t.id);
       });
       setProgressMap(p);
+      setDashTick(t => t + 1);
     };
 
     refresh();
@@ -167,7 +183,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
         metrics={[
           { label: 'Active Track', value: activeTrackObj.title.split(' ')[0] },
           { label: 'Progress', value: `${progressMap[activeTrackId]?.percent || 0}%` },
-          { label: 'Curated Tracks', value: '4+1' },
+          { label: 'Curated Tracks', value: `${ADAPTIVE_TRACKS.length - 1}+1` },
           { label: 'Topics', value: `${TABS_REGISTRY.length}` },
         ]}
         actions={[
@@ -253,6 +269,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                         { id: 'rag', icon: '⚡', label: 'Production RAG', desc: 'Hybrid retrieval & chunking' },
                         { id: 'agents', icon: '🤖', label: 'Autonomous Agents', desc: 'ReAct, swarms & LangGraph' },
                         { id: 'enterprise', icon: '🏢', label: 'Enterprise FinOps', desc: 'Routing, latency & evals' },
+                        { id: 'data', icon: '🗄️', label: 'Data Engineering', desc: 'Parsing, vectors & lineage' },
                       ].map(opt => (
                         <button
                           key={opt.id}
@@ -289,6 +306,19 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                   >
                     ⚡ Calculate Recommended Pathway
                   </Button>
+                  <Button
+                    variant="secondary"
+                    size="md"
+                    onClick={() => setQuizOpen(true)}
+                    style={{ marginTop: '4px', width: '100%', justifyContent: 'center' }}
+                  >
+                    🎯 Take 3-min Knowledge Quiz {placement ? '(retake)' : ''}
+                  </Button>
+                  {placement && placement.levels && (
+                    <div style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)', textAlign: 'center' }}>
+                      Placed: {Object.entries(placement.levels).map(([u, l]) => `${u.split('_')[0]}→L${l}`).join(' · ')}
+                    </div>
+                  )}
                 </div>
 
                 {/* Right: Recommendation Result Card */}
@@ -377,6 +407,121 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
             </Section.Body>
           </Section>
         </div>
+
+        {/* ============================================================ */}
+        {/* SECTION 1.5: ADAPTIVE DASHBOARD — rings, next-best, review */}
+        {/* ============================================================ */}
+        <Section variant="bordered">
+          <Section.Header>
+            <Flex justify="space-between" align="center" wrap gap="sm">
+              <div>
+                <h2 style={{ fontSize: 'var(--ds-font-size-h2)', marginBottom: 'var(--ds-space-2)' }}>
+                  📊 Your Adaptive Dashboard
+                </h2>
+                <p style={{ color: 'var(--ds-color-text-secondary)' }}>
+                  Evidence-based mastery per umbrella, what to learn next and why, plus spaced review before you forget.
+                </p>
+              </div>
+              <Badge variant="module" moduleId="foundations" size="md">Live from your evidence</Badge>
+            </Flex>
+          </Section.Header>
+          <Section.Body>
+            {(() => {
+              void dashTick;
+              if (!hasAnyEvidence()) {
+                return (
+                  <div style={{ textAlign: 'center', padding: '20px', color: 'var(--ds-color-text-tertiary)' }}>
+                    <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🌱</div>
+                    <div style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)', marginBottom: '4px' }}>No learning evidence yet</div>
+                    <p style={{ fontSize: '0.82rem', maxWidth: '420px', margin: '0 auto 12px auto' }}>
+                      Take the placement quiz or start any topic — visit, prove, and review signals will build your dashboard here.
+                    </p>
+                    <Button variant="primary" size="sm" onClick={() => setQuizOpen(true)}>Take the Quiz →</Button>
+                  </div>
+                );
+              }
+              const rings = getUmbrellaMastery();
+              const nextBest = getNextBest(activeTrackId, 3);
+              const queue = getReviewQueue(5);
+              const Ring = ({ value, color, size = 64 }) => {
+                const r = (size - 10) / 2, c = 2 * Math.PI * r;
+                return (
+                  <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+                    <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="7" />
+                    <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth="7" strokeLinecap="round"
+                      strokeDasharray={`${(value / 100) * c} ${c}`} style={{ transition: 'stroke-dasharray 0.4s ease' }} />
+                  </svg>
+                );
+              };
+              return (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {/* mastery rings */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '12px' }}>
+                    {rings.map(u => (
+                      <div key={u.id} style={{ textAlign: 'center', padding: '12px 6px', background: 'var(--ds-color-bg-canvas)', borderRadius: '10px', border: '1px solid var(--ds-color-border-subtle)' }}>
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                          <Ring value={u.avg} color={u.color} />
+                          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.95rem', color: 'var(--ds-color-text-primary)' }}>{u.avg}</div>
+                        </div>
+                        <div style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--ds-color-text-primary)', marginTop: '6px' }}>{u.icon} {u.title.split(' ')[0]}</div>
+                        <div style={{ fontSize: '0.68rem', color: 'var(--ds-color-text-tertiary)' }}>{u.proven}/{u.total} proven</div>
+                      </div>
+                    ))}
+                  </div>
+                  <Grid columns={{ base: 1, md: 2 }} gap="lg">
+                    {/* next best */}
+                    <div>
+                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--ds-color-text-primary)', marginBottom: '8px' }}>
+                        ✨ Up next in {getTrackById(activeTrackId).title} — and why
+                      </div>
+                      {nextBest.length === 0 ? (
+                        <div style={{ fontSize: '0.82rem', color: 'var(--ds-color-text-secondary)' }}>🏆 Track fully proven. Pick another track or review below.</div>
+                      ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          {nextBest.map(n => {
+                            const t = TABS_REGISTRY.find(x => x.id === n.id) || { label: n.id, icon: '📝' };
+                            return (
+                              <div key={n.id} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', background: 'var(--ds-color-bg-canvas)', borderRadius: '8px', border: '1px solid var(--ds-color-border-subtle)' }}>
+                                <span style={{ fontSize: '1.2rem' }}>{t.icon}</span>
+                                <div style={{ flex: 1, minWidth: 0 }}>
+                                  <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>{t.label}</div>
+                                  <div style={{ fontSize: '0.7rem', color: 'var(--ds-color-text-tertiary)' }}>{n.reasons.join(' · ')}</div>
+                                </div>
+                                <Button variant="secondary" size="sm" onClick={() => handleNavigate(n.id)}>Go →</Button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                    {/* review queue */}
+                    <div>
+                      <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--ds-color-text-primary)', marginBottom: '8px' }}>
+                        🔁 Spaced review — prove it again before it fades
+                      </div>
+                      {queue.length === 0 ? (
+                        <div style={{ fontSize: '0.82rem', color: 'var(--ds-color-text-secondary)' }}>Nothing due. Proven topics resurface ~14 days after proof.</div>
+                      ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          {queue.map(q => (
+                            <div key={q.id} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', background: 'var(--ds-color-bg-canvas)', borderRadius: '8px', border: '1px solid var(--ds-color-border-subtle)' }}>
+                              <span style={{ fontSize: '1.2rem' }}>{q.icon}</span>
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>{q.label}</div>
+                                <div style={{ fontSize: '0.7rem', color: '#F5A623' }}>{q.overdueDays === 0 ? 'due today' : `${q.overdueDays}d overdue`}</div>
+                              </div>
+                              <Button variant="secondary" size="sm" onClick={() => setRecapTab(q.id)}>Recap →</Button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </Grid>
+                </div>
+              );
+            })()}
+          </Section.Body>
+        </Section>
 
         {/* ============================================================ */}
         {/* SECTION 2: CURATED ADAPTIVE TRACKS */}
@@ -666,6 +811,23 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
           </Section.Body>
         </Section>
       </Container>
+      <ExitCheck
+        open={!!recapTab}
+        tabId={recapTab || 'overview'}
+        onSelectTab={handleNavigate}
+        onClose={() => { setRecapTab(null); setDashTick(t => t + 1); }}
+      />
+      <DiagnosticQuiz
+        open={quizOpen}
+        onClose={() => setQuizOpen(false)}
+        initialGoal={diagGoal}
+        onComplete={(done) => {
+          setPlacement(getPlacement());
+          setDiagRecommendation({ trackId: done.rec.trackId, startingTab: done.rec.startingTab, rationale: done.rec.rationale });
+          handleSelectTrack(done.rec.trackId);
+          handleNavigate(done.rec.startingTab);
+        }}
+      />
     </>
   );
 }

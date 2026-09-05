@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 410" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<defs><linearGradient id="obg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#090d16"/><stop offset="100%" stop-color="#0e1a2e"/></linearGradient>
+<linearGradient id="oblu" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#6366f1"/></linearGradient>
+<linearGradient id="ogrn" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs>
+<rect width="1200" height="410" fill="url(#obg)" rx="12"/>
+<text x="40" y="48" fill="#fff" font-size="24" font-weight="800">Observability — traces carry prompts, spans carry scores</text>
+<text x="40" y="72" fill="#94a3b8" font-size="13">100% errors + 5% success + full canary windows. Scores as spans; versions pinned.</text>
+<g font-size="12" font-weight="700">
+<rect x="40" y="100" width="250" height="110" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="56" y="128" fill="#38bdf8">Traces + spans</text><text x="56" y="150" fill="#e2e8f0" font-weight="400">per-step latency/cost</text><text x="56" y="170" fill="#e2e8f0" font-weight="400">retrieval→rerank→gen</text><text x="56" y="194" fill="#64748b" font-weight="400">p95 per step</text>
+<rect x="310" y="100" width="250" height="110" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="326" y="128" fill="#38bdf8">Scores as spans</text><text x="326" y="150" fill="#e2e8f0" font-weight="400">faith/prec/rec per run</text><text x="326" y="170" fill="#e2e8f0" font-weight="400">band slip = alert</text><text x="326" y="194" fill="#64748b" font-weight="400">Ship→Gate pages</text>
+<rect x="580" y="100" width="250" height="110" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="596" y="128" fill="#38bdf8">Feedback+override</text><text x="596" y="150" fill="#e2e8f0" font-weight="400">thumbs · edits · gates</text><text x="596" y="170" fill="#e2e8f0" font-weight="400">override spike = alert</text><text x="596" y="194" fill="#64748b" font-weight="400">humans train evals</text>
+<rect x="850" y="100" width="250" height="110" rx="10" fill="url(#ogrn)"/><text x="866" y="128" fill="#fff">Versions pinned</text><text x="866" y="150" fill="#d1fae5" font-weight="400">comp@ver every span</text><text x="866" y="170" fill="#d1fae5" font-weight="400">floating span = bug</text><text x="866" y="194" fill="#fff" font-weight="400">blame needs pins</text>
+</g>
+<rect x="40" y="230" width="560" height="70" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="60" y="256" fill="#fff" font-size="12" font-weight="700">Platforms: LangSmith (LangChain-native, $$) · Langfuse (OSS, own data) · OTel+warehouse (neutral, work)</text>
+<text x="60" y="278" fill="#94a3b8" font-size="11">Pick by data gravity: regulated → self-host; LangChain shop → Smith; polyglot → OTel.</text>
+<rect x="620" y="230" width="540" height="70" rx="10" fill="url(#oblu)"/>
+<text x="640" y="256" fill="#fff" font-size="12" font-weight="700">Sampling default: 100% errors · 5% success · 100% canary</text>
+<text x="640" y="278" fill="#e0f2fe" font-size="11">Thin sampling = blind incidents. Errors are cheap to keep.</text>
+<rect x="40" y="320" width="1120" height="50" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="60" y="346" fill="#94a3b8" font-size="12">Simulator: tasks/day × sample% → stored traces, GB/month, detection lag.</text>
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<defs><linearGradient id="tkbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#090d16"/><stop offset="100%" stop-color="#101a30"/></linearGradient>
+<linearGradient id="tkred" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#b91c1c"/></linearGradient>
+<linearGradient id="tkgrn" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs>
+<rect width="1200" height="400" fill="url(#tkbg)" rx="12"/>
+<text x="40" y="48" fill="#fff" font-size="24" font-weight="800">Tokenization — same meaning, wildly different token bills</text>
+<text x="40" y="72" fill="#94a3b8" font-size="13">BPE merges up · Unigram prunes down · WordPiece likelihood-merges. Fertility = tokens/word vs English.</text>
+<g font-size="12" font-weight="700">
+<rect x="40" y="100" width="330" height="100" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="56" y="128" fill="#38bdf8">BPE · GPT/Llama</text><text x="56" y="150" fill="#e2e8f0" font-weight="400">frequent pairs merge up</text><text x="56" y="170" fill="#e2e8f0" font-weight="400">32k–200k · greedy, fast</text><text x="56" y="190" fill="#64748b" font-weight="400">rare words shatter</text>
+<rect x="390" y="100" width="330" height="100" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="406" y="128" fill="#38bdf8">Unigram · T5/mT5</text><text x="406" y="150" fill="#e2e8f0" font-weight="400">prune max-loss down</text><text x="406" y="170" fill="#e2e8f0" font-weight="400">probabilistic · morphology+</text><text x="406" y="190" fill="#64748b" font-weight="400">32k–250k</text>
+<rect x="740" y="100" width="420" height="100" rx="10" fill="#0f172a" stroke="#475569" stroke-width="2"/><text x="756" y="128" fill="#fff">WordPiece · BERT · ##pieces</text><text x="756" y="150" fill="#e2e8f0" font-weight="400">likelihood merges · ~30k</text><text x="756" y="170" fill="#e2e8f0" font-weight="400">encoder/retrieval classic</text><text x="756" y="190" fill="#64748b" font-weight="400">never split inside a token when chunking</text>
+</g>
+<g font-size="12" font-weight="700">
+<rect x="40" y="220" width="220" height="60" rx="8" fill="url(#tkgrn)"/><text x="56" y="244" fill="#fff">en 1.0x · es/fr 1.2x</text>
+<rect x="280" y="220" width="220" height="60" rx="8" fill="url(#tkred)"/><text x="296" y="244" fill="#fff">hi/ar 1.8x — 2x bill</text>
+<rect x="520" y="220" width="220" height="60" rx="8" fill="#0f172a" stroke="#475569"/><text x="536" y="244" fill="#cbd5e1">zh 0.7x · code 1.4x</text>
+<rect x="760" y="220" width="400" height="60" rx="8" fill="#0f172a" stroke="#c9a84c"/><text x="776" y="244" fill="#c9a84c">Fix: native models · cache · compress</text>
+</g>
+<rect x="40" y="300" width="1120" height="60" rx="10" fill="#0f172a" stroke="#334155"/>
+<text x="60" y="326" fill="#94a3b8" font-size="12">Simulator: words × language → tokens, fertility, $/1k docs. Chunk guard budgets by estimate, splits on whitespace.</text>
+</svg>

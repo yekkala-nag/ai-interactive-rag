@@ -14,25 +14,27 @@ import {
   getCurrentTrackId,
   getTrackById,
   getTrackProgress,
-  isTabMastered,
-  toggleTabMastery,
   getPreviousTopic,
   getNextTopic,
   subscribeToAdaptiveProgress
 } from '../../services/adaptiveLearning.js';
+import { getMasteryScore, isMastered } from '../../services/mastery.js';
+import { hasExitCheck } from '../../registry/exitChecks.js';
+import { ExitCheck } from './ExitCheck.jsx';
 
 export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
   const [trackId, setTrackId] = useState(() => getCurrentTrackId());
   const [progress, setProgress] = useState(() => getTrackProgress(trackId));
-  const [isMastered, setIsMastered] = useState(() => isTabMastered(activeTab));
+  const [mastery, setMastery] = useState(() => getMasteryScore(activeTab));
   const [showCelebration, setShowCelebration] = useState(false);
+  const [exitOpen, setExitOpen] = useState(false);
 
   useEffect(() => {
     const update = () => {
       const currentTrack = getCurrentTrackId();
       setTrackId(currentTrack);
       setProgress(getTrackProgress(currentTrack));
-      setIsMastered(isTabMastered(activeTab));
+      setMastery(getMasteryScore(activeTab));
     };
 
     update();
@@ -43,15 +45,8 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
   const activeTrack = getTrackById(trackId);
   const prevTopicInfo = getPreviousTopic(activeTab, trackId);
   const nextTopicInfo = getNextTopic(activeTab, trackId);
-
-  const handleToggleMastery = () => {
-    const newlyMastered = toggleTabMastery(activeTab);
-    setIsMastered(newlyMastered);
-    if (newlyMastered) {
-      setShowCelebration(true);
-      setTimeout(() => setShowCelebration(false), 2000);
-    }
-  };
+  const proven = isMastered(activeTab);
+  const checkAvailable = hasExitCheck(activeTab);
 
   const isOverview = activeTab === 'overview';
 
@@ -210,23 +205,26 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
           </span>
         </button>
 
-        {/* Center: Mark as Mastered Toggle */}
+        {/* Center: evidence-based mastery (visit + prove) */}
         <div className="adaptive-center-panel">
           {!isOverview && (
             <button
               type="button"
-              onClick={handleToggleMastery}
+              onClick={() => checkAvailable && setExitOpen(true)}
               className="adaptive-nav-btn"
+              title={checkAvailable ? 'Prove mastery: 3 questions (best score keeps)' : 'Exit check landing soon — visits still count'}
               style={{
-                background: isMastered ? 'rgba(16, 185, 129, 0.15)' : 'var(--ds-color-bg-canvas)',
-                borderColor: isMastered ? '#10b981' : 'var(--ds-color-border-default)',
-                color: isMastered ? '#10b981' : 'var(--ds-color-text-secondary)',
-                fontWeight: isMastered ? 600 : 500,
-                position: 'relative'
+                background: proven ? 'rgba(16, 185, 129, 0.15)' : 'var(--ds-color-bg-canvas)',
+                borderColor: proven ? '#10b981' : 'var(--ds-color-border-default)',
+                color: proven ? '#10b981' : 'var(--ds-color-text-secondary)',
+                fontWeight: proven ? 600 : 500,
+                position: 'relative',
+                cursor: checkAvailable ? 'pointer' : 'default',
+                opacity: checkAvailable ? 1 : 0.75
               }}
             >
-              <span style={{ fontSize: '1.1rem' }}>{isMastered ? '✓' : '○'}</span>
-              <span>{isMastered ? 'Topic Mastered' : 'Mark as Mastered'}</span>
+              <span style={{ fontSize: '1.1rem' }}>{proven ? '✓' : '○'}</span>
+              <span>{proven ? `Mastered · ${mastery}` : checkAvailable ? `Prove it · ${mastery}` : `Visited · ${mastery}`}</span>
               {showCelebration && (
                 <span style={{
                   position: 'absolute',
@@ -259,6 +257,21 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
           >
             🎯 Learning Hub
           </button>
+          <ExitCheck
+            open={exitOpen}
+            tabId={activeTab}
+            onSelectTab={onSelectTab}
+            onClose={() => {
+              const wasProven = proven;
+              setExitOpen(false);
+              const now = getMasteryScore(activeTab);
+              setMastery(now);
+              if (!wasProven && isMastered(activeTab)) {
+                setShowCelebration(true);
+                setTimeout(() => setShowCelebration(false), 2000);
+              }
+            }}
+          />
         </div>
 
         {/* Next Topic Button */}
