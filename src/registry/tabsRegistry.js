@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "firstaiapp", "reinforcementlearning", "aimoralagency", "dialoguelamda", "modellandscape", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
+    tabs: ["overview", "glossary", "firstaiapp", "reinforcementlearning", "aimoralagency", "dialoguelamda", "modellandscape", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "promptdependencygraph", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
   },
   {
     id: "rag_architecture",
@@ -24,7 +24,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
-    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "graphtraversalknowledge", "ragcorpusshapes", "ragchunking"]
+    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "ragchunking"]
   },
   {
     id: "context_memory",
@@ -40,7 +40,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🤖",
     color: "#c4572a",
     description: "ReAct loops, multi-agent orchestration, CLI agents, LangChain & LangGraph",
-    tabs: ["fiveassets", "redesign", "claudecode100", "typedagentgate", "agentpairprogramming", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
+    tabs: ["fiveassets", "redesign", "projectprepframework", "claudecode100", "typedagentgate", "agentpairprogramming", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
   },
   {
     id: "data_platform",
@@ -169,6 +169,15 @@ export const TABS_REGISTRY = [
     icon: "📝",
     keywords: ["prompts", "prompt management", "versioning", "prompt engineering", "templates"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.PromptMgmtTab })))
+  },
+  {
+    id: "promptdependencygraph",
+    label: "Prompt Dependency Graph",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🕸️",
+    keywords: ["prompt dependency graph", "blast radius", "reachable vs candidate", "change impact analysis", "section dependents", "composable prompts", "retesting", "emmimal alexander", "towards data science"],
+    component: lazy(() => import("../promptDependencyGraph/PromptDependencyGraphTab.jsx"))
   },
   {
     id: "structuredoutputs",
@@ -371,6 +380,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../rowLevelRAG/RowLevelRAGTab.jsx"))
   },
   {
+    id: "tablegridrag",
+    label: "Tables in PDFs: Don't Flatten the Grid",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "▦",
+    keywords: ["tables in pdfs", "table_df_meta", "table grid", "O1 O2 O3 O4 O5", "header propagation", "multi-page concat", "question projection", "columnar extraction", "vision fallback", "dispatcher", "kezhan shi", "towards data science"],
+    component: lazy(() => import("../tableGridRAG/TableGridRAGTab.jsx"))
+  },
+  {
     id: "graphtraversalknowledge",
     label: "Always-Fused Graph Traversal Knowledge Layer",
     umbrellaId: "rag_architecture",
@@ -490,6 +508,15 @@ export const TABS_REGISTRY = [
     icon: "🏗️",
     keywords: ["redesign work", "process", "automation"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.RedesignWorkTab })))
+  },
+  {
+    id: "projectprepframework",
+    label: "Solve the Right Problem: 6-Doc Prep",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🧭",
+    keywords: ["solve the right problem", "project preparation framework", "agentic ai", "PID", "discovery report", "functional requirements", "technical requirements", "governance RACI", "roadmap", "reversibility", "mike huls", "towards data science"],
+    component: lazy(() => import("../projectPrepFramework/ProjectPrepFrameworkTab.jsx"))
   },
   {
     id: "claudecode100",

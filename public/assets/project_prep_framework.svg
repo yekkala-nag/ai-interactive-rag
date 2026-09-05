@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <linearGradient id="ppbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16"/><stop offset="100%" stop-color="#0d1527"/>
+    </linearGradient>
+    <linearGradient id="ppgreen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="ppamber" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="ppred" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="ppblue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <marker id="pparr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,1 L7,4 L0,7 Z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="560" fill="url(#ppbg)" rx="12"/>
+  <text x="40" y="48" fill="#fff" font-size="24" font-weight="800">Solve the Right Problem — 6 Docs Before Agent Fleet Build</text>
+  <text x="40" y="72" fill="#94a3b8" font-size="13">Change is cheap on the blueprint, 10x in production. Agents amplify wrong direction.</text>
+
+  <g font-size="11" font-weight="700">
+    <g><rect x="40" y="110" width="160" height="86" rx="10" fill="#0f172a" stroke="#10b981" stroke-width="2"/><text x="52" y="134" fill="#10b981">1 · PID.md</text><text x="52" y="152" fill="#e2e8f0" font-weight="400">Business problem,</text><text x="52" y="167" fill="#e2e8f0" font-weight="400">scope, goals</text><text x="52" y="184" fill="#64748b" font-weight="400">wrong problem = fatal</text></g>
+    <g><rect x="220" y="110" width="160" height="86" rx="10" fill="#0f172a" stroke="#10b981" stroke-width="2"/><text x="232" y="134" fill="#10b981">2 · discovery</text><text x="232" y="152" fill="#e2e8f0" font-weight="400">Systems, data,</text><text x="232" y="167" fill="#e2e8f0" font-weight="400">feasibility, risks</text><text x="232" y="184" fill="#64748b" font-weight="400">no railroad = no train</text></g>
+    <g><rect x="400" y="110" width="160" height="86" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="412" y="134" fill="#38bdf8">3 · functional</text><text x="412" y="152" fill="#e2e8f0" font-weight="400">What it must do,</text><text x="412" y="167" fill="#e2e8f0" font-weight="400">users + stories</text><text x="412" y="184" fill="#64748b" font-weight="400">Ferrari vs bicycle</text></g>
+    <g><rect x="580" y="110" width="160" height="86" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/><text x="592" y="134" fill="#38bdf8">4 · technical</text><text x="592" y="152" fill="#e2e8f0" font-weight="400">Architecture +</text><text x="592" y="167" fill="#e2e8f0" font-weight="400">reversal cost</text><text x="592" y="184" fill="#64748b" font-weight="400">before, not during</text></g>
+    <g><rect x="760" y="110" width="160" height="86" rx="10" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/><text x="772" y="134" fill="#f59e0b">5 · governance</text><text x="772" y="152" fill="#e2e8f0" font-weight="400">RACI, escalation,</text><text x="772" y="167" fill="#e2e8f0" font-weight="400">approval gates</text><text x="772" y="184" fill="#64748b" font-weight="400">no inbox limbo</text></g>
+    <g><rect x="940" y="110" width="160" height="86" rx="10" fill="#0f172a" stroke="#f59e0b" stroke-width="2"/><text x="952" y="134" fill="#f59e0b">6 · roadmap</text><text x="952" y="152" fill="#e2e8f0" font-weight="400">Order, owners,</text><text x="952" y="167" fill="#e2e8f0" font-weight="400">dependencies</text><text x="952" y="184" fill="#64748b" font-weight="400">unblock parallel</text></g>
+  </g>
+  <g stroke="#38bdf8" stroke-width="2" marker-end="url(#pparr)">
+    <line x1="200" y1="153" x2="218" y2="153"/><line x1="380" y1="153" x2="398" y2="153"/><line x1="560" y1="153" x2="578" y2="153"/><line x1="740" y1="153" x2="758" y2="153"/><line x1="920" y1="153" x2="938" y2="153"/>
+  </g>
+
+  <rect x="40" y="230" width="720" height="150" rx="10" fill="#0f172a" stroke="#334155"/>
+  <text x="60" y="258" fill="#fff" font-size="14" font-weight="800">Cost-of-change curve — spend scrutiny where reversal is expensive</text>
+  <line x1="70" y1="340" x2="700" y2="340" stroke="#475569" stroke-width="2"/>
+  <line x1="70" y1="340" x2="70" y2="260" stroke="#475569" stroke-width="2"/>
+  <path d="M80,330 C 250,325 420,300 680,265" stroke="#ef4444" stroke-width="3" fill="none"/>
+  <circle cx="120" cy="328" r="7" fill="#10b981"/><text x="100" y="360" fill="#10b981" font-size="11">blueprint 1x</text>
+  <circle cx="380" cy="310" r="7" fill="#f59e0b"/><text x="360" y="360" fill="#f59e0b" font-size="11">build 4x</text>
+  <circle cx="650" cy="270" r="7" fill="#ef4444"/><text x="620" y="360" fill="#ef4444" font-size="11">production 10x</text>
+  <text x="470" y="285" fill="#94a3b8" font-size="11">data contract / autonomy decisions live here →</text>
+
+  <rect x="780" y="230" width="380" height="150" rx="10" fill="#0f172a" stroke="#c9a84c"/>
+  <text x="800" y="258" fill="#c9a84c" font-size="14" font-weight="800">Agent amplification rule</text>
+  <text x="800" y="282" fill="#e2e8f0" font-size="12">1 engineer wrong 1 day = limited damage.</text>
+  <text x="800" y="302" fill="#e2e8f0" font-size="12">1 engineer × fleet wrong 1 day =</text>
+  <text x="800" y="322" fill="#ef4444" font-size="12">pattern copied into every change.</text>
+  <rect x="800" y="334" width="340" height="28" rx="6" fill="url(#ppred)"/><text x="810" y="352" fill="#fff" font-size="11" font-weight="700">Shared playbook: PID → roadmap before fleet</text>
+
+  <rect x="40" y="400" width="1120" height="120" rx="10" fill="#0f172a" stroke="#334155"/>
+  <text x="60" y="428" fill="#fff" font-size="14" font-weight="800">Not waterfall — later discovery updates earlier docs explicitly</text>
+  <text x="60" y="450" fill="#94a3b8" font-size="12">Prototype/spike to kill uncertainty → feed result back into the owning doc. Never silently change direction.</text>
+  <g font-size="11" font-weight="700">
+    <rect x="60" y="462" width="250" height="36" rx="6" fill="url(#ppgreen)"/><text x="72" y="485" fill="#fff">Full: score ≥ 65 (6 docs)</text>
+    <rect x="330" y="462" width="250" height="36" rx="6" fill="url(#ppblue)"/><text x="342" y="485" fill="#fff">Lite: 35–64 (PID + discovery)</text>
+    <rect x="600" y="462" width="250" height="36" rx="6" fill="#1e293b" stroke="#475569"/><text x="612" y="485" fill="#cbd5e1">Skip: &lt; 35 (reversible fix)</text>
+  </g>
+  <text x="880" y="485" fill="#64748b" font-size="11">Source: Mike Huls, TDS · PPF repo</text>
+</svg>
