@@ -12,10 +12,15 @@ export const ROLE_PATHS = {
   foundations: {
     trackTitle: 'AI Foundations & Engineering',
     tagline: 'From first API calls to prompt architectures & attention',
-    description: 'For all learners and engineers new to LLM internals. Core concepts first, then a first taste of retrieval and memory.',
+    description: 'For all learners and engineers new to LLM internals. Opens with a guided first build (the mental-model primer: client as messenger, cloud as brain), then vocabulary and internals attach to it.',
     level: 'Beginner to Intermediate',
     icon: '🌱', color: '#0D9488', badgeVariant: 'module',
     goal: 'foundations',
+    // Declared pedagogy (not a hidden splice): firstaiapp opens because its
+    // first section teaches the messenger→cloud model inline with
+    // anti-pattern pairs. Glossary is a reference — it supports lesson 2,
+    // it can never be lesson 1.
+    start: 'firstaiapp',
     children: [
       { child: 'fnd_start', max: 1 },
       { child: 'fnd_internals', max: 1 },
@@ -88,10 +93,11 @@ export const ROLE_PATHS = {
   full_mastery: {
     trackTitle: 'Full Systems Mastery',
     tagline: 'The complete curriculum: every child, every level',
-    description: 'Comprehensive journey across all six umbrellas in curriculum order. Placement skips what you already prove.',
+    description: 'Comprehensive journey across all six umbrellas in curriculum order, opening with the guided first build. Placement skips what you already prove.',
     level: 'Comprehensive',
     icon: '👑', color: '#d97706', badgeVariant: 'warning',
     goal: 'all',
+    start: 'firstaiapp',
     children: null // null = every child umbrella, all levels
   }
 };
@@ -103,6 +109,35 @@ export const GOAL_TO_ROLE = {
   enterprise: 'enterprise_ops',
   data: 'data_engineer',
   all: 'full_mastery'
+};
+
+// ── Journey loops: the spiral. Explicit story order (DAG-repaired at build).
+// Loop 1 = all L1 (minus hub), Loop 2 = all L2, Loop 3 = all L3. ────────────
+export const JOURNEY_LOOPS = {
+  journey_loop1: {
+    trackTitle: 'Loop 1 · Trail',
+    tagline: 'One pass, whole map — first app, first RAG, first agent',
+    description: 'Concept → immediate use, pillar by pillar. Ends with something working at every stop.',
+    level: 'Start here',
+    icon: '🥾', color: '#10b981', badgeVariant: 'success',
+    order: ['firstaiapp', 'promptfundamentals', 'tokenization', 'llmsampling', 'selfattention', 'archconcepts', 'promptmgmt', 'glossary', 'rag', 'pipeline', 'ragchunking', 'qparseloop', 'filtering', 'ctxeng', 'vague', 'memeng', 'contextlimits', 'pandasdataframes', 'modernioformats', 'linearregression', 'classicalml', 'activelearn', 'fiveassets', 'redesign', 'projectprepframework', 'agentsastools', 'agenttasks', 'codingagentsnonprog', 'datahumanization', 'aiusecases', 'tokenbill', 'practices', 'powerfeatures', 'goaltracker']
+  },
+  journey_loop2: {
+    trackTitle: 'Loop 2 · Practitioner',
+    tagline: 'Professional depth, pillar by pillar',
+    description: 'The same pillars at working depth: precision retrieval, safety gates, document pipelines, cost control.',
+    level: 'Core journey',
+    icon: '🧭', color: '#2563eb', badgeVariant: 'primary',
+    order: ['structuredoutputs', 'workflows', 'promptlearning', 'promptdependencygraph', 'unhobbling', 'modellandscape', 'quantserve', 'aiharness', 'reinforcementlearning', 'aimoralagency', 'dialoguelamda', 'topicmodeling', 'ragcorpusshapes', 'hierrag', 'rerankers', 'rageval', 'rowlevelrag', 'tablegridrag', 'crossdocjoins', 'multilingualrag', 'multimodalrag', 'prodrag', 'routercheap', 'genpatterns', 'fourpdfs', 'ragcasestudies', 'interviewprep', 'hallucination', 'ctxmeasure', 'memhierarchy', 'contextgraph', 'companybrain', 'longcontext', 'agentplanner', 'agenthitl', 'agentsandbox', 'agentevals', 'agentdebugging', 'typedagentgate', 'multiagent', 'langchain', 'compare', 'mcpclient', 'cliagent', 'agentpairprogramming', 'aiproductbuilder', 'docstruct', 'agenticparsing', 'knowledgebase', 'vectordbops', 'datapipeline', 'threelayers', 'frauddetectionml', 'timeseriesanomaly', 'vaes', 'byol', 'xlstm', 'keras3', 'aidataplat', 'medallionarch', 'aitestdatabottleneck', 'pythonprofiling', 'pythonengineering', 'llmevals', 'reasoningbench', 'guardrails', 'llmreliability', 'finops', 'productionragops', 'enterpriseaiops', 'observability', 'visionlanguage', 'diffusionmodels', 'speechvoice', 'slmedge', 'ragbeyond']
+  },
+  journey_loop3: {
+    trackTitle: 'Loop 3 · Summits',
+    tagline: 'High-stakes peaks and frontier outlook',
+    description: 'Advanced patterns in dependency order, closing on the frontier. Placement often starts here for seniors.',
+    level: 'Advanced',
+    icon: '🏔️', color: '#d97706', badgeVariant: 'warning',
+    order: ['promptcontracts', 'promptregression', 'hallucbricks', 'workflowloop', 'proxypointer', 'agenticrag', 'graphtraversalknowledge', 'texttosql', 'agenta2a', 'langgraph', 'loopengineering', 'claudecode100', 'agentscale', 'llmfinetuning', 'tokenorchestrationplaybook', 'enterpriseadvancedplaybook', 'frontiers']
+  }
 };
 
 // ── Question bank: 24 questions, 4 per umbrella (2 L1 + 2 L2) ───────────────

@@ -177,7 +177,7 @@ export const TOPIC_META = {
   diffusionmodels: { c: 'fr_frontiers', l: 2, p: [] },
   speechvoice: { c: 'fr_frontiers', l: 2, p: [] },
   slmedge: { c: 'fr_frontiers', l: 2, p: ['quantserve'] },
-  ragbeyond: { c: 'fr_frontiers', l: 2, p: ['agenticrag'] },
+  ragbeyond: { c: 'fr_frontiers', l: 2, p: ['prodrag'] },
   frontiers: { c: 'fr_frontiers', l: 3, p: ['ragbeyond'] }
 };
 

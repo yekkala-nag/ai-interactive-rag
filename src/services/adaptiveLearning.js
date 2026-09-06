@@ -7,7 +7,27 @@
 
 import { getTabById, TABS_REGISTRY, UMBRELLA_TOPICS } from '../registry/tabsRegistry.js';
 import { CHILD_UMBRELLAS, getTopicMeta, getPrereqIds } from '../registry/curriculum.js';
-import { ROLE_PATHS } from '../registry/diagnostics.js';
+import { ROLE_PATHS, JOURNEY_LOOPS } from '../registry/diagnostics.js';
+
+/** Stable, bounded: prerequisites precede dependents whenever both are listed. */
+function repairOrder(ids) {
+  const pos = new Map(ids.map((id, i) => [id, i]));
+  let changed = true, guard = 0;
+  while (changed && guard++ < 12) {
+    changed = false;
+    for (const id of [...ids]) {
+      for (const p of getPrereqIds(id)) {
+        if (pos.has(p) && pos.get(p) > pos.get(id)) {
+          ids.splice(ids.indexOf(p), 1);
+          ids.splice(ids.indexOf(id), 0, p);
+          ids.forEach((x, i) => pos.set(x, i));
+          changed = true;
+        }
+      }
+    }
+  }
+  return ids;
+}
 
 /**
  * Build an ordered tab list for a role spec: children in spec order,
@@ -36,23 +56,20 @@ export function buildTrackTabs(roleId) {
     }).sort((a, b) => orderIndex.get(a.id) - orderIndex.get(b.id));
     for (const t of inChild) if (!ids.includes(t.id) && !SKIP.has(t.id)) ids.push(t.id);
   }
-  // DAG repair: move prerequisites before dependents (stable, bounded)
-  const pos = new Map(ids.map((id, i) => [id, i]));
-  let changed = true, guard = 0;
-  while (changed && guard++ < 12) {
-    changed = false;
-    for (const id of [...ids]) {
-      for (const p of getPrereqIds(id)) {
-        if (pos.has(p) && pos.get(p) > pos.get(id)) {
-          ids.splice(ids.indexOf(p), 1);
-          ids.splice(ids.indexOf(id), 0, p);
-          ids.forEach((x, i) => pos.set(x, i));
-          changed = true;
-        }
-      }
-    }
-  }
-  return ids.filter(id => TABS_REGISTRY.some(t => t.id === id));
+  return repairOrder(ids.filter(id => TABS_REGISTRY.some(t => t.id === id)));
+}
+
+/**
+ * Journey loops: explicit story order from JOURNEY_LOOPS, registry-validated,
+ * then the same DAG repair. Cross-loop prerequisites are assumed met by
+ * earlier loops (validated separately).
+ */
+export function buildJourneyTabs(loopId) {
+  const spec = JOURNEY_LOOPS[loopId];
+  if (!spec) return [];
+  const valid = new Set(TABS_REGISTRY.map(t => t.id));
+  const ids = spec.order.filter(id => valid.has(id));
+  return repairOrder(ids);
 }
 
 function estimateDuration(tabCount) {
@@ -65,11 +82,8 @@ function estimateDuration(tabCount) {
 function makeTrack(id) {
   const spec = ROLE_PATHS[id];
   const tabs = buildTrackTabs(id);
-  // On-ramp rule: hands-on first build opens foundations-flavored paths
-  if (tabs.includes('firstaiapp')) {
-    tabs.splice(tabs.indexOf('firstaiapp'), 1);
-    tabs.unshift('firstaiapp');
-  }
+  // No hardcoded on-ramp: track order IS the pedagogy (orient → terms → build).
+  // Placement skipping (applyPlacementToTrack) moves proven learners forward.
   const startingTab = (spec.start && tabs.includes(spec.start)) ? spec.start : tabs[0];
   return {
     id,
@@ -97,6 +111,34 @@ export const ADAPTIVE_TRACKS = [
   'full_mastery'
 ].map(makeTrack);
 
+function makeJourney(id) {
+  const spec = JOURNEY_LOOPS[id];
+  const tabs = buildJourneyTabs(id);
+  return {
+    id,
+    title: spec.trackTitle,
+    tagline: spec.tagline,
+    description: spec.description,
+    level: spec.level,
+    badgeVariant: spec.badgeVariant,
+    duration: estimateDuration(tabs.length),
+    icon: spec.icon,
+    color: spec.color,
+    startingTab: tabs[0],
+    tabs
+  };
+}
+
+// The spiral: same shape as role tracks, so every consumer (bar, hub,
+// progress, prev/next) works unchanged.
+export const JOURNEY_TRACKS = [
+  'journey_loop1',
+  'journey_loop2',
+  'journey_loop3'
+].map(makeJourney);
+
+const ALL_TRACKS = [...ADAPTIVE_TRACKS, ...JOURNEY_TRACKS];
+
 const STORAGE_KEY_TRACK = 'adaptive_current_track';
 const STORAGE_KEY_COMPLETED = 'adaptive_completed_tabs';
 const STORAGE_KEY_ACTIVE = 'adaptive_active_tab';
@@ -116,13 +158,13 @@ export function getTracks() {
 }
 
 export function getTrackById(trackId) {
-  return ADAPTIVE_TRACKS.find(t => t.id === trackId) || ADAPTIVE_TRACKS[0];
+  return ALL_TRACKS.find(t => t.id === trackId) || ADAPTIVE_TRACKS[0];
 }
 
 export function getCurrentTrackId() {
   if (typeof window === 'undefined') return 'foundations';
   const saved = localStorage.getItem(STORAGE_KEY_TRACK);
-  if (saved && saved !== 'rag' && ADAPTIVE_TRACKS.some(t => t.id === saved)) {
+  if (saved && saved !== 'rag' && ALL_TRACKS.some(t => t.id === saved)) {
     return saved;
   }
   return 'foundations';
@@ -130,7 +172,7 @@ export function getCurrentTrackId() {
 
 export function setCurrentTrackId(trackId) {
   if (typeof window === 'undefined') return;
-  if (ADAPTIVE_TRACKS.some(t => t.id === trackId)) {
+  if (ALL_TRACKS.some(t => t.id === trackId)) {
     localStorage.setItem(STORAGE_KEY_TRACK, trackId);
     broadcastProgressChange();
   }

@@ -16,6 +16,7 @@ import { Hero, Diagram, CodeBlock, Accordion, Tabs, Stepper } from '../component
 import { Card, Badge, Button, Callout } from '../components/ui/Core.jsx';
 import {
   ADAPTIVE_TRACKS,
+  JOURNEY_TRACKS,
   getCurrentTrackId,
   setCurrentTrackId,
   getTrackById,
@@ -24,6 +25,7 @@ import {
   getPlacement,
   subscribeToAdaptiveProgress
 } from '../services/adaptiveLearning.js';
+import { isMastered } from '../services/mastery.js';
 import { DiagnosticQuiz } from '../components/ui/DiagnosticQuiz.jsx';
 import { ExitCheck } from '../components/ui/ExitCheck.jsx';
 import {
@@ -137,10 +139,14 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
   };
 
   const handleStartLearning = () => {
-    // ALWAYS start at foundational AI principles (firstaiapp), never jump directly to RAG
-    setCurrentTrackId('foundations');
-    setActiveTrackId('foundations');
-    handleNavigate('firstaiapp');
+    // Adaptive entry: foundations track, starting at the first topic the
+    // learner hasn't proven (placement-aware). Fresh users orient first
+    // (glossary), never dropped mid-sequence into a build tutorial.
+    const rec = diagnoseTrack({ experience: 'beginner', goal: 'foundations', placement: getPlacement() });
+    setCurrentTrackId(rec.trackId);
+    setActiveTrackId(rec.trackId);
+    setDiagRecommendation(rec);
+    handleNavigate(rec.startingTab);
   };
 
   const runDiagnostic = () => {
@@ -533,6 +539,73 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                 </div>
               );
             })()}
+          </Section.Body>
+        </Section>
+
+        {/* ============================================================ */}
+        {/* SECTION 1.7: THE JOURNEY — three loops, whole map each time */}
+        {/* ============================================================ */}
+        <Section variant="bordered">
+          <Section.Header>
+            <Flex justify="space-between" align="center" wrap gap="sm">
+              <div>
+                <h2 style={{ fontSize: 'var(--ds-font-size-h2)', marginBottom: 'var(--ds-space-2)' }}>
+                  🥾 The Journey: GenAI → RAG → Agents, Three Times
+                </h2>
+                <p style={{ color: 'var(--ds-color-text-secondary)' }}>
+                  Each loop crosses all three pillars end-to-end — Trail ships firsts, Practitioner goes deep, Summits take the peaks. Placement drops you in the right loop.
+                </p>
+              </div>
+              <Badge variant="module" moduleId="foundations" size="md">Default path</Badge>
+            </Flex>
+          </Section.Header>
+          <Section.Body>
+            <Grid columns={{ base: 1, md: 3 }} gap="md">
+              {JOURNEY_TRACKS.map((loop, i) => {
+                const p = getTrackProgress(loop.id);
+                const isActive = activeTrackId === loop.id;
+                const continueId = loop.tabs.find(t => !isMastered(t)) || loop.tabs[0];
+                const done = p.completed === p.total && p.total > 0;
+                return (
+                  <Card
+                    key={loop.id}
+                    variant={isActive ? 'elevated' : 'bordered'}
+                    padding="md"
+                    style={{
+                      border: isActive ? `2px solid ${loop.color}` : '1px solid var(--ds-color-border-subtle)',
+                      display: 'flex', flexDirection: 'column', gap: '10px'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '1.8rem' }}>{loop.icon}</span>
+                      <div>
+                        <div style={{ fontWeight: 700, color: 'var(--ds-color-text-primary)' }}>{loop.title}</div>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-secondary)' }}>{loop.tagline}</div>
+                      </div>
+                      {i < JOURNEY_TRACKS.length - 1 && (
+                        <span style={{ marginLeft: 'auto', color: 'var(--ds-color-text-tertiary)' }}>→</span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)' }}>
+                      {loop.tabs.length} topics · {loop.duration} · {p.completed}/{p.total} proven
+                    </div>
+                    <div style={{ height: '6px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+                      <div style={{ height: '100%', width: `${p.percent}%`, background: loop.color, borderRadius: '4px', transition: 'width 0.3s ease' }} />
+                    </div>
+                    <Button
+                      variant={isActive ? 'primary' : 'secondary'}
+                      size="sm"
+                      onClick={() => {
+                        handleSelectTrack(loop.id);
+                        handleNavigate(continueId);
+                      }}
+                    >
+                      {done ? 'Review loop ↻' : p.completed > 0 ? `Continue →` : `Start ${loop.title.split('·')[0].trim()} →`}
+                    </Button>
+                  </Card>
+                );
+              })}
+            </Grid>
           </Section.Body>
         </Section>
 
