@@ -47,7 +47,7 @@ export const TOPIC_META = {
   // ── Foundations (23) ──
   overview: { c: 'fnd_start', l: 1, p: [] },
   glossary: { c: 'fnd_start', l: 1, p: [] },
-  firstaiapp: { c: 'fnd_start', l: 1, p: ['promptfundamentals', 'tokenization'] },
+  firstaiapp: { c: 'fr_ops', l: 1, p: ['promptfundamentals', 'tokenization'] },
   promptfundamentals: { c: 'fnd_prompts', l: 1, p: [] },
   llmsampling: { c: 'fnd_internals', l: 1, p: [] },
   selfattention: { c: 'fnd_internals', l: 1, p: ['llmsampling'] },

@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "firstaiapp", "reinforcementlearning", "aimoralagency", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
+    tabs: ["overview", "glossary", "reinforcementlearning", "aimoralagency", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
   },
   {
     id: "rag_architecture",
@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "finops", "observability", "slmedge", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
+    tabs: ["firstaiapp", "enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "finops", "observability", "slmedge", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
@@ -83,10 +83,10 @@ export const TABS_REGISTRY = [
   {
     id: "firstaiapp",
     label: "Building Your First AI App",
-    umbrellaId: "foundations",
-    category: "Foundations",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
     icon: "🚀",
-    keywords: ["first ai app", "ai app", "api keys", "environment variables", "ibrahim salami", "summarizer", "json response", "error triaging", "map reduce chunking", "openai", "towards data science"],
+    keywords: ["first ai app", "ai app", "api keys", "environment variables", "ibrahim salami", "summarizer", "json response", "error triaging", "map reduce chunking", "openai", "towards data science", "shipping", "production app"],
     component: lazy(() => import("../firstAIApp/FirstAIAppTab.jsx"))
   },
   {
