@@ -59,9 +59,9 @@ export function Sidebar({
   }, []);
 
   const activeTrack = getTrackById(trackId);
-  // Bumped on every progress broadcast (mastery shares the event) so
-  // per-child micro-bars stay fresh without extra subscriptions.
-  void progTick;
+  // Tick state: bumped on every progress broadcast (mastery shares the
+  // event) so per-child micro-bars re-render fresh. Value unused.
+  const [, setProgTick] = useState(0);
 
   const [expandedModules, setExpandedModules] = useState({
     foundations: false,
