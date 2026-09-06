@@ -39,7 +39,7 @@ export default function ProjectPrepFrameworkTab() {
       />
       <Container size="wide">
         <div style={{ marginBottom: 'var(--ds-space-6)' }}>
-          <DiagramImage src="/assets/project_prep_framework.svg" alt="Project Preparation Framework workflow" title="6-Doc Prep Framework + Cost-of-Change Curve" caption="Left→right: PID → discovery → functional → technical → governance → roadmap. Cost curve 1x→4x→10x. Fleet amplifies wrong direction." background="#090d16" maxWidth={1100} />
+          <DiagramImage moduleId="agents_frameworks" src="/assets/project_prep_framework.svg" alt="Project Preparation Framework workflow" title="6-Doc Prep Framework + Cost-of-Change Curve" caption="Left→right: PID → discovery → functional → technical → governance → roadmap. Cost curve 1x→4x→10x. Fleet amplifies wrong direction." background="#090d16" maxWidth={1100} />
         </div>
 
         <div style={{ display: 'flex', gap: 'var(--ds-space-2)', marginBottom: 'var(--ds-space-6)', background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-2)', borderRadius: 'var(--ds-radius-lg)', border: '1px solid var(--ds-color-border-subtle)', overflowX: 'auto' }}>

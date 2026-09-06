@@ -24,7 +24,7 @@ export default function MultilingualRAGTab() {
         description="EN-dominant + low volume → translate the query. Latency-sensitive → native multilingual embed. High volume → translate the corpus once. Entities never travel without source spans."
         metrics={[{ label: 'Routes', value: '3' }, { label: 'hi/ar Tax', value: '1.8x' }, { label: 'Cite Rule', value: 'Source Lang' }, { label: 'Default', value: 'Native Embed' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/multilingual_rag.svg" alt="Multilingual RAG" title="3 Routes + Failure Modes" caption="Corpus mix, latency and volume pick the route; citations stay in source language." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="rag_architecture" src="/assets/multilingual_rag.svg" alt="Multilingual RAG" title="3 Routes + Failure Modes" caption="Corpus mix, latency and volume pick the route; citations stay in source language." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'routes', icon: '🌍', label: '1. Routes + Failures', desc: 'Strategy table' },
           { id: 'sim', icon: '🔬', label: '2. Route Picker Sim', desc: 'Mix → route' },

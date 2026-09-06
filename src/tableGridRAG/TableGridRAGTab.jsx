@@ -42,7 +42,7 @@ export default function TableGridRAGTab() {
       />
       <Container size="wide">
         <div style={{ marginBottom: 'var(--ds-space-6)' }}>
-          <DiagramImage src="/assets/table_grid_rag.svg" alt="Table grid diagnostic and ops" title="Flattening Fails → Diagnostic → Ops → Answer" caption="Top: flattened intersection loss vs diagnostic meta vs 4 levels. Middle: O1–O5 composition. Bottom: parser evidence + question modulator." background="#090d16" maxWidth={1100} />
+          <DiagramImage moduleId="rag_architecture" src="/assets/table_grid_rag.svg" alt="Table grid diagnostic and ops" title="Flattening Fails → Diagnostic → Ops → Answer" caption="Top: flattened intersection loss vs diagnostic meta vs 4 levels. Middle: O1–O5 composition. Bottom: parser evidence + question modulator." background="#090d16" maxWidth={1100} />
         </div>
 
         <div style={{ display: 'flex', gap: 'var(--ds-space-2)', marginBottom: 'var(--ds-space-6)', background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-2)', borderRadius: 'var(--ds-radius-lg)', border: '1px solid var(--ds-color-border-subtle)', overflowX: 'auto' }}>

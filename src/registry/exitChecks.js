@@ -297,10 +297,24 @@ export const EXIT_CHECKS = {
   ]
 };
 
+import { EXIT_CHECKS_B } from './exitChecks2.js';
+import { EXIT_CHECKS_C } from './exitChecks3.js';
+
+const ALL_CHECKS = { ...EXIT_CHECKS, ...EXIT_CHECKS_B, ...EXIT_CHECKS_C };
+
 export function getExitCheck(tabId) {
-  return EXIT_CHECKS[tabId] || null;
+  return ALL_CHECKS[tabId] || null;
 }
 
 export function hasExitCheck(tabId) {
-  return Array.isArray(EXIT_CHECKS[tabId]) && EXIT_CHECKS[tabId].length > 0;
+  return Array.isArray(ALL_CHECKS[tabId]) && ALL_CHECKS[tabId].length > 0;
+}
+
+/** Coverage stats for dashboards: banked topics and questions. */
+export function getExitCoverage() {
+  const topics = Object.keys(ALL_CHECKS);
+  return {
+    topics: topics.length,
+    questions: topics.reduce((a, id) => a + ALL_CHECKS[id].length, 0)
+  };
 }

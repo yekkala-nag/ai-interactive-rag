@@ -5,6 +5,7 @@
  */
 import React, { useMemo, useState } from 'react';
 import { getExitCheck } from '../../registry/exitChecks.js';
+import { useModalA11y } from '../../hooks/useModalA11y.js';
 import { getTopicMeta, getLevelInfo } from '../../registry/curriculum.js';
 import { getTabById } from '../../registry/tabsRegistry.js';
 import { recordQuiz, getMasteryScore, getEvidence } from '../../services/mastery.js';
@@ -26,6 +27,11 @@ export function ExitCheck({ open, tabId, onClose, onSelectTab }) {
   const [answers, setAnswers] = useState({});
   const [done, setDone] = useState(false);
   const [score, setScore] = useState(null);
+  const answeredCount = Object.keys(answers).length;
+  // Dismissable before starting or after finishing — never mid-attempt.
+  const { ref: dialogRef, onBackdrop } = useModalA11y(open, onClose, {
+    dismissable: done || answeredCount === 0
+  });
 
   const orders = useMemo(
     () => questions.map((q, i) => shuffleFor(`${tabId}:${i}`, q.o.length)),
@@ -53,10 +59,15 @@ export function ExitCheck({ open, tabId, onClose, onSelectTab }) {
 
   return (
     <div
-      onClick={onClose}
+      onClick={onBackdrop}
       style={{ position: 'fixed', inset: 0, zIndex: 99999, background: 'rgba(10,12,18,0.7)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}
     >
       <div
+        ref={dialogRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Exit check: ${tabId}`}
         onClick={e => e.stopPropagation()}
         style={{ width: '100%', maxWidth: '600px', maxHeight: '88vh', overflowY: 'auto', background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-default)', borderRadius: '16px', padding: '24px', boxShadow: '0 24px 64px rgba(0,0,0,0.5)' }}
       >

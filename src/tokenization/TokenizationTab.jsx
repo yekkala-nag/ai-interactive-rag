@@ -22,7 +22,7 @@ export default function TokenizationTab() {
         description="BPE merges up, Unigram prunes down, WordPiece likelihood-merges. Fertility decides the multilingual tax: Hindi/Arabic cost ~2x English for identical meaning."
         metrics={[{ label: 'Algos', value: 'BPE · Unigram · WP' }, { label: 'hi/ar Tax', value: '~1.8x' }, { label: 'Rule', value: 'Never Split Token' }, { label: 'EN Baseline', value: '1.3 t/w' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/tokenization.svg" alt="Tokenization" title="Algos + Fertility Tax" caption="Algorithm choice shapes splits; language shapes the bill." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="foundations" src="/assets/tokenization.svg" alt="Tokenization" title="Algos + Fertility Tax" caption="Algorithm choice shapes splits; language shapes the bill." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'algos', icon: '🔤', label: '1. Algorithms', desc: 'BPE · Unigram · WordPiece' },
           { id: 'sim', icon: '🔬', label: '2. Fertility Sim', desc: 'Words → tokens → $' },

@@ -21,7 +21,7 @@ export default function AgentA2ATab() {
         description="Chain costs n−1 messages, star 2n, mesh n(n−1)/2 — plus discovery and version skew. Supervisor by default; A2A peers with a pinned registry; chains only for stable flows."
         metrics={[{ label: 'Default', value: 'Supervisor' }, { label: 'Mesh Limit', value: '~6 Agents' }, { label: 'Registry', value: 'Pin or Fail' }, { label: 'Chain', value: 'n−1 Msgs' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/agent_a2a.svg" alt="Agent mesh topologies" title="Star vs Mesh vs Chain + Registry Rule" caption="Message math per topology; registry pins make skew fail closed." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="agents_frameworks" src="/assets/agent_a2a.svg" alt="Agent mesh topologies" title="Star vs Mesh vs Chain + Registry Rule" caption="Message math per topology; registry pins make skew fail closed." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'proto', icon: '📡', label: '1. Protocols', desc: '5 patterns compared' },
           { id: 'sim', icon: '🔬', label: '2. Topology Sim', desc: 'Messages + latency' },

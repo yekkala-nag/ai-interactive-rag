@@ -22,7 +22,7 @@ export default function QuantServeTab() {
         description="70B drops 140GB → 35GB at −1–3% quality. VRAM math (weights + KV cache) picks the quant; workload picks vLLM, TensorRT, TGI, or llama.cpp."
         metrics={[{ label: 'INT4 Saving', value: '4x VRAM' }, { label: 'Quality Cost', value: '−1–3%' }, { label: 'KV at 32k', value: '~10 GB' }, { label: 'Default', value: 'vLLM INT4' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/quant_serve.svg" alt="Quantization" title="Quant Ladder + Stack Picks" caption="Ladder by VRAM; stacks by latency/throughput/ops; KV cache always budgeted." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="foundations" src="/assets/quant_serve.svg" alt="Quantization" title="Quant Ladder + Stack Picks" caption="Ladder by VRAM; stacks by latency/throughput/ops; KV cache always budgeted." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'quants', icon: '🗜️', label: '1. Quants + Stacks', desc: 'Ladder & runtimes' },
           { id: 'sim', icon: '🔬', label: '2. VRAM Sim', desc: 'Fit the GPUs' },

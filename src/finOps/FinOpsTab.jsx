@@ -23,7 +23,7 @@ export default function FinOpsTab() {
         description="Five levers in order: cache removes calls, routing downgrades the rest, filtering cuts calls, compression shrinks prompts, rerank shrinks context. Model the bill before it models you."
         metrics={[{ label: 'Levers', value: '5 Ordered' }, { label: 'Routing', value: '5–10x' }, { label: 'Cache', value: '30–60%' }, { label: 'Typical Save', value: '~70%' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/finops.svg" alt="FinOps" title="Flagship-Only vs Optimized Bill" caption="Same 500k calls: $11k → $3k via cache + routing + filtering." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="frontiers_production" src="/assets/finops.svg" alt="FinOps" title="Flagship-Only vs Optimized Bill" caption="Same 500k calls: $11k → $3k via cache + routing + filtering." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'levers', icon: '💸', label: '1. Cost Levers', desc: '5 in apply-order' },
           { id: 'sim', icon: '🔬', label: '2. Bill Simulator', desc: 'Monthly math live' },

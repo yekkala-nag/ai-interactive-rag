@@ -33,7 +33,7 @@ export default function PromptDependencyGraphTab() {
       />
       <Container size="wide">
         <div style={{ marginBottom: 'var(--ds-space-6)' }}>
-          <DiagramImage src="/assets/prompt_dependency_graph.svg" alt="Prompt dependency blast radius" title="Reachable vs Candidate + Sharing Curve" caption="Top: base-policy/refunds edit splits downstream into candidate (orange), reachable-not-candidate (gray), not-reachable (green). Bottom: narrowing collapses as sharing → 100%." background="#090d16" maxWidth={1100} />
+          <DiagramImage moduleId="foundations" src="/assets/prompt_dependency_graph.svg" alt="Prompt dependency blast radius" title="Reachable vs Candidate + Sharing Curve" caption="Top: base-policy/refunds edit splits downstream into candidate (orange), reachable-not-candidate (gray), not-reachable (green). Bottom: narrowing collapses as sharing → 100%." background="#090d16" maxWidth={1100} />
         </div>
 
         <div style={{ display: 'flex', gap: 'var(--ds-space-2)', marginBottom: 'var(--ds-space-6)', background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-2)', borderRadius: 'var(--ds-radius-lg)', border: '1px solid var(--ds-color-border-subtle)', overflowX: 'auto' }}>

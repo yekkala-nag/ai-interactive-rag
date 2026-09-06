@@ -22,7 +22,7 @@ export default function VectorDBOpsTab() {
         description="RAM math before index choice: vectors × dim × 4 bytes × index multiplier. HNSW by default, IVF at 1–10M, PQ past 100M — and recall@k measured on your filtered queries, never assumed."
         metrics={[{ label: 'HNSW Mult', value: '1.35x RAM' }, { label: 'PQ Mult', value: '0.15x RAM' }, { label: '5M×768', value: '~20 GB' }, { label: 'Recall', value: 'Measure It' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/vector_db_ops.svg" alt="Vector DB ops" title="Index Ladder + RAM Math" caption="Flat → IVF → HNSW → PQ by scale; stores by constraint; filters benchmarked, not assumed." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="data_platform" src="/assets/vector_db_ops.svg" alt="Vector DB ops" title="Index Ladder + RAM Math" caption="Flat → IVF → HNSW → PQ by scale; stores by constraint; filters benchmarked, not assumed." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'index', icon: '🗜️', label: '1. Indexes + Stores', desc: 'Ladder & trade-offs' },
           { id: 'sim', icon: '🔬', label: '2. Sizing Sim', desc: 'GB + guidance' },

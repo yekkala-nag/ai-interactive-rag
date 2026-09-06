@@ -22,7 +22,7 @@ export default function AgentEvalsTab() {
         description="Single-run pass rates lie: p=0.8 becomes 0.51 at k=3. Four attacks probe injection, exfiltration, drift and jailbreak. Ship needs consistency AND hardness."
         metrics={[{ label: 'Consistency', value: 'pass^k' }, { label: 'Attacks', value: '4-Vector Battery' }, { label: 'Ship', value: 'k≥0.7 + s≥0.9' }, { label: 'Cost Lens', value: '$/Success' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/agent_evals.svg" alt="Agent evals" title="Task Battery + Red-Team → Ship/Gate/Rebuild" caption="pass^k punishes flakiness; the battery punishes porosity." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="agents_frameworks" src="/assets/agent_evals.svg" alt="Agent evals" title="Task Battery + Red-Team → Ship/Gate/Rebuild" caption="pass^k punishes flakiness; the battery punishes porosity." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'tasks', icon: '🧪', label: '1. Tasks + Attacks', desc: 'Battery & catalog' },
           { id: 'sim', icon: '🔬', label: '2. Ship-Gate Sim', desc: 'p × k × attacks' },

@@ -89,6 +89,22 @@ export function isMastered(tabId) {
   return e.legacy === true || getMasteryScore(tabId) >= MASTERED_AT;
 }
 
+/**
+ * Proven = earned through an exit check (not a migrated claim).
+ * Claimed = legacy v1 toggle never re-proven. The UI shows claimed
+ * distinctly (amber, hollow) so earned and asserted progress can't
+ * be confused. Proving (any exit check) converts claimed → proven.
+ */
+export function isProven(tabId) {
+  const e = getEvidence(tabId);
+  return e.legacy !== true && getMasteryScore(tabId) >= MASTERED_AT;
+}
+
+export function isClaimed(tabId) {
+  const e = getEvidence(tabId);
+  return e.legacy === true && (e.quizBest || 0) === 0;
+}
+
 export function recordVisit(tabId) {
   if (!tabId || typeof window === 'undefined') return;
   const store = load();

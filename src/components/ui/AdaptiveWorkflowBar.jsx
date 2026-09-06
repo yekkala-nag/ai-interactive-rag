@@ -14,11 +14,11 @@ import {
   getCurrentTrackId,
   getTrackById,
   getTrackProgress,
-  getPreviousTopic,
-  getNextTopic,
   subscribeToAdaptiveProgress
 } from '../../services/adaptiveLearning.js';
-import { getMasteryScore, isMastered } from '../../services/mastery.js';
+import { getTabById } from '../../registry/tabsRegistry.js';
+import { getPrereqIds } from '../../registry/curriculum.js';
+import { getMasteryScore, isMastered, isProven, isClaimed } from '../../services/mastery.js';
 import { hasExitCheck } from '../../registry/exitChecks.js';
 import { ExitCheck } from './ExitCheck.jsx';
 
@@ -43,10 +43,23 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
   }, [activeTab]);
 
   const activeTrack = getTrackById(trackId);
-  const prevTopicInfo = getPreviousTopic(activeTab, trackId);
-  const nextTopicInfo = getNextTopic(activeTab, trackId);
+  // Prerequisites live on the page now (not in nav tooltips): unmet ones
+  // render as navigable chips below. In-child prev/next moved to the TopBar.
+  const unmetPrereqs = getPrereqIds(activeTab)
+    .map(id => getTabById(id))
+    .filter(t => t && !isMastered(t.id));
   const proven = isMastered(activeTab);
+  const earned = isProven(activeTab);
+  const claimed = isClaimed(activeTab);
   const checkAvailable = hasExitCheck(activeTab);
+  // Claimed (migrated toggle, never proven) renders amber + hollow:
+  // asserted progress must never look identical to earned progress.
+  const masteryTone = earned ? '#10b981' : claimed ? '#F5A623' : 'var(--ds-color-text-secondary)';
+  const masteryLabel = earned
+    ? `Mastered · ${mastery}`
+    : claimed
+      ? 'Claimed · prove it'
+      : checkAvailable ? `Prove it · ${mastery}` : `Visited · ${mastery}`;
 
   const isOverview = activeTab === 'overview';
 
@@ -104,16 +117,6 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
           opacity: 0.4;
           cursor: not-allowed;
         }
-        .adaptive-nav-next {
-          background: linear-gradient(135deg, ${activeTrack.color || '#2563eb'}, #4f46e5);
-          color: #ffffff;
-          border: none;
-          box-shadow: 0 4px 14px ${activeTrack.color ? activeTrack.color + '40' : 'rgba(37, 99, 235, 0.3)'};
-        }
-        .adaptive-nav-next:hover:not(:disabled) {
-          background: linear-gradient(135deg, ${activeTrack.color || '#2563eb'}, #4338ca);
-          box-shadow: 0 6px 20px ${activeTrack.color ? activeTrack.color + '60' : 'rgba(37, 99, 235, 0.45)'};
-        }
         .adaptive-center-panel {
           display: flex;
           align-items: center;
@@ -169,6 +172,14 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span>
             {progress.completed} of {progress.total} topics mastered ({progress.percent}%)
+            {(() => {
+              const claimedCount = (activeTrack.tabs || []).filter(isClaimed).length;
+              return claimedCount > 0 ? (
+                <span title="Migrated checklist claims — pass exit checks to convert to proven" style={{ color: '#F5A623' }}>
+                  {' '}· {claimedCount} claimed
+                </span>
+              ) : null;
+            })()}
           </span>
           <div style={{
             width: '80px',
@@ -189,22 +200,39 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
         </div>
       </div>
 
-      {/* Main Navigation Row */}
-      <div className="adaptive-bar-main">
-        {/* Previous Topic Button */}
-        <button
-          type="button"
-          className="adaptive-nav-btn"
-          disabled={!prevTopicInfo}
-          onClick={() => prevTopicInfo && onSelectTab(prevTopicInfo.tabId)}
-          title={prevTopicInfo ? `Go to ${prevTopicInfo.tab?.label || prevTopicInfo.tabId}` : 'At start of track'}
-        >
-          <span>←</span>
-          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '180px' }}>
-            {prevTopicInfo ? (prevTopicInfo.tab?.label || 'Previous Topic') : 'Beginning'}
-          </span>
-        </button>
+      {/* Prerequisites strip — on-page, only when something is unmet */}
+      {!isOverview && unmetPrereqs.length > 0 && (
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap',
+          padding: '8px 2px 0 2px',
+          fontSize: 'var(--ds-font-size-caption)',
+          color: 'var(--ds-color-text-secondary)'
+        }}>
+          <span style={{ fontWeight: 600, color: '#F5A623' }}>Needs first:</span>
+          {unmetPrereqs.map(t => (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => onSelectTab(t.id)}
+              title={`Study prerequisite: ${t.label}`}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                padding: '3px 10px', borderRadius: '16px',
+                background: 'rgba(245, 166, 35, 0.1)',
+                border: '1px solid rgba(245, 166, 35, 0.4)',
+                color: 'var(--ds-color-text-primary)',
+                fontSize: '0.74rem', cursor: 'pointer'
+              }}
+            >
+              <span>{t.icon}</span>
+              <span>{t.label}</span>
+            </button>
+          ))}
+        </div>
+      )}
 
+      {/* Main Row: prove + hub (prev/next live in the TopBar position bar) */}
+      <div className="adaptive-bar-main" style={{ justifyContent: 'center' }}>
         {/* Center: evidence-based mastery (visit + prove) */}
         <div className="adaptive-center-panel">
           {!isOverview && (
@@ -212,19 +240,21 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
               type="button"
               onClick={() => checkAvailable && setExitOpen(true)}
               className="adaptive-nav-btn"
-              title={checkAvailable ? 'Prove mastery: 3 questions (best score keeps)' : 'Exit check landing soon — visits still count'}
+              title={claimed
+                ? 'Migrated from your old checklist — pass the 3-question check to convert this claim into proven mastery'
+                : checkAvailable ? 'Prove mastery: 3 questions (best score keeps)' : 'Exit check landing soon — visits still count'}
               style={{
-                background: proven ? 'rgba(16, 185, 129, 0.15)' : 'var(--ds-color-bg-canvas)',
-                borderColor: proven ? '#10b981' : 'var(--ds-color-border-default)',
-                color: proven ? '#10b981' : 'var(--ds-color-text-secondary)',
+                background: earned ? 'rgba(16, 185, 129, 0.15)' : claimed ? 'rgba(245, 166, 35, 0.12)' : 'var(--ds-color-bg-canvas)',
+                borderColor: earned ? '#10b981' : claimed ? '#F5A623' : 'var(--ds-color-border-default)',
+                color: masteryTone,
                 fontWeight: proven ? 600 : 500,
                 position: 'relative',
                 cursor: checkAvailable ? 'pointer' : 'default',
                 opacity: checkAvailable ? 1 : 0.75
               }}
             >
-              <span style={{ fontSize: '1.1rem' }}>{proven ? '✓' : '○'}</span>
-              <span>{proven ? `Mastered · ${mastery}` : checkAvailable ? `Prove it · ${mastery}` : `Visited · ${mastery}`}</span>
+              <span style={{ fontSize: '1.1rem' }}>{earned ? '✓' : claimed ? '◇' : '○'}</span>
+              <span>{masteryLabel}</span>
               {showCelebration && (
                 <span style={{
                   position: 'absolute',
@@ -273,20 +303,6 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
             }}
           />
         </div>
-
-        {/* Next Topic Button */}
-        <button
-          type="button"
-          className="adaptive-nav-btn adaptive-nav-next"
-          disabled={!nextTopicInfo}
-          onClick={() => nextTopicInfo && onSelectTab(nextTopicInfo.tabId)}
-          title={nextTopicInfo ? `Next: ${nextTopicInfo.tab?.label || nextTopicInfo.tabId}` : 'All caught up!'}
-        >
-          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }}>
-            {nextTopicInfo?.isCompleted ? '🏆 Track Completed!' : `Next: ${nextTopicInfo?.tab?.label || 'Next Topic'}`}
-          </span>
-          <span>→</span>
-        </button>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export default function MultimodalRAGTab() {
         description="Scans get OCR+layout, tables get grids, charts get DePlot, photos get SigLIP+VQA. Every modality cites geometry — bbox, rect, figure. Captions without verification are hallucinations with coordinates."
         metrics={[{ label: 'Modalities', value: '4' }, { label: 'Vision Line', value: '>30% Share' }, { label: 'Cite Rule', value: 'Geometry' }, { label: 'Chart Path', value: 'DePlot → SQL' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/multimodal_rag.svg" alt="Multimodal RAG" title="Modality Router + Citation Invariant" caption="Per-page routing; vision LLM budgeted past 30%; geometry citations everywhere." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="rag_architecture" src="/assets/multimodal_rag.svg" alt="Multimodal RAG" title="Modality Router + Citation Invariant" caption="Per-page routing; vision LLM budgeted past 30%; geometry citations everywhere." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'modal', icon: '🖼️', label: '1. Modalities + VLMs', desc: '4 paths, 3 models' },
           { id: 'sim', icon: '🔬', label: '2. Router Sim', desc: 'Page mix → pipeline' },

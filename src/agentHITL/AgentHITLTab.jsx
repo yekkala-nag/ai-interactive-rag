@@ -24,7 +24,7 @@ export default function AgentHITLTab() {
         description="A 0–9 risk score picks L1 supervised, L2 bounded, or L3 audited autonomy. Four gates cover every act; audit logs all of them — but audit can't un-send, so pair it with gates."
         metrics={[{ label: 'Score', value: '0–9 Risk Sum' }, { label: 'L1 Line', value: '≥ 6' }, { label: 'L2 Band', value: '3–5' }, { label: 'Audit', value: 'Every Act' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/agent_hitl.svg" alt="HITL autonomy" title="L1/L2/L3 + Four Gates" caption="Risk score routes acts; fatigue defence keeps gates honest; audit is universal." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="agents_frameworks" src="/assets/agent_hitl.svg" alt="HITL autonomy" title="L1/L2/L3 + Four Gates" caption="Risk score routes acts; fatigue defence keeps gates honest; audit is universal." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'gates', icon: '🛂', label: '1. Gates + Ladder', desc: '4 gates, L0–L3' },
           { id: 'sim', icon: '🔬', label: '2. Risk Gate Sim', desc: 'Score → autonomy' },

@@ -106,7 +106,7 @@ export default function RAGChunkingStrategyTab() {
       <Container size="wide">
         {/* DUAL ARCHITECTURAL DIAGRAM CARDS */}
         <Grid columns={{ base: '1fr', lg: '1.2fr 0.8fr' }} gap="var(--ds-space-4)" style={{ marginBottom: 'var(--ds-space-6)' }}>
-          <DiagramImage
+          <DiagramImage moduleId="rag_architecture"
             src="/assets/rag_chunking_strategies.svg"
             alt="RAG Chunking Strategies Decision Matrix and Taxonomy"
             title="Chunking Strategy Decision Matrix & Taxonomy"
@@ -114,7 +114,7 @@ export default function RAGChunkingStrategyTab() {
             background="#090d16"
             maxWidth={800}
           />
-          <DiagramImage
+          <DiagramImage moduleId="rag_architecture"
             src="/assets/rag_late_chunking_workflow.svg"
             alt="Traditional Chunking vs Jina Late Chunking Workflow"
             title="Traditional vs Late Chunking Architecture"

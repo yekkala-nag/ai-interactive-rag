@@ -23,7 +23,7 @@ export default function AgentSandboxTab() {
         description="T0 read-only up to T3 break-glass. Tool output is data, never instruction. Secrets are brokered 5-minute creds the model never sees. Mutations carry idempotency keys."
         metrics={[{ label: 'Default', value: 'T1 Staged' }, { label: 'Egress', value: 'Deny Default' }, { label: 'Secrets', value: 'Brokered 5-min' }, { label: 'Mutations', value: 'Idempotent' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/agent_sandbox.svg" alt="Sandbox tiers" title="T0–T3 + Deputy Defence + Secrets" caption="Escalate tiers with risk; quarantine tool output; broker secrets." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="agents_frameworks" src="/assets/agent_sandbox.svg" alt="Sandbox tiers" title="T0–T3 + Deputy Defence + Secrets" caption="Escalate tiers with risk; quarantine tool output; broker secrets." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'tiers', icon: '🏰', label: '1. Tiers + Tool Risks', desc: 'T0–T3, 5 tool classes' },
           { id: 'sim', icon: '🔬', label: '2. Tier Scorer Sim', desc: 'Tools → tier + controls' },

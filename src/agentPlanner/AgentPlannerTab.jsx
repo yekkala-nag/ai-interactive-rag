@@ -24,7 +24,7 @@ export default function AgentPlannerTab() {
         description="ReAct explores, Plan-Execute parallelises, Reflexion retries, Tree-of-Thoughts votes. The pattern is a cost decision; guardrails (caps, stall detection, external verifiers) are non-negotiable."
         metrics={[{ label: 'Patterns', value: '4' }, { label: 'Step Cap', value: '8–12' }, { label: 'Stall Rule', value: '2 → Replan' }, { label: 'Critic Rule', value: '≠ Actor' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/agent_planner.svg" alt="Planner patterns" title="4 Patterns + Guardrails" caption="Cost grows ReAct → Plan-Execute → Reflexion → ToT. Caps and verifiers bound every loop." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="agents_frameworks" src="/assets/agent_planner.svg" alt="Planner patterns" title="4 Patterns + Guardrails" caption="Cost grows ReAct → Plan-Execute → Reflexion → ToT. Caps and verifiers bound every loop." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'patterns', icon: '🔁', label: '1. Patterns + Guards', desc: 'Traces, costs, failures' },
           { id: 'sim', icon: '🔬', label: '2. Pattern Picker Sim', desc: 'Describe task → pattern' },

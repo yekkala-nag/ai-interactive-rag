@@ -20,7 +20,7 @@ export default function DataPipelineTab() {
         description="Partitions from rate math, lineage from OpenLineage, versions from LakeFS/DVC — and new bytes reach retrieval only through a rag-eval Ship gate on a staging branch."
         metrics={[{ label: 'Partition Rule', value: 'max(rate, consumers)' }, { label: 'Lineage', value: 'Column-Level' }, { label: 'Versions', value: 'LakeFS/DVC' }, { label: 'Promotion', value: 'Ship-Gated' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/data_pipeline.svg" alt="Data pipeline" title="Stream → Lineage → Versioned Promotion" caption="Partition math; audit trail; staging-branch evals before prod merge." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="data_platform" src="/assets/data_pipeline.svg" alt="Data pipeline" title="Stream → Lineage → Versioned Promotion" caption="Partition math; audit trail; staging-branch evals before prod merge." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'stream', icon: '🌊', label: '1. Stream + Lineage', desc: 'Kafka/Flink, catalogs' },
           { id: 'sim', icon: '🔬', label: '2. Partition Sim', desc: 'Rate → partitions' },

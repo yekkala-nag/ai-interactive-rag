@@ -20,7 +20,7 @@ export default function CrossDocJoinsTab() {
         description="prime_annuelle and premium_amount are the same column in different costumes. Harvest columns, propose mappings with confidence, confirm ambiguity by human, join on validity — then SUM works across contracts."
         metrics={[{ label: 'Pipeline', value: '4 Steps' }, { label: 'Auto Line', value: 'conf ≥ 0.85' }, { label: 'Join Key', value: '+ Validity' }, { label: 'Payoff', value: 'Corpus SUM' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/cross_doc_joins.svg" alt="Cross-doc joins" title="EN + FR → Unified Schedule" caption="Confidence-gated mapping; human confirms ambiguity; validity-aware join." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="rag_architecture" src="/assets/cross_doc_joins.svg" alt="Cross-doc joins" title="EN + FR → Unified Schedule" caption="Confidence-gated mapping; human confirms ambiguity; validity-aware join." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'align', icon: '🔗', label: '1. Alignment', desc: 'Steps + mapping table' },
           { id: 'sim', icon: '🔬', label: '2. Unify Sim', desc: 'Approve → SUM' },

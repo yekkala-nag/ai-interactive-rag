@@ -387,6 +387,17 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                                 Launch Pathway →
                               </Button>
                             </div>
+                            <div style={{ textAlign: 'center' }}>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  document.getElementById('adaptive-dashboard-section')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)', textDecoration: 'underline' }}
+                              >
+                                or review your full dashboard below ↓
+                              </button>
+                            </div>
                           </div>
                         );
                       })()}
@@ -410,7 +421,9 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
 
         {/* ============================================================ */}
         {/* SECTION 1.5: ADAPTIVE DASHBOARD — rings, next-best, review */}
+        {/* The single ongoing home for "where next". Diagnostic hands off here. */}
         {/* ============================================================ */}
+        <div id="adaptive-dashboard-section" style={{ scrollMarginTop: '80px' }} />
         <Section variant="bordered">
           <Section.Header>
             <Flex justify="space-between" align="center" wrap gap="sm">
@@ -531,10 +544,10 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
             <Flex justify="space-between" align="center" wrap gap="sm">
               <div>
                 <h2 style={{ fontSize: 'var(--ds-font-size-h2)', marginBottom: 'var(--ds-space-2)' }}>
-                  Curated Adaptive Tracks
+                  Browse All Paths
                 </h2>
                 <p style={{ color: 'var(--ds-color-text-secondary)' }}>
-                  Choose your guided progression track or switch anytime. Completed topics and progress persist across tracks.
+                  Prefer exploring? Every role path is browsable — your dashboard above always knows the next best step. Switch tracks anytime; progress persists.
                 </p>
               </div>
               <div style={{ fontSize: '0.8rem', color: 'var(--ds-color-text-tertiary)' }}>

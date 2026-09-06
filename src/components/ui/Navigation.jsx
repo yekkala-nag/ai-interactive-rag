@@ -17,8 +17,11 @@ import {
   getGroupedTabsForUmbrella,
   getTopicMeta,
   getLevelInfo,
-  getChildLevelSpan
+  getChildLevelSpan,
+  getChildById
 } from '../../registry/curriculum.js';
+import { useModalA11y } from '../../hooks/useModalA11y.js';
+import { isMastered } from '../../services/mastery.js';
 
 // Category Accent Gradient Mapping (Apple-Style Vibrancy)
 const MODULE_ACCENTS = {
@@ -49,12 +52,16 @@ export function Sidebar({
       const t = getCurrentTrackId();
       setTrackId(t);
       setTrackProgress(getTrackProgress(t));
+      setProgTick(x => x + 1);
     };
     refresh();
     return subscribeToAdaptiveProgress(refresh);
   }, []);
 
   const activeTrack = getTrackById(trackId);
+  // Bumped on every progress broadcast (mastery shares the event) so
+  // per-child micro-bars stay fresh without extra subscriptions.
+  void progTick;
 
   const [expandedModules, setExpandedModules] = useState({
     foundations: false,
@@ -455,37 +462,50 @@ export function Sidebar({
                 }}>
                   {getGroupedTabsForUmbrella(moduleId, tabs).map(group => (
                     <div key={group.child ? group.child.id : 'ungrouped'} style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: group.child ? '6px' : 0 }}>
-                      {group.child && (
-                        <div
-                          title={group.child.blurb}
-                          style={{
-                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                            padding: '6px 8px 3px 8px',
-                            fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
-                            color: 'var(--ds-color-text-tertiary)'
-                          }}
-                        >
-                          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                            {group.child.title}
-                          </span>
-                          <span style={{
-                            fontFamily: 'SF Mono, monospace', fontWeight: 600, fontSize: '0.6rem',
-                            background: 'rgba(255, 255, 255, 0.06)',
-                            padding: '0px 6px', borderRadius: '9999px', flexShrink: 0, marginLeft: '6px'
-                          }}>
-                            {getChildLevelSpan(group.child.id, tabs)} · {group.tabs.length}
-                          </span>
-                        </div>
-                      )}
+                      {group.child && (() => {
+                        const provenCount = group.tabs.filter(t => isMastered(t.id)).length;
+                        const pct = group.tabs.length ? Math.round((provenCount / group.tabs.length) * 100) : 0;
+                        return (
+                          <div
+                            title={`${group.child.blurb} — ${provenCount}/${group.tabs.length} proven`}
+                            style={{ padding: '6px 8px 4px 8px' }}
+                          >
+                            <div style={{
+                              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                              fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
+                              color: 'var(--ds-color-text-tertiary)', marginBottom: '3px'
+                            }}>
+                              <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                {group.child.title}
+                              </span>
+                              <span style={{
+                                fontFamily: 'SF Mono, monospace', fontWeight: 600, fontSize: '0.6rem',
+                                background: 'rgba(255, 255, 255, 0.06)',
+                                padding: '0px 6px', borderRadius: '9999px', flexShrink: 0, marginLeft: '6px'
+                              }}>
+                                {getChildLevelSpan(group.child.id, tabs)} · {group.tabs.length}
+                              </span>
+                            </div>
+                            <div style={{ height: '3px', borderRadius: '3px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+                              <div style={{
+                                height: '100%', width: `${pct}%`, borderRadius: '3px',
+                                background: pct === 100 ? '#10b981' : accent.primary,
+                                transition: 'width 0.3s ease'
+                              }} />
+                            </div>
+                          </div>
+                        );
+                      })()}
                       {group.tabs.map(tab => {
                     const meta = getTopicMeta(tab.id);
                     const lvl = getLevelInfo(meta.l);
                     const isActive = activeTab === tab.id;
+                    const showFullBadge = isActive;
                     return (
                       <button
                         key={tab.id}
                         onClick={() => onSelectTab(tab.id)}
-                        title={`${tab.label} — ${lvl.label}${meta.p && meta.p.length ? ` · needs: ${meta.p.join(', ')}` : ''}`}
+                        title={`${tab.label} — ${lvl.label}`}
                         style={{
                           display: 'flex', alignItems: 'center', gap: '8px',
                           padding: '5px 8px',
@@ -522,18 +542,29 @@ export function Sidebar({
                         }}>
                           {tab.label}
                         </span>
-                        <span
-                          title={lvl.label}
-                          style={{
-                            fontSize: '0.58rem', fontWeight: 700, fontFamily: 'SF Mono, monospace',
-                            color: isActive ? '#ffffff' : lvl.color,
-                            background: isActive ? 'rgba(255,255,255,0.25)' : `${lvl.color}1f`,
-                            border: `1px solid ${isActive ? 'rgba(255,255,255,0.4)' : `${lvl.color}55`}`,
-                            padding: '0px 5px', borderRadius: '9999px', flexShrink: 0
-                          }}
-                        >
-                          {lvl.short}
-                        </span>
+                        {showFullBadge ? (
+                          <span
+                            title={lvl.label}
+                            style={{
+                              fontSize: '0.58rem', fontWeight: 700, fontFamily: 'SF Mono, monospace',
+                              color: '#ffffff',
+                              background: 'rgba(255,255,255,0.25)',
+                              border: '1px solid rgba(255,255,255,0.4)',
+                              padding: '0px 5px', borderRadius: '9999px', flexShrink: 0
+                            }}
+                          >
+                            {lvl.short}
+                          </span>
+                        ) : (
+                          <span
+                            title={lvl.label}
+                            aria-hidden="true"
+                            style={{
+                              width: '6px', height: '6px', borderRadius: '50%',
+                              background: lvl.color, opacity: 0.75, flexShrink: 0
+                            }}
+                          />
+                        )}
                         {isActive && (
                           <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'white', flexShrink: 0 }} />
                         )}
@@ -621,14 +652,15 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
 
   const activeTrack = getTrackById(trackId);
 
-  const scrollRef = useRef(null);
-
-  useEffect(() => {
-    const btn = scrollRef.current?.querySelector(`[data-tab-id="${activeTab}"]`);
-    if (btn) {
-      btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-    }
-  }, [activeTab]);
+  // Position-in-child: the single source of "where am I" (replaces sibling pills)
+  const activeMeta = getTopicMeta(activeTab);
+  const activeChild = activeMeta.c ? getChildById(activeMeta.c) : null;
+  const childTabs = activeChild
+    ? getTabsForUmbrella(currentModule.id).filter(t => getTopicMeta(t.id).c === activeChild.id)
+    : [];
+  const childIndex = childTabs.findIndex(t => t.id === activeTab);
+  const prevInChild = childIndex > 0 ? childTabs[childIndex - 1] : null;
+  const nextInChild = childIndex >= 0 && childIndex < childTabs.length - 1 ? childTabs[childIndex + 1] : null;
 
   return (
     <header style={{
@@ -741,15 +773,20 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
           </button>
         </div>
 
-        {/* Right: Counter & Search Trigger */}
+        {/* Right: Position & Search Trigger */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{
-            fontSize: '0.72rem',
-            color: 'var(--ds-color-text-tertiary)',
-            fontFamily: 'SF Mono, monospace',
-            fontWeight: 600,
-          }}>
-            {activeIndex + 1} of {siblingTabs.length}
+          <span
+            title={activeChild ? `${activeChild.title} — ${activeChild.blurb}` : 'All topics in this module'}
+            style={{
+              fontSize: '0.72rem',
+              color: 'var(--ds-color-text-tertiary)',
+              fontFamily: 'SF Mono, monospace',
+              fontWeight: 600,
+            }}
+          >
+            {activeChild && childIndex >= 0
+              ? `${childIndex + 1} of ${childTabs.length} · ${activeChild.title}`
+              : `${activeIndex + 1} of ${siblingTabs.length}`}
           </span>
           <button
             onClick={onSearchOpen}
@@ -771,62 +808,62 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
         </div>
       </div>
 
-      {/* SIBLING TABS — Horizontal Quick Switcher */}
-      <div
-        ref={scrollRef}
-        style={{
-          padding: '6px 12px',
-          display: 'flex', gap: '6px',
-          overflowX: 'auto', scrollSnapType: 'x mandatory',
-          background: 'var(--ds-color-bg-canvas)',
-          scrollbarWidth: 'none',
-          '-ms-overflow-style': 'none',
-        }}
-      >
-        <style jsx>{`
-          div::-webkit-scrollbar { display: none; }
-        `}</style>
-        {siblingTabs.map(tab => {
-          const isActive = tab.id === activeTab;
-          return (
-            <button
-              key={tab.id}
-              data-tab-id={tab.id}
-              onClick={() => onSelectTab(tab.id)}
-              title={tab.label}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '6px',
-                padding: '4px 10px',
-                borderRadius: '16px',
-                background: isActive ? accent.primary : 'var(--ds-color-bg-surface)',
-                color: isActive ? '#ffffff' : 'var(--ds-color-text-secondary)',
-                border: `1px solid ${isActive ? accent.primary : 'var(--ds-color-border-subtle)'}`,
-                fontWeight: isActive ? 700 : 500,
-                fontSize: '0.76rem',
-                cursor: 'pointer', whiteSpace: 'nowrap',
-                scrollSnapAlign: 'center',
-                transition: 'all 0.15s ease',
-                boxShadow: isActive ? `0 2px 8px ${accent.primary}40` : 'none',
-              }}
-              onMouseEnter={e => {
-                if (!isActive) {
-                  e.currentTarget.style.borderColor = accent.primary;
-                  e.currentTarget.style.color = accent.primary;
-                }
-              }}
-              onMouseLeave={e => {
-                if (!isActive) {
-                  e.currentTarget.style.borderColor = 'var(--ds-color-border-subtle)';
-                  e.currentTarget.style.color = 'var(--ds-color-text-secondary)';
-                }
-              }}
-            >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
+      {/* POSITION BAR — prev/next within the child umbrella (replaces sibling pills) */}
+      {activeChild && childIndex >= 0 && (
+        <div
+          style={{
+            padding: '5px 12px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px',
+            flexWrap: 'wrap',
+            background: 'var(--ds-color-bg-canvas)',
+          }}
+        >
+          <button
+            onClick={() => prevInChild && onSelectTab(prevInChild.id)}
+            disabled={!prevInChild}
+            title={prevInChild ? `Previous in ${activeChild.title}: ${prevInChild.label}` : `First in ${activeChild.title}`}
+            aria-label={prevInChild ? `Previous topic: ${prevInChild.label}` : 'First topic in section'}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              padding: '3px 10px', borderRadius: '16px',
+              background: 'transparent',
+              color: prevInChild ? 'var(--ds-color-text-secondary)' : 'var(--ds-color-text-tertiary)',
+              border: '1px solid var(--ds-color-border-subtle)',
+              fontSize: '0.74rem', fontWeight: 500,
+              cursor: prevInChild ? 'pointer' : 'default',
+              opacity: prevInChild ? 1 : 0.5,
+              maxWidth: '42vw', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
+            }}
+          >
+            <span aria-hidden="true">‹</span>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{prevInChild ? prevInChild.label : 'Start'}</span>
+          </button>
+          <span style={{ fontSize: '0.68rem', color: 'var(--ds-color-text-tertiary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {activeChild.title}
+          </span>
+          <button
+            onClick={() => nextInChild && onSelectTab(nextInChild.id)}
+            disabled={!nextInChild}
+            title={nextInChild ? `Next in ${activeChild.title}: ${nextInChild.label}` : `Last in ${activeChild.title} — continue in sidebar`}
+            aria-label={nextInChild ? `Next topic: ${nextInChild.label}` : 'Last topic in section'}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              padding: '3px 10px', borderRadius: '16px',
+              background: nextInChild ? accent.primary : 'transparent',
+              color: nextInChild ? '#ffffff' : 'var(--ds-color-text-tertiary)',
+              border: `1px solid ${nextInChild ? accent.primary : 'var(--ds-color-border-subtle)'}`,
+              fontSize: '0.74rem', fontWeight: nextInChild ? 700 : 500,
+              cursor: nextInChild ? 'pointer' : 'default',
+              opacity: nextInChild ? 1 : 0.5,
+              maxWidth: '42vw', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+              boxShadow: nextInChild ? `0 2px 8px ${accent.primary}40` : 'none'
+            }}
+          >
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{nextInChild ? nextInChild.label : 'End'}</span>
+            <span aria-hidden="true">›</span>
+          </button>
+        </div>
+      )}
     </header>
   );
 }
@@ -838,6 +875,8 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef(null);
+  // Focus trap + return-focus. Escape stays with the palette's own handler below.
+  const { ref: dialogRef } = useModalA11y(isOpen, onClose, { dismissable: false, autofocus: false });
 
   const queryStr = (query || '').trim().toLowerCase();
   const filteredTabs = queryStr
@@ -876,6 +915,8 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
 
   return (
     <div
+      ref={dialogRef}
+      tabIndex={-1}
       className="command-palette"
       style={{
         position: 'fixed', top: '15%', left: '50%', transform: 'translateX(-50%)',

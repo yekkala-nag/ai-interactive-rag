@@ -20,7 +20,7 @@ export default function AIObservabilityTab() {
         description="Traces carry prompts, spans carry scores, versions pin every span. 100% of errors, 5% of success, all of canary — thin sampling is incident blindness."
         metrics={[{ label: 'Errors', value: '100% Kept' }, { label: 'Success', value: '5% Sampled' }, { label: 'Canary', value: '100% Kept' }, { label: 'Versions', value: 'Pinned' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/ai_observability.svg" alt="AI observability" title="Signals + Platforms + Sampling" caption="Scores ride spans; platforms picked by data gravity; sampling trades GB for lag." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="frontiers_production" src="/assets/ai_observability.svg" alt="AI observability" title="Signals + Platforms + Sampling" caption="Scores ride spans; platforms picked by data gravity; sampling trades GB for lag." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'signals', icon: '📡', label: '1. Signals + Platforms', desc: 'What to capture, where' },
           { id: 'sim', icon: '🔬', label: '2. Sampling Sim', desc: 'GB vs detection lag' },

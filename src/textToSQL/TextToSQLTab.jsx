@@ -23,7 +23,7 @@ export default function TextToSQLTab() {
         description="Link schema, generate SELECT-only SQL behind four guards, execute with one repair, interpret with SQL+hash citation. Joins carry validity predicates; grain warnings are mandatory."
         metrics={[{ label: 'Loop', value: '4 Steps' }, { label: 'Guards', value: '4 (AST)' }, { label: 'Repairs', value: '1 Then Escalate' }, { label: 'Cite', value: 'SQL + Hash' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/text_to_sql.svg" alt="Text to SQL" title="Link → Guard → Execute → Interpret" caption="Guards parse AST, not vibes; joins never cross versions silently." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="rag_architecture" src="/assets/text_to_sql.svg" alt="Text to SQL" title="Link → Guard → Execute → Interpret" caption="Guards parse AST, not vibes; joins never cross versions silently." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'loop', icon: '🔗', label: '1. Loop + Guards', desc: '4 steps, 4 guards' },
           { id: 'sim', icon: '🔬', label: '2. SQL Draft Sim', desc: 'Intent → guarded SQL' },

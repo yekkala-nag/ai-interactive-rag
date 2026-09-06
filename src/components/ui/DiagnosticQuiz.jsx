@@ -6,6 +6,7 @@
  */
 import React, { useMemo, useState } from 'react';
 import { QUIZ_QUESTIONS, scoreQuiz } from '../../registry/diagnostics.js';
+import { useModalA11y } from '../../hooks/useModalA11y.js';
 import { UMBRELLA_TOPICS, getTabById } from '../../registry/tabsRegistry.js';
 import { LEVELS } from '../../registry/curriculum.js';
 import {
@@ -56,9 +57,13 @@ export function DiagnosticQuiz({ open, onClose, initialGoal = 'foundations', onC
   const [answers, setAnswers] = useState({});
   const [revealed, setRevealed] = useState(false);
   const [result, setResult] = useState(null);
+  const total = session.length;
+  // Backdrop/Escape only dismiss on the goal screen or result screen —
+  // never mid-quiz (answers would be lost).
+  const dismissable = step === 0 || step === total + 1;
+  const { ref: dialogRef, onBackdrop } = useModalA11y(open, onClose, { dismissable });
 
   if (!open) return null;
-  const total = session.length;
 
   const reset = () => {
     setStep(0); setAnswers({}); setRevealed(false); setResult(null);
@@ -93,7 +98,7 @@ export function DiagnosticQuiz({ open, onClose, initialGoal = 'foundations', onC
 
   return (
     <div
-      onClick={onClose}
+      onClick={onBackdrop}
       style={{
         position: 'fixed', inset: 0, zIndex: 99999,
         background: 'rgba(10,12,18,0.7)', backdropFilter: 'blur(6px)',
@@ -101,6 +106,11 @@ export function DiagnosticQuiz({ open, onClose, initialGoal = 'foundations', onC
       }}
     >
       <div
+        ref={dialogRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Knowledge placement quiz"
         onClick={e => e.stopPropagation()}
         style={{
           width: '100%', maxWidth: '640px', maxHeight: '88vh', overflowY: 'auto',
@@ -162,7 +172,7 @@ export function DiagnosticQuiz({ open, onClose, initialGoal = 'foundations', onC
                 <span style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }}>
                   Question {step} of {total} · {umbrellaName(q.umbrella)} · L{q.level}
                 </span>
-                <span style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }}>{Math.round((step / total) * 100)}%</span>
+                <span style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }} title="Finish or use Back — closing now would lose answers">{Math.round((step / total) * 100)}% 🔒</span>
               </div>
               <div style={{ height: '4px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', marginBottom: '16px' }}>
                 <div style={{ height: '100%', width: `${(step / total) * 100}%`, borderRadius: '4px', background: 'var(--ds-color-module-foundations-primary)', transition: 'width 0.2s' }} />

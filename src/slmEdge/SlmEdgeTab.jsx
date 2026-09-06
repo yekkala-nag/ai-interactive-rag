@@ -23,7 +23,7 @@ export default function SlmEdgeTab() {
         description="Distill to 10% size at ~90% quality, quantize to GGUF, pass the server golden set, then ship. Local SLM routes and classifies; cloud verifies. Silent downgrades are incidents."
         metrics={[{ label: 'Distill Keeps', value: '~90% @ 10%' }, { label: 'Fit Rule', value: '≤ 60% RAM' }, { label: 'Pattern', value: 'Local + Cloud' }, { label: 'Gate', value: 'Parity Evals' }]} />
       <Container size="wide">
-        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage src="/assets/slm_edge.svg" alt="Edge SLMs" title="Distill → Quantize → Parity-Gate → Fit" caption="Same golden set, smaller body; local/cloud split by latency and privacy." background="#090d16" maxWidth={1100} /></div>
+        <div style={{ marginBottom: 'var(--ds-space-6)' }}><DiagramImage moduleId="frontiers_production" src="/assets/slm_edge.svg" alt="Edge SLMs" title="Distill → Quantize → Parity-Gate → Fit" caption="Same golden set, smaller body; local/cloud split by latency and privacy." background="#090d16" maxWidth={1100} /></div>
         <div style={NAV}>{[
           { id: 'distill', icon: '🧪', label: '1. Distill + SLMs', desc: 'Methods & models' },
           { id: 'sim', icon: '🔬', label: '2. Fit Sim', desc: 'Device budget' },
