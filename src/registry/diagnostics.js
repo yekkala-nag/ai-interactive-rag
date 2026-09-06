@@ -16,11 +16,11 @@ export const ROLE_PATHS = {
     level: 'Beginner to Intermediate',
     icon: '🌱', color: '#0D9488', badgeVariant: 'module',
     goal: 'foundations',
-    // Declared pedagogy (not a hidden splice): firstaiapp opens because its
-    // first section teaches the messenger→cloud model inline with
-    // anti-pattern pairs. Glossary is a reference — it supports lesson 2,
-    // it can never be lesson 1.
-    start: 'firstaiapp',
+    // Declared pedagogy (not a hidden splice): glossary opens because the
+    // tab is lesson-shaped, not a raw dictionary — leveled terms plus a
+    // built-in self-quiz give beginners anchor vocabulary (token, prompt,
+    // temperature, RAG…) before the first build uses those very words.
+    start: 'glossary',
     children: [
       { child: 'fnd_start', max: 1 },
       { child: 'fnd_internals', max: 1 },
@@ -97,7 +97,7 @@ export const ROLE_PATHS = {
     level: 'Comprehensive',
     icon: '👑', color: '#d97706', badgeVariant: 'warning',
     goal: 'all',
-    start: 'firstaiapp',
+    start: 'glossary',
     children: null // null = every child umbrella, all levels
   }
 };
@@ -120,7 +120,7 @@ export const JOURNEY_LOOPS = {
     description: 'Concept → immediate use, pillar by pillar. Ends with something working at every stop.',
     level: 'Start here',
     icon: '🥾', color: '#10b981', badgeVariant: 'success',
-    order: ['firstaiapp', 'promptfundamentals', 'tokenization', 'llmsampling', 'selfattention', 'archconcepts', 'promptmgmt', 'glossary', 'rag', 'pipeline', 'ragchunking', 'qparseloop', 'filtering', 'ctxeng', 'vague', 'memeng', 'contextlimits', 'pandasdataframes', 'modernioformats', 'linearregression', 'classicalml', 'activelearn', 'fiveassets', 'redesign', 'projectprepframework', 'agentsastools', 'agenttasks', 'codingagentsnonprog', 'datahumanization', 'aiusecases', 'tokenbill', 'practices', 'powerfeatures', 'goaltracker']
+    order: ['glossary', 'firstaiapp', 'promptfundamentals', 'tokenization', 'llmsampling', 'selfattention', 'archconcepts', 'promptmgmt', 'rag', 'pipeline', 'ragchunking', 'qparseloop', 'filtering', 'ctxeng', 'vague', 'memeng', 'contextlimits', 'pandasdataframes', 'modernioformats', 'linearregression', 'classicalml', 'activelearn', 'fiveassets', 'redesign', 'projectprepframework', 'agentsastools', 'agenttasks', 'codingagentsnonprog', 'datahumanization', 'aiusecases', 'tokenbill', 'practices', 'powerfeatures', 'goaltracker']
   },
   journey_loop2: {
     trackTitle: 'Loop 2 · Practitioner',
