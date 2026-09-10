@@ -16,7 +16,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "glossary", "reinforcementlearning", "aimoralagency", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "promptfundamentals", "llmsampling", "selfattention", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
+    tabs: ["overview", "airoadmap", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
   },
   {
     id: "rag_architecture",
@@ -24,7 +24,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
-    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "ragchunking"]
+    tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "agentfanout", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "ragchunking"]
   },
   {
     id: "context_memory",
@@ -32,7 +32,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🧠",
     color: "#9b7fd4",
     description: "Context curation, measuring quality, company brain & context graph",
-    tabs: ["ctxeng", "ctxmeasure", "memhierarchy", "longcontext", "vague", "hallucination", "contextgraph", "companybrain", "memeng", "contextlimits"]
+    tabs: ["ctxeng", "ctxmeasure", "memhierarchy", "longcontext", "vague", "hallucination", "contextgraph", "companybrain", "validitylayer", "memeng", "contextlimits"]
   },
   {
     id: "agents_frameworks",
@@ -40,7 +40,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🤖",
     color: "#c4572a",
     description: "ReAct loops, multi-agent orchestration, CLI agents, LangChain & LangGraph",
-    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "claudecode100", "typedagentgate", "agentpairprogramming", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
+    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
   },
   {
     id: "data_platform",
@@ -48,7 +48,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🏗️",
     color: "#3b82f6",
     description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "datahumanization", "llmfinetuning"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "datahumanization", "llmfinetuning"]
   },
   {
     id: "frontiers_production",
@@ -56,7 +56,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
-    tabs: ["firstaiapp", "enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "finops", "observability", "slmedge", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
+    tabs: ["firstaiapp", "enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "enterprisegrade", "finops", "observability", "slmedge", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "modelvalidation", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
@@ -70,6 +70,15 @@ export const TABS_REGISTRY = [
     icon: "🗺️",
     keywords: ["overview", "introduction", "dashboard"],
     component: lazy(() => import("../tabs/OverviewTabNew.jsx").then(m => ({ default: m.OverviewTab })))
+  },
+  {
+    id: "airoadmap",
+    label: "AI Engineer Roadmap",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🧭",
+    keywords: ["ai engineer roadmap", "roadmap.sh", "learning path", "stages", "week planner", "home", "start here", "career path"],
+    component: lazy(() => import("../aiRoadmap/AIRoadmapTab.jsx"))
   },
   {
     id: "glossary",
@@ -97,6 +106,15 @@ export const TABS_REGISTRY = [
     icon: "🎮",
     keywords: ["reinforcement learning", "rl", "baselines", "markov decision process", "mdp", "ppo", "dqn", "dynamic pricing", "consumer rl", "next-best-action", "ltv", "wouter van heeswijk", "raj", "gymnasium", "towards data science"],
     component: lazy(() => import("../reinforcementLearning/ReinforcementLearningTab.jsx"))
+  },
+  {
+    id: "trpo2grpo",
+    label: "RL Training: TRPO → PPO → GRPO",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🎓",
+    keywords: ["trpo", "ppo", "grpo", "rlhf", "reward model", "value model", "deepseek", "kl divergence", "policy gradient", "maxime wolf", "towards data science"],
+    component: lazy(() => import("../rlTraining/RLTrainingTab.jsx"))
   },
   {
     id: "aimoralagency",
@@ -169,6 +187,15 @@ export const TABS_REGISTRY = [
     icon: "👁️",
     keywords: ["self-attention", "transformer", "query key value", "qkv", "scaled dot product", "mha", "gqa", "mqa", "mla", "multi-head attention", "grouped query attention", "rope", "rotary embeddings", "attention weights", "attention heatmap"],
     component: lazy(() => import("../selfAttention/SelfAttentionTab.jsx"))
+  },
+  {
+    id: "posencoding",
+    label: "Positional Encoding for Time Series",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "⏱️",
+    keywords: ["positional encoding", "sinusoidal", "time series", "self-attention order", "qkv", "rope", "lags", "gurjinder kaur", "towards data science"],
+    component: lazy(() => import("../posEncoding/PosEncodingTab.jsx"))
   },
   {
     id: "archconcepts",
@@ -351,6 +378,15 @@ export const TABS_REGISTRY = [
     icon: "📚",
     keywords: ["four pdfs", "benchmarks", "evaluation"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.FourPDFsTab })))
+  },
+  {
+    id: "agentfanout",
+    label: "Retrieval Under Agent Fan-Out",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🌊",
+    keywords: ["agent fan-out", "retrieval load", "latency stacking", "stale context", "relevance drift", "unified retrieval", "vespa", "concurrency"],
+    component: lazy(() => import("../agentFanout/AgentFanoutTab.jsx"))
   },
   {
     id: "hallucbricks",
@@ -562,6 +598,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.CompanyBrainTab })))
   },
   {
+    id: "validitylayer",
+    label: "Validity Layer: What's Still True",
+    umbrellaId: "context_memory",
+    category: "Context & Memory",
+    icon: "🧭",
+    keywords: ["validity layer", "stale context", "active stale superseded unknown", "pre-failure work", "baseline vs aware", "bitemporal", "emmimal alexander", "towards data science"],
+    component: lazy(() => import("../validityLayer/ValidityLayerTab.jsx"))
+  },
+  {
     id: "memeng",
     label: "Memory Engineering",
     umbrellaId: "context_memory",
@@ -672,6 +717,33 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../agentEvals/AgentEvalsTab.jsx"))
   },
   {
+    id: "handoffwatch",
+    label: "Handoff Watchdogs: Seam Evals",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "👻",
+    keywords: ["handoff watchdog", "intermediate state eval", "silent failure", "empty 200", "plausible but wrong", "confidence floor", "benjamin nweke", "towards data science"],
+    component: lazy(() => import("../handoffWatch/HandoffWatchTab.jsx"))
+  },
+  {
+    id: "verifiedpipes",
+    label: "Verified Pipelines vs Human Review",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🛡️",
+    keywords: ["verified pipelines", "human review", "policy as code", "ai code bugs", "dora", "review theater", "octopus", "farcic"],
+    component: lazy(() => import("../verifiedPipes/VerifiedPipesTab.jsx"))
+  },
+  {
+    id: "codingevals",
+    label: "Coding-Agent Evals: Evaluate the Work",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "⚖️",
+    keywords: ["coding agents", "executable contracts", "six layers", "trial statistics", "swe-bench", "terminal-bench", "hidden tests", "pete hampton", "anthropic evals"],
+    component: lazy(() => import("../codingEvals/CodingEvalsTab.jsx"))
+  },
+  {
     id: "claudecode100",
     label: "Solving 100+ Tasks with Claude Code",
     umbrellaId: "agents_frameworks",
@@ -697,6 +769,15 @@ export const TABS_REGISTRY = [
     icon: "🤝",
     keywords: ["ai coding agents", "pair programming", "sara metwalli", "task decomposition", "test-driven", "context injection", "vibe coding", "human in the loop", "towards data science"],
     component: lazy(() => import("../agentPairProgramming/AgentPairTab.jsx"))
+  },
+  {
+    id: "vibecode",
+    label: "Vibe-Coding Unit Economics",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🎸",
+    keywords: ["vibe coding", "unit economics", "ukuflow", "minimum viable offer", "static first", "thuwarakesh", "towards data science"],
+    component: lazy(() => import("../vibeCode/VibeCodeTab.jsx"))
   },
   {
     id: "agentsastools",
@@ -944,6 +1025,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../pythonEngineering/PythonEngineeringTab.jsx"))
   },
   {
+    id: "functools",
+    label: "functools Power Tricks",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🐍",
+    keywords: ["functools", "total_ordering", "partial", "singledispatch", "lru_cache", "decorators", "python tricks", "christopher tao", "towards data science"],
+    component: lazy(() => import("../functools/FunctoolsTab.jsx"))
+  },
+  {
     id: "activelearn",
     label: "Active Learning",
     umbrellaId: "data_platform",
@@ -1126,6 +1216,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../llmEvals/LLMEvalLayerTab.jsx"))
   },
   {
+    id: "modelvalidation",
+    label: "GenAI Validation Playbook (Banking)",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "🏛️",
+    keywords: ["model validation", "sr 11-7", "banking", "risk tiering", "conceptual soundness", "outcomes analysis", "monitoring", "judge the judge", "robustness", "ananya", "towards data science"],
+    component: lazy(() => import("../modelValidation/ModelValidationTab.jsx"))
+  },
+  {
     id: "reasoningbench",
     label: "LLM Reasoning & GSM-Symbolic",
     umbrellaId: "frontiers_production",
@@ -1205,6 +1304,15 @@ export const TABS_REGISTRY = [
     icon: "🏛️",
     keywords: ["enterprise ai", "ai architecture", "ai operations", "token limits", "token governance", "ai gateway", "semantic cache", "model routing", "map reduce", "reranker", "token compression", "finops", "lost in the middle"],
     component: lazy(() => import("../enterpriseAIOps/EnterpriseAIOpsTab.jsx"))
+  },
+  {
+    id: "enterprisegrade",
+    label: "Enterprise-Grade AI: End-to-End",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "🏭",
+    keywords: ["enterprise grade", "end to end", "mlops", "drift", "bias", "crisp-dm", "readiness", "buy-in", "caroline zaborowski", "towards data science"],
+    component: lazy(() => import("../enterpriseGrade/EnterpriseGradeTab.jsx"))
   },
   {
     id: "productionragops",

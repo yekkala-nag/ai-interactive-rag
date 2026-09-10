@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 410" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+<defs><linearGradient id="cebg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#090d16"/><stop offset="100%" stop-color="#0e1a2e"/></linearGradient>
+<linearGradient id="cegrn" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#10b981"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+<linearGradient id="ceblu" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs>
+<rect width="1200" height="410" fill="url(#cebg)" rx="12"/>
+<text x="40" y="48" fill="#fff" font-size="24" font-weight="800">Agent ≠ model — evaluate the whole system, grade the work</text>
+<text x="40" y="72" fill="#94a3b8" font-size="13">Model + harness + tools + repo + perms + env + loop. Scores measure the combo, never the model alone.</text>
+<rect x="40" y="100" width="1120" height="70" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2"/>
+<text x="60" y="126" fill="#38bdf8" font-size="12" font-weight="800">Executable contracts (many valid patches pass): builds · tests · hidden tests · APIs · migrations · perf · scope · security</text>
+<text x="60" y="148" fill="#e2e8f0" font-size="11">Behavior over reference diffs. Harder to bluff than prose about what the agent believes it did.</text>
+<g font-size="11" font-weight="700">
+<rect x="40" y="190" width="170" height="56" rx="8" fill="url(#cegrn)"/><text x="52" y="212" fill="#fff">1 Outcome</text><text x="52" y="230" fill="#d1fae5" font-weight="400">contract pass?</text>
+<rect x="222" y="190" width="170" height="56" rx="8" fill="#0f172a" stroke="#475569"/><text x="234" y="212" fill="#cbd5e1">2 Quality</text><text x="234" y="230" fill="#94a3b8" font-weight="400">mergeable?</text>
+<rect x="404" y="190" width="170" height="56" rx="8" fill="#0f172a" stroke="#475569"/><text x="416" y="212" fill="#cbd5e1">3 Trajectory</text><text x="416" y="230" fill="#94a3b8" font-weight="400">how? waste?</text>
+<rect x="586" y="190" width="170" height="56" rx="8" fill="#0f172a" stroke="#475569"/><text x="598" y="212" fill="#cbd5e1">4 Intervention</text><text x="598" y="230" fill="#94a3b8" font-weight="400">help needed?</text>
+<rect x="768" y="190" width="170" height="56" rx="8" fill="#0f172a" stroke="#475569"/><text x="780" y="212" fill="#cbd5e1">5 Economics</text><text x="780" y="230" fill="#94a3b8" font-weight="400">$/accepted?</text>
+<rect x="950" y="190" width="170" height="56" rx="8" fill="#0f172a" stroke="#475569"/><text x="962" y="212" fill="#cbd5e1">6 Production</text><text x="962" y="230" fill="#94a3b8" font-weight="400">after merge?</text>
+</g>
+<rect x="40" y="266" width="560" height="60" rx="10" fill="url(#ceblu)"/>
+<text x="60" y="290" fill="#fff" font-size="12" font-weight="800">Non-determinism = statistics: N runs, fixed budget, distributions + CIs</text>
+<text x="60" y="312" fill="#e0f2fe" font-size="11">"How often, within budget, without unacceptable failure?" — never "can it?"</text>
+<rect x="620" y="266" width="540" height="60" rx="10" fill="#0f172a" stroke="#c9a84c"/>
+<text x="640" y="290" fill="#c9a84c" font-size="12" font-weight="800">Open-ended: PO simulator + hidden contract</text>
+<text x="640" y="312" fill="#e2e8f0" font-size="11">Reward questions · punish confident wrong assumptions.</text>
+<rect x="40" y="340" width="1120" height="30" rx="8" fill="#0f172a" stroke="#334155"/>
+<text x="60" y="358" fill="#64748b" font-size="11">Benchmarks: SWE-bench Verified · Terminal-Bench · ICAE · Dialogue SWE-Bench · Anthropic YAML graders.</text>
+</svg>

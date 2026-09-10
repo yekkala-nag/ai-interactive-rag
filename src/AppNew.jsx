@@ -16,6 +16,7 @@ import { s as legacyStyles } from './styles/legacyStyles.js';
 // Lazy-load all tab components
 const TabComponents = {
   overview: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.OverviewTabNew }))),
+  airoadmap: lazy(() => import('./aiRoadmap/AIRoadmapTab.jsx')),
   glossary: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIGlossaryTab }))),
   firstaiapp: lazy(() => import('./firstAIApp/FirstAIAppTab.jsx')),
   modellandscape: lazy(() => import('./modelLandscape/ModelLandscapeTab.jsx')),
@@ -27,6 +28,8 @@ const TabComponents = {
   dialoguelamda: lazy(() => import('./dialogueLaMDA/DialogueLaMDATab.jsx')),
   llmsampling: lazy(() => import('./llmSampling/LLMSamplingTab.jsx')),
   selfattention: lazy(() => import('./selfAttention/SelfAttentionTab.jsx')),
+  posencoding: lazy(() => import('./posEncoding/PosEncodingTab.jsx')),
+  trpo2grpo: lazy(() => import('./rlTraining/RLTrainingTab.jsx')),
   archconcepts: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ArchConceptsTab }))),
   workflows: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ClaudeWorkflowsTab }))),
   unhobbling: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.UnhobblingTab }))),
@@ -56,6 +59,7 @@ const TabComponents = {
   interviewprep: lazy(() => import('./tabs/InterviewPrepTab.jsx')),
   rowlevelrag: lazy(() => import('./rowLevelRAG/RowLevelRAGTab.jsx')),
   tablegridrag: lazy(() => import('./tableGridRAG/TableGridRAGTab.jsx')),
+  agentfanout: lazy(() => import('./agentFanout/AgentFanoutTab.jsx')),
   rerankers: lazy(() => import('./rerankers/RerankersTab.jsx')),
   rageval: lazy(() => import('./ragEvals/RagEvalTab.jsx')),
   multilingualrag: lazy(() => import('./multilingualRAG/MultilingualRAGTab.jsx')),
@@ -74,6 +78,7 @@ const TabComponents = {
   hallucination: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HallucinationLoopTab }))),
   memeng: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.MemoryEngineeringTab }))),
   contextlimits: lazy(() => import('./contextLimits/ContextLimitsTab.jsx')),
+  validitylayer: lazy(() => import('./validityLayer/ValidityLayerTab.jsx')),
   memhierarchy: lazy(() => import('./memHierarchy/MemHierarchyTab.jsx')),
   longcontext: lazy(() => import('./longContext/LongContextTab.jsx')),
 
@@ -88,6 +93,10 @@ const TabComponents = {
   agenta2a: lazy(() => import('./agentA2A/AgentA2ATab.jsx')),
   agentsandbox: lazy(() => import('./agentSandbox/AgentSandboxTab.jsx')),
   agentevals: lazy(() => import('./agentEvals/AgentEvalsTab.jsx')),
+  handoffwatch: lazy(() => import('./handoffWatch/HandoffWatchTab.jsx')),
+  verifiedpipes: lazy(() => import('./verifiedPipes/VerifiedPipesTab.jsx')),
+  codingevals: lazy(() => import('./codingEvals/CodingEvalsTab.jsx')),
+  vibecode: lazy(() => import('./vibeCode/VibeCodeTab.jsx')),
   fiveassets: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.FiveAssetsTab }))),
   multiagent: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.MultiAgentTab }))),
   agentsastools: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentsAsToolsTab }))),
@@ -116,6 +125,7 @@ const TabComponents = {
   modernioformats: lazy(() => import('./modernIOFormats/ModernIOTab.jsx')),
   pythonprofiling: lazy(() => import('./pythonProfiling/PythonProfilingTab.jsx')),
   pythonengineering: lazy(() => import('./pythonEngineering/PythonEngineeringTab.jsx')),
+  functools: lazy(() => import('./functools/FunctoolsTab.jsx')),
   activelearn: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ActiveLearningTab }))),
   goaltracker: lazy(() => import('./goalTracker/GoalTrackerTab.jsx')),
   vaes: lazy(() => import('./vaes/VAETab.jsx')),
@@ -138,11 +148,13 @@ const TabComponents = {
   practices: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PracticesTab }))),
   tokenbill: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.TokenBillTab }))),
   llmevals: lazy(() => import('./llmEvals/LLMEvalLayerTab.jsx')),
+  modelvalidation: lazy(() => import('./modelValidation/ModelValidationTab.jsx')),
   reasoningbench: lazy(() => import('./reasoningBench/ReasoningBenchTab.jsx')),
   progress: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ProgressTab }))),
   guardrails: lazy(() => import('./guardrails/GuardrailsTab.jsx')),
   llmreliability: lazy(() => import('./llmReliability/LLMReliabilityTab.jsx')),
   enterpriseaiops: lazy(() => import('./enterpriseAIOps/EnterpriseAIOpsTab.jsx')),
+  enterprisegrade: lazy(() => import('./enterpriseGrade/EnterpriseGradeTab.jsx')),
   finops: lazy(() => import('./finOps/FinOpsTab.jsx')),
   observability: lazy(() => import('./aiObservability/AIObservabilityTab.jsx')),
   slmedge: lazy(() => import('./slmEdge/SlmEdgeTab.jsx')),
@@ -207,7 +219,7 @@ function TabError({ tabId }) {
 export default function App() {
   const [activeTab, setActiveTab] = useState(() => {
     const tab = new URLSearchParams(window.location.search).get('tab');
-    return tab && TABS_REGISTRY.some(t => t.id === tab) ? tab : 'overview';
+    return tab && TABS_REGISTRY.some(t => t.id === tab) ? tab : 'airoadmap';
   });
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
