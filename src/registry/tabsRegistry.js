@@ -9,21 +9,31 @@ export const CATEGORIES = [
   "Advanced & Frontiers"
 ];
 
+// Umbrella order mirrors the AI Engineer Roadmap flow (stages 1–8):
+// orient/models → embeddings/vectors → RAG → memory → agents → ship.
 export const UMBRELLA_TOPICS = [
   {
     id: "foundations",
     title: "Foundations & Architecture",
     icon: "📚",
     color: "#2a8a84",
-    description: "Core AI concepts, glossaries, transformers, and prompt engineering",
-    tabs: ["overview", "airoadmap", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
+    description: "Roadmap stages 1–4: orientation, how LLMs work, prompting, models — home of the AI Engineer Roadmap",
+    tabs: ["airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
+  },
+  {
+    id: "data_platform",
+    title: "Data & Platform Layers",
+    icon: "🏗️",
+    color: "#3b82f6",
+    description: "Roadmap stage 5: embeddings, vector search and document pipelines that feed retrieval",
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "datahumanization", "llmfinetuning"]
   },
   {
     id: "rag_architecture",
     title: "RAG Architectures & Pipelines",
     icon: "⚡",
     color: "#c9a84c",
-    description: "Naive, Hybrid, GraphRAG, Agentic, PDF extractions, and verification",
+    description: "Roadmap stage 6: RAG systems end to end",
     tabs: ["rag", "pipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "agentfanout", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "ragchunking"]
   },
   {
@@ -31,7 +41,7 @@ export const UMBRELLA_TOPICS = [
     title: "Context & Memory Engineering",
     icon: "🧠",
     color: "#9b7fd4",
-    description: "Context curation, measuring quality, company brain & context graph",
+    description: "Memory layer behind stages 6–7: context craft, memory systems, long context",
     tabs: ["ctxeng", "ctxmeasure", "memhierarchy", "longcontext", "vague", "hallucination", "contextgraph", "companybrain", "validitylayer", "memeng", "contextlimits"]
   },
   {
@@ -39,38 +49,21 @@ export const UMBRELLA_TOPICS = [
     title: "Agent Systems & Frameworks",
     icon: "🤖",
     color: "#c4572a",
-    description: "ReAct loops, multi-agent orchestration, CLI agents, LangChain & LangGraph",
+    description: "Roadmap stage 7: agents, MCP and production deployment",
     tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "loopengineering"]
-  },
-  {
-    id: "data_platform",
-    title: "Data & Platform Layers",
-    icon: "🏗️",
-    color: "#3b82f6",
-    description: "Prompt/Context/Loop layers, agentic document parsing, Medallion, and classical ML",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "datahumanization", "llmfinetuning"]
   },
   {
     id: "frontiers_production",
     title: "Production & Frontiers",
     icon: "🔮",
     color: "#10b981",
-    description: "Copilot power features, Claude Code plugins, token cost optimization, and evals",
+    description: "Roadmap stage 8: evals, cost, observability — ship and stay reliable",
     tabs: ["firstaiapp", "enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "enterprisegrade", "finops", "observability", "slmedge", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "modelvalidation", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
 export const TABS_REGISTRY = [
   // ── Umbrella 1 — Foundations & Architecture ──────────────────────────────
-  {
-    id: "overview",
-    label: "Overview Map",
-    umbrellaId: "foundations",
-    category: "Foundations",
-    icon: "🗺️",
-    keywords: ["overview", "introduction", "dashboard"],
-    component: lazy(() => import("../tabs/OverviewTabNew.jsx").then(m => ({ default: m.OverviewTab })))
-  },
   {
     id: "airoadmap",
     label: "AI Engineer Roadmap",
@@ -79,6 +72,15 @@ export const TABS_REGISTRY = [
     icon: "🧭",
     keywords: ["ai engineer roadmap", "roadmap.sh", "learning path", "stages", "week planner", "home", "start here", "career path"],
     component: lazy(() => import("../aiRoadmap/AIRoadmapTab.jsx"))
+  },
+  {
+    id: "overview",
+    label: "Overview Map",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🗺️",
+    keywords: ["overview", "introduction", "dashboard"],
+    component: lazy(() => import("../tabs/OverviewTabNew.jsx").then(m => ({ default: m.OverviewTab })))
   },
   {
     id: "glossary",

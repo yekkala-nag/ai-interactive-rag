@@ -64,8 +64,8 @@ export function Sidebar({
   const [, setProgTick] = useState(0);
 
   const [expandedModules, setExpandedModules] = useState({
-    foundations: false,
-    rag_architecture: true,
+    foundations: true,
+    rag_architecture: false,
     context_memory: false,
     agents_frameworks: false,
     data_platform: false,

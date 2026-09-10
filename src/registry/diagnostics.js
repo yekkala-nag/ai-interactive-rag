@@ -16,11 +16,9 @@ export const ROLE_PATHS = {
     level: 'Beginner to Intermediate',
     icon: '🌱', color: '#0D9488', badgeVariant: 'module',
     goal: 'foundations',
-    // Declared pedagogy (not a hidden splice): glossary opens because the
-    // tab is lesson-shaped, not a raw dictionary — leveled terms plus a
-    // built-in self-quiz give beginners anchor vocabulary (token, prompt,
-    // temperature, RAG…) before the first build uses those very words.
-    start: 'glossary',
+    // Entry is the map itself: the roadmap orients, links glossary terms,
+    // and hands off to the first lesson. Glossary remains lesson 2.
+    start: 'airoadmap',
     children: [
       { child: 'fnd_start', max: 1 },
       { child: 'fnd_internals', max: 1 },
@@ -97,7 +95,7 @@ export const ROLE_PATHS = {
     level: 'Comprehensive',
     icon: '👑', color: '#d97706', badgeVariant: 'warning',
     goal: 'all',
-    start: 'glossary',
+    start: 'airoadmap',
     children: null // null = every child umbrella, all levels
   }
 };
