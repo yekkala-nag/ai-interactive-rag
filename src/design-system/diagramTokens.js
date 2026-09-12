@@ -13,12 +13,12 @@
  */
 
 export const DIAGRAM_ACCENTS = {
-  foundations: { primary: '#3b82f6', soft: 'rgba(59,130,246,0.14)' },
-  rag_architecture: { primary: '#f59e0b', soft: 'rgba(245,158,11,0.14)' },
-  context_memory: { primary: '#ec4899', soft: 'rgba(236,72,153,0.14)' },
-  agents_frameworks: { primary: '#10b981', soft: 'rgba(16,185,129,0.14)' },
-  data_platform: { primary: '#8b5cf6', soft: 'rgba(139,92,246,0.14)' },
-  frontiers_production: { primary: '#a855f7', soft: 'rgba(168,85,247,0.14)' }
+  foundations: { primary: '#2AB5B0', soft: 'rgba(42,181,176,0.14)' },
+  rag_architecture: { primary: '#FF8A6B', soft: 'rgba(255,138,107,0.14)' },
+  context_memory: { primary: '#8B7BD8', soft: 'rgba(139,123,216,0.14)' },
+  agents_frameworks: { primary: '#FF8A6B', soft: 'rgba(255,138,107,0.14)' },
+  data_platform: { primary: '#2AB5B0', soft: 'rgba(42,181,176,0.14)' },
+  frontiers_production: { primary: '#8B7BD8', soft: 'rgba(139,123,216,0.14)' }
 };
 
 export const DIAGRAM_STATUS = {
@@ -32,5 +32,5 @@ export const DIAGRAM_STATUS = {
 export const DIAGRAM_BG = { from: '#090d16', to: '#101a30' };
 
 export function diagramAccentForModule(moduleId) {
-  return (DIAGRAM_ACCENTS[moduleId] || { primary: '#2a8a84', soft: 'rgba(42,138,132,0.14)' }).primary;
+  return (DIAGRAM_ACCENTS[moduleId] || { primary: '#2AB5B0', soft: 'rgba(42,181,176,0.14)' }).primary;
 }

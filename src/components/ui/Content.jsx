@@ -419,7 +419,7 @@ export function Hero({ moduleId, title, description, metrics = [], actions = [],
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--ds-space-6)', marginBottom: 'var(--ds-space-8)' }}>
               {metrics.map((m, i) => (
                 <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--ds-space-1)' }}>
-                  <div style={{ fontSize: '32px', fontWeight: 'var(--ds-font-weight-bold)', color: moduleColors.primary, lineHeight: 1, fontFamily: 'var(--ds-font-family-display)' }}>{m.value}</div>
+                  <div style={{ fontSize: '32px', fontWeight: 'var(--ds-font-weight-bold)', color: moduleColors.dark, lineHeight: 1, fontFamily: 'var(--ds-font-family-display)' }}>{m.value}</div>
                   <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)' }}>{m.label}</div>
                 </div>
               ))}

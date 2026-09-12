@@ -239,7 +239,7 @@ export function DiagnosticQuiz({ open, onClose, initialGoal = 'foundations', onC
                 return (
                   <div key={u} style={{ padding: '8px 10px', borderRadius: '8px', border: '1px solid var(--ds-color-border-subtle)', background: 'var(--ds-color-bg-canvas)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-secondary)' }}>{umbrellaName(u)}</span>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: info.color }}>{info.short}</span>
+                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: info.text }}>{info.short}</span>
                   </div>
                 );
               })}

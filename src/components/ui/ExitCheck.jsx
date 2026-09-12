@@ -78,7 +78,7 @@ export function ExitCheck({ open, tabId, onClose, onSelectTab }) {
           <button onClick={() => { reset(); onClose(); }} style={{ background: 'transparent', border: 'none', color: 'var(--ds-color-text-tertiary)', fontSize: '1.2rem', cursor: 'pointer' }}>✕</button>
         </div>
         <div style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)', marginBottom: '16px' }}>
-          Prove it, don't claim it · <span style={{ color: lvl.color, fontWeight: 700 }}>{lvl.label}</span> · pass at 2/3 · best score keeps
+          Prove it, don't claim it · <span style={{ color: lvl.text, fontWeight: 700 }}>{lvl.label}</span> · pass at 2/3 · best score keeps
           {getEvidence(tabId).quizBest > 0 && ` · current best ${Math.round(getEvidence(tabId).quizBest * 100)}%`}
         </div>
 

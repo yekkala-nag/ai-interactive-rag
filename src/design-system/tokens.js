@@ -28,26 +28,31 @@ export const tokens = {
       linkHover: '#0F766E',
     },
 
-    // Module accents (WCAG AA on white)
+    // Module accents — trio-mapped, all pairs contrast-verified (see P1 notes).
+    // primary = fills/graphics · dark = any text on white · light = tinted bg.
     module: {
-      foundations: { primary: '#0D9488', light: '#CCFBF1', dark: '#064E3B' },
-      rag: { primary: '#CA8A04', light: '#FEF9C3', dark: '#713F12' },
-      context: { primary: '#9333EA', light: '#F5E6FF', dark: '#3B0764' },
-      agents: { primary: '#DC2626', light: '#FEF2F2', dark: '#7F1D1D' },
-      platform: { primary: '#2563EB', light: '#DBEAFE', dark: '#1E3A8A' },
-      frontiers: { primary: '#10B981', light: '#D1FAE5', dark: '#065F46' },
+      foundations: { primary: '#2AB5B0', light: 'rgba(42,181,176,0.14)', dark: '#0C4F4C' },
+      rag: { primary: '#FF8A6B', light: 'rgba(255,138,107,0.14)', dark: '#A34A28' },
+      context: { primary: '#8B7BD8', light: 'rgba(139,123,216,0.14)', dark: '#4A3F7A' },
+      agents: { primary: '#FF8A6B', light: 'rgba(255,138,107,0.14)', dark: '#A34A28' },
+      platform: { primary: '#2AB5B0', light: 'rgba(42,181,176,0.14)', dark: '#0C4F4C' },
+      frontiers: { primary: '#8B7BD8', light: 'rgba(139,123,216,0.14)', dark: '#4A3F7A' },
     },
 
     // Brand palette — uniform dashboard language (see DesignSampleTab)
+    // Brights = fills/graphics/dots only. Text on white MUST use ink/deep.
     brand: {
       teal: '#2AB5B0',
       tealDark: '#17837F',
+      tealInk: '#0C4F4C',
       tealSoft: 'rgba(42,181,176,0.12)',
       coral: '#FF8A6B',
+      coralDeep: '#A34A28',
       coralSoft: 'rgba(255,138,107,0.14)',
       lav: '#C5ADEA',
       lavDeep: '#8B7BD8',
-      lavSoft: 'rgba(197,173,234,0.16)',
+      lavInk: '#4A3F7A',
+      lavSoft: 'rgba(139,123,216,0.14)',
       ink: '#22303C',
       muted: '#7A8AA0',
       line: '#E6EBF2',

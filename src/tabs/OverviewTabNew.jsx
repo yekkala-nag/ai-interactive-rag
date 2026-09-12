@@ -718,7 +718,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                 </p>
               </div>
               <div style={{ fontSize: '0.8rem', color: 'var(--ds-color-text-tertiary)' }}>
-                Active: <strong style={{ color: activeTrackObj.color }}>{activeTrackObj.title}</strong>
+                Active: <strong style={{ color: 'var(--ds-color-text-primary)' }}>{activeTrackObj.title}</strong>
               </div>
             </Flex>
           </Section.Header>

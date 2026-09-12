@@ -24,14 +24,15 @@ import {
 import { useModalA11y } from '../../hooks/useModalA11y.js';
 import { isMastered } from '../../services/mastery.js';
 
-// Category Accent Gradient Mapping (Apple-Style Vibrancy)
+// Category accents — trio-mapped. primary = fills/graphics only;
+// dark = any text on white (all ≥4.5); NEVER white text on primary.
 const MODULE_ACCENTS = {
-  foundations: { primary: '#3b82f6', gradient: 'linear-gradient(135deg, #2563eb, #60a5fa)', lightBg: 'rgba(59, 130, 246, 0.12)', border: 'rgba(59, 130, 246, 0.3)' },
-  rag_architecture: { primary: '#f59e0b', gradient: 'linear-gradient(135deg, #d97706, #fbbf24)', lightBg: 'rgba(245, 158, 11, 0.12)', border: 'rgba(245, 158, 11, 0.3)' },
-  context_memory: { primary: '#ec4899', gradient: 'linear-gradient(135deg, #db2777, #f472b6)', lightBg: 'rgba(236, 72, 153, 0.12)', border: 'rgba(236, 72, 153, 0.3)' },
-  agents_frameworks: { primary: '#10b981', gradient: 'linear-gradient(135deg, #059669, #34d399)', lightBg: 'rgba(16, 185, 129, 0.12)', border: 'rgba(16, 185, 129, 0.3)' },
-  data_platform: { primary: '#8b5cf6', gradient: 'linear-gradient(135deg, #7c3aed, #a78bfa)', lightBg: 'rgba(139, 92, 246, 0.12)', border: 'rgba(139, 92, 246, 0.3)' },
-  frontiers_production: { primary: '#a855f7', gradient: 'linear-gradient(135deg, #9333ea, #c084fc)', lightBg: 'rgba(168, 85, 247, 0.12)', border: 'rgba(168, 85, 247, 0.3)' }
+  foundations: { primary: '#2AB5B0', dark: '#0C4F4C', gradient: 'linear-gradient(135deg, #2AB5B0, #17837F)', lightBg: 'rgba(42,181,176,0.12)', border: 'rgba(42,181,176,0.35)' },
+  rag_architecture: { primary: '#FF8A6B', dark: '#A34A28', gradient: 'linear-gradient(135deg, #FF8A6B, #A34A28)', lightBg: 'rgba(255,138,107,0.14)', border: 'rgba(255,138,107,0.4)' },
+  context_memory: { primary: '#8B7BD8', dark: '#4A3F7A', gradient: 'linear-gradient(135deg, #C5ADEA, #8B7BD8)', lightBg: 'rgba(139,123,216,0.14)', border: 'rgba(139,123,216,0.4)' },
+  agents_frameworks: { primary: '#FF8A6B', dark: '#A34A28', gradient: 'linear-gradient(135deg, #FF8A6B, #A34A28)', lightBg: 'rgba(255,138,107,0.14)', border: 'rgba(255,138,107,0.4)' },
+  data_platform: { primary: '#2AB5B0', dark: '#0C4F4C', gradient: 'linear-gradient(135deg, #2AB5B0, #17837F)', lightBg: 'rgba(42,181,176,0.12)', border: 'rgba(42,181,176,0.35)' },
+  frontiers_production: { primary: '#8B7BD8', dark: '#4A3F7A', gradient: 'linear-gradient(135deg, #C5ADEA, #8B7BD8)', lightBg: 'rgba(139,123,216,0.14)', border: 'rgba(139,123,216,0.4)' }
 };
 
 // ============================================
@@ -119,7 +120,7 @@ export function Sidebar({
       style={{
         width: '100%',
         height: '100vh',
-        background: 'linear-gradient(180deg, var(--ds-color-brand-teal, #2AB5B0) 0%, var(--ds-color-brand-tealDark, #17837F) 100%)',
+        background: 'linear-gradient(180deg, #147A76 0%, #0F6B68 100%)',
         color: '#fff',
         display: 'flex',
         flexDirection: 'column',
@@ -724,7 +725,7 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
             display: 'inline-flex', alignItems: 'center', gap: '6px',
             padding: '3px 8px', borderRadius: '6px',
             background: accent.lightBg,
-            color: accent.primary,
+            color: accent.dark,
             fontSize: '0.78rem', fontWeight: 600,
             border: `1px solid ${accent.border}`
           }}>
@@ -857,14 +858,14 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '6px',
               padding: '3px 10px', borderRadius: '16px',
-              background: nextInChild ? accent.primary : 'transparent',
+              background: nextInChild ? 'var(--ds-color-brand-tealDark, #17837F)' : 'transparent',
               color: nextInChild ? '#ffffff' : 'var(--ds-color-text-tertiary)',
-              border: `1px solid ${nextInChild ? accent.primary : 'var(--ds-color-border-subtle)'}`,
+              border: `1px solid ${nextInChild ? 'var(--ds-color-brand-tealDark, #17837F)' : 'var(--ds-color-border-subtle)'}`,
               fontSize: '0.74rem', fontWeight: nextInChild ? 700 : 500,
               cursor: nextInChild ? 'pointer' : 'default',
               opacity: nextInChild ? 1 : 0.5,
               maxWidth: '42vw', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-              boxShadow: nextInChild ? `0 2px 8px ${accent.primary}40` : 'none'
+              boxShadow: nextInChild ? '0 2px 8px rgba(23,131,127,0.35)' : 'none'
             }}
           >
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{nextInChild ? nextInChild.label : 'End'}</span>
@@ -1011,18 +1012,18 @@ export function ModuleSwitcher({ activeModuleId, onSelectModule }) {
           <button
             key={module.id}
             onClick={() => onSelectModule(module.id)}
-            style={{
-              display: 'flex', alignItems: 'center', gap: '6px',
-              padding: '6px 12px',
-              borderRadius: '8px',
-              background: isActive ? accent.primary : 'var(--ds-color-bg-surface)',
-              color: isActive ? 'white' : 'var(--ds-color-text-secondary)',
-              border: `1px solid ${isActive ? accent.primary : 'var(--ds-color-border-subtle)'}`,
-              fontSize: '0.78rem',
-              fontWeight: 600,
-              cursor: 'pointer',
-              transition: 'all 0.15s ease',
-            }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '6px',
+                padding: '6px 12px',
+                borderRadius: '8px',
+                background: isActive ? accent.dark : 'var(--ds-color-bg-surface)',
+                color: isActive ? '#ffffff' : 'var(--ds-color-text-secondary)',
+                border: `1px solid ${isActive ? accent.dark : 'var(--ds-color-border-subtle)'}`,
+                fontSize: '0.78rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+              }}
           >
             <span>{module.icon}</span>
             <span>{module.title}</span>

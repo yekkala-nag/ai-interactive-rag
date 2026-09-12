@@ -27,9 +27,9 @@ export function Button({
 
   const variantStyles = {
     primary: {
-      base: { background: 'var(--ds-color-brand-teal, #2AB5B0)', color: 'white', border: 'none' },
-      hover: { background: 'var(--ds-color-brand-tealDark, #17837F)' },
-      active: { background: 'var(--ds-color-brand-tealDark, #17837F)', transform: 'scale(0.98)' },
+      base: { background: 'var(--ds-color-brand-tealDark, #17837F)', color: 'white', border: 'none' },
+      hover: { background: '#0F6B68' },
+      active: { background: '#0F6B68', transform: 'scale(0.98)' },
       disabled: { background: 'var(--ds-color-border-default)', cursor: 'not-allowed' },
     },
     secondary: {
