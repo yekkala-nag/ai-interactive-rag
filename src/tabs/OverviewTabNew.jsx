@@ -42,7 +42,7 @@ const FOUR_PILLARS = [
     id: 'foundations',
     title: 'Foundations & Attention Mechanisms',
     icon: '🌱',
-    color: '#0D9488',
+    color: '#17837F',
     summary: 'Core LLM internals: building your first app, token sampling temperature/top-p, self-attention QKV, and structured outputs.',
     tabs: [
       { id: 'firstaiapp', label: 'First AI App', icon: '🚀', tag: 'Start Here' },
@@ -57,7 +57,7 @@ const FOUR_PILLARS = [
     id: 'rag',
     title: 'RAG & Retrieval Architectures',
     icon: '⚡',
-    color: '#2563eb',
+    color: '#17837F',
     summary: 'Vector embeddings, chunking strategies, question parsing loops, hierarchical retrieval, and production RAG pipelines.',
     tabs: [
       { id: 'rag', label: 'RAG Architectures', icon: '📄', tag: 'Overview' },
@@ -72,7 +72,7 @@ const FOUR_PILLARS = [
     id: 'agents',
     title: 'Autonomous Agent Systems',
     icon: '🤖',
-    color: '#7c3aed',
+    color: '#5A4FA3',
     summary: 'ReAct agent loops, CLI agents, multi-agent collaboration, LangChain/LangGraph graphs, and stateful human-in-the-loop.',
     tabs: [
       { id: 'fiveassets', label: 'Five Agent Assets', icon: '🏛️', tag: 'Core Theory' },
@@ -87,7 +87,7 @@ const FOUR_PILLARS = [
     id: 'enterprise_ops',
     title: 'Production Ops & Token FinOps',
     icon: '🏢',
-    color: '#059669',
+    color: '#17837F',
     summary: 'Zero-model routers, token orchestration playbooks, LLM evaluations, high-concurrency guardrails, and enterprise SLA ops.',
     tabs: [
       { id: 'tokenorchestrationplaybook', label: 'Token Playbook', icon: '🪙', tag: 'FinOps' },
@@ -101,15 +101,15 @@ const FOUR_PILLARS = [
 ];
 
 const RAG_TYPES = [
-  { id: 'naive', label: 'Naive RAG', level: 'Foundational', icon: '📄', color: '#0D9488', tagline: 'Chunk → embed → retrieve → generate' },
-  { id: 'advanced', label: 'Advanced RAG', level: 'Intermediate', icon: '⚙️', color: '#CA8A04', tagline: 'HyDE + rerank + compression' },
+  { id: 'naive', label: 'Naive RAG', level: 'Foundational', icon: '📄', color: '#17837F', tagline: 'Chunk → embed → retrieve → generate' },
+  { id: 'advanced', label: 'Advanced RAG', level: 'Intermediate', icon: '⚙️', color: '#A34A28', tagline: 'HyDE + rerank + compression' },
   { id: 'hybrid', label: 'Hybrid RAG', level: 'Production Standard', icon: '🔀', color: '#DC2626', tagline: 'Dense + sparse via RRF' },
   { id: 'selfrag', label: 'Self-RAG', level: 'Advanced', icon: '🪞', color: '#DC2626', tagline: 'Model decides when to retrieve' },
   { id: 'crag', label: 'Corrective RAG', level: 'Advanced', icon: '🩺', color: '#DC2626', tagline: 'Web fallback when local retrieval fails' },
-  { id: 'graphrag', label: 'Graph RAG', level: 'Cutting Edge', icon: '🕸️', color: '#9333EA', tagline: 'Knowledge graphs for multi-hop reasoning' },
+  { id: 'graphrag', label: 'Graph RAG', level: 'Cutting Edge', icon: '🕸️', color: '#5A4FA3', tagline: 'Knowledge graphs for multi-hop reasoning' },
   { id: 'agentic', label: 'Agentic RAG', level: 'Advanced', icon: '🤖', color: '#DC2626', tagline: 'Multi-step ReAct retrieval loops' },
-  { id: 'multimodal', label: 'Multimodal RAG', level: 'Cutting Edge', icon: '🖼️', color: '#9333EA', tagline: 'Text + images + tables together' },
-  { id: 'raptor', label: 'RAPTOR', level: 'Cutting Edge', icon: '🌲', color: '#9333EA', tagline: 'Recursive tree of summaries' },
+  { id: 'multimodal', label: 'Multimodal RAG', level: 'Cutting Edge', icon: '🖼️', color: '#5A4FA3', tagline: 'Text + images + tables together' },
+  { id: 'raptor', label: 'RAPTOR', level: 'Cutting Edge', icon: '🌲', color: '#5A4FA3', tagline: 'Recursive tree of summaries' },
 ];
 
 export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
@@ -504,8 +504,8 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                             padding: '6px 12px', borderRadius: '16px', cursor: 'pointer',
                             fontSize: '0.75rem', fontWeight: 600,
                             background: 'transparent',
-                            border: `1px solid ${u.color}`,
-                            color: u.color
+                            border: `1px solid ${u.dark || u.color}`,
+                            color: u.dark || u.color
                           }}
                         >
                           {u.icon} Test out: {u.title.split(' ')[0]}
@@ -745,7 +745,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                         position: 'absolute',
                         top: '12px',
                         right: '12px',
-                        background: track.color,
+                        background: track.dark || track.color,
                         color: 'white',
                         fontSize: '10px',
                         fontWeight: 700,
@@ -760,7 +760,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                       <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--ds-color-text-primary)', marginBottom: '4px' }}>
                         {track.title}
                       </h3>
-                      <div style={{ fontSize: '0.72rem', color: track.color, fontWeight: 600, marginBottom: '8px' }}>
+                      <div style={{ fontSize: '0.72rem', color: track.dark || track.color, fontWeight: 600, marginBottom: '8px' }}>
                         {track.level} • {track.duration}
                       </div>
                       <p style={{ fontSize: '0.78rem', color: 'var(--ds-color-text-secondary)', lineHeight: 1.4, marginBottom: '14px' }}>
@@ -807,7 +807,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                   padding: '16px 20px',
                   borderRadius: 'var(--ds-radius-lg)',
                   background: 'var(--ds-color-bg-canvas)',
-                  border: `1px solid ${isActive ? '#d97706' : 'var(--ds-color-border-subtle)'}`,
+                  border: `1px solid ${isActive ? '#FF8A6B' : 'var(--ds-color-border-subtle)'}`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -939,9 +939,9 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
           <Section.Body>
             <Grid columns={{ base: 1, md: 3 }} gap="md">
               {[
-                { id: 'mla', icon: '🧠', label: 'Multi-Head Latent Attention', color: '#0D9488', metric: '2.7–4.7×', sub: 'KV cache reduction', desc: 'Compresses KV cache by projecting to low-dimensional latent, up-projecting at inference.' },
-                { id: 'moe', icon: '🎯', label: 'Mixture of Experts', color: '#CA8A04', metric: '5.5%', sub: 'Params active per token', desc: 'Routes each token to top-k experts; 671B total, 37B active — dense quality at sparse cost.' },
-                { id: 'spec', icon: '⚡', label: 'Speculative Decoding', color: '#9333EA', metric: '2–4×', sub: 'Throughput gain', desc: 'Small draft model proposes tokens; large model verifies in parallel. Lossless speedup.' },
+                { id: 'mla', icon: '🧠', label: 'Multi-Head Latent Attention', color: '#17837F', metric: '2.7–4.7×', sub: 'KV cache reduction', desc: 'Compresses KV cache by projecting to low-dimensional latent, up-projecting at inference.' },
+                { id: 'moe', icon: '🎯', label: 'Mixture of Experts', color: '#A34A28', metric: '5.5%', sub: 'Params active per token', desc: 'Routes each token to top-k experts; 671B total, 37B active — dense quality at sparse cost.' },
+                { id: 'spec', icon: '⚡', label: 'Speculative Decoding', color: '#5A4FA3', metric: '2–4×', sub: 'Throughput gain', desc: 'Small draft model proposes tokens; large model verifies in parallel. Lossless speedup.' },
               ].map(item => (
                 <Card key={item.id} variant="elevated" padding="lg" hover onClick={() => handleNavigate('archconcepts')} style={{ cursor: 'pointer' }}>
                   <Flex gap="md" align="flex-start" style={{ marginBottom: 'var(--ds-space-4)' }}>

@@ -93,8 +93,8 @@ export default function DialogueLaMDATab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
                   {SSI_METRIC_PILLARS.map((p, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: `4px solid ${idx === 0 ? '#38BDF8' : idx === 1 ? '#10b981' : '#F5A623'}` }}>
-                      <strong style={{ fontSize: '13px', color: idx === 0 ? '#38BDF8' : idx === 1 ? '#10b981' : '#F5A623', display: 'block', marginBottom: '8px' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: `4px solid ${idx === 0 ? '#2AB5B0' : idx === 1 ? '#2AB5B0' : '#F5A623'}` }}>
+                      <strong style={{ fontSize: '13px', color: idx === 0 ? '#2AB5B0' : idx === 1 ? '#2AB5B0' : '#F5A623', display: 'block', marginBottom: '8px' }}>
                         {p.pillar}
                       </strong>
 
@@ -106,7 +106,7 @@ export default function DialogueLaMDATab() {
                         <strong>❌ Fails Metric:</strong> {p.badExample}
                       </div>
 
-                      <div style={{ background: 'rgba(16,185,129,0.08)', padding: '8px', borderRadius: '4px', borderLeft: '3px solid #10b981', fontSize: '11px', color: '#34d399' }}>
+                      <div style={{ background: 'rgba(16,185,129,0.08)', padding: '8px', borderRadius: '4px', borderLeft: '3px solid #2AB5B0', fontSize: '11px', color: '#34d399' }}>
                         <strong>✅ Satisfies SSI:</strong> {p.goodExample}
                       </div>
                     </Card>
@@ -135,8 +135,8 @@ export default function DialogueLaMDATab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {LAMDA_SAFETY_GROUNDEDNESS_SYSTEM.map((s, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
-                      <strong style={{ fontSize: '13px', color: '#38BDF8', display: 'block', marginBottom: '6px' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
                         {s.component}
                       </strong>
 
@@ -144,7 +144,7 @@ export default function DialogueLaMDATab() {
                         {s.function}
                       </p>
 
-                      <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 'bold' }}>
+                      <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>
                         💡 Impact: {s.impact}
                       </div>
                     </Card>
@@ -176,9 +176,9 @@ export default function DialogueLaMDATab() {
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #38BDF8' }}>
+                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
                     <Badge variant="outline" style={{ marginBottom: '6px' }}>2021: Google LaMDA</Badge>
-                    <strong style={{ fontSize: '12px', color: '#38BDF8', display: 'block' }}>SSI Dialogue Tuning</strong>
+                    <strong style={{ fontSize: '12px', color: '#17837F', display: 'block' }}>SSI Dialogue Tuning</strong>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
                       Dedicated multi-turn fine-tuning, search-tool grounding, and persona-taking.
                     </div>
@@ -192,9 +192,9 @@ export default function DialogueLaMDATab() {
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #10b981' }}>
+                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
                     <Badge variant="outline" style={{ marginBottom: '6px' }}>2024+: Gemini & DeepSeek</Badge>
-                    <strong style={{ fontSize: '12px', color: '#10b981', display: 'block' }}>Native Multimodal Reasoning</strong>
+                    <strong style={{ fontSize: '12px', color: '#17837F', display: 'block' }}>Native Multimodal Reasoning</strong>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
                       End-to-end audio/video/text tokens with test-time compute scaling and reasoning chains.
                     </div>

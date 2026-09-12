@@ -31,21 +31,21 @@ export default function AgentsSDKTab() {
           <button key={t.id} onClick={() => setSub(t.id)} style={navBtn(sub, t.id)}><div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'patterns' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{WHY_MULTI.map((w, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #38BDF8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{w.why}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{w.detail}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{WHY_MULTI.map((w, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{w.why}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{w.detail}</div></Card>))}</Grid>
           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-              <strong style={{ fontSize: '12px', color: '#38BDF8' }}>Handoff flow (+custom knobs):</strong>
+              <strong style={{ fontSize: '12px', color: '#17837F' }}>Handoff flow (+custom knobs):</strong>
               {HANDOFF_FLOW.map((h, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace', marginTop: '4px' }}>{h.step} — {h.code}</div>))}
               {HANDOFF_CUSTOM.map((c, i) => (<div key={i} style={{ fontSize: '11px', color: '#F5A623', marginTop: '4px' }}>⚙ {c.knob}: {c.does}</div>))}
             </Card>
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-              <strong style={{ fontSize: '12px', color: '#10b981' }}>Agents-as-tools flow:</strong>
+              <strong style={{ fontSize: '12px', color: '#17837F' }}>Agents-as-tools flow:</strong>
               {TOOLS_PATTERN.map((t, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace', marginTop: '4px' }}>{t.step} — {t.code}</div>))}
             </Card>
           </Grid>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Need</th><th style={{ padding: '8px' }}>Pick</th><th style={{ textAlign: 'left', padding: '8px' }}>Why</th></tr></thead>
-            <tbody>{PICK_TABLE.map((p, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white' }}>{p.need}</td><td style={{ padding: '8px', textAlign: 'center', color: '#10b981', fontWeight: 'bold' }}>{p.pick}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{p.why}</td></tr>))}</tbody></table></div>
+            <tbody>{PICK_TABLE.map((p, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white' }}>{p.need}</td><td style={{ padding: '8px', textAlign: 'center', color: '#17837F', fontWeight: 'bold' }}>{p.pick}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{p.why}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Pattern picker simulator</h3></div>
@@ -59,10 +59,10 @@ export default function AgentsSDKTab() {
                 ))}
               </Stack>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-              <strong style={{ color: '#10b981' }}>{r.pattern}</strong>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+              <strong style={{ color: '#17837F' }}>{r.pattern}</strong>
               <div style={{ fontSize: '12px', color: 'white', marginTop: '6px' }}>{r.why}</div>
-              <div style={{ fontSize: '11px', color: '#38BDF8', fontFamily: 'monospace', marginTop: '4px' }}>{r.code}</div>
+              <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace', marginTop: '4px' }}>{r.code}</div>
               <div style={{ fontSize: '11px', color: '#F5A623', marginTop: '4px' }}>⚠ {r.warn}</div>
             </Card>
           </Grid>

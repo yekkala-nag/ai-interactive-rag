@@ -108,9 +108,9 @@ export const GENERATE_HTML_TRIAGE_REPORT_PREVIEW = (tasks) => {
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0b0f19; color: #e2e8f0; padding: 20px; }
     .card { background: #161e2e; border: 1px solid #2d3748; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
     .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
-    .badge-auto { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+    .badge-auto { background: rgba(16, 185, 129, 0.2); color: #17837F; }
     .badge-handoff { background: rgba(245, 166, 35, 0.2); color: #f5a623; }
-    .code { font-family: monospace; background: #090d16; padding: 2px 6px; border-radius: 4px; color: #38bdf8; }
+    .code { font-family: monospace; background: #090d16; padding: 2px 6px; border-radius: 4px; color: #17837F; }
   </style>
 </head>
 <body>

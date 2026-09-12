@@ -29,8 +29,8 @@ export default function AIObservabilityTab() {
             <div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'signals' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{SIGNAL_TABLE.map((s, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #38BDF8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{s.signal}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.captures}</div><div style={{ fontSize: '11px', color: '#ef4444', fontFamily: 'monospace' }}>alert: {s.alert}</div></Card>))}</Grid>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{PLATFORM_TABLE.map((pl, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #10b981' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{pl.dim}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{pl.note}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{SIGNAL_TABLE.map((s, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{s.signal}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.captures}</div><div style={{ fontSize: '11px', color: '#ef4444', fontFamily: 'monospace' }}>alert: {s.alert}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{PLATFORM_TABLE.map((pl, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{pl.dim}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{pl.note}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Sampling vs detection-lag simulator</h3></div>
@@ -41,9 +41,9 @@ export default function AIObservabilityTab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Success sample: {sample}% (errors always 100%)</label>
               <input type="range" min={1} max={100} value={sample} onChange={e => setSample(+e.target.value)} style={{ width: '100%' }} />
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${sample < 5 ? '#ef4444' : '#10b981'}` }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${sample < 5 ? '#ef4444' : '#2AB5B0'}` }}>
               <div style={{ fontSize: '12px', color: 'white', fontFamily: 'monospace' }}>{p.storedPerDay.toLocaleString()} traces/day · {p.gbPerDay} GB/day · {p.gbPerMonth} GB/mo</div>
-              <div style={{ fontSize: '12px', color: sample < 5 ? '#ef4444' : '#10b981', fontWeight: 'bold', marginTop: '6px' }}>detection lag {p.detectLag}</div>
+              <div style={{ fontSize: '12px', color: sample < 5 ? '#ef4444' : '#2AB5B0', fontWeight: 'bold', marginTop: '6px' }}>detection lag {p.detectLag}</div>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>{p.advice}</div>
             </Card>
           </Grid>

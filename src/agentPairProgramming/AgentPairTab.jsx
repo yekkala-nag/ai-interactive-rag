@@ -93,8 +93,8 @@ export default function AgentPairTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {AGENT_PAIRING_PILLARS.map((p, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
-                      <strong style={{ fontSize: '13px', color: '#38BDF8', display: 'block', marginBottom: '8px' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
                         {p.pillar}
                       </strong>
 
@@ -102,7 +102,7 @@ export default function AgentPairTab() {
                         <strong>Common Anti-Pattern:</strong> {p.mistake}
                       </div>
 
-                      <div style={{ background: 'rgba(16,185,129,0.08)', padding: '8px 10px', borderRadius: '4px', borderLeft: '3px solid #10b981', fontSize: '11px', color: '#34d399', marginBottom: '8px' }}>
+                      <div style={{ background: 'rgba(16,185,129,0.08)', padding: '8px 10px', borderRadius: '4px', borderLeft: '3px solid #2AB5B0', fontSize: '11px', color: '#34d399', marginBottom: '8px' }}>
                         <strong>Engineered Pattern:</strong> {p.bestPractice}
                       </div>
 
@@ -131,10 +131,10 @@ export default function AgentPairTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                   {WORKFLOW_COMPARISON_MODES.map((m, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: `4px solid ${idx === 0 ? '#ef4444' : '#10b981'}` }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: `4px solid ${idx === 0 ? '#ef4444' : '#2AB5B0'}` }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                        <strong style={{ fontSize: '14px', color: idx === 0 ? '#ef4444' : '#10b981' }}>{m.mode}</strong>
-                        <Badge variant="subtle" style={{ color: idx === 0 ? '#ef4444' : '#10b981', background: idx === 0 ? 'rgba(239,68,68,0.15)' : 'rgba(16,185,129,0.15)' }}>
+                        <strong style={{ fontSize: '14px', color: idx === 0 ? '#ef4444' : '#2AB5B0' }}>{m.mode}</strong>
+                        <Badge variant="subtle" style={{ color: idx === 0 ? '#ef4444' : '#2AB5B0', background: idx === 0 ? 'rgba(239,68,68,0.15)' : 'rgba(16,185,129,0.15)' }}>
                           Failure Rate: {m.failureRate}
                         </Badge>
                       </Flex>
@@ -187,14 +187,14 @@ export default function AgentPairTab() {
 
                 {selectedTaskType === 'fullstack' ? (
                   <Grid columns={{ base: '1fr', md: 'repeat(4, 1fr)' }} gap="var(--ds-space-3)">
-                    <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #38BDF8' }}>
-                      <strong style={{ fontSize: '11px', color: '#38BDF8' }}>Step 1: Data Model</strong>
+                    <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: '11px', color: '#17837F' }}>Step 1: Data Model</strong>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
                         Create Prisma/SQL migration for <code>Notification</code> schema with read receipts and user foreign keys.
                       </div>
                     </Card>
-                    <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #10b981' }}>
-                      <strong style={{ fontSize: '11px', color: '#10b981' }}>Step 2: Service & Redis PubSub</strong>
+                    <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: '11px', color: '#17837F' }}>Step 2: Service & Redis PubSub</strong>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
                         Implement notification dispatch worker with Redis PubSub message queuing and deduplication.
                       </div>
@@ -214,14 +214,14 @@ export default function AgentPairTab() {
                   </Grid>
                 ) : (
                   <Grid columns={{ base: '1fr', md: 'repeat(4, 1fr)' }} gap="var(--ds-space-3)">
-                    <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #38BDF8' }}>
-                      <strong style={{ fontSize: '11px', color: '#38BDF8' }}>Step 1: GraphQL Type Defs</strong>
+                    <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: '11px', color: '#17837F' }}>Step 1: GraphQL Type Defs</strong>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
                         Define strict schema SDL with Query and Mutation types matching existing Pydantic models.
                       </div>
                     </Card>
-                    <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #10b981' }}>
-                      <strong style={{ fontSize: '11px', color: '#10b981' }}>Step 2: Resolvers & DataLoader</strong>
+                    <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: '11px', color: '#17837F' }}>Step 2: Resolvers & DataLoader</strong>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
                         Implement Strawberry/Ariane resolvers with batch DataLoader to eliminate N+1 query bottlenecks.
                       </div>

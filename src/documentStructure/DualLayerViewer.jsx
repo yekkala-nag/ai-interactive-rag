@@ -57,7 +57,7 @@ export default function DualLayerViewer({ lineDf, tocDf }) {
               padding: '0.25rem 0.6rem',
               borderRadius: 4,
               border: 'none',
-              background: customQueryActive ? '#2563eb' : '#e2e8f0',
+              background: customQueryActive ? '#2AB5B0' : '#e2e8f0',
               color: customQueryActive ? '#ffffff' : '#475569',
               fontSize: '0.62rem',
               fontFamily: 'Syne, sans-serif',

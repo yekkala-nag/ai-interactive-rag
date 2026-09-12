@@ -193,9 +193,9 @@ export default function ReinforcementLearningTab() {
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: '#090d16', borderTop: '3px solid #10b981' }}>
+                  <Card style={{ padding: '16px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>LEARNED RL AGENT REVENUE</div>
-                    <div style={{ fontSize: '20px', color: '#10b981', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '20px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>
                       ${mdpResult.revenueRL.toLocaleString()} (+{mdpResult.rlLiftVsHeuristic}%)
                     </div>
                   </Card>
@@ -219,8 +219,8 @@ export default function ReinforcementLearningTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {CONSUMER_RL_USE_CASES.map((u, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #38BDF8' }}>
-                      <strong style={{ fontSize: '13px', color: '#38BDF8', display: 'block', marginBottom: '8px' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
                         {u.domain}
                       </strong>
 
@@ -236,7 +236,7 @@ export default function ReinforcementLearningTab() {
                         <strong>Reward (R):</strong> {u.reward}
                       </div>
 
-                      <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 'bold' }}>
+                      <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>
                         🚀 Business Impact: {u.businessImpact}
                       </div>
                     </Card>

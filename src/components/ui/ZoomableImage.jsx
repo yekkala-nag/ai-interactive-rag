@@ -32,12 +32,12 @@ function ensureKeyframes() {
 }
 
 const ACCENTS = {
-  rag: "#CA8A04",
-  foundations: "#0D9488",
-  context: "#9333EA",
+  rag: "#A34A28",
+  foundations: "#17837F",
+  context: "#8B7BD8",
   agents: "#DC2626",
-  platform: "#2563EB",
-  frontiers: "#10B981",
+  platform: "#2AB5B0",
+  frontiers: "#2AB5B0",
 };
 
 const lbBtn = (w, h = 36) => ({
@@ -63,7 +63,7 @@ export default function ZoomableImage({
   maxWidth = 1100,
   background = "#ffffff",
   hotspots = [],
-  accent = "#0D9488",
+  accent = "#17837F",
   reduceMotion = false,
 }) {
   const [zoomed, setZoomed] = useState(false);
@@ -113,7 +113,7 @@ export default function ZoomableImage({
               <span style={{ color: accentColor }}>🖼️</span>
               {title || "Interactive Figure"}
             </span>
-            <span style={{ color: "#9b7fd4", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+            <span style={{ color: "#5A4FA3", fontSize: "0.58rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
               {hasHotspots ? "⠿ Hotspots · ⤢ Fullscreen" : "⤢ Fullscreen"}
             </span>
           </div>
@@ -264,10 +264,10 @@ export default function ZoomableImage({
             </span>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <button onClick={zoomOut} title="Zoom Out" style={lbBtn(36)}>➖</button>
-              <button onClick={reset} title="Reset" style={{ ...lbBtn(64), fontFamily: "DM Mono, monospace", fontSize: "0.8rem", color: scale !== 1 ? "#c9a84c" : "#a0a5ba" }}>{Math.round(scale * 100)}%</button>
+              <button onClick={reset} title="Reset" style={{ ...lbBtn(64), fontFamily: "DM Mono, monospace", fontSize: "0.8rem", color: scale !== 1 ? "#FF8A6B" : "#a0a5ba" }}>{Math.round(scale * 100)}%</button>
               <button onClick={zoomIn} title="Zoom In" style={lbBtn(36)}>➕</button>
               <div style={{ width: 1, height: 24, background: "#3a3e54", margin: "0 6px" }} />
-              <button onClick={close} title="Close" style={{ ...lbBtn(80), background: "#c4572a", border: "none", color: "#fff", fontWeight: 800 }}>✕ Close</button>
+              <button onClick={close} title="Close" style={{ ...lbBtn(80), background: "#FF8A6B", border: "none", color: "#fff", fontWeight: 800 }}>✕ Close</button>
             </div>
           </div>
           <div

@@ -33,10 +33,10 @@ export default function PandasMemTab() {
         </div>
         {sub === 'tricks' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           {TECHNIQUES.map((t) => (
-            <Card key={t.n} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${t.n === 2 ? '#10b981' : t.n === 7 ? '#F5A623' : '#38BDF8'}` }}>
-              <strong style={{ color: 'white', fontSize: '12px' }}>#{t.n} {t.name} — <span style={{ color: '#10b981' }}>{t.saves}</span></strong>
+            <Card key={t.n} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${t.n === 2 ? '#2AB5B0' : t.n === 7 ? '#F5A623' : '#2AB5B0'}` }}>
+              <strong style={{ color: 'white', fontSize: '12px' }}>#{t.n} {t.name} — <span style={{ color: '#17837F' }}>{t.saves}</span></strong>
               <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)" style={{ fontSize: '11px', marginTop: '4px' }}>
-                <div><span style={{ color: '#38BDF8', fontWeight: 'bold' }}>Rule: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{t.rule}</span></div>
+                <div><span style={{ color: '#17837F', fontWeight: 'bold' }}>Rule: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{t.rule}</span></div>
                 <div><span style={{ color: '#F5A623', fontWeight: 'bold' }}>⚠ Caveat: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{t.caveat}</span></div>
               </Grid>
             </Card>
@@ -56,8 +56,8 @@ export default function PandasMemTab() {
                 {[1, 2, 3, 4, 5, 6].map(n => (<Button key={n} variant={use.includes(n) ? 'primary' : 'secondary'} size="sm" onClick={() => toggle(n)}>#{n}</Button>))}
               </Flex>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-              <div style={{ fontSize: '20px', color: 'white', fontFamily: 'monospace' }}>{r.baseMB} → {r.optMB} MB <span style={{ color: '#10b981' }}>−{r.savedPct}%</span></div>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+              <div style={{ fontSize: '20px', color: 'white', fontFamily: 'monospace' }}>{r.baseMB} → {r.optMB} MB <span style={{ color: '#17837F' }}>−{r.savedPct}%</span></div>
               {r.applied.map((a, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>✓ {a}</div>))}
               <div style={{ fontSize: '11px', color: '#F5A623', marginTop: '6px' }}>{r.verdict}</div>
             </Card>

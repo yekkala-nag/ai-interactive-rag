@@ -111,14 +111,14 @@ export default function GraphTraversalTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {ROUTER_RETIREMENT_COMPARISON.map((c, idx) => (
-                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${idx === 1 ? '#10b981' : '#ef4444'}` }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: idx === 1 ? '#10b981' : '#ef4444', display: 'block', marginBottom: '4px' }}>
+                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${idx === 1 ? '#2AB5B0' : '#ef4444'}` }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: idx === 1 ? '#2AB5B0' : '#ef4444', display: 'block', marginBottom: '4px' }}>
                         {c.feature}
                       </strong>
                       <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '6px' }}>
                         Mechanism: {c.mechanism}
                       </div>
-                      <div style={{ fontSize: '11px', color: idx === 1 ? '#10b981' : '#ef4444' }}>
+                      <div style={{ fontSize: '11px', color: idx === 1 ? '#2AB5B0' : '#ef4444' }}>
                         Outcome: {c.outcome}
                       </div>
                     </Card>
@@ -143,11 +143,11 @@ export default function GraphTraversalTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
                   {BITEMPORAL_EDGE_CONCEPTS.map((b, idx) => (
-                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#38BDF8', display: 'block', marginBottom: '4px' }}>
+                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', display: 'block', marginBottom: '4px' }}>
                         {b.concept}
                       </strong>
-                      <div style={{ fontSize: '11px', color: '#10b981', fontFamily: 'monospace', marginBottom: '6px' }}>
+                      <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace', marginBottom: '6px' }}>
                         Fields: {b.fields}
                       </div>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -205,25 +205,25 @@ export default function GraphTraversalTab() {
                     </Stack>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${simResult.decision === 'AUTO_LINK' ? '#10b981' : simResult.decision === 'LLM_ADJUDICATE' ? '#F5A623' : '#ef4444'}` }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${simResult.decision === 'AUTO_LINK' ? '#2AB5B0' : simResult.decision === 'LLM_ADJUDICATE' ? '#F5A623' : '#ef4444'}` }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: simResult.decision === 'AUTO_LINK' ? '#10b981' : simResult.decision === 'LLM_ADJUDICATE' ? '#F5A623' : '#ef4444' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: simResult.decision === 'AUTO_LINK' ? '#2AB5B0' : simResult.decision === 'LLM_ADJUDICATE' ? '#F5A623' : '#ef4444' }}>
                         RESOLUTION DECISION: {simResult.decision}
                       </strong>
-                      <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.15)', color: '#38BDF8', fontSize: '9px' }}>
+                      <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.15)', color: '#17837F', fontSize: '9px' }}>
                         SIMILARITY: {simResult.score}
                       </Badge>
                     </Flex>
 
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginBottom: '6px' }}>
-                      Target Canonical Node: <strong style={{ color: '#10b981' }}>{simResult.targetNode}</strong>
+                      Target Canonical Node: <strong style={{ color: '#17837F' }}>{simResult.targetNode}</strong>
                     </div>
 
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', margin: '0 0 8px 0' }}>
                       {simResult.explanation}
                     </p>
 
-                    <div style={{ fontSize: '11px', color: '#10b981' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F' }}>
                       Impact: {simResult.fragmentationReductionPct}
                     </div>
                   </Card>

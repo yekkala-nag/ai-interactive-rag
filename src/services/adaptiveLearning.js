@@ -93,6 +93,7 @@ function makeTrack(id) {
     duration: estimateDuration(tabs.length),
     icon: spec.icon,
     color: spec.color,
+    dark: spec.dark,
     startingTab,
     tabs
   };
@@ -122,6 +123,7 @@ function makeJourney(id) {
     duration: estimateDuration(tabs.length),
     icon: spec.icon,
     color: spec.color,
+    dark: spec.dark,
     startingTab: tabs[0],
     tabs
   };

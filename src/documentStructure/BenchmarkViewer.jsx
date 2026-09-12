@@ -100,7 +100,7 @@ export default function BenchmarkViewer() {
   return (
     <div style={{ background: '#ffffff', borderRadius: 8, border: '1px solid #e0dcd4', padding: '1.25rem' }}>
       <div style={{ marginBottom: '1.25rem' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.65rem', fontWeight: 700, color: '#c9a84c', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
+        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.65rem', fontWeight: 700, color: '#A34A28', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
           Ground Truth Benchmark Evaluation Suite
         </div>
         <p style={{ fontSize: '0.72rem', color: '#334155', lineHeight: 1.5 }}>
@@ -109,10 +109,10 @@ export default function BenchmarkViewer() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
-        <StatCard label="Micro Recall (Before LLM)" value={`${microRecallBefore}%`} sub="299 / 415 native rows" color="#2563eb" />
-        <StatCard label="Micro Precision (Before LLM)" value={`${microPrecisionBefore}%`} sub="299 / 1481 candidates" color="#d97706" />
+        <StatCard label="Micro Recall (Before LLM)" value={`${microRecallBefore}%`} sub="299 / 415 native rows" color="#2AB5B0" />
+        <StatCard label="Micro Precision (Before LLM)" value={`${microPrecisionBefore}%`} sub="299 / 1481 candidates" color="#FF8A6B" />
         <StatCard label="Micro Precision (After LLM)" value="87.0%" sub="+67% precision gain" color="#16a34a" />
-        <StatCard label="Page Accuracy (±1)" value="100%" sub="Across all matched rows" color="#9333ea" />
+        <StatCard label="Page Accuracy (±1)" value="100%" sub="Across all matched rows" color="#8B7BD8" />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '1.25rem' }}>
@@ -131,7 +131,7 @@ export default function BenchmarkViewer() {
                   borderRadius: 4,
                   border: 'none',
                   background: selectedFixture.name === f.name ? '#eff6ff' : 'transparent',
-                  borderLeft: selectedFixture.name === f.name ? '3px solid #2563eb' : '3px solid transparent',
+                  borderLeft: selectedFixture.name === f.name ? '3px solid #2AB5B0' : '3px solid transparent',
                   cursor: 'pointer',
                 }}
               >
@@ -154,8 +154,8 @@ export default function BenchmarkViewer() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1rem' }}>
             <ProgressBar label="Precision Before LLM" value={selectedFixture.precisionBefore} color="#f59e0b" />
-            <ProgressBar label="Precision After LLM Validation" value={selectedFixture.precisionAfter} color="#10b981" />
-            <ProgressBar label="Recall Before LLM" value={selectedFixture.recallBefore} color="#3b82f6" />
+            <ProgressBar label="Precision After LLM Validation" value={selectedFixture.precisionAfter} color="#2AB5B0" />
+            <ProgressBar label="Recall Before LLM" value={selectedFixture.recallBefore} color="#2AB5B0" />
             <ProgressBar label="Recall After LLM Validation" value={selectedFixture.recallAfter} color="#6366f1" />
           </div>
 

@@ -32,7 +32,7 @@ export default function VerifiedPipesTab() {
         {sub === 'breakdown' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{BREAKDOWN_STATS.map((s, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #ef4444' }}><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.stat}</div><div style={{ fontSize: '18px', color: '#ef4444', fontWeight: 'bold' }}>{s.value}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>{s.note}</div></Card>))}</Grid>
           <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{WHY_REVIEW_FAILS.map((w, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #F5A623' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>✕ {w.belief}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{w.fails}</div></Card>))}</Grid>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{PIPELINE_GATES.map((g, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #10b981' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{g.gate}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{g.catches}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{PIPELINE_GATES.map((g, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{g.gate}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{g.catches}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Escaped-bug simulator</h3></div>
@@ -47,12 +47,12 @@ export default function VerifiedPipesTab() {
             </Card>
             <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #F5A623' }}>
               <div style={{ fontSize: '13px', color: 'white' }}><b style={{ color: '#ef4444' }}>{r.escapedPerWeek}</b> escaped/week → <b style={{ color: '#ef4444' }}>{r.incidentsPerWeek}</b> incidents</div>
-              <div style={{ fontSize: '12px', color: '#10b981', marginTop: '6px' }}>{r.verdict}</div>
+              <div style={{ fontSize: '12px', color: '#17837F', marginTop: '6px' }}>{r.verdict}</div>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginTop: '4px' }}>{r.note}</div>
             </Card>
           </Grid>
-          <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #38BDF8' }}>
-            <strong style={{ fontSize: '12px', color: '#38BDF8' }}>Where review still earns keep:</strong>
+          <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}>
+            <strong style={{ fontSize: '12px', color: '#17837F' }}>Where review still earns keep:</strong>
             {WHERE_REVIEW_EARNS_KEEP.map((w, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>• {w}</div>))}
           </Card>
         </Stack></Card></Stack>)}

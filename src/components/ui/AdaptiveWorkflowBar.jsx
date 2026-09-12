@@ -54,7 +54,7 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
   const checkAvailable = hasExitCheck(activeTab);
   // Claimed (migrated toggle, never proven) renders amber + hollow:
   // asserted progress must never look identical to earned progress.
-  const masteryTone = earned ? '#10b981' : claimed ? '#F5A623' : 'var(--ds-color-text-secondary)';
+  const masteryTone = earned ? '#2AB5B0' : claimed ? '#F5A623' : 'var(--ds-color-text-secondary)';
   const masteryLabel = earned
     ? `Mastered · ${mastery}`
     : claimed
@@ -245,7 +245,7 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
                 : checkAvailable ? 'Prove mastery: 3 questions (best score keeps)' : 'Exit check landing soon — visits still count'}
               style={{
                 background: earned ? 'rgba(16, 185, 129, 0.15)' : claimed ? 'rgba(245, 166, 35, 0.12)' : 'var(--ds-color-bg-canvas)',
-                borderColor: earned ? '#10b981' : claimed ? '#F5A623' : 'var(--ds-color-border-default)',
+                borderColor: earned ? '#2AB5B0' : claimed ? '#F5A623' : 'var(--ds-color-border-default)',
                 color: masteryTone,
                 fontWeight: proven ? 600 : 500,
                 position: 'relative',
@@ -259,7 +259,7 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
                 <span style={{
                   position: 'absolute',
                   top: '-18px',
-                  background: '#10b981',
+                  background: '#2AB5B0',
                   color: 'white',
                   fontSize: '10px',
                   fontWeight: 700,

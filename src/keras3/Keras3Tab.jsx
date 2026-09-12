@@ -109,7 +109,7 @@ export default function Keras3Tab() {
                 <Flex gap={3} wrap>
                   {[
                     { id: 'torch', label: '🔥 PyTorch Backend', color: '#ee4c2c' },
-                    { id: 'jax', label: '⚡ JAX Backend', color: '#10b981' },
+                    { id: 'jax', label: '⚡ JAX Backend', color: '#17837F' },
                     { id: 'tensorflow', label: '🟧 TensorFlow Backend', color: '#f59e0b' }
                   ].map(b => (
                     <Button
@@ -166,7 +166,7 @@ export default function Keras3Tab() {
                             <td style={{ padding: '10px', fontWeight: 'bold' }}>{row.backend}</td>
                             <td style={{ padding: '10px', color: 'var(--ds-color-text-secondary)' }}>{row.primaryUse}</td>
                             <td style={{ padding: '10px', fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{row.pros}</td>
-                            <td style={{ padding: '10px', fontWeight: 'bold', color: '#10b981' }}>{row.speedBenchmark}</td>
+                            <td style={{ padding: '10px', fontWeight: 'bold', color: '#17837F' }}>{row.speedBenchmark}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -206,8 +206,8 @@ export default function Keras3Tab() {
                 </Flex>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #3b82f6' }}>
-                    <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3b82f6' }}>ENGLISH SOURCE TEXT (ENCODER INPUT):</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F' }}>ENGLISH SOURCE TEXT (ENCODER INPUT):</strong>
                     <div style={{ fontSize: 'var(--ds-font-size-body)', fontWeight: 'bold', marginTop: '6px' }}>
                       "{activePair.sourceEn}"
                     </div>
@@ -216,8 +216,8 @@ export default function Keras3Tab() {
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-                    <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#10b981' }}>SPANISH TARGET TEXT (DECODER TARGET):</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F' }}>SPANISH TARGET TEXT (DECODER TARGET):</strong>
                     <div style={{ fontSize: 'var(--ds-font-size-body)', fontWeight: 'bold', marginTop: '6px' }}>
                       "startofseq {activePair.targetEs} endofseq"
                     </div>
@@ -258,7 +258,7 @@ export default function Keras3Tab() {
                         </div>
                       )}
                       {step.output && (
-                        <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 'bold', marginTop: '4px' }}>
+                        <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>
                           Output: {step.output}
                         </div>
                       )}

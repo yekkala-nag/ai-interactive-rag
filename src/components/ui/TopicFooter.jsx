@@ -41,7 +41,7 @@ export function TopicFooter({ tabId, onSelectTab }) {
         <Card style={{ padding: '14px 16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #F5A623' }}>
           <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#F5A623', marginBottom: '4px' }}>🚫 Anti-Pattern</div>
           <div style={{ fontSize: '0.82rem', color: 'var(--ds-color-text-secondary)' }}>✕ {anti.no}</div>
-          <div style={{ fontSize: '0.82rem', color: '#10b981', marginTop: '4px' }}>✓ {anti.yes}</div>
+          <div style={{ fontSize: '0.82rem', color: '#17837F', marginTop: '4px' }}>✓ {anti.yes}</div>
         </Card>
       )}
       {checkable && (

@@ -5,14 +5,14 @@ export function AgenticPatternsQuadDiagram() {
   return (
     <div style={{
       background: '#090d16',
-      border: '1px solid #38bdf8',
+      border: '1px solid #2AB5B0',
       borderRadius: '12px',
       padding: '24px 20px',
       color: '#f8fafc',
       boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
     }}>
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#38bdf8' }}>
+        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#17837F' }}>
           🤖 The 4 Core Enterprise Agentic Patterns
         </h3>
         <p style={{ margin: '6px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
@@ -22,8 +22,8 @@ export function AgenticPatternsQuadDiagram() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px' }}>
         {/* Pattern 1 */}
-        <div style={{ background: '#0f172a', border: '1px solid #38bdf8', borderRadius: '10px', padding: '16px' }}>
-          <span style={{ fontSize: '10px', background: 'rgba(56, 189, 248, 0.2)', color: '#38bdf8', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>PATTERN A</span>
+        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '10px', padding: '16px' }}>
+          <span style={{ fontSize: '10px', background: 'rgba(56, 189, 248, 0.2)', color: '#17837F', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>PATTERN A</span>
           <h4 style={{ margin: '8px 0 4px 0', fontSize: '14px', color: '#ffffff' }}>ReAct Loop</h4>
           <p style={{ margin: '0 0 8px 0', fontSize: '11px', color: '#94a3b8' }}>Reason + Act</p>
           <div style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
@@ -32,8 +32,8 @@ export function AgenticPatternsQuadDiagram() {
         </div>
 
         {/* Pattern 2 */}
-        <div style={{ background: '#0f172a', border: '1px solid #10b981', borderRadius: '10px', padding: '16px' }}>
-          <span style={{ fontSize: '10px', background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>PATTERN B</span>
+        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '10px', padding: '16px' }}>
+          <span style={{ fontSize: '10px', background: 'rgba(16, 185, 129, 0.2)', color: '#17837F', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>PATTERN B</span>
           <h4 style={{ margin: '8px 0 4px 0', fontSize: '14px', color: '#ffffff' }}>Plan-and-Execute</h4>
           <p style={{ margin: '0 0 8px 0', fontSize: '11px', color: '#94a3b8' }}>StateGraph Router</p>
           <div style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
@@ -70,14 +70,14 @@ export function FullStackObservabilityStackDiagram() {
   return (
     <div style={{
       background: '#090d16',
-      border: '1px solid #10b981',
+      border: '1px solid #2AB5B0',
       borderRadius: '12px',
       padding: '24px 20px',
       color: '#f8fafc',
       boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
     }}>
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#10b981' }}>
+        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#17837F' }}>
           📊 Enterprise 4-Layer Observability Stack
         </h3>
         <p style={{ margin: '6px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
@@ -87,23 +87,23 @@ export function FullStackObservabilityStackDiagram() {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {/* Layer 1 */}
-        <div style={{ background: '#0f172a', borderLeft: '6px solid #10b981', borderRadius: '8px', padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ background: '#0f172a', borderLeft: '6px solid #2AB5B0', borderRadius: '8px', padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#10b981' }}>LAYER 1: BUSINESS METRICS</div>
+            <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#17837F' }}>LAYER 1: BUSINESS METRICS</div>
             <div style={{ fontSize: '12px', color: '#cbd5e1' }}>Cost per query, CSAT user feedback (1-5), business unit cost attribution, token savings ROI</div>
           </div>
-          <span style={{ fontSize: '11px', background: 'rgba(16, 185, 129, 0.15)', color: '#10b981', padding: '4px 10px', borderRadius: '6px', fontWeight: 'bold' }}>
+          <span style={{ fontSize: '11px', background: 'rgba(16, 185, 129, 0.15)', color: '#17837F', padding: '4px 10px', borderRadius: '6px', fontWeight: 'bold' }}>
             LangSmith / BI Data Lake
           </span>
         </div>
 
         {/* Layer 2 */}
-        <div style={{ background: '#0f172a', borderLeft: '6px solid #38bdf8', borderRadius: '8px', padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ background: '#0f172a', borderLeft: '6px solid #2AB5B0', borderRadius: '8px', padding: '14px 18px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#38bdf8' }}>LAYER 2: APPLICATION METRICS</div>
+            <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#17837F' }}>LAYER 2: APPLICATION METRICS</div>
             <div style={{ fontSize: '12px', color: '#cbd5e1' }}>P95 / P99 latency, requests per second (RPS), error rates, cache hit rate percentage</div>
           </div>
-          <span style={{ fontSize: '11px', background: 'rgba(56, 189, 248, 0.15)', color: '#38bdf8', padding: '4px 10px', borderRadius: '6px', fontWeight: 'bold' }}>
+          <span style={{ fontSize: '11px', background: 'rgba(56, 189, 248, 0.15)', color: '#17837F', padding: '4px 10px', borderRadius: '6px', fontWeight: 'bold' }}>
             Prometheus & Grafana
           </span>
         </div>
@@ -156,13 +156,13 @@ export function EndToEndEnterpriseArchitectureDiagram() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 40px 1.2fr 40px 1.2fr', alignItems: 'center', gap: '8px', textAlign: 'center' }}>
         {/* Tier 1 */}
-        <div style={{ background: '#0f172a', border: '1px solid #38bdf8', borderRadius: '8px', padding: '14px' }}>
-          <div style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 'bold' }}>INGRESS TIER</div>
+        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '14px' }}>
+          <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>INGRESS TIER</div>
           <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#ffffff', margin: '4px 0' }}>API Gateway</div>
           <div style={{ fontSize: '10px', color: '#94a3b8' }}>Consistent Hash Router + Rate Limiting</div>
         </div>
 
-        <div style={{ fontSize: '18px', color: '#38bdf8', fontWeight: 'bold' }}>➔</div>
+        <div style={{ fontSize: '18px', color: '#17837F', fontWeight: 'bold' }}>➔</div>
 
         {/* Tier 2 */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -170,8 +170,8 @@ export function EndToEndEnterpriseArchitectureDiagram() {
             <strong style={{ color: '#f59e0b' }}>Kafka Event Stream</strong>
             <div style={{ fontSize: '9px', color: '#94a3b8' }}>ai-queries ➔ ai-processing</div>
           </div>
-          <div style={{ background: '#0f172a', border: '1px solid #10b981', borderRadius: '8px', padding: '8px', fontSize: '11px' }}>
-            <strong style={{ color: '#10b981' }}>Redis Cluster Cache</strong>
+          <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '8px', fontSize: '11px' }}>
+            <strong style={{ color: '#17837F' }}>Redis Cluster Cache</strong>
             <div style={{ fontSize: '9px', color: '#94a3b8' }}>TTL Caching & Invalidation</div>
           </div>
         </div>
@@ -184,8 +184,8 @@ export function EndToEndEnterpriseArchitectureDiagram() {
             <strong style={{ color: '#a855f7' }}>AI Processing Layer</strong>
             <div style={{ fontSize: '9px', color: '#94a3b8' }}>RAG + Agentic StateGraph</div>
           </div>
-          <div style={{ background: '#0f172a', border: '1px solid #38bdf8', borderRadius: '8px', padding: '8px', fontSize: '11px' }}>
-            <strong style={{ color: '#38bdf8' }}>Distributed Workloads</strong>
+          <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '8px', fontSize: '11px' }}>
+            <strong style={{ color: '#17837F' }}>Distributed Workloads</strong>
             <div style={{ fontSize: '9px', color: '#94a3b8' }}>Celery Chords + Ray Cluster</div>
           </div>
         </div>
@@ -199,14 +199,14 @@ export function SecurityGuardrailsPipelineDiagram() {
   return (
     <div style={{
       background: '#090d16',
-      border: '1px solid #10b981',
+      border: '1px solid #2AB5B0',
       borderRadius: '12px',
       padding: '24px 20px',
       color: '#f8fafc',
       boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
     }}>
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#10b981' }}>
+        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#17837F' }}>
           🛡️ Enterprise 3-Stage Security & Guardrails Pipeline
         </h3>
         <p style={{ margin: '6px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
@@ -216,8 +216,8 @@ export function SecurityGuardrailsPipelineDiagram() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
         {/* Stage 1 */}
-        <div style={{ background: '#0f172a', border: '1px solid #38bdf8', borderRadius: '10px', padding: '16px' }}>
-          <span style={{ fontSize: '10px', background: 'rgba(56, 189, 248, 0.2)', color: '#38bdf8', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>STAGE 1</span>
+        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '10px', padding: '16px' }}>
+          <span style={{ fontSize: '10px', background: 'rgba(56, 189, 248, 0.2)', color: '#17837F', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>STAGE 1</span>
           <h4 style={{ margin: '8px 0 4px 0', fontSize: '14px', color: '#ffffff' }}>Presidio PII Redaction</h4>
           <p style={{ margin: '0 0 8px 0', fontSize: '11px', color: '#94a3b8' }}>Local NLP Sanitization</p>
           <div style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
@@ -236,8 +236,8 @@ export function SecurityGuardrailsPipelineDiagram() {
         </div>
 
         {/* Stage 3 */}
-        <div style={{ background: '#0f172a', border: '1px solid #10b981', borderRadius: '10px', padding: '16px' }}>
-          <span style={{ fontSize: '10px', background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>STAGE 3</span>
+        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '10px', padding: '16px' }}>
+          <span style={{ fontSize: '10px', background: 'rgba(16, 185, 129, 0.2)', color: '#17837F', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>STAGE 3</span>
           <h4 style={{ margin: '8px 0 4px 0', fontSize: '14px', color: '#ffffff' }}>RBAC Pre-Filtered Vector DB</h4>
           <p style={{ margin: '0 0 8px 0', fontSize: '11px', color: '#94a3b8' }}>Security-Trimmed Search</p>
           <div style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
@@ -270,16 +270,16 @@ export function StackAdaptationComparisonDiagram() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
-        <div style={{ background: '#0f172a', border: '1px solid #38bdf8', borderRadius: '10px', padding: '16px' }}>
-          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#38bdf8' }}>PYTHON ECOSYSTEM</div>
+        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '10px', padding: '16px' }}>
+          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#17837F' }}>PYTHON ECOSYSTEM</div>
           <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff', margin: '4px 0 8px 0' }}>LangChain & LangGraph</div>
           <p style={{ fontSize: '11px', color: '#cbd5e1', margin: 0, lineHeight: '1.4' }}>
             Rapid AI research, StateGraph multi-agent cyclical loops, Qdrant/Chroma clients, and native LangSmith tracing.
           </p>
         </div>
 
-        <div style={{ background: '#0f172a', border: '1px solid #10b981', borderRadius: '10px', padding: '16px' }}>
-          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#10b981' }}>JAVA / SPRING AI</div>
+        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '10px', padding: '16px' }}>
+          <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#17837F' }}>JAVA / SPRING AI</div>
           <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff', margin: '4px 0 8px 0' }}>Spring AI & Micrometer</div>
           <p style={{ fontSize: '11px', color: '#cbd5e1', margin: 0, lineHeight: '1.4' }}>
             Enterprise Java Spring Boot services, ChatClient with advisors, pgvector store, and Micrometer OpenTelemetry.

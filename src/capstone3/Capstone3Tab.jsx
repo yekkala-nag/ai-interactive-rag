@@ -51,14 +51,14 @@ export default function Capstone3Tab({ onSelectTab }) {
                   You inherit the mess: confident fabrications, a five-figure run-rate, retrieval that misses. No rewrites from scratch — rescue it in place, with before/after numbers for every intervention.
                 </p></div>
               <div style={{ height: '8px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${pct}%`, background: complete ? '#10b981' : '#c9a84c', borderRadius: '4px', transition: 'width 0.3s ease' }} />
+                <div style={{ height: '100%', width: `${pct}%`, background: complete ? '#2AB5B0' : '#FF8A6B', borderRadius: '4px', transition: 'width 0.3s ease' }} />
               </div>
               <Stack gap={2}>
                 {MILESTONES.map((ms, i) => (
                   <label key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', padding: '10px 12px', background: 'var(--ds-color-bg-surface)', borderRadius: '8px', border: `1px solid ${done.includes(i) ? 'rgba(16,185,129,0.4)' : 'var(--ds-color-border-subtle)'}`, cursor: 'pointer', fontSize: '0.85rem' }}>
                     <input type="checkbox" checked={done.includes(i)} onChange={() => toggle(i)} style={{ marginTop: '3px' }} />
                     <span>
-                      <strong style={{ color: done.includes(i) ? '#10b981' : 'var(--ds-color-text-primary)' }}>{done.includes(i) ? '✓ ' : `${i + 1}. `}{ms.m}</strong>
+                      <strong style={{ color: done.includes(i) ? '#2AB5B0' : 'var(--ds-color-text-primary)' }}>{done.includes(i) ? '✓ ' : `${i + 1}. `}{ms.m}</strong>
                       <span style={{ display: 'block', color: 'var(--ds-color-text-secondary)', fontSize: '0.78rem' }}>{ms.done}</span>
                       <span style={{ display: 'block', color: 'var(--ds-color-text-tertiary)', fontSize: '0.7rem' }}>proves: {ms.proves.join(' · ')}</span>
                     </span>

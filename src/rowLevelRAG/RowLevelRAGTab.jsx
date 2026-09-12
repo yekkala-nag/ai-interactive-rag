@@ -110,12 +110,12 @@ export default function RowLevelRAGTab() {
 
                 <Stack gap={3}>
                   {RETRIEVAL_MISMATCH_CONCEPTS.map((c, idx) => (
-                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${idx === 1 ? '#10b981' : '#38BDF8'}` }}>
+                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${idx === 1 ? '#2AB5B0' : '#2AB5B0'}` }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: idx === 1 ? '#10b981' : '#38BDF8' }}>
+                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: idx === 1 ? '#2AB5B0' : '#2AB5B0' }}>
                           {c.concept}
                         </strong>
-                        <Badge variant="subtle" style={{ background: idx === 1 ? 'rgba(46,204,140,0.15)' : 'rgba(56,189,248,0.15)', color: idx === 1 ? '#10b981' : '#38BDF8' }}>
+                        <Badge variant="subtle" style={{ background: idx === 1 ? 'rgba(46,204,140,0.15)' : 'rgba(56,189,248,0.15)', color: idx === 1 ? '#2AB5B0' : '#2AB5B0' }}>
                           {idx === 1 ? 'RECOMMENDED_TARGETED' : 'OVERVIEW_ONLY'}
                         </Badge>
                       </Flex>
@@ -128,7 +128,7 @@ export default function RowLevelRAGTab() {
 
                         <div>
                           <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>Impact & Evaluation:</div>
-                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: idx === 1 ? '#10b981' : '#ef4444' }}>{c.problem}</div>
+                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: idx === 1 ? '#2AB5B0' : '#ef4444' }}>{c.problem}</div>
                         </div>
                       </Grid>
 
@@ -151,14 +151,14 @@ export default function RowLevelRAGTab() {
                 <div>
                   <h3 style={{ margin: 0 }}>🔍 Markdown-Pipe Parser Rules & Extraction Contract</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
-                    Parsers like Docling and Azure Document Intelligence emit tables as markdown-pipe lines in <code style={{ color: '#10b981' }}>line_df</code>. The pipe structure is detected without parser-specific branching.
+                    Parsers like Docling and Azure Document Intelligence emit tables as markdown-pipe lines in <code style={{ color: '#17837F' }}>line_df</code>. The pipe structure is detected without parser-specific branching.
                   </p>
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {MARKDOWN_PIPE_PARSER_RULES.map((r, idx) => (
-                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#10b981', display: 'block', marginBottom: '4px' }}>
+                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', display: 'block', marginBottom: '4px' }}>
                         {r.rule}
                       </strong>
                       <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
@@ -169,10 +169,10 @@ export default function RowLevelRAGTab() {
                 </Grid>
 
                 <div>
-                  <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#38BDF8', display: 'block', marginBottom: '8px' }}>
+                  <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', display: 'block', marginBottom: '8px' }}>
                     Sample Parsed Pipe Table (Car Insurance Policy Dataset)
                   </strong>
-                  <Card style={{ padding: '12px', background: '#090d16', fontFamily: 'monospace', fontSize: '11px', color: '#10b981' }}>
+                  <Card style={{ padding: '12px', background: '#090d16', fontFamily: 'monospace', fontSize: '11px', color: '#17837F' }}>
                     <div>| Covered Event | Coverage Cap | Deductible | Eligibility Condition |</div>
                     <div>| --- | --- | --- | --- |</div>
                     {SAMPLE_INSURANCE_TABLE_ROWS.map(r => (
@@ -232,18 +232,18 @@ export default function RowLevelRAGTab() {
                     </Stack>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${retrievalMode === 'row_level' ? '#10b981' : '#ef4444'}` }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${retrievalMode === 'row_level' ? '#2AB5B0' : '#ef4444'}` }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: retrievalMode === 'row_level' ? '#10b981' : '#ef4444' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: retrievalMode === 'row_level' ? '#2AB5B0' : '#ef4444' }}>
                         RETRIEVED CONTEXT RESULTS
                       </strong>
-                      <Badge variant="subtle" style={{ background: retrievalMode === 'row_level' ? 'rgba(46,204,140,0.15)' : 'rgba(239,68,68,0.15)', color: retrievalMode === 'row_level' ? '#10b981' : '#ef4444', fontSize: '9px' }}>
+                      <Badge variant="subtle" style={{ background: retrievalMode === 'row_level' ? 'rgba(46,204,140,0.15)' : 'rgba(239,68,68,0.15)', color: retrievalMode === 'row_level' ? '#2AB5B0' : '#ef4444', fontSize: '9px' }}>
                         {simResult.totalTokens} TOKENS | NOISE: {simResult.contextNoisePct}%
                       </Badge>
                     </Flex>
 
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>Retrieved Payload Sent to LLM Context:</div>
-                    <Card style={{ padding: '10px', background: '#090d16', color: retrievalMode === 'row_level' ? '#10b981' : '#38BDF8', fontFamily: 'monospace', fontSize: '11px', whiteSpace: 'pre-wrap' }}>
+                    <Card style={{ padding: '10px', background: '#090d16', color: retrievalMode === 'row_level' ? '#2AB5B0' : '#2AB5B0', fontFamily: 'monospace', fontSize: '11px', whiteSpace: 'pre-wrap' }}>
                       {simResult.retrievedContext}
                     </Card>
 

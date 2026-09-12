@@ -15,7 +15,7 @@ export default function AgentHITLTab() {
   const [conf, setConf] = useState(0.6);
   const [novel, setNovel] = useState('routine');
   const g = REQUIRED_GATE(irrev, blast, conf, novel);
-  const gc = g.autonomy === 'L1' ? '#ef4444' : g.autonomy === 'L2' ? '#F5A623' : '#10b981';
+  const gc = g.autonomy === 'L1' ? '#ef4444' : g.autonomy === 'L2' ? '#F5A623' : '#2AB5B0';
   const sel = { width: '100%', background: 'var(--ds-color-bg-surface)', color: 'white', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '6px', fontSize: '12px', marginBottom: '8px' };
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
@@ -33,7 +33,7 @@ export default function AgentHITLTab() {
             <div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'gates' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{HITL_PATTERNS.map((p, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #38BDF8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{p.name}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{p.where}</div><div style={{ fontSize: '11px', color: '#F5A623' }}>cost: {p.cost}</div><div style={{ fontSize: '11px', color: '#ef4444' }}>risk: {p.risk}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{HITL_PATTERNS.map((p, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{p.name}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{p.where}</div><div style={{ fontSize: '11px', color: '#F5A623' }}>cost: {p.cost}</div><div style={{ fontSize: '11px', color: '#ef4444' }}>risk: {p.risk}</div></Card>))}</Grid>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ padding: '8px' }}>Level</th><th style={{ textAlign: 'left', padding: '8px' }}>Human role</th><th style={{ textAlign: 'left', padding: '8px' }}>Example</th></tr></thead>
             <tbody>{AUTONOMY_LADDER.map((a, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>{a.level}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.human}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.example}</td></tr>))}</tbody></table></div>

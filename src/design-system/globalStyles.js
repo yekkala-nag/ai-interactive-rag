@@ -18,15 +18,15 @@ ${generateCSSVariables({
       subtle: '#E7E5E4',
       default: '#D6D3D1',
       strong: '#A8A29E',
-      focus: '#0D9488',
+      focus: '#17837F',
     },
     text: {
       primary: '#0F172A',
       secondary: '#334155',
       tertiary: '#475569',
       inverse: '#FAFAF9',
-      link: '#0D9488',
-      linkHover: '#0F766E',
+      link: '#17837F',
+      linkHover: '#0C4F4C',
     },
     module: {
       foundations: { primary: '#2AB5B0', light: 'rgba(42,181,176,0.14)', dark: '#0C4F4C' },

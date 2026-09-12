@@ -126,9 +126,9 @@ export default function EnterpriseAdvancedPlaybookTab() {
                 gap: '8px',
                 padding: '10px 16px',
                 borderRadius: '8px',
-                border: activeSubTab === tab.id ? '1px solid #38bdf8' : '1px solid transparent',
+                border: activeSubTab === tab.id ? '1px solid #2AB5B0' : '1px solid transparent',
                 background: activeSubTab === tab.id ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                color: activeSubTab === tab.id ? '#38bdf8' : 'var(--ds-color-text-secondary)',
+                color: activeSubTab === tab.id ? '#2AB5B0' : 'var(--ds-color-text-secondary)',
                 fontWeight: activeSubTab === tab.id ? 'bold' : 'normal',
                 fontSize: '13px',
                 cursor: 'pointer',
@@ -145,9 +145,9 @@ export default function EnterpriseAdvancedPlaybookTab() {
         {/* ─── SUBTAB 1: CORE AGENTIC PATTERNS ─── */}
         {activeSubTab === 'agentpatterns' && (
           <Stack gap={6}>
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #38bdf8' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #2AB5B0' }}>
               <div style={{ marginBottom: '14px' }}>
-                <span style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
+                <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
                 <h3 style={{ margin: '4px 0 0 0', color: '#f8fafc' }}>Enterprise Agentic Patterns Architecture</h3>
               </div>
               <img
@@ -163,7 +163,7 @@ export default function EnterpriseAdvancedPlaybookTab() {
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#38bdf8' }}>🎮 Interactive Pattern Execution Simulator</h3>
+                  <h3 style={{ margin: 0, color: '#17837F' }}>🎮 Interactive Pattern Execution Simulator</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Select a pattern to trace its step-by-step internal reasoning and execution state.
                   </p>
@@ -180,9 +180,9 @@ export default function EnterpriseAdvancedPlaybookTab() {
                     style={{
                       padding: '10px 12px',
                       borderRadius: '6px',
-                      border: selectedPatternId === p.id ? '1px solid #38bdf8' : '1px solid var(--ds-color-border-subtle)',
+                      border: selectedPatternId === p.id ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                       background: selectedPatternId === p.id ? 'rgba(56, 189, 248, 0.15)' : '#090d16',
-                      color: selectedPatternId === p.id ? '#38bdf8' : '#cbd5e1',
+                      color: selectedPatternId === p.id ? '#2AB5B0' : '#cbd5e1',
                       cursor: 'pointer',
                       textAlign: 'left',
                       fontSize: '12px'
@@ -196,7 +196,7 @@ export default function EnterpriseAdvancedPlaybookTab() {
 
               {/* Active Pattern Details */}
               <div style={{ background: '#090d16', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '8px', padding: '16px', marginBottom: '16px' }}>
-                <div style={{ fontSize: '12px', color: '#38bdf8', fontFamily: 'monospace', marginBottom: '4px' }}>
+                <div style={{ fontSize: '12px', color: '#17837F', fontFamily: 'monospace', marginBottom: '4px' }}>
                   Formula: {activePattern.formula}
                 </div>
                 <div style={{ fontSize: '13px', color: '#f8fafc', marginBottom: '12px' }}>
@@ -207,7 +207,7 @@ export default function EnterpriseAdvancedPlaybookTab() {
                   {activePattern.steps.map((st, idx) => (
                     <div key={idx} style={{
                       background: 'rgba(255,255,255,0.02)',
-                      borderLeft: `4px solid ${st.type === 'thought' ? '#38bdf8' : st.type === 'action' ? '#f59e0b' : st.type === 'observation' ? '#10b981' : '#a855f7'}`,
+                      borderLeft: `4px solid ${st.type === 'thought' ? '#2AB5B0' : st.type === 'action' ? '#f59e0b' : st.type === 'observation' ? '#2AB5B0' : '#a855f7'}`,
                       padding: '8px 12px',
                       borderRadius: '4px',
                       fontSize: '12px',
@@ -304,20 +304,20 @@ workflow.add_conditional_edges("supervisor", route_supervisor, {**{w: w for w in
         {activeSubTab === 'memorytools' && (
           <Stack gap={6}>
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 14px 0', color: '#10b981' }}>🧠 Agent Memory Patterns Comparison</h3>
+              <h3 style={{ margin: '0 0 14px 0', color: '#17837F' }}>🧠 Agent Memory Patterns Comparison</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '24px' }}>
                 {MEMORY_PATTERNS.map((mem, idx) => (
                   <div key={idx} style={{ background: '#090d16', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '8px', padding: '16px' }}>
                     <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#f8fafc', marginBottom: '4px' }}>
                       {mem.name}
                     </div>
-                    <div style={{ fontSize: '11px', color: '#38bdf8', fontFamily: 'monospace', marginBottom: '8px' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace', marginBottom: '8px' }}>
                       {mem.implementation}
                     </div>
                     <p style={{ fontSize: '11px', color: '#cbd5e1', margin: '0 0 8px 0', lineHeight: '1.4' }}>
                       <strong>Mechanism:</strong> {mem.mechanism}
                     </p>
-                    <div style={{ fontSize: '10px', color: '#10b981', marginBottom: '4px' }}>
+                    <div style={{ fontSize: '10px', color: '#17837F', marginBottom: '4px' }}>
                       ✔ {mem.pros}
                     </div>
                     <div style={{ fontSize: '10px', color: '#ef4444', marginBottom: '8px' }}>
@@ -331,7 +331,7 @@ workflow.add_conditional_edges("supervisor", route_supervisor, {**{w: w for w in
               </div>
 
               {/* Interactive Tool Execution Sandbox */}
-              <h3 style={{ margin: '0 0 12px 0', color: '#38bdf8' }}>🛠️ Interactive Enterprise Tool Sandbox (@tool)</h3>
+              <h3 style={{ margin: '0 0 12px 0', color: '#17837F' }}>🛠️ Interactive Enterprise Tool Sandbox (@tool)</h3>
               <p style={{ margin: '0 0 16px 0', fontSize: '13px', color: 'var(--ds-color-text-secondary)' }}>
                 Test how the LLM binds to typed Python tools to perform actions in external systems.
               </p>
@@ -344,9 +344,9 @@ workflow.add_conditional_edges("supervisor", route_supervisor, {**{w: w for w in
                     style={{
                       padding: '8px 14px',
                       borderRadius: '6px',
-                      border: selectedTool === tool ? '1px solid #38bdf8' : '1px solid var(--ds-color-border-subtle)',
+                      border: selectedTool === tool ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                       background: selectedTool === tool ? 'rgba(56, 189, 248, 0.15)' : '#090d16',
-                      color: selectedTool === tool ? '#38bdf8' : '#cbd5e1',
+                      color: selectedTool === tool ? '#2AB5B0' : '#cbd5e1',
                       fontSize: '12px',
                       cursor: 'pointer'
                     }}
@@ -411,8 +411,8 @@ workflow.add_conditional_edges("supervisor", route_supervisor, {**{w: w for w in
                 </div>
 
                 {toolExecResult && (
-                  <div style={{ marginTop: '14px', background: '#0f172a', border: '1px solid #10b981', borderRadius: '6px', padding: '12px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#10b981', marginBottom: '4px' }}>
+                  <div style={{ marginTop: '14px', background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '6px', padding: '12px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#17837F', marginBottom: '4px' }}>
                       <span>STATUS: {toolExecResult.status}</span>
                       <span>LATENCY: {toolExecResult.executionTimeMs}ms</span>
                     </div>
@@ -429,9 +429,9 @@ workflow.add_conditional_edges("supervisor", route_supervisor, {**{w: w for w in
         {/* ─── SUBTAB 3: FULL-STACK OBSERVABILITY ─── */}
         {activeSubTab === 'observability' && (
           <Stack gap={6}>
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #10b981' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #2AB5B0' }}>
               <div style={{ marginBottom: '14px' }}>
-                <span style={{ fontSize: '11px', color: '#10b981', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
+                <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
                 <h3 style={{ margin: '4px 0 0 0', color: '#f8fafc' }}>Enterprise Full-Stack AI Observability Stack</h3>
               </div>
               <img
@@ -445,7 +445,7 @@ workflow.add_conditional_edges("supervisor", route_supervisor, {**{w: w for w in
 
             {/* Interactive Prometheus Live Metrics Simulator */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 14px 0', color: '#10b981' }}>📈 Live Prometheus & OpenTelemetry Metrics Simulator</h3>
+              <h3 style={{ margin: '0 0 14px 0', color: '#17837F' }}>📈 Live Prometheus & OpenTelemetry Metrics Simulator</h3>
               
               <Grid cols={2} gap={4} style={{ marginBottom: '20px' }}>
                 <div>
@@ -458,7 +458,7 @@ workflow.add_conditional_edges("supervisor", route_supervisor, {**{w: w for w in
                     max="100"
                     value={qps}
                     onChange={(e) => setQps(Number(e.target.value))}
-                    style={{ width: '100%', accentColor: '#38bdf8' }}
+                    style={{ width: '100%', accentColor: '#2AB5B0' }}
                   />
                 </div>
                 <div>
@@ -472,7 +472,7 @@ workflow.add_conditional_edges("supervisor", route_supervisor, {**{w: w for w in
                     step="0.05"
                     value={cacheHitRatio}
                     onChange={(e) => setCacheHitRatio(Number(e.target.value))}
-                    style={{ width: '100%', accentColor: '#10b981' }}
+                    style={{ width: '100%', accentColor: '#2AB5B0' }}
                   />
                 </div>
               </Grid>
@@ -481,11 +481,11 @@ workflow.add_conditional_edges("supervisor", route_supervisor, {**{w: w for w in
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginBottom: '20px' }}>
                 <div style={{ background: '#090d16', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '6px', padding: '12px' }}>
                   <div style={{ fontSize: '10px', color: '#94a3b8' }}>P95 LATENCY</div>
-                  <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#38bdf8' }}>{liveMetrics.p95LatencyMs}ms</div>
+                  <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#17837F' }}>{liveMetrics.p95LatencyMs}ms</div>
                 </div>
                 <div style={{ background: '#090d16', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '6px', padding: '12px' }}>
                   <div style={{ fontSize: '10px', color: '#94a3b8' }}>TOKEN VELOCITY</div>
-                  <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#10b981' }}>{liveMetrics.tokensPerSec.toLocaleString()}/s</div>
+                  <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#17837F' }}>{liveMetrics.tokensPerSec.toLocaleString()}/s</div>
                 </div>
                 <div style={{ background: '#090d16', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '6px', padding: '12px' }}>
                   <div style={{ fontSize: '10px', color: '#94a3b8' }}>PROJECTED HOURLY COST</div>
@@ -643,11 +643,11 @@ for msg in consumer:
                 <Grid cols={3} gap={4}>
                   <div style={{ background: '#0f172a', padding: '10px', borderRadius: '4px' }}>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>HASH VALUE</div>
-                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#38bdf8' }}>{hashRoutingResult.hashVal}</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#17837F' }}>{hashRoutingResult.hashVal}</div>
                   </div>
                   <div style={{ background: '#0f172a', padding: '10px', borderRadius: '4px' }}>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>RING POSITION</div>
-                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#10b981' }}>{hashRoutingResult.virtualRingPosition}</div>
+                    <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#17837F' }}>{hashRoutingResult.virtualRingPosition}</div>
                   </div>
                   <div style={{ background: '#0f172a', padding: '10px', borderRadius: '4px' }}>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>ASSIGNED WORKER</div>
@@ -693,7 +693,7 @@ for msg in consumer:
             {/* 10-Week Roadmap Table */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ marginBottom: '16px' }}>
-                <h3 style={{ margin: 0, color: '#38bdf8' }}>📅 10-Week Enterprise AI Implementation Roadmap</h3>
+                <h3 style={{ margin: 0, color: '#17837F' }}>📅 10-Week Enterprise AI Implementation Roadmap</h3>
                 <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                   Enterprise phasing from baseline observability to auto-scaled distributed production.
                 </p>
@@ -701,7 +701,7 @@ for msg in consumer:
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {TEN_WEEK_ROADMAP.map((phase, idx) => (
-                  <div key={idx} style={{ background: '#090d16', borderLeft: `4px solid ${phase.completed ? '#10b981' : '#f59e0b'}`, borderRadius: '8px', padding: '14px 18px' }}>
+                  <div key={idx} style={{ background: '#090d16', borderLeft: `4px solid ${phase.completed ? '#2AB5B0' : '#f59e0b'}`, borderRadius: '8px', padding: '14px 18px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                       <div>
                         <strong style={{ fontSize: '14px', color: '#f8fafc' }}>{phase.weeks}: {phase.title}</strong>
@@ -732,7 +732,7 @@ for msg in consumer:
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#38bdf8' }}>🛡️ 1.1 Inbound PII Redaction & Data Masking (Presidio)</h3>
+                  <h3 style={{ margin: 0, color: '#17837F' }}>🛡️ 1.1 Inbound PII Redaction & Data Masking (Presidio)</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Anonymize customer PII (SSN, emails, names, phone numbers) before sending prompts to external model providers.
                   </p>
@@ -754,7 +754,7 @@ for msg in consumer:
                 />
 
                 <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '4px' }}>SANITIZED PROMPT SENT TO LLM:</div>
-                <div style={{ background: '#0f172a', border: '1px solid #38bdf8', padding: '10px 14px', borderRadius: '6px', color: '#38bdf8', fontFamily: 'monospace', fontSize: '12px' }}>
+                <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', padding: '10px 14px', borderRadius: '6px', color: '#17837F', fontFamily: 'monospace', fontSize: '12px' }}>
                   {piiRedactionResult.sanitizedText}
                 </div>
               </div>
@@ -801,7 +801,7 @@ def redact_pii(text: str) -> str:
                 <Grid cols={3} gap={4}>
                   <div style={{ background: '#0f172a', padding: '10px', borderRadius: '4px' }}>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>INJECTION SCORE</div>
-                    <div style={{ fontSize: '18px', fontWeight: 'bold', color: injectionResult.injectionScore >= 0.5 ? '#ef4444' : '#10b981' }}>
+                    <div style={{ fontSize: '18px', fontWeight: 'bold', color: injectionResult.injectionScore >= 0.5 ? '#ef4444' : '#2AB5B0' }}>
                       {injectionResult.injectionScore}
                     </div>
                   </div>
@@ -835,7 +835,7 @@ def validate_input(user_input: str):
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#10b981' }}>🔐 1.3 Role-Based Access Control (RBAC) in Vector Search</h3>
+                  <h3 style={{ margin: 0, color: '#17837F' }}>🔐 1.3 Role-Based Access Control (RBAC) in Vector Search</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Pre-filter vector queries with user authorization tags, preventing unauthorized document disclosure.
                   </p>
@@ -848,9 +848,9 @@ def validate_input(user_input: str):
                       style={{
                         padding: '6px 12px',
                         borderRadius: '6px',
-                        border: selectedRbacRole === role ? '1px solid #10b981' : '1px solid var(--ds-color-border-subtle)',
+                        border: selectedRbacRole === role ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                         background: selectedRbacRole === role ? 'rgba(16, 185, 129, 0.15)' : '#090d16',
-                        color: selectedRbacRole === role ? '#10b981' : '#cbd5e1',
+                        color: selectedRbacRole === role ? '#2AB5B0' : '#cbd5e1',
                         fontSize: '11px',
                         cursor: 'pointer'
                       }}
@@ -863,7 +863,7 @@ def validate_input(user_input: str):
 
               <div style={{ background: '#090d16', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '8px', padding: '16px', marginBottom: '16px' }}>
                 <div style={{ fontSize: '12px', color: '#cbd5e1', marginBottom: '10px' }}>
-                  Active User Role: <strong style={{ color: '#10b981' }}>{rbacResult.role}</strong> (Authorized Tags: <code>{rbacResult.allowedTags.join(', ')}</code>)
+                  Active User Role: <strong style={{ color: '#17837F' }}>{rbacResult.role}</strong> (Authorized Tags: <code>{rbacResult.allowedTags.join(', ')}</code>)
                 </div>
 
                 <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '8px' }}>
@@ -871,7 +871,7 @@ def validate_input(user_input: str):
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   {rbacResult.visibleDocs.map(doc => (
-                    <div key={doc.id} style={{ background: 'rgba(255,255,255,0.02)', padding: '8px 12px', borderRadius: '4px', borderLeft: '4px solid #10b981', fontSize: '12px' }}>
+                    <div key={doc.id} style={{ background: 'rgba(255,255,255,0.02)', padding: '8px 12px', borderRadius: '4px', borderLeft: '4px solid #2AB5B0', fontSize: '12px' }}>
                       <strong style={{ color: '#f8fafc' }}>{doc.title}</strong>
                       <span style={{ marginLeft: '8px', fontSize: '10px', background: 'rgba(16, 185, 129, 0.2)', color: '#6ee7b7', padding: '1px 6px', borderRadius: '3px' }}>
                         {doc.accessLevel}
@@ -907,8 +907,8 @@ def validate_input(user_input: str):
                   <thead>
                     <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
                       <th style={{ textAlign: 'left', padding: '8px', color: '#94a3b8' }}>Architectural Component</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#38bdf8' }}>Python (LangChain / LangGraph)</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Java (Spring AI)</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Python (LangChain / LangGraph)</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Java (Spring AI)</th>
                       <th style={{ textAlign: 'left', padding: '8px', color: '#f59e0b' }}>AWS Cloud-Native</th>
                     </tr>
                   </thead>
@@ -932,9 +932,9 @@ def validate_input(user_input: str):
                   style={{
                     padding: '8px 14px',
                     borderRadius: '6px',
-                    border: selectedStack === 'java' ? '1px solid #10b981' : '1px solid var(--ds-color-border-subtle)',
+                    border: selectedStack === 'java' ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                     background: selectedStack === 'java' ? 'rgba(16, 185, 129, 0.15)' : '#090d16',
-                    color: selectedStack === 'java' ? '#10b981' : '#cbd5e1',
+                    color: selectedStack === 'java' ? '#2AB5B0' : '#cbd5e1',
                     fontSize: '12px',
                     cursor: 'pointer'
                   }}
@@ -946,9 +946,9 @@ def validate_input(user_input: str):
                   style={{
                     padding: '8px 14px',
                     borderRadius: '6px',
-                    border: selectedStack === 'micrometer' ? '1px solid #10b981' : '1px solid var(--ds-color-border-subtle)',
+                    border: selectedStack === 'micrometer' ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                     background: selectedStack === 'micrometer' ? 'rgba(16, 185, 129, 0.15)' : '#090d16',
-                    color: selectedStack === 'micrometer' ? '#10b981' : '#cbd5e1',
+                    color: selectedStack === 'micrometer' ? '#2AB5B0' : '#cbd5e1',
                     fontSize: '12px',
                     cursor: 'pointer'
                   }}
@@ -1083,7 +1083,7 @@ print(completion)`}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#38bdf8' }}>📄 Automated Word (.docx) Playbook Generator</h3>
+                  <h3 style={{ margin: 0, color: '#17837F' }}>📄 Automated Word (.docx) Playbook Generator</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Generate a professionally formatted Microsoft Word document with styled headings, code blocks, and tables.
                   </p>
@@ -1095,7 +1095,7 @@ print(completion)`}
                 <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#f8fafc', marginBottom: '8px' }}>
                   🚀 How to Run the Generator:
                 </div>
-                <div style={{ background: '#0f172a', padding: '10px 14px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '12px', color: '#10b981', marginBottom: '12px' }}>
+                <div style={{ background: '#0f172a', padding: '10px 14px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '12px', color: '#17837F', marginBottom: '12px' }}>
                   $ pip install python-docx markdown<br />
                   $ python export_playbook.py
                 </div>
@@ -1124,8 +1124,8 @@ print(completion)`}
                     padding: '4px 10px',
                     borderRadius: '4px',
                     background: 'rgba(56, 189, 248, 0.15)',
-                    border: '1px solid #38bdf8',
-                    color: '#38bdf8',
+                    border: '1px solid #2AB5B0',
+                    color: '#17837F',
                     fontSize: '11px',
                     cursor: 'pointer'
                   }}

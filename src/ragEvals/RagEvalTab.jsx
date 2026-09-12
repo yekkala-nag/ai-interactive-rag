@@ -13,7 +13,7 @@ export default function RagEvalTab() {
   const [need, setNeed] = useState(6); const [found, setFound] = useState(5);
   const [claims, setClaims] = useState(10); const [supp, setSupp] = useState(9);
   const r = SCORE_RUN(ret, rel, need, found, claims, supp);
-  const bandColor = r.band === 'Ship' ? '#10b981' : r.band === 'Gate' ? '#F5A623' : '#ef4444';
+  const bandColor = r.band === 'Ship' ? '#2AB5B0' : r.band === 'Gate' ? '#F5A623' : '#ef4444';
   const tabs = [
     { id: 'triad', icon: '📐', label: '1. Eval Triad', desc: 'Precision · recall · faithfulness' },
     { id: 'sim', icon: '🔬', label: '2. Ship-Gate Simulator', desc: 'Score a QA run live' },
@@ -35,11 +35,11 @@ export default function RagEvalTab() {
         </div>
         {sub === 'triad' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div><h3 style={{ margin: 0 }}>📐 Four metrics, each with an owner</h3></div>
-          {EVAL_METRICS.map((m, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${m.metric === 'Faithfulness' ? '#10b981' : '#38BDF8'}` }}>
+          {EVAL_METRICS.map((m, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${m.metric === 'Faithfulness' ? '#2AB5B0' : '#2AB5B0'}` }}>
             <Flex justify="space-between" align="center"><strong style={{ color: 'white' }}>{m.metric}</strong><Badge variant="subtle" style={{ fontSize: '9px' }}>{m.range}</Badge></Flex>
             <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)" style={{ fontSize: '11px', marginTop: '6px' }}>
               <div><span style={{ color: '#F5A623', fontWeight: 'bold' }}>Asks: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{m.asks}</span></div>
-              <div><span style={{ color: '#10b981', fontWeight: 'bold' }}>Fix: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{m.fix}</span></div></Grid></Card>))}
+              <div><span style={{ color: '#17837F', fontWeight: 'bold' }}>Fix: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{m.fix}</span></div></Grid></Card>))}
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Ship-gate simulator</h3></div>
@@ -61,7 +61,7 @@ export default function RagEvalTab() {
           <div><h3 style={{ margin: 0 }}>🛠️ Grade bands + Python scorer</h3></div>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ padding: '8px' }}>Band</th><th style={{ textAlign: 'left', padding: '8px' }}>Rule</th><th style={{ textAlign: 'left', padding: '8px' }}>Action</th></tr></thead>
-            <tbody>{GRADE_TABLE.map((g, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', textAlign: 'center', color: g.band === 'Ship' ? '#10b981' : g.band === 'Gate' ? '#F5A623' : '#ef4444', fontWeight: 'bold' }}>{g.band}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace' }}>{g.rule}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{g.action}</td></tr>))}</tbody></table></div>
+            <tbody>{GRADE_TABLE.map((g, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', textAlign: 'center', color: g.band === 'Ship' ? '#2AB5B0' : g.band === 'Gate' ? '#F5A623' : '#ef4444', fontWeight: 'bold' }}>{g.band}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace' }}>{g.rule}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{g.action}</td></tr>))}</tbody></table></div>
           <CodeBlock language="python" code={PYTHON_RAGEVAL_CODE} />
           <Callout type="success"><strong>Fix order matters:</strong> faithfulness fault → generation contract first. Recall fault → retrieval rebuild. Precision fault → rerank + filter. Never tune prompts to fix retrieval blindness.</Callout>
         </Stack></Card></Stack>)}

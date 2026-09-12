@@ -34,7 +34,7 @@ export default function AgentPlannerTab() {
         {sub === 'patterns' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Pattern</th><th style={{ textAlign: 'left', padding: '8px' }}>Trace</th><th style={{ padding: '8px' }}>Calls</th><th style={{ textAlign: 'left', padding: '8px' }}>Best for</th><th style={{ textAlign: 'left', padding: '8px' }}>Fails when</th></tr></thead>
-            <tbody>{PLANNER_PATTERNS.map((p, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{p.name}</td><td style={{ padding: '8px', color: '#38BDF8', fontFamily: 'monospace' }}>{p.trace}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{p.calls}</td><td style={{ padding: '8px', color: '#10b981' }}>{p.best}</td><td style={{ padding: '8px', color: '#ef4444' }}>{p.fail}</td></tr>))}</tbody></table></div>
+            <tbody>{PLANNER_PATTERNS.map((p, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{p.name}</td><td style={{ padding: '8px', color: '#17837F', fontFamily: 'monospace' }}>{p.trace}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{p.calls}</td><td style={{ padding: '8px', color: '#17837F' }}>{p.best}</td><td style={{ padding: '8px', color: '#ef4444' }}>{p.fail}</td></tr>))}</tbody></table></div>
           <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{PLANNER_GUARDRAILS.map((g, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #F5A623' }}><div style={{ fontSize: '12px', color: '#F5A623', fontWeight: 'bold' }}>{g.guard}</div><div style={{ fontSize: '11px', color: 'white', fontFamily: 'monospace' }}>{g.rule}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>stops: {g.stops}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
@@ -48,10 +48,10 @@ export default function AgentPlannerTab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Unknowns</label>
               <select value={unk} onChange={e => setUnk(e.target.value)} style={sel}><option value="many">many (explore)</option><option value="few">few (known tools)</option></select>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-              <strong style={{ color: '#10b981' }}>{rec.pick}</strong>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+              <strong style={{ color: '#17837F' }}>{rec.pick}</strong>
               <div style={{ fontSize: '12px', color: 'white', marginTop: '6px' }}>{rec.why}</div>
-              <div style={{ fontSize: '11px', color: '#38BDF8', fontFamily: 'monospace', marginTop: '4px' }}>{rec.trace} · {rec.calls}</div>
+              <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace', marginTop: '4px' }}>{rec.trace} · {rec.calls}</div>
               <div style={{ fontSize: '11px', color: '#F5A623', marginTop: '4px' }}>caution: {rec.caution}</div>
             </Card>
           </Grid>

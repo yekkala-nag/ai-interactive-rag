@@ -109,9 +109,9 @@ export default function MCPClientTab() {
 
                 <Stack gap={3}>
                   {MCP_CLIENT_PROTOCOL_CONCEPTS.map((c, idx) => (
-                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
+                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#38BDF8' }}>{c.concept}</strong>
+                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F' }}>{c.concept}</strong>
                         <Badge variant="subtle" style={{ fontSize: '9px', fontFamily: 'monospace' }}>JSON-RPC 2.0</Badge>
                       </Flex>
 
@@ -123,7 +123,7 @@ export default function MCPClientTab() {
 
                         <div>
                           <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>Client Responsibility (Streamlit):</div>
-                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#10b981' }}>{c.clientRole}</div>
+                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F' }}>{c.clientRole}</div>
                         </div>
                       </Grid>
 
@@ -152,11 +152,11 @@ export default function MCPClientTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
                   {REMOTE_SERVERS_CATALOG.map((srv) => (
-                    <Card key={srv.id} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#10b981', display: 'block', marginBottom: '4px' }}>
+                    <Card key={srv.id} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', display: 'block', marginBottom: '4px' }}>
                         {srv.name}
                       </strong>
-                      <div style={{ fontFamily: 'monospace', fontSize: '10px', color: '#38BDF8', marginBottom: '8px', wordBreak: 'break-all' }}>
+                      <div style={{ fontFamily: 'monospace', fontSize: '10px', color: '#17837F', marginBottom: '8px', wordBreak: 'break-all' }}>
                         {srv.url}
                       </div>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '0 0 8px 0' }}>
@@ -226,17 +226,17 @@ export default function MCPClientTab() {
                   </Card>
 
                   {/* Streamlit Main App Render */}
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#10b981' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F' }}>
                         STREAMLIT MAIN APP RENDER
                       </strong>
-                      <Badge variant="subtle" style={{ background: 'rgba(46,204,140,0.15)', color: '#10b981', fontSize: '9px' }}>
+                      <Badge variant="subtle" style={{ background: 'rgba(46,204,140,0.15)', color: '#17837F', fontSize: '9px' }}>
                         CONNECTED: {simResult.server.id.toUpperCase()}
                       </Badge>
                     </Flex>
 
-                    <Card style={{ padding: '10px', background: '#090d16', color: '#38BDF8', fontFamily: 'monospace', fontSize: '11px', marginBottom: '10px' }}>
+                    <Card style={{ padding: '10px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '11px', marginBottom: '10px' }}>
                       {JSON.stringify(simResult.simulatedResponse, null, 2)}
                     </Card>
 

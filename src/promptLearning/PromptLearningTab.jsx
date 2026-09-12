@@ -109,12 +109,12 @@ export default function PromptLearningTab() {
 
                 <Stack gap={3}>
                   {PARADIGMS_COMPARISON.map((p, idx) => (
-                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${idx === 2 ? '#10b981' : '#38BDF8'}` }}>
+                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${idx === 2 ? '#2AB5B0' : '#2AB5B0'}` }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: idx === 2 ? '#10b981' : '#38BDF8' }}>
+                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: idx === 2 ? '#2AB5B0' : '#2AB5B0' }}>
                           {p.paradigm}
                         </strong>
-                        <Badge variant="subtle" style={{ fontSize: '9px', background: idx === 2 ? 'rgba(46,204,140,0.15)' : 'rgba(56,189,248,0.15)', color: idx === 2 ? '#10b981' : '#38BDF8' }}>
+                        <Badge variant="subtle" style={{ fontSize: '9px', background: idx === 2 ? 'rgba(46,204,140,0.15)' : 'rgba(56,189,248,0.15)', color: idx === 2 ? '#2AB5B0' : '#2AB5B0' }}>
                           {idx === 2 ? 'ENGLISH_FEEDBACK' : 'SCALAR_NUMERIC'}
                         </Badge>
                       </Flex>
@@ -180,29 +180,29 @@ export default function PromptLearningTab() {
                     </Card>
 
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>Extracted System Rule (Meta-Prompt Output):</div>
-                    <Card style={{ padding: '10px', background: '#090d16', border: '1px solid #10b981', color: '#10b981', fontSize: '11px' }}>
+                    <Card style={{ padding: '10px', background: '#090d16', border: '1px solid #2AB5B0', color: '#17837F', fontSize: '11px' }}>
                       {simResult.currentCritique.generatedInstruction}
                     </Card>
                   </Card>
 
                   <Card style={{ padding: '14px', background: '#090d16', border: '1px solid var(--ds-color-border-subtle)' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '11px', color: '#38BDF8' }}>
+                      <strong style={{ fontSize: '11px', color: '#17837F' }}>
                         PROMPT ACCURACY PROGRESSION (Loop {loopCount}/5):
                       </strong>
-                      <Badge variant="subtle" style={{ background: 'rgba(46,204,140,0.15)', color: '#10b981' }}>
+                      <Badge variant="subtle" style={{ background: 'rgba(46,204,140,0.15)', color: '#17837F' }}>
                         {simResult.finalAccuracy}% Accuracy
                       </Badge>
                     </Flex>
 
                     <Stack gap={2}>
                       {simResult.loopTrace.map((lt, idx) => (
-                        <Card key={idx} style={{ padding: '8px 12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${lt.accuracyPct === 100 ? '#10b981' : '#38BDF8'}` }}>
+                        <Card key={idx} style={{ padding: '8px 12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${lt.accuracyPct === 100 ? '#2AB5B0' : '#2AB5B0'}` }}>
                           <Flex justify="space-between" align="center">
                             <span style={{ fontSize: '11px', color: 'white', fontFamily: 'monospace' }}>
                               Loop {lt.loop}: {lt.accumulatedRules} Accumulated System Rules
                             </span>
-                            <strong style={{ fontSize: '11px', color: lt.accuracyPct === 100 ? '#10b981' : '#38BDF8' }}>
+                            <strong style={{ fontSize: '11px', color: lt.accuracyPct === 100 ? '#2AB5B0' : '#2AB5B0' }}>
                               {lt.accuracyPct}%
                             </strong>
                           </Flex>
@@ -231,7 +231,7 @@ export default function PromptLearningTab() {
                 <div style={{ overflowX: 'auto' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 'var(--ds-font-size-caption)' }}>
                     <thead>
-                      <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', textAlign: 'left', color: '#38BDF8' }}>
+                      <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', textAlign: 'left', color: '#17837F' }}>
                         <th style={{ padding: '8px' }}>Latent Ruleset Size</th>
                         <th style={{ padding: '8px' }}>Accuracy: 1-Loop</th>
                         <th style={{ padding: '8px' }}>Accuracy: 5-Loop</th>
@@ -244,9 +244,9 @@ export default function PromptLearningTab() {
                         <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                           <td style={{ padding: '8px', color: '#F5A623', fontWeight: 'bold' }}>{row.rulesetSize} Latent Rules</td>
                           <td style={{ padding: '8px', color: '#ef4444', fontFamily: 'monospace' }}>{row.loop1Acc}%</td>
-                          <td style={{ padding: '8px', color: '#10b981', fontFamily: 'monospace', fontWeight: 'bold' }}>{row.loop5Acc}%</td>
+                          <td style={{ padding: '8px', color: '#17837F', fontFamily: 'monospace', fontWeight: 'bold' }}>{row.loop5Acc}%</td>
                           <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{row.loop1RulesPct}%</td>
-                          <td style={{ padding: '8px', color: '#38BDF8', fontWeight: 'bold' }}>{row.loop5RulesPct}%</td>
+                          <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{row.loop5RulesPct}%</td>
                         </tr>
                       ))}
                     </tbody>

@@ -79,11 +79,11 @@ export default function AgenticRAGTab() {
   const estimatedCost = (((totalPromptTokens / 1000) * 0.0025) + ((totalCompletionTokens / 1000) * 0.01)).toFixed(4);
 
   const SECTIONS = [
-    { id: 'problem', icon: '🔴', label: 'The Problem with Standard RAG', color: '#c4572a', desc: 'Failure modes of single-shot retrieval' },
-    { id: 'loop', icon: '🔄', label: 'The Agentic Loop', color: '#2a8a84', desc: 'Search ➔ Read ➔ Decide cycle' },
-    { id: 'tools', icon: '🧰', label: 'Three Tools', color: '#9b7fd4', desc: 'Interactive Tool Sandbox' },
-    { id: 'trace', icon: '🔬', label: 'Agent Trace (Real Run)', color: '#c9a84c', desc: '4-Scenario execution simulator' },
-    { id: 'decisions', icon: '⚖️', label: '5 Design Decisions', color: '#10b981', desc: 'Architecture scorecard calculator' }
+    { id: 'problem', icon: '🔴', label: 'The Problem with Standard RAG', color: '#A34A28', desc: 'Failure modes of single-shot retrieval' },
+    { id: 'loop', icon: '🔄', label: 'The Agentic Loop', color: '#17837F', desc: 'Search ➔ Read ➔ Decide cycle' },
+    { id: 'tools', icon: '🧰', label: 'Three Tools', color: '#5A4FA3', desc: 'Interactive Tool Sandbox' },
+    { id: 'trace', icon: '🔬', label: 'Agent Trace (Real Run)', color: '#A34A28', desc: '4-Scenario execution simulator' },
+    { id: 'decisions', icon: '⚖️', label: '5 Design Decisions', color: '#17837F', desc: 'Architecture scorecard calculator' }
   ];
 
   return (
@@ -164,19 +164,19 @@ export default function AgenticRAGTab() {
                 {
                   icon: '🎯',
                   title: '1. Semantic Similarity ≠ Usefulness',
-                  color: '#c4572a',
+                  color: '#A34A28',
                   desc: 'Vector cosine similarity finds chunks with similar vocabulary (e.g. hotel room descriptions), but misses the actual governance clause that contains the approval exception threshold.'
                 },
                 {
                   icon: '📉',
                   title: '2. Right Evidence Ranked Beyond Top-k',
-                  color: '#c9a84c',
+                  color: '#A34A28',
                   desc: 'The essential policy update (e.g. 14-day advance notice) exists in the database, but ranks at position #6. With a static top-k=3 limit, the LLM is starved of ground truth and forced to hallucinate.'
                 },
                 {
                   icon: '✂️',
                   title: '3. Context Split Across Doc Boundaries',
-                  color: '#9b7fd4',
+                  color: '#5A4FA3',
                   desc: 'Policy rules are distributed across multiple files (Guidelines ➔ Approval Matrix ➔ 2026 Amendments). A single embedding query cannot simultaneously target all 3 disparate files.'
                 }
               ].map((f, i) => (
@@ -231,7 +231,7 @@ export default function AgenticRAGTab() {
                   <Stack gap={3}>
                     <Flex justify="space-between" align="center">
                       <Badge variant="success">Agentic Multi-Step RAG</Badge>
-                      <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#10B981', fontWeight: 'bold' }}>Iterative Loop (3 Tools)</span>
+                      <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>Iterative Loop (3 Tools)</span>
                     </Flex>
                     <div>
                       <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>Query:</strong>
@@ -246,7 +246,7 @@ export default function AgenticRAGTab() {
                       </ol>
                     </div>
                     <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
-                      <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#10B981', fontWeight: 'bold' }}>✅ 100% GROUNDED OUTCOME:</span>
+                      <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>✅ 100% GROUNDED OUTCOME:</span>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '2px 0 0 0' }}>
                         Verifies hotel is allowed, identifies Manager + Director sign-off levels, and cites mandatory 14-day international notice rule.
                       </p>
@@ -307,7 +307,7 @@ result = await Runner.run(
               <Card style={{ padding: 'var(--ds-space-4)' }}>
                 <Stack gap={2}>
                   <Flex justify="space-between" align="center">
-                    <strong style={{ fontSize: 'var(--ds-font-size-body)', color: '#c9a84c' }}>
+                    <strong style={{ fontSize: 'var(--ds-font-size-body)', color: '#A34A28' }}>
                       Prompt Instructions Shaping the Loop
                     </strong>
                     <Badge variant="subtle">System Prompt</Badge>
@@ -536,19 +536,19 @@ You are a careful internal policy research assistant.
                   </div>
                   <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
                     <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Accumulated Latency</span>
-                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: '#2563EB' }}>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: '#17837F' }}>
                       {totalLatencyMs}ms
                     </div>
                   </div>
                   <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
                     <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Tokens Consumed</span>
-                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: '#CA8A04' }}>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: '#A34A28' }}>
                       {totalPromptTokens + totalCompletionTokens}
                     </div>
                   </div>
                   <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
                     <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Estimated Cost</span>
-                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: '#10B981' }}>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: '#17837F' }}>
                       ${estimatedCost}
                     </div>
                   </div>
@@ -642,7 +642,7 @@ You are a careful internal policy research assistant.
                     <Stack gap={3}>
                       <Flex justify="space-between" align="center">
                         <Badge variant="success">✅ Final Grounded Answer Synthesized</Badge>
-                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#10B981', fontWeight: 'bold' }}>100% Policy Grounded</span>
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>100% Policy Grounded</span>
                       </Flex>
                       <p style={{ margin: 0, fontSize: 'var(--ds-font-size-body)', color: 'var(--ds-color-text-primary)', whiteSpace: 'pre-line', lineHeight: '1.6' }}>
                         {activeScenario.finalAnswer}

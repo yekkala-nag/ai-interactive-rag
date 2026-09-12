@@ -185,7 +185,7 @@ export default function GoalTrackerTab() {
                                 );
                               })}
                               <td style={{ padding: '10px', textAlign: 'center' }}>
-                                <strong style={{ color: '#10b981', fontSize: 'var(--ds-font-size-bodySm)' }}>🔥 {g.currentStreak} Days</strong>
+                                <strong style={{ color: '#17837F', fontSize: 'var(--ds-font-size-bodySm)' }}>🔥 {g.currentStreak} Days</strong>
                               </td>
                             </tr>
                           ))}
@@ -279,7 +279,7 @@ export default function GoalTrackerTab() {
                           </div>
                         </div>
                         <div style={{ textAlign: 'right' }}>
-                          <strong style={{ color: '#10b981', fontSize: 'var(--ds-font-size-bodySm)' }}>🔥 {g.currentStreak}</strong>
+                          <strong style={{ color: '#17837F', fontSize: 'var(--ds-font-size-bodySm)' }}>🔥 {g.currentStreak}</strong>
                           <div style={{ fontSize: '10px', color: 'var(--ds-color-text-tertiary)' }}>Streak</div>
                         </div>
                       </Flex>
@@ -305,11 +305,11 @@ export default function GoalTrackerTab() {
 
                 <Grid columns={{ base: '1fr', md: 'repeat(4, 1fr)' }} gap="var(--ds-space-3)">
                   <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', textAlign: 'center' }}>
-                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#10b981' }}>88.4%</div>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#17837F' }}>88.4%</div>
                     <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>Overall Habit Consistency</div>
                   </Card>
                   <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', textAlign: 'center' }}>
-                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#3b82f6' }}>{dailyHabitsCount}</div>
+                    <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#17837F' }}>{dailyHabitsCount}</div>
                     <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>Active High-Freq Habits</div>
                   </Card>
                   <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', textAlign: 'center' }}>

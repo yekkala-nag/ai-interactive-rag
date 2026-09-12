@@ -99,9 +99,9 @@ export default function ModernIOTab() {
                     <thead>
                       <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
                         <th style={{ textAlign: 'left', padding: '8px', color: 'var(--ds-color-text-tertiary)' }}>Storage & Format Engine</th>
-                        <th style={{ textAlign: 'center', padding: '8px', color: '#38BDF8' }}>Read Time</th>
-                        <th style={{ textAlign: 'center', padding: '8px', color: '#38BDF8' }}>Write Time</th>
-                        <th style={{ textAlign: 'center', padding: '8px', color: '#10b981' }}>File Size</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#17837F' }}>Read Time</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#17837F' }}>Write Time</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#17837F' }}>File Size</th>
                         <th style={{ textAlign: 'center', padding: '8px', color: '#a78bfa' }}>RAM Footprint</th>
                         <th style={{ textAlign: 'left', padding: '8px', color: '#F5A623' }}>Predicate Pushdown</th>
                       </tr>
@@ -110,13 +110,13 @@ export default function ModernIOTab() {
                       {IO_FORMATS_BENCHMARK.map((b, i) => (
                         <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', background: b.format.includes('DuckDB') || b.format.includes('Parquet') ? 'rgba(16,185,129,0.06)' : 'transparent' }}>
                           <td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{b.format}</td>
-                          <td style={{ padding: '8px', textAlign: 'center', color: b.readTimeSec > 5 ? '#ef4444' : '#10b981', fontWeight: 'bold' }}>
+                          <td style={{ padding: '8px', textAlign: 'center', color: b.readTimeSec > 5 ? '#ef4444' : '#2AB5B0', fontWeight: 'bold' }}>
                             {b.readTimeSec}s
                           </td>
-                          <td style={{ padding: '8px', textAlign: 'center', color: '#38BDF8' }}>{b.writeTimeSec}s</td>
-                          <td style={{ padding: '8px', textAlign: 'center', color: '#10b981' }}>{b.fileSizeMb} MB</td>
+                          <td style={{ padding: '8px', textAlign: 'center', color: '#17837F' }}>{b.writeTimeSec}s</td>
+                          <td style={{ padding: '8px', textAlign: 'center', color: '#17837F' }}>{b.fileSizeMb} MB</td>
                           <td style={{ padding: '8px', textAlign: 'center', color: '#a78bfa' }}>{b.memoryUsageMb} MB</td>
-                          <td style={{ padding: '8px', color: b.predicatePushdown.includes('Yes') ? '#10b981' : '#ef4444' }}>
+                          <td style={{ padding: '8px', color: b.predicatePushdown.includes('Yes') ? '#2AB5B0' : '#ef4444' }}>
                             {b.predicatePushdown.split(' ')[0]}
                           </td>
                         </tr>
@@ -173,16 +173,16 @@ export default function ModernIOTab() {
 
                 {/* SAVINGS STATS */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '16px', background: '#090d16', borderTop: '3px solid #10b981' }}>
+                  <Card style={{ padding: '16px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>DEVELOPER WAIT TIME SAVED</div>
-                    <div style={{ fontSize: '20px', color: '#10b981', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '20px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>
                       {savings.hoursSavedPerDay} Hours / day
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: '#090d16', borderTop: '3px solid #38BDF8' }}>
+                  <Card style={{ padding: '16px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>CLOUD DISK STORAGE SAVED</div>
-                    <div style={{ fontSize: '20px', color: '#38BDF8', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '20px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>
                       {savings.storageSavedGb} GB (-88%)
                     </div>
                   </Card>
@@ -225,8 +225,8 @@ export default function ModernIOTab() {
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-                    <strong style={{ fontSize: '13px', color: '#10b981', display: 'block', marginBottom: '6px' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
                       PARQUET COLUMNAR CHUNK SCAN:
                     </strong>
                     <div style={{ background: '#090d16', padding: '10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#34d399', marginBottom: '8px' }}>

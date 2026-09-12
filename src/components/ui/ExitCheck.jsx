@@ -121,8 +121,8 @@ export function ExitCheck({ open, tabId, onClose, onSelectTab }) {
 
         {done && (
           <div>
-            <div style={{ padding: '14px', borderRadius: '10px', marginBottom: '12px', border: `2px solid ${passed ? '#10b981' : '#F5A623'}`, background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: passed ? '#10b981' : '#F5A623' }}>
+            <div style={{ padding: '14px', borderRadius: '10px', marginBottom: '12px', border: `2px solid ${passed ? '#2AB5B0' : '#F5A623'}`, background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
+              <div style={{ fontSize: '1.4rem', fontWeight: 800, color: passed ? '#2AB5B0' : '#F5A623' }}>
                 {score.correct}/{score.total} {passed ? '· Proven ✓' : '· Not yet'}
               </div>
               <div style={{ fontSize: '0.8rem', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
@@ -158,7 +158,7 @@ export function ExitCheck({ open, tabId, onClose, onSelectTab }) {
               const ok = answers[i] === q.a;
               return (
                 <div key={i} style={{ fontSize: '0.8rem', marginBottom: '8px', color: 'var(--ds-color-text-secondary)' }}>
-                  <span style={{ color: ok ? '#10b981' : '#ef4444', fontWeight: 700 }}>{ok ? '✓' : '✕'} {i + 1}.</span> {q.e}
+                  <span style={{ color: ok ? '#2AB5B0' : '#ef4444', fontWeight: 700 }}>{ok ? '✓' : '✕'} {i + 1}.</span> {q.e}
                 </div>
               );
             })}

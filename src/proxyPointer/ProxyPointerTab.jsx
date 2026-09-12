@@ -178,7 +178,7 @@ export default function ProxyPointerTab() {
                     <Stack gap={3}>
                       <Flex justify="space-between" align="center">
                         <Badge variant="info">1. Lightweight Text Proxy Index</Badge>
-                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#2563EB', fontWeight: 'bold' }}>
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>
                           Latency: &lt;10ms (1536d)
                         </span>
                       </Flex>
@@ -208,20 +208,20 @@ export default function ProxyPointerTab() {
                     <Stack gap={3}>
                       <Flex justify="space-between" align="center">
                         <Badge variant="success">2. Pointer Asset Resolution ➔ Multimodal LLM</Badge>
-                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#10B981', fontWeight: 'bold' }}>
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>
                           Confidence: {activeMultimodal.multimodalLLMAnswer.confidence}
                         </span>
                       </Flex>
 
                       <div>
                         <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>RESOLVED HIGH-RES ASSET POINTER:</span>
-                        <div style={{ fontSize: 'var(--ds-font-size-caption)', fontFamily: 'var(--ds-font-family-mono)', color: '#0D9488', marginTop: '2px' }}>
+                        <div style={{ fontSize: 'var(--ds-font-size-caption)', fontFamily: 'var(--ds-font-family-mono)', color: '#17837F', marginTop: '2px' }}>
                           📎 {activeMultimodal.multimodalPointer.pointer_uri} ({activeMultimodal.multimodalPointer.resolution})
                         </div>
                       </div>
 
                       <div style={{ background: 'var(--ds-color-bg-surface)', padding: '10px 12px', borderRadius: '6px', border: '1px solid var(--ds-color-border-subtle)' }}>
-                        <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: '#10B981' }}>
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: '#17837F' }}>
                           MULTIMODAL SYNTHESIS (GEMINI 1.5 PRO / GPT-4O):
                         </span>
                         <p style={{ margin: '4px 0 0 0', fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-primary)', lineHeight: '1.5' }}>
@@ -248,7 +248,7 @@ export default function ProxyPointerTab() {
                         </p>
                       </div>
                       <div style={{ background: 'rgba(16,185,129,0.06)', padding: '8px 10px', borderRadius: '6px', border: '1px solid rgba(16,185,129,0.2)' }}>
-                        <span style={{ color: '#10B981', fontWeight: 'bold' }}>✅ Text Proxy + Multimodal Pointer:</span>
+                        <span style={{ color: '#17837F', fontWeight: 'bold' }}>✅ Text Proxy + Multimodal Pointer:</span>
                         <p style={{ margin: '2px 0 0 0', color: 'var(--ds-color-text-secondary)' }}>
                           {activeMultimodal.clipColPaliVsProxyComparison.proxyPointerAdvantage}
                         </p>
@@ -385,14 +385,14 @@ export default function ProxyPointerTab() {
                     <Stack gap={3}>
                       <Flex justify="space-between" align="center">
                         <Badge variant="info">1. Proxy Search Hit (FAISS Index)</Badge>
-                        <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: '#2563EB' }}>
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: '#17837F' }}>
                           Similarity: {(activeSearch.proxyHit.score * 100).toFixed(1)}%
                         </span>
                       </Flex>
 
                       <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '8px 10px', borderRadius: '6px' }}>
                         <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>INJECTED BREADCRUMB PATH:</span>
-                        <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#0D9488', fontFamily: 'var(--ds-font-family-mono)', fontWeight: 'bold', marginTop: '2px' }}>
+                        <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontFamily: 'var(--ds-font-family-mono)', fontWeight: 'bold', marginTop: '2px' }}>
                           🏷️ [{activeSearch.proxyHit.breadcrumb}]
                         </div>
                       </div>
@@ -415,7 +415,7 @@ export default function ProxyPointerTab() {
                     <Stack gap={3}>
                       <Flex justify="space-between" align="center">
                         <Badge variant="success">2. Pointer Resolved Context (Source Section)</Badge>
-                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#10B981', fontWeight: 'bold' }}>
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>
                           100% Boundary Preservation
                         </span>
                       </Flex>
@@ -458,7 +458,7 @@ export default function ProxyPointerTab() {
                       key={idx}
                       style={{
                         padding: 'var(--ds-space-4)',
-                        borderTop: `3px solid ${activeNoiseCategory === idx ? '#0D9488' : 'var(--ds-color-border-subtle)'}`,
+                        borderTop: `3px solid ${activeNoiseCategory === idx ? '#17837F' : 'var(--ds-color-border-subtle)'}`,
                         background: activeNoiseCategory === idx ? 'var(--ds-color-bg-surfaceHover)' : 'var(--ds-color-bg-surface)',
                         cursor: 'pointer'
                       }}
@@ -502,20 +502,20 @@ export default function ProxyPointerTab() {
                     </Stack>
                   </Card>
 
-                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '3px solid #CA8A04' }}>
+                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '3px solid #A34A28' }}>
                     <Stack gap={2}>
                       <Badge variant="warning">Sliding Window with Overlap</Badge>
-                      <div style={{ fontSize: '2rem', fontWeight: 900, color: '#CA8A04' }}>82.5%</div>
+                      <div style={{ fontSize: '2rem', fontWeight: 900, color: '#A34A28' }}>82.5%</div>
                       <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
                         High Token Redundancy (+85% Index Bloat)
                       </span>
                     </Stack>
                   </Card>
 
-                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '3px solid #10B981', background: 'rgba(16,185,129,0.04)' }}>
+                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '3px solid #2AB5B0', background: 'rgba(16,185,129,0.04)' }}>
                     <Stack gap={2}>
                       <Badge variant="success">Proxy-Pointer Architecture</Badge>
-                      <div style={{ fontSize: '2rem', fontWeight: 900, color: '#10B981' }}>100%</div>
+                      <div style={{ fontSize: '2rem', fontWeight: 900, color: '#17837F' }}>100%</div>
                       <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
                         Zero Boundary Fragmentation & -42% Token Waste
                       </span>

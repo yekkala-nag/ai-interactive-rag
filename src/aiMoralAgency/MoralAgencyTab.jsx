@@ -93,8 +93,8 @@ export default function MoralAgencyTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
                   {THREE_TIERS_OF_CARING.map((t, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: `4px solid ${idx === 0 ? '#10b981' : idx === 1 ? '#38BDF8' : '#F5A623'}` }}>
-                      <strong style={{ fontSize: '13px', color: idx === 0 ? '#10b981' : idx === 1 ? '#38BDF8' : '#F5A623', display: 'block', marginBottom: '8px' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: `4px solid ${idx === 0 ? '#2AB5B0' : idx === 1 ? '#2AB5B0' : '#F5A623'}` }}>
+                      <strong style={{ fontSize: '13px', color: idx === 0 ? '#2AB5B0' : idx === 1 ? '#2AB5B0' : '#F5A623', display: 'block', marginBottom: '8px' }}>
                         {t.tier}
                       </strong>
 
@@ -110,7 +110,7 @@ export default function MoralAgencyTab() {
                         <strong>Example:</strong> {t.realWorldExample}
                       </div>
 
-                      <div style={{ fontSize: '11px', color: '#38BDF8', fontWeight: 'bold' }}>
+                      <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>
                         Verifiability: {t.verifiability}
                       </div>
                     </Card>
@@ -151,7 +151,7 @@ export default function MoralAgencyTab() {
                 </div>
 
                 <Card style={{ padding: '16px', background: '#090d16', border: '1px solid rgba(255,255,255,0.1)' }}>
-                  <strong style={{ fontSize: '13px', color: '#38BDF8', display: 'block', marginBottom: '6px' }}>
+                  <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
                     CONTEXT SCENARIO:
                   </strong>
                   <p style={{ fontSize: '12px', color: 'white', margin: 0 }}>
@@ -167,15 +167,15 @@ export default function MoralAgencyTab() {
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #38BDF8' }}>
-                    <strong style={{ fontSize: '12px', color: '#38BDF8' }}>2. Deontological View (Duty/Rights)</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '12px', color: '#17837F' }}>2. Deontological View (Duty/Rights)</strong>
                     <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       {activeScenario.deontologicalChoice}
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #10b981' }}>
-                    <strong style={{ fontSize: '12px', color: '#10b981' }}>3. Functional AI Alignment Action</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '12px', color: '#17837F' }}>3. Functional AI Alignment Action</strong>
                     <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       {activeScenario.functionalAIAction}
                     </p>
@@ -199,15 +199,15 @@ export default function MoralAgencyTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
-                    <strong style={{ fontSize: '13px', color: '#38BDF8' }}>Stage 1: Supervised Self-Critique</strong>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F' }}>Stage 1: Supervised Self-Critique</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       The base model drafts a response, then is prompted to critique its own output against written constitutional rules (e.g. non-harm, privacy, truthfulness). It revises its own text until compliance is achieved.
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-                    <strong style={{ fontSize: '13px', color: '#10b981' }}>Stage 2: Reinforcement Learning from AI Feedback (RLAIF)</strong>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F' }}>Stage 2: Reinforcement Learning from AI Feedback (RLAIF)</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       A preference model evaluates thousands of pairs of responses purely based on constitutional principle adherence, training a reward model without human bottlenecking.
                     </p>

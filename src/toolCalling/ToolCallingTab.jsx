@@ -15,7 +15,7 @@ export default function ToolCallingTab() {
   const [task, setTask] = useState('weather');
   const [good, setGood] = useState(true);
   const r = BUILD_CALL(task, good);
-  const rc = r.verdict.startsWith('VALID') ? '#10b981' : '#ef4444';
+  const rc = r.verdict.startsWith('VALID') ? '#2AB5B0' : '#ef4444';
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
       <Hero moduleId="agents_frameworks" moduleLabel="Agent Systems & Frameworks [Function Calling Basics]"
@@ -31,8 +31,8 @@ export default function ToolCallingTab() {
           <button key={t.id} onClick={() => setSub(t.id)} style={navBtn(sub, t.id)}><div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'bridge' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{WHY_BRIDGE.map((w, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #38BDF8' }}><div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>{w.from} → {w.to}</div><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{w.bridge}</div></Card>))}</Grid>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{ANATOMY.map((a, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #10b981' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold', fontFamily: 'monospace' }}>{a.part}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{a.role}</div><div style={{ fontSize: '11px', color: '#F5A623' }}>{a.bad}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{WHY_BRIDGE.map((w, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>{w.from} → {w.to}</div><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{w.bridge}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{ANATOMY.map((a, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold', fontFamily: 'monospace' }}>{a.part}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{a.role}</div><div style={{ fontSize: '11px', color: '#F5A623' }}>{a.bad}</div></Card>))}</Grid>
           <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{FAILURE_MODES.map((f, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #ef4444' }}><div style={{ fontSize: '12px', color: '#ef4444', fontWeight: 'bold' }}>{f.fail}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>→ {f.fix}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
@@ -54,7 +54,7 @@ export default function ToolCallingTab() {
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>{r.explain}</div>
             </Card>
           </Grid>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{PROVIDER_SHAPES.map((p, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{p.provider}</div><div style={{ fontSize: '11px', color: '#38BDF8', fontFamily: 'monospace' }}>{p.shape}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{p.note}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{PROVIDER_SHAPES.map((p, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{p.provider}</div><div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace' }}>{p.shape}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{p.note}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'code' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🛠️ Schema-first tools, validated</h3></div>

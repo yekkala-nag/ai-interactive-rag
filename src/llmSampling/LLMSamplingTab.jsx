@@ -176,7 +176,7 @@ export default function LLMSamplingTab() {
                 </div>
 
                 {/* PROMPT CONTEXT DISPLAY */}
-                <Card style={{ padding: '12px 14px', background: '#090d16', borderLeft: '4px solid #38BDF8' }}>
+                <Card style={{ padding: '12px 14px', background: '#090d16', borderLeft: '4px solid #2AB5B0' }}>
                   <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>INPUT PROMPT CONTEXT:</div>
                   <pre style={{ margin: 0, color: 'white', fontFamily: 'monospace', fontSize: '12px', whiteSpace: 'pre-wrap' }}>
                     {activePrompt.prompt}
@@ -188,7 +188,7 @@ export default function LLMSamplingTab() {
                   {/* Temperature */}
                   <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                      <label style={{ fontSize: '11px', color: '#38BDF8', fontWeight: 'bold' }}>Temperature (T):</label>
+                      <label style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>Temperature (T):</label>
                       <span style={{ fontSize: '11px', fontFamily: 'monospace', color: 'white' }}>{temperature.toFixed(2)}</span>
                     </Flex>
                     <input
@@ -212,7 +212,7 @@ export default function LLMSamplingTab() {
                   {/* Top-K */}
                   <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                      <label style={{ fontSize: '11px', color: '#10b981', fontWeight: 'bold' }}>Top-K Cutoff:</label>
+                      <label style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>Top-K Cutoff:</label>
                       <span style={{ fontSize: '11px', fontFamily: 'monospace', color: 'white' }}>{topK}</span>
                     </Flex>
                     <input
@@ -297,7 +297,7 @@ export default function LLMSamplingTab() {
                       TOKEN CANDIDATE PROBABILITY DISTRIBUTION:
                     </strong>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>
-                      Surviving Tokens in Sampling Pool: <strong style={{ color: '#10b981' }}>{distribution.filter(d => d.isSurviving).length} / {distribution.length}</strong>
+                      Surviving Tokens in Sampling Pool: <strong style={{ color: '#17837F' }}>{distribution.filter(d => d.isSurviving).length} / {distribution.length}</strong>
                     </div>
                   </Flex>
 
@@ -309,12 +309,12 @@ export default function LLMSamplingTab() {
                           padding: '10px 14px',
                           background: item.isSurviving ? 'var(--ds-color-bg-surface)' : 'rgba(255,255,255,0.02)',
                           opacity: item.isSurviving ? 1.0 : 0.35,
-                          borderLeft: `4px solid ${item.isSurviving ? '#10b981' : '#64748b'}`
+                          borderLeft: `4px solid ${item.isSurviving ? '#2AB5B0' : '#64748b'}`
                         }}
                       >
                         <Flex justify="space-between" align="center" style={{ marginBottom: '4px' }}>
                           <Flex align="center" gap="8px">
-                            <span style={{ fontFamily: 'monospace', fontSize: '13px', color: item.isSurviving ? '#38BDF8' : '#94a3b8', fontWeight: 'bold', background: '#090d16', padding: '2px 6px', borderRadius: '3px' }}>
+                            <span style={{ fontFamily: 'monospace', fontSize: '13px', color: item.isSurviving ? '#2AB5B0' : '#94a3b8', fontWeight: 'bold', background: '#090d16', padding: '2px 6px', borderRadius: '3px' }}>
                               "{item.token}"
                             </span>
                             <Badge variant="subtle" style={{ fontSize: '10px' }}>
@@ -325,7 +325,7 @@ export default function LLMSamplingTab() {
                             {!item.isKeptByMinP && <Badge variant="outline" style={{ color: '#a78bfa', borderColor: '#a78bfa' }}>Cut by Min-P</Badge>}
                           </Flex>
 
-                          <div style={{ fontFamily: 'monospace', fontSize: '12px', color: item.isSurviving ? '#10b981' : '#64748b', fontWeight: 'bold' }}>
+                          <div style={{ fontFamily: 'monospace', fontSize: '12px', color: item.isSurviving ? '#2AB5B0' : '#64748b', fontWeight: 'bold' }}>
                             {(item.finalProb * 100).toFixed(1)}% probability
                           </div>
                         </Flex>
@@ -336,7 +336,7 @@ export default function LLMSamplingTab() {
                             style={{
                               width: `${item.finalProb * 100}%`,
                               height: '100%',
-                              background: item.isSurviving ? 'linear-gradient(90deg, #38BDF8, #10b981)' : '#64748b',
+                              background: item.isSurviving ? 'linear-gradient(90deg, #2AB5B0, #2AB5B0)' : '#64748b',
                               transition: 'width 0.2s ease'
                             }}
                           />
@@ -368,15 +368,15 @@ export default function LLMSamplingTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {DECODING_STRATEGIES.map((strat) => (
-                    <Card key={strat.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
+                    <Card key={strat.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                        <strong style={{ fontSize: '13px', color: '#38BDF8' }}>{strat.name}</strong>
+                        <strong style={{ fontSize: '13px', color: '#17837F' }}>{strat.name}</strong>
                         <Badge variant="outline" style={{ color: '#F5A623', borderColor: '#F5A623' }}>
                           {strat.idealTemperature}
                         </Badge>
                       </Flex>
 
-                      <Card style={{ padding: '6px 10px', background: '#090d16', color: '#10b981', fontFamily: 'monospace', fontSize: '11px', margin: '6px 0 10px 0' }}>
+                      <Card style={{ padding: '6px 10px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '11px', margin: '6px 0 10px 0' }}>
                         {strat.formula}
                       </Card>
 
@@ -386,7 +386,7 @@ export default function LLMSamplingTab() {
                       <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '6px' }}>
                         <strong>Cons:</strong> {strat.cons}
                       </div>
-                      <div style={{ fontSize: '11px', color: '#10b981' }}>
+                      <div style={{ fontSize: '11px', color: '#17837F' }}>
                         🎯 <strong>Ideal for:</strong> {strat.useCases}
                       </div>
                     </Card>
@@ -423,13 +423,13 @@ export default function LLMSamplingTab() {
                   ))}
                 </div>
 
-                <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
+                <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                   <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>CONTEXT WINDOW AT STEP {tracerSteps[tracerStep].step}:</div>
                   <div style={{ fontSize: '14px', color: 'white', fontFamily: 'monospace', padding: '8px 12px', background: '#090d16', borderRadius: '4px', marginBottom: '12px' }}>
-                    {tracerSteps[tracerStep].inputContext} <span style={{ background: '#10b981', color: '#090d16', padding: '1px 4px', borderRadius: '2px', fontWeight: 'bold' }}>[NEXT_TOKEN_PREDICTION]</span>
+                    {tracerSteps[tracerStep].inputContext} <span style={{ background: '#2AB5B0', color: '#090d16', padding: '1px 4px', borderRadius: '2px', fontWeight: 'bold' }}>[NEXT_TOKEN_PREDICTION]</span>
                   </div>
 
-                  <strong style={{ fontSize: '12px', color: '#38BDF8', display: 'block', marginBottom: '6px' }}>
+                  <strong style={{ fontSize: '12px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
                     Predicted Candidate Probabilities at Step {tracerSteps[tracerStep].step}:
                   </strong>
 
@@ -440,17 +440,17 @@ export default function LLMSamplingTab() {
                         style={{
                           padding: '8px 12px',
                           background: item.selected ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.03)',
-                          border: item.selected ? '1px solid #10b981' : '1px solid rgba(255,255,255,0.06)',
+                          border: item.selected ? '1px solid #2AB5B0' : '1px solid rgba(255,255,255,0.06)',
                           borderRadius: '4px',
                           display: 'flex',
                           justifyContent: 'space-between',
                           alignItems: 'center'
                         }}
                       >
-                        <span style={{ fontFamily: 'monospace', color: item.selected ? '#10b981' : 'white', fontWeight: item.selected ? 'bold' : 'normal' }}>
+                        <span style={{ fontFamily: 'monospace', color: item.selected ? '#2AB5B0' : 'white', fontWeight: item.selected ? 'bold' : 'normal' }}>
                           "{item.token}" {item.selected && '✓ (SAMPLED)'}
                         </span>
-                        <span style={{ fontFamily: 'monospace', color: item.selected ? '#10b981' : 'var(--ds-color-text-tertiary)' }}>
+                        <span style={{ fontFamily: 'monospace', color: item.selected ? '#2AB5B0' : 'var(--ds-color-text-tertiary)' }}>
                           {(item.prob * 100).toFixed(0)}%
                         </span>
                       </div>
@@ -479,9 +479,9 @@ export default function LLMSamplingTab() {
                 </div>
 
                 <Stack gap={3}>
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
-                    <strong style={{ fontSize: '13px', color: '#38BDF8' }}>1. Unnormalized Logits to Probabilities (Standard Softmax)</strong>
-                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#10b981', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F' }}>1. Unnormalized Logits to Probabilities (Standard Softmax)</strong>
+                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
                       {"P(t_i) = exp(z_i) / sum_{j=1}^{|V|} exp(z_j)"}
                     </div>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -489,9 +489,9 @@ export default function LLMSamplingTab() {
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-                    <strong style={{ fontSize: '13px', color: '#10b981' }}>2. Temperature Scaling (T)</strong>
-                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#10b981', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F' }}>2. Temperature Scaling (T)</strong>
+                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
                       {"P(t_i; T) = exp(z_i / T) / sum_{j=1}^{|V|} exp(z_j / T)"}
                     </div>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -501,7 +501,7 @@ export default function LLMSamplingTab() {
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #F5A623' }}>
                     <strong style={{ fontSize: '13px', color: '#F5A623' }}>3. Top-P (Nucleus) Cumulative Probability Cutoff</strong>
-                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#10b981', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
+                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
                       {"V^(p) = min { V' subseteq V : sum_{t in V'} P(t) >= p }"}
                     </div>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -511,7 +511,7 @@ export default function LLMSamplingTab() {
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #a78bfa' }}>
                     <strong style={{ fontSize: '13px', color: '#a78bfa' }}>4. Min-P Dynamic Probability Thresholding</strong>
-                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#10b981', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
+                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
                       {"Mask(t_i) = z_i if P(t_i) >= P_max * p_min else -infinity"}
                     </div>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>

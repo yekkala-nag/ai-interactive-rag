@@ -144,9 +144,9 @@ export default function GuardrailsTab() {
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '11px', color: '#10b981' }}>SANITIZED GUARDRAIL OUTPUT STREAM:</strong>
+                      <strong style={{ fontSize: '11px', color: '#17837F' }}>SANITIZED GUARDRAIL OUTPUT STREAM:</strong>
                       <Flex gap={2}>
-                        <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.15)', color: '#38BDF8', fontSize: '9px' }}>
+                        <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.15)', color: '#17837F', fontSize: '9px' }}>
                           Authors Redacted: {redactionResult.stats.authorsRedacted}
                         </Badge>
                         <Badge variant="subtle" style={{ background: 'rgba(245,166,35,0.15)', color: '#F5A623', fontSize: '9px' }}>
@@ -188,7 +188,7 @@ export default function GuardrailsTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
-                    <strong style={{ fontSize: '11px', color: '#38BDF8', display: 'block', marginBottom: '8px' }}>
+                    <strong style={{ fontSize: '11px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
                       GENERATED MODEL OUTPUT TO SCAN:
                     </strong>
                     <textarea
@@ -219,15 +219,15 @@ export default function GuardrailsTab() {
                     </Flex>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${copyrightResult.status === 'BLOCKED_COPYRIGHT' ? '#ef4444' : '#10b981'}` }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${copyrightResult.status === 'BLOCKED_COPYRIGHT' ? '#ef4444' : '#2AB5B0'}` }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
                       <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>IP COMPLIANCE SCANNER RESULT:</strong>
-                      <Badge variant="subtle" style={{ background: copyrightResult.status === 'BLOCKED_COPYRIGHT' ? 'rgba(255,77,77,0.15)' : 'rgba(46,204,140,0.15)', color: copyrightResult.status === 'BLOCKED_COPYRIGHT' ? '#ef4444' : '#10b981' }}>
+                      <Badge variant="subtle" style={{ background: copyrightResult.status === 'BLOCKED_COPYRIGHT' ? 'rgba(255,77,77,0.15)' : 'rgba(46,204,140,0.15)', color: copyrightResult.status === 'BLOCKED_COPYRIGHT' ? '#ef4444' : '#2AB5B0' }}>
                         {copyrightResult.status}
                       </Badge>
                     </Flex>
 
-                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: copyrightResult.status === 'BLOCKED_COPYRIGHT' ? '#ef4444' : '#10b981', marginBottom: '8px' }}>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: copyrightResult.status === 'BLOCKED_COPYRIGHT' ? '#ef4444' : '#2AB5B0', marginBottom: '8px' }}>
                       Similarity Score: {(copyrightResult.similarityScore * 100).toFixed(0)}%
                     </div>
 
@@ -283,15 +283,15 @@ export default function GuardrailsTab() {
                     </Flex>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${injectionResult.isThreat ? '#ef4444' : '#10b981'}` }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${injectionResult.isThreat ? '#ef4444' : '#2AB5B0'}` }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
                       <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>SECURITY EVALUATION RESULT:</strong>
-                      <Badge variant="subtle" style={{ background: injectionResult.isThreat ? 'rgba(255,77,77,0.15)' : 'rgba(46,204,140,0.15)', color: injectionResult.isThreat ? '#ef4444' : '#10b981' }}>
+                      <Badge variant="subtle" style={{ background: injectionResult.isThreat ? 'rgba(255,77,77,0.15)' : 'rgba(46,204,140,0.15)', color: injectionResult.isThreat ? '#ef4444' : '#2AB5B0' }}>
                         {injectionResult.threatType}
                       </Badge>
                     </Flex>
 
-                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: injectionResult.isThreat ? '#ef4444' : '#10b981', marginBottom: '8px' }}>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: injectionResult.isThreat ? '#ef4444' : '#2AB5B0', marginBottom: '8px' }}>
                       Threat Risk Score: {(injectionResult.riskScore * 100).toFixed(0)}%
                     </div>
 

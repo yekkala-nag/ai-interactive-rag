@@ -17,15 +17,15 @@ export const tokens = {
       subtle: '#E7E5E4',
       default: '#D6D3D1',
       strong: '#A8A29E',
-      focus: '#0D9488',
+      focus: '#17837F',
     },
     text: {
       primary: '#0F172A',
       secondary: '#334155',
       tertiary: '#475569',
       inverse: '#FAFAF9',
-      link: '#0D9488',
-      linkHover: '#0F766E',
+      link: '#17837F',
+      linkHover: '#0C4F4C',
     },
 
     // Module accents — trio-mapped, all pairs contrast-verified (see P1 notes).

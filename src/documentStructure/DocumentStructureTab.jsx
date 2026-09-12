@@ -183,10 +183,10 @@ export default function DocumentStructureTab() {
   const s = {
     container: { maxWidth: 1280, margin: '0 auto', padding: '1.5rem', fontFamily: 'DM Mono, monospace', color: '#1a1a2e' },
     card: { background: '#ffffff', border: '1px solid #e0dcd4', borderRadius: 8, boxShadow: '0 1px 3px rgba(0,0,0,0.04)' },
-    sectionLabel: (color = '#c9a84c') => ({ fontFamily: 'Syne, sans-serif', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color, borderLeft: `3px solid ${color}`, paddingLeft: '0.7rem', marginBottom: '1rem' }),
+    sectionLabel: (color = '#FF8A6B') => ({ fontFamily: 'Syne, sans-serif', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color, borderLeft: `3px solid ${color}`, paddingLeft: '0.7rem', marginBottom: '1rem' }),
     input: { width: '100%', padding: '0.55rem 0.9rem', border: '1px solid #d0ccc4', borderRadius: 4, fontSize: '0.72rem', fontFamily: 'DM Mono, monospace', outline: 'none' },
     btn: { padding: '0.6rem 1.2rem', borderRadius: 6, border: 'none', fontSize: '0.72rem', fontFamily: 'Syne, sans-serif', fontWeight: 700, cursor: 'pointer', transition: 'opacity 0.2s' },
-    btnPrimary: { background: '#2563eb', color: '#fff' },
+    btnPrimary: { background: '#2AB5B0', color: '#fff' },
     btnDisabled: { opacity: 0.5, cursor: 'not-allowed' },
     table: { width: '100%', borderCollapse: 'collapse', fontSize: '0.67rem' },
     th: { textAlign: 'left', padding: '0.7rem 0.8rem', fontFamily: 'Syne, sans-serif', fontWeight: 700, color: '#334155', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', borderBottom: '1px solid #e0dcd4' },
@@ -208,8 +208,8 @@ export default function DocumentStructureTab() {
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.5rem' }}>
         {[
-          { label: 'Pages', value: new Set(lineDf.map(l => l.page_num)).size, color: '#2a8a84' },
-          { label: 'Candidates', value: candidates.length, color: '#c9a84c' },
+          { label: 'Pages', value: new Set(lineDf.map(l => l.page_num)).size, color: '#17837F' },
+          { label: 'Candidates', value: candidates.length, color: '#A34A28' },
           { label: 'TOC Entries', value: tocDf.length, color: '#5c3d8f' },
         ].map((stat, i) => (
           <div key={i} style={{ ...s.card, padding: '1rem' }}>
@@ -307,7 +307,7 @@ export default function DocumentStructureTab() {
 
       <div style={{ ...s.card, overflow: 'hidden' }}>
         <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0' }}>
-          <div style={s.sectionLabel('#c9a84c')}>Heading Candidates (Deterministic Pass)</div>
+          <div style={s.sectionLabel('#FF8A6B')}>Heading Candidates (Deterministic Pass)</div>
           <p style={{ fontSize: '0.65rem', color: '#334155', marginTop: '0.3rem' }}>Lines scoring $\ge {threshold.toFixed(1)}$ before LLM validation</p>
         </div>
         <div style={{ overflowX: 'auto', maxHeight: 400, overflowY: 'auto' }}>
@@ -342,7 +342,7 @@ export default function DocumentStructureTab() {
 
   const renderValidationTrajectoryView = () => (
     <div style={{ ...s.card, padding: '1.25rem' }}>
-      <div style={s.sectionLabel('#7c3aed')}>Bounded LLM Validation Trajectory</div>
+      <div style={s.sectionLabel('#8B7BD8')}>Bounded LLM Validation Trajectory</div>
       <p style={{ fontSize: '0.72rem', color: '#64748b', marginBottom: '1rem' }}>
         Tracks the pass-by-pass refinement loop ($max\_passes=3$). Convergence is achieved when a pass makes zero modifications.
       </p>
@@ -355,7 +355,7 @@ export default function DocumentStructureTab() {
             <div key={idx} style={{ border: '1px solid #e2e8f0', borderRadius: 6, padding: '0.85rem', background: '#fafafa' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
                 <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#1e293b' }}>Pass #{log.pass}</span>
-                <span style={{ fontSize: '0.65rem', fontWeight: 600, color: log.status.includes('Converged') ? '#16a34a' : '#2563eb' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: 600, color: log.status.includes('Converged') ? '#16a34a' : '#2AB5B0' }}>
                   {log.status}
                 </span>
               </div>
@@ -392,7 +392,7 @@ export default function DocumentStructureTab() {
           <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
             {workflow.nodes.map(node => (
               <div key={node.id} style={{ display: 'flex', alignItems: 'center', paddingLeft: `${node.level * 16}px`, fontSize: '0.72rem', color: '#1E293B' }}>
-                <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', marginRight: 8, background: node.type === 'root' ? '#2563eb' : node.type === 'section' ? '#3b82f6' : '#93c5fd' }} />
+                <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', marginRight: 8, background: node.type === 'root' ? '#2AB5B0' : node.type === 'section' ? '#2AB5B0' : '#93c5fd' }} />
                 <span>{node.label}</span>
                 {node.page && <span style={{ marginLeft: 8, fontSize: '0.6rem', color: '#9ca3af' }}>p.{node.page}</span>}
               </div>
@@ -411,7 +411,7 @@ export default function DocumentStructureTab() {
     return (
       <div style={{ ...s.card, overflow: 'hidden' }}>
         <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0' }}>
-          <div style={s.sectionLabel('#2a8a84')}>{table.title}</div>
+          <div style={s.sectionLabel('#2AB5B0')}>{table.title}</div>
         </div>
         <div style={{ overflowX: 'auto' }}>
           <table style={s.table}>
@@ -460,7 +460,7 @@ export default function DocumentStructureTab() {
               position: 'relative', width: '100%', height: '100%', transition: 'transform 0.5s', transformStyle: 'preserve-3d',
               transform: flashcardFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
             }}>
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #2563eb, #4f46e5)', borderRadius: 12, boxShadow: '0 10px 25px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backfaceVisibility: 'hidden' }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #2AB5B0, #4f46e5)', borderRadius: 12, boxShadow: '0 10px 25px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backfaceVisibility: 'hidden' }}>
                 <p style={{ color: '#fff', textAlign: 'center', fontSize: '1.1rem', fontWeight: 600 }}>{card.front}</p>
               </div>
               <div style={{ position: 'absolute', inset: 0, background: '#ffffff', border: '2px solid #e0dcd4', borderRadius: 12, boxShadow: '0 10px 25px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
@@ -485,7 +485,7 @@ export default function DocumentStructureTab() {
   const renderImagesView = () => (
     <div style={{ ...s.card, overflow: 'hidden' }}>
       <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #e0dcd4', background: '#f7f5f0' }}>
-        <div style={s.sectionLabel('#7c3aed')}>Image Generation Prompts</div>
+        <div style={s.sectionLabel('#8B7BD8')}>Image Generation Prompts</div>
         <p style={{ fontSize: '0.65rem', color: '#334155', marginTop: '0.3rem' }}>AI prompts to generate diagrams for each section</p>
       </div>
       <div style={{ padding: '1rem', maxHeight: 400, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -499,7 +499,7 @@ export default function DocumentStructureTab() {
                 <span style={{ fontSize: '0.6rem', color: '#9ca3af' }}>Page {img.page}</span>
               </div>
               <p style={{ fontSize: '0.72rem', color: '#6b7280', fontStyle: 'italic' }}>"{img.prompt}"</p>
-              <span style={{ display: 'inline-block', marginTop: '0.5rem', padding: '0.15rem 0.5rem', background: '#f3e8ff', color: '#7c3aed', borderRadius: 999, fontSize: '0.6rem' }}>{img.style}</span>
+              <span style={{ display: 'inline-block', marginTop: '0.5rem', padding: '0.15rem 0.5rem', background: '#f3e8ff', color: '#5A4FA3', borderRadius: 999, fontSize: '0.6rem' }}>{img.style}</span>
             </div>
           ))
         )}
@@ -547,13 +547,13 @@ export default function DocumentStructureTab() {
             <a
               href="?tab=agenticparsing"
               style={{
-                color: '#2563eb',
+                color: '#17837F',
                 fontWeight: 700,
                 textDecoration: 'none',
                 padding: '3px 8px',
                 background: 'white',
                 borderRadius: '4px',
-                border: '1px solid #2563eb',
+                border: '1px solid #2AB5B0',
               }}
             >
               Open Dispatcher ⚡
@@ -572,7 +572,7 @@ export default function DocumentStructureTab() {
                   flex: 1,
                   padding: '0.6rem 0.8rem',
                   borderRadius: 6,
-                  border: activeStep === st.num ? '2px solid #2563eb' : '1px solid #e2e8f0',
+                  border: activeStep === st.num ? '2px solid #2AB5B0' : '1px solid #e2e8f0',
                   background: activeStep === st.num ? '#eff6ff' : '#ffffff',
                   cursor: 'pointer',
                   transition: 'all 0.2s',
@@ -581,7 +581,7 @@ export default function DocumentStructureTab() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.2rem' }}>
                   <span style={{
                     width: 18, height: 18, borderRadius: '50%',
-                    background: activeStep === st.num ? '#2563eb' : '#cbd5e1',
+                    background: activeStep === st.num ? '#2AB5B0' : '#cbd5e1',
                     color: '#ffffff', fontSize: '0.6rem', fontWeight: 700,
                     display: 'flex', alignItems: 'center', justifyContent: 'center'
                   }}>
@@ -609,8 +609,8 @@ export default function DocumentStructureTab() {
               style={{ fontSize: '0.72rem', color: '#1E293B' }}
             />
             {parsing && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.72rem', color: '#2563eb' }}>
-                <div style={{ width: 16, height: 16, border: '2px solid #2563eb', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.72rem', color: '#17837F' }}>
+                <div style={{ width: 16, height: 16, border: '2px solid #2AB5B0', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
                 {progress}
               </div>
             )}
@@ -628,7 +628,7 @@ export default function DocumentStructureTab() {
                     padding: '0.3rem 0.6rem',
                     borderRadius: 4,
                     border: 'none',
-                    background: cascadeMode === m ? '#2563eb' : '#e2e8f0',
+                    background: cascadeMode === m ? '#2AB5B0' : '#e2e8f0',
                     color: cascadeMode === m ? '#ffffff' : '#475569',
                     fontSize: '0.62rem',
                     fontFamily: 'Syne, sans-serif',
@@ -698,9 +698,9 @@ export default function DocumentStructureTab() {
                   fontFamily: 'Syne, sans-serif',
                   cursor: 'pointer',
                   border: 'none',
-                  borderBottom: activeView === tab.id ? '2px solid #2563eb' : '2px solid transparent',
+                  borderBottom: activeView === tab.id ? '2px solid #2AB5B0' : '2px solid transparent',
                   background: activeView === tab.id ? '#eff6ff' : 'transparent',
-                  color: activeView === tab.id ? '#2563eb' : '#6b7280',
+                  color: activeView === tab.id ? '#2AB5B0' : '#6b7280',
                   whiteSpace: 'nowrap',
                   transition: 'all 0.2s',
                 }}

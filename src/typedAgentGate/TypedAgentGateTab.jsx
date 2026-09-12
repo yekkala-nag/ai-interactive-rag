@@ -136,16 +136,16 @@ export default function TypedAgentGateTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '14px', color: '#38BDF8', fontFamily: 'monospace' }}>
+                      <strong style={{ fontSize: '14px', color: '#17837F', fontFamily: 'monospace' }}>
                         {activeTool.name}
                       </strong>
                       <Badge variant="outline">{activeTool.domain}</Badge>
                     </Flex>
 
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>FUNCTION SIGNATURE:</div>
-                    <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#10b981', marginBottom: '8px' }}>
+                    <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#17837F', marginBottom: '8px' }}>
                       {activeTool.signature}
                     </div>
 
@@ -160,10 +160,10 @@ export default function TypedAgentGateTab() {
                   </Card>
 
                   <Card style={{ padding: '16px', background: '#090d16', border: '1px solid rgba(255,255,255,0.1)' }}>
-                    <strong style={{ fontSize: '12px', color: '#10b981', display: 'block', marginBottom: '8px' }}>
+                    <strong style={{ fontSize: '12px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
                       STANDARDIZED ENVELOPE RETURN SCHEMA:
                     </strong>
-                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#38BDF8', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
+                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#17837F', whiteSpace: 'pre-wrap', lineHeight: '1.6' }}>
 {`{
   "results": [...],           // Typed payload: EvidenceChunk | Concept | GraphPath
   "sources": ["DOC_2026_01"], // Source document identifiers
@@ -200,7 +200,7 @@ export default function TypedAgentGateTab() {
                   <Button variant="primary" size="sm" onClick={handleStartSim} disabled={isSimulating}>
                     {isSimulating ? 'Simulating Trace...' : '▶ Run Multi-Hop Investigation Trace'}
                   </Button>
-                  <Badge variant="subtle" style={{ color: '#10b981', background: 'rgba(16,185,129,0.15)' }}>
+                  <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
                     Round: {simulationEvents[simStep].round} / 8 | Tokens: {simulationEvents[simStep].tokens} / 6000
                   </Badge>
                 </Flex>
@@ -216,7 +216,7 @@ export default function TypedAgentGateTab() {
                         style={{
                           padding: '10px 14px',
                           background: isCurrent ? 'rgba(56, 189, 248, 0.12)' : isPassed ? '#090d16' : 'rgba(255,255,255,0.02)',
-                          border: isCurrent ? '1px solid #38BDF8' : '1px solid rgba(255,255,255,0.05)',
+                          border: isCurrent ? '1px solid #2AB5B0' : '1px solid rgba(255,255,255,0.05)',
                           borderRadius: '6px',
                           display: 'flex',
                           justifyContent: 'space-between',
@@ -225,17 +225,17 @@ export default function TypedAgentGateTab() {
                         }}
                       >
                         <div>
-                          <span style={{ fontFamily: 'monospace', color: isPassed ? '#10b981' : 'var(--ds-color-text-tertiary)', fontWeight: 'bold', marginRight: '8px' }}>
+                          <span style={{ fontFamily: 'monospace', color: isPassed ? '#2AB5B0' : 'var(--ds-color-text-tertiary)', fontWeight: 'bold', marginRight: '8px' }}>
                             [Round {evt.round}]
                           </span>
-                          <span style={{ fontFamily: 'monospace', color: isCurrent ? '#38BDF8' : 'white', fontWeight: isCurrent ? 'bold' : 'normal' }}>
+                          <span style={{ fontFamily: 'monospace', color: isCurrent ? '#2AB5B0' : 'white', fontWeight: isCurrent ? 'bold' : 'normal' }}>
                             {evt.tool}()
                           </span>
                           <span style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginLeft: '10px' }}>
                             Args: {evt.args}
                           </span>
                         </div>
-                        <div style={{ fontSize: '11px', fontFamily: 'monospace', color: isPassed ? '#10b981' : 'var(--ds-color-text-tertiary)' }}>
+                        <div style={{ fontSize: '11px', fontFamily: 'monospace', color: isPassed ? '#2AB5B0' : 'var(--ds-color-text-tertiary)' }}>
                           {isPassed ? evt.result : 'Pending...'}
                         </div>
                       </div>
@@ -279,8 +279,8 @@ export default function TypedAgentGateTab() {
 
                   <Card style={{ padding: '16px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.3)' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '13px', color: '#10b981' }}>✅ DOWNSTREAM COMPOSER GATE</strong>
-                      <Badge variant="subtle" style={{ color: '#10b981', background: 'rgba(16,185,129,0.2)' }}>Refusal Enforced</Badge>
+                      <strong style={{ fontSize: '13px', color: '#17837F' }}>✅ DOWNSTREAM COMPOSER GATE</strong>
+                      <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.2)' }}>Refusal Enforced</Badge>
                     </Flex>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '8px' }}>
                       The composer performs its <em>own independent lookup</em> of open contradictions for all touched entities downstream. If a disagreement exists, it strictly enforces the "both positions + no choice" presentation.
@@ -313,18 +313,18 @@ export default function TypedAgentGateTab() {
                     <thead>
                       <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
                         <th style={{ textAlign: 'left', padding: '8px', color: 'var(--ds-color-text-tertiary)' }}>Evaluation Metric</th>
-                        <th style={{ textAlign: 'center', padding: '8px', color: '#38BDF8' }}>System A (Fixed Fused)</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#17837F' }}>System A (Fixed Fused)</th>
                         <th style={{ textAlign: 'center', padding: '8px', color: '#ef4444' }}>System B (Search-Box)</th>
-                        <th style={{ textAlign: 'center', padding: '8px', color: '#10b981' }}>System C (8-Tool Agent)</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#17837F' }}>System C (8-Tool Agent)</th>
                       </tr>
                     </thead>
                     <tbody>
                       {BENCHMARK_ABLATION_DATA.map((row, i) => (
                         <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)' }}>
                           <td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{row.metric}</td>
-                          <td style={{ padding: '8px', textAlign: 'center', color: '#38BDF8' }}>{row.systemA_fixed}</td>
+                          <td style={{ padding: '8px', textAlign: 'center', color: '#17837F' }}>{row.systemA_fixed}</td>
                           <td style={{ padding: '8px', textAlign: 'center', color: '#ef4444' }}>{row.systemB_searchOnly}</td>
-                          <td style={{ padding: '8px', textAlign: 'center', color: '#10b981' }}>{row.systemC_typedAgent}</td>
+                          <td style={{ padding: '8px', textAlign: 'center', color: '#17837F' }}>{row.systemC_typedAgent}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -343,7 +343,7 @@ export default function TypedAgentGateTab() {
                         <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', margin: '4px 0' }}>
                           Detector: {sig.detector}
                         </p>
-                        <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 'bold' }}>
+                        <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>
                           Action: {sig.action}
                         </div>
                       </Card>

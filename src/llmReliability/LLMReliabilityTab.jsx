@@ -144,10 +144,10 @@ export default function LLMReliabilityTab() {
                     />
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${xmlResult.success ? '#10b981' : '#F5A623'}` }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${xmlResult.success ? '#2AB5B0' : '#F5A623'}` }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '11px', color: '#10b981' }}>PARSED & EXTRACTED CONTENT:</strong>
-                      <Badge variant="subtle" style={{ background: xmlResult.success ? 'rgba(46,204,140,0.15)' : 'rgba(245,166,35,0.15)', color: xmlResult.success ? '#10b981' : '#F5A623' }}>
+                      <strong style={{ fontSize: '11px', color: '#17837F' }}>PARSED & EXTRACTED CONTENT:</strong>
+                      <Badge variant="subtle" style={{ background: xmlResult.success ? 'rgba(46,204,140,0.15)' : 'rgba(245,166,35,0.15)', color: xmlResult.success ? '#2AB5B0' : '#F5A623' }}>
                         {xmlResult.success ? 'TAG_MATCH' : 'FALLBACK'}
                       </Badge>
                     </Flex>
@@ -157,7 +157,7 @@ export default function LLMReliabilityTab() {
                       border: '1px solid var(--ds-color-border-subtle)',
                       borderRadius: '6px',
                       padding: '10px',
-                      color: '#38BDF8',
+                      color: '#17837F',
                       fontFamily: 'monospace',
                       fontSize: '12px',
                       whiteSpace: 'pre-wrap'
@@ -188,7 +188,7 @@ export default function LLMReliabilityTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
-                    <strong style={{ fontSize: '11px', color: '#38BDF8', display: 'block', marginBottom: '8px' }}>
+                    <strong style={{ fontSize: '11px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
                       INCOMING LLM JSON PAYLOAD:
                     </strong>
                     <textarea
@@ -216,16 +216,16 @@ export default function LLMReliabilityTab() {
                     </Flex>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${schemaResult.isValid ? '#10b981' : '#ef4444'}` }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${schemaResult.isValid ? '#2AB5B0' : '#ef4444'}` }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
                       <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>PYDANTIC VALIDATION RESULT:</strong>
-                      <Badge variant="subtle" style={{ background: schemaResult.isValid ? 'rgba(46,204,140,0.15)' : 'rgba(255,77,77,0.15)', color: schemaResult.isValid ? '#10b981' : '#ef4444' }}>
+                      <Badge variant="subtle" style={{ background: schemaResult.isValid ? 'rgba(46,204,140,0.15)' : 'rgba(255,77,77,0.15)', color: schemaResult.isValid ? '#2AB5B0' : '#ef4444' }}>
                         {schemaResult.isValid ? 'VALIDATED_OK' : 'SCHEMA_ERROR'}
                       </Badge>
                     </Flex>
 
                     {schemaResult.isValid ? (
-                      <Card style={{ padding: '10px', background: '#090d16', color: '#10b981', fontFamily: 'monospace', fontSize: '11px' }}>
+                      <Card style={{ padding: '10px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '11px' }}>
                         {JSON.stringify(schemaResult.parsedObject, null, 2)}
                       </Card>
                     ) : (
@@ -269,22 +269,22 @@ export default function LLMReliabilityTab() {
 
                 <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
                   <Flex justify="space-between" align="center" style={{ marginBottom: '12px' }}>
-                    <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#10b981' }}>
+                    <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F' }}>
                       RELIABILITY EXECUTION TRACE (Total Attempts: {fallbackResult.totalAttempts})
                     </strong>
-                    <Badge variant="subtle" style={{ background: 'rgba(46,204,140,0.15)', color: '#10b981' }}>
+                    <Badge variant="subtle" style={{ background: 'rgba(46,204,140,0.15)', color: '#17837F' }}>
                       Resolved Via: {fallbackResult.finalProvider}
                     </Badge>
                   </Flex>
 
                   <Stack gap={2}>
                     {fallbackResult.attempts.map((att, idx) => (
-                      <Card key={idx} style={{ padding: '10px 14px', background: '#090d16', borderLeft: `4px solid ${att.status === 'SUCCESS' ? '#10b981' : '#ef4444'}` }}>
+                      <Card key={idx} style={{ padding: '10px 14px', background: '#090d16', borderLeft: `4px solid ${att.status === 'SUCCESS' ? '#2AB5B0' : '#ef4444'}` }}>
                         <Flex justify="space-between" align="center">
-                          <span style={{ fontSize: '11px', color: '#38BDF8', fontFamily: 'monospace' }}>
+                          <span style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace' }}>
                             Attempt {att.attempt}: {att.provider} (Temp={att.temperature})
                           </span>
-                          <Badge variant="subtle" style={{ background: att.status === 'SUCCESS' ? 'rgba(46,204,140,0.15)' : 'rgba(255,77,77,0.15)', color: att.status === 'SUCCESS' ? '#10b981' : '#ef4444', fontSize: '9px' }}>
+                          <Badge variant="subtle" style={{ background: att.status === 'SUCCESS' ? 'rgba(46,204,140,0.15)' : 'rgba(255,77,77,0.15)', color: att.status === 'SUCCESS' ? '#2AB5B0' : '#ef4444', fontSize: '9px' }}>
                             {att.status}
                           </Badge>
                         </Flex>

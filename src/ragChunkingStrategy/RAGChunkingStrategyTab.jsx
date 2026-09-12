@@ -27,7 +27,7 @@ const STRATEGY_ICONS = {
 };
 
 const RISK_COLORS = {
-  low: "#10b981",
+  low: "#2AB5B0",
   medium: "#f59e0b",
   high: "#ef4444"
 };
@@ -206,7 +206,7 @@ export default function RAGChunkingStrategyTab() {
                         onClick={() => { setActiveStepIdx(idx); setIsAutoPlaying(false); }}
                         style={{
                           background: isCurrent ? 'var(--ds-color-module-foundations-primary)' : 'var(--ds-color-bg-surface)',
-                          border: `1px solid ${isCurrent ? '#38bdf8' : 'var(--ds-color-border-subtle)'}`,
+                          border: `1px solid ${isCurrent ? '#2AB5B0' : 'var(--ds-color-border-subtle)'}`,
                           borderRadius: 'var(--ds-radius-md)',
                           padding: '10px 8px',
                           color: isCurrent ? 'white' : 'var(--ds-color-text-secondary)',
@@ -226,13 +226,13 @@ export default function RAGChunkingStrategyTab() {
                 </div>
 
                 {/* Active Step Detailed Card */}
-                <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38bdf8' }}>
+                <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                   <Stack gap={3}>
                     <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
                       <Flex gap="var(--ds-space-2)" align="center">
                         <span style={{ fontSize: '24px' }}>{activePipelineStep.icon}</span>
                         <div>
-                          <strong style={{ fontSize: '16px', color: '#38bdf8' }}>
+                          <strong style={{ fontSize: '16px', color: '#17837F' }}>
                             Stage {activePipelineStep.stepNumber}: {activePipelineStep.name}
                           </strong>
                           <div style={{ fontSize: '12px', color: 'var(--ds-color-text-tertiary)' }}>
@@ -272,7 +272,7 @@ export default function RAGChunkingStrategyTab() {
                         </div>
                       </div>
                       <div style={{ background: '#090d16', padding: '12px', borderRadius: '6px', border: '1px solid var(--ds-color-border-subtle)' }}>
-                        <strong style={{ fontSize: '11px', color: '#10b981', display: 'block', marginBottom: '6px' }}>
+                        <strong style={{ fontSize: '11px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
                           OUTPUT TRANSFORM &amp; METADATA:
                         </strong>
                         <div style={{ fontFamily: 'monospace', fontSize: '11px', color: '#6ee7b7', whiteSpace: 'pre-wrap' }}>
@@ -308,7 +308,7 @@ export default function RAGChunkingStrategyTab() {
                 {/* Controls Bar */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
                   <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-                    <label style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 'bold', display: 'block', marginBottom: '6px' }}>
+                    <label style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', display: 'block', marginBottom: '6px' }}>
                       1. SELECT DOCUMENT TYPE:
                     </label>
                     <select
@@ -333,7 +333,7 @@ export default function RAGChunkingStrategyTab() {
                   </Card>
 
                   <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-                    <label style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 'bold', display: 'block', marginBottom: '6px' }}>
+                    <label style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', display: 'block', marginBottom: '6px' }}>
                       2. CHUNKING STRATEGY:
                     </label>
                     <select
@@ -359,7 +359,7 @@ export default function RAGChunkingStrategyTab() {
 
                   <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
-                      <span style={{ color: '#38bdf8', fontWeight: 'bold' }}>TARGET CHUNK SIZE:</span>
+                      <span style={{ color: '#17837F', fontWeight: 'bold' }}>TARGET CHUNK SIZE:</span>
                       <span style={{ color: 'white', fontWeight: 'bold' }}>{chunkSizeSlider} words</span>
                     </div>
                     <input
@@ -368,7 +368,7 @@ export default function RAGChunkingStrategyTab() {
                       max="200"
                       value={chunkSizeSlider}
                       onChange={e => setChunkSizeSlider(Number(e.target.value))}
-                      style={{ width: '100%', accentColor: '#38bdf8', marginBottom: '8px' }}
+                      style={{ width: '100%', accentColor: '#2AB5B0', marginBottom: '8px' }}
                     />
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
                       <span style={{ color: '#f59e0b', fontWeight: 'bold' }}>SLIDING OVERLAP:</span>
@@ -402,23 +402,23 @@ export default function RAGChunkingStrategyTab() {
                     </div>
                     <div>
                       <div style={{ fontSize: '10px', color: 'var(--ds-color-text-tertiary)' }}>RETRIEVAL PRECISION</div>
-                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#38bdf8' }}>{simResult.retrievalPrecision}</div>
+                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#17837F' }}>{simResult.retrievalPrecision}</div>
                     </div>
                     <div>
                       <div style={{ fontSize: '10px', color: 'var(--ds-color-text-tertiary)' }}>SEMANTIC INTEGRITY</div>
-                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: simResult.semanticQuality === 'Poor' ? '#ef4444' : '#10b981' }}>
+                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: simResult.semanticQuality === 'Poor' ? '#ef4444' : '#2AB5B0' }}>
                         {simResult.semanticQuality}
                       </div>
                     </div>
                     <div>
                       <div style={{ fontSize: '10px', color: 'var(--ds-color-text-tertiary)' }}>SEVERED SENTENCES</div>
-                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: simResult.severedSentencesCount > 0 ? '#ef4444' : '#10b981' }}>
+                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: simResult.severedSentencesCount > 0 ? '#ef4444' : '#2AB5B0' }}>
                         {simResult.severedSentencesCount} cuts
                       </div>
                     </div>
                     <div>
                       <div style={{ fontSize: '10px', color: 'var(--ds-color-text-tertiary)' }}>CONTEXT RETENTION</div>
-                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#10b981' }}>{simResult.contextRetention}</div>
+                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#17837F' }}>{simResult.contextRetention}</div>
                     </div>
                   </div>
                 )}
@@ -443,7 +443,7 @@ export default function RAGChunkingStrategyTab() {
                           style={{
                             background: 'var(--ds-color-bg-surface)',
                             border: `1px solid ${chunk.breaksMidSentence ? '#ef4444' : 'var(--ds-color-border-subtle)'}`,
-                            borderLeft: `4px solid ${chunk.breaksMidSentence ? '#ef4444' : '#10b981'}`,
+                            borderLeft: `4px solid ${chunk.breaksMidSentence ? '#ef4444' : '#2AB5B0'}`,
                             borderRadius: '6px',
                             padding: '12px',
                             cursor: 'pointer',
@@ -452,7 +452,7 @@ export default function RAGChunkingStrategyTab() {
                         >
                           <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
                             <Flex gap="var(--ds-space-2)" align="center">
-                              <span style={{ fontSize: '11px', fontWeight: 'bold', color: '#38bdf8' }}>
+                              <span style={{ fontSize: '11px', fontWeight: 'bold', color: '#17837F' }}>
                                 Chunk #{chunk.id}
                               </span>
                               <Badge variant="subtle" style={{ background: 'rgba(255,255,255,0.08)', fontSize: '9px' }}>
@@ -471,7 +471,7 @@ export default function RAGChunkingStrategyTab() {
                                   ⚠️ BREAKS MID-SENTENCE
                                 </Badge>
                               ) : (
-                                <Badge variant="subtle" style={{ background: 'rgba(16,185,129,0.2)', color: '#10b981', fontSize: '9px' }}>
+                                <Badge variant="subtle" style={{ background: 'rgba(16,185,129,0.2)', color: '#17837F', fontSize: '9px' }}>
                                   ✓ BOUNDARY CLEAN
                                 </Badge>
                               )}
@@ -528,7 +528,7 @@ export default function RAGChunkingStrategyTab() {
                 <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-surface)' }}>
                   <Stack gap={4}>
                     <div>
-                      <div style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                      <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', textTransform: 'uppercase' }}>
                         {activeScenario.category} Case Study
                       </div>
                       <h4 style={{ margin: '4px 0', fontSize: '15px' }}>
@@ -571,13 +571,13 @@ export default function RAGChunkingStrategyTab() {
                       </Card>
 
                       {/* Advanced Chunking Fix */}
-                      <Card style={{ padding: '14px', background: '#0d1f1a', border: '1px solid rgba(16,185,129,0.4)', borderTop: '4px solid #10b981' }}>
+                      <Card style={{ padding: '14px', background: '#0d1f1a', border: '1px solid rgba(16,185,129,0.4)', borderTop: '4px solid #2AB5B0' }}>
                         <Stack gap={2}>
                           <Flex justify="space-between" align="center">
-                            <strong style={{ fontSize: '12px', color: '#10b981' }}>
+                            <strong style={{ fontSize: '12px', color: '#17837F' }}>
                               ✅ {activeScenario.advancedChunk.strategy}
                             </strong>
-                            <Badge variant="subtle" style={{ background: 'rgba(16,185,129,0.2)', color: '#10b981', fontSize: '9px' }}>
+                            <Badge variant="subtle" style={{ background: 'rgba(16,185,129,0.2)', color: '#17837F', fontSize: '9px' }}>
                               {activeScenario.advancedChunk.retrievalStatus}
                             </Badge>
                           </Flex>
@@ -650,13 +650,13 @@ Give a short 1-2 sentence context to situate this chunk for search.`}
                   </Card>
 
                   {/* Late Chunking Deep-Dive */}
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '4px solid #38bdf8' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '4px solid #2AB5B0' }}>
                     <Stack gap={3}>
                       <Flex justify="space-between" align="center">
-                        <strong style={{ fontSize: '14px', color: '#38bdf8' }}>
+                        <strong style={{ fontSize: '14px', color: '#17837F' }}>
                           ⏳ Jina Late Chunking
                         </strong>
-                        <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.2)', color: '#38bdf8', fontSize: '10px' }}>
+                        <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.2)', color: '#17837F', fontSize: '10px' }}>
                           Attention Pooling
                         </Badge>
                       </Flex>
@@ -665,7 +665,7 @@ Give a short 1-2 sentence context to situate this chunk for search.`}
                       </p>
 
                       <div style={{ background: '#090d16', padding: '12px', borderRadius: '6px', border: '1px solid var(--ds-color-border-subtle)' }}>
-                        <div style={{ fontSize: '10px', color: '#38bdf8', fontWeight: 'bold', marginBottom: '4px' }}>
+                        <div style={{ fontSize: '10px', color: '#17837F', fontWeight: 'bold', marginBottom: '4px' }}>
                           TRANSFORMER POOLING MECHANISM:
                         </div>
                         <div style={{ fontFamily: 'monospace', fontSize: '10px', color: '#cbd5e1' }}>
@@ -703,7 +703,7 @@ For span [start_idx, end_idx]:
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-4)">
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
-                    <div style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 'bold', marginBottom: '6px' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', marginBottom: '6px' }}>
                       LLM CONTEXT WINDOW:
                     </div>
                     <select
@@ -719,7 +719,7 @@ For span [start_idx, end_idx]:
                   </Card>
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
-                    <div style={{ fontSize: '11px', color: '#38bdf8', fontWeight: 'bold', marginBottom: '6px' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', marginBottom: '6px' }}>
                       QUERY SPECIFICITY:
                     </div>
                     <select
@@ -734,7 +734,7 @@ For span [start_idx, end_idx]:
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
-                      <span style={{ color: '#38bdf8', fontWeight: 'bold' }}>DOC VOLUME:</span>
+                      <span style={{ color: '#17837F', fontWeight: 'bold' }}>DOC VOLUME:</span>
                       <span style={{ color: 'white', fontWeight: 'bold' }}>{calcDocVolume.toLocaleString()} pages</span>
                     </div>
                     <input
@@ -744,7 +744,7 @@ For span [start_idx, end_idx]:
                       step="10000"
                       value={calcDocVolume}
                       onChange={e => setCalcDocVolume(Number(e.target.value))}
-                      style={{ width: '100%', accentColor: '#38bdf8' }}
+                      style={{ width: '100%', accentColor: '#2AB5B0' }}
                     />
                   </Card>
                 </Grid>
@@ -761,7 +761,7 @@ For span [start_idx, end_idx]:
                 }}>
                   <div>
                     <div style={{ fontSize: '10px', color: 'var(--ds-color-text-tertiary)' }}>RECOMMENDED CHUNK SIZE</div>
-                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#38bdf8' }}>{recommendedChunkTokens} tokens</div>
+                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#17837F' }}>{recommendedChunkTokens} tokens</div>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>~{Math.round(recommendedChunkTokens * 0.75)} words</div>
                   </div>
                   <div>
@@ -776,7 +776,7 @@ For span [start_idx, end_idx]:
                   </div>
                   <div>
                     <div style={{ fontSize: '10px', color: 'var(--ds-color-text-tertiary)' }}>EMBEDDING API INGESTION</div>
-                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#10b981' }}>${monthlyCostEst}</div>
+                    <div style={{ fontSize: '20px', fontWeight: 'bold', color: '#17837F' }}>${monthlyCostEst}</div>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>@ $0.02 / 1M tokens</div>
                   </div>
                 </div>
@@ -809,7 +809,7 @@ For span [start_idx, end_idx]:
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
                     <thead>
                       <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)' }}>
-                        <th style={{ padding: '10px', textAlign: 'left', color: '#38bdf8' }}>Strategy</th>
+                        <th style={{ padding: '10px', textAlign: 'left', color: '#17837F' }}>Strategy</th>
                         <th style={{ padding: '10px', textAlign: 'center', color: '#94a3b8' }}>Ingest Speed</th>
                         <th style={{ padding: '10px', textAlign: 'center', color: '#94a3b8' }}>Recall Quality</th>
                         <th style={{ padding: '10px', textAlign: 'center', color: '#94a3b8' }}>Storage</th>
@@ -821,10 +821,10 @@ For span [start_idx, end_idx]:
                       {CHUNKING_COMPARISON_TABLE.map((row, idx) => (
                         <tr key={idx} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
                           <td style={{ padding: '10px', color: 'white', fontWeight: 'bold' }}>{row.strategy}</td>
-                          <td style={{ padding: '10px', textAlign: 'center', color: row.speed.includes('1x') ? '#10b981' : row.speed.includes('2x') || row.speed.includes('4x') ? '#f59e0b' : '#ef4444' }}>
+                          <td style={{ padding: '10px', textAlign: 'center', color: row.speed.includes('1x') ? '#2AB5B0' : row.speed.includes('2x') || row.speed.includes('4x') ? '#f59e0b' : '#ef4444' }}>
                             {row.speed}
                           </td>
-                          <td style={{ padding: '10px', textAlign: 'center', color: Number(row.quality.replace('%','')) > 85 ? '#10b981' : Number(row.quality.replace('%','')) > 60 ? '#38bdf8' : '#ef4444', fontWeight: 'bold' }}>
+                          <td style={{ padding: '10px', textAlign: 'center', color: Number(row.quality.replace('%','')) > 85 ? '#2AB5B0' : Number(row.quality.replace('%','')) > 60 ? '#2AB5B0' : '#ef4444', fontWeight: 'bold' }}>
                             {row.quality}
                           </td>
                           <td style={{ padding: '10px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{row.storage}</td>

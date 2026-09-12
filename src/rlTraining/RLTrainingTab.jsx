@@ -30,20 +30,20 @@ export default function RLTrainingTab() {
           <button key={t.id} onClick={() => setSub(t.id)} style={navBtn(sub, t.id)}><div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'stages' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{THREE_STAGES.map((s, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${i === 2 ? '#10b981' : '#38BDF8'}` }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{s.stage}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.does}</div><div style={{ fontSize: '11px', color: '#10b981' }}>→ {s.gives}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{THREE_STAGES.map((s, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${i === 2 ? '#2AB5B0' : '#2AB5B0'}` }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{s.stage}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.does}</div><div style={{ fontSize: '11px', color: '#17837F' }}>→ {s.gives}</div></Card>))}</Grid>
           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
               <strong style={{ fontSize: '12px', color: '#F5A623' }}>RL → LLM mapping:</strong>
               {RL_MAPPING.map((m, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}><span style={{ color: 'white', fontFamily: 'monospace' }}>{m.rl}</span> = {m.llm}</div>))}
             </Card>
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-              <strong style={{ fontSize: '12px', color: '#38BDF8' }}>Value discounting (γ):</strong>
+              <strong style={{ fontSize: '12px', color: '#17837F' }}>Value discounting (γ):</strong>
               {VALUE_DISCOUNT.map((v, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace', marginTop: '4px' }}>{v.prefix} → {v.value}</div>))}
             </Card>
           </Grid>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Method</th><th style={{ textAlign: 'left', padding: '8px' }}>Idea</th><th style={{ textAlign: 'left', padding: '8px' }}>Cost</th><th style={{ padding: '8px' }}>Status</th></tr></thead>
-            <tbody>{METHOD_LADDER.map((m, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{m.method}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{m.idea}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{m.cost}</td><td style={{ padding: '8px', textAlign: 'center', color: m.status === 'Frontier' ? '#10b981' : 'var(--ds-color-text-tertiary)' }}>{m.status}</td></tr>))}</tbody></table></div>
+            <tbody>{METHOD_LADDER.map((m, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{m.method}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{m.idea}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{m.cost}</td><td style={{ padding: '8px', textAlign: 'center', color: m.status === 'Frontier' ? '#2AB5B0' : 'var(--ds-color-text-tertiary)' }}>{m.status}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 GRPO advantage lab — pick a reward group</h3></div>
@@ -57,9 +57,9 @@ export default function RLTrainingTab() {
               </Flex>
               <div style={{ fontSize: '11px', color: 'white', fontFamily: 'monospace', marginTop: '8px' }}>rewards = [{rewards.join(', ')}]</div>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
               <div style={{ fontSize: '12px', color: 'white', fontFamily: 'monospace' }}>μ={g.mu} σ={g.sd} → A=[{g.adv.join(', ')}]</div>
-              <div style={{ fontSize: '12px', color: '#10b981', marginTop: '6px' }}>{g.read}</div>
+              <div style={{ fontSize: '12px', color: '#17837F', marginTop: '6px' }}>{g.read}</div>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginTop: '4px' }}>{g.note}</div>
             </Card>
           </Grid>

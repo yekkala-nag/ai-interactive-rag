@@ -7,8 +7,8 @@
  * Rules for new diagrams:
  * 1. Background: deep navy `#090d16 → #101a30` (dark) — never light gray.
  * 2. Exactly ONE umbrella accent + white/gray text. No rainbow gradients.
- * 3. Status colors are global, not per-diagram: ok #10b981, warn #F5A623,
- *    bad #ef4444, info #38bdf8.
+ * 3. Status colors are global, not per-diagram: ok #2AB5B0, warn #F5A623,
+ *    bad #ef4444, info #2AB5B0.
  * 4. Room to breathe: ≥40px margins, ≥11px type, one idea per panel.
  */
 
@@ -22,10 +22,10 @@ export const DIAGRAM_ACCENTS = {
 };
 
 export const DIAGRAM_STATUS = {
-  ok: '#10b981',
+  ok: '#2AB5B0',
   warn: '#F5A623',
   bad: '#ef4444',
-  info: '#38bdf8',
+  info: '#2AB5B0',
   muted: '#64748b'
 };
 

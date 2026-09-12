@@ -79,13 +79,13 @@ export default function AIRoadmapTab({ onSelectTab }) {
               const score = stageScore(s.tabs);
               const done = s.tabs.filter(isMastered).length;
               return (
-                <Card key={s.id} style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-canvas)', borderLeft: `4px solid ${score === 100 ? '#10b981' : '#38BDF8'}` }}>
+                <Card key={s.id} style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-canvas)', borderLeft: `4px solid ${score === 100 ? '#2AB5B0' : '#2AB5B0'}` }}>
                   <Flex justify="space-between" align="center" style={{ marginBottom: '6px', flexWrap: 'wrap', gap: '8px' }}>
                     <strong style={{ color: 'white', fontSize: '14px' }}>{s.n}. {s.title}</strong>
                     <Flex gap="var(--ds-space-2)" align="center">
                       <span style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>{done}/{s.tabs.length} proven · {score}</span>
                       <div style={{ width: '90px', height: '6px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', width: `${score}%`, background: score === 100 ? '#10b981' : '#38BDF8', borderRadius: '4px' }} />
+                        <div style={{ height: '100%', width: `${score}%`, background: score === 100 ? '#2AB5B0' : '#2AB5B0', borderRadius: '4px' }} />
                       </div>
                     </Flex>
                   </Flex>
@@ -103,17 +103,17 @@ export default function AIRoadmapTab({ onSelectTab }) {
                             display: 'inline-flex', alignItems: 'center', gap: '6px',
                             padding: '5px 10px', borderRadius: '16px', cursor: 'pointer',
                             background: m ? 'rgba(16,185,129,0.12)' : 'var(--ds-color-bg-surface)',
-                            border: `1px solid ${m ? '#10b981' : 'var(--ds-color-border-subtle)'}`,
+                            border: `1px solid ${m ? '#2AB5B0' : 'var(--ds-color-border-subtle)'}`,
                             color: 'var(--ds-color-text-primary)', fontSize: '12px'
                           }}
                         >
-                          <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: m ? '#10b981' : '#475569', flexShrink: 0 }} />
+                          <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: m ? '#2AB5B0' : '#475569', flexShrink: 0 }} />
                           <span>{t.icon} {t.label}</span>
                         </button>
                       );
                     })}
                   </Flex>
-                  <div style={{ fontSize: '11px', color: '#10b981', marginTop: '8px' }}>✓ {s.outcome}</div>
+                  <div style={{ fontSize: '11px', color: '#17837F', marginTop: '8px' }}>✓ {s.outcome}</div>
                 </Card>
               );
             })}
@@ -144,8 +144,8 @@ export default function AIRoadmapTab({ onSelectTab }) {
                     <label style={{ fontSize: '11px', color: 'white' }}>Hours/week: {hrs}</label>
                     <input type="range" min={2} max={20} value={hrs} onChange={e => setHrs(+e.target.value)} style={{ width: '100%' }} />
                   </Card>
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-                    <strong style={{ color: '#10b981' }}>{plan.headline}</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ color: '#17837F' }}>{plan.headline}</strong>
                     <div style={{ marginTop: '8px', maxHeight: '220px', overflowY: 'auto' }}>
                       {plan.rows.filter(r => !r.skipped).map(r => (
                         <div key={r.n} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', padding: '3px 0', borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
@@ -189,7 +189,7 @@ export default function AIRoadmapTab({ onSelectTab }) {
                               {m.ours.map(id => {
                                 const t = getTabById(id) || { label: id, icon: '📝' };
                                 return (
-                                  <button key={id} onClick={() => go(id)} style={{ background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', color: '#38BDF8', borderRadius: '12px', padding: '2px 8px', fontSize: '11px', cursor: 'pointer' }}>
+                                  <button key={id} onClick={() => go(id)} style={{ background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', color: '#17837F', borderRadius: '12px', padding: '2px 8px', fontSize: '11px', cursor: 'pointer' }}>
                                     {t.icon} {t.label}
                                   </button>
                                 );
@@ -219,7 +219,7 @@ export default function AIRoadmapTab({ onSelectTab }) {
                     ['3 · Prove', 'Exit checks convert visits into proven mastery.'],
                     ['4 · Review', 'Spaced queue resurfaces proven topics at ~14 days.']
                   ].map(([t, d], i) => (
-                    <Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #10b981' }}>
+                    <Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}>
                       <div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{t}</div>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{d}</div>
                     </Card>

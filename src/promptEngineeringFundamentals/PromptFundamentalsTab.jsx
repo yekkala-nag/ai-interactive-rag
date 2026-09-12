@@ -130,9 +130,9 @@ Return strictly valid ${outputFormat}.`;
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                      <strong style={{ fontSize: '13px', color: '#38BDF8' }}>{activePattern.name}</strong>
+                      <strong style={{ fontSize: '13px', color: '#17837F' }}>{activePattern.name}</strong>
                       <Badge variant="outline">{activePattern.paper}</Badge>
                     </Flex>
 
@@ -140,7 +140,7 @@ Return strictly valid ${outputFormat}.`;
                       {activePattern.mechanism}
                     </p>
 
-                    <div style={{ fontSize: '11px', color: '#10b981' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F' }}>
                       🎯 <strong>When to Use:</strong> {activePattern.whenToUse}
                     </div>
                   </Card>
@@ -149,7 +149,7 @@ Return strictly valid ${outputFormat}.`;
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '6px' }}>
                       EXEMPLAR PROMPT FORMAT:
                     </div>
-                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#38BDF8', whiteSpace: 'pre-wrap' }}>
+                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#17837F', whiteSpace: 'pre-wrap' }}>
                       {activePattern.samplePrompt}
                     </pre>
                   </Card>
@@ -173,14 +173,14 @@ Return strictly valid ${outputFormat}.`;
 
                 <Grid columns={{ base: '1fr', sm: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {PROMPT_STRUCTURE_COMPONENTS.map((comp, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #10b981' }}>
-                      <strong style={{ fontSize: '12px', color: '#10b981', display: 'block', marginBottom: '4px' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
+                      <strong style={{ fontSize: '12px', color: '#17837F', display: 'block', marginBottom: '4px' }}>
                         {comp.section}
                       </strong>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '0 0 8px 0' }}>
                         {comp.purpose}
                       </p>
-                      <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#38BDF8' }}>
+                      <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#17837F' }}>
                         {comp.example}
                       </div>
                     </Card>
@@ -258,14 +258,14 @@ Return strictly valid ${outputFormat}.`;
                     </div>
                   </Stack>
 
-                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #10b981' }}>
+                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #2AB5B0' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '12px', color: '#10b981' }}>ASSEMBLED PRODUCTION PROMPT:</strong>
-                      <Badge variant="subtle" style={{ color: '#10b981', background: 'rgba(16,185,129,0.15)' }}>
+                      <strong style={{ fontSize: '12px', color: '#17837F' }}>ASSEMBLED PRODUCTION PROMPT:</strong>
+                      <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
                         READY TO COPY
                       </Badge>
                     </Flex>
-                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#38BDF8', whiteSpace: 'pre-wrap', maxHeight: '280px', overflowY: 'auto' }}>
+                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#17837F', whiteSpace: 'pre-wrap', maxHeight: '280px', overflowY: 'auto' }}>
                       {assembledPrompt}
                     </pre>
                   </Card>

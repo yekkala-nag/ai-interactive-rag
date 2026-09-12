@@ -183,7 +183,7 @@ export default function TSAnomalyTab() {
                         return `${acc} ${i === 0 ? 'M' : 'L'} ${posX} ${posY}`;
                       }, '')}
                       fill="none"
-                      stroke={signalType === 'anomalous' ? '#ef4444' : '#10b981'}
+                      stroke={signalType === 'anomalous' ? '#ef4444' : '#2AB5B0'}
                       strokeWidth="2"
                     />
                   </svg>
@@ -215,9 +215,9 @@ export default function TSAnomalyTab() {
                     </div>
 
                     <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #3b82f6' }}>
+                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>RECONSTRUCTION MSE LOSS:</strong>
-                        <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3b82f6' }}>{reconstruction.mse}</div>
+                        <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#17837F' }}>{reconstruction.mse}</div>
                       </Card>
 
                       <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #f59e0b' }}>
@@ -225,9 +225,9 @@ export default function TSAnomalyTab() {
                         <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#f59e0b' }}>{reconstruction.threshold}</div>
                       </Card>
 
-                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: `4px solid ${reconstruction.isAlert ? '#ef4444' : '#10b981'}` }}>
+                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: `4px solid ${reconstruction.isAlert ? '#ef4444' : '#2AB5B0'}` }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>CLASSIFICATION:</strong>
-                        <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: reconstruction.isAlert ? '#ef4444' : '#10b981' }}>
+                        <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: reconstruction.isAlert ? '#ef4444' : '#2AB5B0' }}>
                           {reconstruction.isAlert ? '🚨 ANOMALY ALERT!' : '🟢 NORMAL SIGNAL'}
                         </div>
                       </Card>

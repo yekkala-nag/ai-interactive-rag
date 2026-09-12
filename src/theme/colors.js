@@ -11,11 +11,11 @@ export const COLORS = {
   borderDark: "#2b2b3d",
   
   // Accents
-  gold: "#c9a84c",
-  teal: "#2a8a84",
-  purple: "#9b7fd4",
-  orange: "#c4572a",
-  green: "#4a9a4a",
+  gold: "#FF8A6B",
+  teal: "#2AB5B0",
+  purple: "#C5ADEA",
+  orange: "#FF8A6B",
+  green: "#2AB5B0",
   blue: "#60a5fa",
   red: "#ef4444"
 };

@@ -16,7 +16,8 @@ export const UMBRELLA_TOPICS = [
     id: "foundations",
     title: "Foundations & Architecture",
     icon: "📚",
-    color: "#2a8a84",
+    color: "#2AB5B0",
+    dark: "#0C4F4C",
     description: "Roadmap stages 1–4: orientation, how LLMs work, prompting, models — home of the AI Engineer Roadmap",
     tabs: ["airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "humancentric", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "vramconductor", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning", "visionlanguage", "diffusionmodels", "speechvoice", "uipreview"]
   },
@@ -24,7 +25,8 @@ export const UMBRELLA_TOPICS = [
     id: "data_platform",
     title: "Data & Platform Layers",
     icon: "🏗️",
-    color: "#3b82f6",
+    color: "#17837F",
+    dark: "#0C4F4C",
     description: "Roadmap stage 5: embeddings, vector search and document pipelines that feed retrieval",
     tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "pandasmem", "geopopviz", "datahumanization", "llmfinetuning"]
   },
@@ -32,7 +34,8 @@ export const UMBRELLA_TOPICS = [
     id: "rag_architecture",
     title: "RAG Architectures & Pipelines",
     icon: "⚡",
-    color: "#c9a84c",
+    color: "#FF8A6B",
+    dark: "#A34A28",
     description: "Roadmap stage 6: RAG systems end to end",
     tabs: ["rag", "pipeline", "completepipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "agentfanout", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "amplifyexpert", "ragchunking", "capstone1", "capstone3"]
   },
@@ -40,7 +43,8 @@ export const UMBRELLA_TOPICS = [
     id: "context_memory",
     title: "Context & Memory Engineering",
     icon: "🧠",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
+    dark: "#5A4FA3",
     description: "Memory layer behind stages 6–7: context craft, memory systems, long context",
     tabs: ["ctxeng", "ctxmeasure", "memhierarchy", "longcontext", "vague", "hallucination", "contextgraph", "companybrain", "validitylayer", "memeng", "contextlimits"]
   },
@@ -48,7 +52,8 @@ export const UMBRELLA_TOPICS = [
     id: "agents_frameworks",
     title: "Agent Systems & Frameworks",
     icon: "🤖",
-    color: "#c4572a",
+    color: "#FF8A6B",
+    dark: "#A34A28",
     description: "Roadmap stage 7: agents, MCP and production deployment",
     tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "capstone2"]
   },
@@ -56,7 +61,8 @@ export const UMBRELLA_TOPICS = [
     id: "frontiers_production",
     title: "Production & Frontiers",
     icon: "🔮",
-    color: "#10b981",
+    color: "#8B7BD8",
+    dark: "#4A3F7A",
     description: "Roadmap stage 8: evals, cost, observability — ship and stay reliable",
     tabs: ["firstaiapp", "enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "enterprisegrade", "finops", "observability", "slmedge", "tokenbill", "llmevals", "modelvalidation", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }

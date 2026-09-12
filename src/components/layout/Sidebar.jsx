@@ -54,7 +54,7 @@ export default function Sidebar({
             width: 32,
             height: 32,
             borderRadius: 6,
-            background: "linear-gradient(135deg, #c9a84c, #2a8a84)",
+            background: "linear-gradient(135deg, #FF8A6B, #2AB5B0)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

@@ -105,10 +105,10 @@ export default function DiffusionTab() {
                 {/* TIMESTEP SLIDER */}
                 <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)' }}>
                   <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                    <strong style={{ fontSize: '13px', color: '#38BDF8' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F' }}>
                       Diffusion Timestep (t): {currentTimestep} / 1000
                     </strong>
-                    <Badge variant="subtle" style={{ color: currentTimestep > 500 ? '#ef4444' : '#10b981', background: currentTimestep > 500 ? 'rgba(239,68,68,0.15)' : 'rgba(16,185,129,0.15)' }}>
+                    <Badge variant="subtle" style={{ color: currentTimestep > 500 ? '#ef4444' : '#2AB5B0', background: currentTimestep > 500 ? 'rgba(239,68,68,0.15)' : 'rgba(16,185,129,0.15)' }}>
                       Noise Level: {((currentTimestep / 1000) * 100).toFixed(0)}%
                     </Badge>
                   </Flex>
@@ -132,7 +132,7 @@ export default function DiffusionTab() {
 
                 {/* VISUAL STATE BOX & STAGES */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #38BDF8', textAlign: 'center' }}>
+                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #2AB5B0', textAlign: 'center' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '8px' }}>
                       SIMULATED LATENT REPRESENTATION STATE:
                     </div>
@@ -148,7 +148,7 @@ export default function DiffusionTab() {
                           ? 'repeating-radial-gradient(circle, #334155 0, #090d16 8px)'
                           : currentTimestep > 400
                           ? 'linear-gradient(135deg, #1e293b, #0f172a)'
-                          : 'linear-gradient(135deg, #0284c7, #10b981)',
+                          : 'linear-gradient(135deg, #2AB5B0, #2AB5B0)',
                         border: '1px solid rgba(255,255,255,0.1)',
                         color: 'white',
                         fontFamily: 'monospace',
@@ -164,8 +164,8 @@ export default function DiffusionTab() {
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-                    <strong style={{ fontSize: '13px', color: '#10b981', display: 'block', marginBottom: '8px' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
                       WHAT HAPPENS AT THIS TIMESTEP:
                     </strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '10px' }}>
@@ -195,16 +195,16 @@ export default function DiffusionTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {DIFFUSION_ARCHITECTURAL_PARADIGMS.map((par) => (
-                    <Card key={par.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
+                    <Card key={par.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                        <strong style={{ fontSize: '13px', color: '#38BDF8' }}>{par.name}</strong>
+                        <strong style={{ fontSize: '13px', color: '#17837F' }}>{par.name}</strong>
                       </Flex>
 
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '6px' }}>
                         {par.paper}
                       </div>
 
-                      <div style={{ background: '#090d16', padding: '6px 10px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#10b981', marginBottom: '8px' }}>
+                      <div style={{ background: '#090d16', padding: '6px 10px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#17837F', marginBottom: '8px' }}>
                         Domain: {par.space} | Cost: {par.computeCost}
                       </div>
 
@@ -269,12 +269,12 @@ export default function DiffusionTab() {
                       Unconditioned Score (eps_null): {cfgResult.uncondScore}<br/>
                       Text-Conditioned Score (eps_prompt): {cfgResult.textCondScore}<br/>
                       Difference Direction Vector: +0.60<br/>
-                      <span style={{ color: '#10b981', fontWeight: 'bold' }}>Final Extrapolated Score: {cfgResult.guidedScore}</span>
+                      <span style={{ color: '#17837F', fontWeight: 'bold' }}>Final Extrapolated Score: {cfgResult.guidedScore}</span>
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
-                    <strong style={{ fontSize: '12px', color: '#38BDF8', display: 'block', marginBottom: '8px' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '12px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
                       IMAGE QUALITY & SATURATION ASSESSMENT:
                     </strong>
                     <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'white', marginBottom: '6px' }}>
@@ -303,9 +303,9 @@ export default function DiffusionTab() {
                 </div>
 
                 <Stack gap={3}>
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
-                    <strong style={{ fontSize: '13px', color: '#38BDF8' }}>1. Forward Diffusion Markov Chain (Closed-Form Sampling)</strong>
-                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#10b981', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F' }}>1. Forward Diffusion Markov Chain (Closed-Form Sampling)</strong>
+                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
                       {"q(x_t | x_0) = N(x_t; sqrt(alpha_bar_t) * x_0, (1 - alpha_bar_t) * I)"}
                     </div>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -313,9 +313,9 @@ export default function DiffusionTab() {
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #10b981' }}>
-                    <strong style={{ fontSize: '13px', color: '#10b981' }}>2. Simplified Denoising Training Objective (L_simple)</strong>
-                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#10b981', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F' }}>2. Simplified Denoising Training Objective (L_simple)</strong>
+                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
                       {"L_simple(theta) = E_{t, x_0, epsilon} [ || epsilon - epsilon_theta(sqrt(alpha_bar_t) * x_0 + sqrt(1 - alpha_bar_t) * epsilon, t) ||^2 ]"}
                     </div>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -325,7 +325,7 @@ export default function DiffusionTab() {
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #F5A623' }}>
                     <strong style={{ fontSize: '13px', color: '#F5A623' }}>3. Classifier-Free Guidance Equation</strong>
-                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#10b981', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
+                    <div style={{ padding: '8px 12px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '12px', margin: '6px 0' }}>
                       {"tilde{epsilon}_theta(x_t, c) = epsilon_theta(x_t, null) + s * (epsilon_theta(x_t, c) - epsilon_theta(x_t, null))"}
                     </div>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>

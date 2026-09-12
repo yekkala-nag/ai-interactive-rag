@@ -24,7 +24,7 @@ const DiagramImage = ({
   const [failed, setFailed] = useState(false);
   const [retryKey, setRetryKey] = useState(0);
 
-  const tint = accent || (moduleId ? diagramAccentForModule(moduleId) : "#2a8a84");
+  const tint = accent || (moduleId ? diagramAccentForModule(moduleId) : "#2AB5B0");
 
   const open = () => { if (!failed) { setScale(1); setZoomed(true); } };
   const close = () => setZoomed(false);
@@ -141,10 +141,10 @@ const DiagramImage = ({
             </span>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <button onClick={zoomOut} title="Zoom Out" style={lb(36)}>➖</button>
-              <button onClick={reset} title="Reset" style={{ ...lb(64), fontFamily: "DM Mono, monospace", fontSize: "0.8rem", color: scale !== 1 ? "#c9a84c" : "#a0a5ba" }}>{Math.round(scale * 100)}%</button>
+              <button onClick={reset} title="Reset" style={{ ...lb(64), fontFamily: "DM Mono, monospace", fontSize: "0.8rem", color: scale !== 1 ? "#A34A28" : "#a0a5ba" }}>{Math.round(scale * 100)}%</button>
               <button onClick={zoomIn} title="Zoom In" style={lb(36)}>➕</button>
               <div style={{ width: 1, height: 24, background: "#3a3e54", margin: "0 6px" }} />
-              <button onClick={close} title="Close" style={{ ...lb(80), background: "#c4572a", border: "none", color: "#fff", fontWeight: 800 }}>✕ Close</button>
+              <button onClick={close} title="Close" style={{ ...lb(80), background: "#A34A28", border: "none", color: "#fff", fontWeight: 800 }}>✕ Close</button>
             </div>
           </div>
           <div

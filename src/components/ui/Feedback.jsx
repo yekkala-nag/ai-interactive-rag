@@ -74,7 +74,7 @@ function Toast({ message, type = 'info', title, action, onDismiss, duration = 40
   const typeStyles = {
     info: { bg: 'var(--ds-color-module-platform-light)', border: 'var(--ds-color-module-platform-primary)', icon: 'ℹ️' },
     success: { bg: '#DCFCE7', border: '#16A34A', icon: '✅' },
-    warning: { bg: '#FEF9C3', border: '#CA8A04', icon: '⚠️' },
+    warning: { bg: '#FEF9C3', border: '#A34A28', icon: '⚠️' },
     danger: { bg: '#FEF2F2', border: '#DC2626', icon: '🚫' },
   };
   const style = typeStyles[type];

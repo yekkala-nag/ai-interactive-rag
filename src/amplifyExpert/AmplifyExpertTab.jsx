@@ -14,7 +14,7 @@ export default function AmplifyExpertTab() {
   const [conds, setConds] = useState({ known: true, experts: true, amplify: true, audit: true });
   const toggle = (k) => setConds(c => ({ ...c, [k]: !c[k] }));
   const fit = CHECK_FIT(conds.known, conds.experts, conds.amplify, conds.audit);
-  const fc = fit.score === '4/4' ? '#10b981' : fit.score.startsWith('3') ? '#F5A623' : '#ef4444';
+  const fc = fit.score === '4/4' ? '#2AB5B0' : fit.score.startsWith('3') ? '#F5A623' : '#ef4444';
   const condLabel = { known: 'Known document context', experts: 'Accessible experts', amplify: 'Amplification goal', audit: 'Audit required' };
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
@@ -31,10 +31,10 @@ export default function AmplifyExpertTab() {
           <button key={t.id} onClick={() => setSub(t.id)} style={navBtn(sub, t.id)}><div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'thesis' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Card style={{ padding: '14px', background: '#090d16', borderLeft: '4px solid #c9a84c' }}>
+          <Card style={{ padding: '14px', background: '#090d16', borderLeft: '4px solid #FF8A6B' }}>
             <div style={{ fontSize: '13px', color: 'white', fontWeight: 'bold' }}>"{THESIS}"</div>
           </Card>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{TWO_CAMPS.map((c, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${i === 2 ? '#10b981' : '#64748b'}` }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{c.camp}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{c.builds}</div><div style={{ fontSize: '11px', color: '#38BDF8' }}>trusts: {c.trusts}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{TWO_CAMPS.map((c, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${i === 2 ? '#2AB5B0' : '#64748b'}` }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{c.camp}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{c.builds}</div><div style={{ fontSize: '11px', color: '#17837F' }}>trusts: {c.trusts}</div></Card>))}</Grid>
           <Callout type="success"><strong>History rhymes:</strong> 2015–20 enterprise ML failed copying Google (≈85% stalled) for the same sins — generality over domain anchoring. RAG repeats it; domain-specific RAG is the same answer that worked.</Callout>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
@@ -55,12 +55,12 @@ export default function AmplifyExpertTab() {
           </Grid>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>If…</th><th style={{ textAlign: 'left', padding: '8px' }}>…then (mechanically)</th></tr></thead>
-            <tbody>{SIX_POSITIONS.map((s, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: '#F5A623' }}>{s.if}</td><td style={{ padding: '8px', color: '#10b981' }}>{s.then}</td></tr>))}</tbody></table></div>
+            <tbody>{SIX_POSITIONS.map((s, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: '#F5A623' }}>{s.if}</td><td style={{ padding: '8px', color: '#17837F' }}>{s.then}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'code' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🛠️ Disciplines, bricks, and the fit gate</h3></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{THREE_DISCIPLINES.map((d, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #38BDF8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{d.d}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{d.rule}</div><div style={{ fontSize: '11px', color: '#F5A623', fontFamily: 'monospace' }}>test: {d.test}</div></Card>))}</Grid>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{FOUR_BRICKS.map((b, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #10b981' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{b.brick}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>mirrors: {b.mirrors}</div><div style={{ fontSize: '11px', color: '#10b981' }}>× {b.amplifies}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{THREE_DISCIPLINES.map((d, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{d.d}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{d.rule}</div><div style={{ fontSize: '11px', color: '#F5A623', fontFamily: 'monospace' }}>test: {d.test}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{FOUR_BRICKS.map((b, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{b.brick}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>mirrors: {b.mirrors}</div><div style={{ fontSize: '11px', color: '#17837F' }}>× {b.amplifies}</div></Card>))}</Grid>
           <CodeBlock language="python" code={PYTHON_MANIFEST_CODE} />
           <Callout type="success"><strong>Lineage:</strong> Tetlock (expert judgment) · Norman (tool-as-amplifier) · Bainbridge (ironies of automation) · Anthropic (workflows over agents). Same direction, deeper roots.</Callout>
         </Stack></Card></Stack>)}

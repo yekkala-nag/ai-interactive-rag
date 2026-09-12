@@ -15,7 +15,7 @@ export default function AgentFanoutTab() {
   const [reforms, setReforms] = useState(4);
   const [cache, setCache] = useState(40);
   const r = FANOUT_LOAD(agents, reforms, 120, cache / 100);
-  const rc = r.verdict.startsWith('WALL') ? '#ef4444' : r.verdict.startsWith('CORRUPTION') ? '#F5A623' : '#10b981';
+  const rc = r.verdict.startsWith('WALL') ? '#ef4444' : r.verdict.startsWith('CORRUPTION') ? '#F5A623' : '#2AB5B0';
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
       <Hero moduleId="rag_architecture" moduleLabel="RAG Architectures & Pipelines [Retrieval Under Agent Fan-Out]"
@@ -54,7 +54,7 @@ export default function AgentFanoutTab() {
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>{r.note}</div>
             </Card>
           </Grid>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{UNIFIED_LAYER.map((u, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #10b981' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{u.piece}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{u.does}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{UNIFIED_LAYER.map((u, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{u.piece}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{u.does}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'code' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🛠️ Fan-out load model</h3></div>

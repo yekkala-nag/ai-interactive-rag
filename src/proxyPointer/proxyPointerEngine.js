@@ -37,7 +37,7 @@ export const PIPELINE_STEPS = [
     num: 1,
     title: "Skeleton Tree Parse",
     icon: "🦴",
-    color: "#c9a84c",
+    color: "#A34A28",
     badge: "Regex Heading Parser · No LLM · <1 sec",
     desc: "Parses markdown headings (#, ##, ###, ####) into a hierarchical tree structure with start/end line offsets in under 1 second.",
     output: {
@@ -56,7 +56,7 @@ export const PIPELINE_STEPS = [
     num: 2,
     title: "Tree Walk & Boundary Propagation",
     icon: "🌳",
-    color: "#2a8a84",
+    color: "#17837F",
     badge: "Parent-Child Capping · Boundary Propagation",
     desc: "Walks the tree to compute exact character spans, establishes parent-child relationships, and calculates section boundaries.",
     output: {
@@ -87,7 +87,7 @@ export const PIPELINE_STEPS = [
     num: 4,
     title: "Breadcrumb Injection",
     icon: "🏷️",
-    color: "#9b7fd4",
+    color: "#5A4FA3",
     badge: "Prepend Ancestry Path",
     desc: "Prepends full hierarchical ancestry to each chunk to eliminate pronoun ambiguity and contextual blindness.",
     output: {
@@ -112,7 +112,7 @@ export const PIPELINE_STEPS = [
     num: 6,
     title: "Metadata & Pointer Attachment",
     icon: "📎",
-    color: "#3b82f6",
+    color: "#17837F",
     badge: "doc_id · node_id · title · line_ranges · pointer_uri",
     desc: "Attaches pointer coordinates back to the source Markdown document for instant full-section resolution.",
     output: {
@@ -146,7 +146,7 @@ export const PIPELINE_STEPS = [
     num: 8,
     title: "FAISS Index & Pointer Map",
     icon: "📦",
-    color: "#10b981",
+    color: "#17837F",
     badge: "Proxy Search Layer + Physical Pointer Map",
     desc: "Stores proxy vectors in FAISS for sub-millisecond retrieval and maps hit IDs directly to source document line pointers.",
     output: {

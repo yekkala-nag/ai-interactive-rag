@@ -88,10 +88,10 @@ export const PREDICT_LEAD_SCORE = (yearsExp, isITLeader, icpSim) => {
   let color = '#f59e0b';
   if (score >= 0.8) {
     grade = 'A (Top Priority)';
-    color = '#10b981';
+    color = '#2AB5B0';
   } else if (score >= 0.6) {
     grade = 'B (Medium Priority)';
-    color = '#3b82f6';
+    color = '#2AB5B0';
   }
 
   return {

@@ -14,7 +14,7 @@ export default function HandoffWatchTab() {
   const [scenario, setScenario] = useState('empty200');
   const [floor, setFloor] = useState(0.35);
   const g = GRADE_HANDOFF(scenario, floor);
-  const gc = g.verdict.startsWith('PASS') ? '#10b981' : '#ef4444';
+  const gc = g.verdict.startsWith('PASS') ? '#2AB5B0' : '#ef4444';
   const sel = { width: '100%', background: 'var(--ds-color-bg-surface)', color: 'white', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '6px', fontSize: '12px' };
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
@@ -33,7 +33,7 @@ export default function HandoffWatchTab() {
         {sub === 'failures' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{SILENT_FAILURES.map((f, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #ef4444' }}><div style={{ fontSize: '12px', color: '#ef4444', fontWeight: 'bold' }}>{f.shape}</div><div style={{ fontSize: '11px', color: 'white' }}>{f.detail}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>→ {f.downstream}</div></Card>))}</Grid>
           <div><h3 style={{ margin: 0 }}>Why evals miss all four</h3></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{WHY_EVALS_MISS.map((w, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{w.check}</div><div style={{ fontSize: '11px', color: '#10b981' }}>sees: {w.sees}</div><div style={{ fontSize: '11px', color: '#ef4444' }}>misses: {w.misses}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{WHY_EVALS_MISS.map((w, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{w.check}</div><div style={{ fontSize: '11px', color: '#17837F' }}>sees: {w.sees}</div><div style={{ fontSize: '11px', color: '#ef4444' }}>misses: {w.misses}</div></Card>))}</Grid>
           <Callout type="success"><strong>UI-testing analogy:</strong> nobody calls an app tested because login renders. Test the query, the token, the permission — the layers beneath the final text.</Callout>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
@@ -52,7 +52,7 @@ export default function HandoffWatchTab() {
               <div style={{ fontSize: '11px', color: '#F5A623', marginTop: '4px' }}>{g.lesson}</div>
             </Card>
           </Grid>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{[...WATCHDOG_RULES, ...WATCHDOG_COSTS.map(c => ({ rule: `Cost: ${c.cost}`, why: c.detail }))].slice(0, 6).map((r, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${r.rule.startsWith('Cost') ? '#ef4444' : '#38BDF8'}` }}><div style={{ fontSize: '11px', color: 'white', fontWeight: 'bold' }}>{r.rule}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{r.why}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{[...WATCHDOG_RULES, ...WATCHDOG_COSTS.map(c => ({ rule: `Cost: ${c.cost}`, why: c.detail }))].slice(0, 6).map((r, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${r.rule.startsWith('Cost') ? '#ef4444' : '#2AB5B0'}` }}><div style={{ fontSize: '11px', color: 'white', fontWeight: 'bold' }}>{r.rule}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{r.why}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'code' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🛠️ Schema + grader + gate (article-faithful)</h3></div>

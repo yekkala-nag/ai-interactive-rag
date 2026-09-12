@@ -862,7 +862,7 @@ export default function AIHarnessTab() {
                           </ul>
                         </Card>
                         <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)' }}>
-                          <strong style={{ fontSize: '11px', color: '#10b981' }}>ADVANTAGES:</strong>
+                          <strong style={{ fontSize: '11px', color: '#17837F' }}>ADVANTAGES:</strong>
                           <ul style={{ margin: '4px 0 0 14px', padding: 0, fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>
                             {selectedLoop.pros.map((p, i) => <li key={i}>{p}</li>)}
                           </ul>
@@ -980,11 +980,11 @@ export default function AIHarnessTab() {
                         {/* RESULTS GRID */}
                         <Grid columns={{ base: '1fr 1fr', md: '1fr 1fr 1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: stability < 0.5 ? '#ef4444' : '#10b981' }}>{(stability * 100).toFixed(0)}%</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: stability < 0.5 ? '#ef4444' : '#2AB5B0' }}>{(stability * 100).toFixed(0)}%</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>Stability Score</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#3b82f6' }}>{finalLoss}</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#17837F' }}>{finalLoss}</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>Est. Final Loss</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
@@ -992,7 +992,7 @@ export default function AIHarnessTab() {
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>Steps to Converge</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: gpuUtil > 85 ? '#10b981' : '#F5A623' }}>{gpuUtil}%</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: gpuUtil > 85 ? '#2AB5B0' : '#F5A623' }}>{gpuUtil}%</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>GPU Utilisation</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
@@ -1000,7 +1000,7 @@ export default function AIHarnessTab() {
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>VRAM (GB est.)</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: overfit === 'HIGH' ? '#ef4444' : '#10b981' }}>{overfit}</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: overfit === 'HIGH' ? '#ef4444' : '#2AB5B0' }}>{overfit}</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>Overfit Risk</div>
                           </Card>
                         </Grid>
@@ -1015,7 +1015,7 @@ export default function AIHarnessTab() {
                           {explodes && <div style={{ color: '#ef4444', marginBottom: '4px' }}>🔴 <strong>Exploding Gradients:</strong> Learning rate too high for optimizer — expect NaN loss. Reduce LR or switch to AdamW.</div>}
                           {vanishes && <div style={{ color: '#ef4444', marginBottom: '4px' }}>🔴 <strong>Vanishing Gradients:</strong> Deep architecture with SGD at low LR. Add residual connections or use AdamW.</div>}
                           {slowConv && <div style={{ color: '#F5A623', marginBottom: '4px' }}>⚠️ <strong>Slow Convergence:</strong> Learning rate is very low for SGD. Increase LR or add warmup schedule.</div>}
-                          {stability > 0.85 && <div style={{ color: '#10b981' }}>✅ <strong>Healthy Configuration:</strong> Hyperparameters are well-balanced for stable training.</div>}
+                          {stability > 0.85 && <div style={{ color: '#17837F' }}>✅ <strong>Healthy Configuration:</strong> Hyperparameters are well-balanced for stable training.</div>}
                         </Card>
                       </Stack>
                     </Card>

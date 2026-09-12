@@ -94,7 +94,7 @@ export function TestOutGate({ open, umbrellaId, onClose, onSelectTab }) {
                 const isAnswer = oi === q.q.a;
                 const isPicked = picked === oi;
                 let border = 'var(--ds-color-border-default)', bg = 'transparent';
-                if (picked !== null && isAnswer) { border = '#10b981'; bg = 'rgba(16,185,129,0.12)'; }
+                if (picked !== null && isAnswer) { border = '#2AB5B0'; bg = 'rgba(16,185,129,0.12)'; }
                 else if (picked !== null && isPicked) { border = '#ef4444'; bg = 'rgba(239,68,68,0.1)'; }
                 return (
                   <button key={oi} onClick={() => answer(oi)} disabled={picked !== null}
@@ -114,8 +114,8 @@ export function TestOutGate({ open, umbrellaId, onClose, onSelectTab }) {
 
         {(done || session.length === 0) && session.length > 0 && (
           <div>
-            <div style={{ padding: '14px', borderRadius: '10px', border: `2px solid ${proven.length ? '#10b981' : '#F5A623'}`, background: 'var(--ds-color-bg-canvas)', textAlign: 'center', marginBottom: '12px' }}>
-              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: proven.length ? '#10b981' : '#F5A623' }}>
+            <div style={{ padding: '14px', borderRadius: '10px', border: `2px solid ${proven.length ? '#2AB5B0' : '#F5A623'}`, background: 'var(--ds-color-bg-canvas)', textAlign: 'center', marginBottom: '12px' }}>
+              <div style={{ fontSize: '1.2rem', fontWeight: 800, color: proven.length ? '#2AB5B0' : '#F5A623' }}>
                 Tested out of {proven.length}/{results.length}
               </div>
               <div style={{ fontSize: '0.8rem', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>

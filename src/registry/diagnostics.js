@@ -14,7 +14,7 @@ export const ROLE_PATHS = {
     tagline: 'From first API calls to prompt architectures & attention',
     description: 'For all learners and engineers new to LLM internals. Opens with a guided first build (the mental-model primer: client as messenger, cloud as brain), then vocabulary and internals attach to it.',
     level: 'Beginner to Intermediate',
-    icon: '🌱', color: '#0D9488', badgeVariant: 'module',
+    icon: '🌱', color: '#2AB5B0', dark: '#0C4F4C', badgeVariant: 'module',
     goal: 'foundations',
     // Entry is the map itself: the roadmap orients, links glossary terms,
     // and hands off to the first lesson. Glossary remains lesson 2.
@@ -32,7 +32,7 @@ export const ROLE_PATHS = {
     tagline: 'High-precision retrieval, chunking, reranking & verification',
     description: 'For engineers building resilient retrieval systems: core pipeline, precision layer, advanced architectures, and the eval gates that keep them honest.',
     level: 'Intermediate to Advanced',
-    icon: '⚡', color: '#2563eb', badgeVariant: 'primary',
+    icon: '⚡', color: '#FF8A6B', dark: '#A34A28', badgeVariant: 'primary',
     goal: 'rag',
     children: [
       { child: 'fnd_prompts', max: 1 },
@@ -48,7 +48,7 @@ export const ROLE_PATHS = {
     tagline: 'Planning, safety, multi-agent mesh & production agents',
     description: 'From agent assets and prep through planners, HITL gates, sandboxes and evals, into orchestration frameworks and production deployment.',
     level: 'Advanced',
-    icon: '🤖', color: '#7c3aed', badgeVariant: 'accent',
+    icon: '🤖', color: '#8B7BD8', dark: '#4A3F7A', badgeVariant: 'accent',
     goal: 'agents',
     children: [
       { child: 'agt_found', max: 1 },
@@ -63,7 +63,7 @@ export const ROLE_PATHS = {
     tagline: 'Evals, cost governance, tracing & safe scale-up',
     description: 'For operating AI in production: reliability gates first, then cost control, observability, hardened agent safety, and retrieval that survives scale.',
     level: 'Enterprise Ready',
-    icon: '🏢', color: '#059669', badgeVariant: 'success',
+    icon: '🏢', color: '#2AB5B0', dark: '#0C4F4C', badgeVariant: 'success',
     goal: 'enterprise',
     start: 'llmevals',
     children: [
@@ -78,7 +78,7 @@ export const ROLE_PATHS = {
     tagline: 'Frames, parsing, vector search, lineage & scale',
     description: 'For data engineers feeding AI systems: foundations, document pipelines, classical ML breadth, and the eval discipline that proves the bytes.',
     level: 'Intermediate',
-    icon: '🗄️', color: '#3b82f6', badgeVariant: 'module',
+    icon: '🗄️', color: '#FF8A6B', dark: '#A34A28', badgeVariant: 'module',
     goal: 'data',
     children: [
       { child: 'data_found', max: 1 },
@@ -93,7 +93,7 @@ export const ROLE_PATHS = {
     tagline: 'The complete curriculum: every child, every level',
     description: 'Comprehensive journey across all six umbrellas in curriculum order, opening with the guided first build. Placement skips what you already prove.',
     level: 'Comprehensive',
-    icon: '👑', color: '#d97706', badgeVariant: 'warning',
+    icon: '👑', color: '#8B7BD8', dark: '#4A3F7A', badgeVariant: 'warning',
     goal: 'all',
     start: 'airoadmap',
     children: null // null = every child umbrella, all levels
@@ -117,7 +117,7 @@ export const JOURNEY_LOOPS = {
     tagline: 'One pass, whole map — first app, first RAG, first agent',
     description: 'Concept → immediate use, pillar by pillar. Ends with something working at every stop.',
     level: 'Start here',
-    icon: '🥾', color: '#2AB5B0', badgeVariant: 'success',
+    icon: '🥾', color: '#2AB5B0', dark: '#0C4F4C', badgeVariant: 'success',
     order: ['glossary', 'promptfundamentals', 'tokenization', 'firstaiapp', 'llmsampling', 'promptmgmt', 'selfattention', 'archconcepts', 'rag', 'pipeline', 'completepipeline', 'ragchunking', 'qparseloop', 'filtering', 'ctxeng', 'vague', 'memeng', 'contextlimits', 'pandasdataframes', 'pandasmem', 'modernioformats', 'linearregression', 'classicalml', 'geopopviz', 'activelearn', 'fiveassets', 'projectprepframework', 'redesign', 'agentsastools', 'toolcalling', 'agenttasks', 'codingagentsnonprog', 'datahumanization', 'aiusecases', 'tokenbill', 'practices', 'powerfeatures', 'goaltracker', 'capstone1']
   },
   journey_loop2: {
@@ -125,7 +125,7 @@ export const JOURNEY_LOOPS = {
     tagline: 'Professional depth, pillar by pillar',
     description: 'The same pillars at working depth: precision retrieval, safety gates, document pipelines, cost control.',
     level: 'Core journey',
-    icon: '🧭', color: '#8B7BD8', badgeVariant: 'primary',
+    icon: '🧭', color: '#8B7BD8', dark: '#4A3F7A', badgeVariant: 'primary',
     order: ['modellandscape', 'posencoding', 'structuredoutputs', 'workflows', 'promptlearning', 'promptdependencygraph', 'unhobbling', 'quantserve', 'aiharness', 'topicmodeling', 'reinforcementlearning', 'trpo2grpo', 'aimoralagency', 'humancentric', 'dialoguelamda', 'visionlanguage', 'diffusionmodels', 'speechvoice', 'ragcorpusshapes', 'hierrag', 'rerankers', 'rageval', 'rowlevelrag', 'tablegridrag', 'crossdocjoins', 'multilingualrag', 'multimodalrag', 'prodrag', 'routercheap', 'genpatterns', 'fourpdfs', 'agentfanout', 'amplifyexpert', 'ragcasestudies', 'interviewprep', 'hallucination', 'ctxmeasure', 'memhierarchy', 'contextgraph', 'validitylayer', 'companybrain', 'longcontext', 'langchain', 'frameworkcompare', 'agentplanner', 'agenthitl', 'agentsandbox', 'typedagentgate', 'agentevals', 'handoffwatch', 'verifiedpipes', 'codingevals', 'agentdebugging', 'multiagent', 'modelrouting', 'mcpclient', 'agentsdk', 'cliagent', 'agentpairprogramming', 'vibecode', 'aiproductbuilder', 'docstruct', 'agenticparsing', 'knowledgebase', 'vectordbops', 'datapipeline', 'threelayers', 'medallionarch', 'aidataplat', 'aitestdatabottleneck', 'frauddetectionml', 'timeseriesanomaly', 'vaes', 'byol', 'xlstm', 'keras3', 'pythonprofiling', 'pythonengineering', 'functools', 'llmevals', 'modelvalidation', 'reasoningbench', 'guardrails', 'llmreliability', 'finops', 'productionragops', 'enterpriseaiops', 'enterprisegrade', 'observability', 'slmedge', 'ragbeyond', 'capstone2']
   },
   journey_loop3: {
@@ -133,7 +133,7 @@ export const JOURNEY_LOOPS = {
     tagline: 'High-stakes peaks and frontier outlook',
     description: 'Advanced patterns in dependency order, closing on the frontier. Placement often starts here for seniors.',
     level: 'Advanced',
-    icon: '🏔️', color: '#FF8A6B', badgeVariant: 'warning',
+    icon: '🏔️', color: '#FF8A6B', dark: '#A34A28', badgeVariant: 'warning',
     order: ['promptcontracts', 'promptregression', 'hallucbricks', 'workflowloop', 'proxypointer', 'agenticrag', 'graphtraversalknowledge', 'texttosql', 'langgraph', 'agenta2a', 'loopengineering', 'claudecode100', 'agentscale', 'llmfinetuning', 'vramconductor', 'tokenorchestrationplaybook', 'enterpriseadvancedplaybook', 'frontiers', 'capstone3']
   }
 };

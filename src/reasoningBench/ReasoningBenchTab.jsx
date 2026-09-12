@@ -180,7 +180,7 @@ export default function ReasoningBenchTab() {
                       <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '4px', fontWeight: 'bold' }}>
                         "Oliver picks {satVal} apples on Saturday and {sunVal} apples on Sunday. He eats {eatenVal} apples and sells the rest at ${priceVal} each. How much money did Oliver make?"
                       </div>
-                      <div style={{ marginTop: '8px', fontSize: 'var(--ds-font-size-caption)', color: '#10b981', fontFamily: 'var(--ds-font-family-mono)' }}>
+                      <div style={{ marginTop: '8px', fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontFamily: 'var(--ds-font-family-mono)' }}>
                         Deterministic Ground Truth Equation: ({satVal} + {sunVal} - {eatenVal}) * ${priceVal} = <strong>${calculatedAnswer}</strong>
                       </div>
                     </Card>
@@ -190,7 +190,7 @@ export default function ReasoningBenchTab() {
                 {/* SOTA MODEL VARIANCE COMPARISON */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {activeMutation.llmBehaviors.map((beh, idx) => (
-                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${beh.status.includes('FAIL') ? '#ef4444' : '#10b981'}` }}>
+                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${beh.status.includes('FAIL') ? '#ef4444' : '#2AB5B0'}` }}>
                       <Flex align="center" justify="space-between">
                         <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>{beh.model}</strong>
                         <Badge variant={beh.status.includes('FAIL') ? 'danger' : 'success'} size="sm">{beh.status}</Badge>
@@ -246,7 +246,7 @@ export default function ReasoningBenchTab() {
                   </Card>
 
                   <Card style={{ padding: '14px', background: includeNoise ? 'rgba(239, 68, 68, 0.05)' : 'rgba(16, 185, 129, 0.05)', border: `1px solid ${includeNoise ? 'rgba(239, 68, 68, 0.3)' : 'rgba(16, 185, 129, 0.3)'}` }}>
-                    <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: includeNoise ? '#ef4444' : '#10b981' }}>
+                    <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: includeNoise ? '#ef4444' : '#2AB5B0' }}>
                       {includeNoise ? '🔴 LLM Distractor Collapse Output:' : '🟢 Clean LLM Reasoning Output:'}
                     </strong>
                     <div style={{ fontSize: 'var(--ds-font-size-caption)', marginTop: '6px', color: 'var(--ds-color-text-primary)' }}>

@@ -27,7 +27,7 @@ export const THREE_RL_BASELINES = [
     behavior: "Follows a fixed calendar or periodic schedule (e.g. rebalance every 7 days, restock fixed batch size S every morning).",
     whyEssential: "Verifies whether dynamic state-dependent closed-loop adaptation outperforms cheap open-loop scheduling.",
     expectedScore: "54.0 / 100",
-    color: "#38BDF8"
+    color: "#17837F"
   },
   {
     name: "4. Trained Deep RL Agent (PPO / DQN)",
@@ -35,7 +35,7 @@ export const THREE_RL_BASELINES = [
     behavior: "Maximizes discounted cumulative reward: \\sum \\gamma^t r_t via deep Q-learning / Actor-Critic.",
     whyEssential: "Must statistically outperform all 3 baselines across multiple random seeds before production deployment.",
     expectedScore: "92.4 / 100",
-    color: "#10b981"
+    color: "#17837F"
   }
 ];
 

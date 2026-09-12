@@ -32,8 +32,8 @@ export default function MultimodalRAGTab() {
         {sub === 'modal' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Modality</th><th style={{ textAlign: 'left', padding: '8px' }}>Embedding</th><th style={{ padding: '8px' }}>Cite</th><th style={{ textAlign: 'left', padding: '8px' }}>Trap</th></tr></thead>
-            <tbody>{MODALITY_TABLE.map((m, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{m.mod}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{m.embed}</td><td style={{ padding: '8px', color: '#38BDF8', fontFamily: 'monospace' }}>{m.cite}</td><td style={{ padding: '8px', color: '#ef4444' }}>{m.trap}</td></tr>))}</tbody></table></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{VLM_TABLE.map((v, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #10b981' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{v.model}</div><div style={{ fontSize: '11px', color: '#10b981' }}>{v.role}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{v.note}</div></Card>))}</Grid>
+            <tbody>{MODALITY_TABLE.map((m, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{m.mod}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{m.embed}</td><td style={{ padding: '8px', color: '#17837F', fontFamily: 'monospace' }}>{m.cite}</td><td style={{ padding: '8px', color: '#ef4444' }}>{m.trap}</td></tr>))}</tbody></table></div>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{VLM_TABLE.map((v, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{v.model}</div><div style={{ fontSize: '11px', color: '#17837F' }}>{v.role}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{v.note}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Modality router simulator</h3></div>
@@ -41,9 +41,9 @@ export default function MultimodalRAGTab() {
             <Card style={{ padding: '14px', background: '#090d16', border: '1px solid var(--ds-color-border-subtle)' }}>
               {slider('Scanned', scan, setScan)}{slider('Charts', chart, setChart)}{slider('Photos', photo, setPhoto)}{slider('Tables', table, setTable)}
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
               <div style={{ fontSize: '12px', color: 'white' }}>{r.pipeline}</div>
-              <div style={{ fontSize: '12px', color: r.visionLLM.startsWith('REQUIRED') ? '#F5A623' : '#10b981', fontWeight: 'bold', marginTop: '6px' }}>{r.visionLLM}</div>
+              <div style={{ fontSize: '12px', color: r.visionLLM.startsWith('REQUIRED') ? '#F5A623' : '#2AB5B0', fontWeight: 'bold', marginTop: '6px' }}>{r.visionLLM}</div>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>{r.cite}</div>
             </Card>
           </Grid>

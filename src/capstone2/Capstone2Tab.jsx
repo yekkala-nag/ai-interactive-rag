@@ -51,14 +51,14 @@ export default function Capstone2Tab({ onSelectTab }) {
                   Give it any research topic. Researcher gathers, writer drafts, critic rejects, dashboard bills. Then pull the plug mid-run and watch it degrade gracefully instead of inventing confidence.
                 </p></div>
               <div style={{ height: '8px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${pct}%`, background: complete ? '#10b981' : '#7c3aed', borderRadius: '4px', transition: 'width 0.3s ease' }} />
+                <div style={{ height: '100%', width: `${pct}%`, background: complete ? '#2AB5B0' : '#8B7BD8', borderRadius: '4px', transition: 'width 0.3s ease' }} />
               </div>
               <Stack gap={2}>
                 {MILESTONES.map((ms, i) => (
                   <label key={i} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', padding: '10px 12px', background: 'var(--ds-color-bg-surface)', borderRadius: '8px', border: `1px solid ${done.includes(i) ? 'rgba(16,185,129,0.4)' : 'var(--ds-color-border-subtle)'}`, cursor: 'pointer', fontSize: '0.85rem' }}>
                     <input type="checkbox" checked={done.includes(i)} onChange={() => toggle(i)} style={{ marginTop: '3px' }} />
                     <span>
-                      <strong style={{ color: done.includes(i) ? '#10b981' : 'var(--ds-color-text-primary)' }}>{done.includes(i) ? '✓ ' : `${i + 1}. `}{ms.m}</strong>
+                      <strong style={{ color: done.includes(i) ? '#2AB5B0' : 'var(--ds-color-text-primary)' }}>{done.includes(i) ? '✓ ' : `${i + 1}. `}{ms.m}</strong>
                       <span style={{ display: 'block', color: 'var(--ds-color-text-secondary)', fontSize: '0.78rem' }}>{ms.done}</span>
                       <span style={{ display: 'block', color: 'var(--ds-color-text-tertiary)', fontSize: '0.7rem' }}>proves: {ms.proves.join(' · ')}</span>
                     </span>

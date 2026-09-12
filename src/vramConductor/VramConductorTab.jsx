@@ -31,21 +31,21 @@ export default function VramConductorTab() {
         </div>
         {sub === 'story' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           {OOM_STORY.map((s, i) => (
-            <Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${s.result.includes('Survives') ? '#10b981' : '#ef4444'}` }}>
+            <Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${s.result.includes('Survives') ? '#2AB5B0' : '#ef4444'}` }}>
               <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
                 <strong style={{ color: 'white', fontSize: '12px', fontFamily: 'monospace' }}>{s.step}</strong>
-                <Badge variant="subtle" style={{ fontSize: '9px', background: s.result.includes('Survives') ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)', color: s.result.includes('Survives') ? '#10b981' : '#ef4444' }}>{s.result}</Badge>
+                <Badge variant="subtle" style={{ fontSize: '9px', background: s.result.includes('Survives') ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.15)', color: s.result.includes('Survives') ? '#2AB5B0' : '#ef4444' }}>{s.result}</Badge>
               </Flex>
-              <div style={{ fontSize: '11px', color: '#38BDF8', fontFamily: 'monospace', marginTop: '4px' }}>{s.vram}</div>
+              <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace', marginTop: '4px' }}>{s.vram}</div>
             </Card>
           ))}
           <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2]">
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-              <strong style={{ fontSize: '12px', color: '#10b981' }}>Ledger rules:</strong>
+              <strong style={{ fontSize: '12px', color: '#17837F' }}>Ledger rules:</strong>
               {LEDGER_RULES.map((l, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}><span style={{ color: 'white' }}>{l.rule}:</span> {l.why}</div>))}
             </Card>
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-              <strong style={{ fontSize: '12px', color: '#38BDF8' }}>KV-swap DECODE walk:</strong>
+              <strong style={{ fontSize: '12px', color: '#17837F' }}>KV-swap DECODE walk:</strong>
               {KV_SWAP.map((k, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace', marginTop: '4px' }}>{k.call} → evict:{k.evicted} restore:{k.restored} ({k.what})</div>))}
             </Card>
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
@@ -64,9 +64,9 @@ export default function VramConductorTab() {
               ))}</Stack>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginTop: '8px' }}>llama 6536 · qwen 1536 · smol 1536 MiB (KV-heavy, like the article)</div>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${r.rows.every(x => x.ok) ? '#10b981' : '#ef4444'}` }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${r.rows.every(x => x.ok) ? '#2AB5B0' : '#ef4444'}` }}>
               <div style={{ fontSize: '12px', color: 'white', fontFamily: 'monospace' }}>cap {r.cap} MiB · booked {r.usedMB}</div>
-              {r.rows.map((x, i) => (<div key={i} style={{ fontSize: '12px', fontFamily: 'monospace', color: x.ok ? '#10b981' : '#ef4444', marginTop: '4px' }}>{x.ok ? 'OK' : 'ERR DENY'} {x.model} ({x.need} MiB) → {x.usedAfter}</div>))}
+              {r.rows.map((x, i) => (<div key={i} style={{ fontSize: '12px', fontFamily: 'monospace', color: x.ok ? '#2AB5B0' : '#ef4444', marginTop: '4px' }}>{x.ok ? 'OK' : 'ERR DENY'} {x.model} ({x.need} MiB) → {x.usedAfter}</div>))}
               <div style={{ fontSize: '11px', color: 'white', fontWeight: 'bold', marginTop: '6px' }}>{r.verdict}</div>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginTop: '4px' }}>{r.note}</div>
             </Card>

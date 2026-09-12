@@ -199,7 +199,7 @@ export default function TopicModelingTab() {
                       <Badge variant="warning">Model Quality & Noise Reduction</Badge>
                       <Grid columns="1fr 1fr" gap="var(--ds-space-3)">
                         <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '12px', borderRadius: 'var(--ds-radius-md)', textAlign: 'center' }}>
-                          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#10b981' }}>
+                          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#17837F' }}>
                             {activeScenario.prunedJunkTopics}
                           </div>
                           <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
@@ -207,7 +207,7 @@ export default function TopicModelingTab() {
                           </div>
                         </div>
                         <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '12px', borderRadius: 'var(--ds-radius-md)', textAlign: 'center' }}>
-                          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3b82f6' }}>
+                          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#17837F' }}>
                             {((activeScenario.fsmRelevanceScore + (seedExponent - 3.0) * 0.01) * 100).toFixed(0)}%
                           </div>
                           <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
@@ -291,17 +291,17 @@ export default function TopicModelingTab() {
                           <strong>{preprocInfo.topicQualityScore}/100</strong>
                         </div>
                         <div style={{ height: '8px', background: 'var(--ds-color-border-subtle)', borderRadius: '4px', overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: `${preprocInfo.topicQualityScore}%`, background: preprocInfo.topicQualityScore > 90 ? '#10b981' : preprocInfo.topicQualityScore > 70 ? '#f59e0b' : '#ef4444' }} />
+                          <div style={{ height: '100%', width: `${preprocInfo.topicQualityScore}%`, background: preprocInfo.topicQualityScore > 90 ? '#2AB5B0' : preprocInfo.topicQualityScore > 70 ? '#f59e0b' : '#ef4444' }} />
                         </div>
                       </div>
 
                       <div>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 'var(--ds-font-size-caption)', marginBottom: '4px' }}>
                           <span>Junk Topic Noise Percentage</span>
-                          <strong style={{ color: preprocInfo.junkTopicsPct < 10 ? '#10b981' : '#ef4444' }}>{preprocInfo.junkTopicsPct}% Noise</strong>
+                          <strong style={{ color: preprocInfo.junkTopicsPct < 10 ? '#2AB5B0' : '#ef4444' }}>{preprocInfo.junkTopicsPct}% Noise</strong>
                         </div>
                         <div style={{ height: '8px', background: 'var(--ds-color-border-subtle)', borderRadius: '4px', overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: `${preprocInfo.junkTopicsPct}%`, background: preprocInfo.junkTopicsPct < 10 ? '#10b981' : '#ef4444' }} />
+                          <div style={{ height: '100%', width: `${preprocInfo.junkTopicsPct}%`, background: preprocInfo.junkTopicsPct < 10 ? '#2AB5B0' : '#ef4444' }} />
                         </div>
                       </div>
                     </Stack>
@@ -413,10 +413,10 @@ export default function TopicModelingTab() {
                         Topic Prevalence Intensity over Time (% of Speech Focus)
                       </span>
                       <Flex gap={3} wrap="wrap">
-                        <span style={{ fontSize: '11px', color: '#c9a84c' }}>■ Eurozone Integration</span>
-                        <span style={{ fontSize: '11px', color: '#3b82f6' }}>■ Monetary Policy Rates</span>
+                        <span style={{ fontSize: '11px', color: '#A34A28' }}>■ Eurozone Integration</span>
+                        <span style={{ fontSize: '11px', color: '#17837F' }}>■ Monetary Policy Rates</span>
                         <span style={{ fontSize: '11px', color: '#ef4444' }}>■ Liquidity Crisis (2008)</span>
-                        <span style={{ fontSize: '11px', color: '#10b981' }}>■ HICP Inflation (2022)</span>
+                        <span style={{ fontSize: '11px', color: '#17837F' }}>■ HICP Inflation (2022)</span>
                       </Flex>
                     </Flex>
 
@@ -438,7 +438,7 @@ export default function TopicModelingTab() {
                         {/* Polyline 1: Eurozone Integration (Gold) */}
                         <polyline
                           fill="none"
-                          stroke="#c9a84c"
+                          stroke="#FF8A6B"
                           strokeWidth="2.5"
                           points={TWENTY_FIVE_YEAR_TRENDS.map((d, i) => `${40 + i * (740 / 12)},${210 - (d.eurozoneIntegration / 70) * 170}`).join(' ')}
                         />
@@ -446,7 +446,7 @@ export default function TopicModelingTab() {
                         {/* Polyline 2: Monetary Policy (Blue) */}
                         <polyline
                           fill="none"
-                          stroke="#3b82f6"
+                          stroke="#2AB5B0"
                           strokeWidth="2.5"
                           points={TWENTY_FIVE_YEAR_TRENDS.map((d, i) => `${40 + i * (740 / 12)},${210 - (d.monetaryPolicy / 70) * 170}`).join(' ')}
                         />
@@ -462,7 +462,7 @@ export default function TopicModelingTab() {
                         {/* Polyline 4: Inflation Shock (Green) */}
                         <polyline
                           fill="none"
-                          stroke="#10b981"
+                          stroke="#2AB5B0"
                           strokeWidth="2.5"
                           points={TWENTY_FIVE_YEAR_TRENDS.map((d, i) => `${40 + i * (740 / 12)},${210 - (d.inflationShock / 70) * 170}`).join(' ')}
                         />
@@ -486,14 +486,14 @@ export default function TopicModelingTab() {
                       </Card>
 
                       <Card style={{ padding: '12px', background: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.3)' }}>
-                        <div style={{ color: '#3b82f6', fontWeight: 'bold', fontSize: 'var(--ds-font-size-caption)' }}>2014-2016 RATE CYCLE</div>
+                        <div style={{ color: '#17837F', fontWeight: 'bold', fontSize: 'var(--ds-font-size-caption)' }}>2014-2016 RATE CYCLE</div>
                         <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '2px' }}>
                           Monetary Policy Stance peaked at 62% during NIRP (Negative Interest Rate Policy) introduction.
                         </div>
                       </Card>
 
                       <Card style={{ padding: '12px', background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.3)' }}>
-                        <div style={{ color: '#10b981', fontWeight: 'bold', fontSize: 'var(--ds-font-size-caption)' }}>2022 INFLATION CRISIS</div>
+                        <div style={{ color: '#17837F', fontWeight: 'bold', fontSize: 'var(--ds-font-size-caption)' }}>2022 INFLATION CRISIS</div>
                         <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '2px' }}>
                           HICP Inflation & Energy Price Shocks surged to 52% of speech duration following post-pandemic shocks.
                         </div>

@@ -121,7 +121,7 @@ export default function EnterpriseAIOpsTab() {
                 padding: 'var(--ds-space-3) var(--ds-space-3)',
                 borderRadius: 'var(--ds-radius-md)',
                 border: 'none',
-                background: activeSubTab === tab.id ? 'var(--ds-color-module-frontiers-primary, #10b981)' : 'transparent',
+                background: activeSubTab === tab.id ? 'var(--ds-color-module-frontiers-primary, #2AB5B0)' : 'transparent',
                 color: activeSubTab === tab.id ? 'white' : 'var(--ds-color-text-secondary)',
                 cursor: 'pointer',
                 textAlign: 'left',
@@ -164,7 +164,7 @@ export default function EnterpriseAIOpsTab() {
                     </p>
 
                     <div style={{ background: '#090d16', padding: '12px', borderRadius: '6px' }}>
-                      <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 'bold', marginBottom: '6px' }}>
+                      <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', marginBottom: '6px' }}>
                         KEY ARCHITECTURAL MECHANISMS:
                       </div>
                       <ul style={{ margin: 0, paddingLeft: '16px', fontSize: '12px', color: '#cbd5e1', lineHeight: '1.6' }}>
@@ -190,11 +190,11 @@ export default function EnterpriseAIOpsTab() {
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', fontFamily: 'monospace' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Maturity Level</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Architecture Pattern</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Token Efficiency</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Cost / 1M Requests</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Organizational Risk</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Maturity Level</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Architecture Pattern</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Token Efficiency</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Cost / 1M Requests</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Organizational Risk</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -213,18 +213,18 @@ export default function EnterpriseAIOpsTab() {
                       <td style={{ padding: '8px' }}>Chunk truncation, irrelevant context noise</td>
                     </tr>
                     <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                      <td style={{ padding: '8px', color: '#3b82f6' }}>Level 3: Multi-Stage</td>
+                      <td style={{ padding: '8px', color: '#17837F' }}>Level 3: Multi-Stage</td>
                       <td style={{ padding: '8px' }}>Hybrid search + Reranking + LLMLingua</td>
                       <td style={{ padding: '8px' }}>85% reduction</td>
                       <td style={{ padding: '8px' }}>$2,200 - $4,500</td>
                       <td style={{ padding: '8px' }}>Low (High precision grounded answers)</td>
                     </tr>
                     <tr>
-                      <td style={{ padding: '8px', color: '#10b981' }}>Level 4: Enterprise Ops</td>
+                      <td style={{ padding: '8px', color: '#17837F' }}>Level 4: Enterprise Ops</td>
                       <td style={{ padding: '8px' }}>AI Gateway + Semantic Cache + Router + Map-Reduce</td>
-                      <td style={{ padding: '8px', color: '#10b981', fontWeight: 'bold' }}>94%+ reduction</td>
-                      <td style={{ padding: '8px', color: '#10b981', fontWeight: 'bold' }}>$650 - $1,400</td>
-                      <td style={{ padding: '8px', color: '#10b981' }}>Minimal (Guaranteed SLAs & Cost Predictability)</td>
+                      <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>94%+ reduction</td>
+                      <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>$650 - $1,400</td>
+                      <td style={{ padding: '8px', color: '#17837F' }}>Minimal (Guaranteed SLAs & Cost Predictability)</td>
                     </tr>
                   </tbody>
                 </table>
@@ -249,13 +249,13 @@ export default function EnterpriseAIOpsTab() {
                       <span style={{ fontSize: '20px' }}>{guide.icon}</span>
                       <h4 style={{ margin: 0, fontSize: '14px', color: '#f8fafc' }}>{guide.title}</h4>
                     </div>
-                    <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 'bold', marginBottom: '8px' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', marginBottom: '8px' }}>
                       {guide.audience}
                     </div>
                     <p style={{ margin: '0 0 10px 0', fontSize: '12px', color: '#cbd5e1', lineHeight: '1.5' }}>
                       {guide.description}
                     </p>
-                    <div style={{ fontSize: '11px', color: '#38bdf8', background: 'rgba(56, 189, 248, 0.08)', padding: '6px 8px', borderRadius: '4px' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F', background: 'rgba(56, 189, 248, 0.08)', padding: '6px 8px', borderRadius: '4px' }}>
                       <strong>Takeaway:</strong> {guide.keyTakeaway}
                     </div>
                   </div>
@@ -297,7 +297,7 @@ export default function EnterpriseAIOpsTab() {
               <Grid cols={3} gap={4} style={{ marginBottom: '20px' }}>
                 {/* Control 1: Dataset Selector */}
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', marginBottom: '6px', color: '#38bdf8' }}>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', marginBottom: '6px', color: '#17837F' }}>
                     1. Select Enterprise Corpus:
                   </label>
                   <select
@@ -323,9 +323,9 @@ export default function EnterpriseAIOpsTab() {
                         flex: 1,
                         padding: '8px',
                         borderRadius: '6px',
-                        border: !isCacheHit ? '1px solid #10b981' : '1px solid var(--ds-color-border-subtle)',
+                        border: !isCacheHit ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                         background: !isCacheHit ? 'rgba(16, 185, 129, 0.2)' : '#090d16',
-                        color: !isCacheHit ? '#10b981' : 'white',
+                        color: !isCacheHit ? '#2AB5B0' : 'white',
                         cursor: 'pointer',
                         fontSize: '12px'
                       }}
@@ -338,9 +338,9 @@ export default function EnterpriseAIOpsTab() {
                         flex: 1,
                         padding: '8px',
                         borderRadius: '6px',
-                        border: isCacheHit ? '1px solid #10b981' : '1px solid var(--ds-color-border-subtle)',
+                        border: isCacheHit ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                         background: isCacheHit ? 'rgba(16, 185, 129, 0.2)' : '#090d16',
-                        color: isCacheHit ? '#10b981' : 'white',
+                        color: isCacheHit ? '#2AB5B0' : 'white',
                         cursor: 'pointer',
                         fontSize: '12px'
                       }}
@@ -354,7 +354,7 @@ export default function EnterpriseAIOpsTab() {
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '4px' }}>
                     <span style={{ fontWeight: 'bold', color: '#a855f7' }}>Rerank Top-K Chunks: {topKCount}</span>
-                    <span style={{ color: '#10b981' }}>Compress: {compressionRatio}%</span>
+                    <span style={{ color: '#17837F' }}>Compress: {compressionRatio}%</span>
                   </div>
                   <input
                     type="range"
@@ -371,11 +371,11 @@ export default function EnterpriseAIOpsTab() {
               {/* LIVE SIMULATION TELEMETRY */}
               <div style={{ background: '#090d16', borderRadius: '8px', padding: '18px', border: '1px solid var(--ds-color-border-subtle)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '10px' }}>
-                  <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#38bdf8' }}>
+                  <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#17837F' }}>
                     📊 Live Execution Telemetry & Cost Meter
                   </div>
                   <div style={{ display: 'flex', gap: '16px', fontSize: '12px' }}>
-                    <span><strong>Total Token Reduction:</strong> <span style={{ color: '#10b981', fontWeight: 'bold' }}>{ragSimResult.tokenReductionPct}%</span></span>
+                    <span><strong>Total Token Reduction:</strong> <span style={{ color: '#17837F', fontWeight: 'bold' }}>{ragSimResult.tokenReductionPct}%</span></span>
                     <span><strong>End-to-End Latency:</strong> <span style={{ color: '#f59e0b', fontWeight: 'bold' }}>{ragSimResult.latencyMs}ms</span></span>
                     <span><strong>Inference Cost:</strong> <span style={{ color: '#a855f7', fontWeight: 'bold' }}>${ragSimResult.costUsd}</span></span>
                   </div>
@@ -386,7 +386,7 @@ export default function EnterpriseAIOpsTab() {
                   {ragSimResult.traceSteps.map((t, idx) => (
                     <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', background: 'rgba(255,255,255,0.03)', padding: '8px 12px', borderRadius: '4px', fontSize: '12px' }}>
                       <div style={{ color: '#cbd5e1' }}>
-                        <strong style={{ color: '#10b981' }}>{idx + 1}. {t.node}:</strong> {t.detail}
+                        <strong style={{ color: '#17837F' }}>{idx + 1}. {t.node}:</strong> {t.detail}
                       </div>
                       <span style={{ color: '#64748b', fontFamily: 'monospace' }}>{t.time}</span>
                     </div>
@@ -394,8 +394,8 @@ export default function EnterpriseAIOpsTab() {
                 </div>
 
                 {/* GROUNDED OUTPUT */}
-                <div style={{ background: 'rgba(16, 185, 129, 0.08)', border: '1px solid #10b981', borderRadius: '6px', padding: '14px' }}>
-                  <div style={{ fontSize: '11px', color: '#10b981', fontWeight: 'bold', marginBottom: '4px' }}>
+                <div style={{ background: 'rgba(16, 185, 129, 0.08)', border: '1px solid #2AB5B0', borderRadius: '6px', padding: '14px' }}>
+                  <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', marginBottom: '4px' }}>
                     🎯 GENERATED GROUNDED ANSWER:
                   </div>
                   <div style={{ fontSize: '13px', color: '#f8fafc', lineHeight: '1.6' }}>
@@ -437,8 +437,8 @@ export default function EnterpriseAIOpsTab() {
                       style={{
                         padding: '6px 12px',
                         borderRadius: '4px',
-                        border: partitionCount === num ? '1px solid #10b981' : '1px solid var(--ds-color-border-subtle)',
-                        background: partitionCount === num ? '#10b981' : '#090d16',
+                        border: partitionCount === num ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
+                        background: partitionCount === num ? '#2AB5B0' : '#090d16',
                         color: partitionCount === num ? '#000' : 'white',
                         cursor: 'pointer',
                         fontWeight: 'bold',
@@ -453,7 +453,7 @@ export default function EnterpriseAIOpsTab() {
 
               {/* MAP WORKERS GRID */}
               <div style={{ marginBottom: '18px' }}>
-                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#38bdf8', marginBottom: '8px' }}>
+                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#17837F', marginBottom: '8px' }}>
                   PARALLEL MAP PHASE WORKERS ({partitionCount} Concurrent SLM Instances):
                 </div>
                 <Grid cols={2} gap={3}>
@@ -465,7 +465,7 @@ export default function EnterpriseAIOpsTab() {
                       </div>
                       <div style={{ background: 'rgba(255,255,255,0.03)', padding: '8px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#cbd5e1' }}>
                         <div><strong>Worker:</strong> {p.workerModel}</div>
-                        <div style={{ color: '#10b981', marginTop: '2px' }}><strong>Extracted:</strong> {p.extractedJson.extractedKeyFact}</div>
+                        <div style={{ color: '#17837F', marginTop: '2px' }}><strong>Extracted:</strong> {p.extractedJson.extractedKeyFact}</div>
                       </div>
                     </div>
                   ))}
@@ -473,9 +473,9 @@ export default function EnterpriseAIOpsTab() {
               </div>
 
               {/* MASTER REDUCE SYNTHESIS */}
-              <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #10b981', borderRadius: '8px', padding: '16px' }}>
+              <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '16px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#10b981' }}>
+                  <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#17837F' }}>
                     MASTER REDUCE SYNTHESIS PHASE ({mapReduceResult.reduceSynthesis.reducerModel})
                   </div>
                   <Badge variant="success">Input to Master: {mapReduceResult.reduceSynthesis.inputTokensToReducer} tokens (99.4% Compression)</Badge>
@@ -519,7 +519,7 @@ export default function EnterpriseAIOpsTab() {
                     style={{
                       padding: '12px 14px',
                       borderRadius: '6px',
-                      border: selectedPromptId === p.id ? '1px solid #10b981' : '1px solid var(--ds-color-border-subtle)',
+                      border: selectedPromptId === p.id ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                       background: selectedPromptId === p.id ? 'rgba(16, 185, 129, 0.15)' : 'var(--ds-color-bg-surface)',
                       color: 'var(--ds-color-text-primary)',
                       cursor: 'pointer',
@@ -527,7 +527,7 @@ export default function EnterpriseAIOpsTab() {
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontSize: '13px', fontWeight: 'bold', color: selectedPromptId === p.id ? '#10b981' : '#f8fafc' }}>
+                      <span style={{ fontSize: '13px', fontWeight: 'bold', color: selectedPromptId === p.id ? '#2AB5B0' : '#f8fafc' }}>
                         {p.label}
                       </span>
                       <Badge variant={p.complexity < 0.5 ? 'success' : 'primary'}>
@@ -543,14 +543,14 @@ export default function EnterpriseAIOpsTab() {
 
               {/* ROUTER DECISION TRACE */}
               <div style={{ background: '#090d16', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '8px', padding: '18px' }}>
-                <div style={{ fontSize: '12px', color: '#38bdf8', fontWeight: 'bold', marginBottom: '12px' }}>
+                <div style={{ fontSize: '12px', color: '#17837F', fontWeight: 'bold', marginBottom: '12px' }}>
                   ROUTING DECISION ENGINE TRACE:
                 </div>
 
                 <Grid cols={2} gap={4} style={{ marginBottom: '14px' }}>
                   <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '6px' }}>
                     <div style={{ fontSize: '11px', color: '#94a3b8' }}>ROUTED MODEL TARGET</div>
-                    <div style={{ fontSize: '15px', fontWeight: 'bold', color: routerResult.isHighComplexity ? '#a855f7' : '#10b981', marginTop: '2px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: 'bold', color: routerResult.isHighComplexity ? '#a855f7' : '#2AB5B0', marginTop: '2px' }}>
                       {routerResult.targetModel}
                     </div>
                     <div style={{ fontSize: '12px', color: '#cbd5e1', marginTop: '4px' }}>
@@ -560,7 +560,7 @@ export default function EnterpriseAIOpsTab() {
 
                   <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '6px' }}>
                     <div style={{ fontSize: '11px', color: '#94a3b8' }}>FINOPS SAVINGS vs DIRECT FRONTIER</div>
-                    <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#38bdf8', marginTop: '2px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#17837F', marginTop: '2px' }}>
                       {routerResult.savingsPct}
                     </div>
                     <div style={{ fontSize: '12px', color: '#cbd5e1', marginTop: '4px' }}>
@@ -569,7 +569,7 @@ export default function EnterpriseAIOpsTab() {
                   </div>
                 </Grid>
 
-                <div style={{ fontSize: '12px', color: '#e2e8f0', background: 'rgba(56, 189, 248, 0.08)', padding: '10px 14px', borderRadius: '4px', borderLeft: '3px solid #38bdf8' }}>
+                <div style={{ fontSize: '12px', color: '#e2e8f0', background: 'rgba(56, 189, 248, 0.08)', padding: '10px 14px', borderRadius: '4px', borderLeft: '3px solid #2AB5B0' }}>
                   <strong>Classification Rational:</strong> {routerResult.classificationReason}
                 </div>
               </div>
@@ -592,7 +592,7 @@ export default function EnterpriseAIOpsTab() {
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
                       <span>Monthly Inbound AI Requests:</span>
-                      <strong style={{ color: '#10b981' }}>{monthlyRequests.toLocaleString()} reqs</strong>
+                      <strong style={{ color: '#17837F' }}>{monthlyRequests.toLocaleString()} reqs</strong>
                     </div>
                     <input
                       type="range"
@@ -601,14 +601,14 @@ export default function EnterpriseAIOpsTab() {
                       step="50000"
                       value={monthlyRequests}
                       onChange={(e) => setMonthlyRequests(Number(e.target.value))}
-                      style={{ width: '100%', accentColor: '#10b981' }}
+                      style={{ width: '100%', accentColor: '#2AB5B0' }}
                     />
                   </div>
 
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
                       <span>Avg Raw Document Tokens per Request:</span>
-                      <strong style={{ color: '#38bdf8' }}>{avgRawTokens.toLocaleString()} tokens</strong>
+                      <strong style={{ color: '#17837F' }}>{avgRawTokens.toLocaleString()} tokens</strong>
                     </div>
                     <input
                       type="range"
@@ -617,7 +617,7 @@ export default function EnterpriseAIOpsTab() {
                       step="5000"
                       value={avgRawTokens}
                       onChange={(e) => setAvgRawTokens(Number(e.target.value))}
-                      style={{ width: '100%', accentColor: '#38bdf8' }}
+                      style={{ width: '100%', accentColor: '#2AB5B0' }}
                     />
                   </div>
 
@@ -655,15 +655,15 @@ export default function EnterpriseAIOpsTab() {
                 </Stack>
 
                 {/* RESULTS CARD */}
-                <div style={{ background: '#090d16', border: '1px solid #10b981', borderRadius: '8px', padding: '20px' }}>
+                <div style={{ background: '#090d16', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '20px' }}>
                   <div style={{ fontSize: '12px', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 'bold' }}>
                     FINANCIAL IMPACT SUMMARY
                   </div>
 
                   <div style={{ marginTop: '14px', marginBottom: '20px' }}>
                     <div style={{ fontSize: '11px', color: '#94a3b8' }}>ESTIMATED ANNUAL ORGANIZATIONAL SAVINGS</div>
-                    <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#10b981' }}>{finops.annualSavings}</div>
-                    <div style={{ fontSize: '13px', color: '#38bdf8' }}>{finops.savingsPercent}% Total Token Spend Reduction</div>
+                    <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#17837F' }}>{finops.annualSavings}</div>
+                    <div style={{ fontSize: '13px', color: '#17837F' }}>{finops.savingsPercent}% Total Token Spend Reduction</div>
                   </div>
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '12px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '12px' }}>
@@ -672,7 +672,7 @@ export default function EnterpriseAIOpsTab() {
                       <strong>{finops.baselineMonthlyCost}</strong>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: '#10b981' }}>Optimized Architecture Monthly Cost:</span>
+                      <span style={{ color: '#17837F' }}>Optimized Architecture Monthly Cost:</span>
                       <strong>{finops.optimizedMonthlyCost}</strong>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -692,7 +692,7 @@ export default function EnterpriseAIOpsTab() {
             {/* 1. Cost-Benefit Analysis Matrix */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ marginBottom: '14px' }}>
-                <h3 style={{ margin: 0, color: '#38bdf8' }}>📊 1. Cost-Benefit Analysis Matrix</h3>
+                <h3 style={{ margin: 0, color: '#17837F' }}>📊 1. Cost-Benefit Analysis Matrix</h3>
                 <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                   Comparing implementation effort, token savings, accuracy impact, capex/opex, and rollout timelines across core optimization strategies.
                 </p>
@@ -702,12 +702,12 @@ export default function EnterpriseAIOpsTab() {
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', fontFamily: 'monospace' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Strategy</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Implementation Effort</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Token Savings</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Accuracy Impact</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Time-to-Production</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Key Risk / Trade-off</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Strategy</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Implementation Effort</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Token Savings</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Accuracy Impact</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Time-to-Production</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Key Risk / Trade-off</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -719,8 +719,8 @@ export default function EnterpriseAIOpsTab() {
                             {row.effort}
                           </Badge>
                         </td>
-                        <td style={{ padding: '10px 8px', color: '#10b981', fontWeight: 'bold' }}>{row.tokenSavings}</td>
-                        <td style={{ padding: '10px 8px', color: '#38bdf8' }}>{row.accuracyImpact}</td>
+                        <td style={{ padding: '10px 8px', color: '#17837F', fontWeight: 'bold' }}>{row.tokenSavings}</td>
+                        <td style={{ padding: '10px 8px', color: '#17837F' }}>{row.accuracyImpact}</td>
                         <td style={{ padding: '10px 8px', color: '#cbd5e1' }}>{row.timeToProduction}</td>
                         <td style={{ padding: '10px 8px', color: '#f59e0b', fontSize: '11px' }}>{row.keyRisk}</td>
                       </tr>
@@ -748,9 +748,9 @@ export default function EnterpriseAIOpsTab() {
                     </div>
 
                     <div style={{ display: 'flex', gap: '12px', fontSize: '11px', color: '#94a3b8', marginBottom: '10px' }}>
-                      <span>Input: <strong style={{ color: '#10b981' }}>{m.inputPrice}</strong></span>
+                      <span>Input: <strong style={{ color: '#17837F' }}>{m.inputPrice}</strong></span>
                       <span>•</span>
-                      <span>Output: <strong style={{ color: '#38bdf8' }}>{m.outputPrice}</strong></span>
+                      <span>Output: <strong style={{ color: '#17837F' }}>{m.outputPrice}</strong></span>
                       <span>•</span>
                       <span>90% Recall: <strong style={{ color: '#f59e0b' }}>{m.recallAt90Depth}</strong></span>
                     </div>
@@ -770,7 +770,7 @@ export default function EnterpriseAIOpsTab() {
             {/* 3. Vector Database Vendor Evaluation Checklist */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ marginBottom: '14px' }}>
-                <h3 style={{ margin: 0, color: '#10b981' }}>🗄️ 3. Vendor Evaluation Checklist: Qdrant vs. Pinecone vs. Weaviate vs. pgvector</h3>
+                <h3 style={{ margin: 0, color: '#17837F' }}>🗄️ 3. Vendor Evaluation Checklist: Qdrant vs. Pinecone vs. Weaviate vs. pgvector</h3>
                 <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                   Evaluating vector infrastructure for enterprise hybrid search, metadata filtering speed, multi-tenancy, and compliance certifications.
                 </p>
@@ -780,12 +780,12 @@ export default function EnterpriseAIOpsTab() {
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', fontFamily: 'monospace' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Vector Store</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Hosting Model</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Hybrid Search</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Filtering Speed</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Cost Profile</th>
-                      <th style={{ textAlign: 'left', padding: '8px', color: '#10b981' }}>Enterprise Verdict</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Vector Store</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Hosting Model</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Hybrid Search</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Filtering Speed</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Cost Profile</th>
+                      <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Enterprise Verdict</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -793,8 +793,8 @@ export default function EnterpriseAIOpsTab() {
                       <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                         <td style={{ padding: '10px 8px', fontWeight: 'bold', color: '#f8fafc' }}>{v.vendor}</td>
                         <td style={{ padding: '10px 8px', color: '#cbd5e1' }}>{v.hosting}</td>
-                        <td style={{ padding: '10px 8px', color: '#38bdf8' }}>{v.hybridSearch}</td>
-                        <td style={{ padding: '10px 8px', color: '#10b981' }}>{v.filteringSpeed}</td>
+                        <td style={{ padding: '10px 8px', color: '#17837F' }}>{v.hybridSearch}</td>
+                        <td style={{ padding: '10px 8px', color: '#17837F' }}>{v.filteringSpeed}</td>
                         <td style={{ padding: '10px 8px', color: '#f59e0b' }}>{v.costProfile}</td>
                         <td style={{ padding: '10px 8px', color: '#cbd5e1', fontSize: '11px' }}>{v.verdict}</td>
                       </tr>
@@ -808,13 +808,13 @@ export default function EnterpriseAIOpsTab() {
             <Grid cols={2} gap={4}>
               {/* Reranker Benchmarks */}
               <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-                <h4 style={{ margin: '0 0 10px 0', color: '#38bdf8' }}>⚡ 4. Reranking Model Latency & NDCG Benchmarks</h4>
+                <h4 style={{ margin: '0 0 10px 0', color: '#17837F' }}>⚡ 4. Reranking Model Latency & NDCG Benchmarks</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {RERANKER_BENCHMARKS.map((r, idx) => (
                     <div key={idx} style={{ background: '#090d16', padding: '10px', borderRadius: '6px', border: '1px solid rgba(56, 189, 248, 0.2)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '4px' }}>
                         <strong style={{ color: '#f8fafc' }}>{r.model}</strong>
-                        <span style={{ color: '#10b981' }}>NDCG@10: {r.ndcg10}</span>
+                        <span style={{ color: '#17837F' }}>NDCG@10: {r.ndcg10}</span>
                       </div>
                       <div style={{ display: 'flex', gap: '12px', fontSize: '11px', color: '#94a3b8' }}>
                         <span>P50: <strong>{r.latencyP50}</strong></span>
@@ -840,7 +840,7 @@ export default function EnterpriseAIOpsTab() {
                       <div style={{ fontSize: '11px', color: '#cbd5e1', marginBottom: '4px' }}>
                         {s.benefit}
                       </div>
-                      <div style={{ fontSize: '10px', color: '#10b981', fontFamily: 'monospace' }}>
+                      <div style={{ fontSize: '10px', color: '#17837F', fontFamily: 'monospace' }}>
                         {s.implementation}
                       </div>
                     </div>
@@ -850,9 +850,9 @@ export default function EnterpriseAIOpsTab() {
             </Grid>
 
             {/* 6. ADVANCED RAG DEEP-DIVE: CHUNKING STRATEGIES */}
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #10b981' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #2AB5B0' }}>
               <div style={{ marginBottom: '16px' }}>
-                <h3 style={{ margin: 0, color: '#10b981', fontSize: '18px' }}>
+                <h3 style={{ margin: 0, color: '#17837F', fontSize: '18px' }}>
                   🏗️ 6. Advanced Chunking Strategies for Maximum Accuracy
                 </h3>
                 <p style={{ margin: '4px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
@@ -867,13 +867,13 @@ export default function EnterpriseAIOpsTab() {
                       <h4 style={{ margin: 0, fontSize: '14px', color: '#f8fafc' }}>{c.title}</h4>
                       <Badge variant="success">{c.badge}</Badge>
                     </div>
-                    <div style={{ fontSize: '11px', color: '#38bdf8', marginBottom: '6px' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F', marginBottom: '6px' }}>
                       <strong>Best For:</strong> {c.bestFor}
                     </div>
                     <p style={{ margin: '0 0 8px 0', fontSize: '12px', color: '#cbd5e1', lineHeight: '1.4' }}>
                       <strong>How it works:</strong> {c.howItWorks}
                     </p>
-                    <div style={{ fontSize: '11px', color: '#10b981', background: 'rgba(16, 185, 129, 0.08)', padding: '6px 8px', borderRadius: '4px', marginBottom: '6px' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F', background: 'rgba(16, 185, 129, 0.08)', padding: '6px 8px', borderRadius: '4px', marginBottom: '6px' }}>
                       <strong>Why it wins:</strong> {c.whyItWins}
                     </div>
                     <div style={{ fontSize: '10px', color: '#94a3b8', fontFamily: 'monospace' }}>
@@ -887,7 +887,7 @@ export default function EnterpriseAIOpsTab() {
             {/* 7. EXACT PROMPT TEMPLATES FOR ENTERPRISE RAG */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ marginBottom: '14px' }}>
-                <h3 style={{ margin: 0, color: '#38bdf8' }}>📝 7. Exact Prompt Templates for Enterprise RAG</h3>
+                <h3 style={{ margin: 0, color: '#17837F' }}>📝 7. Exact Prompt Templates for Enterprise RAG</h3>
                 <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                   Battle-tested templates to strictly enforce factual grounding, prevent hallucinations, and resolve conflicting sources.
                 </p>
@@ -902,9 +902,9 @@ export default function EnterpriseAIOpsTab() {
                     style={{
                       padding: '8px 14px',
                       borderRadius: '6px',
-                      border: selectedTemplateId === t.id ? '1px solid #38bdf8' : '1px solid var(--ds-color-border-subtle)',
+                      border: selectedTemplateId === t.id ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                       background: selectedTemplateId === t.id ? 'rgba(56, 189, 248, 0.2)' : '#090d16',
-                      color: selectedTemplateId === t.id ? '#38bdf8' : '#cbd5e1',
+                      color: selectedTemplateId === t.id ? '#2AB5B0' : '#cbd5e1',
                       cursor: 'pointer',
                       fontSize: '12px',
                       fontWeight: 'bold'
@@ -920,7 +920,7 @@ export default function EnterpriseAIOpsTab() {
                 const currentTmpl = ENTERPRISE_PROMPT_TEMPLATES.find(t => t.id === selectedTemplateId) || ENTERPRISE_PROMPT_TEMPLATES[0];
                 return (
                   <div>
-                    <div style={{ fontSize: '12px', color: '#10b981', marginBottom: '8px' }}>
+                    <div style={{ fontSize: '12px', color: '#17837F', marginBottom: '8px' }}>
                       <strong>Recommended Use Case:</strong> {currentTmpl.useCase}
                     </div>
                     <pre style={{ margin: 0, padding: '14px', background: '#090d16', borderRadius: '6px', fontSize: '12px', color: '#f8fafc', whiteSpace: 'pre-wrap', fontFamily: 'monospace', border: '1px solid var(--ds-color-border-subtle)' }}>
@@ -932,8 +932,8 @@ export default function EnterpriseAIOpsTab() {
             </Card>
 
             {/* 8. RAG ACCURACY OPERATIONAL PRO-TIPS */}
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#0c1322', border: '1px solid #38bdf8' }}>
-              <h3 style={{ margin: '0 0 12px 0', color: '#38bdf8', fontSize: '16px' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#0c1322', border: '1px solid #2AB5B0' }}>
+              <h3 style={{ margin: '0 0 12px 0', color: '#17837F', fontSize: '16px' }}>
                 🎯 8. Operational Pro-Tips for Maximum Retrieval Accuracy (The Secret Sauce)
               </h3>
               <Grid cols={3} gap={4}>
@@ -946,7 +946,7 @@ export default function EnterpriseAIOpsTab() {
                     <div style={{ fontSize: '11px', color: '#ef4444', marginBottom: '6px' }}>
                       <strong>Problem:</strong> {tip.problem}
                     </div>
-                    <div style={{ fontSize: '11px', color: '#10b981', lineHeight: '1.4' }}>
+                    <div style={{ fontSize: '11px', color: '#17837F', lineHeight: '1.4' }}>
                       <strong>Fix:</strong> {tip.solution}
                     </div>
                   </div>
@@ -966,7 +966,7 @@ export default function EnterpriseAIOpsTab() {
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#38bdf8' }}>⚡ Live Multi-Tier Fallback Cascade & Circuit Breaker Simulator</h3>
+                  <h3 style={{ margin: 0, color: '#17837F' }}>⚡ Live Multi-Tier Fallback Cascade & Circuit Breaker Simulator</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Simulate how incoming token bursts, moderate context overflows, and HTTP 429 rate limit outages dynamically trip circuit breakers and fail over seamlessly.
                   </p>
@@ -996,9 +996,9 @@ export default function EnterpriseAIOpsTab() {
                         minWidth: '220px',
                         padding: '10px 12px',
                         borderRadius: '6px',
-                        border: selectedScenarioId === s.id ? '1px solid #38bdf8' : '1px solid var(--ds-color-border-subtle)',
+                        border: selectedScenarioId === s.id ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
                         background: selectedScenarioId === s.id ? 'rgba(56, 189, 248, 0.15)' : '#090d16',
-                        color: selectedScenarioId === s.id ? '#38bdf8' : '#cbd5e1',
+                        color: selectedScenarioId === s.id ? '#2AB5B0' : '#cbd5e1',
                         cursor: 'pointer',
                         textAlign: 'left'
                       }}
@@ -1021,7 +1021,7 @@ export default function EnterpriseAIOpsTab() {
                     padding: '6px 14px',
                     borderRadius: '4px',
                     border: 'none',
-                    background: manualCircuitTrip ? '#ef4444' : '#10b981',
+                    background: manualCircuitTrip ? '#ef4444' : '#2AB5B0',
                     color: '#fff',
                     fontWeight: 'bold',
                     fontSize: '11px',
@@ -1035,9 +1035,9 @@ export default function EnterpriseAIOpsTab() {
               {/* Live Fallback Telemetry */}
               <div style={{ background: '#090d16', padding: '16px', borderRadius: '8px', border: '1px solid var(--ds-color-border-subtle)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '8px' }}>
-                  <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#38bdf8' }}>📊 Fallback Cascade Execution Trace</span>
+                  <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#17837F' }}>📊 Fallback Cascade Execution Trace</span>
                   <div style={{ display: 'flex', gap: '14px', fontSize: '12px' }}>
-                    <span>Active Provider: <strong style={{ color: '#10b981' }}>{fallbackSimResult.activeProvider}</strong></span>
+                    <span>Active Provider: <strong style={{ color: '#17837F' }}>{fallbackSimResult.activeProvider}</strong></span>
                     <span>•</span>
                     <span>Latency: <strong style={{ color: '#f59e0b' }}>{fallbackSimResult.latencyMs}ms</strong></span>
                   </div>
@@ -1048,7 +1048,7 @@ export default function EnterpriseAIOpsTab() {
                   {fallbackSimResult.traceSteps.map((step, idx) => (
                     <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', background: 'rgba(255,255,255,0.03)', padding: '8px 12px', borderRadius: '4px', fontSize: '12px' }}>
                       <div style={{ color: '#cbd5e1' }}>
-                        <strong style={{ color: step.status.includes('FAIL') ? '#ef4444' : step.status.includes('AMBER') ? '#f59e0b' : '#10b981' }}>
+                        <strong style={{ color: step.status.includes('FAIL') ? '#ef4444' : step.status.includes('AMBER') ? '#f59e0b' : '#2AB5B0' }}>
                           {idx + 1}. {step.node}:
                         </strong> {step.detail}
                       </div>
@@ -1057,7 +1057,7 @@ export default function EnterpriseAIOpsTab() {
                   ))}
                 </div>
 
-                <div style={{ background: 'rgba(16, 185, 129, 0.08)', border: '1px solid #10b981', borderRadius: '6px', padding: '12px', fontSize: '12px', color: '#f8fafc' }}>
+                <div style={{ background: 'rgba(16, 185, 129, 0.08)', border: '1px solid #2AB5B0', borderRadius: '6px', padding: '12px', fontSize: '12px', color: '#f8fafc' }}>
                   {fallbackSimResult.simulatedResponse}
                 </div>
               </div>
@@ -1067,7 +1067,7 @@ export default function EnterpriseAIOpsTab() {
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#38bdf8' }}>⚡ 2. Live "Pre-Flight" Token Guard & Auto-Truncation Sandbox</h3>
+                  <h3 style={{ margin: 0, color: '#17837F' }}>⚡ 2. Live "Pre-Flight" Token Guard & Auto-Truncation Sandbox</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Test the quickest quick-win pattern to prevent LLM API crashes and massive budget spikes by estimating tokens, calculating overflow, and injecting safe truncation headers.
                   </p>
@@ -1080,7 +1080,7 @@ export default function EnterpriseAIOpsTab() {
               {/* Sandbox Controls */}
               <Grid cols={2} gap={4} style={{ marginBottom: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#10b981', marginBottom: '6px' }}>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#17837F', marginBottom: '6px' }}>
                     1. User Prompt:
                   </label>
                   <textarea
@@ -1113,7 +1113,7 @@ export default function EnterpriseAIOpsTab() {
               </Grid>
 
               <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#38bdf8', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#17837F', marginBottom: '6px' }}>
                   3. Retrieved Context (Simulated Knowledge Corpus / RAG Chunks):
                 </label>
                 <textarea
@@ -1127,13 +1127,13 @@ export default function EnterpriseAIOpsTab() {
               {/* Telemetry Meter */}
               <div style={{ background: '#090d16', padding: '16px', borderRadius: '8px', border: '1px solid var(--ds-color-border-subtle)', marginBottom: '16px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '8px' }}>
-                  <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#38bdf8' }}>📊 Pre-Flight Safety Telemetry</span>
+                  <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#17837F' }}>📊 Pre-Flight Safety Telemetry</span>
                   <div style={{ display: 'flex', gap: '16px', fontSize: '12px' }}>
                     <span>Raw Input: <strong>{preflightResult.totalRawTokens} tokens</strong></span>
                     <span>•</span>
-                    <span>Safe Payload: <strong style={{ color: '#10b981' }}>{preflightResult.finalTokens} tokens</strong></span>
+                    <span>Safe Payload: <strong style={{ color: '#17837F' }}>{preflightResult.finalTokens} tokens</strong></span>
                     <span>•</span>
-                    <span>Truncation: <strong style={{ color: preflightResult.truncationApplied ? '#f59e0b' : '#10b981' }}>{preflightResult.truncationApplied ? `YES (-${preflightResult.tokensTruncated} tokens)` : 'NONE'}</strong></span>
+                    <span>Truncation: <strong style={{ color: preflightResult.truncationApplied ? '#f59e0b' : '#2AB5B0' }}>{preflightResult.truncationApplied ? `YES (-${preflightResult.tokensTruncated} tokens)` : 'NONE'}</strong></span>
                   </div>
                 </div>
 
@@ -1156,7 +1156,7 @@ export default function EnterpriseAIOpsTab() {
 
             {/* 2. Production Python/FastAPI Pre-Flight Token Guard Code */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 4px 0', color: '#10b981' }}>🐍 2. Production Pre-Flight Token Check (Python / FastAPI)</h3>
+              <h3 style={{ margin: '0 0 4px 0', color: '#17837F' }}>🐍 2. Production Pre-Flight Token Check (Python / FastAPI)</h3>
               <p style={{ margin: '0 0 16px 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
                 Drop-in FastAPI middleware using tiktoken to estimate tokens, auto-truncate oversized context, and emit observability warnings.
               </p>
@@ -1217,7 +1217,7 @@ async def generate_response(request: AIRequest):
 
             {/* 3. Production Semantic Caching Implementation (Redis + Vector Search Code in Python) */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 4px 0', color: '#38bdf8' }}>⚡ 3. Production Semantic Caching Implementation (Redis + Vector Search)</h3>
+              <h3 style={{ margin: '0 0 4px 0', color: '#17837F' }}>⚡ 3. Production Semantic Caching Implementation (Redis + Vector Search)</h3>
               <p style={{ margin: '0 0 16px 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
                 Production-grade semantic caching layer using Redis string hashes for exact matches and Qdrant / Redis vector similarity for semantic matches (saves 20–40% tokens).
               </p>

@@ -37,7 +37,7 @@ export default function LongContextTab() {
             <Flex justify="space-between" align="center"><strong style={{ color: 'white' }}>{f.mode}</strong><Badge variant="subtle" style={{ background: 'rgba(239,68,68,0.15)', color: '#ef4444', fontSize: '9px' }}>{f.loss}</Badge></Flex>
             <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)" style={{ fontSize: '11px', marginTop: '6px' }}>
               <div><span style={{ color: '#F5A623', fontWeight: 'bold' }}>Symptom: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{f.symptom}</span></div>
-              <div><span style={{ color: '#10b981', fontWeight: 'bold' }}>Fix: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{f.fix}</span></div></Grid></Card>))}
+              <div><span style={{ color: '#17837F', fontWeight: 'bold' }}>Fix: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{f.fix}</span></div></Grid></Card>))}
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Context planner simulator</h3></div>
@@ -50,17 +50,17 @@ export default function LongContextTab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Needle depth: {depth}%</label>
               <input type="range" min="0" max="100" value={depth} onChange={e => setDepth(+e.target.value)} style={{ width: '100%' }} />
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${plan.fits ? '#10b981' : '#ef4444'}` }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${plan.fits ? '#2AB5B0' : '#ef4444'}` }}>
               <div style={{ fontSize: '12px', color: 'white' }}>Usable: {(plan.usable / 1000).toFixed(0)}k · Fits: {plan.fits ? 'yes' : 'NO'}</div>
-              <div style={{ fontSize: '12px', color: plan.depthRisk.startsWith('HIGH') ? '#ef4444' : '#10b981', fontWeight: 'bold' }}>Depth risk: {plan.depthRisk}</div>
-              <div style={{ fontSize: '12px', color: '#38BDF8', fontWeight: 'bold', marginTop: '6px' }}>{plan.strategy}</div>
+              <div style={{ fontSize: '12px', color: plan.depthRisk.startsWith('HIGH') ? '#ef4444' : '#2AB5B0', fontWeight: 'bold' }}>Depth risk: {plan.depthRisk}</div>
+              <div style={{ fontSize: '12px', color: '#17837F', fontWeight: 'bold', marginTop: '6px' }}>{plan.strategy}</div>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>{plan.compressionNeeded}</div>
             </Card>
           </Grid>
         </Stack></Card></Stack>)}
         {sub === 'code' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🛠️ Compression ladder L0–L3 + planner code</h3></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{COMPRESSION_LADDER.map((l, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #38BDF8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{l.level}</div><div style={{ fontSize: '11px', color: '#38BDF8', fontFamily: 'monospace' }}>{l.ratio}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{l.use}</div><div style={{ fontSize: '11px', color: '#F5A623' }}>risk: {l.risk}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{COMPRESSION_LADDER.map((l, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{l.level}</div><div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace' }}>{l.ratio}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{l.use}</div><div style={{ fontSize: '11px', color: '#F5A623' }}>risk: {l.risk}</div></Card>))}</Grid>
           <CodeBlock language="python" code={PYTHON_LONGCTX_CODE} />
           <Callout type="success"><strong>Rule:</strong> never stuff overflow. Overflow tokens get retrieved or compressed — stuffing them is how needles drown.</Callout>
         </Stack></Card></Stack>)}

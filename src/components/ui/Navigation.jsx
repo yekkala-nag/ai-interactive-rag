@@ -160,7 +160,7 @@ export function Sidebar({
             {/* Apple Squircle Brand Icon */}
             <div style={{
               width: '32px', height: '32px', borderRadius: '9px',
-              background: 'linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #6366f1 100%)',
+              background: 'linear-gradient(135deg, #06b6d4 0%, #2AB5B0 50%, #6366f1 100%)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontWeight: 800, fontSize: '0.95rem', color: 'white', flexShrink: 0,
               boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4), 0 3px 8px rgba(37, 99, 235, 0.35)'
@@ -547,7 +547,7 @@ export function Sidebar({
                         }}>
                           {tab.label}
                           {meta.deep && (
-                            <span title="Deep dive — optional, skippable on the core path" style={{ color: '#c9a84c', fontSize: '0.7rem', marginLeft: '4px' }}>✦</span>
+                            <span title="Deep dive — optional, skippable on the core path" style={{ color: '#A34A28', fontSize: '0.7rem', marginLeft: '4px' }}>✦</span>
                           )}
                         </span>
                         {showFullBadge ? (
@@ -772,8 +772,8 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
             <span style={{
               fontSize: '0.66rem',
               fontWeight: 700,
-              color: activeTrack.color,
-              background: activeTrack.color ? activeTrack.color + '20' : 'transparent',
+              color: activeTrack.dark || activeTrack.color,
+              background: (activeTrack.dark || activeTrack.color) ? (activeTrack.dark || activeTrack.color) + '20' : 'transparent',
               padding: '1px 4px',
               borderRadius: '4px'
             }}>
@@ -974,7 +974,7 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
                 <div style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--ds-color-text-primary)' }}>{tab.label}</div>
                 <div style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }}>{tab.umbrellaId ? UMBRELLA_TOPICS.find(u => u.id === t.umbrellaId)?.title : ''}</div>
               </div>
-              {i === selectedIndex && <span style={{ color: '#3b82f6', fontSize: '0.85rem' }}>➔</span>}
+              {i === selectedIndex && <span style={{ color: '#17837F', fontSize: '0.85rem' }}>➔</span>}
             </button>
           ))
         )}

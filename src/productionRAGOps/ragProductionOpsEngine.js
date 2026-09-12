@@ -299,7 +299,7 @@ export const FOUR_QUADRANTS_MATRIX = [
   {
     quadrant: 'Q1: Retrieval Pass / Generation Pass',
     status: 'OPTIMAL SUCCESS',
-    color: '#10b981',
+    color: '#17837F',
     description: 'Relevant evidence was retrieved in top-k, and LLM generated a grounded, faithful answer with citations.'
   },
   {

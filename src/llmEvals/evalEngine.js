@@ -48,7 +48,7 @@ Tier-2 developer accounts are allocated 1,200 requests per minute with a burst c
     ],
     failureType: "NONE",
     logReason: "100% Entailed: All factual assertions strictly supported by retrieved context chunks.",
-    decisionBadge: { label: "SERVE TO USER", color: "#10b981", bg: "rgba(16, 185, 129, 0.1)" }
+    decisionBadge: { label: "SERVE TO USER", color: "#17837F", bg: "rgba(16, 185, 129, 0.1)" }
   },
   {
     id: "vague_retry",

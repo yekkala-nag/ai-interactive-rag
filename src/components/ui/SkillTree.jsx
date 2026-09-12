@@ -53,8 +53,8 @@ export function SkillTree({ onSelectTab }) {
             style={{
               padding: '6px 12px', borderRadius: '16px', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 600,
               background: umbrella === u.id ? u.color + '26' : 'transparent',
-              border: `1px solid ${umbrella === u.id ? u.color : 'var(--ds-color-border-subtle)'}`,
-              color: umbrella === u.id ? u.color : 'var(--ds-color-text-secondary)'
+              border: `1px solid ${umbrella === u.id ? (u.dark || u.color) : 'var(--ds-color-border-subtle)'}`,
+              color: umbrella === u.id ? (u.dark || u.color) : 'var(--ds-color-text-secondary)'
             }}
           >
             {u.icon} {u.title.split(' ')[0]}

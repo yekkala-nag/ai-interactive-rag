@@ -101,28 +101,28 @@ export default function VisionLanguageTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '4px solid #38BDF8' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '4px solid #2AB5B0' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '13px', color: '#38BDF8' }}>Stage 1: Vision Encoder (ViT)</strong>
+                      <strong style={{ fontSize: '13px', color: '#17837F' }}>Stage 1: Vision Encoder (ViT)</strong>
                       <Badge variant="subtle">CLIP / SigLIP</Badge>
                     </Flex>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '8px' }}>
                       Splits the 2D image into a grid of 14x14 pixel patches. Flattens each patch, adds 2D positional encodings, and runs multiple Transformer self-attention blocks to produce dense feature vectors.
                     </p>
-                    <div style={{ background: '#090d16', padding: '6px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#38BDF8' }}>
+                    <div style={{ background: '#090d16', padding: '6px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#17837F' }}>
                       Input: [3, 448, 448] -&gt; Output: [1024, 1024]
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '4px solid #10b981' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '4px solid #2AB5B0' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '13px', color: '#10b981' }}>Stage 2: Cross-Modal Connector</strong>
+                      <strong style={{ fontSize: '13px', color: '#17837F' }}>Stage 2: Cross-Modal Connector</strong>
                       <Badge variant="subtle">2-Layer MLP</Badge>
                     </Flex>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '8px' }}>
                       Projects the visual representation space into the exact dimensional embedding space of the target LLM. Acts as the "translator" between vision and text.
                     </p>
-                    <div style={{ background: '#090d16', padding: '6px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#10b981' }}>
+                    <div style={{ background: '#090d16', padding: '6px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#17837F' }}>
                       W_proj: Linear(1024 -&gt; 4096)
                     </div>
                   </Card>
@@ -196,10 +196,10 @@ export default function VisionLanguageTab() {
 
                 {/* COMPUTED TOKEN METRICS */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #10b981' }}>
+                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #2AB5B0' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '10px' }}>
-                      <strong style={{ fontSize: '13px', color: '#10b981' }}>TOTAL VISUAL TOKENS IN LLM CONTEXT:</strong>
-                      <Badge variant="subtle" style={{ color: '#10b981', background: 'rgba(16,185,129,0.15)' }}>
+                      <strong style={{ fontSize: '13px', color: '#17837F' }}>TOTAL VISUAL TOKENS IN LLM CONTEXT:</strong>
+                      <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
                         {patchStats.totalVisualTokens} Tokens
                       </Badge>
                     </Flex>
@@ -219,8 +219,8 @@ export default function VisionLanguageTab() {
                     </Stack>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
-                    <strong style={{ fontSize: '13px', color: '#38BDF8', display: 'block', marginBottom: '8px' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
                       ENGINEERING IMPLICATIONS & COST:
                     </strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '0 0 8px 0' }}>
@@ -250,13 +250,13 @@ export default function VisionLanguageTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {VLM_CONNECTOR_ARCHITECTURES.map((conn) => (
-                    <Card key={conn.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
+                    <Card key={conn.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                        <strong style={{ fontSize: '13px', color: '#38BDF8' }}>{conn.name}</strong>
+                        <strong style={{ fontSize: '13px', color: '#17837F' }}>{conn.name}</strong>
                         <Badge variant="outline">{conn.models}</Badge>
                       </Flex>
 
-                      <div style={{ background: '#090d16', padding: '8px 12px', borderRadius: '4px', fontSize: '11px', color: '#10b981', fontFamily: 'monospace', margin: '6px 0 8px 0' }}>
+                      <div style={{ background: '#090d16', padding: '8px 12px', borderRadius: '4px', fontSize: '11px', color: '#17837F', fontFamily: 'monospace', margin: '6px 0 8px 0' }}>
                         {conn.mechanism}
                       </div>
 
@@ -300,14 +300,14 @@ export default function VisionLanguageTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #38BDF8' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>IMAGE TYPE:</div>
                     <div style={{ fontSize: '13px', color: 'white', fontWeight: 'bold', marginBottom: '8px' }}>
                       {activeTask.imageType} ({activeTask.visualTokens} Visual Tokens)
                     </div>
 
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>USER PROMPT QUESTION:</div>
-                    <div style={{ background: '#090d16', padding: '10px', borderRadius: '4px', color: '#38BDF8', fontFamily: 'monospace', fontSize: '12px', marginBottom: '8px' }}>
+                    <div style={{ background: '#090d16', padding: '10px', borderRadius: '4px', color: '#17837F', fontFamily: 'monospace', fontSize: '12px', marginBottom: '8px' }}>
                       "{activeTask.inputQuestion}"
                     </div>
 
@@ -319,8 +319,8 @@ export default function VisionLanguageTab() {
 
                   <Card style={{ padding: '14px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.3)' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '12px', color: '#10b981' }}>✅ VLM STRUCTURED RESPONSE</strong>
-                      <Badge variant="subtle" style={{ color: '#10b981', background: 'rgba(16,185,129,0.2)' }}>
+                      <strong style={{ fontSize: '12px', color: '#17837F' }}>✅ VLM STRUCTURED RESPONSE</strong>
+                      <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.2)' }}>
                         {activeTask.connectorUsed}
                       </Badge>
                     </Flex>
