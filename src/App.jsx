@@ -4364,12 +4364,12 @@ export const ClaudeWorkflowsTab = ({ s }) => {
   };
 
   const SKILL_STEPS = [
-    { label: "Paste 3 writing samples",       icon: "📋", detail: "Give Claude examples of your best work — emails, posts, docs", color: "#2a8a84" },
-    { label: "Ask Claude to analyse your style", icon: "🔍", detail: "Vocabulary, sentence length, tone, unique phrases", color: "#c9a84c" },
-    { label: "Claude identifies patterns",    icon: "🧠", detail: "Gets back a style profile: formal/casual, short sentences, etc.", color: "#9b7fd4" },
-    { label: "Make a request using your style", icon: "✍️", detail: "Write [X] in my style, using the patterns identified above", color: "#c4572a" },
-    { label: "Review and give feedback",      icon: "✅", detail: "Tell Claude what it got right and what to adjust", color: "#4a9a4a" },
-    { label: "Your custom skill is trained",  icon: "🎯", detail: "Use it for all future content — consistent voice every time", color: "#c9a84c" },
+    { label: "Paste 3 writing samples",       icon: "📋", detail: "Give Claude examples of your best work — emails, posts, docs", color: "#2AB5B0" },
+    { label: "Ask Claude to analyse your style", icon: "🔍", detail: "Vocabulary, sentence length, tone, unique phrases", color: "#8B7BD8" },
+    { label: "Claude identifies patterns",    icon: "🧠", detail: "Gets back a style profile: formal/casual, short sentences, etc.", color: "#C5ADEA" },
+    { label: "Make a request using your style", icon: "✍️", detail: "Write [X] in my style, using the patterns identified above", color: "#FF8A6B" },
+    { label: "Review and give feedback",      icon: "✅", detail: "Tell Claude what it got right and what to adjust", color: "#2AB5B0" },
+    { label: "Your custom skill is trained",  icon: "🎯", detail: "Use it for all future content — consistent voice every time", color: "#8B7BD8" },
   ];
 
   const runSkill = () => {
@@ -4385,28 +4385,28 @@ export const ClaudeWorkflowsTab = ({ s }) => {
     setTimeout(tick, 200);
   };
 
-  const diffColor = { Beginner: "#4a9a4a", Intermediate: "#c9a84c" };
+  const diffColor = { Beginner: "#2AB5B0", Intermediate: "#8B7BD8" };
 
   return (
     <div>
       {/* HERO */}
       <div style={{ background: "linear-gradient(135deg,#f0f4f8,#f6f0fa,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#4a9a4a,#c4572a)" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2AB5B0,#8B7BD8,#C5ADEA,#2AB5B0,#FF8A6B)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(201,168,76,0.04)", lineHeight: 1, pointerEvents: "none" }}>10×</div>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.75rem" }}>Beginner Guide · Geeky Gadgets · July 2026</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#8B7BD8", marginBottom: "0.75rem" }}>Beginner Guide · Geeky Gadgets · July 2026</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
-          Claude Workflows:<br /><em style={{ color: "#c9a84c", fontStyle: "italic" }}>10 Features to Try First</em>
+          Claude Workflows:<br /><em style={{ color: "#8B7BD8", fontStyle: "italic" }}>10 Features to Try First</em>
         </h2>
         <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           From basic chat and writing assistance to role-based prompting, app integrations, and workflow automation. Each workflow comes with ready-to-use prompt templates, a key tip, and a difficulty rating. Start with Week 1 — build from there.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
           {[
-            { val: "10",  label: "Workflows",    sub: "beginner → intermediate", color: "#c9a84c" },
-            { val: "30",  label: "Prompt templates", sub: "copy and customise",  color: "#2a8a84" },
-            { val: "3",   label: "Week ramp",    sub: "structured learning path", color: "#9b7fd4" },
-            { val: "1",   label: "Role builder", sub: "interactive prompt tool",  color: "#c4572a" },
-            { val: "∞",   label: "Skills",       sub: "train your writing style",  color: "#4a9a4a" },
+            { val: "10",  label: "Workflows",    sub: "beginner → intermediate", color: "#8B7BD8" },
+            { val: "30",  label: "Prompt templates", sub: "copy and customise",  color: "#2AB5B0" },
+            { val: "3",   label: "Week ramp",    sub: "structured learning path", color: "#C5ADEA" },
+            { val: "1",   label: "Role builder", sub: "interactive prompt tool",  color: "#FF8A6B" },
+            { val: "∞",   label: "Skills",       sub: "train your writing style",  color: "#2AB5B0" },
           ].map((m, i) => (
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
@@ -4423,35 +4423,35 @@ export const ClaudeWorkflowsTab = ({ s }) => {
       </div>
 
       {/* ECOSYSTEM DIAGRAM */}
-      <div style={s.sectionLabel("#c9a84c")}>The Claude Ecosystem — 10 Workflow Areas</div>
+      <div style={s.sectionLabel("#8B7BD8")}>The Claude Ecosystem — 10 Workflow Areas</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
         <ZoomableFigure title="The Claude Ecosystem — 10 Workflow Areas"><ClaudeEcosystemDiagram /></ZoomableFigure>
       </div>
 
       {/* LEARNING RAMP */}
-      <div style={s.sectionLabel("#4a9a4a")}>Learning Ramp — Where to Start</div>
+      <div style={s.sectionLabel("#2AB5B0")}>Learning Ramp — Where to Start</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
         <ZoomableFigure title="Learning Ramp"><DifficultyRampDiagram /></ZoomableFigure>
       </div>
 
       {/* PROMPT ANATOMY */}
-      <div style={s.sectionLabel("#9b7fd4")}>Anatomy of a Great Prompt</div>
+      <div style={s.sectionLabel("#C5ADEA")}>Anatomy of a Great Prompt</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
         <ZoomableFigure title="Anatomy of a Great Prompt"><PromptAnatomyDiagram /></ZoomableFigure>
       </div>
 
       {/* INTERACTIVE ROLE BUILDER */}
-      <div style={s.sectionLabel("#c4572a")}>Role-Based Prompt Builder — Live</div>
+      <div style={s.sectionLabel("#FF8A6B")}>Role-Based Prompt Builder — Live</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.7, marginBottom: "1.2rem", maxWidth: 540 }}>
           Fill in the four fields below. The prompt assembles in real time. Copy it straight into Claude.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.8rem", marginBottom: "1.2rem" }}>
           {[
-            { key: "role", label: "Role", placeholder: "e.g. senior financial analyst", color: "#c4572a" },
-            { key: "task", label: "Task", placeholder: "e.g. analyse our Q3 revenue data", color: "#c9a84c" },
-            { key: "context", label: "Context", placeholder: "e.g. presenting to the board next week", color: "#9b7fd4" },
-            { key: "format", label: "Format", placeholder: "e.g. numbered list, max 5 items", color: "#4a9a4a" },
+            { key: "role", label: "Role", placeholder: "e.g. senior financial analyst", color: "#FF8A6B" },
+            { key: "task", label: "Task", placeholder: "e.g. analyse our Q3 revenue data", color: "#8B7BD8" },
+            { key: "context", label: "Context", placeholder: "e.g. presenting to the board next week", color: "#C5ADEA" },
+            { key: "format", label: "Format", placeholder: "e.g. numbered list, max 5 items", color: "#2AB5B0" },
           ].map(f => (
             <div key={f.key}>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: f.color, marginBottom: "0.3rem" }}>{f.label}</div>
@@ -4464,22 +4464,22 @@ export const ClaudeWorkflowsTab = ({ s }) => {
             </div>
           ))}
         </div>
-        <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem", border: "1px solid #c9a84c30", marginBottom: "0.8rem" }}>
-          <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#c9a84c", marginBottom: "0.5rem" }}>Generated Prompt</div>
+        <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem", border: "1px solid #8B7BD830", marginBottom: "0.8rem" }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#8B7BD8", marginBottom: "0.5rem" }}>Generated Prompt</div>
           <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.67rem", color: "#1a1a2e", lineHeight: 1.7 }}>{builtPrompt}</div>
         </div>
         <button onClick={() => copyPrompt(builtPrompt, "built")}
-          style={{ background: copiedPrompt === "built" ? "rgba(74,154,74,0.2)" : "rgba(201,168,76,0.1)", border: `1px solid ${copiedPrompt === "built" ? "#4a9a4a" : "#c9a84c"}`, borderRadius: 4, padding: "0.5rem 1.2rem", color: copiedPrompt === "built" ? "#4a9a4a" : "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: "pointer", letterSpacing: "0.1em", transition: "all 0.2s" }}>
+          style={{ background: copiedPrompt === "built" ? "rgba(74,154,74,0.2)" : "rgba(201,168,76,0.1)", border: `1px solid ${copiedPrompt === "built" ? "#2AB5B0" : "#8B7BD8"}`, borderRadius: 4, padding: "0.5rem 1.2rem", color: copiedPrompt === "built" ? "#2AB5B0" : "#8B7BD8", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: "pointer", letterSpacing: "0.1em", transition: "all 0.2s" }}>
           {copiedPrompt === "built" ? "✓ Copied!" : "📋 Copy Prompt"}
         </button>
       </div>
 
       {/* WORKFLOW EXPLORER */}
-      <div style={s.sectionLabel("#2a8a84")}>10 Workflows — Interactive Explorer</div>
+      <div style={s.sectionLabel("#2AB5B0")}>10 Workflows — Interactive Explorer</div>
       <div style={{ display: "flex", gap: "0.4rem", marginBottom: "1rem", flexWrap: "wrap" }}>
         {CW_CATEGORIES.map(cat => (
           <button key={cat} onClick={() => setCatFilter(cat)}
-            style={{ padding: "0.35rem 0.8rem", background: catFilter === cat ? "rgba(201,168,76,0.15)" : "#ffffff", border: `1px solid ${catFilter === cat ? "#c9a84c" : "#e0dcd4"}`, borderRadius: 4, color: catFilter === cat ? "#c9a84c" : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", cursor: "pointer", transition: "all 0.2s", letterSpacing: "0.08em" }}>
+            style={{ padding: "0.35rem 0.8rem", background: catFilter === cat ? "rgba(201,168,76,0.15)" : "#ffffff", border: `1px solid ${catFilter === cat ? "#8B7BD8" : "#e0dcd4"}`, borderRadius: 4, color: catFilter === cat ? "#8B7BD8" : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem", cursor: "pointer", transition: "all 0.2s", letterSpacing: "0.08em" }}>
             {cat}
           </button>
         ))}
@@ -4497,7 +4497,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
                 <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.52rem", color: wf.color }}>{wf.num}</div>
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: activeWf === wf.id ? wf.color : "#1a1a2e" }}>{wf.name}</div>
               </div>
-              <span style={{ marginLeft: "auto", fontSize: "0.5rem", padding: "0.15rem 0.4rem", background: `${diffColor[wf.difficulty] || "#c9a84c"}12`, color: diffColor[wf.difficulty] || "#c9a84c", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, whiteSpace: "nowrap" }}>{wf.difficulty}</span>
+              <span style={{ marginLeft: "auto", fontSize: "0.5rem", padding: "0.15rem 0.4rem", background: `${diffColor[wf.difficulty] || "#8B7BD8"}12`, color: diffColor[wf.difficulty] || "#8B7BD8", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, whiteSpace: "nowrap" }}>{wf.difficulty}</span>
             </div>
             <div style={{ fontSize: "0.62rem", color: "#334155", lineHeight: 1.6 }}>{wf.description.slice(0, 80)}…</div>
           </button>
@@ -4552,7 +4552,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
                 </div>
                 <div style={{ display: "flex", gap: "0.6rem" }}>
                   <button onClick={() => copyPrompt(wf.prompts[promptIdx].template, `${wf.id}-${promptIdx}`)}
-                    style={{ background: copiedPrompt === `${wf.id}-${promptIdx}` ? "rgba(74,154,74,0.2)" : "rgba(201,168,76,0.1)", border: `1px solid ${copiedPrompt === `${wf.id}-${promptIdx}` ? "#4a9a4a" : "#c9a84c"}`, borderRadius: 4, padding: "0.45rem 1rem", color: copiedPrompt === `${wf.id}-${promptIdx}` ? "#4a9a4a" : "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: "pointer", transition: "all 0.2s" }}>
+                    style={{ background: copiedPrompt === `${wf.id}-${promptIdx}` ? "rgba(74,154,74,0.2)" : "rgba(201,168,76,0.1)", border: `1px solid ${copiedPrompt === `${wf.id}-${promptIdx}` ? "#2AB5B0" : "#8B7BD8"}`, borderRadius: 4, padding: "0.45rem 1rem", color: copiedPrompt === `${wf.id}-${promptIdx}` ? "#2AB5B0" : "#8B7BD8", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: "pointer", transition: "all 0.2s" }}>
                     {copiedPrompt === `${wf.id}-${promptIdx}` ? "✓ Copied!" : "📋 Copy Template"}
                   </button>
                   <span style={{ fontSize: "0.62rem", color: "#334155", padding: "0.45rem 0", fontFamily: "Syne, sans-serif" }}>Replace [BRACKETED] text with your specifics</span>
@@ -4564,12 +4564,12 @@ export const ClaudeWorkflowsTab = ({ s }) => {
       )}
 
       {/* SKILLS TRAINING SIMULATOR */}
-      <div style={s.sectionLabel("#9b7fd4")}>Train Your Writing Style — 6-Step Simulator</div>
+      <div style={s.sectionLabel("#C5ADEA")}>Train Your Writing Style — 6-Step Simulator</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem", flexWrap: "wrap", gap: "0.6rem" }}>
           <p style={{ fontSize: "0.7rem", color: "#334155", lineHeight: 1.6, maxWidth: 480 }}>The Skills feature lets you train Claude to write in your unique voice. Animate the process to see how it works.</p>
           <button onClick={runSkill} disabled={skillRunning}
-            style={{ background: skillRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #9b7fd4", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#9b7fd4", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: skillRunning ? "not-allowed" : "pointer", opacity: skillRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+            style={{ background: skillRunning ? "#e2e8f0" : "#ffffff", border: "1px solid #C5ADEA", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#C5ADEA", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: skillRunning ? "not-allowed" : "pointer", opacity: skillRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
             {skillRunning ? "Training…" : "▶ Train Skill"}
           </button>
         </div>
@@ -4583,7 +4583,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
                 <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: skillStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.1rem" }}>{step.label}</div>
                 <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.58rem", color: skillStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
               </div>
-              {skillStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
+              {skillStep > i && <div style={{ color: "#2AB5B0", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
             </div>
           ))}
         </div>
@@ -4591,7 +4591,7 @@ export const ClaudeWorkflowsTab = ({ s }) => {
 
       {/* QUICK WINS TABLE */}
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
-        <div style={s.sectionLabel("#4a9a4a")}>Quick Wins — Best First Prompts for Each Workflow</div>
+        <div style={s.sectionLabel("#2AB5B0")}>Quick Wins — Best First Prompts for Each Workflow</div>
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.67rem" }}>
             <thead>
@@ -4627,7 +4627,7 @@ const GLOSSARY_TERMS = [
   // ── Foundations ──
   {
     id: "ai", term: "Artificial Intelligence", abbr: "AI", category: "Foundations", level: "Beginner",
-    color: "#2a8a84",
+    color: "#2AB5B0",
     simple: "Computer systems that can do things usually requiring human intelligence — like understanding language, recognising images, or making decisions.",
     technical: "A broad field spanning machine learning, reasoning, perception, and natural language processing. Modern AI is primarily statistical and data-driven rather than rule-based.",
     analogy: "A very well-read assistant that has absorbed billions of books and can predict what a helpful answer looks like — but has never actually 'experienced' anything.",
@@ -4636,7 +4636,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "ml", term: "Machine Learning", abbr: "ML", category: "Foundations", level: "Beginner",
-    color: "#2a8a84",
+    color: "#2AB5B0",
     simple: "Teaching a computer to improve at a task by showing it examples — without programming every rule explicitly.",
     technical: "Algorithms that learn statistical patterns from data to make predictions or decisions. Three main types: supervised (labelled data), unsupervised (find structure), reinforcement (learn from rewards).",
     analogy: "Teaching a child to recognise cats by showing thousands of cat photos — not by writing a rulebook of what a cat is.",
@@ -4645,7 +4645,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "llm", term: "Large Language Model", abbr: "LLM", category: "Foundations", level: "Beginner",
-    color: "#2a8a84",
+    color: "#2AB5B0",
     simple: "A massive AI model trained on billions of words of text that can understand and generate human language — the engine behind ChatGPT, Claude, and Gemini.",
     technical: "A deep neural network with billions of parameters, pre-trained on large text corpora via self-supervised learning (predicting next tokens), then fine-tuned with RLHF for instruction-following.",
     analogy: "A next-word autocomplete trained on the entire internet — but so good at predicting what comes next that it appears to reason, write, and converse.",
@@ -4654,7 +4654,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "token", term: "Token", abbr: null, category: "Foundations", level: "Beginner",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     simple: "The basic unit of text an AI processes — roughly a word, part of a word, or punctuation. 'Unbelievable' = 2 tokens: 'un' + 'believable'. ~1 token ≈ 0.75 English words.",
     technical: "Subword units produced by a tokeniser (e.g. BPE, WordPiece). The model reads and generates one token at a time. Token counts determine API pricing and context window usage.",
     analogy: "Lego bricks of language. Words are built from tokens the same way structures are built from bricks — some words are one brick, some are several.",
@@ -4663,7 +4663,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "context_window", term: "Context Window", abbr: null, category: "Foundations", level: "Beginner",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     simple: "The maximum amount of text an AI can read and 'remember' at once. If your conversation exceeds this limit, the model forgets earlier content.",
     technical: "The maximum number of tokens the model can attend to in a single forward pass. Modern frontier models range from 128K to 1M+ tokens. Does not persist across sessions.",
     analogy: "A whiteboard the model can see during your conversation. Everything on the board is 'in mind'. When the board fills up, older notes get erased to make room for new ones.",
@@ -4672,7 +4672,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "hallucination", term: "Hallucination", abbr: null, category: "Foundations", level: "Beginner",
-    color: "#c4572a",
+    color: "#FF8A6B",
     simple: "When an AI confidently states something that is factually wrong or completely made up — fake citations, wrong dates, invented statistics.",
     technical: "A generation failure where the model produces plausible-sounding but incorrect text. Occurs because LLMs optimise for linguistic probability, not factual accuracy. Not a bug — a feature of how token prediction works.",
     analogy: "Ask someone to fill in a crossword without checking a dictionary. They'll write something that fits the letter pattern — but it might not be a real word.",
@@ -4682,7 +4682,7 @@ const GLOSSARY_TERMS = [
   // ── Retrieval ──
   {
     id: "rag", term: "Retrieval-Augmented Generation", abbr: "RAG", category: "Retrieval", level: "Beginner",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     simple: "Connecting an AI to an external knowledge source so it retrieves relevant documents before answering — reducing hallucination and enabling up-to-date responses.",
     technical: "A hybrid architecture: a retriever fetches relevant chunks from a vector store or database; a generator LLM produces an answer conditioned on the retrieved context. Keeps knowledge separate from model weights.",
     analogy: "Instead of answering from memory, the AI first searches your filing cabinet, reads the relevant pages, then answers based on what it just read.",
@@ -4691,7 +4691,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "embedding", term: "Embedding", abbr: null, category: "Retrieval", level: "Intermediate",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     simple: "Converting text (or images, audio) into a list of numbers that captures meaning — so that similar ideas produce similar numbers, enabling semantic search.",
     technical: "A dense vector representation in high-dimensional space (typically 768–3072 dimensions). Produced by an encoder model. Semantic similarity = cosine distance between vectors. Foundation of all modern retrieval systems.",
     analogy: "Imagine placing every word or sentence on a map. Similar meanings cluster together. 'Heart attack' and 'cardiac arrest' land near each other even though they share no words.",
@@ -4700,7 +4700,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "vector_db", term: "Vector Database", abbr: null, category: "Retrieval", level: "Intermediate",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     simple: "A database designed to store and search embeddings — finding the most similar content to a query in milliseconds across millions of documents.",
     technical: "Stores high-dimensional vectors with approximate nearest-neighbour (ANN) indexes (HNSW, IVF). Supports filtering by metadata alongside similarity search. Examples: pgvector, Pinecone, Weaviate, Qdrant.",
     analogy: "A library that organises books not by title or author but by meaning — so asking 'books about grief' immediately surfaces everything emotionally related, not just books with that word in the title.",
@@ -4710,7 +4710,7 @@ const GLOSSARY_TERMS = [
   // ── Models & Training ──
   {
     id: "fine_tuning", term: "Fine-Tuning", abbr: null, category: "Training", level: "Intermediate",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     simple: "Taking a pre-trained AI model and training it further on a smaller, specialised dataset to make it better at a specific task or domain.",
     technical: "Continued gradient-based training on domain-specific data. Updates model weights — changing behaviour permanently. Contrasts with RAG (retrieval at inference time). Common variants: full fine-tune, LoRA, QLoRA.",
     analogy: "A medical generalist who does a specialist residency. They keep all their base knowledge but become much better at cardiology specifically.",
@@ -4719,7 +4719,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "rlhf", term: "Reinforcement Learning from Human Feedback", abbr: "RLHF", category: "Training", level: "Intermediate",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     simple: "A training technique where humans rate AI responses, and those ratings teach the model to give more helpful, accurate, and safe answers over time.",
     technical: "Three-stage process: supervised fine-tuning on demonstrations, reward model training from human preference data, then RL (PPO) to optimise the LLM against the reward model. Produces instruction-following models.",
     analogy: "Teaching a dog by giving treats for good behaviour and no treats for bad — except the 'dog' is a language model and the 'treats' are numerical reward signals from human raters.",
@@ -4728,7 +4728,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "temperature", term: "Temperature", abbr: null, category: "Training", level: "Beginner",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     simple: "A dial controlling how creative or predictable an AI's output is. Low temperature = consistent and factual. High temperature = varied and creative.",
     technical: "A scalar applied to the logit distribution before sampling. At T=0, the model always picks the highest-probability token (greedy decoding). At T>1, the distribution flattens, increasing diversity and randomness.",
     analogy: "Low temperature = a news reporter sticking strictly to facts. High temperature = a poet riffing freely. Same knowledge, different expression dial.",
@@ -4738,7 +4738,7 @@ const GLOSSARY_TERMS = [
   // ── Agents & Architecture ──
   {
     id: "agent", term: "AI Agent", abbr: null, category: "Agents", level: "Beginner",
-    color: "#c4572a",
+    color: "#FF8A6B",
     simple: "An AI that doesn't just respond to a single question — it plans, uses tools, takes multiple actions, and iterates toward a goal autonomously.",
     technical: "An LLM in a loop with access to tools (search, code execution, APIs). Uses a reasoning pattern (ReAct: reason → act → observe) to complete multi-step tasks. State tracked across iterations.",
     analogy: "A very capable intern. You give them a goal ('research our competitors and write a report'), and they figure out the steps: searching, reading, synthesising, formatting — without you specifying each step.",
@@ -4747,7 +4747,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "mcp", term: "Model Context Protocol", abbr: "MCP", category: "Agents", level: "Intermediate",
-    color: "#c4572a",
+    color: "#FF8A6B",
     simple: "A standard way for AI models to connect to external tools and data sources — like a USB-C port that works with any AI application.",
     technical: "An open protocol (Anthropic) defining a host/client/server architecture. Servers expose tools, resources, and prompts. Clients negotiate capabilities. Enables plug-and-play integrations across any MCP-compatible host.",
     analogy: "Before USB-C, every device had a different charger. MCP is the USB-C moment for AI tool integrations — one standard that works everywhere.",
@@ -4756,7 +4756,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "prompt_engineering", term: "Prompt Engineering", abbr: null, category: "Agents", level: "Beginner",
-    color: "#4a9a4a",
+    color: "#2AB5B0",
     simple: "The craft of writing instructions to an AI that produce better, more accurate, and more useful responses — choosing the right words, structure, and context.",
     technical: "Techniques include: zero-shot prompting, few-shot examples, chain-of-thought (ask the model to reason step by step), role assignment, output format specification, and system prompt design.",
     analogy: "Giving directions to a very literal GPS. 'Take me somewhere nice' gets a random result. 'Take me to a Michelin-starred Italian restaurant within 5km that's open on Mondays' gets what you actually want.",
@@ -4765,7 +4765,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "cot", term: "Chain-of-Thought", abbr: "CoT", category: "Agents", level: "Intermediate",
-    color: "#4a9a4a",
+    color: "#2AB5B0",
     simple: "Asking an AI to show its reasoning step-by-step before giving a final answer — like asking someone to 'show their work'. Dramatically improves accuracy on complex tasks.",
     technical: "A prompting technique (or training objective in reasoning models) that elicits intermediate reasoning steps. Zero-shot CoT: add 'Let's think step by step'. Few-shot CoT: provide worked examples. Scales with model size.",
     analogy: "The difference between asking 'what's 17 × 23?' and asking 'work out 17 × 23 step by step'. The second forces intermediate verification that catches errors.",
@@ -4775,7 +4775,7 @@ const GLOSSARY_TERMS = [
   // ── Safety & Alignment ──
   {
     id: "alignment", term: "Alignment", abbr: null, category: "Safety", level: "Intermediate",
-    color: "#4a9a4a",
+    color: "#2AB5B0",
     simple: "Making sure an AI does what humans actually want — and not just what its objective technically optimises for. The gap between 'what we asked for' and 'what we meant'.",
     technical: "The research area concerned with building AI systems that reliably pursue intended goals. Includes value alignment (matching human values), robustness (behaving correctly in edge cases), and interpretability.",
     analogy: "A genie that grants wishes literally. You wish to 'never miss a flight' and it glues you to the airport. Alignment is making the genie understand what you actually meant.",
@@ -4784,7 +4784,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "grounding", term: "Grounding", abbr: null, category: "Safety", level: "Intermediate",
-    color: "#4a9a4a",
+    color: "#2AB5B0",
     simple: "Connecting an AI's output to real, verifiable sources — so its answers are anchored in actual documents or data rather than generated from internal patterns alone.",
     technical: "Techniques that link model outputs to external evidence: RAG (retrieval), citations, tool-use (calling APIs for current data), and constrained decoding. Reduces hallucination risk significantly.",
     analogy: "The difference between a witness testifying from memory and one reading from a contemporaneous document. Grounding is requiring the document.",
@@ -4794,7 +4794,7 @@ const GLOSSARY_TERMS = [
   // ── Architecture ──
   {
     id: "transformer", term: "Transformer", abbr: null, category: "Architecture", level: "Intermediate",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     simple: "The neural network architecture that powers nearly all modern AI — from GPT to Claude to Gemini. Introduced in 2017 with the paper 'Attention Is All You Need'.",
     technical: "An encoder-decoder (or decoder-only) architecture using multi-head self-attention to model relationships between all tokens simultaneously. Scales better than RNNs with compute and data. The backbone of all major LLMs.",
     analogy: "Unlike reading a sentence word by word (old RNNs), a Transformer reads the whole sentence at once and weighs how much each word relates to every other word — simultaneously.",
@@ -4803,7 +4803,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "neural_network", term: "Neural Network", abbr: "NN", category: "Architecture", level: "Beginner",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     simple: "A computational system loosely inspired by the brain — interconnected nodes organised in layers, each learning to detect increasingly complex patterns.",
     technical: "A function approximator: layers of weighted linear transformations with non-linear activations. Trained by gradient descent to minimise a loss function on training data. 'Deep' = many layers.",
     analogy: "A series of filters: the first layer detects edges, the next detects shapes, the next detects objects. Each layer builds on the previous one's understanding.",
@@ -4812,7 +4812,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "inference", term: "Inference", abbr: null, category: "Architecture", level: "Beginner",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     simple: "The act of using a trained AI model to generate a response. Training = learning from data (expensive, done once). Inference = using that learning (happens millions of times per day).",
     technical: "A forward pass through the model: input tokens → transformer layers → output logits → sampled token → repeat. Compute-intensive at scale; optimised with quantisation, batching, and caching.",
     analogy: "Training is studying for a test. Inference is taking the test. The studying happens once; the test-taking happens every time someone sends a prompt.",
@@ -4821,7 +4821,7 @@ const GLOSSARY_TERMS = [
   },
   {
     id: "multimodal", term: "Multimodal", abbr: null, category: "Architecture", level: "Beginner",
-    color: "#2a8a84",
+    color: "#2AB5B0",
     simple: "An AI that can understand and generate multiple types of content — text, images, audio, video — not just text.",
     technical: "Models with encoders for multiple modalities, projecting each into a shared latent space. Examples: GPT-4o (text + image + audio), Claude 3.x (text + image). Enables cross-modal reasoning.",
     analogy: "The difference between a pen-pal (text only) and a video call (text + voice + face). Multimodal AI can see, hear, and read simultaneously.",
@@ -4838,15 +4838,15 @@ const AIHierarchyDiagram = () => (
   <svg viewBox="0 0 240 110" style={{ width: "100%", height: "auto", maxHeight: "100%" }}>
     <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE AI HIERARCHY</text>
     {/* Concentric ovals */}
-    <ellipse cx="120" cy="65" rx="108" ry="38" fill="rgba(42,138,132,0.06)" stroke="#2a8a84" strokeWidth="0.7"/>
-    <ellipse cx="120" cy="65" rx="80" ry="28" fill="rgba(201,168,76,0.06)" stroke="#c9a84c" strokeWidth="0.7"/>
-    <ellipse cx="120" cy="65" rx="52" ry="18" fill="rgba(155,127,212,0.08)" stroke="#9b7fd4" strokeWidth="0.7"/>
-    <ellipse cx="120" cy="65" rx="28" ry="10" fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.7"/>
+    <ellipse cx="120" cy="65" rx="108" ry="38" fill="rgba(42,138,132,0.06)" stroke="#2AB5B0" strokeWidth="0.7"/>
+    <ellipse cx="120" cy="65" rx="80" ry="28" fill="rgba(201,168,76,0.06)" stroke="#8B7BD8" strokeWidth="0.7"/>
+    <ellipse cx="120" cy="65" rx="52" ry="18" fill="rgba(155,127,212,0.08)" stroke="#C5ADEA" strokeWidth="0.7"/>
+    <ellipse cx="120" cy="65" rx="28" ry="10" fill="rgba(196,87,42,0.1)" stroke="#FF8A6B" strokeWidth="0.7"/>
     {/* Labels */}
-    <text x="120" y="68" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">LLMs</text>
-    <text x="120" y="53" textAnchor="middle" fontSize="4" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">Deep Learning</text>
-    <text x="120" y="41" textAnchor="middle" fontSize="4" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Machine Learning</text>
-    <text x="120" y="29" textAnchor="middle" fontSize="4" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">Artificial Intelligence</text>
+    <text x="120" y="68" textAnchor="middle" fontSize="4.5" fill="#FF8A6B" fontFamily="Syne, sans-serif" fontWeight="800">LLMs</text>
+    <text x="120" y="53" textAnchor="middle" fontSize="4" fill="#C5ADEA" fontFamily="Syne, sans-serif" fontWeight="700">Deep Learning</text>
+    <text x="120" y="41" textAnchor="middle" fontSize="4" fill="#8B7BD8" fontFamily="Syne, sans-serif" fontWeight="700">Machine Learning</text>
+    <text x="120" y="29" textAnchor="middle" fontSize="4" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="700">Artificial Intelligence</text>
     {/* Annotations */}
     <text x="14" y="68" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">GPT · Claude · Gemini</text>
     <text x="216" y="68" textAnchor="end" fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">Transformers · BERT</text>
@@ -4861,26 +4861,26 @@ const HallucinationDiagram = () => (
   <svg viewBox="0 0 240 90" style={{ width: "100%", height: "auto", maxHeight: "100%" }}>
     <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">HALLUCINATION vs GROUNDING (RAG)</text>
     {/* Without RAG */}
-    <rect x="10" y="18" width="100" height="62" rx={3} fill="#ffffff" stroke="#c4572a" strokeWidth="0.7"/>
-    <text x="60" y="29" textAnchor="middle" fontSize="4.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">Without RAG</text>
-    <rect x="18" y="33" width="84" height="14" rx={2} fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.5"/>
-    <text x="60" y="42" textAnchor="middle" fontSize="3.8" fill="#c9a84c" fontFamily="Syne, sans-serif">"What did Apple say in Q4?"</text>
-    <line x1="60" y1="47" x2="60" y2="55" stroke="#c4572a" strokeWidth="0.5" strokeDasharray="2,1"/>
-    <rect x="18" y="55" width="84" height="18" rx={2} fill="rgba(196,87,42,0.12)" stroke="#c4572a" strokeWidth="0.5"/>
-    <text x="60" y="62" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif">LLM generates plausible-</text>
-    <text x="60" y="68" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif">sounding but WRONG answer</text>
+    <rect x="10" y="18" width="100" height="62" rx={3} fill="#ffffff" stroke="#FF8A6B" strokeWidth="0.7"/>
+    <text x="60" y="29" textAnchor="middle" fontSize="4.5" fill="#FF8A6B" fontFamily="Syne, sans-serif" fontWeight="800">Without RAG</text>
+    <rect x="18" y="33" width="84" height="14" rx={2} fill="rgba(201,168,76,0.1)" stroke="#8B7BD8" strokeWidth="0.5"/>
+    <text x="60" y="42" textAnchor="middle" fontSize="3.8" fill="#8B7BD8" fontFamily="Syne, sans-serif">"What did Apple say in Q4?"</text>
+    <line x1="60" y1="47" x2="60" y2="55" stroke="#FF8A6B" strokeWidth="0.5" strokeDasharray="2,1"/>
+    <rect x="18" y="55" width="84" height="18" rx={2} fill="rgba(196,87,42,0.12)" stroke="#FF8A6B" strokeWidth="0.5"/>
+    <text x="60" y="62" textAnchor="middle" fontSize="3.5" fill="#FF8A6B" fontFamily="Syne, sans-serif">LLM generates plausible-</text>
+    <text x="60" y="68" textAnchor="middle" fontSize="3.5" fill="#FF8A6B" fontFamily="Syne, sans-serif">sounding but WRONG answer</text>
     {/* Arrow */}
     <text x="120" y="52" textAnchor="middle" fontSize="10" fill="#1E293B">→</text>
     {/* With RAG */}
-    <rect x="130" y="18" width="100" height="62" rx={3} fill="#ffffff" stroke="#4a9a4a" strokeWidth="0.7"/>
-    <text x="180" y="29" textAnchor="middle" fontSize="4.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="800">With RAG</text>
-    <rect x="138" y="33" width="84" height="14" rx={2} fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.5"/>
-    <text x="180" y="42" textAnchor="middle" fontSize="3.8" fill="#c9a84c" fontFamily="Syne, sans-serif">"What did Apple say in Q4?"</text>
-    <rect x="138" y="48" width="84" height="9" rx={2} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.5"/>
-    <text x="180" y="55" textAnchor="middle" fontSize="3.5" fill="#2a8a84" fontFamily="Syne, sans-serif">① Retrieve Apple Q4 filing</text>
-    <line x1="180" y1="57" x2="180" y2="63" stroke="#4a9a4a" strokeWidth="0.5"/>
-    <rect x="138" y="63" width="84" height="10" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.5"/>
-    <text x="180" y="70" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif">② Answer grounded in real doc</text>
+    <rect x="130" y="18" width="100" height="62" rx={3} fill="#ffffff" stroke="#2AB5B0" strokeWidth="0.7"/>
+    <text x="180" y="29" textAnchor="middle" fontSize="4.5" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="800">With RAG</text>
+    <rect x="138" y="33" width="84" height="14" rx={2} fill="rgba(201,168,76,0.1)" stroke="#8B7BD8" strokeWidth="0.5"/>
+    <text x="180" y="42" textAnchor="middle" fontSize="3.8" fill="#8B7BD8" fontFamily="Syne, sans-serif">"What did Apple say in Q4?"</text>
+    <rect x="138" y="48" width="84" height="9" rx={2} fill="rgba(42,138,132,0.12)" stroke="#2AB5B0" strokeWidth="0.5"/>
+    <text x="180" y="55" textAnchor="middle" fontSize="3.5" fill="#2AB5B0" fontFamily="Syne, sans-serif">① Retrieve Apple Q4 filing</text>
+    <line x1="180" y1="57" x2="180" y2="63" stroke="#2AB5B0" strokeWidth="0.5"/>
+    <rect x="138" y="63" width="84" height="10" rx={2} fill="rgba(74,154,74,0.12)" stroke="#2AB5B0" strokeWidth="0.5"/>
+    <text x="180" y="70" textAnchor="middle" fontSize="3.5" fill="#2AB5B0" fontFamily="Syne, sans-serif">② Answer grounded in real doc</text>
     <text x="120" y="88" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">RAG = retriever finds relevant docs → LLM reads them → answers from evidence, not memory</text>
   </svg>
 );
@@ -4888,17 +4888,17 @@ const HallucinationDiagram = () => (
 // SVG: Token visualization
 const TokenDiagram = () => {
   const words = [
-    { text: "Un", color: "#c4572a" },
-    { text: "believ", color: "#9b7fd4" },
-    { text: "able", color: "#c9a84c" },
+    { text: "Un", color: "#FF8A6B" },
+    { text: "believ", color: "#C5ADEA" },
+    { text: "able", color: "#8B7BD8" },
     { text: " ", color: "#1E293B" },
-    { text: "AI", color: "#2a8a84" },
+    { text: "AI", color: "#2AB5B0" },
     { text: " ", color: "#1E293B" },
-    { text: "tok", color: "#4a9a4a" },
-    { text: "en", color: "#c4572a" },
-    { text: "izes", color: "#9b7fd4" },
+    { text: "tok", color: "#2AB5B0" },
+    { text: "en", color: "#FF8A6B" },
+    { text: "izes", color: "#C5ADEA" },
     { text: " ", color: "#1E293B" },
-    { text: "everything", color: "#c9a84c" },
+    { text: "everything", color: "#8B7BD8" },
   ];
   let x = 12;
   return (
@@ -4918,7 +4918,7 @@ const TokenDiagram = () => {
         return rect;
       })}
       <text x="12" y="58" fontSize="3.8" fill="#334155" fontFamily="Syne, sans-serif">Original: "Unbelievable AI tokenizes everything"</text>
-      <text x="12" y="65" fontSize="3.8" fill="#c9a84c" fontFamily="Syne, sans-serif">Result: 8 tokens (not 4 words). ~1 token ≈ 0.75 English words on average.</text>
+      <text x="12" y="65" fontSize="3.8" fill="#8B7BD8" fontFamily="Syne, sans-serif">Result: 8 tokens (not 4 words). ~1 token ≈ 0.75 English words on average.</text>
     </svg>
   );
 };
@@ -9427,9 +9427,9 @@ export const ArchConceptsTab = ({ s }) => {
   const [activeChallenge, setActiveChallenge] = useState(null);
 
   const SECTIONS = [
-    { id: "mla",  icon: "🧠", label: "Multi-Head Latent Attention", color: "#2a8a84" },
-    { id: "moe",  icon: "🎯", label: "Mixture of Experts",          color: "#c9a84c" },
-    { id: "spec", icon: "⚡", label: "Parallel / Speculative",      color: "#9b7fd4" },
+    { id: "mla",  icon: "🧠", label: "Multi-Head Latent Attention", color: "#2AB5B0" },
+    { id: "moe",  icon: "🎯", label: "Mixture of Experts",          color: "#8B7BD8" },
+    { id: "spec", icon: "⚡", label: "Parallel / Speculative",      color: "#C5ADEA" },
   ];
 
   const runMla = () => {
@@ -9452,20 +9452,20 @@ export const ArchConceptsTab = ({ s }) => {
     <div>
       {/* HERO */}
       <div style={{ background: "linear-gradient(135deg,#eff8f4,#f6f0fa,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4)" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2AB5B0,#8B7BD8,#C5ADEA)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "4.5rem", fontWeight: 900, color: "rgba(42,138,132,0.05)", lineHeight: 1, pointerEvents: "none" }}>∑</div>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Module 1 — Foundations · Architecture Concepts · DeepSeek · MoE · Speculative Decoding</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2AB5B0", marginBottom: "0.75rem" }}>Module 1 — Foundations · Architecture Concepts · DeepSeek · MoE · Speculative Decoding</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
-          Three Architecture Concepts<br /><em style={{ color: "#2a8a84", fontStyle: "italic" }}>Every AI Engineer Should Know</em>
+          Three Architecture Concepts<br /><em style={{ color: "#2AB5B0", fontStyle: "italic" }}>Every AI Engineer Should Know</em>
         </h2>
         <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           The techniques behind the most efficient frontier models in 2025–2026. MLA compresses the KV cache by 2.7–4.7× without quality loss. MoE activates 5.5% of parameters per token while matching dense model quality. Speculative decoding generates 2–4× more tokens per second without changing the model at all.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.8rem" }}>
           {[
-            { val: "2.7–4.7×", label: "KV cache reduction",  sub: "MLA (DeepSeek-V3 vs GQA)",        color: "#2a8a84" },
-            { val: "5.5%",    label: "Parameters active",    sub: "MoE — 37B of 671B per token",      color: "#c9a84c" },
-            { val: "2–4×",    label: "Throughput gain",      sub: "Speculative decoding, lossless",    color: "#9b7fd4" },
+            { val: "2.7–4.7×", label: "KV cache reduction",  sub: "MLA (DeepSeek-V3 vs GQA)",        color: "#2AB5B0" },
+            { val: "5.5%",    label: "Parameters active",    sub: "MoE — 37B of 671B per token",      color: "#8B7BD8" },
+            { val: "2–4×",    label: "Throughput gain",      sub: "Speculative decoding, lossless",    color: "#C5ADEA" },
           ].map((m, i) => (
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "1rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
@@ -9490,12 +9490,12 @@ export const ArchConceptsTab = ({ s }) => {
       {/* ─── MLA ─── */}
       {section === "mla" && (
         <div>
-          <div style={s.sectionLabel("#2a8a84")}>Multi-Head Latent Attention (MLA) — DeepSeek-V2/V3, 2024</div>
+          <div style={s.sectionLabel("#2AB5B0")}>Multi-Head Latent Attention (MLA) — DeepSeek-V2/V3, 2024</div>
 
           {/* The problem */}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
-            <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #c4572a" }}>
-              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.8rem" }}>❌ The KV Cache Problem</div>
+            <div style={{ background: "#ffffff", border: "1px solid #FF8A6B30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #FF8A6B" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#FF8A6B", marginBottom: "0.8rem" }}>❌ The KV Cache Problem</div>
               <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.7rem" }}>Standard MHA stores full K and V matrices for every token, every head, every layer. Memory scales as <strong style={{ color: "#1a1a2e" }}>O(n × h × d_k)</strong> — linear in sequence length and the number of heads. At 128K tokens with 32 heads: enormous.</p>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                 {MLA_VARIANTS.map((v, i) => (
@@ -9506,10 +9506,10 @@ export const ArchConceptsTab = ({ s }) => {
                 ))}
               </div>
             </div>
-            <div style={{ background: "#ffffff", border: "1px solid #4a9a4a30", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #4a9a4a" }}>
-              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#4a9a4a", marginBottom: "0.8rem" }}>✅ The MLA Solution</div>
+            <div style={{ background: "#ffffff", border: "1px solid #2AB5B030", borderRadius: 6, padding: "1.4rem", borderTop: "2px solid #2AB5B0" }}>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#2AB5B0", marginBottom: "0.8rem" }}>✅ The MLA Solution</div>
               <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.7rem" }}>Instead of caching K and V, cache a single low-dimensional latent vector <strong style={{ color: "#1a1a2e" }}>C_KV = X·W_DKV</strong> where d_c ≪ d. At inference, up-project C_KV back into K and V on-the-fly. Cache is tiny; computation is cheap.</p>
-              <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#4a9a4a", lineHeight: 1.7 }}>
+              <div style={{ padding: "0.7rem", background: "#f7f5f0", borderRadius: 4, fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#2AB5B0", lineHeight: 1.7 }}>
                 {`C_KV = X · W_DKV          # cache this\nK^h  = C_KV · W_UK_h      # at inference\nV^h  = C_KV · W_UV_h      # at inference`}
               </div>
             </div>
@@ -9521,18 +9521,18 @@ export const ArchConceptsTab = ({ s }) => {
           </div>
 
           {/* Step-by-step animator */}
-          <div style={s.sectionLabel("#2a8a84")}>Step-by-Step: How MLA Processes One Token</div>
+          <div style={s.sectionLabel("#2AB5B0")}>Step-by-Step: How MLA Processes One Token</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
               <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace a single input token through MLA — from full K/V in standard MHA to the compressed latent path.</p>
               <button onClick={runMla} disabled={mlaRunning}
-                style={{ background: mlaRunning ? "#f7f5f0" : "rgba(42,138,132,0.1)", border: "1px solid #2a8a84", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2a8a84", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: mlaRunning ? "not-allowed" : "pointer", opacity: mlaRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+                style={{ background: mlaRunning ? "#f7f5f0" : "rgba(42,138,132,0.1)", border: "1px solid #2AB5B0", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#2AB5B0", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: mlaRunning ? "not-allowed" : "pointer", opacity: mlaRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {mlaRunning ? "Running…" : "▶ Animate MLA"}
               </button>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
               {MLA_STEPS.map((step, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: mlaStep >= i ? (step.problem ? "rgba(196,87,42,0.07)" : "rgba(42,138,132,0.07)") : "#f7f5f0", border: `1px solid ${mlaStep >= i ? (step.problem ? "#c4572a" : "#2a8a84") + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: mlaStep === -1 ? 0.35 : mlaStep >= i ? 1 : 0.25 }}>
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: mlaStep >= i ? (step.problem ? "rgba(196,87,42,0.07)" : "rgba(42,138,132,0.07)") : "#f7f5f0", border: `1px solid ${mlaStep >= i ? (step.problem ? "#FF8A6B" : "#2AB5B0") + "40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: mlaStep === -1 ? 0.35 : mlaStep >= i ? 1 : 0.25 }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: mlaStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: mlaStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${mlaStep >= i ? step.color : "#e0dcd4"}` }}>
                     {mlaStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
@@ -9543,15 +9543,15 @@ export const ArchConceptsTab = ({ s }) => {
                     </div>
                     <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: mlaStep >= i ? step.color : "#1E293B", marginTop: "0.1rem" }}>{step.desc}</div>
                   </div>
-                  {mlaStep > i && <div style={{ color: step.problem ? "#c4572a" : "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>{step.problem ? "↓" : "✓"}</div>}
+                  {mlaStep > i && <div style={{ color: step.problem ? "#FF8A6B" : "#2AB5B0", fontSize: "0.8rem", flexShrink: 0 }}>{step.problem ? "↓" : "✓"}</div>}
                 </div>
               ))}
             </div>
           </div>
 
           {/* RoPE + transfer */}
-          <div style={{ background: "#ffffff", border: "1px solid #9b7fd430", borderRadius: 6, padding: "1.4rem" }}>
-            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#9b7fd4", marginBottom: "0.6rem" }}>Decoupled RoPE — Why Positional Encoding Needs Special Handling</div>
+          <div style={{ background: "#ffffff", border: "1px solid #C5ADEA30", borderRadius: 6, padding: "1.4rem" }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#C5ADEA", marginBottom: "0.6rem" }}>Decoupled RoPE — Why Positional Encoding Needs Special Handling</div>
             <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>RoPE (Rotary Position Embedding) encodes token positions by rotating Q and K vectors. Problem: if you compress K into a latent C_KV, you can't rotate C_KV and get the same result as rotating the full K. MLA solves this by <strong style={{ color: "#1a1a2e" }}>splitting</strong> Q and K into content components (from the compression path) and positional components (a separate projection that RoPE is applied to). They combine only in the attention score computation.</p>
             <CodeBlock code={`# Content + position split in MLA
 Q_content, Q_pos = split(X @ W_UQ, X @ W_QR)
@@ -9569,7 +9569,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
       {/* ─── MoE ─── */}
       {section === "moe" && (
         <div>
-          <div style={s.sectionLabel("#c9a84c")}>Mixture of Experts (MoE) — DeepSeek, Mixtral, Llama 4, Qwen3</div>
+          <div style={s.sectionLabel("#8B7BD8")}>Mixture of Experts (MoE) — DeepSeek, Mixtral, Llama 4, Qwen3</div>
 
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
             <ZoomableFigure title="Mixture of Experts — Sparse Routing"><MoEDiagram /></ZoomableFigure>
@@ -9577,9 +9577,9 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem" }}>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
-              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c9a84c", marginBottom: "0.8rem" }}>The Core Idea</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#8B7BD8", marginBottom: "0.8rem" }}>The Core Idea</div>
               <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8, marginBottom: "0.8rem" }}>Replace the dense feed-forward network in each transformer layer with <strong style={{ color: "#1a1a2e" }}>N expert FFNs</strong>. A router selects the top-k experts for each token. The other N-k experts are completely skipped — no compute, no memory access.</p>
-              <p style={{ fontSize: "0.68rem", color: "#c9a84c", lineHeight: 1.8, fontWeight: 700 }}>Result: a model can have 671B total parameters but use only 37B (5.5%) per token — scaling law knowledge with dense-equivalent cost at inference.</p>
+              <p style={{ fontSize: "0.68rem", color: "#8B7BD8", lineHeight: 1.8, fontWeight: 700 }}>Result: a model can have 671B total parameters but use only 37B (5.5%) per token — scaling law knowledge with dense-equivalent cost at inference.</p>
             </div>
             <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem" }}>
               <ZoomableFigure title="Dense vs Sparse Parameters"><DenseSparseParamDiagram /></ZoomableFigure>
@@ -9603,10 +9603,10 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td style={{ padding: "0.6rem 0.8rem", color: m.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{m.model}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{m.total}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#4a9a4a", fontWeight: 700 }}>{m.active}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#2AB5B0", fontWeight: 700 }}>{m.active}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{m.experts ?? "—"}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{m.topk ?? "—"}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: m.shared ? "#4a9a4a" : "#1E293B" }}>{m.shared ? "✓ Yes" : "No"}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: m.shared ? "#2AB5B0" : "#1E293B" }}>{m.shared ? "✓ Yes" : "No"}</td>
                   </tr>
                 ))}
               </tbody>
@@ -9614,18 +9614,18 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
           </div>
 
           {/* Animated routing */}
-          <div style={s.sectionLabel("#c9a84c")}>Animated: Token Routing Through MoE Layer</div>
+          <div style={s.sectionLabel("#8B7BD8")}>Animated: Token Routing Through MoE Layer</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
               <p style={{ fontSize: "0.7rem", color: "#334155", maxWidth: 440 }}>Trace one token through the MoE routing process — from gate scores to weighted expert combination.</p>
               <button onClick={runMoe} disabled={moeRunning}
-                style={{ background: moeRunning ? "#f7f5f0" : "rgba(201,168,76,0.1)", border: "1px solid #c9a84c", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: moeRunning ? "not-allowed" : "pointer", opacity: moeRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
+                style={{ background: moeRunning ? "#f7f5f0" : "rgba(201,168,76,0.1)", border: "1px solid #8B7BD8", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#8B7BD8", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: moeRunning ? "not-allowed" : "pointer", opacity: moeRunning ? 0.6 : 1, letterSpacing: "0.1em", flexShrink: 0 }}>
                 {moeRunning ? "Routing…" : "▶ Route Token"}
               </button>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
               {MOE_STEPS.map((step, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: moeStep >= i ? "rgba(201,168,76,0.06)" : "#f7f5f0", border: `1px solid ${moeStep >= i ? "#c9a84c40" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: moeStep === -1 ? 0.35 : moeStep >= i ? 1 : 0.25 }}>
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", background: moeStep >= i ? "rgba(201,168,76,0.06)" : "#f7f5f0", border: `1px solid ${moeStep >= i ? "#8B7BD840" : "#e8e4dc"}`, borderRadius: 4, transition: "all 0.4s", opacity: moeStep === -1 ? 0.35 : moeStep >= i ? 1 : 0.25 }}>
                   <div style={{ width: 30, height: 30, borderRadius: "50%", background: moeStep >= i ? step.color : "#e8e4dc", display: "flex", alignItems: "center", justifyContent: "center", fontSize: moeStep >= i ? "0.9rem" : "0.6rem", flexShrink: 0, transition: "all 0.35s", border: `1.5px solid ${moeStep >= i ? step.color : "#e0dcd4"}` }}>
                     {moeStep >= i ? step.icon : <span style={{ color: "#1E293B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{i + 1}</span>}
                   </div>
@@ -9633,14 +9633,14 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
                     <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.67rem", color: moeStep >= i ? "#1a1a2e" : "#1E293B", marginBottom: "0.1rem" }}>{step.label}</div>
                     <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.57rem", color: moeStep >= i ? step.color : "#1E293B" }}>{step.detail}</div>
                   </div>
-                  {moeStep > i && <div style={{ color: "#4a9a4a", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
+                  {moeStep > i && <div style={{ color: "#2AB5B0", fontSize: "0.8rem", flexShrink: 0 }}>✓</div>}
                 </div>
               ))}
             </div>
           </div>
 
           {/* 4 Challenges */}
-          <div style={s.sectionLabel("#c4572a")}>Four Engineering Challenges — Click to Expand</div>
+          <div style={s.sectionLabel("#FF8A6B")}>Four Engineering Challenges — Click to Expand</div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem" }}>
             {MOE_CHALLENGES.map((c, i) => (
               <div key={i} onClick={() => setActiveChallenge(activeChallenge === i ? null : i)}
@@ -9662,12 +9662,12 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
       {/* ─── SPECULATIVE / PARALLEL DECODING ─── */}
       {section === "spec" && (
         <div>
-          <div style={s.sectionLabel("#9b7fd4")}>Parallel & Speculative Decoding — Making Autoregression Faster</div>
+          <div style={s.sectionLabel("#C5ADEA")}>Parallel & Speculative Decoding — Making Autoregression Faster</div>
 
           {/* The problem */}
-          <div style={{ background: "#ffffff", border: "1px solid #c4572a30", borderRadius: 6, padding: "1.4rem", marginBottom: "1.2rem", borderTop: "2px solid #c4572a" }}>
-            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#c4572a", marginBottom: "0.6rem" }}>The Autoregressive Bottleneck</div>
-            <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8 }}>Standard LLM inference is <strong style={{ color: "#1a1a2e" }}>inherently sequential</strong>: generate t1 → generate t2 (conditioned on t1) → generate t3 (conditioned on t1, t2) → … Each step requires a full forward pass through the large model. GPU utilisation is terrible — a single token per step massively underloads parallel hardware. Speculative decoding exploits a key insight: <strong style={{ color: "#c9a84c" }}>verification is parallel; generation is serial</strong>.</p>
+          <div style={{ background: "#ffffff", border: "1px solid #FF8A6B30", borderRadius: 6, padding: "1.4rem", marginBottom: "1.2rem", borderTop: "2px solid #FF8A6B" }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.72rem", color: "#FF8A6B", marginBottom: "0.6rem" }}>The Autoregressive Bottleneck</div>
+            <p style={{ fontSize: "0.68rem", color: "#334155", lineHeight: 1.8 }}>Standard LLM inference is <strong style={{ color: "#1a1a2e" }}>inherently sequential</strong>: generate t1 → generate t2 (conditioned on t1) → generate t3 (conditioned on t1, t2) → … Each step requires a full forward pass through the large model. GPU utilisation is terrible — a single token per step massively underloads parallel hardware. Speculative decoding exploits a key insight: <strong style={{ color: "#8B7BD8" }}>verification is parallel; generation is serial</strong>.</p>
           </div>
 
           {/* Diagram */}
@@ -9676,7 +9676,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
           </div>
 
           {/* Step by step */}
-          <div style={s.sectionLabel("#9b7fd4")}>Step-by-Step: Speculative Decoding</div>
+          <div style={s.sectionLabel("#C5ADEA")}>Step-by-Step: Speculative Decoding</div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginBottom: "1.5rem" }}>
             {SPEC_STEPS.map((step, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.8rem 1rem", background: `${step.color}08`, border: `1px solid ${step.color}30`, borderRadius: 4 }}>
@@ -9693,7 +9693,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
           </div>
 
           {/* 4 variants */}
-          <div style={s.sectionLabel("#9b7fd4")}>4 Parallel Decoding Variants</div>
+          <div style={s.sectionLabel("#C5ADEA")}>4 Parallel Decoding Variants</div>
           <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.8rem" }}>
             {PARALLEL_VARIANTS.map(v => (
               <button key={v.name} onClick={() => setActiveVariant(activeVariant === v.name ? null : v.name)}
@@ -9719,7 +9719,7 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
                     <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.3rem", fontWeight: 900, color: v.color }}>{v.speedup}</div>
                     <div style={{ fontSize: "0.55rem", color: "#334155", fontFamily: "Syne, sans-serif" }}>typical speedup</div>
                   </div>
-                  <div style={{ padding: "0.5rem", background: v.lossless ? "rgba(74,154,74,0.1)" : "rgba(201,168,76,0.08)", border: `1px solid ${v.lossless ? "#4a9a4a" : "#c9a84c"}30`, borderRadius: 4, textAlign: "center", fontSize: "0.6rem", color: v.lossless ? "#4a9a4a" : "#c9a84c", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>
+                  <div style={{ padding: "0.5rem", background: v.lossless ? "rgba(74,154,74,0.1)" : "rgba(201,168,76,0.08)", border: `1px solid ${v.lossless ? "#2AB5B0" : "#8B7BD8"}30`, borderRadius: 4, textAlign: "center", fontSize: "0.6rem", color: v.lossless ? "#2AB5B0" : "#8B7BD8", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>
                     {v.lossless ? "✅ Lossless" : "⚠️ Approximate"}
                   </div>
                 </div>
@@ -9743,8 +9743,8 @@ K = concat(K_content, rope(K_pos))   # ← RoPE only on positional part
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td style={{ padding: "0.6rem 0.8rem", color: v.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{v.icon} {v.name}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: "#4a9a4a", fontWeight: 700 }}>{v.speedup}</td>
-                    <td style={{ padding: "0.6rem 0.8rem", color: v.lossless ? "#4a9a4a" : "#c9a84c" }}>{v.lossless ? "Lossless" : "Approximate"}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: "#2AB5B0", fontWeight: 700 }}>{v.speedup}</td>
+                    <td style={{ padding: "0.6rem 0.8rem", color: v.lossless ? "#2AB5B0" : "#8B7BD8" }}>{v.lossless ? "Lossless" : "Approximate"}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#1E293B" }}>{v.name === "Speculative Decoding" ? "Yes — small LLM" : v.name === "Medusa / Multi-head" ? "No — extra heads" : "No"}</td>
                     <td style={{ padding: "0.6rem 0.8rem", color: "#334155", fontSize: "0.62rem" }}>{v.use.split(".")[0]}</td>
                   </tr>
@@ -9766,7 +9766,7 @@ const ARAG_TOOLS = [
     id: "list_docs",
     icon: "📋",
     name: "list_docs()",
-    color: "#2a8a84",
+    color: "#2AB5B0",
     desc: "Returns document metadata — name, title, effective date, summary — without returning body text. The agent calls this first to orient itself before deciding what to read.",
     returns: "doc_name · title · effective · summary",
     when: "First call in any search session. Gives the agent a map of the corpus without burning tokens on full text.",
@@ -9787,7 +9787,7 @@ def list_docs() -> list[dict]:
     id: "search_docs",
     icon: "🔍",
     name: "search_docs(query)",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     desc: "Keyword search across all document chunks by token overlap. Returns top-3 snippets (≤420 chars each) with doc_name, section, and score. No embeddings needed.",
     returns: "doc_name · title · section · snippet (≤420 chars) · score",
     when: "When the agent has a specific term to look up. Fast and cheap. Called multiple times with different query phrasings when the first results are insufficient.",
@@ -9822,7 +9822,7 @@ def search_docs(query: str) -> list[dict]:
     id: "read_doc",
     icon: "📖",
     name: "read_doc(doc_name)",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     desc: "Opens and returns the full text of one document by filename. Called when snippets are insufficient or when the agent needs to verify context across a whole policy.",
     returns: "Full document text as string",
     when: "After search_docs narrows the candidate to one or two documents. The agent reads the full doc to verify and cite correctly.",
@@ -9840,42 +9840,42 @@ def read_doc(doc_name: str) -> str:
 // ── Data: agent trace steps (from the article's actual run) ──
 const ARAG_TRACE = [
   {
-    step: 1, type: "tool_call", icon: "🔍", color: "#c9a84c",
+    step: 1, type: "tool_call", icon: "🔍", color: "#8B7BD8",
     label: "search_docs()",
     detail: "query: 'conference hotel above cap Berlin approval'",
     output: "Snippets from conference_guidelines.md and travel_policy.md — both mention hotel caps",
     decision: "Snippets mention cap exceptions but don't give approval specifics. Need more.",
   },
   {
-    step: 2, type: "tool_call", icon: "📋", color: "#2a8a84",
+    step: 2, type: "tool_call", icon: "📋", color: "#2AB5B0",
     label: "list_docs()",
     detail: "No arguments — orient to available documents",
     output: "6 docs listed: approval_matrix.md, conference_guidelines.md, faq.md, policy_updates_2026.md, remote_work_policy.md, travel_policy.md",
     decision: "approval_matrix.md and policy_updates_2026.md look relevant. Will read both.",
   },
   {
-    step: 3, type: "tool_call", icon: "📖", color: "#9b7fd4",
+    step: 3, type: "tool_call", icon: "📖", color: "#C5ADEA",
     label: "read_doc('conference_guidelines.md')",
     detail: "Full document: conference hotel rules, official hotel exception, approval requirements",
     output: "Found: official conference hotel allowed above cap if business justification. Pre-approval required from manager.",
     decision: "Confirms hotel is allowed. Now need exact approval thresholds.",
   },
   {
-    step: 4, type: "tool_call", icon: "📖", color: "#9b7fd4",
+    step: 4, type: "tool_call", icon: "📖", color: "#C5ADEA",
     label: "read_doc('approval_matrix.md')",
     detail: "Full document: approval levels for travel expenditures",
     output: "Found: hotel above cap → Manager pre-approval required. Conference travel >$2000 total → Director sign-off.",
     decision: "Got approval levels. Check if 2026 updates changed anything.",
   },
   {
-    step: 5, type: "tool_call", icon: "📖", color: "#9b7fd4",
+    step: 5, type: "tool_call", icon: "📖", color: "#C5ADEA",
     label: "read_doc('policy_updates_2026.md')",
     detail: "Full document: 2026 lodging, conference travel, and approval timing updates",
     output: "Found: Approval must be submitted 14 days in advance for international conferences (effective Jan 1 2026).",
     decision: "Have sufficient evidence across 3 documents. Ready to answer.",
   },
   {
-    step: 6, type: "answer", icon: "✅", color: "#4a9a4a",
+    step: 6, type: "answer", icon: "✅", color: "#2AB5B0",
     label: "Final answer generated",
     detail: "Grounded in conference_guidelines.md + approval_matrix.md + policy_updates_2026.md",
     output: "Yes, you can book the official conference hotel. Manager pre-approval required. If total trip >$2000, Director sign-off needed. Submit approval 14 days in advance (2026 policy).",
@@ -9889,7 +9889,7 @@ const ARAG_QUESTIONS = [
     id: "freedom",
     num: "Q1",
     icon: "🎛️",
-    color: "#2a8a84",
+    color: "#2AB5B0",
     question: "How much freedom should the agent have?",
     answer: "Start with curated tools (list_docs, search_docs, read_doc). Only add shell/filesystem access when task complexity justifies it. Curated tools are easier to audit, test, and control.",
     tradeoff: "Broader access (shell, file system) = more powerful but less predictable. Curated tools = safer but can't handle tasks outside the tool spec.",
@@ -9899,7 +9899,7 @@ const ARAG_QUESTIONS = [
     id: "knowledge",
     num: "Q2",
     icon: "🗂️",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     question: "Should the agent search raw text only?",
     answer: "No. Build a knowledge layer on top: document metadata, summaries, cross-document links, or a knowledge graph. These help the agent navigate the corpus. Raw text remains the source of truth.",
     tradeoff: "Raw text only = simpler to maintain, misses structure. Knowledge layer = richer navigation, higher maintenance cost.",
@@ -9909,7 +9909,7 @@ const ARAG_QUESTIONS = [
     id: "embeddings",
     num: "Q3",
     icon: "🧮",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     question: "Do we still need embeddings?",
     answer: "Maybe. Embeddings find semantically relevant text and often outperform keyword search. In agentic RAG, retrieval is just an 'action' — that action can be keyword-based, embedding-based, or hybrid.",
     tradeoff: "Keyword search = fast, interpretable, no embedding overhead, misses semantic similarity. Embeddings = better recall, requires an embedding model and vector store.",
@@ -9919,7 +9919,7 @@ const ARAG_QUESTIONS = [
     id: "multiagent",
     num: "Q4",
     icon: "🤝",
-    color: "#c4572a",
+    color: "#FF8A6B",
     question: "Should one agent handle everything?",
     answer: "Start with one agent. Split into multi-agent (planner-retriever-writer, or by source type) only when task complexity justifies the coordination overhead. Test empirically — multi-agent doesn't guarantee better performance.",
     tradeoff: "Single agent = simpler, easier to debug, lower latency. Multi-agent = more specialised, harder to coordinate, unpredictable interaction.",
@@ -9929,7 +9929,7 @@ const ARAG_QUESTIONS = [
     id: "always",
     num: "Q5",
     icon: "⚖️",
-    color: "#4a9a4a",
+    color: "#2AB5B0",
     question: "Should we always use agentic RAG?",
     answer: "No. Agentic RAG adds flexibility but increases latency, token cost, and unpredictability. Start simple — use agentic loops only when the question actually requires iterative retrieval.",
     tradeoff: "Simple RAG = fast, cheap, predictable. Agentic RAG = better for multi-hop, complex, cross-document questions. Worse for simple lookups.",
@@ -9942,51 +9942,51 @@ const AgenticLoopDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
     <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AGENTIC RAG — SEARCH-READ-DECIDE LOOP</text>
     {/* Standard RAG (top) */}
-    <rect x="8" y="16" width="244" height="18" rx={2} fill="#ffffff" stroke="#c4572a" strokeWidth="0.6"/>
-    <text x="130" y="24" textAnchor="middle" fontSize="4.2" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">Standard RAG (one-shot)</text>
+    <rect x="8" y="16" width="244" height="18" rx={2} fill="#ffffff" stroke="#FF8A6B" strokeWidth="0.6"/>
+    <text x="130" y="24" textAnchor="middle" fontSize="4.2" fill="#FF8A6B" fontFamily="Syne, sans-serif" fontWeight="700">Standard RAG (one-shot)</text>
     {["chunk", "embed", "retrieve (top-k)", "answer"].map((s2, i) => {
       const x = 18 + i * 60;
       return (
         <g key={i}>
-          <rect x={x} y={27} width={50} height={6} rx={1} fill="rgba(196,87,42,0.15)" stroke="#c4572a" strokeWidth="0.4"/>
-          <text x={x+25} y={31} textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">{s2}</text>
+          <rect x={x} y={27} width={50} height={6} rx={1} fill="rgba(196,87,42,0.15)" stroke="#FF8A6B" strokeWidth="0.4"/>
+          <text x={x+25} y={31} textAnchor="middle" fontSize="3.2" fill="#FF8A6B" fontFamily="Syne, sans-serif">{s2}</text>
           {i < 3 && <text x={x+51} y={31} fontSize="4" fill="#1E293B">→</text>}
         </g>
       );
     })}
     {/* Agentic loop (main) */}
-    <rect x="8" y="42" width="244" height="52" rx={2} fill="#ffffff" stroke="#4a9a4a" strokeWidth="0.8"/>
-    <text x="130" y="52" textAnchor="middle" fontSize="4.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">Agentic RAG (iterative loop)</text>
+    <rect x="8" y="42" width="244" height="52" rx={2} fill="#ffffff" stroke="#2AB5B0" strokeWidth="0.8"/>
+    <text x="130" y="52" textAnchor="middle" fontSize="4.2" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="700">Agentic RAG (iterative loop)</text>
     {/* Question */}
-    <rect x="14" y="56" width="36" height="12" rx={1} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.6"/>
-    <text x="32" y="63" textAnchor="middle" fontSize="3.8" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">Question</text>
-    <line x1="50" y1="62" x2="58" y2="62" stroke="#c9a84c" strokeWidth="0.5"/>
+    <rect x="14" y="56" width="36" height="12" rx={1} fill="rgba(201,168,76,0.12)" stroke="#8B7BD8" strokeWidth="0.6"/>
+    <text x="32" y="63" textAnchor="middle" fontSize="3.8" fill="#8B7BD8" fontFamily="Syne, sans-serif" fontWeight="700">Question</text>
+    <line x1="50" y1="62" x2="58" y2="62" stroke="#8B7BD8" strokeWidth="0.5"/>
     {/* Search */}
-    <rect x="58" y="56" width="36" height="12" rx={1} fill="rgba(42,138,132,0.12)" stroke="#2a8a84" strokeWidth="0.7"/>
-    <text x="76" y="62" textAnchor="middle" fontSize="3.8" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">🔍 Search</text>
+    <rect x="58" y="56" width="36" height="12" rx={1} fill="rgba(42,138,132,0.12)" stroke="#2AB5B0" strokeWidth="0.7"/>
+    <text x="76" y="62" textAnchor="middle" fontSize="3.8" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="700">🔍 Search</text>
     <text x="76" y="67" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">search_docs()</text>
-    <line x1="94" y1="62" x2="102" y2="62" stroke="#2a8a84" strokeWidth="0.5"/>
+    <line x1="94" y1="62" x2="102" y2="62" stroke="#2AB5B0" strokeWidth="0.5"/>
     {/* Read */}
-    <rect x="102" y="56" width="36" height="12" rx={1} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.7"/>
-    <text x="120" y="62" textAnchor="middle" fontSize="3.8" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">📖 Read</text>
+    <rect x="102" y="56" width="36" height="12" rx={1} fill="rgba(155,127,212,0.12)" stroke="#C5ADEA" strokeWidth="0.7"/>
+    <text x="120" y="62" textAnchor="middle" fontSize="3.8" fill="#C5ADEA" fontFamily="Syne, sans-serif" fontWeight="700">📖 Read</text>
     <text x="120" y="67" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">read_doc()</text>
-    <line x1="138" y1="62" x2="146" y2="62" stroke="#9b7fd4" strokeWidth="0.5"/>
+    <line x1="138" y1="62" x2="146" y2="62" stroke="#C5ADEA" strokeWidth="0.5"/>
     {/* Decide */}
-    <rect x="146" y="56" width="36" height="12" rx={1} fill="rgba(201,168,76,0.12)" stroke="#c9a84c" strokeWidth="0.7"/>
-    <text x="164" y="62" textAnchor="middle" fontSize="3.8" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="700">🧠 Decide</text>
+    <rect x="146" y="56" width="36" height="12" rx={1} fill="rgba(201,168,76,0.12)" stroke="#8B7BD8" strokeWidth="0.7"/>
+    <text x="164" y="62" textAnchor="middle" fontSize="3.8" fill="#8B7BD8" fontFamily="Syne, sans-serif" fontWeight="700">🧠 Decide</text>
     <text x="164" y="67" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="DM Mono, monospace">enough?</text>
     {/* Loop back arrow */}
-    <line x1="182" y1="62" x2="196" y2="62" stroke="#c9a84c" strokeWidth="0.5"/>
-    <text x="200" y="60" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">YES</text>
-    <rect x="196" y="62" width="50" height="12" rx={1} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.7"/>
-    <text x="221" y="70" textAnchor="middle" fontSize="3.8" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">✅ Answer</text>
+    <line x1="182" y1="62" x2="196" y2="62" stroke="#8B7BD8" strokeWidth="0.5"/>
+    <text x="200" y="60" fontSize="3.5" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="700">YES</text>
+    <rect x="196" y="62" width="50" height="12" rx={1} fill="rgba(74,154,74,0.12)" stroke="#2AB5B0" strokeWidth="0.7"/>
+    <text x="221" y="70" textAnchor="middle" fontSize="3.8" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="700">✅ Answer</text>
     {/* NO loop back */}
-    <path d="M164 68 L164 82 L76 82 L76 68" fill="none" stroke="#c4572a" strokeWidth="0.6" strokeDasharray="2,1"/>
-    <text x="120" y="80" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">NO → search again with refined query</text>
-    <polygon points="76,68 73,74 79,74" fill="#c4572a"/>
+    <path d="M164 68 L164 82 L76 82 L76 68" fill="none" stroke="#FF8A6B" strokeWidth="0.6" strokeDasharray="2,1"/>
+    <text x="120" y="80" textAnchor="middle" fontSize="3.2" fill="#FF8A6B" fontFamily="Syne, sans-serif">NO → search again with refined query</text>
+    <polygon points="76,68 73,74 79,74" fill="#FF8A6B"/>
     {/* list_docs side note */}
-    <rect x="58" y="86" width="80" height="6" rx={1} fill="rgba(42,138,132,0.07)" stroke="#2a8a84" strokeWidth="0.4"/>
-    <text x="98" y="90" textAnchor="middle" fontSize="3" fill="#2a8a84" fontFamily="DM Mono, monospace">list_docs() called early to orient — no body text burned</text>
+    <rect x="58" y="86" width="80" height="6" rx={1} fill="rgba(42,138,132,0.07)" stroke="#2AB5B0" strokeWidth="0.4"/>
+    <text x="98" y="90" textAnchor="middle" fontSize="3" fill="#2AB5B0" fontFamily="DM Mono, monospace">list_docs() called early to orient — no body text burned</text>
   </svg>
 );
 
@@ -10006,10 +10006,10 @@ const StandardVsAgenticDiagram = () => (
       <g key={i}>
         <rect x="8" y={16 + i * 10} width="80" height="8" rx={1} fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.3"/>
         <text x="12" y={22 + i * 10} fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="600">{row.label}</text>
-        <rect x="92" y={16 + i * 10} width="76" height="8" rx={1} fill="rgba(196,87,42,0.07)" stroke="#c4572a" strokeWidth="0.3"/>
-        <text x="96" y={22 + i * 10} fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">{row.standard}</text>
-        <rect x="172" y={16 + i * 10} width="80" height="8" rx={1} fill="rgba(74,154,74,0.07)" stroke="#4a9a4a" strokeWidth="0.3"/>
-        <text x="176" y={22 + i * 10} fontSize="3.2" fill="#4a9a4a" fontFamily="Syne, sans-serif">{row.agentic}</text>
+        <rect x="92" y={16 + i * 10} width="76" height="8" rx={1} fill="rgba(196,87,42,0.07)" stroke="#FF8A6B" strokeWidth="0.3"/>
+        <text x="96" y={22 + i * 10} fontSize="3.2" fill="#FF8A6B" fontFamily="Syne, sans-serif">{row.standard}</text>
+        <rect x="172" y={16 + i * 10} width="80" height="8" rx={1} fill="rgba(74,154,74,0.07)" stroke="#2AB5B0" strokeWidth="0.3"/>
+        <text x="176" y={22 + i * 10} fontSize="3.2" fill="#2AB5B0" fontFamily="Syne, sans-serif">{row.agentic}</text>
       </g>
     ))}
     <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Default to standard RAG · add agentic loop when iterative evidence is genuinely needed</text>
@@ -10021,12 +10021,12 @@ const MultiAgentPatternsDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
     <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">MULTI-AGENT SPLIT PATTERNS FOR AGENTIC RAG</text>
     {/* Pattern 1: role split */}
-    <rect x="8" y="18" width="116" height="62" rx={2} fill="#ffffff" stroke="#2a8a84" strokeWidth="0.7"/>
-    <text x="66" y="27" textAnchor="middle" fontSize="4.5" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">Split by Role</text>
+    <rect x="8" y="18" width="116" height="62" rx={2} fill="#ffffff" stroke="#2AB5B0" strokeWidth="0.7"/>
+    <text x="66" y="27" textAnchor="middle" fontSize="4.5" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="800">Split by Role</text>
     {[
-      { label: "🗺️ Planner", desc: "Decides what evidence is needed", color: "#c9a84c" },
-      { label: "🔍 Retriever", desc: "Runs search_docs + read_doc", color: "#2a8a84" },
-      { label: "✍️ Writer",   desc: "Produces final grounded answer", color: "#4a9a4a" },
+      { label: "🗺️ Planner", desc: "Decides what evidence is needed", color: "#8B7BD8" },
+      { label: "🔍 Retriever", desc: "Runs search_docs + read_doc", color: "#2AB5B0" },
+      { label: "✍️ Writer",   desc: "Produces final grounded answer", color: "#2AB5B0" },
     ].map((ag, i) => (
       <g key={i}>
         <rect x="14" y={30 + i * 15} width="104" height="12" rx={1} fill={`${ag.color}12`} stroke={ag.color} strokeWidth="0.5"/>
@@ -10037,12 +10037,12 @@ const MultiAgentPatternsDiagram = () => (
     ))}
     <text x="66" y="78" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Good for: long research tasks</text>
     {/* Pattern 2: source split */}
-    <rect x="136" y="18" width="116" height="62" rx={2} fill="#ffffff" stroke="#9b7fd4" strokeWidth="0.7"/>
-    <text x="194" y="27" textAnchor="middle" fontSize="4.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="800">Split by Source Type</text>
+    <rect x="136" y="18" width="116" height="62" rx={2} fill="#ffffff" stroke="#C5ADEA" strokeWidth="0.7"/>
+    <text x="194" y="27" textAnchor="middle" fontSize="4.5" fill="#C5ADEA" fontFamily="Syne, sans-serif" fontWeight="800">Split by Source Type</text>
     {[
-      { label: "📄 PDF Agent",  desc: "search + read PDF corpus",    color: "#c4572a" },
-      { label: "🌐 API Agent",  desc: "query live data APIs",         color: "#c9a84c" },
-      { label: "🗄️ DB Agent",  desc: "SQL queries on structured data", color: "#2a8a84" },
+      { label: "📄 PDF Agent",  desc: "search + read PDF corpus",    color: "#FF8A6B" },
+      { label: "🌐 API Agent",  desc: "query live data APIs",         color: "#8B7BD8" },
+      { label: "🗄️ DB Agent",  desc: "SQL queries on structured data", color: "#2AB5B0" },
     ].map((ag, i) => (
       <g key={i}>
         <rect x="142" y={30 + i * 15} width="104" height="12" rx={1} fill={`${ag.color}12`} stroke={ag.color} strokeWidth="0.5"/>
@@ -10051,7 +10051,7 @@ const MultiAgentPatternsDiagram = () => (
       </g>
     ))}
     <text x="194" y="78" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Good for: heterogeneous corpora</text>
-    <text x="130" y="88" textAnchor="middle" fontSize="3.2" fill="#c4572a" fontFamily="Syne, sans-serif">⚠️ Multi-agent adds coordination complexity — test empirically, not assumed benefit</text>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.2" fill="#FF8A6B" fontFamily="Syne, sans-serif">⚠️ Multi-agent adds coordination complexity — test empirically, not assumed benefit</text>
   </svg>
 );
 
@@ -12186,35 +12186,35 @@ export const AIDataPlatformTab = ({ s }) => {
   const pillar     = ADP_GOVERNANCE_PILLARS.find(p => p.id === activePillar);
 
   const SECTIONS = [
-    { id: "agents",     icon: "🤖", label: "Data Agents vs Chatbots", color: "#2a8a84" },
-    { id: "architecture", icon: "🏛️", label: "3-Component Architecture", color: "#9b7fd4" },
-    { id: "qa",         icon: "🔬", label: "AI-Powered QA",           color: "#c9a84c" },
-    { id: "governance", icon: "🛡️", label: "AI Governance",          color: "#c4572a" },
+    { id: "agents",     icon: "🤖", label: "Data Agents vs Chatbots", color: "#2AB5B0" },
+    { id: "architecture", icon: "🏛️", label: "3-Component Architecture", color: "#C5ADEA" },
+    { id: "qa",         icon: "🔬", label: "AI-Powered QA",           color: "#8B7BD8" },
+    { id: "governance", icon: "🛡️", label: "AI Governance",          color: "#FF8A6B" },
   ];
 
   return (
     <div>
       {/* HERO */}
       <div style={{ background: "linear-gradient(135deg,#f4f2fa,#eff8f4,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2AB5B0,#8B7BD8,#C5ADEA,#FF8A6B,#2AB5B0)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(155,127,212,0.06)", lineHeight: 1, pointerEvents: "none" }}>🏛️</div>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#9b7fd4", marginBottom: "0.75rem" }}>TDS · Jiayan Yin · Jul 18, 2026 · 14 min</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#C5ADEA", marginBottom: "0.75rem" }}>TDS · Jiayan Yin · Jul 18, 2026 · 14 min</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
-          Many Companies Use AI.<br /><em style={{ color: "#9b7fd4", fontStyle: "italic" }}>Few Know How to Build an AI-Native Data Platform.</em>
+          Many Companies Use AI.<br /><em style={{ color: "#C5ADEA", fontStyle: "italic" }}>Few Know How to Build an AI-Native Data Platform.</em>
         </h2>
         <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Chatbots and internal Q&A tools improve individual productivity, but that's not where AI's potential ends. A practical enterprise AI architecture built on three components: Data Agents, AI-Powered QA, and AI Governance & Observability — working together on top of a data platform that humans still have to engineer well.
         </p>
-        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
-          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#9b7fd4", marginBottom: "0.3rem" }}>The reframe on governance</div>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #C5ADEA30", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#C5ADEA", marginBottom: "0.3rem" }}>The reframe on governance</div>
           <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"Many people think AI governance means security. But after AI is fully integrated into your enterprise system, governance is about something broader: <strong style={{ color: "#1a1a2e" }}>can you explain and stand behind every answer your AI gives?</strong>"</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
-            { val: "3",  label: "Architecture components", sub: "Data Agent · QA · Governance", color: "#9b7fd4" },
-            { val: "8",  label: "Data agent problems",     sub: "ambiguity → schema drift",       color: "#c4572a" },
-            { val: "4",  label: "QA tools compared",       sub: "Great Expectations → AWS Glue",  color: "#c9a84c" },
-            { val: "6",  label: "Governance pillars",      sub: "versioning → human feedback",     color: "#2a8a84" },
+            { val: "3",  label: "Architecture components", sub: "Data Agent · QA · Governance", color: "#C5ADEA" },
+            { val: "8",  label: "Data agent problems",     sub: "ambiguity → schema drift",       color: "#FF8A6B" },
+            { val: "4",  label: "QA tools compared",       sub: "Great Expectations → AWS Glue",  color: "#8B7BD8" },
+            { val: "6",  label: "Governance pillars",      sub: "versioning → human feedback",     color: "#2AB5B0" },
           ].map((m, i) => (
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.5rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
@@ -12239,16 +12239,16 @@ export const AIDataPlatformTab = ({ s }) => {
       {/* ─── DATA AGENTS VS CHATBOTS ─── */}
       {section === "agents" && (
         <div>
-          <div style={s.sectionLabel("#2a8a84")}>Beyond Chatbot — What AI Agents Actually Do</div>
+          <div style={s.sectionLabel("#2AB5B0")}>Beyond Chatbot — What AI Agents Actually Do</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
             <ZoomableFigure title="Analyst Workflow vs Data Agent Workflow"><WorkflowComparisonDiagram /></ZoomableFigure>
           </div>
-          <div style={{ background: "#ffffff", border: "1px solid #2a8a8430", borderRadius: 6, padding: "1.4rem", marginBottom: "1.5rem", borderLeft: "4px solid #2a8a84" }}>
-            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.4rem" }}>Definition</div>
+          <div style={{ background: "#ffffff", border: "1px solid #2AB5B030", borderRadius: 6, padding: "1.4rem", marginBottom: "1.5rem", borderLeft: "4px solid #2AB5B0" }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2AB5B0", marginBottom: "0.4rem" }}>Definition</div>
             <p style={{ fontSize: "0.72rem", color: "#1a1a2e", lineHeight: 1.8, fontStyle: "italic" }}>"An AI agent is an autonomous system that perceives its environment, makes decisions, and takes concrete actions to achieve a goal."</p>
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden", marginBottom: "1.5rem" }}>
-            <div style={{ padding: "0.8rem 1.2rem", borderBottom: "1px solid #e0dcd4", fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#2a8a84", letterSpacing: "0.2em", textTransform: "uppercase" }}>Chatbot vs Agent — Key Differences</div>
+            <div style={{ padding: "0.8rem 1.2rem", borderBottom: "1px solid #e0dcd4", fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#2AB5B0", letterSpacing: "0.2em", textTransform: "uppercase" }}>Chatbot vs Agent — Key Differences</div>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.66rem" }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
@@ -12263,14 +12263,14 @@ export const AIDataPlatformTab = ({ s }) => {
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
                     <td style={{ padding: "0.7rem 0.9rem", color: "#334155", fontFamily: "Syne, sans-serif", fontWeight: 600 }}>{row.dimension}</td>
-                    <td style={{ padding: "0.7rem 0.9rem", color: "#c4572a" }}>{row.chatbot}</td>
-                    <td style={{ padding: "0.7rem 0.9rem", color: "#4a9a4a" }}>{row.agent}</td>
+                    <td style={{ padding: "0.7rem 0.9rem", color: "#FF8A6B" }}>{row.chatbot}</td>
+                    <td style={{ padding: "0.7rem 0.9rem", color: "#2AB5B0" }}>{row.agent}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <div style={s.sectionLabel("#c4572a")}>8 Problems That Relying on Data Agents Alone Creates</div>
+          <div style={s.sectionLabel("#FF8A6B")}>8 Problems That Relying on Data Agents Alone Creates</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.6rem" }}>
             {ADP_AGENT_PROBLEMS.map((p, i) => (
               <div key={i} onClick={() => setActiveProblem(activeProblem === i ? null : i)}
@@ -12292,11 +12292,11 @@ export const AIDataPlatformTab = ({ s }) => {
       {/* ─── 3-COMPONENT ARCHITECTURE ─── */}
       {section === "architecture" && (
         <div>
-          <div style={s.sectionLabel("#9b7fd4")}>3-Component Enterprise AI Data Architecture</div>
+          <div style={s.sectionLabel("#C5ADEA")}>3-Component Enterprise AI Data Architecture</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
             <ZoomableFigure title="Enterprise AI Data Architecture"><ThreeComponentArchDiagram /></ZoomableFigure>
           </div>
-          <div style={{ padding: "0.9rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #9b7fd430", borderRadius: 6, marginBottom: "1.5rem" }}>
+          <div style={{ padding: "0.9rem 1.2rem", background: "rgba(155,127,212,0.07)", border: "1px solid #C5ADEA30", borderRadius: 6, marginBottom: "1.5rem" }}>
             <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>"Enterprise AI doesn't eliminate the need for robust data engineering implemented by humans. Instead, AI can enhance it. No matter how smart AI agents are, before they can answer business questions or validate data quality, the underlying data platform must already be reliable and scalable."</p>
           </div>
           <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1rem" }}>
@@ -12339,26 +12339,26 @@ export const AIDataPlatformTab = ({ s }) => {
       {/* ─── AI-POWERED QA ─── */}
       {section === "qa" && (
         <div>
-          <div style={s.sectionLabel("#c9a84c")}>How AI Is Transforming Data Quality Assurance</div>
+          <div style={s.sectionLabel("#8B7BD8")}>How AI Is Transforming Data Quality Assurance</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
             <ZoomableFigure title="Traditional QA Loop vs AI-Powered QA Loop"><QALoopComparisonDiagram /></ZoomableFigure>
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem", marginBottom: "1.5rem" }}>
-            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#c9a84c", marginBottom: "0.8rem" }}>The healthcare scenario — 8-item traditional checklist</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#8B7BD8", marginBottom: "0.8rem" }}>The healthcare scenario — 8-item traditional checklist</div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "0.5rem", marginBottom: "1rem" }}>
               {ADP_QA_CHECKLIST.map((c, i) => (
-                <div key={i} style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #c9a84c" }}>
-                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: "#c9a84c", marginBottom: "0.15rem" }}>{c.check}</div>
+                <div key={i} style={{ padding: "0.6rem 0.8rem", background: "#f7f5f0", borderRadius: 4, borderLeft: "3px solid #8B7BD8" }}>
+                  <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: "#8B7BD8", marginBottom: "0.15rem" }}>{c.check}</div>
                   <div style={{ fontSize: "0.6rem", color: "#334155", lineHeight: 1.5 }}>{c.question}</div>
                 </div>
               ))}
             </div>
-            <div style={{ padding: "0.9rem 1.1rem", background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a25", borderRadius: 4, fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>
-              <strong style={{ color: "#c4572a" }}>The catch: </strong>Traditional checks pass a clinic whose lab results suddenly run 10× higher than their historical average — because the format is valid, ranges are fine, no NULLs, no duplicates. AI-powered QA flags it because <em>it doesn't look right compared to what that clinic has always produced.</em>
+            <div style={{ padding: "0.9rem 1.1rem", background: "rgba(196,87,42,0.06)", border: "1px solid #FF8A6B25", borderRadius: 4, fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7 }}>
+              <strong style={{ color: "#FF8A6B" }}>The catch: </strong>Traditional checks pass a clinic whose lab results suddenly run 10× higher than their historical average — because the format is valid, ranges are fine, no NULLs, no duplicates. AI-powered QA flags it because <em>it doesn't look right compared to what that clinic has always produced.</em>
             </div>
           </div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.4rem" }}>
-            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#2a8a84", marginBottom: "0.7rem" }}>Combining traditional + AI checks with Soda (working code)</div>
+            <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: "#2AB5B0", marginBottom: "0.7rem" }}>Combining traditional + AI checks with Soda (working code)</div>
             <CodeBlock code={`from soda.scan import Scan
 from soda.contracts.contract import Contract
 from soda.contracts.check import AnomalyCheck, SchemaCheck, UserDefinedCheck
@@ -12417,7 +12417,7 @@ scan.set_verbose(True)
 scan.execute()`} />
             <div style={{ marginTop: "1rem", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.5rem" }}>
               {["Anomaly detection without predefined thresholds", "Root cause investigation", "Contextual understanding", "Pattern recognition across dimensions"].map((cap, i) => (
-                <div key={i} style={{ padding: "0.5rem 0.6rem", background: "rgba(74,154,74,0.08)", border: "1px solid #4a9a4a25", borderRadius: 4, fontSize: "0.58rem", color: "#4a9a4a", textAlign: "center", lineHeight: 1.5 }}>{cap}</div>
+                <div key={i} style={{ padding: "0.5rem 0.6rem", background: "rgba(74,154,74,0.08)", border: "1px solid #2AB5B025", borderRadius: 4, fontSize: "0.58rem", color: "#2AB5B0", textAlign: "center", lineHeight: 1.5 }}>{cap}</div>
               ))}
             </div>
           </div>
@@ -12427,7 +12427,7 @@ scan.execute()`} />
       {/* ─── AI GOVERNANCE ─── */}
       {section === "governance" && (
         <div>
-          <div style={s.sectionLabel("#c4572a")}>AI Can Get It Wrong. How Do We Trust It?</div>
+          <div style={s.sectionLabel("#FF8A6B")}>AI Can Get It Wrong. How Do We Trust It?</div>
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
             <ZoomableFigure title="Six Pillars of AI Governance"><GovernancePillarsDiagram /></ZoomableFigure>
           </div>
@@ -12464,7 +12464,7 @@ scan.execute()`} />
             </div>
           )}
           <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden" }}>
-            <div style={{ padding: "0.8rem 1.2rem", borderBottom: "1px solid #e0dcd4", fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#c4572a", letterSpacing: "0.2em", textTransform: "uppercase" }}>Security — 3 AI-Specific Risks</div>
+            <div style={{ padding: "0.8rem 1.2rem", borderBottom: "1px solid #e0dcd4", fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#FF8A6B", letterSpacing: "0.2em", textTransform: "uppercase" }}>Security — 3 AI-Specific Risks</div>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.66rem" }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
@@ -12478,9 +12478,9 @@ scan.execute()`} />
                   <tr key={i} style={{ borderBottom: i < ADP_SECURITY_RISKS.length-1 ? "1px solid #e8e4dc" : "none" }}
                     onMouseEnter={e => e.currentTarget.style.background = "#f0ede6"}
                     onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
-                    <td style={{ padding: "0.7rem 0.9rem", color: "#c4572a", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{r.risk}</td>
+                    <td style={{ padding: "0.7rem 0.9rem", color: "#FF8A6B", fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{r.risk}</td>
                     <td style={{ padding: "0.7rem 0.9rem", color: "#1E293B" }}>{r.desc}</td>
-                    <td style={{ padding: "0.7rem 0.9rem", color: "#4a9a4a" }}>{r.fix}</td>
+                    <td style={{ padding: "0.7rem 0.9rem", color: "#2AB5B0" }}>{r.fix}</td>
                   </tr>
                 ))}
               </tbody>
@@ -12496,29 +12496,29 @@ scan.execute()`} />
 
 // ── Data: the 3 engineering eras ──
 const QPL_ERAS = [
-  { id: "prompt", year: "2023", icon: "✍️", name: "Prompt Engineering", color: "#c4572a", who: "The user does the work", desc: "Learn to write the right prompt, add few-shot examples, use 'think step by step'. The LLM is a stateless oracle. Quality is a wording problem." },
-  { id: "context", year: "mid-2025", icon: "🧩", name: "Context Engineering", color: "#c9a84c", who: "The engineer does the work", desc: "\"The delicate art of filling the context window with just the right information for the next step.\" The prompt is one slot among many." },
-  { id: "loop", year: "2026", icon: "🔂", name: "Loop Engineering", color: "#4a9a4a", who: "The engineer designs the loops around the LLM call", desc: "\"The potential in agents is in the loops you build around them\" (LangChain). \"Designing AI systems that operate in iterative cycles, repeating until a goal is met\" (MindStudio) — the discipline that closes the feedback gap." },
+  { id: "prompt", year: "2023", icon: "✍️", name: "Prompt Engineering", color: "#FF8A6B", who: "The user does the work", desc: "Learn to write the right prompt, add few-shot examples, use 'think step by step'. The LLM is a stateless oracle. Quality is a wording problem." },
+  { id: "context", year: "mid-2025", icon: "🧩", name: "Context Engineering", color: "#8B7BD8", who: "The engineer does the work", desc: "\"The delicate art of filling the context window with just the right information for the next step.\" The prompt is one slot among many." },
+  { id: "loop", year: "2026", icon: "🔂", name: "Loop Engineering", color: "#2AB5B0", who: "The engineer designs the loops around the LLM call", desc: "\"The potential in agents is in the loops you build around them\" (LangChain). \"Designing AI systems that operate in iterative cycles, repeating until a goal is met\" (MindStudio) — the discipline that closes the feedback gap." },
 ];
 
 // ── Data: the fixed schema fields ──
 const QPL_SCHEMA_FIELDS = [
-  { field: "keywords", type: "list[str]", desc: "Content noun phrases for retrieval detectors", loopFills: false, color: "#2a8a84" },
-  { field: "intent", type: "enum", desc: "factual · listing · section_retrieval · open_scoped · open_corpus_wide", loopFills: false, color: "#2a8a84" },
-  { field: "retrieval.section_hint", type: "str | None", desc: "Section name or number to filter toc_df", loopFills: true, color: "#c4572a" },
-  { field: "retrieval.layout_hint", type: "enum | None", desc: "\"table\" · \"figure\" · \"glossary\" when answer sits in a specific layout", loopFills: false, color: "#2a8a84" },
-  { field: "structural_hints.pages_hint", type: "list[int] | None", desc: "Explicit page list the user pinned in the question", loopFills: true, color: "#c4572a" },
-  { field: "sheets_hint / slides_hint", type: "(Vol.2)", desc: "Unused in this article — reserved for spreadsheet/slide formats", loopFills: false, color: "#9b7fd4" },
+  { field: "keywords", type: "list[str]", desc: "Content noun phrases for retrieval detectors", loopFills: false, color: "#2AB5B0" },
+  { field: "intent", type: "enum", desc: "factual · listing · section_retrieval · open_scoped · open_corpus_wide", loopFills: false, color: "#2AB5B0" },
+  { field: "retrieval.section_hint", type: "str | None", desc: "Section name or number to filter toc_df", loopFills: true, color: "#FF8A6B" },
+  { field: "retrieval.layout_hint", type: "enum | None", desc: "\"table\" · \"figure\" · \"glossary\" when answer sits in a specific layout", loopFills: false, color: "#2AB5B0" },
+  { field: "structural_hints.pages_hint", type: "list[int] | None", desc: "Explicit page list the user pinned in the question", loopFills: true, color: "#FF8A6B" },
+  { field: "sheets_hint / slides_hint", type: "(Vol.2)", desc: "Unused in this article — reserved for spreadsheet/slide formats", loopFills: false, color: "#C5ADEA" },
 ];
 
 // ── Data: the 6-step loop flow ──
 const QPL_LOOP_STEPS = [
-  { step: 1, icon: "❓", label: "Raw question arrives", detail: "\"What is the premium?\" — no section, no page, nothing pinned", color: "#c9a84c" },
-  { step: 2, icon: "🔧", label: "First parse_question() call", detail: "Fills keywords=['premium'], intent='factual'. section_hint refuses to fill.", color: "#2a8a84" },
-  { step: 3, icon: "🕳️", label: "Detect the missing field", detail: "Parser checks: is section_hint None AND does the topic look sectioned? If yes → hold the pipeline.", color: "#c4572a" },
-  { step: 4, icon: "💬", label: "Ask one plain question", detail: "\"I don't see a 'Premium' section in this policy. Where should I look?\" — sent to user, free-form reply expected", color: "#9b7fd4" },
-  { step: 5, icon: "🔁", label: "Re-parse with enriched question", detail: "Original question + user's reply appended. Same parse_question() call, same schema.", color: "#c9a84c" },
-  { step: 6, icon: "✅", label: "dispatch(parsed) — unchanged", detail: "Retrieval and generation see a fully-filled ParsedQuestion. They never know a loop happened.", color: "#4a9a4a" },
+  { step: 1, icon: "❓", label: "Raw question arrives", detail: "\"What is the premium?\" — no section, no page, nothing pinned", color: "#8B7BD8" },
+  { step: 2, icon: "🔧", label: "First parse_question() call", detail: "Fills keywords=['premium'], intent='factual'. section_hint refuses to fill.", color: "#2AB5B0" },
+  { step: 3, icon: "🕳️", label: "Detect the missing field", detail: "Parser checks: is section_hint None AND does the topic look sectioned? If yes → hold the pipeline.", color: "#FF8A6B" },
+  { step: 4, icon: "💬", label: "Ask one plain question", detail: "\"I don't see a 'Premium' section in this policy. Where should I look?\" — sent to user, free-form reply expected", color: "#C5ADEA" },
+  { step: 5, icon: "🔁", label: "Re-parse with enriched question", detail: "Original question + user's reply appended. Same parse_question() call, same schema.", color: "#8B7BD8" },
+  { step: 6, icon: "✅", label: "dispatch(parsed) — unchanged", detail: "Retrieval and generation see a fully-filled ParsedQuestion. They never know a loop happened.", color: "#2AB5B0" },
 ];
 
 // ── Data: the 3 cases ──
@@ -12528,7 +12528,7 @@ const QPL_CASES = [
     icon: "📋",
     title: "Missing section_hint",
     subtitle: "Topic not in the TOC",
-    color: "#2a8a84",
+    color: "#2AB5B0",
     persona: "Insurance analyst, 47-page policy she's never seen",
     question: '"What is the premium for the first quarter?"',
     docProfile: [
@@ -12547,7 +12547,7 @@ const QPL_CASES = [
     icon: "📜",
     title: "Missing pages_hint",
     subtitle: "Multi-position topic",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     persona: "Paralegal, 47-page contract, filing deadline today",
     question: '"What is the client\'s name?"',
     docProfile: [
@@ -12566,7 +12566,7 @@ const QPL_CASES = [
     icon: "📄",
     title: "Missing pages_hint",
     subtitle: "No TOC on a long document",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     persona: "Researcher, 32-page internal risk paper",
     question: '"Summarize the risk section."',
     docProfile: [
@@ -12584,27 +12584,27 @@ const QPL_CASES = [
 
 // ── Data: what makes this NOT agentic RAG ──
 const QPL_NOT_AGENTIC = [
-  { icon: "1️⃣", title: "One iteration, not many", desc: "The loop fires once, the user picks, the pipeline continues. No plan, no replan, no self-critique inside the loop.", color: "#2a8a84" },
-  { icon: "👷", title: "Engineer-designed, not LLM-planned", desc: "Candidate values, target field, fallback default — all authored code paths driven by the doc profile. The LLM only writes the question string and picks the default.", color: "#c9a84c" },
-  { icon: "🎯", title: "Grounded in real state", desc: "Fires only on gaps the parser can name (topic not in TOC, multi-position topic, no TOC). No open-ended 'let me think about this' introspection.", color: "#9b7fd4" },
-  { icon: "⏱️", title: "Bounded latency", desc: "A big agentic loop can spin for tens of seconds. This one adds one round-trip and one LLM call, then continues or hands control to the user.", color: "#c4572a" },
+  { icon: "1️⃣", title: "One iteration, not many", desc: "The loop fires once, the user picks, the pipeline continues. No plan, no replan, no self-critique inside the loop.", color: "#2AB5B0" },
+  { icon: "👷", title: "Engineer-designed, not LLM-planned", desc: "Candidate values, target field, fallback default — all authored code paths driven by the doc profile. The LLM only writes the question string and picks the default.", color: "#8B7BD8" },
+  { icon: "🎯", title: "Grounded in real state", desc: "Fires only on gaps the parser can name (topic not in TOC, multi-position topic, no TOC). No open-ended 'let me think about this' introspection.", color: "#C5ADEA" },
+  { icon: "⏱️", title: "Bounded latency", desc: "A big agentic loop can spin for tens of seconds. This one adds one round-trip and one LLM call, then continues or hands control to the user.", color: "#FF8A6B" },
 ];
 
 // ── Data: out of scope ──
 const QPL_OUT_OF_SCOPE = [
-  { icon: "🔄", title: "The multi-turn agentic loop", desc: "When the pipeline itself plans and re-plans across many LLM calls — Volume 4's territory (agentic bricks with tools).", color: "#2a8a84" },
-  { icon: "🔍", title: "Verification / evaluator loops after generation", desc: "Answer-generated-then-critiqued patterns (schema-validation retry, Article 8C) are their own loops downstream. Different receiver.", color: "#c9a84c" },
-  { icon: "📚", title: "Cross-document / corpus scoping", desc: "\"Which document?\" rather than \"which section?\" is a CorpusContext problem — Volume 2.", color: "#9b7fd4" },
+  { icon: "🔄", title: "The multi-turn agentic loop", desc: "When the pipeline itself plans and re-plans across many LLM calls — Volume 4's territory (agentic bricks with tools).", color: "#2AB5B0" },
+  { icon: "🔍", title: "Verification / evaluator loops after generation", desc: "Answer-generated-then-critiqued patterns (schema-validation retry, Article 8C) are their own loops downstream. Different receiver.", color: "#8B7BD8" },
+  { icon: "📚", title: "Cross-document / corpus scoping", desc: "\"Which document?\" rather than \"which section?\" is a CorpusContext problem — Volume 2.", color: "#C5ADEA" },
 ];
 
 // ── Data: series position ──
 const QPL_SERIES = [
-  { id: "6a", label: "6A — Question Parsing Thesis", color: "#2a8a84" },
-  { id: "6b", label: "6B — What the Parser Extracts", color: "#c9a84c" },
-  { id: "6c", label: "6C — Dispatch", color: "#9b7fd4" },
-  { id: "6bis", label: "6bis — Vague Questions (full clarification mechanic)", color: "#c4572a" },
-  { id: "6quater", label: "6quater — Context Engineering for Question Parsing", color: "#4a9a4a" },
-  { id: "6quinquies", label: "6quinquies — Loop Engineering ← HERE", color: "#c9a84c", current: true },
+  { id: "6a", label: "6A — Question Parsing Thesis", color: "#2AB5B0" },
+  { id: "6b", label: "6B — What the Parser Extracts", color: "#8B7BD8" },
+  { id: "6c", label: "6C — Dispatch", color: "#C5ADEA" },
+  { id: "6bis", label: "6bis — Vague Questions (full clarification mechanic)", color: "#FF8A6B" },
+  { id: "6quater", label: "6quater — Context Engineering for Question Parsing", color: "#2AB5B0" },
+  { id: "6quinquies", label: "6quinquies — Loop Engineering ← HERE", color: "#8B7BD8", current: true },
 ];
 
 // ── SVG: 3 eras stacking diagram ──
@@ -12636,9 +12636,9 @@ const SmallLoopFlowDiagram = () => (
     <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE SMALL LOOP — 6 STEPS, ONE LOOP-BACK ARROW</text>
     {/* Steps 1-3 top row */}
     {[
-      { n: 1, icon: "❓", label: "Raw question", x: 8, color: "#c9a84c" },
-      { n: 2, icon: "🔧", label: "First parse", x: 96, color: "#2a8a84" },
-      { n: 3, icon: "🕳️", label: "Missing field?", x: 184, color: "#c4572a" },
+      { n: 1, icon: "❓", label: "Raw question", x: 8, color: "#8B7BD8" },
+      { n: 2, icon: "🔧", label: "First parse", x: 96, color: "#2AB5B0" },
+      { n: 3, icon: "🕳️", label: "Missing field?", x: 184, color: "#FF8A6B" },
     ].map((st, i) => (
       <g key={i}>
         <rect x={st.x} y="20" width="68" height="26" rx={2} fill={`${st.color}12`} stroke={st.color} strokeWidth="0.7"/>
@@ -12649,12 +12649,12 @@ const SmallLoopFlowDiagram = () => (
       </g>
     ))}
     {/* Loop back arrow from 3 down to 4 */}
-    <path d="M218 46 C 218 58, 130 58, 130 66" fill="none" stroke="#c4572a" strokeWidth="0.7" strokeDasharray="2,1"/>
-    <text x="175" y="58" textAnchor="middle" fontSize="3" fill="#c4572a" fontFamily="Syne, sans-serif">YES: hold</text>
+    <path d="M218 46 C 218 58, 130 58, 130 66" fill="none" stroke="#FF8A6B" strokeWidth="0.7" strokeDasharray="2,1"/>
+    <text x="175" y="58" textAnchor="middle" fontSize="3" fill="#FF8A6B" fontFamily="Syne, sans-serif">YES: hold</text>
     {/* Steps 4-6 bottom row */}
     {[
-      { n: 4, icon: "💬", label: "Ask user", x: 96, color: "#9b7fd4" },
-      { n: 5, icon: "🔁", label: "Re-parse", x: 184, color: "#c9a84c" },
+      { n: 4, icon: "💬", label: "Ask user", x: 96, color: "#C5ADEA" },
+      { n: 5, icon: "🔁", label: "Re-parse", x: 184, color: "#8B7BD8" },
     ].map((st, i) => (
       <g key={i}>
         <rect x={st.x} y="66" width="68" height="26" rx={2} fill={`${st.color}12`} stroke={st.color} strokeWidth="0.7"/>
@@ -12665,11 +12665,11 @@ const SmallLoopFlowDiagram = () => (
       </g>
     ))}
     {/* step 6 */}
-    <rect x="8" y="66" width="68" height="26" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.9"/>
-    <text x="42" y="76" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="DM Mono, monospace" fontWeight="700">6</text>
+    <rect x="8" y="66" width="68" height="26" rx={2} fill="rgba(74,154,74,0.12)" stroke="#2AB5B0" strokeWidth="0.9"/>
+    <text x="42" y="76" textAnchor="middle" fontSize="3.5" fill="#2AB5B0" fontFamily="DM Mono, monospace" fontWeight="700">6</text>
     <text x="42" y="84" textAnchor="middle" fontSize="7" dominantBaseline="middle">✅</text>
-    <text x="42" y="90" textAnchor="middle" fontSize="3.2" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">dispatch()</text>
-    <line x1="184" y1="79" x2="176" y2="79" stroke="#4a9a4a" strokeWidth="0.6" transform="rotate(180 180 79)"/>
+    <text x="42" y="90" textAnchor="middle" fontSize="3.2" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="700">dispatch()</text>
+    <line x1="184" y1="79" x2="176" y2="79" stroke="#2AB5B0" strokeWidth="0.6" transform="rotate(180 180 79)"/>
     <text x="130" y="102" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Loop back only from step 3 to step 4 · retrieval never sees the loop happened</text>
   </svg>
 );
@@ -12679,24 +12679,24 @@ const LoopScopeDiagram = () => (
   <svg viewBox="0 0 260 90" style={{ width: "100%", height: 135 }}>
     <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE LOOP LIVES INSIDE QUESTION PARSING — RETRIEVAL NEVER SEES IT</text>
     {/* Question parsing brick with loop inside */}
-    <rect x="8" y="20" width="110" height="58" rx={2} fill="rgba(201,168,76,0.08)" stroke="#c9a84c" strokeWidth="0.9"/>
-    <text x="63" y="30" textAnchor="middle" fontSize="4.2" fill="#c9a84c" fontFamily="Syne, sans-serif" fontWeight="800">❓ Question Parsing</text>
-    <rect x="16" y="36" width="94" height="34" rx={2} fill="rgba(196,87,42,0.1)" stroke="#c4572a" strokeWidth="0.6" strokeDasharray="2,1"/>
-    <text x="63" y="46" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="700">🔂 small loop lives here</text>
+    <rect x="8" y="20" width="110" height="58" rx={2} fill="rgba(201,168,76,0.08)" stroke="#8B7BD8" strokeWidth="0.9"/>
+    <text x="63" y="30" textAnchor="middle" fontSize="4.2" fill="#8B7BD8" fontFamily="Syne, sans-serif" fontWeight="800">❓ Question Parsing</text>
+    <rect x="16" y="36" width="94" height="34" rx={2} fill="rgba(196,87,42,0.1)" stroke="#FF8A6B" strokeWidth="0.6" strokeDasharray="2,1"/>
+    <text x="63" y="46" textAnchor="middle" fontSize="3.5" fill="#FF8A6B" fontFamily="Syne, sans-serif" fontWeight="700">🔂 small loop lives here</text>
     <text x="63" y="53" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">parse → detect gap → ask</text>
     <text x="63" y="59" textAnchor="middle" fontSize="3" fill="#334155" fontFamily="Syne, sans-serif">→ re-parse (loop back)</text>
-    <text x="63" y="66" textAnchor="middle" fontSize="3" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">↳ invisible outside this box</text>
+    <text x="63" y="66" textAnchor="middle" fontSize="3" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="700">↳ invisible outside this box</text>
     {/* Arrow to filled ParsedQuestion */}
-    <line x1="118" y1="49" x2="132" y2="49" stroke="#4a9a4a" strokeWidth="0.7"/>
-    <rect x="132" y="38" width="48" height="22" rx={2} fill="rgba(74,154,74,0.12)" stroke="#4a9a4a" strokeWidth="0.8"/>
-    <text x="156" y="47" textAnchor="middle" fontSize="3.5" fill="#4a9a4a" fontFamily="Syne, sans-serif" fontWeight="700">Filled</text>
-    <text x="156" y="53" textAnchor="middle" fontSize="3.2" fill="#4a9a4a" fontFamily="DM Mono, monospace" fontWeight="700">ParsedQuestion</text>
+    <line x1="118" y1="49" x2="132" y2="49" stroke="#2AB5B0" strokeWidth="0.7"/>
+    <rect x="132" y="38" width="48" height="22" rx={2} fill="rgba(74,154,74,0.12)" stroke="#2AB5B0" strokeWidth="0.8"/>
+    <text x="156" y="47" textAnchor="middle" fontSize="3.5" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="700">Filled</text>
+    <text x="156" y="53" textAnchor="middle" fontSize="3.2" fill="#2AB5B0" fontFamily="DM Mono, monospace" fontWeight="700">ParsedQuestion</text>
     {/* Arrow to retrieval + generation */}
-    <line x1="180" y1="49" x2="192" y2="49" stroke="#9b7fd4" strokeWidth="0.7"/>
-    <rect x="192" y="30" width="56" height="18" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.7"/>
-    <text x="220" y="40" textAnchor="middle" fontSize="3.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">🔍 Retrieval</text>
-    <rect x="192" y="52" width="56" height="18" rx={2} fill="rgba(155,127,212,0.12)" stroke="#9b7fd4" strokeWidth="0.7"/>
-    <text x="220" y="62" textAnchor="middle" fontSize="3.5" fill="#9b7fd4" fontFamily="Syne, sans-serif" fontWeight="700">✍️ Generation</text>
+    <line x1="180" y1="49" x2="192" y2="49" stroke="#C5ADEA" strokeWidth="0.7"/>
+    <rect x="192" y="30" width="56" height="18" rx={2} fill="rgba(155,127,212,0.12)" stroke="#C5ADEA" strokeWidth="0.7"/>
+    <text x="220" y="40" textAnchor="middle" fontSize="3.5" fill="#C5ADEA" fontFamily="Syne, sans-serif" fontWeight="700">🔍 Retrieval</text>
+    <rect x="192" y="52" width="56" height="18" rx={2} fill="rgba(155,127,212,0.12)" stroke="#C5ADEA" strokeWidth="0.7"/>
+    <text x="220" y="62" textAnchor="middle" fontSize="3.5" fill="#C5ADEA" fontFamily="Syne, sans-serif" fontWeight="700">✍️ Generation</text>
     <text x="130" y="85" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Whether the pipeline needed a turn or not is invisible to both downstream bricks</text>
   </svg>
 );
@@ -15690,25 +15690,25 @@ export const UnhobblingTab = ({ s }) => {
     <div>
       {/* HERO */}
       <div style={{ background: "linear-gradient(135deg,#eff8f4,#f4f2fa,#faf6ef)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2AB5B0,#8B7BD8,#C5ADEA,#FF8A6B,#2AB5B0)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🔓</div>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Anthropic · Thariq Shihipar · claude.com/blog · Jul 24, 2026 · 5 min</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2AB5B0", marginBottom: "0.75rem" }}>Anthropic · Thariq Shihipar · claude.com/blog · Jul 24, 2026 · 5 min</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
-          The New Rules of Context Engineering<br />for <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Claude 5-Generation Models</em>
+          The New Rules of Context Engineering<br />for <em style={{ color: "#2AB5B0", fontStyle: "italic" }}>Claude 5-Generation Models</em>
         </h2>
         <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 620, marginBottom: "1.2rem" }}>
           Anthropic removed over 80% of Claude Code's system prompt for models like Claude Opus 5 and Claude Fable 5 — with no measurable loss on coding evaluations. Six practices that used to be necessary have become myths. Here's what replaced them, straight from the team that runs `claude doctor;`.
         </p>
-        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
-          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>Why this happened</div>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2AB5B030", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 580 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2AB5B0", marginBottom: "0.3rem" }}>Why this happened</div>
           <div style={{ fontSize: "0.68rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>"Overall, we found that we were overconstraining Claude Code, both through our system prompt and in our CLAUDE.md files and skills. While these constraints were once needed to avoid worst case scenarios, we have since found we can delete many of them and let the model use surrounding context and judgement instead."</div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
-            { val: "80%+", label: "Prompt removed", sub: "no measurable eval loss", color: "#2a8a84" },
-            { val: "6",    label: "Myths replaced",  sub: "then → now shifts",     color: "#c9a84c" },
-            { val: "4",    label: "Context sources",  sub: "system · CLAUDE.md · skills · refs", color: "#9b7fd4" },
-            { val: "1",    label: "New command",      sub: "`claude doctor;` / `/doctor`", color: "#c4572a" },
+            { val: "80%+", label: "Prompt removed", sub: "no measurable eval loss", color: "#2AB5B0" },
+            { val: "6",    label: "Myths replaced",  sub: "then → now shifts",     color: "#8B7BD8" },
+            { val: "4",    label: "Context sources",  sub: "system · CLAUDE.md · skills · refs", color: "#C5ADEA" },
+            { val: "1",    label: "New command",      sub: "`claude doctor;` / `/doctor`", color: "#FF8A6B" },
           ].map((m, i) => (
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
@@ -15720,16 +15720,16 @@ export const UnhobblingTab = ({ s }) => {
       </div>
 
       {/* SUMMARY DIAGRAM */}
-      <div style={s.sectionLabel("#2a8a84")}>§1 — Unhobbling Claude: What "80% Removed" Looks Like</div>
+      <div style={s.sectionLabel("#2AB5B0")}>§1 — Unhobbling Claude: What "80% Removed" Looks Like</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
         <ZoomableFigure title="80% Removed, No Measurable Loss"><UnhobblingSummaryDiagram /></ZoomableFigure>
       </div>
-      <div style={{ padding: "1rem 1.2rem", background: "rgba(196,87,42,0.06)", border: "1px solid #c4572a25", borderRadius: 6, marginBottom: "1.5rem" }}>
+      <div style={{ padding: "1rem 1.2rem", background: "rgba(196,87,42,0.06)", border: "1px solid #FF8A6B25", borderRadius: 6, marginBottom: "1.5rem" }}>
         <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>Reading transcripts of internal Claude Code usage revealed conflicting messages stacked in a single request — <em>"leave documentation as appropriate"</em> from one source, <em>"DO NOT add comments"</em> from another. Claude generally interprets intent correctly, but it must think harder about overlapping and conflicting instructions before deciding what to do. Removing the unnecessary rules removed the conflicts too.</p>
       </div>
 
       {/* 6 SHIFTS */}
-      <div style={s.sectionLabel("#c9a84c")}>§2 — Six Practices That Became Myths</div>
+      <div style={s.sectionLabel("#8B7BD8")}>§2 — Six Practices That Became Myths</div>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "0.5rem", marginBottom: "1rem" }}>
         {UH_SHIFTS.map(sh => (
           <button key={sh.id} onClick={() => { setActiveShift(sh.id); setShiftTab("then"); }}
@@ -15738,7 +15738,7 @@ export const UnhobblingTab = ({ s }) => {
               <span style={{ fontSize: "1rem" }}>{sh.icon}</span>
               <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.5rem", color: sh.color }}>{sh.num}</span>
             </div>
-            <div style={{ fontSize: "0.55rem", color: "#c4572a", textDecoration: "line-through", marginBottom: "0.1rem" }}>{sh.then}</div>
+            <div style={{ fontSize: "0.55rem", color: "#FF8A6B", textDecoration: "line-through", marginBottom: "0.1rem" }}>{sh.then}</div>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", color: activeShift === sh.id ? sh.color : "#1a1a2e" }}>{sh.now}</div>
           </button>
         ))}
@@ -15750,7 +15750,7 @@ export const UnhobblingTab = ({ s }) => {
             <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.6rem" }}>
               <span style={{ fontSize: "1.4rem" }}>{shift.icon}</span>
               <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.75rem", color: "#c4572a", textDecoration: "line-through" }}>{shift.then}</span>
+                <span style={{ fontFamily: "Syne, sans-serif", fontSize: "0.75rem", color: "#FF8A6B", textDecoration: "line-through" }}>{shift.then}</span>
                 <span style={{ color: "#334155" }}>→</span>
                 <span style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 900, color: shift.color }}>{shift.now}</span>
               </div>
@@ -15774,7 +15774,7 @@ export const UnhobblingTab = ({ s }) => {
       )}
 
       {/* CONTEXT ASSEMBLY */}
-      <div style={s.sectionLabel("#9b7fd4")}>§3 — Applying This: How Your Context Assembles</div>
+      <div style={s.sectionLabel("#C5ADEA")}>§3 — Applying This: How Your Context Assembles</div>
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.2rem", marginBottom: "1.5rem" }}>
         <ZoomableFigure title="How Your Context Assembles"><ContextAssemblyStackDiagram /></ZoomableFigure>
       </div>
@@ -15797,8 +15797,8 @@ export const UnhobblingTab = ({ s }) => {
       </div>
 
       {/* CLOSING */}
-      <div style={{ padding: "1.2rem 1.4rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 6, borderLeft: "4px solid #2a8a84" }}>
-        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2a8a84", marginBottom: "0.5rem" }}>Try simplifying</div>
+      <div style={{ padding: "1.2rem 1.4rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2AB5B030", borderRadius: 6, borderLeft: "4px solid #2AB5B0" }}>
+        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.68rem", color: "#2AB5B0", marginBottom: "0.5rem" }}>Try simplifying</div>
         <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8 }}>Across your system prompt, skills, and CLAUDE.md files, you may need to simplify just like Anthropic did. The <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>claude doctor;</code> command (or <code style={{ background: "#f0ede6", padding: "0.1rem 0.4rem", borderRadius: 3, fontFamily: "DM Mono, monospace" }}>/doctor</code> inside Claude Code) helps rightsize your skills and CLAUDE.md files automatically.</p>
       </div>
     </div>
@@ -15813,7 +15813,7 @@ const AL_TECHNIQUES = [
     id: "uncertainty",
     icon: "🎲",
     name: "Uncertainty Sampling",
-    color: "#2a8a84",
+    color: "#2AB5B0",
     tagline: "Query the points the model is least sure about",
     desc: "Uncertainty sampling queries the unlabeled data points for which the model is least confident. For binary classification, points with predicted probability near 0.5 sit directly on the decision boundary and offer maximum learning value per label.",
     metrics: [
@@ -15862,7 +15862,7 @@ selected_batch = X_unlabeled[mask].sample(n=60, random_state=42)`
     id: "diversity",
     icon: "🌐",
     name: "Diversity-Based Sampling",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     tagline: "Query points that represent the full feature space",
     desc: "Diversity sampling selects unlabeled points based on how uncommon or distinct they are relative to the feature space. By using K-Nearest Neighbors Euclidean distance, it targets sparse, underrepresented clusters to ensure broad model coverage.",
     metrics: [
@@ -15898,7 +15898,7 @@ most_diverse_batch.head()`
     id: "committee",
     icon: "👥",
     name: "Query By Committee (QBC)",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     tagline: "Train multiple diverse models, query maximum disagreement",
     desc: "Query By Committee maintains an ensemble of diverse classifiers (Linear, Tree-based, SVM). It queries unlabeled samples where committee members exhibit highest prediction variance, capturing true boundary ambiguity.",
     metrics: [
@@ -15955,7 +15955,7 @@ const AL_ARTICLE_STEPS = [
   {
     strategy: "uncertainty",
     title: "1. Uncertainty Sampling (Step-by-Step)",
-    color: "#2a8a84",
+    color: "#2AB5B0",
     icon: "🎲",
     steps: [
       {
@@ -15987,7 +15987,7 @@ const AL_ARTICLE_STEPS = [
   {
     strategy: "diversity",
     title: "2. Diversity-Based Sampling (Step-by-Step)",
-    color: "#c9a84c",
+    color: "#8B7BD8",
     icon: "🌐",
     steps: [
       {
@@ -16013,7 +16013,7 @@ const AL_ARTICLE_STEPS = [
   {
     strategy: "committee",
     title: "3. Query By Committee (Step-by-Step)",
-    color: "#9b7fd4",
+    color: "#C5ADEA",
     icon: "👥",
     steps: [
       {
@@ -16049,20 +16049,20 @@ const UncertaintyWindowDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
     <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">UNCERTAINTY SAMPLING — PROBABILITY BAND [0.45, 0.55]</text>
     <rect x="30" y="20" width="200" height="60" fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5" rx="2"/>
-    <rect x="110" y="20" width="40" height="60" fill="rgba(42,138,132,0.18)" stroke="#2a8a84" strokeWidth="0.8" strokeDasharray="2,1"/>
-    <text x="130" y="28" textAnchor="middle" fontSize="3.5" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="800">UNCERTAINTY BAND</text>
-    <path d="M 35 75 Q 70 70, 95 50 T 130 35 T 165 50 T 225 75" fill="none" stroke="#2a8a84" strokeWidth="1.5"/>
+    <rect x="110" y="20" width="40" height="60" fill="rgba(42,138,132,0.18)" stroke="#2AB5B0" strokeWidth="0.8" strokeDasharray="2,1"/>
+    <text x="130" y="28" textAnchor="middle" fontSize="3.5" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="800">UNCERTAINTY BAND</text>
+    <path d="M 35 75 Q 70 70, 95 50 T 130 35 T 165 50 T 225 75" fill="none" stroke="#2AB5B0" strokeWidth="1.5"/>
     {[
       { x: 45, y: 72, inc: false }, { x: 75, y: 62, inc: false },
       { x: 118, y: 42, inc: true }, { x: 125, y: 38, inc: true }, { x: 135, y: 40, inc: true }, { x: 144, y: 44, inc: true },
       { x: 180, y: 60, inc: false }, { x: 210, y: 70, inc: false }
     ].map((pt, idx) => (
-      <circle key={idx} cx={pt.x} cy={pt.y} r={pt.inc ? "3.5" : "2"} fill={pt.inc ? "#c4572a" : "#94a3b8"} stroke={pt.inc ? "#ffffff" : "none"} strokeWidth="0.5"/>
+      <circle key={idx} cx={pt.x} cy={pt.y} r={pt.inc ? "3.5" : "2"} fill={pt.inc ? "#FF8A6B" : "#94a3b8"} stroke={pt.inc ? "#ffffff" : "none"} strokeWidth="0.5"/>
     ))}
-    <line x1="130" y1="20" x2="130" y2="80" stroke="#c4572a" strokeWidth="0.8" strokeDasharray="1.5,1.5"/>
-    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="DM Mono, monospace">Threshold p = 0.50</text>
-    <text x="110" y="88" textAnchor="end" fontSize="3" fill="#2a8a84" fontFamily="DM Mono, monospace">0.45</text>
-    <text x="150" y="88" textAnchor="start" fontSize="3" fill="#2a8a84" fontFamily="DM Mono, monospace">0.55</text>
+    <line x1="130" y1="20" x2="130" y2="80" stroke="#FF8A6B" strokeWidth="0.8" strokeDasharray="1.5,1.5"/>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#FF8A6B" fontFamily="DM Mono, monospace">Threshold p = 0.50</text>
+    <text x="110" y="88" textAnchor="end" fontSize="3" fill="#2AB5B0" fontFamily="DM Mono, monospace">0.45</text>
+    <text x="150" y="88" textAnchor="start" fontSize="3" fill="#2AB5B0" fontFamily="DM Mono, monospace">0.55</text>
   </svg>
 );
 
@@ -16070,20 +16070,20 @@ const UncertaintyWindowDiagram = () => (
 const KNNDensityDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
     <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">DIVERSITY SAMPLING — KNN MEAN EUCLIDEAN DISTANCE</text>
-    <circle cx="75" cy="55" r="28" fill="rgba(201,168,76,0.1)" stroke="#c9a84c" strokeWidth="0.6" strokeDasharray="2,1"/>
+    <circle cx="75" cy="55" r="28" fill="rgba(201,168,76,0.1)" stroke="#8B7BD8" strokeWidth="0.6" strokeDasharray="2,1"/>
     <text x="75" y="32" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Dense Cluster (Low Distance)</text>
     {[
       {x:65,y:50},{x:72,y:45},{x:80,y:52},{x:75,y:60},{x:68,y:58},{x:82,y:58}
-    ].map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="2" fill="#c9a84c"/>)}
+    ].map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="2" fill="#8B7BD8"/>)}
 
     {[
       {x:145,y:35,label:"Sparse Point 1 (High Density Dist)"},
       {x:195,y:65,label:"Sparse Point 2 (High Density Dist)"}
     ].map((p, i) => (
       <g key={i}>
-        <circle cx={p.x} cy={p.y} r="4" fill="#2a8a84" stroke="#ffffff" strokeWidth="0.8"/>
-        <circle cx={p.x} cy={p.y} r="10" fill="none" stroke="#2a8a84" strokeWidth="0.5" strokeDasharray="1,1"/>
-        <text x={p.x} y={p.y-6} textAnchor="middle" fontSize="3" fill="#2a8a84" fontFamily="Syne, sans-serif" fontWeight="700">{p.label}</text>
+        <circle cx={p.x} cy={p.y} r="4" fill="#2AB5B0" stroke="#ffffff" strokeWidth="0.8"/>
+        <circle cx={p.x} cy={p.y} r="10" fill="none" stroke="#2AB5B0" strokeWidth="0.5" strokeDasharray="1,1"/>
+        <text x={p.x} y={p.y-6} textAnchor="middle" fontSize="3" fill="#2AB5B0" fontFamily="Syne, sans-serif" fontWeight="700">{p.label}</text>
       </g>
     ))}
     <text x="130" y="92" textAnchor="middle" fontSize="3.5" fill="#1E293B" fontFamily="Syne, sans-serif">KNN computes average distance to K=5 neighbors → Select points with nlargest('Density')</text>
@@ -16095,46 +16095,46 @@ const QBCVarianceDiagram = () => (
   <svg viewBox="0 0 260 100" style={{ width: "100%", height: 150 }}>
     <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">QUERY BY COMMITTEE — PREDICTION VARIANCE DISAGREEMENT</text>
     <rect x="30" y="20" width="200" height="60" fill="#f7f5f0" stroke="#e0dcd4" strokeWidth="0.5" rx="2"/>
-    <path d="M 35 70 Q 100 65, 130 50 T 225 25" fill="none" stroke="#2a8a84" strokeWidth="1.2"/>
-    <path d="M 35 75 Q 90 40, 130 50 T 225 35" fill="none" stroke="#c9a84c" strokeWidth="1.2"/>
-    <path d="M 35 65 Q 110 75, 130 50 T 225 20" fill="none" stroke="#9b7fd4" strokeWidth="1.2"/>
-    <path d="M 35 72 Q 80 50, 130 50 T 225 40" fill="none" stroke="#c4572a" strokeWidth="1.2"/>
-    <line x1="130" y1="20" x2="130" y2="80" stroke="#c4572a" strokeWidth="1" strokeDasharray="2,2"/>
-    <circle cx="130" cy="50" r="4" fill="#c4572a" stroke="#ffffff" strokeWidth="1"/>
-    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#c4572a" fontFamily="Syne, sans-serif" fontWeight="800">PEAK VARIANCE DISAGREEMENT (Query Top 60)</text>
+    <path d="M 35 70 Q 100 65, 130 50 T 225 25" fill="none" stroke="#2AB5B0" strokeWidth="1.2"/>
+    <path d="M 35 75 Q 90 40, 130 50 T 225 35" fill="none" stroke="#8B7BD8" strokeWidth="1.2"/>
+    <path d="M 35 65 Q 110 75, 130 50 T 225 20" fill="none" stroke="#C5ADEA" strokeWidth="1.2"/>
+    <path d="M 35 72 Q 80 50, 130 50 T 225 40" fill="none" stroke="#FF8A6B" strokeWidth="1.2"/>
+    <line x1="130" y1="20" x2="130" y2="80" stroke="#FF8A6B" strokeWidth="1" strokeDasharray="2,2"/>
+    <circle cx="130" cy="50" r="4" fill="#FF8A6B" stroke="#ffffff" strokeWidth="1"/>
+    <text x="130" y="88" textAnchor="middle" fontSize="3.5" fill="#FF8A6B" fontFamily="Syne, sans-serif" fontWeight="800">PEAK VARIANCE DISAGREEMENT (Query Top 60)</text>
     <g transform="translate(35,24)">
-      <circle cx="0" cy="0" r="2" fill="#2a8a84"/><text x="4" y="1.5" fontSize="2.5" fill="#1E293B">LogReg</text>
-      <circle cx="25" cy="0" r="2" fill="#c9a84c"/><text x="29" y="1.5" fontSize="2.5" fill="#1E293B">RF</text>
-      <circle cx="45" cy="0" r="2" fill="#9b7fd4"/><text x="49" y="1.5" fontSize="2.5" fill="#1E293B">ExtraTrees</text>
-      <circle cx="75" cy="0" r="2" fill="#c4572a"/><text x="79" y="1.5" fontSize="2.5" fill="#1E293B">SVM</text>
+      <circle cx="0" cy="0" r="2" fill="#2AB5B0"/><text x="4" y="1.5" fontSize="2.5" fill="#1E293B">LogReg</text>
+      <circle cx="25" cy="0" r="2" fill="#8B7BD8"/><text x="29" y="1.5" fontSize="2.5" fill="#1E293B">RF</text>
+      <circle cx="45" cy="0" r="2" fill="#C5ADEA"/><text x="49" y="1.5" fontSize="2.5" fill="#1E293B">ExtraTrees</text>
+      <circle cx="75" cy="0" r="2" fill="#FF8A6B"/><text x="79" y="1.5" fontSize="2.5" fill="#1E293B">SVM</text>
     </g>
   </svg>
 );
 
 // ── Data: the AL loop steps ──
 const AL_LOOP_STEPS = [
-  { icon: "🌱", label: "Seed with small labeled set", detail: "Start with a small, randomly labeled subset — e.g. 100 of 10,000 points", color: "#c9a84c" },
-  { icon: "🏋️", label: "Train model on labeled data", detail: "Fit the current model (RandomForest, logistic regression, etc.) on what's labeled so far", color: "#2a8a84" },
-  { icon: "🔍", label: "Score the unlabeled pool", detail: "Apply the query strategy (uncertainty / diversity / committee) to every unlabeled point", color: "#9b7fd4" },
-  { icon: "👤", label: "Query top-N to human", detail: "Send the most informative N points to a human annotator for labeling", color: "#c4572a" },
-  { icon: "➕", label: "Add to labeled set", detail: "Newly labeled points move from the unlabeled pool into the training set", color: "#4a9a4a" },
-  { icon: "🔁", label: "Repeat until budget exhausted", detail: "Loop back to training — stop when the labeling budget runs out or performance plateaus", color: "#c9a84c" },
+  { icon: "🌱", label: "Seed with small labeled set", detail: "Start with a small, randomly labeled subset — e.g. 100 of 10,000 points", color: "#8B7BD8" },
+  { icon: "🏋️", label: "Train model on labeled data", detail: "Fit the current model (RandomForest, logistic regression, etc.) on what's labeled so far", color: "#2AB5B0" },
+  { icon: "🔍", label: "Score the unlabeled pool", detail: "Apply the query strategy (uncertainty / diversity / committee) to every unlabeled point", color: "#C5ADEA" },
+  { icon: "👤", label: "Query top-N to human", detail: "Send the most informative N points to a human annotator for labeling", color: "#FF8A6B" },
+  { icon: "➕", label: "Add to labeled set", detail: "Newly labeled points move from the unlabeled pool into the training set", color: "#2AB5B0" },
+  { icon: "🔁", label: "Repeat until budget exhausted", detail: "Loop back to training — stop when the labeling budget runs out or performance plateaus", color: "#8B7BD8" },
 ];
 
 // ── Data: performance comparison ──
 const AL_PERFORMANCE = [
-  { strategy: "Random Sampling", n200: 71.2, n500: 78.4, n1000: 83.1, color: "#c4572a" },
-  { strategy: "Uncertainty Sampling", n200: 76.8, n500: 84.2, n1000: 88.9, color: "#2a8a84" },
-  { strategy: "Diversity Sampling", n200: 75.1, n500: 82.6, n1000: 87.3, color: "#c9a84c" },
-  { strategy: "Query by Committee", n200: 78.3, n500: 85.7, n1000: 90.1, color: "#9b7fd4" },
+  { strategy: "Random Sampling", n200: 71.2, n500: 78.4, n1000: 83.1, color: "#FF8A6B" },
+  { strategy: "Uncertainty Sampling", n200: 76.8, n500: 84.2, n1000: 88.9, color: "#2AB5B0" },
+  { strategy: "Diversity Sampling", n200: 75.1, n500: 82.6, n1000: 87.3, color: "#8B7BD8" },
+  { strategy: "Query by Committee", n200: 78.3, n500: 85.7, n1000: 90.1, color: "#C5ADEA" },
 ];
 
 // ── Data: when to use AL ──
 const AL_USE_CASES = [
-  { icon: "💰", title: "Labeling is expensive", desc: "Medical imaging annotation by radiologists, legal document review by lawyers — expert time is the bottleneck, not compute.", color: "#2a8a84" },
-  { icon: "📊", title: "Large unlabeled pool exists", desc: "You have 100k unlabeled examples and budget to label only 2k — AL decides which 2k matter most.", color: "#c9a84c" },
-  { icon: "⚖️", title: "Class imbalance is severe", desc: "Rare-event detection (fraud, defects) where random sampling mostly returns uninformative majority-class examples.", color: "#9b7fd4" },
-  { icon: "🔄", title: "Model needs to adapt to drift", desc: "Production systems where the input distribution shifts over time — AL continuously identifies where current labels are stalest.", color: "#c4572a" },
+  { icon: "💰", title: "Labeling is expensive", desc: "Medical imaging annotation by radiologists, legal document review by lawyers — expert time is the bottleneck, not compute.", color: "#2AB5B0" },
+  { icon: "📊", title: "Large unlabeled pool exists", desc: "You have 100k unlabeled examples and budget to label only 2k — AL decides which 2k matter most.", color: "#8B7BD8" },
+  { icon: "⚖️", title: "Class imbalance is severe", desc: "Rare-event detection (fraud, defects) where random sampling mostly returns uninformative majority-class examples.", color: "#C5ADEA" },
+  { icon: "🔄", title: "Model needs to adapt to drift", desc: "Production systems where the input distribution shifts over time — AL continuously identifies where current labels are stalest.", color: "#FF8A6B" },
 ];
 
 // ── SVG: active learning loop diagram ──
@@ -16143,11 +16143,11 @@ const ActiveLearningLoopDiagram = () => (
     <text x="130" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">THE ACTIVE LEARNING LOOP</text>
     {/* Circular flow */}
     {[
-      { icon: "🌱", label: "Seed", x: 40, y: 25, color: "#c9a84c" },
-      { icon: "🏋️", label: "Train", x: 130, y: 20, color: "#2a8a84" },
-      { icon: "🔍", label: "Score Pool", x: 220, y: 25, color: "#9b7fd4" },
-      { icon: "👤", label: "Human Labels", x: 220, y: 65, color: "#c4572a" },
-      { icon: "➕", label: "Add to Set", x: 130, y: 70, color: "#4a9a4a" },
+      { icon: "🌱", label: "Seed", x: 40, y: 25, color: "#8B7BD8" },
+      { icon: "🏋️", label: "Train", x: 130, y: 20, color: "#2AB5B0" },
+      { icon: "🔍", label: "Score Pool", x: 220, y: 25, color: "#C5ADEA" },
+      { icon: "👤", label: "Human Labels", x: 220, y: 65, color: "#FF8A6B" },
+      { icon: "➕", label: "Add to Set", x: 130, y: 70, color: "#2AB5B0" },
     ].map((n, i) => (
       <g key={i}>
         <circle cx={n.x} cy={n.y} r="16" fill={`${n.color}15`} stroke={n.color} strokeWidth="0.8"/>
@@ -18318,27 +18318,27 @@ export const PromptMgmtTab = ({ s }) => {
     <div>
       {/* HERO */}
       <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2a8a84,#c9a84c,#9b7fd4,#c4572a,#4a9a4a)" }} />
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#2AB5B0,#8B7BD8,#C5ADEA,#FF8A6B,#2AB5B0)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🛡️</div>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2a8a84", marginBottom: "0.75rem" }}>Towards Data Science · Emmimal P Alexander</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2AB5B0", marginBottom: "0.75rem" }}>Towards Data Science · Emmimal P Alexander</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
-          Prompt Engineering Is Solved — <em style={{ color: "#2a8a84", fontStyle: "italic" }}>Prompt Management Isn't</em>
+          Prompt Engineering Is Solved — <em style={{ color: "#2AB5B0", fontStyle: "italic" }}>Prompt Management Isn't</em>
         </h2>
         <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 660, marginBottom: "1.2rem" }}>
           Prompt engineering helps you write better prompts — but it doesn't help you change them safely. Learn how simple variable renames break live production calls, why unit test LLM mocking creates a massive blind spot, and how to use 3-pass static AST contract validation to catch breaking changes in 3ms.
         </p>
-        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2a8a8430", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
-          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2a8a84", marginBottom: "0.3rem" }}>The LLM Unit Test Blind Spot</div>
+        <div style={{ padding: "0.9rem 1.2rem", background: "rgba(42,138,132,0.07)", border: "1px solid #2AB5B030", borderRadius: 4, marginBottom: "1.2rem", maxWidth: 620 }}>
+          <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.65rem", color: "#2AB5B0", marginBottom: "0.3rem" }}>The LLM Unit Test Blind Spot</div>
           <div style={{ fontSize: "0.66rem", color: "#1E293B", lineHeight: 1.7, fontStyle: "italic" }}>
             A codebase can have 100% green unit tests and still ship a production-crashing KeyError! Because unit tests mock out the LLM client call before PROMPT.format(...) ever runs, format mismatches slip right through. Static AST validation fills this exact gap.
           </div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.7rem" }}>
           {[
-            { val: "3 ms",  label: "Scan Execution Time", sub: "Zero network/API latency",       color: "#2a8a84" },
-            { val: "3",     label: "AST Pass Pipeline",   sub: "PromptDiff, Validate, Impact",   color: "#c9a84c" },
-            { val: "0",     label: "Model API Cost",      sub: "Pure local Python ast parsing",  color: "#9b7fd4" },
-            { val: "Code 1", label: "CI Merge Gate",      sub: "Blocks breaking PRs automatically", color: "#c4572a" },
+            { val: "3 ms",  label: "Scan Execution Time", sub: "Zero network/API latency",       color: "#2AB5B0" },
+            { val: "3",     label: "AST Pass Pipeline",   sub: "PromptDiff, Validate, Impact",   color: "#8B7BD8" },
+            { val: "0",     label: "Model API Cost",      sub: "Pure local Python ast parsing",  color: "#C5ADEA" },
+            { val: "Code 1", label: "CI Merge Gate",      sub: "Blocks breaking PRs automatically", color: "#FF8A6B" },
           ].map((m, i) => (
             <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.9rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
@@ -18436,10 +18436,10 @@ export const PromptMgmtTab = ({ s }) => {
           </thead>
           <tbody>
             {[
-              { method: "No Static Validation", catches: "❌ No", gate: "❌ No", api: "No", time: "N/A", verdict: "💥 High risk of KeyError in production", color: "#c4572a" },
-              { method: "Unit Tests (Mocked LLM)", catches: "❌ No (Mocks skip .format)", gate: "⚠️ Passes green", api: "No", time: "2.5s", verdict: "⚠️ False security; misses format crashes", color: "#c9a84c" },
-              { method: "Live LLM Eval Suite", catches: "✅ Yes (Throws error)", gate: "✅ Yes", api: "Yes", time: "5.0s+", verdict: "🐢 Slow & costly for every PR commit", color: "#9b7fd4" },
-              { method: "promptctl Static AST Check", catches: "✅ Yes (Line-numbered)", gate: "✅ Yes (Exit Code 1)", api: "No", time: "~3 ms", verdict: "⭐⭐⭐⭐⭐ Ideal CI merge gate", color: "#2a8a84" },
+              { method: "No Static Validation", catches: "❌ No", gate: "❌ No", api: "No", time: "N/A", verdict: "💥 High risk of KeyError in production", color: "#FF8A6B" },
+              { method: "Unit Tests (Mocked LLM)", catches: "❌ No (Mocks skip .format)", gate: "⚠️ Passes green", api: "No", time: "2.5s", verdict: "⚠️ False security; misses format crashes", color: "#8B7BD8" },
+              { method: "Live LLM Eval Suite", catches: "✅ Yes (Throws error)", gate: "✅ Yes", api: "Yes", time: "5.0s+", verdict: "🐢 Slow & costly for every PR commit", color: "#C5ADEA" },
+              { method: "promptctl Static AST Check", catches: "✅ Yes (Line-numbered)", gate: "✅ Yes (Exit Code 1)", api: "No", time: "~3 ms", verdict: "⭐⭐⭐⭐⭐ Ideal CI merge gate", color: "#2AB5B0" },
             ].map((r, i) => (
               <tr key={i} style={{ borderBottom: i < 3 ? "1px solid #e8e4dc" : "none" }}>
                 <td style={{ padding: "0.65rem 0.9rem", color: r.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{r.method}</td>
@@ -18456,7 +18456,7 @@ export const PromptMgmtTab = ({ s }) => {
 
       {/* INTERACTIVE AST CONTRACT CHECKER SIMULATOR */}
       <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem" }}>
-        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2a8a84", marginBottom: "0.4rem" }}>
+        <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2AB5B0", marginBottom: "0.4rem" }}>
           ⚡ Interactive AST Contract Checker Simulator
         </div>
         <p style={{ fontSize: "0.65rem", color: "#334155", marginBottom: "1.2rem" }}>
@@ -18489,15 +18489,15 @@ export const PromptMgmtTab = ({ s }) => {
 
         {/* SIMULATOR OUTPUT REPORT */}
         {simOutput && (
-          <div style={{ background: "#0b0c10", border: `1px solid ${simOutput.exitCode === 0 ? "#2a8a84" : "#c4572a"}`, borderRadius: 6, padding: "1.2rem", fontFamily: "DM Mono, monospace", fontSize: "0.65rem" }}>
+          <div style={{ background: "#0b0c10", border: `1px solid ${simOutput.exitCode === 0 ? "#2AB5B0" : "#FF8A6B"}`, borderRadius: 6, padding: "1.2rem", fontFamily: "DM Mono, monospace", fontSize: "0.65rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.8rem", borderBottom: "1px solid #1a1a2e", paddingBottom: "0.5rem" }}>
               <span style={{ color: "#334155", fontWeight: 700 }}>$ promptctl check</span>
-              <span style={{ background: simOutput.exitCode === 0 ? "#2a8a8420" : "#c4572a20", color: simOutput.exitCode === 0 ? "#2a8a84" : "#c4572a", padding: "0.2rem 0.6rem", borderRadius: 4, fontWeight: 700 }}>
+              <span style={{ background: simOutput.exitCode === 0 ? "#2AB5B020" : "#FF8A6B20", color: simOutput.exitCode === 0 ? "#2AB5B0" : "#FF8A6B", padding: "0.2rem 0.6rem", borderRadius: 4, fontWeight: 700 }}>
                 {simOutput.exitCode === 0 ? "CHECK PASSED (Exit Code 0)" : "CHECK FAILED (Exit Code 1)"}
               </span>
             </div>
 
-            <div style={{ color: "#e2e8f0", marginBottom: "0.5rem" }}>Prompt Symbol: <span style={{ color: "#c9a84c" }}>CUSTOMER_ROUTER_PROMPT</span></div>
+            <div style={{ color: "#e2e8f0", marginBottom: "0.5rem" }}>Prompt Symbol: <span style={{ color: "#8B7BD8" }}>CUSTOMER_ROUTER_PROMPT</span></div>
             <div style={{ color: "#94a3b8", marginBottom: "0.8rem" }}>
               Required Vars: [{simOutput.required.map(v => `{${v}}`).join(", ")}]<br/>
               Baseline Vars: [{simOutput.baseline.map(v => `{${v}}`).join(", ")}]
@@ -18505,19 +18505,19 @@ export const PromptMgmtTab = ({ s }) => {
 
             <div style={{ borderTop: "1px stroke #1a1a2e", paddingTop: "0.5rem" }}>
               {simOutput.isBreaking ? (
-                <div style={{ color: "#c4572a", marginBottom: "0.4rem" }}>
+                <div style={{ color: "#FF8A6B", marginBottom: "0.4rem" }}>
                   ⚠️ <b>PromptDiff Breaking Change:</b> Variable deleted from baseline snapshot! Removed: [{simOutput.removed.map(v => `{${v}}`).join(", ")}]
                 </div>
               ) : (
-                <div style={{ color: "#2a8a84", marginBottom: "0.4rem" }}>✓ <b>PromptDiff:</b> No breaking schema changes vs baseline.</div>
+                <div style={{ color: "#2AB5B0", marginBottom: "0.4rem" }}>✓ <b>PromptDiff:</b> No breaking schema changes vs baseline.</div>
               )}
 
               {simOutput.isViolation ? (
-                <div style={{ color: "#c4572a" }}>
+                <div style={{ color: "#FF8A6B" }}>
                   ❌ <b>Contract Violation in router.py:8:</b> Missing required keyword argument [{simOutput.missing.map(v => `{${v}}`).join(", ")}]! Calling .format() will throw KeyError.
                 </div>
               ) : (
-                <div style={{ color: "#2a8a84" }}>✓ <b>Contract Validation:</b> All caller keyword arguments match required prompt variables.</div>
+                <div style={{ color: "#2AB5B0" }}>✓ <b>Contract Validation:</b> All caller keyword arguments match required prompt variables.</div>
               )}
             </div>
           </div>
@@ -21060,8 +21060,8 @@ export const MedallionArchTab = ({ s }) => {
                   Applies validation rules, type casting, and deduplication.
                 </div>
                 <ul style={{ fontSize: "0.6rem", color: "#334155", paddingLeft: "1rem", margin: 0, lineHeight: 1.6 }}>
-                  <li>Parses & enforces data types (<code style={{ color: "#0284c7" }}>try_cast</code>)</li>
-                  <li>Deduplicates via Window functions (<code style={{ color: "#0284c7" }}>row_number() OVER ...</code>)</li>
+                  <li>Parses & enforces data types (<code style={{ color: "#2AB5B0" }}>try_cast</code>)</li>
+                  <li>Deduplicates via Window functions (<code style={{ color: "#2AB5B0" }}>row_number() OVER ...</code>)</li>
                   <li><strong>Quarantine Table</strong> (<code style={{ color: "#dc2626" }}>silver.orders_quarantine</code>) isolates bad rows with explicit rejection reasons</li>
                 </ul>
               </div>
@@ -21107,7 +21107,7 @@ export const MedallionArchTab = ({ s }) => {
                         <td style={{ padding: "0.4rem" }}>Standard Medallion pipelines with Spark & DB SQL</td>
                       </tr>
                       <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
-                        <td style={{ padding: "0.4rem", fontWeight: 700, color: "#0284c7" }}>Apache Iceberg</td>
+                        <td style={{ padding: "0.4rem", fontWeight: 700, color: "#2AB5B0" }}>Apache Iceberg</td>
                         <td style={{ padding: "0.4rem" }}>Netflix / Apache Foundation</td>
                         <td style={{ padding: "0.4rem" }}>Engine-agnostic schema evolution & hidden partitioning</td>
                         <td style={{ padding: "0.4rem" }}>Multi-engine querying (Trino, Athena, Snowflake, Spark)</td>
@@ -21129,7 +21129,7 @@ export const MedallionArchTab = ({ s }) => {
                   <div style={{ background: "#fffbeb", padding: "0.4rem 0.6rem", borderRadius: 4, borderLeft: "3px solid #d97706" }}>
                     <strong>1. Row Count & Completeness Verification:</strong> Validate Bronze row counts match inbound source event metrics before triggering Silver.
                   </div>
-                  <div style={{ background: "#f8fafc", padding: "0.4rem 0.6rem", borderRadius: 4, borderLeft: "3px solid #0284c7" }}>
+                  <div style={{ background: "#f8fafc", padding: "0.4rem 0.6rem", borderRadius: 4, borderLeft: "3px solid #2AB5B0" }}>
                     <strong>2. Silver Referential Integrity & Key Uniqueness:</strong> Assert zero duplicate keys and validate foreign key references.
                   </div>
                   <div style={{ background: "#f0fdf4", padding: "0.4rem 0.6rem", borderRadius: 4, borderLeft: "3px solid #16a34a" }}>
@@ -21168,8 +21168,8 @@ export const MedallionArchTab = ({ s }) => {
                 <div style={{ color: "#cbd5e1", fontSize: "0.8rem" }}>↓ try_cast() + Window Deduplication</div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "1rem", width: "90%" }}>
-                  <div style={{ background: "#1e293b", border: "2px solid #38bdf8", padding: "0.8rem", borderRadius: 8, textAlign: "center" }}>
-                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#38bdf8" }}>
+                  <div style={{ background: "#1e293b", border: "2px solid #2AB5B0", padding: "0.8rem", borderRadius: 8, textAlign: "center" }}>
+                    <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.8rem", color: "#2AB5B0" }}>
                       🥈 silver.orders (Valid & Typed)
                     </div>
                     <div style={{ fontSize: "0.58rem", color: "#94a3b8", marginTop: "0.2rem" }}>
@@ -21865,7 +21865,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
       stat: "28 Days → 4 Days",
       metric: "Environment Setup Reduction",
       desc: "Streamlined test data provisioning across enterprise payment processing pipelines, drastically shortening release cycles.",
-      badgeColor: "#0284c7"
+      badgeColor: "#2AB5B0"
     },
     {
       company: "Molina Healthcare",
@@ -21957,7 +21957,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
       status: "AUTOMATED",
       details: "CI pipeline calls TDM API: POST /api/v1/environments/provision with PR #142 context.",
       icon: "⚡",
-      color: "#2563eb"
+      color: "#2AB5B0"
     },
     {
       step: 3,
@@ -22035,22 +22035,22 @@ export const AITestDataBottleneckTab = ({ s }) => {
   return (
     <div>
       {/* SECTION HEADER */}
-      <div style={s.sectionLabel("#0284c7")}>DevOps & Test Data Management · The New Stack</div>
-      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)", border: "1px solid #0284c7" }}>
+      <div style={s.sectionLabel("#2AB5B0")}>DevOps & Test Data Management · The New Stack</div>
+      <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)", border: "1px solid #2AB5B0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
           <div>
-            <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#38bdf8", marginBottom: "0.5rem" }}>
+            <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#2AB5B0", marginBottom: "0.5rem" }}>
               The Shifted Delivery Bottleneck
             </div>
             <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.8rem", fontWeight: 900, color: "#ffffff", marginBottom: "0.5rem", lineHeight: 1.1 }}>
-              Test Data Wait Times: <em style={{ color: "#38bdf8", fontStyle: "italic" }}>The AI Execution Bottleneck</em>
+              Test Data Wait Times: <em style={{ color: "#2AB5B0", fontStyle: "italic" }}>The AI Execution Bottleneck</em>
             </h2>
             <p style={{ fontSize: "0.72rem", color: "#cbd5e1", maxWidth: 680, lineHeight: 1.7 }}>
               AI generates code and tests in minutes, but software delivery pipelines stall at <strong>validation</strong>. When 99% of organizations wait over a day and 42% wait weeks for production test data, AI code acceleration becomes a <em>full stop</em> rather than a speedup.
             </p>
           </div>
-          <div style={{ background: "#1e293b", border: "1px solid #0284c760", padding: "0.8rem 1rem", borderRadius: 6, textAlign: "right" }}>
-            <div style={{ fontSize: "0.6rem", color: "#38bdf8", textTransform: "uppercase", letterSpacing: "0.1em" }}>Author</div>
+          <div style={{ background: "#1e293b", border: "1px solid #2AB5B060", padding: "0.8rem 1rem", borderRadius: 6, textAlign: "right" }}>
+            <div style={{ fontSize: "0.6rem", color: "#2AB5B0", textTransform: "uppercase", letterSpacing: "0.1em" }}>Author</div>
             <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.85rem", fontWeight: 700, color: "#ffffff" }}>Woody Evans</div>
             <div style={{ fontSize: "0.58rem", color: "#94a3b8", marginTop: "0.2rem" }}>VP Sales Eng, Perforce (The New Stack 2026)</div>
           </div>
@@ -22077,8 +22077,8 @@ export const AITestDataBottleneckTab = ({ s }) => {
               textTransform: "uppercase",
               borderRadius: 4,
               border: "1px solid",
-              borderColor: subTab === t.id ? "#0284c7" : "transparent",
-              background: subTab === t.id ? "#0284c7" : "#ffffff",
+              borderColor: subTab === t.id ? "#2AB5B0" : "transparent",
+              background: subTab === t.id ? "#2AB5B0" : "#ffffff",
               color: subTab === t.id ? "#ffffff" : "#64748b",
               cursor: "pointer",
               transition: "all 0.2s"
@@ -22127,7 +22127,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
 
           {/* CALCULATOR */}
           <div style={{ ...s.card, marginBottom: "1.5rem" }}>
-            <div style={s.sectionLabel("#0284c7")}>Interactive Velocity Mismatch Calculator</div>
+            <div style={s.sectionLabel("#2AB5B0")}>Interactive Velocity Mismatch Calculator</div>
             <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1.2rem", lineHeight: 1.6 }}>
               Adjust code generation time vs test data wait time to compute your pipeline's <strong>Validation Friction Ratio</strong>.
             </p>
@@ -22189,7 +22189,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
           {/* 3 STRUCTURAL CAUSES */}
           <ZoomableFigure title="3 Structural Causes of Test Data Bottlenecks">
           <div style={s.card}>
-            <div style={s.sectionLabel("#0284c7")}>The 3 Structural Causes of Test Data Delays</div>
+            <div style={s.sectionLabel("#2AB5B0")}>The 3 Structural Causes of Test Data Delays</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
               <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", padding: "1rem", borderRadius: 6 }}>
                 <div style={{ fontSize: "1.2rem", marginBottom: "0.3rem" }}>🔀</div>
@@ -22232,10 +22232,10 @@ export const AITestDataBottleneckTab = ({ s }) => {
           {/* 4 TDM DESIGN PRINCIPLES */}
           <ZoomableFigure title="4 Modern TDM Design Principles & GitHub Actions API Integration">
           <div style={{ ...s.card, marginBottom: "0.5rem" }}>
-            <div style={s.sectionLabel("#0284c7")}>4 Modern TDM Design Principles</div>
+            <div style={s.sectionLabel("#2AB5B0")}>4 Modern TDM Design Principles</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
               <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", padding: "1rem", borderRadius: 6 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0284c7", marginBottom: "0.4rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2AB5B0", marginBottom: "0.4rem" }}>
                   1. End-to-End Automated Provisioning
                 </div>
                 <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>
@@ -22244,7 +22244,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
               </div>
 
               <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", padding: "1rem", borderRadius: 6 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0284c7", marginBottom: "0.4rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2AB5B0", marginBottom: "0.4rem" }}>
                   2. Built-In Governance by Default
                 </div>
                 <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>
@@ -22253,7 +22253,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
               </div>
 
               <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", padding: "1rem", borderRadius: 6 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0284c7", marginBottom: "0.4rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2AB5B0", marginBottom: "0.4rem" }}>
                   3. Ephemeral Test Environments
                 </div>
                 <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>
@@ -22262,7 +22262,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
               </div>
 
               <div style={{ background: "#f8fafc", border: "1px solid #cbd5e1", padding: "1rem", borderRadius: 6 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#0284c7", marginBottom: "0.4rem" }}>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.75rem", color: "#2AB5B0", marginBottom: "0.4rem" }}>
                   4. API-First CI/CD Integration
                 </div>
                 <div style={{ fontSize: "0.65rem", color: "#334155", lineHeight: 1.6 }}>
@@ -22295,7 +22295,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
 
           {/* CASE STUDIES */}
           <div style={s.card}>
-            <div style={s.sectionLabel("#0284c7")}>Real-World Enterprise Benchmarks</div>
+            <div style={s.sectionLabel("#2AB5B0")}>Real-World Enterprise Benchmarks</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
               {CASE_STUDIES.map(cs => (
                 <div key={cs.company} style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 6, padding: "1rem" }}>
@@ -22325,7 +22325,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
       {subTab === "simulator" && (
         <ZoomableFigure title="Interactive Ephemeral TDM Pipeline Simulator">
         <div style={s.card}>
-          <div style={s.sectionLabel("#0284c7")}>Interactive Ephemeral TDM Pipeline Simulator</div>
+          <div style={s.sectionLabel("#2AB5B0")}>Interactive Ephemeral TDM Pipeline Simulator</div>
           <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1rem" }}>
             Compare the traditional 14-day ticket-based test data request process against modern automated self-service ephemeral data provisioning.
           </p>
@@ -22450,7 +22450,7 @@ export const AITestDataBottleneckTab = ({ s }) => {
       {/* SUB-TAB 4: DIAGNOSTIC CALCULATOR */}
       {subTab === "diagnostic" && (
         <div style={s.card}>
-          <div style={s.sectionLabel("#0284c7")}>Enterprise TDM AI-Readiness Diagnostic</div>
+          <div style={s.sectionLabel("#2AB5B0")}>Enterprise TDM AI-Readiness Diagnostic</div>
           <p style={{ fontSize: "0.72rem", color: "#64748b", marginBottom: "1.5rem", lineHeight: 1.7 }}>
             Answer 4 questions about your test data delivery infrastructure to evaluate if your organization is ready for AI-velocity code execution.
           </p>
@@ -22474,8 +22474,8 @@ export const AITestDataBottleneckTab = ({ s }) => {
                       padding: "0.4rem 0.8rem",
                       borderRadius: 4,
                       border: "1px solid",
-                      borderColor: diagScores.q1 === opt.val ? "#0284c7" : "#cbd5e1",
-                      background: diagScores.q1 === opt.val ? "#0284c7" : "#ffffff",
+                      borderColor: diagScores.q1 === opt.val ? "#2AB5B0" : "#cbd5e1",
+                      background: diagScores.q1 === opt.val ? "#2AB5B0" : "#ffffff",
                       color: diagScores.q1 === opt.val ? "#ffffff" : "#475569",
                       fontSize: "0.62rem",
                       fontWeight: 700,
@@ -22506,8 +22506,8 @@ export const AITestDataBottleneckTab = ({ s }) => {
                       padding: "0.4rem 0.8rem",
                       borderRadius: 4,
                       border: "1px solid",
-                      borderColor: diagScores.q2 === opt.val ? "#0284c7" : "#cbd5e1",
-                      background: diagScores.q2 === opt.val ? "#0284c7" : "#ffffff",
+                      borderColor: diagScores.q2 === opt.val ? "#2AB5B0" : "#cbd5e1",
+                      background: diagScores.q2 === opt.val ? "#2AB5B0" : "#ffffff",
                       color: diagScores.q2 === opt.val ? "#ffffff" : "#475569",
                       fontSize: "0.62rem",
                       fontWeight: 700,
@@ -22538,8 +22538,8 @@ export const AITestDataBottleneckTab = ({ s }) => {
                       padding: "0.4rem 0.8rem",
                       borderRadius: 4,
                       border: "1px solid",
-                      borderColor: diagScores.q3 === opt.val ? "#0284c7" : "#cbd5e1",
-                      background: diagScores.q3 === opt.val ? "#0284c7" : "#ffffff",
+                      borderColor: diagScores.q3 === opt.val ? "#2AB5B0" : "#cbd5e1",
+                      background: diagScores.q3 === opt.val ? "#2AB5B0" : "#ffffff",
                       color: diagScores.q3 === opt.val ? "#ffffff" : "#475569",
                       fontSize: "0.62rem",
                       fontWeight: 700,
@@ -22570,8 +22570,8 @@ export const AITestDataBottleneckTab = ({ s }) => {
                       padding: "0.4rem 0.8rem",
                       borderRadius: 4,
                       border: "1px solid",
-                      borderColor: diagScores.q4 === opt.val ? "#0284c7" : "#cbd5e1",
-                      background: diagScores.q4 === opt.val ? "#0284c7" : "#ffffff",
+                      borderColor: diagScores.q4 === opt.val ? "#2AB5B0" : "#cbd5e1",
+                      background: diagScores.q4 === opt.val ? "#2AB5B0" : "#ffffff",
                       color: diagScores.q4 === opt.val ? "#ffffff" : "#475569",
                       fontSize: "0.62rem",
                       fontWeight: 700,

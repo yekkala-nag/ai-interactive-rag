@@ -10,7 +10,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { TABS_REGISTRY } from '../registry/tabsRegistry.js';
+import { TABS_REGISTRY, UMBRELLA_TOPICS } from '../registry/tabsRegistry.js';
 import { Container, Section, Grid, Flex, Stack } from '../components/layout/Primitives.jsx';
 import { Hero, Diagram, CodeBlock, Accordion, Tabs, Stepper } from '../components/ui/Content.jsx';
 import { Card, Badge, Button, Callout } from '../components/ui/Core.jsx';
@@ -608,6 +608,17 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
             </Flex>
           </Section.Header>
           <Section.Body>
+            {(() => {
+              const allDone = JOURNEY_TRACKS.every(l => {
+                const pp = getTrackProgress(l.id);
+                return pp.total > 0 && pp.completed === pp.total;
+              });
+              return allDone ? (
+                <div style={{ padding: '12px 16px', borderRadius: '10px', marginBottom: '12px', background: 'rgba(42,181,176,0.1)', border: '1px solid rgba(42,181,176,0.4)', fontSize: '0.85rem', color: 'var(--ds-color-text-primary)', textAlign: 'center' }}>
+                  🏆 <strong>Journey complete</strong> — all three loops proven. Review any loop below, or take on full mastery.
+                </div>
+              ) : null;
+            })()}
             <Grid columns={{ base: 1, md: 3 }} gap="md">
               {JOURNEY_TRACKS.map((loop, i) => {
                 const p = getTrackProgress(loop.id);
@@ -621,6 +632,8 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                   const e = getEvidence(id);
                   return e.visit || (e.quizBest || 0) > 0;
                 });
+                const nextLoop = JOURNEY_TRACKS[i + 1] || null;
+                const nextContinue = nextLoop ? (nextLoop.tabs.find(t => !isMastered(t)) || nextLoop.tabs[0]) : null;
                 return (
                   <Card
                     key={loop.id}
@@ -647,16 +660,42 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                     <div style={{ height: '6px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
                       <div style={{ height: '100%', width: `${p.percent}%`, background: loop.color, borderRadius: '4px', transition: 'width 0.3s ease' }} />
                     </div>
-                    <Button
-                      variant={isActive ? 'primary' : 'secondary'}
-                      size="sm"
-                      onClick={() => {
-                        handleSelectTrack(loop.id);
-                        handleNavigate(continueId);
-                      }}
-                    >
-                      {done ? 'Review loop ↻' : started ? `Continue →` : `Start ${loop.title.split('·')[0].trim()} →`}
-                    </Button>
+                    {done && nextLoop ? (
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          style={{ flex: 1, justifyContent: 'center' }}
+                          onClick={() => {
+                            handleSelectTrack(nextLoop.id);
+                            handleNavigate(nextContinue);
+                          }}
+                        >
+                          Next: {nextLoop.title.split('·')[0].trim()} →
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => {
+                            handleSelectTrack(loop.id);
+                            handleNavigate(loop.tabs[0]);
+                          }}
+                        >
+                          Review ↻
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        variant={isActive ? 'primary' : 'secondary'}
+                        size="sm"
+                        onClick={() => {
+                          handleSelectTrack(loop.id);
+                          handleNavigate(continueId);
+                        }}
+                      >
+                        {done ? 'Review loop ↻' : started ? `Continue →` : `Start ${loop.title.split('·')[0].trim()} →`}
+                      </Button>
+                    )}
                   </Card>
                 );
               })}
