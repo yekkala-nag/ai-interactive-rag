@@ -25,7 +25,7 @@ import {
   getPlacement,
   subscribeToAdaptiveProgress
 } from '../services/adaptiveLearning.js';
-import { isMastered } from '../services/mastery.js';
+import { isMastered, getEvidence } from '../services/mastery.js';
 import { DiagnosticQuiz } from '../components/ui/DiagnosticQuiz.jsx';
 import { ExitCheck } from '../components/ui/ExitCheck.jsx';
 import {
@@ -566,6 +566,13 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                 const isActive = activeTrackId === loop.id;
                 const continueId = loop.tabs.find(t => !isMastered(t)) || loop.tabs[0];
                 const done = p.completed === p.total && p.total > 0;
+                // Started = any evidence (visit or attempt), not just proven topics.
+                // The old check (p.completed > 0) kept saying "Start" to learners
+                // already underway with visits/partial scores but zero proofs.
+                const started = loop.tabs.some(id => {
+                  const e = getEvidence(id);
+                  return e.visit || (e.quizBest || 0) > 0;
+                });
                 return (
                   <Card
                     key={loop.id}
@@ -600,7 +607,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                         handleNavigate(continueId);
                       }}
                     >
-                      {done ? 'Review loop ↻' : p.completed > 0 ? `Continue →` : `Start ${loop.title.split('·')[0].trim()} →`}
+                      {done ? 'Review loop ↻' : started ? `Continue →` : `Start ${loop.title.split('·')[0].trim()} →`}
                     </Button>
                   </Card>
                 );
