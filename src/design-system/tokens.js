@@ -38,6 +38,22 @@ export const tokens = {
       frontiers: { primary: '#10B981', light: '#D1FAE5', dark: '#065F46' },
     },
 
+    // Brand palette — uniform dashboard language (see DesignSampleTab)
+    brand: {
+      teal: '#2AB5B0',
+      tealDark: '#17837F',
+      tealSoft: 'rgba(42,181,176,0.12)',
+      coral: '#FF8A6B',
+      coralSoft: 'rgba(255,138,107,0.14)',
+      lav: '#C5ADEA',
+      lavDeep: '#8B7BD8',
+      lavSoft: 'rgba(197,173,234,0.16)',
+      ink: '#22303C',
+      muted: '#7A8AA0',
+      line: '#E6EBF2',
+      editor: '#10141D',
+    },
+
     // Semantic states
     state: {
       success: { light: '#16A34A', dark: '#22C55E' },

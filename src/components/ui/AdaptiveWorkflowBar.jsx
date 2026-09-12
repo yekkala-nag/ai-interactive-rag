@@ -192,7 +192,7 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
             <div style={{
               width: `${progress.percent}%`,
               height: '100%',
-              background: `linear-gradient(90deg, ${activeTrack.color || '#2563eb'}, #10b981)`,
+              background: 'linear-gradient(90deg, var(--ds-color-brand-coral, #FF8A6B), #FFB199)',
               borderRadius: '4px',
               transition: 'width 0.4s ease'
             }} />

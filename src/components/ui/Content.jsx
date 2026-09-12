@@ -146,10 +146,15 @@ export function CodeBlock({ code, language = 'text', filename, highlightLines, s
   const maxLineNum = lines.length.toString().length;
 
   return (
-    <div style={{ borderRadius: 'var(--ds-radius-lg)', overflow: 'hidden', background: '#1C1917', border: '1px solid var(--ds-color-border-strong)', ...style }} {...props}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--ds-space-3) var(--ds-space-4)', background: '#1C1917', borderBottom: '1px solid var(--ds-color-border-strong)' }}>
+    <div style={{ borderRadius: 'var(--ds-radius-lg)', overflow: 'hidden', background: 'var(--ds-color-brand-editor, #10141D)', border: '1px solid #1E2635', ...style }} {...props}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--ds-space-3) var(--ds-space-4)', background: 'var(--ds-color-brand-editor, #10141D)', borderBottom: '1px solid #1E2635' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)' }}>
-          {filename && <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontFamily: 'var(--ds-font-family-mono)' }}>{filename}</span>}
+          <span style={{ display: 'inline-flex', gap: '5px' }} aria-hidden="true">
+            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#FF5F57' }} />
+            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#FEBC2E' }} />
+            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#28C840' }} />
+          </span>
+          {filename && <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#8A94A8', fontFamily: 'var(--ds-font-family-mono)' }}>{filename}</span>}
           <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 'var(--ds-font-weight-medium)' }}>{language}</span>
         </div>
         <Button variant="ghost" size="sm" onClick={copy} aria-label={copied ? 'Copied' : 'Copy code'}>

@@ -119,24 +119,25 @@ export function Sidebar({
       style={{
         width: '100%',
         height: '100vh',
-        background: 'var(--ds-color-bg-surface)',
+        background: 'linear-gradient(180deg, var(--ds-color-brand-teal, #2AB5B0) 0%, var(--ds-color-brand-tealDark, #17837F) 100%)',
+        color: '#fff',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif',
         userSelect: 'none',
-        borderRight: '1px solid var(--ds-color-border-subtle)'
+        borderRight: '1px solid rgba(255,255,255,0.15)'
       }}
       aria-label="Main navigation"
     >
       {/* 1. APPLE MACOS HEADER & TRAFFIC LIGHTS */}
       <div style={{
         padding: collapsed ? '12px 6px' : '12px 14px',
-        borderBottom: '1px solid var(--ds-color-border-subtle)',
+        borderBottom: '1px solid rgba(255,255,255,0.18)',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
-        background: 'rgba(255, 255, 255, 0.02)',
+        background: 'transparent',
         flexShrink: 0
       }}>
         {/* macOS Traffic Lights (Desktop Decorative) */}
@@ -171,7 +172,7 @@ export function Sidebar({
                 <span style={{
                   fontWeight: 700,
                   fontSize: '0.92rem',
-                  color: 'var(--ds-color-text-primary)',
+                  color: '#fff',
                   letterSpacing: '-0.02em',
                   lineHeight: 1.15,
                   whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
@@ -180,7 +181,7 @@ export function Sidebar({
                 </span>
                 <span style={{
                   fontSize: '0.62rem',
-                  color: 'var(--ds-color-text-tertiary)',
+                  color: 'rgba(255,255,255,0.75)',
                   fontFamily: 'SF Mono, Menlo, Monaco, monospace',
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
@@ -198,18 +199,18 @@ export function Sidebar({
               onClick={onToggleCollapse}
               title="Collapse Sidebar (⌘[)"
               style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid var(--ds-color-border-subtle)',
+                background: 'rgba(255, 255, 255, 0.16)',
+                border: '1px solid rgba(255,255,255,0.25)',
                 borderRadius: '7px',
-                color: 'var(--ds-color-text-secondary)',
+                color: '#fff',
                 cursor: 'pointer',
                 width: '26px', height: '26px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'all 0.15s ease',
                 fontSize: '0.75rem'
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; e.currentTarget.style.color = 'var(--ds-color-text-primary)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)'; e.currentTarget.style.color = 'var(--ds-color-text-secondary)'; }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.28)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.16)'; }}
               aria-label="Collapse sidebar"
             >
               ◂
@@ -220,28 +221,30 @@ export function Sidebar({
 
       {/* 2. APPLE SPOTLIGHT SEARCH INPUT */}
       {!collapsed && (
-        <div style={{ padding: '10px 12px', borderBottom: '1px solid var(--ds-color-border-subtle)', flexShrink: 0 }}>
+        <div style={{ padding: '10px 12px', borderBottom: '1px solid rgba(255,255,255,0.18)', flexShrink: 0 }}>
+          <style>{`.teal-search-input::placeholder { color: rgba(255,255,255,0.65); }`}</style>
           <div style={{
             position: 'relative', display: 'flex', alignItems: 'center',
-            background: 'var(--ds-color-bg-canvas)',
-            border: '1px solid var(--ds-color-border-default)',
+            background: 'rgba(255, 255, 255, 0.16)',
+            border: '1px solid rgba(255,255,255,0.25)',
             borderRadius: '8px',
             padding: '5px 8px 5px 30px',
             transition: 'all 0.15s ease'
           }}>
-            <span style={{ position: 'absolute', left: '9px', color: 'var(--ds-color-text-tertiary)', fontSize: '0.85rem', pointerEvents: 'none' }}>
+            <span style={{ position: 'absolute', left: '9px', color: 'rgba(255,255,255,0.8)', fontSize: '0.85rem', pointerEvents: 'none' }}>
               🔍
             </span>
             <input
               type="text"
               placeholder="Search topics..."
+              className="teal-search-input"
               value={typeof searchQuery === 'string' ? searchQuery : (searchQuery?.target?.value || '')}
               onChange={(e) => onSearchChange?.(e.target.value)}
               style={{
                 width: '100%',
                 background: 'transparent',
                 border: 'none',
-                color: 'var(--ds-color-text-primary)',
+                color: '#fff',
                 fontSize: '0.8rem',
                 outline: 'none',
                 fontFamily: 'inherit'
@@ -252,9 +255,9 @@ export function Sidebar({
                 fontSize: '0.62rem',
                 padding: '1px 5px',
                 borderRadius: '4px',
-                background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                color: 'var(--ds-color-text-tertiary)',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                color: '#fff',
                 fontFamily: 'SF Mono, monospace',
                 fontWeight: 600,
                 flexShrink: 0
@@ -266,7 +269,7 @@ export function Sidebar({
                 onClick={() => onSearchChange?.('')}
                 style={{
                   background: 'none', border: 'none',
-                  color: 'var(--ds-color-text-tertiary)', cursor: 'pointer', fontSize: '0.75rem', padding: '0 2px'
+                  color: '#fff', cursor: 'pointer', fontSize: '0.75rem', padding: '0 2px'
                 }}
                 aria-label="Clear search"
               >
@@ -279,8 +282,8 @@ export function Sidebar({
 
       {/* 3. PINNED FAVORITES & TOPICS SUMMARY */}
       {!collapsed && !queryStr && (
-        <div style={{ padding: '8px 12px 4px 12px', borderBottom: '1px solid var(--ds-color-border-subtle)', flexShrink: 0 }}>
-          <div style={{ fontSize: '0.62rem', fontWeight: 700, color: 'var(--ds-color-text-tertiary)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+        <div style={{ padding: '8px 12px 4px 12px', borderBottom: '1px solid rgba(255,255,255,0.18)', flexShrink: 0 }}>
+          <div style={{ fontSize: '0.62rem', fontWeight: 700, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
             QUICK NAVIGATION
           </div>
 
@@ -290,13 +293,13 @@ export function Sidebar({
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '5px 8px', borderRadius: '6px',
-                background: activeTab === 'overview' ? 'linear-gradient(135deg, #2563eb, #3b82f6)' : 'transparent',
-                color: activeTab === 'overview' ? '#ffffff' : 'var(--ds-color-text-secondary)',
+                background: activeTab === 'overview' ? '#ffffff' : 'transparent',
+                color: activeTab === 'overview' ? '#17837F' : 'rgba(255,255,255,0.88)',
                 border: 'none', cursor: 'pointer', textAlign: 'left', fontSize: '0.78rem',
                 fontWeight: activeTab === 'overview' ? 700 : 500,
                 transition: 'all 0.12s ease'
               }}
-              onMouseEnter={e => { if (activeTab !== 'overview') e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+              onMouseEnter={e => { if (activeTab !== 'overview') e.currentTarget.style.background = 'rgba(255,255,255,0.14)'; }}
               onMouseLeave={e => { if (activeTab !== 'overview') e.currentTarget.style.background = 'transparent'; }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -312,15 +315,15 @@ export function Sidebar({
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '5px 8px', borderRadius: '6px',
-                background: 'rgba(255, 255, 255, 0.03)',
-                color: 'var(--ds-color-text-primary)',
-                border: '1px solid var(--ds-color-border-subtle)',
+                background: 'rgba(255, 255, 255, 0.12)',
+                color: '#fff',
+                border: '1px solid rgba(255,255,255,0.22)',
                 cursor: 'pointer', textAlign: 'left', fontSize: '0.76rem',
                 transition: 'all 0.12s ease',
                 marginTop: '2px'
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'var(--ds-color-bg-surfaceHover)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)'; }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.22)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)'; }}
               title="Open Adaptive Learning Hub & Diagnostic"
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0 }}>
@@ -333,8 +336,8 @@ export function Sidebar({
                 fontSize: '0.65rem',
                 padding: '1px 5px',
                 borderRadius: '4px',
-                background: activeTrack.color ? activeTrack.color + '20' : 'rgba(255,255,255,0.08)',
-                color: activeTrack.color || '#3b82f6',
+                background: 'rgba(255,255,255,0.2)',
+                color: '#fff',
                 fontWeight: 700,
                 flexShrink: 0
               }}>
@@ -387,9 +390,9 @@ export function Sidebar({
                   width: '100%', display: 'flex', alignItems: 'center',
                   justifyContent: collapsed ? 'center' : 'space-between',
                   padding: collapsed ? '8px' : '7px 8px',
-                  background: hasActiveTab ? accent.lightBg : 'transparent',
-                  border: `1px solid ${hasActiveTab ? accent.border : 'transparent'}`,
-                  color: hasActiveTab ? accent.primary : 'var(--ds-color-text-primary)',
+                  background: hasActiveTab ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+                  border: `1px solid ${hasActiveTab ? 'rgba(255,255,255,0.3)' : 'transparent'}`,
+                  color: '#fff',
                   cursor: 'pointer', textAlign: 'left',
                   borderRadius: '7px',
                   transition: 'all 0.15s ease',
@@ -397,7 +400,7 @@ export function Sidebar({
                 }}
                 onMouseEnter={e => {
                   if (!hasActiveTab) {
-                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
                   }
                 }}
                 onMouseLeave={e => {
@@ -421,7 +424,7 @@ export function Sidebar({
                   {!collapsed && (
                     <span style={{
                       fontWeight: 600,
-                      color: hasActiveTab ? accent.primary : 'var(--ds-color-text-primary)',
+                      color: hasActiveTab ? '#fff' : 'rgba(255,255,255,0.88)',
                       whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                       fontSize: '0.81rem', letterSpacing: '-0.01em'
                     }}>
@@ -436,15 +439,15 @@ export function Sidebar({
                       fontSize: '0.65rem',
                       fontWeight: 600,
                       fontFamily: 'SF Mono, monospace',
-                      background: hasActiveTab ? `${accent.primary}25` : 'rgba(255, 255, 255, 0.07)',
-                      color: hasActiveTab ? accent.primary : 'var(--ds-color-text-tertiary)',
+                      background: 'rgba(255, 255, 255, 0.2)',
+                      color: '#fff',
                       padding: '1px 6px',
                       borderRadius: '9999px',
-                      border: `1px solid ${hasActiveTab ? `${accent.primary}40` : 'rgba(255, 255, 255, 0.1)'}`
+                      border: '1px solid rgba(255,255,255,0.25)'
                     }}>
                       {tabs.length}
                     </span>
-                    <span style={{ fontSize: '0.7rem', color: 'var(--ds-color-text-tertiary)', transition: 'transform 0.15s ease', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>
+                    <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.75)', transition: 'transform 0.15s ease', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>
                       ‣
                     </span>
                   </div>
@@ -456,7 +459,7 @@ export function Sidebar({
                 <div style={{
                   display: 'flex', flexDirection: 'column', gap: '2px',
                   padding: '4px 4px 4px 10px',
-                  borderLeft: `1.5px solid ${hasActiveTab ? `${accent.primary}60` : 'rgba(255, 255, 255, 0.1)'}`,
+                  borderLeft: '1.5px solid rgba(255, 255, 255, 0.3)',
                   marginLeft: '18px',
                   marginTop: '3px',
                   marginBottom: '4px'
@@ -473,8 +476,8 @@ export function Sidebar({
                           >
                             <div style={{
                               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                              fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
-                              color: 'var(--ds-color-text-tertiary)', marginBottom: '3px'
+                            fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
+                            color: 'rgba(255,255,255,0.75)', marginBottom: '3px'
                             }}>
                               <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                 {group.child.title}
@@ -487,10 +490,10 @@ export function Sidebar({
                                 {getChildLevelCounts(group.child.id, tabs)}
                               </span>
                             </div>
-                            <div style={{ height: '3px', borderRadius: '3px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+                            <div style={{ height: '3px', borderRadius: '3px', background: 'rgba(255,255,255,0.25)', overflow: 'hidden' }}>
                               <div style={{
                                 height: '100%', width: `${pct}%`, borderRadius: '3px',
-                                background: pct === 100 ? '#10b981' : accent.primary,
+                                background: '#fff',
                                 transition: 'width 0.3s ease'
                               }} />
                             </div>
@@ -511,26 +514,26 @@ export function Sidebar({
                           display: 'flex', alignItems: 'center', gap: '8px',
                           padding: '5px 8px',
                           borderRadius: '6px',
-                          background: isActive ? 'linear-gradient(135deg, #2563eb, #3b82f6)' : 'transparent',
-                          color: isActive ? '#ffffff' : 'var(--ds-color-text-secondary)',
+                          background: isActive ? '#ffffff' : 'transparent',
+                          color: isActive ? '#17837F' : 'rgba(255,255,255,0.88)',
                           border: 'none', cursor: 'pointer', textAlign: 'left',
                           fontSize: '0.78rem',
                           fontWeight: isActive ? 700 : 500,
                           transition: 'all 0.12s ease',
                           width: '100%',
-                          boxShadow: isActive ? '0 3px 10px rgba(37, 99, 235, 0.35)' : 'none'
+                          boxShadow: isActive ? '0 3px 10px rgba(0,0,0,0.2)' : 'none'
                         }}
                         onMouseEnter={e => {
                           if (!isActive) {
-                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
-                            e.currentTarget.style.color = 'var(--ds-color-text-primary)';
+                            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.14)';
+                            e.currentTarget.style.color = '#ffffff';
                             e.currentTarget.style.transform = 'translateX(2px)';
                           }
                         }}
                         onMouseLeave={e => {
                           if (!isActive) {
                             e.currentTarget.style.background = 'transparent';
-                            e.currentTarget.style.color = 'var(--ds-color-text-secondary)';
+                            e.currentTarget.style.color = 'rgba(255,255,255,0.88)';
                             e.currentTarget.style.transform = 'translateX(0)';
                           }
                         }}
@@ -551,9 +554,9 @@ export function Sidebar({
                             title={lvl.label}
                             style={{
                               fontSize: '0.58rem', fontWeight: 700, fontFamily: 'SF Mono, monospace',
-                              color: '#ffffff',
-                              background: 'rgba(255,255,255,0.25)',
-                              border: '1px solid rgba(255,255,255,0.4)',
+                              color: '#17837F',
+                              background: 'rgba(42,181,176,0.14)',
+                              border: '1px solid rgba(42,181,176,0.4)',
                               padding: '0px 5px', borderRadius: '9999px', flexShrink: 0
                             }}
                           >
@@ -565,12 +568,13 @@ export function Sidebar({
                             aria-hidden="true"
                             style={{
                               width: '6px', height: '6px', borderRadius: '50%',
-                              background: lvl.color, opacity: 0.75, flexShrink: 0
+                              background: lvl.color, opacity: 0.9, flexShrink: 0,
+                              border: '1px solid rgba(255,255,255,0.65)'
                             }}
                           />
                         )}
                         {isActive && (
-                          <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'white', flexShrink: 0 }} />
+                          <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#17837F', flexShrink: 0 }} />
                         )}
                       </button>
                     );
@@ -584,7 +588,7 @@ export function Sidebar({
         })}
 
         {queryStr && totalVisibleTabs === 0 && (
-          <div style={{ padding: '24px 12px', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>
+          <div style={{ padding: '24px 12px', textAlign: 'center', color: 'rgba(255,255,255,0.85)' }}>
             <div style={{ fontSize: '1.4rem', marginBottom: '6px' }}>🔍</div>
             <div style={{ fontSize: '0.8rem', marginBottom: '8px' }}>No topics match "{queryStr}"</div>
             <button
@@ -592,9 +596,9 @@ export function Sidebar({
               style={{
                 padding: '3px 10px',
                 borderRadius: '6px',
-                border: '1px solid var(--ds-color-border-default)',
-                background: 'rgba(255, 255, 255, 0.05)',
-                color: 'var(--ds-color-text-secondary)',
+                border: '1px solid rgba(255,255,255,0.3)',
+                background: 'rgba(255, 255, 255, 0.16)',
+                color: '#fff',
                 fontSize: '0.72rem',
                 cursor: 'pointer',
               }}
@@ -607,15 +611,15 @@ export function Sidebar({
 
       {/* 5. COLLAPSED EXPAND BUTTON */}
       {collapsed && (
-        <div style={{ padding: '8px', borderTop: '1px solid var(--ds-color-border-subtle)', textAlign: 'center' }}>
+        <div style={{ padding: '8px', borderTop: '1px solid rgba(255,255,255,0.18)', textAlign: 'center' }}>
           <button
             onClick={onToggleCollapse}
             title="Expand sidebar (⌘[)"
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid var(--ds-color-border-subtle)',
+              background: 'rgba(255, 255, 255, 0.16)',
+              border: '1px solid rgba(255,255,255,0.25)',
               borderRadius: '6px',
-              color: 'var(--ds-color-text-primary)',
+              color: '#fff',
               cursor: 'pointer',
               padding: '6px',
               fontSize: '0.8rem',

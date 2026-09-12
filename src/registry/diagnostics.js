@@ -117,7 +117,7 @@ export const JOURNEY_LOOPS = {
     tagline: 'One pass, whole map — first app, first RAG, first agent',
     description: 'Concept → immediate use, pillar by pillar. Ends with something working at every stop.',
     level: 'Start here',
-    icon: '🥾', color: '#10b981', badgeVariant: 'success',
+    icon: '🥾', color: '#2AB5B0', badgeVariant: 'success',
     order: ['glossary', 'promptfundamentals', 'tokenization', 'firstaiapp', 'llmsampling', 'promptmgmt', 'selfattention', 'archconcepts', 'rag', 'pipeline', 'completepipeline', 'ragchunking', 'qparseloop', 'filtering', 'ctxeng', 'vague', 'memeng', 'contextlimits', 'pandasdataframes', 'pandasmem', 'modernioformats', 'linearregression', 'classicalml', 'geopopviz', 'activelearn', 'fiveassets', 'projectprepframework', 'redesign', 'agentsastools', 'toolcalling', 'agenttasks', 'codingagentsnonprog', 'datahumanization', 'aiusecases', 'tokenbill', 'practices', 'powerfeatures', 'goaltracker', 'capstone1']
   },
   journey_loop2: {
@@ -125,7 +125,7 @@ export const JOURNEY_LOOPS = {
     tagline: 'Professional depth, pillar by pillar',
     description: 'The same pillars at working depth: precision retrieval, safety gates, document pipelines, cost control.',
     level: 'Core journey',
-    icon: '🧭', color: '#2563eb', badgeVariant: 'primary',
+    icon: '🧭', color: '#8B7BD8', badgeVariant: 'primary',
     order: ['modellandscape', 'posencoding', 'structuredoutputs', 'workflows', 'promptlearning', 'promptdependencygraph', 'unhobbling', 'quantserve', 'aiharness', 'topicmodeling', 'reinforcementlearning', 'trpo2grpo', 'aimoralagency', 'humancentric', 'dialoguelamda', 'visionlanguage', 'diffusionmodels', 'speechvoice', 'ragcorpusshapes', 'hierrag', 'rerankers', 'rageval', 'rowlevelrag', 'tablegridrag', 'crossdocjoins', 'multilingualrag', 'multimodalrag', 'prodrag', 'routercheap', 'genpatterns', 'fourpdfs', 'agentfanout', 'amplifyexpert', 'ragcasestudies', 'interviewprep', 'hallucination', 'ctxmeasure', 'memhierarchy', 'contextgraph', 'validitylayer', 'companybrain', 'longcontext', 'langchain', 'frameworkcompare', 'agentplanner', 'agenthitl', 'agentsandbox', 'typedagentgate', 'agentevals', 'handoffwatch', 'verifiedpipes', 'codingevals', 'agentdebugging', 'multiagent', 'modelrouting', 'mcpclient', 'agentsdk', 'cliagent', 'agentpairprogramming', 'vibecode', 'aiproductbuilder', 'docstruct', 'agenticparsing', 'knowledgebase', 'vectordbops', 'datapipeline', 'threelayers', 'medallionarch', 'aidataplat', 'aitestdatabottleneck', 'frauddetectionml', 'timeseriesanomaly', 'vaes', 'byol', 'xlstm', 'keras3', 'pythonprofiling', 'pythonengineering', 'functools', 'llmevals', 'modelvalidation', 'reasoningbench', 'guardrails', 'llmreliability', 'finops', 'productionragops', 'enterpriseaiops', 'enterprisegrade', 'observability', 'slmedge', 'ragbeyond', 'capstone2']
   },
   journey_loop3: {
@@ -133,7 +133,7 @@ export const JOURNEY_LOOPS = {
     tagline: 'High-stakes peaks and frontier outlook',
     description: 'Advanced patterns in dependency order, closing on the frontier. Placement often starts here for seniors.',
     level: 'Advanced',
-    icon: '🏔️', color: '#d97706', badgeVariant: 'warning',
+    icon: '🏔️', color: '#FF8A6B', badgeVariant: 'warning',
     order: ['promptcontracts', 'promptregression', 'hallucbricks', 'workflowloop', 'proxypointer', 'agenticrag', 'graphtraversalknowledge', 'texttosql', 'langgraph', 'agenta2a', 'loopengineering', 'claudecode100', 'agentscale', 'llmfinetuning', 'vramconductor', 'tokenorchestrationplaybook', 'enterpriseadvancedplaybook', 'frontiers', 'capstone3']
   }
 };
