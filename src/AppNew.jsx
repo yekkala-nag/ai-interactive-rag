@@ -22,9 +22,11 @@ const TabComponents = {
   modellandscape: lazy(() => import('./modelLandscape/ModelLandscapeTab.jsx')),
   tokenization: lazy(() => import('./tokenization/TokenizationTab.jsx')),
   quantserve: lazy(() => import('./quantServe/QuantServeTab.jsx')),
+  vramconductor: lazy(() => import('./vramConductor/VramConductorTab.jsx')),
   promptfundamentals: lazy(() => import('./promptEngineeringFundamentals/PromptFundamentalsTab.jsx')),
   reinforcementlearning: lazy(() => import('./reinforcementLearning/ReinforcementLearningTab.jsx')),
   aimoralagency: lazy(() => import('./aiMoralAgency/MoralAgencyTab.jsx')),
+  humancentric: lazy(() => import('./humanCentric/HumanCentricTab.jsx')),
   dialoguelamda: lazy(() => import('./dialogueLaMDA/DialogueLaMDATab.jsx')),
   llmsampling: lazy(() => import('./llmSampling/LLMSamplingTab.jsx')),
   selfattention: lazy(() => import('./selfAttention/SelfAttentionTab.jsx')),
@@ -44,6 +46,7 @@ const TabComponents = {
 
   rag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.RAGTypesTab }))),
   pipeline: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PipelineTab }))),
+  completepipeline: lazy(() => import('./completePipeline/CompletePipelineTab.jsx')),
   filtering: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.FilteringTab }))),
   hierrag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HierarchicalRetrievalTab }))),
   qparseloop: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.QuestionParsingLoopTab }))),
@@ -68,6 +71,7 @@ const TabComponents = {
   crossdocjoins: lazy(() => import('./crossDocJoins/CrossDocJoinsTab.jsx')),
   graphtraversalknowledge: lazy(() => import('./graphTraversalKnowledge/GraphTraversalTab.jsx')),
   ragcorpusshapes: lazy(() => import('./ragCorpusShapes/RAGCorpusShapesTab.jsx')),
+  amplifyexpert: lazy(() => import('./amplifyExpert/AmplifyExpertTab.jsx')),
   ragchunking: lazy(() => import('./ragChunkingStrategy/RAGChunkingStrategyTab.jsx')),
 
   ctxeng: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.ContextEngineeringTab }))),
@@ -99,6 +103,7 @@ const TabComponents = {
   vibecode: lazy(() => import('./vibeCode/VibeCodeTab.jsx')),
   fiveassets: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.FiveAssetsTab }))),
   multiagent: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.MultiAgentTab }))),
+  modelrouting: lazy(() => import('./modelRouting/ModelRoutingTab.jsx')),
   agentsastools: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentsAsToolsTab }))),
   codingagentsnonprog: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.NonProgCodingAgentsTab }))),
   langchain: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.LangChainTab }))),
@@ -109,6 +114,7 @@ const TabComponents = {
   agenttasks: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentTasksTab }))),
   aiproductbuilder: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIProductBuilderTab }))),
   mcpclient: lazy(() => import('./mcpClient/MCPClientTab.jsx')),
+  agentsdk: lazy(() => import('./agentsSDK/AgentsSDKTab.jsx')),
   loopengineering: lazy(() => import('./loopEngineering/LoopEngineeringTab.jsx')),
 
   threelayers: lazy(() => import('./engineeringLayers/ThreeLayersTab.jsx')),
@@ -136,6 +142,8 @@ const TabComponents = {
   aiusecases: lazy(() => import('./aiUseCases/AIUseCasesTab.jsx')),
   linearregression: lazy(() => import('./linearRegression/LinearRegressionTab.jsx')),
   pandasdataframes: lazy(() => import('./pandasDataframes/PandasDataFrameTab.jsx')),
+  pandasmem: lazy(() => import('./pandasMem/PandasMemTab.jsx')),
+  geopopviz: lazy(() => import('./geoPopViz/GeoPopTab.jsx')),
   datahumanization: lazy(() => import('./dataHumanization/DataHumanizationTab.jsx')),
   llmfinetuning: lazy(() => import('./llmFinetuning/LLMFinetuningTab.jsx')),
 
