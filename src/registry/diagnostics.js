@@ -118,7 +118,7 @@ export const JOURNEY_LOOPS = {
     description: 'Concept → immediate use, pillar by pillar. Ends with something working at every stop.',
     level: 'Start here',
     icon: '🥾', color: '#10b981', badgeVariant: 'success',
-    order: ['airoadmap', 'glossary', 'firstaiapp', 'promptfundamentals', 'tokenization', 'llmsampling', 'selfattention', 'archconcepts', 'promptmgmt', 'rag', 'pipeline', 'completepipeline', 'ragchunking', 'qparseloop', 'filtering', 'ctxeng', 'vague', 'memeng', 'contextlimits', 'pandasdataframes', 'pandasmem', 'modernioformats', 'geopopviz', 'linearregression', 'classicalml', 'activelearn', 'fiveassets', 'redesign', 'projectprepframework', 'agentsastools', 'agenttasks', 'codingagentsnonprog', 'datahumanization', 'aiusecases', 'tokenbill', 'practices', 'powerfeatures', 'goaltracker']
+    order: ['glossary', 'firstaiapp', 'promptfundamentals', 'tokenization', 'llmsampling', 'selfattention', 'archconcepts', 'promptmgmt', 'rag', 'pipeline', 'completepipeline', 'ragchunking', 'qparseloop', 'filtering', 'ctxeng', 'vague', 'memeng', 'contextlimits', 'pandasdataframes', 'pandasmem', 'modernioformats', 'geopopviz', 'linearregression', 'classicalml', 'activelearn', 'fiveassets', 'redesign', 'projectprepframework', 'agentsastools', 'agenttasks', 'codingagentsnonprog', 'datahumanization', 'aiusecases', 'tokenbill', 'practices', 'powerfeatures', 'goaltracker']
   },
   journey_loop2: {
     trackTitle: 'Loop 2 · Practitioner',
