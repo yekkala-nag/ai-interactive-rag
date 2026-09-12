@@ -17,8 +17,9 @@ import {
   getGroupedTabsForUmbrella,
   getTopicMeta,
   getLevelInfo,
-  getChildLevelSpan,
-  getChildById
+  getChildLevelCounts,
+  getChildById,
+  sortTopicsLikeJourney
 } from '../../registry/curriculum.js';
 import { useModalA11y } from '../../hooks/useModalA11y.js';
 import { isMastered } from '../../services/mastery.js';
@@ -483,7 +484,7 @@ export function Sidebar({
                                 background: 'rgba(255, 255, 255, 0.06)',
                                 padding: '0px 6px', borderRadius: '9999px', flexShrink: 0, marginLeft: '6px'
                               }}>
-                                {getChildLevelSpan(group.child.id, tabs)} · {group.tabs.length}
+                                {getChildLevelCounts(group.child.id, tabs)}
                               </span>
                             </div>
                             <div style={{ height: '3px', borderRadius: '3px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
@@ -505,7 +506,7 @@ export function Sidebar({
                       <button
                         key={tab.id}
                         onClick={() => onSelectTab(tab.id)}
-                        title={`${tab.label} — ${lvl.label}`}
+                        title={`${tab.label} — ${lvl.label}${meta.deep ? ' · Deep dive (optional)' : ''}`}
                         style={{
                           display: 'flex', alignItems: 'center', gap: '8px',
                           padding: '5px 8px',
@@ -541,6 +542,9 @@ export function Sidebar({
                           flex: 1
                         }}>
                           {tab.label}
+                          {meta.deep && (
+                            <span title="Deep dive — optional, skippable on the core path" style={{ color: '#c9a84c', fontSize: '0.7rem', marginLeft: '4px' }}>✦</span>
+                          )}
                         </span>
                         {showFullBadge ? (
                           <span
@@ -656,7 +660,7 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
   const activeMeta = getTopicMeta(activeTab);
   const activeChild = activeMeta.c ? getChildById(activeMeta.c) : null;
   const childTabs = activeChild
-    ? getTabsForUmbrella(currentModule.id).filter(t => getTopicMeta(t.id).c === activeChild.id)
+    ? sortTopicsLikeJourney(getTabsForUmbrella(currentModule.id).filter(t => getTopicMeta(t.id).c === activeChild.id))
     : [];
   const childIndex = childTabs.findIndex(t => t.id === activeTab);
   const prevInChild = childIndex > 0 ? childTabs[childIndex - 1] : null;

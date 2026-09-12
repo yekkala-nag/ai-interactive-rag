@@ -6,7 +6,7 @@
  */
 
 import { getTabById, TABS_REGISTRY, UMBRELLA_TOPICS } from '../registry/tabsRegistry.js';
-import { CHILD_UMBRELLAS, getTopicMeta, getPrereqIds } from '../registry/curriculum.js';
+import { CHILD_UMBRELLAS, getTopicMeta, getPrereqIds, sortTopicsLikeJourney } from '../registry/curriculum.js';
 import { ROLE_PATHS, JOURNEY_LOOPS } from '../registry/diagnostics.js';
 
 /** Stable, bounded: prerequisites precede dependents whenever both are listed. */
@@ -37,8 +37,6 @@ function repairOrder(ids) {
 export function buildTrackTabs(roleId) {
   const spec = ROLE_PATHS[roleId];
   if (!spec) return [];
-  const orderIndex = new Map();
-  TABS_REGISTRY.forEach((t, i) => orderIndex.set(t.id, i));
   let children = spec.children;
   if (!children) {
     // full_mastery: every child umbrella in curriculum order, all levels
@@ -50,10 +48,10 @@ export function buildTrackTabs(roleId) {
   const ids = [];
   const SKIP = new Set(['overview', 'progress']); // hub / tracker pages, not learning topics
   for (const { child, max } of children) {
-    const inChild = TABS_REGISTRY.filter(t => {
+    const inChild = sortTopicsLikeJourney(TABS_REGISTRY.filter(t => {
       const m = getTopicMeta(t.id);
       return m.c === child && m.l <= max;
-    }).sort((a, b) => orderIndex.get(a.id) - orderIndex.get(b.id));
+    }));
     for (const t of inChild) if (!ids.includes(t.id) && !SKIP.has(t.id)) ids.push(t.id);
   }
   return repairOrder(ids.filter(id => TABS_REGISTRY.some(t => t.id === id)));

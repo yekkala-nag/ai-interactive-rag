@@ -9,6 +9,7 @@ import { Page, Container, Section } from './components/layout/Primitives.jsx';
 import { Sidebar, TopBar, CommandPalette } from './components/ui/Navigation.jsx';
 import { AdaptiveWorkflowBar } from './components/ui/AdaptiveWorkflowBar.jsx';
 import { ToastProvider, useToast, Skeleton } from './components/ui/Feedback.jsx';
+import { TopicFooter } from './components/ui/TopicFooter.jsx';
 import { UMBRELLA_TOPICS, getUmbrellaForTab, getTabsForUmbrella, getTabById, TABS_REGISTRY } from './registry/tabsRegistry.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import { s as legacyStyles } from './styles/legacyStyles.js';
@@ -43,6 +44,7 @@ const TabComponents = {
   topicmodeling: lazy(() => import('./topicModeling/TopicModelingTab.jsx')),
   aiharness: lazy(() => import('./aiHarness/AIHarnessTab.jsx')),
   promptlearning: lazy(() => import('./promptLearning/PromptLearningTab.jsx')),
+  uipreview: lazy(() => import('./designPreview/DesignSampleTab.jsx')),
 
   rag: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.RAGTypesTab }))),
   pipeline: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.PipelineTab }))),
@@ -59,6 +61,8 @@ const TabComponents = {
   proxypointer: lazy(() => import('./proxyPointer/ProxyPointerTab.jsx')),
   agenticrag: lazy(() => import('./agenticRAG/AgenticRAGTab.jsx')),
   ragcasestudies: lazy(() => import('./tabs/RAGCaseStudiesTab.jsx')),
+  capstone1: lazy(() => import('./capstone1/Capstone1Tab.jsx')),
+  capstone3: lazy(() => import('./capstone3/Capstone3Tab.jsx')),
   interviewprep: lazy(() => import('./tabs/InterviewPrepTab.jsx')),
   rowlevelrag: lazy(() => import('./rowLevelRAG/RowLevelRAGTab.jsx')),
   tablegridrag: lazy(() => import('./tableGridRAG/TableGridRAGTab.jsx')),
@@ -108,11 +112,14 @@ const TabComponents = {
   codingagentsnonprog: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.NonProgCodingAgentsTab }))),
   langchain: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.LangChainTab }))),
   langgraph: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.LangGraphTab }))),
-  compare: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.CompareTab }))),
+  frameworkcompare: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.CompareTab }))),
+  toolcalling: lazy(() => import('./toolCalling/ToolCallingTab.jsx')),
+  toolcalling: lazy(() => import('./toolCalling/ToolCallingTab.jsx')),
   agentscale: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HighScaleAgentsTab }))),
   agentdebugging: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentDebuggingTab }))),
   agenttasks: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentTasksTab }))),
   aiproductbuilder: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AIProductBuilderTab }))),
+  capstone2: lazy(() => import('./capstone2/Capstone2Tab.jsx')),
   mcpclient: lazy(() => import('./mcpClient/MCPClientTab.jsx')),
   agentsdk: lazy(() => import('./agentsSDK/AgentsSDKTab.jsx')),
   loopengineering: lazy(() => import('./loopEngineering/LoopEngineeringTab.jsx')),
@@ -180,11 +187,14 @@ function TabLoader({ tabId, onSelectTab }) {
   const Component = TabComponents[tabId];
   if (!Component) return <div style={{ padding: 'var(--ds-space-10)', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>Tab not found: {tabId}</div>;
   return (
-    <Suspense fallback={<TabSkeleton />}>
-      <ErrorBoundary key={tabId} fallback={<TabError tabId={tabId} />}>
-        <Component s={legacyStyles} onSelectTab={onSelectTab} setActiveTab={onSelectTab} />
-      </ErrorBoundary>
-    </Suspense>
+    <>
+      <Suspense fallback={<TabSkeleton />}>
+        <ErrorBoundary key={tabId} fallback={<TabError tabId={tabId} />}>
+          <Component s={legacyStyles} onSelectTab={onSelectTab} setActiveTab={onSelectTab} />
+        </ErrorBoundary>
+      </Suspense>
+      <TopicFooter tabId={tabId} onSelectTab={onSelectTab} />
+    </>
   );
 }
 

@@ -5,6 +5,8 @@
  * prerequisites (topic ids). Pure data + helpers; no UI behavior change.
  */
 
+import { JOURNEY_LOOPS as _JOURNEY } from './diagnostics.js';
+
 export const LEVELS = {
   1: { label: 'L1 · Core', short: 'L1', color: '#10b981', blurb: 'Entry points. No prerequisites.' },
   2: { label: 'L2 · Practitioner', short: 'L2', color: '#38bdf8', blurb: 'Builds on L1. Hands-on patterns.' },
@@ -17,6 +19,7 @@ export const CHILD_UMBRELLAS = [
   { id: 'fnd_internals', umbrellaId: 'foundations', title: 'Model Internals', blurb: 'Sampling, attention, models, tokens, serving', order: 2 },
   { id: 'fnd_prompts', umbrellaId: 'foundations', title: 'Prompt Lifecycle', blurb: 'From first prompt to contracts & regression', order: 3 },
   { id: 'fnd_mlsoc', umbrellaId: 'foundations', title: 'ML & Society', blurb: 'RL, alignment, dialogue, topic modeling', order: 4 },
+  { id: 'fnd_multimodal', umbrellaId: 'foundations', title: 'Multimodal Models', blurb: 'Vision, diffusion, speech — core modalities, not ops', order: 5 },
   // ── RAG Architectures & Pipelines ──
   { id: 'rag_core', umbrellaId: 'rag_architecture', title: 'RAG Core', blurb: 'Architectures, pipeline, chunking, parsing', order: 1 },
   { id: 'rag_precision', umbrellaId: 'rag_architecture', title: 'Retrieval Precision', blurb: 'Rerank, eval, tables, multilingual, vision', order: 2 },
@@ -53,7 +56,7 @@ export const TOPIC_META = {
   llmsampling: { c: 'fnd_internals', l: 1, p: [] },
   selfattention: { c: 'fnd_internals', l: 1, p: ['llmsampling'] },
   posencoding: { c: 'fnd_internals', l: 2, p: ['selfattention'] },
-  trpo2grpo: { c: 'fnd_mlsoc', l: 2, p: ['reinforcementlearning'] },
+  trpo2grpo: { c: 'fnd_mlsoc', l: 2, p: ['reinforcementlearning'], deep: true },
   archconcepts: { c: 'fnd_internals', l: 1, p: ['selfattention'] },
   tokenization: { c: 'fnd_internals', l: 1, p: [] },
   modellandscape: { c: 'fnd_internals', l: 2, p: ['archconcepts'] },
@@ -101,8 +104,10 @@ export const TOPIC_META = {
   agenticrag: { c: 'rag_advanced', l: 3, p: ['workflowloop'] },
   graphtraversalknowledge: { c: 'rag_advanced', l: 3, p: ['hierrag'] },
   texttosql: { c: 'rag_advanced', l: 3, p: ['tablegridrag'] },
+  capstone3: { c: 'rag_advanced', l: 3, p: ['agenticrag'] },
   ragcasestudies: { c: 'rag_practice', l: 2, p: ['prodrag'] },
   interviewprep: { c: 'rag_practice', l: 2, p: ['rag'] },
+  capstone1: { c: 'rag_practice', l: 1, p: ['pipeline'] },
   // ── Context & Memory (10) ──
   ctxeng: { c: 'ctx_craft', l: 1, p: [] },
   vague: { c: 'ctx_craft', l: 1, p: ['ctxeng'] },
@@ -120,6 +125,7 @@ export const TOPIC_META = {
   redesign: { c: 'agt_found', l: 1, p: [] },
   projectprepframework: { c: 'agt_found', l: 1, p: ['fiveassets'] },
   agentsastools: { c: 'agt_found', l: 1, p: ['fiveassets'] },
+  toolcalling: { c: 'agt_found', l: 1, p: ['agentsastools'] },
   agenttasks: { c: 'agt_found', l: 1, p: ['fiveassets'] },
   codingagentsnonprog: { c: 'agt_found', l: 1, p: [] },
   agentplanner: { c: 'agt_safety', l: 2, p: ['fiveassets'] },
@@ -136,7 +142,7 @@ export const TOPIC_META = {
   agenta2a: { c: 'agt_multi', l: 3, p: ['multiagent'] },
   langchain: { c: 'agt_multi', l: 2, p: ['agentsastools'] },
   langgraph: { c: 'agt_multi', l: 3, p: ['langchain'] },
-  compare: { c: 'agt_multi', l: 2, p: ['langchain'] },
+  frameworkcompare: { c: 'agt_multi', l: 2, p: ['langchain'] },
   mcpclient: { c: 'agt_multi', l: 2, p: ['agentsastools'] },
   agentsdk: { c: 'agt_multi', l: 2, p: ['multiagent'] },
   loopengineering: { c: 'agt_multi', l: 3, p: ['agentplanner'] },
@@ -146,6 +152,7 @@ export const TOPIC_META = {
   claudecode100: { c: 'agt_prod', l: 3, p: ['agentpairprogramming'] },
   agentscale: { c: 'agt_prod', l: 3, p: ['multiagent'] },
   aiproductbuilder: { c: 'agt_prod', l: 2, p: ['projectprepframework'] },
+  capstone2: { c: 'agt_prod', l: 2, p: ['multiagent'] },
   // ── Data & Platform (26) ──
   pandasdataframes: { c: 'data_found', l: 1, p: [] },
   pandasmem: { c: 'data_found', l: 1, p: ['pandasdataframes'] },
@@ -166,8 +173,8 @@ export const TOPIC_META = {
   frauddetectionml: { c: 'data_ml', l: 2, p: ['classicalml'] },
   timeseriesanomaly: { c: 'data_ml', l: 2, p: ['classicalml'] },
   vaes: { c: 'data_ml', l: 2, p: ['linearregression'] },
-  byol: { c: 'data_ml', l: 2, p: ['vaes'] },
-  xlstm: { c: 'data_ml', l: 2, p: ['classicalml'] },
+  byol: { c: 'data_ml', l: 2, p: ['vaes'], deep: true },
+  xlstm: { c: 'data_ml', l: 2, p: ['classicalml'], deep: true },
   keras3: { c: 'data_ml', l: 2, p: ['classicalml'] },
   aidataplat: { c: 'data_scale', l: 2, p: ['datapipeline'] },
   medallionarch: { c: 'data_scale', l: 2, p: ['datapipeline'] },
@@ -193,9 +200,9 @@ export const TOPIC_META = {
   observability: { c: 'fr_ops', l: 2, p: ['enterpriseaiops'] },
   tokenorchestrationplaybook: { c: 'fr_ops', l: 3, p: ['finops'] },
   enterpriseadvancedplaybook: { c: 'fr_ops', l: 3, p: ['enterpriseaiops'] },
-  visionlanguage: { c: 'fr_frontiers', l: 2, p: [] },
-  diffusionmodels: { c: 'fr_frontiers', l: 2, p: [] },
-  speechvoice: { c: 'fr_frontiers', l: 2, p: [] },
+  visionlanguage: { c: 'fnd_multimodal', l: 2, p: [] },
+  diffusionmodels: { c: 'fnd_multimodal', l: 2, p: [] },
+  speechvoice: { c: 'fnd_multimodal', l: 2, p: [] },
   slmedge: { c: 'fr_frontiers', l: 2, p: ['quantserve'] },
   ragbeyond: { c: 'fr_frontiers', l: 2, p: ['prodrag'] },
   frontiers: { c: 'fr_frontiers', l: 3, p: ['ragbeyond'] }
@@ -218,12 +225,46 @@ export function getLevelInfo(level) {
   return LEVELS[level] || LEVELS[1];
 }
 
-/** Tabs of an umbrella grouped by child, preserving registry order within each child. */
+/** Journey position map: tabId → { loop, index }. Built once, lazily. */
+let _journeyPos = null;
+function journeyPos() {
+  if (!_journeyPos) {
+    _journeyPos = new Map();
+    ['journey_loop1', 'journey_loop2', 'journey_loop3'].forEach((loopId, loop) => {
+      const order = (_JOURNEY[loopId] && _JOURNEY[loopId].order) || [];
+      order.forEach((id, index) => {
+        if (!_journeyPos.has(id)) _journeyPos.set(id, { loop, index });
+      });
+    });
+  }
+  return _journeyPos;
+}
+
+/**
+ * Single display-order rule used by EVERY surface (sidebar, TopBar,
+ * role-track builder): journey loop first, position inside loop second,
+ * level as tiebreak, registry order as final fallback.
+ */
+export function sortTopicsLikeJourney(tabs) {
+  const pos = journeyPos();
+  const fallback = new Map((tabs || []).map((t, i) => [t.id, i]));
+  return [...(tabs || [])].sort((a, b) => {
+    const pa = pos.get(a.id) || { loop: 99, index: 999 };
+    const pb = pos.get(b.id) || { loop: 99, index: 999 };
+    if (pa.loop !== pb.loop) return pa.loop - pb.loop;
+    if (pa.index !== pb.index) return pa.index - pb.index;
+    const la = getTopicMeta(a.id).l, lb = getTopicMeta(b.id).l;
+    if (la !== lb) return la - lb;
+    return (fallback.get(a.id) || 0) - (fallback.get(b.id) || 0);
+  });
+}
+
+/** Tabs of an umbrella grouped by child, journey-ordered within each child. */
 export function getGroupedTabsForUmbrella(umbrellaId, tabsInUmbrella) {
   const children = getChildrenForUmbrella(umbrellaId);
   const byChild = new Map(children.map(c => [c.id, []]));
   const ungrouped = [];
-  for (const t of tabsInUmbrella) {
+  for (const t of sortTopicsLikeJourney(tabsInUmbrella)) {
     const meta = getTopicMeta(t.id);
     if (meta.c && byChild.has(meta.c)) byChild.get(meta.c).push(t);
     else ungrouped.push(t);
@@ -243,6 +284,17 @@ export function getChildLevelSpan(childId, tabsInUmbrella) {
   if (!levels.length) return '';
   const min = Math.min(...levels), max = Math.max(...levels);
   return min === max ? `L${min}` : `L${min}–L${max}`;
+}
+
+/** Per-level composition, e.g. "L1×2 · L2×5 · L3×2" (nonzero levels only). */
+export function getChildLevelCounts(childId, tabsInUmbrella) {
+  const counts = { 1: 0, 2: 0, 3: 0 };
+  for (const t of (tabsInUmbrella || [])) {
+    if (getTopicMeta(t.id).c !== childId) continue;
+    const l = getTopicMeta(t.id).l;
+    if (counts[l] !== undefined) counts[l]++;
+  }
+  return [1, 2, 3].filter(l => counts[l] > 0).map(l => `L${l}×${counts[l]}`).join(' · ');
 }
 
 /** Prerequisite tab ids for a topic (may cross umbrellas). */

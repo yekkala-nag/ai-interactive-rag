@@ -17,5 +17,25 @@ export const EXIT_CHECKS_I = {
     { q: 'Biggest single cut (137→15MB)…', o: ['usecols subset at read', 'inplace only', 'Chunks only', 'Renaming'], a: 0, e: '9x memory, 4x load — interests first.' },
     { q: 'object→category wins when…', o: ['nunique ≪ nrows (~75% saved)', 'Always', 'High cardinality', 'Never'], a: 0, e: 'Repeats compress; unique values punish.' },
     { q: 'chunksize cannot do…', o: ['Global ops (groupby splits chunks)', 'Filtering', 'Aggregation per chunk', 'Saving'], a: 0, e: 'Fits anything, but groups may span chunks.' }
+  ],
+  toolcalling: [
+    { q: 'Function calling bridges…', o: ['Data pipelines to agent execution via typed contracts', 'Prompts to prompts', 'Models to models', 'Logs to bills'], a: 0, e: 'Schemas both sides understand.' },
+    { q: 'Broken args must…', o: ['Fail validation pre-execution', 'Execute anyway', 'Retry silently', 'Ask the user always'], a: 0, e: 'Never execute what the schema rejects.' },
+    { q: 'Parallel calls suit…', o: ['Independent calls in one turn', 'Dependent chains', 'Single calls', 'Writes first'], a: 0, e: 'Serial latency for free work is a bug.' }
+  ],
+  capstone1: [
+    { q: 'Capstone 1 proves Loop 1 RAG with…', o: ['Cited answers + measured retrieval + unit math', 'A demo with no numbers', 'Slides about RAG', 'A bigger model'], a: 0, e: 'Evidence: citations, precision, cost/query.' },
+    { q: 'Vague questions must…', o: ['Clarify, never guess', 'Guess fast', 'Retrieve everything', 'Refuse all'], a: 0, e: 'Clarification is a feature, not friction.' },
+    { q: 'Portfolio artifact…', o: ['Deployed URL + 5-line writeup', 'Adjectives', 'Certificates', 'Screenshots only'], a: 0, e: 'Reviewers hire evidence.' }
+  ],
+  capstone2: [
+    { q: 'Critic agents earn keep by…', o: ['Rejecting weak claims with reasons', 'Approving everything', 'Writing reports', 'Cutting cost'], a: 0, e: 'Rejection with reasons is the value.' },
+    { q: 'Token dashboard attributes…', o: ['Every cent to agent + step', 'Totals only', 'Nothing', 'Monthly guesses'], a: 0, e: 'Unattributed spend is ungoverned spend.' },
+    { q: 'Kill-drill proves…', o: ['Graceful degradation, never hallucination', 'Uptime luck', 'Speed records', 'Low cost'], a: 0, e: 'Demo the failure handling, not just success.' }
+  ],
+  capstone3: [
+    { q: 'Rescue starts with…', o: ['Reproducing failure with identical harness', 'Rewriting everything', 'Bigger models', 'More prompts'], a: 0, e: 'Measure first; hunches last.' },
+    { q: 'Cost down requires…', o: ['Faithfulness held flat, both proven', 'Faithfulness drop accepted', 'Less eval', 'Hope'], a: 0, e: 'Cheap + wrong is not a rescue.' },
+    { q: 'The artifact that matters…', o: ['Before/after metrics + runbook', 'A new architecture diagram', 'Vendor pitch', 'Apology email'], a: 0, e: 'Evidence the next on-call can use.' }
   ]
 };

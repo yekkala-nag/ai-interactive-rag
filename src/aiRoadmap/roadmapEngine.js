@@ -18,7 +18,7 @@ export const ROADMAP_STAGES = [
   },
   {
     n: 3, id: "promptctx", title: "Prompt + Context Engineering", road: "Role/behavior, constraints, structured output, context eval, CoT/ReAct, compaction, caching",
-    tabs: ["promptfundamentals", "promptmgmt", "structuredoutputs", "ctxeng", "vague"],
+    tabs: ["promptfundamentals", "promptmgmt", "ctxeng", "vague", "structuredoutputs"],
     outcome: "Steer models reliably, engineer evidence"
   },
   {
@@ -33,17 +33,18 @@ export const ROADMAP_STAGES = [
   },
   {
     n: 6, id: "rag", title: "RAG Systems", road: "Chunking, retrieval, RAG vs fine-tuning, usecases",
-    tabs: ["rag", "pipeline", "ragchunking", "filtering", "qparseloop", "rerankers", "rageval", "prodrag"],
+    tabs: ["rag", "pipeline", "ragchunking", "qparseloop", "filtering", "rerankers", "rageval", "prodrag"],
     outcome: "Ship grounded answers, measured"
   },
   {
     n: 7, id: "agents", title: "Agents + MCP", road: "Tools/function calling, multi-agent, LangChain/LlamaIndex/SDKs, MCP client/host/server, security",
-    tabs: ["fiveassets", "agentplanner", "agentsastools", "langchain", "langgraph", "mcpclient", "multiagent", "agentevals", "agentsandbox"],
+    tabs: ["fiveassets", "agentsastools", "agentplanner", "agentsandbox", "agentevals", "multiagent", "langchain", "mcpclient", "langgraph"],
     outcome: "Orchestrate tool-using systems safely"
   },
   {
     n: 8, id: "ship", title: "Eval, Observe, Ship", road: "Deterministic/model evals, RAGAS, regression testing, observability, safety, multimodal, dev tools",
-    tabs: ["llmevals", "guardrails", "observability", "finops", "productionragops", "llmreliability", "vibecode", "interviewprep"],
+    // vibecode closes as a capstone pointer (loop-earlier by design, not by journey order)
+    tabs: ["llmevals", "guardrails", "llmreliability", "finops", "productionragops", "observability", "vibecode"],
     outcome: "Prove it, price it, keep it up"
   }
 ];

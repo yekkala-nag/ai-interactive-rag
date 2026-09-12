@@ -18,7 +18,7 @@ export const UMBRELLA_TOPICS = [
     icon: "📚",
     color: "#2a8a84",
     description: "Roadmap stages 1–4: orientation, how LLMs work, prompting, models — home of the AI Engineer Roadmap",
-    tabs: ["airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "humancentric", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "vramconductor", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning"]
+    tabs: ["airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "humancentric", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "vramconductor", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning", "visionlanguage", "diffusionmodels", "speechvoice", "uipreview"]
   },
   {
     id: "data_platform",
@@ -34,7 +34,7 @@ export const UMBRELLA_TOPICS = [
     icon: "⚡",
     color: "#c9a84c",
     description: "Roadmap stage 6: RAG systems end to end",
-    tabs: ["rag", "pipeline", "completepipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "agentfanout", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "amplifyexpert", "ragchunking"]
+    tabs: ["rag", "pipeline", "completepipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "agentfanout", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "amplifyexpert", "ragchunking", "capstone1", "capstone3"]
   },
   {
     id: "context_memory",
@@ -50,7 +50,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🤖",
     color: "#c4572a",
     description: "Roadmap stage 7: agents, MCP and production deployment",
-    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "modelrouting", "langchain", "langgraph", "compare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering"]
+    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "capstone2"]
   },
   {
     id: "frontiers_production",
@@ -58,7 +58,7 @@ export const UMBRELLA_TOPICS = [
     icon: "🔮",
     color: "#10b981",
     description: "Roadmap stage 8: evals, cost, observability — ship and stay reliable",
-    tabs: ["firstaiapp", "enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "enterprisegrade", "finops", "observability", "slmedge", "visionlanguage", "diffusionmodels", "speechvoice", "tokenbill", "llmevals", "modelvalidation", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
+    tabs: ["firstaiapp", "enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "enterprisegrade", "finops", "observability", "slmedge", "tokenbill", "llmevals", "modelvalidation", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
@@ -308,6 +308,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../aiHarness/AIHarnessTab.jsx"))
   },
   {
+    id: "uipreview",
+    label: "🎨 UI Refresh Preview (sample)",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🎨",
+    keywords: ["ui preview", "design sample", "redesign", "mockup", "palette"],
+    component: lazy(() => import("../designPreview/DesignSampleTab.jsx"))
+  },
+  {
     id: "promptlearning",
     label: "Prompt Learning & English Feedback",
     umbrellaId: "foundations",
@@ -472,6 +481,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../tabs/InterviewPrepTab.jsx"))
   },
   {
+    id: "capstone1",
+    label: "Capstone 1: RAG Chatbot",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🏁",
+    keywords: ["capstone", "boss fight", "rag chatbot", "portfolio", "loop 1", "synthesis"],
+    component: lazy(() => import("../capstone1/Capstone1Tab.jsx"))
+  },
+  {
     id: "rowlevelrag",
     label: "Row-Level Table Chunks for RAG",
     umbrellaId: "rag_architecture",
@@ -524,6 +542,15 @@ export const TABS_REGISTRY = [
     icon: "🔗",
     keywords: ["text to sql", "sql agent", "schema linking", "guarded sql", "aggregate", "validity join", "read-only"],
     component: lazy(() => import("../textToSQL/TextToSQLTab.jsx"))
+  },
+  {
+    id: "capstone3",
+    label: "Capstone 3: Save the Pipeline",
+    umbrellaId: "rag_architecture",
+    category: "RAG Systems",
+    icon: "🚒",
+    keywords: ["capstone", "boss fight", "rescue", "sla", "postmortem", "loop 3", "synthesis"],
+    component: lazy(() => import("../capstone3/Capstone3Tab.jsx"))
   },
   {
     id: "crossdocjoins",
@@ -827,6 +854,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AgentsAsToolsTab })))
   },
   {
+    id: "toolcalling",
+    label: "Function Calling Basics",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "📞",
+    keywords: ["function calling", "tool calling", "json schema", "parallel calls", "openai tools", "anthropic tool use", "bridge", "data to agents"],
+    component: lazy(() => import("../toolCalling/ToolCallingTab.jsx"))
+  },
+  {
     id: "agenttasks",
     label: "11 Agent Task Archetypes",
     umbrellaId: "agents_frameworks",
@@ -890,8 +926,8 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.LangGraphTab })))
   },
   {
-    id: "compare",
-    label: "Framework Comparison",
+    id: "frameworkcompare",
+    label: "Agent Framework Comparison",
     umbrellaId: "agents_frameworks",
     category: "Agents & Frameworks",
     icon: "⚖️",
@@ -924,6 +960,15 @@ export const TABS_REGISTRY = [
     icon: "🔨",
     keywords: ["product builder", "prd", "cursorrules", "architecture", "system spec"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.AIProductBuilderTab })))
+  },
+  {
+    id: "capstone2",
+    label: "Capstone 2: Research Agents",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🏆",
+    keywords: ["capstone", "boss fight", "multi-agent report", "token dashboard", "kill drill", "loop 2", "synthesis"],
+    component: lazy(() => import("../capstone2/Capstone2Tab.jsx"))
   },
   {
     id: "mcpclient",
@@ -1247,8 +1292,8 @@ export const TABS_REGISTRY = [
   {
     id: "visionlanguage",
     label: "Vision-Language Models (VLM)",
-    umbrellaId: "frontiers_production",
-    category: "Production & Frontiers",
+    umbrellaId: "foundations",
+    category: "Foundations",
     icon: "🖼️",
     keywords: ["vlm", "vision language models", "multimodal", "vit", "vision transformer", "llava", "paligemma", "clip", "siglip", "patches", "cross-modal connector", "q-former", "vqa", "visual question answering", "multimodal rag"],
     component: lazy(() => import("../visionLanguageModels/VisionLanguageTab.jsx"))
@@ -1256,8 +1301,8 @@ export const TABS_REGISTRY = [
   {
     id: "diffusionmodels",
     label: "Diffusion Models & DiT",
-    umbrellaId: "frontiers_production",
-    category: "Production & Frontiers",
+    umbrellaId: "foundations",
+    category: "Foundations",
     icon: "🎨",
     keywords: ["diffusion", "diffusion models", "dit", "diffusion transformers", "stable diffusion", "flux", "sora", "cfg", "classifier free guidance", "latent diffusion", "ddpm", "ddim", "score matching", "flow matching", "denoising"],
     component: lazy(() => import("../diffusionModels/DiffusionTab.jsx"))
@@ -1265,8 +1310,8 @@ export const TABS_REGISTRY = [
   {
     id: "speechvoice",
     label: "Speech AI & Voice Agents",
-    umbrellaId: "frontiers_production",
-    category: "Production & Frontiers",
+    umbrellaId: "foundations",
+    category: "Foundations",
     icon: "🎙️",
     keywords: ["speech", "voice", "whisper", "asr", "tts", "speech-to-speech", "voice agent", "mel-spectrogram", "encodec", "rvq", "audio codec", "silero vad", "audio tokenization"],
     component: lazy(() => import("../speechVoiceAI/SpeechVoiceTab.jsx"))

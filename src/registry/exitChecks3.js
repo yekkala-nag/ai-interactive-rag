@@ -3,7 +3,7 @@
  * Same shape as exitChecks.js.
  */
 export const EXIT_CHECKS_C = {
-  compare: [
+  frameworkcompare: [
     { q: 'Framework comparison axes…', o: ['State, control, ecosystem, ops burden', 'Logo design', 'Founder fame', 'Tweet count'], a: 0, e: 'Compare on engineering dimensions, not hype.' },
     { q: 'LangChain vs LangGraph choice…', o: ['Chains for flows, graphs for stateful loops', 'Always Graph', 'Always Chain', 'Neither ever'], a: 0, e: 'Match the abstraction to the control you need.' },
     { q: 'Migration cost driver…', o: ['State + handoff contracts', 'Import names', 'Docs length', 'Colors'], a: 0, e: 'Semantics migrate harder than syntax.' }

@@ -27,6 +27,8 @@ import {
 } from '../services/adaptiveLearning.js';
 import { isMastered, getEvidence } from '../services/mastery.js';
 import { DiagnosticQuiz } from '../components/ui/DiagnosticQuiz.jsx';
+import { TestOutGate } from '../components/ui/TestOutGate.jsx';
+import { SkillTree } from '../components/ui/SkillTree.jsx';
 import { ExitCheck } from '../components/ui/ExitCheck.jsx';
 import {
   getNextBest,
@@ -122,6 +124,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
   const [quizOpen, setQuizOpen] = useState(false);
   const [placement, setPlacement] = useState(() => getPlacement());
   const [recapTab, setRecapTab] = useState(null);
+  const [testOutUmb, setTestOutUmb] = useState(null);
   const [dashTick, setDashTick] = useState(0);
 
   const handleNavigate = (tabId) => {
@@ -487,6 +490,29 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                       </div>
                     ))}
                   </div>
+                  <div>
+                    <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--ds-color-text-primary)', marginBottom: '8px' }}>
+                      🛫 Test out of a pillar — prove foundations, skip ahead
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      {UMBRELLA_TOPICS.map(u => (
+                        <button
+                          key={u.id}
+                          onClick={() => setTestOutUmb(u.id)}
+                          title={`Pre-flight check for ${u.title}`}
+                          style={{
+                            padding: '6px 12px', borderRadius: '16px', cursor: 'pointer',
+                            fontSize: '0.75rem', fontWeight: 600,
+                            background: 'transparent',
+                            border: `1px solid ${u.color}`,
+                            color: u.color
+                          }}
+                        >
+                          {u.icon} Test out: {u.title.split(' ')[0]}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                   <Grid columns={{ base: 1, md: 2 }} gap="lg">
                     {/* next best */}
                     <div>
@@ -539,6 +565,28 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                 </div>
               );
             })()}
+          </Section.Body>
+        </Section>
+
+        {/* ============================================================ */}
+        {/* SECTION 1.6: SKILL TREE — the dependency graph as a map */}
+        {/* ============================================================ */}
+        <Section variant="bordered">
+          <Section.Header>
+            <Flex justify="space-between" align="center" wrap gap="sm">
+              <div>
+                <h2 style={{ fontSize: 'var(--ds-font-size-h2)', marginBottom: 'var(--ds-space-2)' }}>
+                  🕸️ Skill Tree — See What Each Topic Unlocks
+                </h2>
+                <p style={{ color: 'var(--ds-color-text-secondary)' }}>
+                  The curriculum's prerequisite graph, colored by your mastery. Glowing nodes are ready now — completing one lights up everything downstream of it.
+                </p>
+              </div>
+              <Badge variant="module" moduleId="foundations" size="md">Meta-learning map</Badge>
+            </Flex>
+          </Section.Header>
+          <Section.Body>
+            <SkillTree onSelectTab={handleNavigate} />
           </Section.Body>
         </Section>
 
@@ -909,6 +957,12 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
         tabId={recapTab || 'overview'}
         onSelectTab={handleNavigate}
         onClose={() => { setRecapTab(null); setDashTick(t => t + 1); }}
+      />
+      <TestOutGate
+        open={!!testOutUmb}
+        umbrellaId={testOutUmb || 'foundations'}
+        onSelectTab={handleNavigate}
+        onClose={() => { setTestOutUmb(null); setDashTick(t => t + 1); }}
       />
       <DiagnosticQuiz
         open={quizOpen}
