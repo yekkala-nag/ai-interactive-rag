@@ -2,6 +2,8 @@
 // PROMPT ENGINEERING FUNDAMENTALS & COGNITIVE PATTERNS ENGINE
 // Complete taxonomy of Zero-shot, Few-shot, Chain-of-Thought (CoT),
 // Tree-of-Thoughts (ToT), Directional Stimulus, and Delimiter Architectures
+// Extended with: CoT vs ToT Deep Dive (ML Mastery) — when to use each,
+// computational trade-offs, hybrid approaches, and agentic reasoning patterns
 // ============================================================================
 
 export const COGNITIVE_PROMPTING_PATTERNS = [
@@ -73,7 +75,7 @@ export const PROMPT_STRUCTURE_COMPONENTS = [
 export const PYTHON_DSPY_PROMPT_SCRIPT = `# ============================================================================
 # PRODUCTION DSPY DECLARATIVE PROMPTING & COMPILATION PIPELINE
 # Demonstrates automatic prompt optimization with teleprompters & assertions
-# ============================================================================
+// ============================================================================
 
 import dspy
 
@@ -110,4 +112,175 @@ class FinancialExtractor(dspy.Module):
 extractor = FinancialExtractor()
 result = extractor(transcript="In Q2 we hit 100M and in Q3 we accelerated to 130M.")
 print("Extracted Data:", result)
+`;
+
+// ============================================================================
+// CHAIN-OF-THOUGHT vs TREE-OF-THOUGHTS — Deep Comparison (ML Mastery Guide)
+// When to use each, computational trade-offs, hybrid approaches, agentic patterns
+// ============================================================================
+
+export const COT_VS_TOT_COMPARISON = [
+  {
+    dimension: "Reasoning Structure",
+    cot: "Linear chain: single path of reasoning tokens → final answer",
+    tot: "Tree search: multiple branches explored in parallel, scored, pruned, backtracked",
+    winner: "ToT for complex branching problems; CoT for linear deduction"
+  },
+  {
+    dimension: "Computational Cost",
+    cot: "O(1) LLM calls (single generation with reasoning tokens)",
+    tot: "O(k^d) LLM calls where k=branching factor, d=depth. Typically 10-100x CoT cost",
+    winner: "CoT for latency/cost sensitive; ToT for high-stakes single decisions"
+  },
+  {
+    dimension: "Error Recovery",
+    cot: "None — first error propagates to final answer (no backtracking)",
+    tot: "Built-in — dead ends detected via self-evaluation, backtrack to sibling branch",
+    winner: "ToT dramatically superior for puzzles, planning, multi-constraint problems"
+  },
+  {
+    dimension: "Implementation Complexity",
+    cot: "Trivial — add \"Let's think step by step\" or few-shot CoT exemplars",
+    tot: "Requires search infrastructure: tree state, evaluator, pruning policy, backtrack logic",
+    winner: "CoT wins on simplicity; ToT needs framework (LangGraph, custom)"
+  },
+  {
+    dimension: "Best Task Types",
+    cot: "Arithmetic, logic puzzles, code tracing, math word problems, syllogisms",
+    tot: "Game of 24, creative writing with constraints, architecture design, strategic games, multi-file refactoring",
+    winner: "Match structure to task: linear → CoT, branching → ToT"
+  },
+  {
+    dimension: "Scalability to Agents",
+    cot: "Natural fit for ReAct loops — each step is a CoT micro-reasoning",
+    tot: "Expensive in agent loops; use sparingly for critical decision nodes only",
+    winner: "CoT as default agent reasoning; ToT for planner/strategic nodes"
+  }
+];
+
+export const COT_TOT_HYBRID_PATTERNS = [
+  {
+    name: "CoT-Planned ToT",
+    description: "Use CoT to generate high-level plan, then ToT only on the most uncertain/critical step",
+    whenToUse: "Long-horizon tasks where only 1-2 decisions are truly branching",
+    costReduction: "90%+ vs full ToT"
+  },
+  {
+    name: "Progressive Deepening",
+    description: "Start with CoT; if confidence low (self-eval) or validator fails, escalate to ToT for that subproblem",
+    whenToUse: "Unknown task difficulty; adaptive compute allocation",
+    costReduction: "Variable — only pays for ToT when needed"
+  },
+  {
+    name: "ToT-for-Planning, CoT-for-Execution",
+    description: "Planner agent uses ToT to generate robust plan; executor agents use CoT for each step",
+    whenToUse: "Multi-agent systems with planner/executor separation",
+    costReduction: "Concentrates ToT cost on single planner call"
+  },
+  {
+    name: "Constrained ToT (Grammar-Guided)",
+    description: "Restrict ToT branching with formal grammars / JSON schemas to prune invalid branches early",
+    whenToUse: "Structured output tasks (code, SQL, API calls) where syntax errors dominate",
+    costReduction: "50-80% via early syntactic pruning"
+  }
+];
+
+export const AGENTIC_REASONING_PATTERNS = [
+  {
+    pattern: "ReAct + CoT",
+    trace: "Thought (CoT) → Action → Observation → Thought (CoT) → ...",
+    useCase: "General-purpose tool-using agents; default for most applications",
+    cost: "Low-Medium"
+  },
+  {
+    pattern: "Plan-Execute + ToT Planner",
+    trace: "ToT Planner → Plan → [Parallel CoT Executors] → Replan on drift",
+    useCase: "Complex multi-step tasks with clear decomposition; high-stakes outcomes",
+    cost: "High (planner) + Medium (executors)"
+  },
+  {
+    pattern: "Reflexion + CoT",
+    trace: "CoT Attempt → CoT Critique → CoT Retry (bounded)",
+    useCase: "Code generation, math, verifiable tasks where self-correction works",
+    cost: "Medium (2-3x base CoT)"
+  },
+  {
+    pattern: "Multi-Agent Debate (ToT-inspired)",
+    trace: "Multiple agents propose → cross-critique → converge → final answer",
+    useCase: "Subjective tasks, creative work, safety-critical decisions",
+    cost: "High (k agents × rounds)"
+  }
+];
+
+export const PYTHON_COT_TOT_HYBRID = `# ============================================================================
+# HYBRID CoT/ToT: Progressive Deepening with Adaptive Compute
+# ============================================================================
+
+from dataclasses import dataclass
+from typing import Callable, Optional
+import json
+
+@dataclass
+class ReasoningResult:
+    answer: str
+    confidence: float          # 0-1 self-evaluation
+    reasoning_trace: str
+    method: str                # "cot" | "tot" | "hybrid"
+    llm_calls: int
+
+class HybridReasoner:
+    def __init__(self, llm: Callable[[str], str], tot_branching: int = 3, tot_depth: int = 2):
+        self.llm = llm
+        self.tot_branching = tot_branching
+        self.tot_depth = tot_depth
+
+    def cot(self, prompt: str) -> ReasoningResult:
+        response = self.llm(f"{prompt}\\nLet's think step by step:")
+        confidence = self._self_eval(response)
+        return ReasoningResult(response, confidence, response, "cot", 1)
+
+    def tot(self, prompt: str) -> ReasoningResult:
+        # Simplified ToT: generate k candidates at each depth, score, keep best
+        candidates = [prompt]
+        total_calls = 0
+        for depth in range(self.tot_depth):
+            new_candidates = []
+            for c in candidates:
+                branches = [self.llm(f"{c}\\nAlternative approach {i+1}:") for i in range(self.tot_branching)]
+                total_calls += self.tot_branching
+                scored = [(b, self._self_eval(b)) for b in branches]
+                scored.sort(key=lambda x: x[1], reverse=True)
+                new_candidates.extend([b for b, _ in scored[:2]])  # keep top 2
+            candidates = new_candidates
+        best = max(candidates, key=self._self_eval)
+        return ReasoningResult(best, self._self_eval(best), json.dumps(candidates), "tot", total_calls)
+
+    def hybrid(self, prompt: str, confidence_threshold: float = 0.7) -> ReasoningResult:
+        # Progressive deepening: CoT first, escalate to ToT if low confidence
+        cot_result = self.cot(prompt)
+        if cot_result.confidence >= confidence_threshold:
+            return ReasoningResult(cot_result.answer, cot_result.confidence, cot_result.reasoning_trace, "cot", 1)
+        
+        # Low confidence → escalate to ToT
+        tot_result = self.tot(prompt)
+        return ReasoningResult(
+            tot_result.answer,
+            tot_result.confidence,
+            f"CoT (conf={cot_result.confidence:.2f}) → ToT:\\n{tot_result.reasoning_trace}",
+            "hybrid",
+            1 + tot_result.llm_calls
+        )
+
+    def _self_eval(self, text: str) -> float:
+        # In production: use a separate critic model or structured eval
+        eval_prompt = f"Rate the correctness and completeness of this reasoning 0-1:\\n{text}\\nScore:"
+        try:
+            return float(self.llm(eval_prompt).strip())
+        except:
+            return 0.5
+
+# Usage
+# reasoner = HybridReasoner(llm=my_llm_call)
+# result = reasoner.hybrid("Design a rate limiter for 100k req/s with per-tenant fairness")
+# print(f"Method: {result.method}, Calls: {result.llm_calls}, Confidence: {result.confidence:.2f}")
 `;

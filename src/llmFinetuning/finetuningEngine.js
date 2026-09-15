@@ -2,6 +2,8 @@
 // MODEL FINE-TUNING & QLORA/DPO END-TO-END ENGINE
 // Comprehensive, production-grade logic for PEFT, LoRA, QLoRA, DPO, RLHF,
 // Hardware & VRAM Estimation, Dataset Preparation, and Inference Comparisons
+// Extended with: Fine-tuning Agentic AI (ML Mastery) — multi-agent fine-tuning,
+// agentic behavior distillation, tool-use fine-tuning, and agent evaluation loops
 // ============================================================================
 
 export const FINE_TUNE_VS_RAG_MATRIX = [
@@ -494,4 +496,230 @@ python3 -m vllm.entrypoints.openai.api_server \\
     --max-model-len 8192 \\
     --dtype bfloat16 \\
     --enforce-eager
+`;
+
+// ============================================================================
+// FINE-TUNING AGENTIC AI — Extended Content from ML Mastery Guide
+// Multi-agent fine-tuning, agentic behavior distillation, tool-use training,
+// and agent evaluation loops
+// ============================================================================
+
+export const AGENTIC_FINE_TUNING_PIPELINE = [
+  {
+    stage: "1. Agent Behavior Data Collection",
+    description: "Generate expert trajectories from strong agents (GPT-4o, Claude 3.5 Sonnet) solving complex tasks using tools, planning, and multi-step reasoning.",
+    keyTechniques: [
+      "ReAct / Plan-Execute trajectory logging",
+      "Tool call + observation serialization",
+      "State snapshots at each decision point",
+      "Human preference annotations on trajectories"
+    ],
+    dataFormat: "JSONL with {task, trajectory, tools_used, outcome, preference_rank}",
+    computeCost: "High — requires frontier model API calls"
+  },
+  {
+    stage: "2. Behavior Cloning (SFT) on Agent Trajectories",
+    description: "Supervised fine-tuning on expert agent trajectories to internalize planning, tool selection, and reasoning patterns.",
+    keyTechniques: [
+      "QLoRA on 7B–70B base models",
+      "Packed sequences with conversation + tool format",
+      "Loss masking on tool outputs (only train on agent tokens)",
+      "Multi-turn conversation template with tool schema"
+    ],
+    dataFormat: "ChatML / OpenAI format with tool_calls and tool_results roles",
+    computeCost: "Moderate — single GPU (24GB) for 7B QLoRA"
+  },
+  {
+    stage: "3. Tool-Use Fine-Tuning (Function Calling)",
+    description: "Specialized fine-tuning for reliable function calling with correct JSON schema adherence and parameter validation.",
+    keyTechniques: [
+      "Constrained decoding with JSON schema grammars",
+      "Negative examples: malformed tool calls → correction",
+      "Parallel tool call training",
+      "Tool description injection at inference"
+    ],
+    dataFormat: "Function calling format (OpenAI / Mistral / Anthropic)",
+    computeCost: "Low — can be combined with Stage 2"
+  },
+  {
+    stage: "4. Preference Optimization (DPO/RLAIF) for Agent Behavior",
+    description: "Align agent outputs with human preferences: fewer loops, better tool choices, graceful error recovery.",
+    keyTechniques: [
+      "DPO on trajectory pairs (chosen vs rejected)",
+      "RLAIF: LLM-as-judge for trajectory ranking",
+      "Reward components: task success, tool efficiency, token economy",
+      "Rejection sampling for hard negative mining"
+    ],
+    dataFormat: "DPO pairs: {prompt, chosen_trajectory, rejected_trajectory}",
+    computeCost: "Moderate — requires reference model"
+  },
+  {
+    stage: "5. Agent Evaluation Loop",
+    description: "Continuous evaluation framework measuring agent capabilities on held-out tasks with automated and human judges.",
+    keyTechniques: [
+      "Benchmarks: GAIA, WebShop, ALFWorld, SWE-bench",
+      "Metrics: success rate, steps to completion, tool accuracy, cost",
+      "Regression detection on capability drift",
+      "A/B testing fine-tuned vs base agents"
+    ],
+    dataFormat: "Evaluation reports + trajectory logs",
+    computeCost: "Ongoing — automated nightly runs"
+  }
+];
+
+export const AGENTIC_FINE_TUNING_CHALLENGES = [
+  {
+    challenge: "Distribution Shift: Agent vs Chat Data",
+    detail: "Agent trajectories contain tool calls, observations, and multi-turn reasoning — vastly different from chat/instruction data. Requires custom tokenization and loss masking.",
+    mitigation: "Separate training phases: SFT on trajectories → tool-use specialization → preference alignment"
+  },
+  {
+    challenge: "Tool Schema Generalization",
+    detail: "Fine-tuned agents overfit to training tool schemas. New tools at inference cause hallucinated parameters.",
+    mitigation: "Schema-injected training, few-shot tool examples in context, constrained decoding with dynamic grammars"
+  },
+  {
+    challenge: "Multi-Agent Credit Assignment",
+    detail: "In multi-agent systems, which agent's action caused success/failure? Trajectory-level rewards don't attribute to individual agents.",
+    mitigation: "Counterfactual trajectory editing, per-agent advantage estimation, hierarchical reward decomposition"
+  },
+  {
+    challenge: "Evaluation Cost & Reliability",
+    detail: "Running agents on benchmarks is expensive (API costs, latency) and stochastic. Hard to get statistically significant comparisons.",
+    mitigation: "Deterministic seeds, cached tool responses, LLM-as-judge with calibration, smaller proxy benchmarks"
+  },
+  {
+    challenge: "Catastrophic Forgetting of Base Capabilities",
+    detail: "Fine-tuning for agent behavior can degrade general reasoning, coding, or knowledge retrieval abilities.",
+    mitigation: "LoRA with low rank (r=8–16), replay buffers with general data, KL regularization to base model"
+  }
+];
+
+export const AGENTIC_FINE_TUNING_RECIPES = [
+  {
+    name: "Single-Agent Task Automation (7B QLoRA)",
+    baseModel: "Mistral-7B / Llama-3.1-8B",
+    method: "QLoRA r=16, α=32, 4-bit NF4",
+    data: "5k–10k expert ReAct trajectories on target domain",
+    epochs: 3,
+    lr: "2e-4",
+    hardware: "1× RTX 4090 (24GB) or A10G",
+    expectedOutcome: "80%+ success on domain tasks, reliable tool calling"
+  },
+  {
+    name: "Multi-Agent Coding Assistant (34B QLoRA)",
+    baseModel: "CodeLlama-34B / DeepSeek-Coder-33B",
+    method: "QLoRA r=32, α=64, 4-bit NF4",
+    data: "20k+ trajectories: planner + coder + reviewer + tester roles",
+    epochs: 2,
+    lr: "1e-4",
+    hardware: "2× A100 80GB or 4× RTX 4090",
+    expectedOutcome: "End-to-end feature implementation with self-review"
+  },
+  {
+    name: "Tool-Augmented Research Agent (DPO Alignment)",
+    baseModel: "Llama-3.1-70B (QLoRA)",
+    method: "DPO β=0.1 on trajectory pairs + QLoRA",
+    data: "3k preference pairs from human annotators",
+    epochs: 1,
+    lr: "5e-7",
+    hardware: "2× A100 80GB",
+    expectedOutcome: "Fewer redundant searches, better source selection, graceful API error handling"
+  }
+];
+
+export const PYTHON_AGENTIC_QLORA_SCRIPT = `# ============================================================================
+# AGENTIC QLORA: Fine-tuning a Tool-Using Agent with Trajectory Data
+# ============================================================================
+# pip install unsloth trl peft accelerate bitsandbytes datasets
+
+from unsloth import FastLanguageModel
+from trl import SFTTrainer
+from datasets import load_dataset
+import torch
+
+# 1. Load 4-bit quantized base model
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="unsloth/Mistral-7B-Instruct-v0.3-bnb-4bit",
+    max_seq_length=8192,
+    dtype=torch.bfloat16,
+    load_in_4bit=True,
+)
+
+# 2. Add LoRA adapters (only 0.5% params trained)
+model = FastLanguageModel.get_peft_model(
+    model, r=16, target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    lora_alpha=32, lora_dropout=0, bias="none", use_gradient_checkpointing="unsloth",
+    random_state=42, use_rslora=False, loftq_config=None,
+)
+
+# 3. Load agent trajectory dataset (JSONL: messages with tool_calls/tool_results)
+dataset = load_dataset("json", data_files="agent_trajectories.jsonl", split="train")
+
+# 4. Format for chat template with tool roles
+def format_trajectory(ex):
+    # Assumes OpenAI-style chat format with tool_calls
+    return {"text": tokenizer.apply_chat_template(ex["messages"], tokenize=False, add_generation_prompt=False)}
+
+dataset = dataset.map(format_trajectory, remove_columns=dataset.column_names)
+
+# 5. SFT Trainer with loss masking on tool outputs
+trainer = SFTTrainer(
+    model=model,
+    tokenizer=tokenizer,
+    train_dataset=dataset,
+    dataset_text_field="text",
+    max_seq_length=8192,
+    dataset_num_proc=4,
+    packing=True,
+    args=TrainingArguments(
+        output_dir="./agentic-mistral-7b-qlora",
+        per_device_train_batch_size=2,
+        gradient_accumulation_steps=8,
+        warmup_steps=10,
+        num_train_epochs=3,
+        learning_rate=2e-4,
+        fp16=False, bf16=True,
+        logging_steps=5,
+        optim="adamw_8bit",
+        weight_decay=0.01,
+        lr_scheduler_type="cosine",
+        seed=42,
+        report_to="none",
+    ),
+)
+
+trainer.train()
+model.save_pretrained_merged("./agentic-mistral-7b-merged", tokenizer, save_method="merged_16bit")
+print("Agentic QLoRA complete!")
+
+# ============================================================================
+# INFERENCE: Tool-Constrained Decoding with JSON Schema
+# ============================================================================
+from transformers import GenerationConfig
+from llama_cpp import Llama
+
+llm = Llama(model_path="./agentic-mistral-7b-merged.gguf", n_gpu_layers=-1, n_ctx=8192)
+
+# Define tool schema for constrained decoding
+tool_schema = {
+    "name": "search_web",
+    "parameters": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]}
+}
+
+# Grammar-constrained generation (llama.cpp GBNF)
+gbnf_grammar = '''
+root ::= tool_call
+tool_call ::= "{\\"name\\": \\"search_web\\", \\"arguments\\": " {" query } "}"
+query ::= "\\"query\\": \\"" [^"]* "\\""
+'''
+
+response = llm.create_chat_completion(
+    messages=[{"role": "user", "content": "Find the latest Rust async runtime benchmarks"}],
+    tools=[tool_schema],
+    tool_choice="auto",
+    grammar=gbnf_grammar,
+    temperature=0.1,
+)
+print(response)
 `;

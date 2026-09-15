@@ -3,7 +3,7 @@ import * as Primitives from '../components/layout/Primitives.jsx';
 import { Hero, CodeBlock } from '../components/ui/Content.jsx';
 import { Card, Badge, Button, Callout } from '../components/ui/Core.jsx';
 import DiagramImage from '../components/ui/DiagramImage.jsx';
-import { MEMORY_TIERS, MEMGPT_LOOP, FORGETTING_RULES, ROUTE_MEMORY, PYTHON_MEMORY_CODE } from './memoryEngine.js';
+import { MEMORY_TIERS, MEMGPT_LOOP, FORGETTING_RULES, ROUTE_MEMORY, PYTHON_MEMORY_CODE, MEMORY_FRAMEWORKS_2026, MEMORY_FRAMEWORK_SELECTION_GUIDE, PYTHON_MEMORY_FRAMEWORK_COMPARISON } from './memoryEngine.js';
 
 const { Container, Grid, Flex, Stack } = Primitives;
 const TIER_COLORS = { Working: '#2AB5B0', Episodic: '#F5A623', Semantic: '#2AB5B0', 'Cold archive': '#64748b' };
@@ -19,7 +19,8 @@ export default function MemHierarchyTab() {
   const tabs = [
     { id: 'tiers', icon: '🗂️', label: '1. Tiers + MemGPT Loop', desc: '4 tiers & paging workflow' },
     { id: 'sim', icon: '🔬', label: '2. Memory Router Sim', desc: 'Route any event live' },
-    { id: 'code', icon: '🛠️', label: '3. Forgetting + Code', desc: 'Rules & Python' }
+    { id: 'code', icon: '🛠️', label: '3. Forgetting + Code', desc: 'Rules & Python' },
+    { id: 'frameworks', icon: '📦', label: '4. 6 Frameworks (2026)', desc: 'MemGPT, Letta, LangMem, Zep, Mem0, CrewAI' }
   ];
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
@@ -69,6 +70,86 @@ export default function MemHierarchyTab() {
           <CodeBlock language="python" code={PYTHON_MEMORY_CODE} />
           <Callout type="success"><strong>Privacy invariant:</strong> quarantine → hash + TTL before any scoring. 'Forget X' deletes with receipt; contradictions tombstone via valid_to.</Callout>
         </Stack></Card></Stack>)}
+
+        {/* ─── SUBTAB 4: 6 BEST AI AGENT MEMORY FRAMEWORKS 2026 ─── */}
+        {sub === 'frameworks' && (
+          <Stack gap={6}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
+              <Stack gap={4}>
+                <div>
+                  <h3 style={{ margin: 0 }}>📦 6 Best AI Agent Memory Frameworks (ML Mastery 2026)</h3>
+                  <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+                    Comprehensive comparison: MemGPT (OS-level paging), Letta (managed), LangMem (LangChain-native), Zep (graph+temporal), Mem0 (lightweight), CrewAI (multi-agent).
+                  </p>
+                </div>
+
+                {/* Framework Cards */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--ds-space-3)' }}>
+                  {MEMORY_FRAMEWORKS_2026.map((f, i) => (
+                    <Card key={i} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                        <div>
+                          <div style={{ fontSize: '14px', color: '#17837F', fontWeight: 'bold' }}>{f.name}</div>
+                          <div style={{ fontSize: '11px', color: '#F5A623', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{f.category}</div>
+                        </div>
+                      </div>
+                      <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginBottom: '8px', fontStyle: 'italic' }}>"{f.keyInsight}"</div>
+                      <div style={{ fontSize: '10px', color: 'var(--ds-color-text-tertiary)', marginBottom: '6px' }}>
+                        <strong>Architecture:</strong> {f.architecture.slice(0, 2).join('; ')}...
+                      </div>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '8px' }}>
+                        {f.strengths.slice(0, 2).map((s, j) => (
+                          <span key={j} style={{ background: 'rgba(38,191,176,0.15)', color: '#17837F', padding: '2px 6px', borderRadius: '3px', fontSize: '9px' }}>{s}</span>
+                        ))}
+                      </div>
+                      <div style={{ fontSize: '10px', color: '#ef4444', marginBottom: '8px' }}>
+                        ⚠ {f.limitations[0]}
+                      </div>
+                      <div style={{ fontSize: '10px', color: '#17837F', fontWeight: 'bold' }}>
+                        ✓ Best for: {f.bestFor}
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+
+                {/* Selection Guide */}
+                <div style={{ marginTop: 'var(--ds-space-4)' }}>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>🎯 Framework Selection Guide</h4>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Your Scenario</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Recommended</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Why</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {MEMORY_FRAMEWORK_SELECTION_GUIDE.map((g, i) => (
+                          <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{g.scenario}</td>
+                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{g.recommended}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-tertiary)' }}>{g.reason}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Quickstart Comparison Code */}
+                <div style={{ marginTop: 'var(--ds-space-4)' }}>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>🛠️ Quickstart API Comparison (Run Each to Compare)</h4>
+                  <CodeBlock language="python" code={PYTHON_MEMORY_FRAMEWORK_COMPARISON} />
+                  <Callout type="success">
+                    <strong>Decision heuristic:</strong> OS paging → MemGPT/Letta. LangChain native → LangMem. Temporal queries → Zep. 
+                    5-minute integration → Mem0. CrewAI multi-agent → CrewAI Memory. Enterprise compliance → Letta/Zep Cloud.
+                  </Callout>
+                </div>
+              </Stack>
+            </Card>
+          </Stack>
+        )}
       </Container>
     </div>
   );

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import OReillyRadarTab from "./OReillyRadarTab.jsx";
+import GraphEngineeringTab from "./GraphEngineeringTab.jsx";
 
 const COLORS = {
   bg: "#080D1A",
@@ -1601,6 +1603,8 @@ export function LoopEngineeringTab({ onSelectTab, setActiveTab }) {
     { id: "patterns", label: "Patterns" },
     { id: "library", label: "Loop Library" },
     { id: "guide", label: "Practical Guide" },
+    { id: "oreilly", label: "O'Reilly Radar" },
+    { id: "graphs", label: "Graph Engineering" },
     { id: "addy", label: "Addy Osmani" },
     { id: "commands", label: "Commands" },
     { id: "realworld", label: "Real World" },
@@ -1801,6 +1805,12 @@ export function LoopEngineeringTab({ onSelectTab, setActiveTab }) {
 
         {/* PRACTICAL GUIDE TAB */}
         {tab === "guide" && <PracticalGuide />}
+
+        {/* O'REILLY RADAR TAB */}
+        {tab === "oreilly" && <OReillyRadarTab />}
+
+        {/* GRAPH ENGINEERING TAB */}
+        {tab === "graphs" && <GraphEngineeringTab />}
 
         {/* ADDY OSMANI TAB */}
         {tab === "addy" && <AddyOsmani />}

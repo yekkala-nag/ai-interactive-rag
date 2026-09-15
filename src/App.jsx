@@ -3,6 +3,7 @@ import { TABS_REGISTRY, CATEGORIES, UMBRELLA_TOPICS, getTabById } from "./regist
 import { s } from "./styles/legacyStyles.js";
 import DiagramImage from "./components/ui/DiagramImage.jsx";
 import LangChainVsLangGraphComparison from "./components/ui/LangChainVsLangGraphComparison.jsx";
+import StrandsAgentCoreTab from "./strandsAgentCore/StrandsAgentCoreTab.jsx";
 import Sidebar from "./components/layout/Sidebar.jsx";
 import TopBar from "./components/layout/TopBar.jsx";
 
@@ -14637,12 +14638,13 @@ export const HighScaleAgentsTab = ({ s }) => {
     { id: "simulator", label: "⚡ 1M-Request Engine", desc: "Monolith vs Decomposed agent benchmark" },
     { id: "guardrails", label: "🛡️ Guardrails Triad", desc: "Scope limits, step caps & checkpointing" },
     { id: "resilience", label: "💾 Checkpoints & Backoff", desc: "PostgresSaver & Tenacity retries" },
-    { id: "token_debugger", label: "🔍 Live Request Inspector", desc: "Traced agent step logs & context overhead" }
+    { id: "token_debugger", label: "🔍 Live Request Inspector", desc: "Traced agent step logs & context overhead" },
+    { id: "strands", label: "☁️ Strands + AgentCore", desc: "Build & deploy agents on AWS cloud" }
   ];
 
   return (
     <div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.8rem", marginBottom: "1.5rem" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "0.8rem", marginBottom: "1.5rem" }}>
         {subTabs.map(t => (
           <button
             key={t.id}
@@ -15069,6 +15071,9 @@ async def safe_llm_invoke(agent, payload):
           </div>
         </div>
       )}
+
+      {/* SUB-TAB 5: STRANDS + AGENTCORE */}
+      {subTab === "strands" && <StrandsAgentCoreTab />}
 
     </div>
   );

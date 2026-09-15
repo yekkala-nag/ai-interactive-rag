@@ -1,6 +1,8 @@
 // ============================================================================
 // AGENT PLANNING PATTERNS ENGINE — ReAct vs Plan-Execute vs Reflexion vs ToT
 // Responsible AI & Security Compliant: Zero PII / synthetic demo data only
+// Extended with: Dynamic Skill Composition (TDS) — skill graphs, context-aware
+// skill retrieval, skill chaining, and skill evolution loops
 // ============================================================================
 
 export const PLANNER_PATTERNS = [
@@ -53,4 +55,158 @@ def plan_execute(task: str, plan, dispatch) -> dict:
 
 def needs_approval(steps) -> bool:
     return any(s.get("irreversible") for s in steps)
+`;
+
+// ============================================================================
+// DYNAMIC SKILL COMPOSITION — From Static to Dynamic Skills (TDS Guide)
+// Skill graphs, context-aware retrieval, chaining, and evolution loops
+// ============================================================================
+
+export const DYNAMIC_SKILL_ARCHITECTURE = [
+  {
+    component: "Skill Graph (Knowledge Base)",
+    description: "Directed acyclic graph of skills with prerequisites, inputs/outputs, and success conditions. Each skill is a self-contained capability with pre/post conditions.",
+    structure: "Nodes: skill_id, name, description, code/tool, preconditions, postconditions, confidence\nEdges: depends_on, enables, conflicts_with",
+    example: "Skill: 'query_sql' requires 'connect_db' → enables 'analyze_results'",
+    benefit: "Enables topological planning — agent discovers valid skill sequences automatically"
+  },
+  {
+    component: "Context-Aware Skill Retrieval",
+    description: "Embed skills + task context into shared vector space. Retrieve top-k relevant skills for current state, not all skills.",
+    technique: "Dual encoder: skill(description + preconditions) + task(state + goal) → cosine similarity",
+    reranking: "Cross-encoder on (task, skill) pairs for precision; filter by precondition satisfaction",
+    benefit: "Scales to 1000s of skills; agent only sees relevant capabilities"
+  },
+  {
+    component: "Skill Chaining & Composition",
+    description: "Compose primitive skills into compound skills dynamically. Verified chains cached as new macro-skills.",
+    mechanism: "Planner proposes chain → simulator validates preconditions → execute → if success, distill into macro-skill",
+    caching: "Macro-skill stored with: name, sub-skills, aggregated pre/post conditions, empirical success rate",
+    benefit: "Amortizes planning cost; builds hierarchy from primitives to complex workflows"
+  },
+  {
+    component: "Skill Evolution Loop",
+    description: "Continuous improvement: monitor skill success/failure → propose mutations → A/B test → promote or retire.",
+    loop: "1. Log every skill invocation (context, outcome, latency, errors)\n2. Nightly: cluster failures → identify gaps\n3. LLM proposes new skills / fixes\n4. Shadow test on production traffic\n5. Promote if statistically significant improvement",
+    safeguards: "Canary deployment, rollback on regression, human-in-loop for safety-critical skills",
+    benefit: "System gets better autonomously; no manual skill engineering bottleneck"
+  }
+];
+
+export const SKILL_RETRIEVAL_SIMULATOR = (taskContext, availableSkills, topK = 5) => {
+  // Simulated dual-encoder retrieval with precondition filtering
+  const scored = availableSkills.map(skill => {
+    const semanticScore = Math.random() * 0.4 + 0.3; // 0.3-0.7 simulated cosine sim
+    const precondMet = skill.preconditions.every(p => taskContext.state.includes(p));
+    const relevance = precondMet ? semanticScore : semanticScore * 0.3;
+    return { ...skill, relevance: +relevance.toFixed(2), precondMet };
+  });
+  return scored
+    .filter(s => s.relevance > 0.25)
+    .sort((a, b) => b.relevance - a.relevance)
+    .slice(0, topK);
+};
+
+export const PYTHON_DYNAMIC_SKILLS_CODE = `# ============================================================================
+# DYNAMIC SKILL COMPOSITION: Graph + Retrieval + Chaining + Evolution
+# ============================================================================
+
+from dataclasses import dataclass, field
+from typing import Callable, Any
+import numpy as np
+
+@dataclass
+class Skill:
+    id: str
+    name: str
+    description: str
+    executor: Callable[..., Any]          # actual tool/code
+    preconditions: list[str] = field(default_factory=list)
+    postconditions: list[str] = field(default_factory=list)
+    confidence: float = 0.8               # empirical success rate
+    embedding: np.ndarray = None          # dual-encoder embedding
+
+    def can_execute(self, state: set[str]) -> bool:
+        return all(p in state for p in self.preconditions)
+
+    def apply(self, state: set[str]) -> set[str]:
+        new_state = state | set(self.postconditions)
+        return new_state
+
+class SkillGraph:
+    def __init__(self):
+        self.skills: dict[str, Skill] = {}
+        self.edges: dict[str, set[str]] = {}  # depends_on
+
+    def add_skill(self, skill: Skill, depends_on: list[str] = None):
+        self.skills[skill.id] = skill
+        if depends_on:
+            self.edges[skill.id] = set(depends_on)
+
+    def topological_plan(self, goal_state: set[str], current_state: set[str]) -> list[Skill]:
+        # Simplified: greedy forward-chaining from current state toward goal
+        plan, state = [], set(current_state)
+        while not goal_state.issubset(state):
+            candidates = [s for s in self.skills.values()
+                         if s.can_execute(state) and not s.postconditions.issubset(state)]
+            if not candidates:
+                raise ValueError("No applicable skill — goal unreachable")
+            # Pick skill that maximizes progress toward goal
+            best = max(candidates, key=lambda s: len(s.postconditions & goal_state))
+            plan.append(best)
+            state = best.apply(state)
+        return plan
+
+# 2. Context-Aware Retrieval (Dual Encoder)
+class SkillRetriever:
+    def __init__(self, encoder):  # encoder: (text) -> np.ndarray
+        self.encoder = encoder
+        self.skill_embeddings = {}
+
+    def index_skills(self, skills: list[Skill]):
+        for s in skills:
+            text = f"{s.name}. {s.description}. Pre: {', '.join(s.preconditions)}"
+            s.embedding = self.encoder(text)
+            self.skill_embeddings[s.id] = s.embedding
+
+    def retrieve(self, task_context: str, top_k: int = 5) -> list[Skill]:
+        task_emb = self.encoder(task_context)
+        scored = [(sid, float(task_emb @ emb)) for sid, emb in self.skill_embeddings.items()]
+        scored.sort(key=lambda x: x[1], reverse=True)
+        return [self.skills[sid] for sid, _ in scored[:top_k]]
+
+# 3. Skill Chaining → Macro-Skill Distillation
+def compose_macro_skill(graph: SkillGraph, skill_chain: list[Skill], name: str) -> Skill:
+    all_pre = set()
+    all_post = set()
+    for s in skill_chain:
+        all_pre |= set(s.preconditions)
+        all_post |= set(s.postconditions)
+    # Remove internal preconditions satisfied by chain
+    internal = set()
+    for s in skill_chain:
+        internal |= set(s.postconditions)
+    all_pre -= internal
+    confidence = min(s.confidence for s in skill_chain)
+    return Skill(
+        id=f"macro_{name.lower().replace(' ', '_')}",
+        name=name,
+        description=f"Composed: {' → '.join(s.name for s in skill_chain)}",
+        executor=lambda **kw: [s.executor(**kw) for s in skill_chain],
+        preconditions=list(all_pre),
+        postconditions=list(all_post),
+        confidence=confidence,
+    )
+
+# 4. Evolution Loop (Pseudocode)
+def evolution_step(graph: SkillGraph, logs: list[dict], llm_propose):
+    # logs: {skill_id, context, success, latency, error}
+    failures = [l for l in logs if not l['success']]
+    clusters = cluster_by_error(failures)  # e.g., embedding of error messages
+    for cluster in clusters:
+        proposed = llm_propose(f"Fix failures: {cluster.errors}")
+        new_skill = Skill(**proposed)
+        # Shadow test
+        if shadow_test(new_skill, logs) > 0.95 * baseline:
+            graph.add_skill(new_skill)
 `;

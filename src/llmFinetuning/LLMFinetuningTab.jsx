@@ -15,7 +15,11 @@ import {
   RUN_QLORA_SIMULATOR,
   PYTHON_QLORA_TRAINING_SCRIPT,
   PYTHON_DPO_TRAINING_SCRIPT,
-  VLLM_SERVING_COMMAND
+  VLLM_SERVING_COMMAND,
+  AGENTIC_FINE_TUNING_PIPELINE,
+  AGENTIC_FINE_TUNING_CHALLENGES,
+  AGENTIC_FINE_TUNING_RECIPES,
+  PYTHON_AGENTIC_QLORA_SCRIPT
 } from './finetuningEngine.js';
 
 const { Container, Grid, Flex, Stack } = Primitives;
@@ -103,7 +107,8 @@ export default function LLMFinetuningTab() {
             { id: 'simulator', icon: '🧪', label: '4. Training Simulator', desc: 'Loss curves & accuracy' },
             { id: 'datasets', icon: '📂', label: '5. Dataset Formats', desc: 'Alpaca, ShareGPT, DPO' },
             { id: 'benchmarks', icon: '🔬', label: '6. Base vs FT Playground', desc: 'Live output comparison' },
-            { id: 'code', icon: '🛠️', label: '7. PyTorch & vLLM Code', desc: 'TRL SFT, DPO & Serving' }
+            { id: 'code', icon: '🛠️', label: '7. PyTorch & vLLM Code', desc: 'TRL SFT, DPO & Serving' },
+            { id: 'agentic', icon: '🤖', label: '8. Agentic Fine-Tuning', desc: 'Multi-agent, tools, DPO alignment' }
           ].map(tab => (
             <button
               key={tab.id}
@@ -705,6 +710,110 @@ export default function LLMFinetuningTab() {
                 <Callout type="success">
                   <strong>Enterprise Ready:</strong> Includes automated memory paging, gradient accumulation, completion-only loss masking, and LoRA adapter merging for low-latency vLLM inference.
                 </Callout>
+              </Stack>
+            </Card>
+          </Stack>
+        )}
+
+        {/* ─── SUBTAB 8: AGENTIC FINE-TUNING (ML MASTERY GUIDE) ─── */}
+        {activeSubTab === 'agentic' && (
+          <Stack gap={6}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
+              <Stack gap={4}>
+                <div>
+                  <h3 style={{ margin: 0 }}>🤖 Fine-Tuning Agentic AI — End-to-End Pipeline</h3>
+                  <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+                    Extending the ML Mastery practical guide: behavior cloning from expert agent trajectories, tool-use specialization, preference alignment for agent behavior, and continuous evaluation loops.
+                  </p>
+                </div>
+
+                {/* 5-Stage Pipeline */}
+                <div>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>🔄 5-Stage Agentic Fine-Tuning Pipeline</h4>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Stage</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Description</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Key Techniques</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Data Format</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Compute</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {AGENTIC_FINE_TUNING_PIPELINE.map((s, i) => (
+                          <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
+                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{s.stage}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{s.description}</td>
+                            <td style={{ padding: '8px' }}>
+                              <ul style={{ margin: 0, paddingLeft: '16px', color: '#17837F' }}>
+                                {s.keyTechniques.map((t, j) => <li key={j} style={{ fontSize: '10px' }}>{t}</li>)}
+                              </ul>
+                            </td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace', fontSize: '10px' }}>{s.dataFormat}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-tertiary)', fontSize: '10px' }}>{s.computeCost}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Key Challenges */}
+                <div style={{ marginTop: 'var(--ds-space-4)' }}>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>⚠️ Key Challenges & Mitigations</h4>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--ds-space-3)' }}>
+                    {AGENTIC_FINE_TUNING_CHALLENGES.map((c, i) => (
+                      <Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #F5A623' }}>
+                        <div style={{ fontSize: '12px', color: '#F5A623', fontWeight: 'bold', marginBottom: '4px' }}>{c.challenge}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginBottom: '6px' }}>{c.detail}</div>
+                        <div style={{ fontSize: '11px', color: '#17837F', fontStyle: 'italic' }}>→ {c.mitigation}</div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Training Recipes */}
+                <div style={{ marginTop: 'var(--ds-space-4)' }}>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>📋 Production Training Recipes</h4>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Recipe</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Base Model</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Method</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Data</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Hardware</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Outcome</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {AGENTIC_FINE_TUNING_RECIPES.map((r, i) => (
+                          <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
+                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{r.name}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace', fontSize: '10px' }}>{r.baseModel}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontSize: '10px' }}>{r.method}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontSize: '10px' }}>{r.data}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontSize: '10px' }}>{r.hardware}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-tertiary)', fontSize: '10px' }}>{r.expectedOutcome}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Agentic QLoRA Code */}
+                <div style={{ marginTop: 'var(--ds-space-4)' }}>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>🛠️ Agentic QLoRA Training + Constrained Tool Decoding</h4>
+                  <CodeBlock language="python" code={PYTHON_AGENTIC_QLORA_SCRIPT} />
+                  <Callout type="success">
+                    <strong>Key additions vs standard QLoRA:</strong> Tool call serialization in chat template, loss masking on tool outputs (train only on agent tokens), 
+                    JSON schema-constrained decoding at inference (llama.cpp GBNF / vLLM guided decoding), trajectory-level DPO pairs for preference alignment.
+                  </Callout>
+                </div>
               </Stack>
             </Card>
           </Stack>

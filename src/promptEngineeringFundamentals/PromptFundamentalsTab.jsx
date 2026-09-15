@@ -5,7 +5,11 @@ import { Card, Badge, Button, Callout } from '../components/ui/Core.jsx';
 import {
   COGNITIVE_PROMPTING_PATTERNS,
   PROMPT_STRUCTURE_COMPONENTS,
-  PYTHON_DSPY_PROMPT_SCRIPT
+  PYTHON_DSPY_PROMPT_SCRIPT,
+  COT_VS_TOT_COMPARISON,
+  COT_TOT_HYBRID_PATTERNS,
+  AGENTIC_REASONING_PATTERNS,
+  PYTHON_COT_TOT_HYBRID
 } from './promptFundamentalsEngine.js';
 
 const { Container, Grid, Flex, Stack } = Primitives;
@@ -74,7 +78,8 @@ Return strictly valid ${outputFormat}.`;
             { id: 'patterns', icon: '🧠', label: '1. Cognitive Patterns Taxonomy', desc: 'Zero-Shot, Few-Shot, CoT, ToT' },
             { id: 'architecture', icon: '🏛️', label: '2. System Prompt Blueprint', desc: 'Roles, delimiters, guardrails' },
             { id: 'builder', icon: '⚡', label: '3. Interactive Prompt Builder', desc: 'Real-time structured prompt composer' },
-            { id: 'dspy', icon: '🛠️', label: '4. DSPy Programmatic Prompts', desc: 'Declarative signatures & assertions' }
+            { id: 'dspy', icon: '🛠️', label: '4. DSPy Programmatic Prompts', desc: 'Declarative signatures & assertions' },
+            { id: 'cot_tot', icon: '🌳', label: '5. CoT vs ToT Deep Dive', desc: 'Trade-offs, hybrids, agentic patterns' }
           ].map(tab => (
             <button
               key={tab.id}
@@ -292,6 +297,101 @@ Return strictly valid ${outputFormat}.`;
                 <Callout type="success">
                   <strong>The Shift to Programmatic Prompts:</strong> In 2026, leading engineering teams treat prompts as compiled code: defining inputs, outputs, and validation metrics (<code>dspy.Assert</code>), allowing automated teleprompters to discover optimal phrasing across different foundation models.
                 </Callout>
+              </Stack>
+            </Card>
+          </Stack>
+        )}
+
+        {/* ─── SUBTAB 5: CoT vs ToT DEEP DIVE (ML MASTERY) ─── */}
+        {activeSubTab === 'cot_tot' && (
+          <Stack gap={6}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
+              <Stack gap={4}>
+                <div>
+                  <h3 style={{ margin: 0 }}>🌳 Chain-of-Thought vs Tree-of-Thoughts — When to Use Which</h3>
+                  <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
+                    Based on ML Mastery guide: CoT is linear, cheap, and great for deduction. ToT is branching, expensive, and shines on puzzles/planning. Hybrid patterns give you the best of both.
+                  </p>
+                </div>
+
+                {/* Comparison Table */}
+                <div>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>⚖️ Head-to-Head Comparison</h4>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Dimension</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Chain-of-Thought (CoT)</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Tree-of-Thoughts (ToT)</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Winner</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {COT_VS_TOT_COMPARISON.map((c, i) => (
+                          <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
+                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{c.dimension}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{c.cot}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{c.tot}</td>
+                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{c.winner}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Hybrid Patterns */}
+                <div style={{ marginTop: 'var(--ds-space-4)' }}>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>🔀 Hybrid Patterns — Best of Both Worlds</h4>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--ds-space-3)' }}>
+                    {COT_TOT_HYBRID_PATTERNS.map((h, i) => (
+                      <Card key={i} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}>
+                        <div style={{ fontSize: '12px', color: '#17837F', fontWeight: 'bold', marginBottom: '4px' }}>{h.name}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginBottom: '4px' }}>{h.description}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>✓ {h.whenToUse}</div>
+                        <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>Cost reduction: {h.costReduction}</div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Agentic Reasoning Patterns */}
+                <div style={{ marginTop: 'var(--ds-space-4)' }}>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>🤖 Agentic Reasoning Patterns (CoT/ToT in Agent Loops)</h4>
+                  <div style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Pattern</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Trace</th>
+                          <th style={{ textAlign: 'left', padding: '8px' }}>Use Case</th>
+                          <th style={{ textAlign: 'center', padding: '8px' }}>Cost</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {AGENTIC_REASONING_PATTERNS.map((a, i) => (
+                          <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
+                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{a.pattern}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace', fontSize: '10px' }}>{a.trace}</td>
+                            <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.useCase}</td>
+                            <td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>{a.cost}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Hybrid Implementation */}
+                <div style={{ marginTop: 'var(--ds-space-4)' }}>
+                  <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>🛠️ Progressive Deepening: CoT → ToT on Low Confidence</h4>
+                  <CodeBlock language="python" code={PYTHON_COT_TOT_HYBRID} />
+                  <Callout type="success">
+                    <strong>Key insight:</strong> Default to CoT (1 call). Only escalate to ToT when self-evaluation confidence &lt; threshold. 
+                    This adaptive compute allocation means 80%+ of tasks use cheap CoT; ToT budget spent only where it matters.
+                  </Callout>
+                </div>
               </Stack>
             </Card>
           </Stack>
