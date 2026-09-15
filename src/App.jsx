@@ -20273,7 +20273,7 @@ fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
   return (
     <div>
       {/* SECTION HEADER */}
-      <div style={s.sectionLabel("#e11d48")}>Agentic AI Pattern · Towards Data Science</div>
+      <div style={s.sectionLabel("#e11d48")}>Agentic AI Pattern · Coding Agents for Non-Programming Tasks</div>
       <div style={{ ...s.card, marginBottom: "1.5rem", background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)", border: "1px solid #4338ca" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem" }}>
           <div>
@@ -20286,11 +20286,6 @@ fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
             <p style={{ fontSize: "0.72rem", color: "#c7d2fe", maxWidth: 680, lineHeight: 1.7 }}>
               Coding agents (Claude Code, Cursor, Codex, Gemini CLI) aren't just for software development. Their core tools — <strong>File System I/O, Terminal Script Execution, Headless Browser Navigation, and Persistent Workspaces</strong> — make them the ultimate digital assistant for budgeting, sales CRM, research, slide decks, and language learning.
             </p>
-          </div>
-          <div style={{ background: "#3730a350", border: "1px solid #6366f160", padding: "0.8rem 1rem", borderRadius: 6, textAlign: "right" }}>
-            <div style={{ fontSize: "0.6rem", color: "#a5b4fc", textTransform: "uppercase", letterSpacing: "0.1em" }}>Author</div>
-            <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.85rem", fontWeight: 700, color: "#ffffff" }}>Eivind Kjosbakken</div>
-            <div style={{ fontSize: "0.58rem", color: "#818cf8", marginTop: "0.2rem" }}>Towards Data Science (2026)</div>
           </div>
         </div>
       </div>
@@ -20337,7 +20332,7 @@ fs.appendFileSync(".env", \`\nSTAGING_API_KEY=\${apiKey}\`);`
                 "When you receive ANY digital task on your computer, your first thought should be: <em style={{ color: "#4338ca" }}>How can I solve this task using a coding agent?</em>"
               </div>
               <div style={{ fontSize: "0.68rem", color: "#64748b" }}>
-                — Eivind Kjosbakken, Towards Data Science
+                — The Coding Agent Mindset
               </div>
             </div>
 

@@ -40,7 +40,7 @@ export default function StrandsAgentCoreTab() {
           <div>
             <div style={{ color: COLORS.amber, fontFamily: "JetBrains Mono, monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", marginBottom: 4 }}>TOWARDS DATA SCIENCE · JULY 2026</div>
             <h2 style={{ margin: 0, fontSize: 22, fontWeight: 700, lineHeight: 1.2 }}>Build and Run Your Own AI Agent in the Cloud</h2>
-            <div style={{ color: COLORS.muted, fontSize: 13, marginTop: 4 }}>By Thomas Reid · AWS Strands + AgentCore</div>
+            <div style={{ color: COLORS.muted, fontSize: 13, marginTop: 4 }}>AWS Strands + AgentCore</div>
           </div>
         </div>
         <div style={{ color: COLORS.muted, fontSize: 13, lineHeight: 1.7 }}>
