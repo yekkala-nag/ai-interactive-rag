@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const COLORS = {
   bg: "#080D1A",
@@ -369,6 +369,171 @@ export default function GraphEngineeringTab() {
         </div>
       </div>
 
+      {/* Interactive Workflow Simulator */}
+      <WorkflowSimulator />
+
+    </div>
+  );
+}
+
+function WorkflowSimulator() {
+  const [selectedPattern, setSelectedPattern] = useState("chaining");
+  const [running, setRunning] = useState(false);
+  const [activeNode, setActiveNode] = useState(null);
+  const [completedNodes, setCompletedNodes] = useState([]);
+  const timerRef = useRef(null);
+
+  const patterns = {
+    chaining: {
+      name: "Prompt Chaining",
+      desc: "Assembly line — each station only touches what the last one handed off.",
+      nodes: [
+        { id: "input", label: "Input", x: 50, y: 50, color: COLORS.muted },
+        { id: "step1", label: "Step 1\nResearch", x: 200, y: 50, color: COLORS.sky },
+        { id: "step2", label: "Step 2\nAnalyze", x: 350, y: 50, color: COLORS.amber },
+        { id: "step3", label: "Step 3\nDraft", x: 500, y: 50, color: COLORS.violet },
+        { id: "output", label: "Output", x: 650, y: 50, color: COLORS.emerald },
+      ],
+      edges: [["input","step1"],["step1","step2"],["step2","step3"],["step3","output"]],
+    },
+    routing: {
+      name: "Routing",
+      desc: "Triage — match the amount of work to the difficulty of the question.",
+      nodes: [
+        { id: "input", label: "Input", x: 50, y: 80, color: COLORS.muted },
+        { id: "router", label: "Router", x: 200, y: 80, color: COLORS.amber },
+        { id: "narrow", label: "Narrow\nPath", x: 400, y: 30, color: COLORS.sky },
+        { id: "broad", label: "Broad\nPath", x: 400, y: 130, color: COLORS.violet },
+        { id: "output", label: "Output", x: 600, y: 80, color: COLORS.emerald },
+      ],
+      edges: [["input","router"],["router","narrow"],["router","broad"],["narrow","output"],["broad","output"]],
+    },
+    parallel: {
+      name: "Parallelization",
+      desc: "Independent pieces happen at the same time.",
+      nodes: [
+        { id: "input", label: "Input", x: 50, y: 80, color: COLORS.muted },
+        { id: "fan", label: "Fan Out", x: 200, y: 80, color: COLORS.amber },
+        { id: "a", label: "Researcher A", x: 400, y: 20, color: COLORS.sky },
+        { id: "b", label: "Researcher B", x: 400, y: 80, color: COLORS.sky },
+        { id: "c", label: "Researcher C", x: 400, y: 140, color: COLORS.sky },
+        { id: "merge", label: "Merge", x: 570, y: 80, color: COLORS.violet },
+        { id: "output", label: "Output", x: 700, y: 80, color: COLORS.emerald },
+      ],
+      edges: [["input","fan"],["fan","a"],["fan","b"],["fan","c"],["a","merge"],["b","merge"],["c","merge"],["merge","output"]],
+    },
+    evaluator: {
+      name: "Evaluator-Optimizer",
+      desc: "Producer → evaluator → improve loop. Capped at 2 rounds.",
+      nodes: [
+        { id: "input", label: "Input", x: 50, y: 80, color: COLORS.muted },
+        { id: "producer", label: "Producer", x: 200, y: 80, color: COLORS.sky },
+        { id: "evaluator", label: "Evaluator", x: 400, y: 80, color: COLORS.amber },
+        { id: "pass", label: "Pass ✓", x: 600, y: 40, color: COLORS.emerald },
+        { id: "revise", label: "Revise", x: 400, y: 160, color: COLORS.rose },
+        { id: "output", label: "Output", x: 700, y: 80, color: COLORS.emerald },
+      ],
+      edges: [["input","producer"],["producer","evaluator"],["evaluator","pass"],["evaluator","revise"],["revise","producer"],["pass","output"]],
+    },
+  };
+
+  const pattern = patterns[selectedPattern];
+
+  const runSimulation = () => {
+    setRunning(true);
+    setCompletedNodes([]);
+    setActiveNode(null);
+    let idx = 0;
+    const nodeOrder = pattern.nodes.map(n => n.id);
+
+    timerRef.current = setInterval(() => {
+      if (idx < nodeOrder.length) {
+        setActiveNode(nodeOrder[idx]);
+        setCompletedNodes(prev => [...prev, nodeOrder[idx]]);
+        idx++;
+      } else {
+        clearInterval(timerRef.current);
+        setActiveNode(null);
+        setRunning(false);
+      }
+    }, 500);
+  };
+
+  useEffect(() => () => clearInterval(timerRef.current), []);
+
+  return (
+    <div style={{ background: COLORS.surface, border: `1px solid ${COLORS.border}`, borderRadius: 14, padding: 24 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+        <div style={{ color: COLORS.sky, fontFamily: "JetBrains Mono, monospace", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em" }}>
+          INTERACTIVE: GRAPH WORKFLOW PATTERNS
+        </div>
+        <button onClick={runSimulation} disabled={running} style={{
+          background: running ? COLORS.surface2 : COLORS.sky + "22",
+          border: `1px solid ${COLORS.sky}44`, borderRadius: 6,
+          color: COLORS.sky, fontFamily: "JetBrains Mono, monospace", fontSize: 11, fontWeight: 700,
+          padding: "6px 16px", cursor: running ? "not-allowed" : "pointer",
+        }}>
+          {running ? "Running..." : "Simulate"}
+        </button>
+      </div>
+
+      {/* Pattern selector */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+        {Object.entries(patterns).map(([key, p]) => (
+          <button key={key} onClick={() => { setSelectedPattern(key); setCompletedNodes([]); setActiveNode(null); }} style={{
+            padding: "6px 12px", borderRadius: 6,
+            background: selectedPattern === key ? COLORS.sky + "22" : COLORS.surface2,
+            border: `1px solid ${selectedPattern === key ? COLORS.sky : COLORS.border}`,
+            color: selectedPattern === key ? COLORS.sky : COLORS.muted,
+            fontSize: 11, fontWeight: 600, cursor: "pointer",
+          }}>
+            {p.name}
+          </button>
+        ))}
+      </div>
+
+      <div style={{ color: COLORS.muted, fontSize: 12, marginBottom: 16 }}>{pattern.desc}</div>
+
+      {/* SVG visualization */}
+      <div style={{ background: "#060A14", borderRadius: 8, padding: 16, marginBottom: 16, overflowX: "auto" }}>
+        <svg viewBox="0 0 780 180" style={{ width: "100%", height: 180 }}>
+          <defs>
+            <marker id="arrow" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
+              <path d="M0,0 L6,2 L0,4" fill={COLORS.border} />
+            </marker>
+          </defs>
+          {pattern.edges.map(([from, to], i) => {
+            const fNode = pattern.nodes.find(n => n.id === from);
+            const tNode = pattern.nodes.find(n => n.id === to);
+            return (
+              <line key={i} x1={fNode.x + 40} y1={fNode.y + 15} x2={tNode.x} y2={tNode.y + 15}
+                stroke={COLORS.border} strokeWidth="1.5" markerEnd="url(#arrow)" />
+            );
+          })}
+          {pattern.nodes.map(n => {
+            const isActive = activeNode === n.id;
+            const isCompleted = completedNodes.includes(n.id);
+            return (
+              <g key={n.id}>
+                <rect x={n.x} y={n.y} width={80} height={30} rx={6}
+                  fill={isActive ? n.color + "44" : isCompleted ? n.color + "22" : COLORS.surface2}
+                  stroke={isActive ? n.color : isCompleted ? n.color + "66" : COLORS.border}
+                  strokeWidth={isActive ? 2 : 1} />
+                <text x={n.x + 40} y={n.y + 18} textAnchor="middle" fill={isActive ? n.color : isCompleted ? n.color : COLORS.muted}
+                  fontSize="8" fontFamily="JetBrains Mono, monospace" fontWeight="600">
+                  {n.label.split("\n")[0]}
+                </text>
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+
+      <div style={{ padding: "10px 14px", background: COLORS.surface2, borderRadius: 8, border: `1px solid ${COLORS.amber}33` }}>
+        <div style={{ color: COLORS.amber, fontSize: 12, fontWeight: 600 }}>
+          {running ? `Processing: ${activeNode}` : completedNodes.length > 0 ? "Simulation complete — all nodes processed" : "Click Simulate to trace data flow through the graph"}
+        </div>
+      </div>
     </div>
   );
 }

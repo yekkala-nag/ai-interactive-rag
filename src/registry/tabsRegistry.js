@@ -19,7 +19,7 @@ export const UMBRELLA_TOPICS = [
     color: "#2AB5B0",
     dark: "#0C4F4C",
     description: "Roadmap stages 1–4: orientation, how LLMs work, prompting, models — home of the AI Engineer Roadmap",
-    tabs: ["airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "humancentric", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "vramconductor", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning", "visionlanguage", "diffusionmodels", "speechvoice", "uipreview"]
+    tabs: ["airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "humancentric", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "vramconductor", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning", "visionlanguage", "diffusionmodels", "speechvoice", "datacentricai", "uipreview"]
   },
   {
     id: "data_platform",
@@ -28,7 +28,7 @@ export const UMBRELLA_TOPICS = [
     color: "#17837F",
     dark: "#0C4F4C",
     description: "Roadmap stage 5: embeddings, vector search and document pipelines that feed retrieval",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "pandasmem", "geopopviz", "datahumanization", "llmfinetuning"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "nsquaredpizza", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "pandasmem", "geopopviz", "datahumanization", "llmfinetuning"]
   },
   {
     id: "rag_architecture",
@@ -37,7 +37,7 @@ export const UMBRELLA_TOPICS = [
     color: "#FF8A6B",
     dark: "#A34A28",
     description: "Roadmap stage 6: RAG systems end to end",
-    tabs: ["rag", "pipeline", "completepipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "agentfanout", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "amplifyexpert", "ragchunking", "capstone1", "capstone3"]
+    tabs: ["rag", "pipeline", "completepipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "agentfanout", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "amplifyexpert", "ragchunking", "textclassificationdata", "capstone1", "capstone3"]
   },
   {
     id: "context_memory",
@@ -55,7 +55,7 @@ export const UMBRELLA_TOPICS = [
     color: "#FF8A6B",
     dark: "#A34A28",
     description: "Roadmap stage 7: agents, MCP and production deployment",
-    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "capstone2"]
+    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "multiagentcoord", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "modeldeploy", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "capstone2"]
   },
   {
     id: "frontiers_production",
@@ -905,6 +905,15 @@ export const TABS_REGISTRY = [
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.MultiAgentTab })))
   },
   {
+    id: "multiagentcoord",
+    label: "Multi-Agent Coordination",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🤝",
+    keywords: ["multi-agent coordination", "specialist agents", "coordinator", "typed findings", "contradiction detection", "risk routing", "model selection", "naveen goel", "towards data science"],
+    component: lazy(() => import("../multiAgentCoordination/MultiAgentCoordinationTab.jsx"))
+  },
+  {
     id: "modelrouting",
     label: "Adaptive Model Routing",
     umbrellaId: "agents_frameworks",
@@ -957,6 +966,15 @@ export const TABS_REGISTRY = [
     icon: "🚀",
     keywords: ["high-scale", "millions requests", "production"],
     component: lazy(() => import("../App.jsx").then(m => ({ default: m.HighScaleAgentsTab })))
+  },
+  {
+    id: "modeldeploy",
+    label: "Model Deployment",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "📦",
+    keywords: ["model deployment", "docker", "fastapi", "ec2", "containerization", "ml deployment", "ibrahim salami", "towards data science"],
+    component: lazy(() => import("../modelDeployment/ModelDeploymentTab.jsx"))
   },
   {
     id: "aiproductbuilder",
@@ -1465,6 +1483,34 @@ export const TABS_REGISTRY = [
     icon: "🤖",
     keywords: ["agentic patterns", "react", "plan and execute", "multi-agent", "supervisor agent", "agent memory", "tools", "opentelemetry", "prometheus", "elk", "grafana", "celery", "ray", "kafka", "consistent hashing", "rate limiting", "redis cluster", "nagaraj y"],
     component: lazy(() => import("../enterpriseAdvancedPlaybook/EnterpriseAdvancedPlaybookTab.jsx"))
+  },
+  // ── TDS Article Tabs ──────────────────────────────────────────────────────
+  {
+    id: "textclassificationdata",
+    label: "How Much Labeled Data Do You Need?",
+    umbrellaId: "rag_architecture",
+    category: "RAG Architectures & Pipelines",
+    icon: "📊",
+    keywords: ["text classification", "labeled data", "TF-IDF", "learning curves", "data efficiency", "zero-shot", "LLM vs classical", "towards data science"],
+    component: lazy(() => import("../textClassificationData/TextClassificationDataTab.jsx"))
+  },
+  {
+    id: "nsquaredpizza",
+    label: "The N² Pizza Problem",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🍕",
+    keywords: ["quadratic memory", "N squared", "ML memory", "pizza problem", "cluster matching", "bounding", "decimation", "KD-tree", "towards data science"],
+    component: lazy(() => import("../nSquaredPizza/NSquaredPizzaTab.jsx"))
+  },
+  {
+    id: "datacentricai",
+    label: "Data-Centric AI",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🎯",
+    keywords: ["data-centric AI", "model-centric", "label quality", "annotation consistency", "data governance", "towards data science"],
+    component: lazy(() => import("../dataCentricAI/DataCentricAITab.jsx"))
   }
 ];
 
