@@ -125,6 +125,7 @@ const TabComponents = {
   mcpclient: lazy(() => import('./mcpClient/MCPClientTab.jsx')),
   agentsdk: lazy(() => import('./agentsSDK/AgentsSDKTab.jsx')),
   loopengineering: lazy(() => import('./loopEngineering/LoopEngineeringTab.jsx')),
+  finassistproject: lazy(() => import('./finAssistProject/FinAssistProjectTab.jsx')),
 
   threelayers: lazy(() => import('./engineeringLayers/ThreeLayersTab.jsx')),
   docstruct: lazy(() => import('./documentStructure/DocumentStructureTab.jsx')),
@@ -158,6 +159,7 @@ const TabComponents = {
   textclassificationdata: lazy(() => import('./textClassificationData/TextClassificationDataTab.jsx')),
   nsquaredpizza: lazy(() => import('./nSquaredPizza/NSquaredPizzaTab.jsx')),
   datacentricai: lazy(() => import('./dataCentricAI/DataCentricAITab.jsx')),
+  threesentenceprompt: lazy(() => import('./threeSentencePrompt/ThreeSentencePromptTab.jsx')),
 
   visionlanguage: lazy(() => import('./visionLanguageModels/VisionLanguageTab.jsx')),
   diffusionmodels: lazy(() => import('./diffusionModels/DiffusionTab.jsx')),

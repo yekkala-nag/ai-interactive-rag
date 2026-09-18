@@ -19,7 +19,7 @@ export const UMBRELLA_TOPICS = [
     color: "#2AB5B0",
     dark: "#0C4F4C",
     description: "Roadmap stages 1–4: orientation, how LLMs work, prompting, models — home of the AI Engineer Roadmap",
-    tabs: ["airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "humancentric", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "vramconductor", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning", "visionlanguage", "diffusionmodels", "speechvoice", "datacentricai", "uipreview"]
+    tabs: ["airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "humancentric", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "vramconductor", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning", "visionlanguage", "diffusionmodels", "speechvoice", "datacentricai", "threesentenceprompt", "uipreview"]
   },
   {
     id: "data_platform",
@@ -55,7 +55,7 @@ export const UMBRELLA_TOPICS = [
     color: "#FF8A6B",
     dark: "#A34A28",
     description: "Roadmap stage 7: agents, MCP and production deployment",
-    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "multiagentcoord", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "modeldeploy", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "capstone2"]
+    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "multiagentcoord", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "modeldeploy", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "finassistproject", "capstone2"]
   },
   {
     id: "frontiers_production",
@@ -1511,6 +1511,24 @@ export const TABS_REGISTRY = [
     icon: "🎯",
     keywords: ["data-centric AI", "model-centric", "label quality", "annotation consistency", "data governance", "towards data science"],
     component: lazy(() => import("../dataCentricAI/DataCentricAITab.jsx"))
+  },
+  {
+    id: "threesentenceprompt",
+    label: "Better AI Answers in 3 Sentences",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "✍️",
+    keywords: ["prompt engineering", "3 sentences", "plan-first", "better prompts", "AI productivity", "brain dump", "messy prompts", "course correction"],
+    component: lazy(() => import("../threeSentencePrompt/ThreeSentencePromptTab.jsx"))
+  },
+  {
+    id: "finassistproject",
+    label: "FinAssist: Banking AI Project",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🏦",
+    keywords: ["banking AI", "MCP", "LangGraph", "compliance", "PII redaction", "RAG", "agentic workflow", "realtime project", "portfolio", "FinAssist"],
+    component: lazy(() => import("../finAssistProject/FinAssistProjectTab.jsx"))
   }
 ];
 
