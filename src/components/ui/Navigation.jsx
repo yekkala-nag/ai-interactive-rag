@@ -109,8 +109,12 @@ export function Sidebar({
     });
   };
 
-  const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
-  const queryStr = (typeof searchQuery === 'string' ? searchQuery : (searchQuery?.target?.value || '')).trim().toLowerCase();
+const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
+          const queryStr = (typeof searchQuery === 'string' ? searchQuery : (searchQuery?.target?.value || '')).trim().toLowerCase();
+
+          // Helper: filter tabs to only show hub pages (_hub) at top level
+          const isHubTab = (tabId) => tabId.endsWith('_hub');
+          const isSearchMode = queryStr.length > 0;
 
   let totalVisibleTabs = 0;
   const activeTabObj = getTabById(activeTab);
@@ -359,24 +363,29 @@ export function Sidebar({
         gap: '4px',
         scrollbarWidth: 'thin'
       }}>
-        {moduleOrder.map(moduleId => {
-          const module = UMBRELLA_TOPICS.find(m => m.id === moduleId);
-          if (!module) return null;
-          const rawTabs = getTabsForUmbrella(moduleId);
-          const tabs = queryStr
-            ? rawTabs.filter(t =>
-                t.label.toLowerCase().includes(queryStr) ||
-                t.id.toLowerCase().includes(queryStr) ||
-                (t.keywords && t.keywords.some(k => k.toLowerCase().includes(queryStr)))
-              )
-            : rawTabs;
+{moduleOrder.map(moduleId => {
+            const module = UMBRELLA_TOPICS.find(m => m.id === moduleId);
+            if (!module) return null;
+            const rawTabs = getTabsForUmbrella(moduleId);
+            // Only show hub pages (_hub) at top level, unless searching
+            const tabs = isSearchMode
+              ? rawTabs.filter(t =>
+                  t.label.toLowerCase().includes(queryStr) ||
+                  t.id.toLowerCase().includes(queryStr) ||
+                  (t.keywords && t.keywords.some(k => k.toLowerCase().includes(queryStr)))
+                )
+              : rawTabs.filter(isHubTab);
 
-          if (queryStr && tabs.length === 0) return null;
+            // If active tab is in this module but not a hub, show it for backward compatibility
+            const showNonHubActive = !isSearchMode && rawTabs.some(t => t.id === activeTab && !isHubTab(t.id));
+            const displayTabs = isSearchMode ? tabs : (showNonHubActive ? [...tabs, rawTabs.find(t => t.id === activeTab)].filter(Boolean) : tabs);
 
-          totalVisibleTabs += tabs.length;
-          const isExpanded = queryStr.length > 0 ? true : (expandedModules[moduleId] ?? false);
-          const hasActiveTab = rawTabs.some(t => t.id === activeTab);
-          const accent = MODULE_ACCENTS[moduleId] || MODULE_ACCENTS.foundations;
+            if (isSearchMode && tabs.length === 0) return null;
+
+            totalVisibleTabs += displayTabs.length;
+            const isExpanded = isSearchMode ? true : (expandedModules[moduleId] ?? false);
+            const hasActiveTab = rawTabs.some(t => t.id === activeTab);
+            const accent = MODULE_ACCENTS[moduleId] || MODULE_ACCENTS.foundations;
 
           return (
             <div key={moduleId} style={{
@@ -465,7 +474,7 @@ export function Sidebar({
                   marginTop: '3px',
                   marginBottom: '4px'
                 }}>
-                  {getGroupedTabsForUmbrella(moduleId, tabs).map(group => (
+                  {getGroupedTabsForUmbrella(moduleId, rawTabs).map(group => (
                     <div key={group.child ? group.child.id : 'ungrouped'} style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: group.child ? '6px' : 0 }}>
                       {group.child && (() => {
                         const provenCount = group.tabs.filter(t => isMastered(t.id)).length;
@@ -488,7 +497,7 @@ export function Sidebar({
                                 background: 'rgba(255, 255, 255, 0.06)',
                                 padding: '0px 6px', borderRadius: '9999px', flexShrink: 0, marginLeft: '6px'
                               }}>
-                                {getChildLevelCounts(group.child.id, tabs)}
+                                {getChildLevelCounts(group.child.id, rawTabs)}
                               </span>
                             </div>
                             <div style={{ height: '3px', borderRadius: '3px', background: 'rgba(255,255,255,0.25)', overflow: 'hidden' }}>
