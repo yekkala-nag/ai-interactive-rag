@@ -113,7 +113,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
           const queryStr = (typeof searchQuery === 'string' ? searchQuery : (searchQuery?.target?.value || '')).trim().toLowerCase();
 
           // Helper: filter tabs to only show hub pages (_hub) at top level
-          const isHubTab = (tabId) => tabId.endsWith('_hub');
+          const isHubTab = (tabId) => typeof tabId === 'string' && tabId.endsWith('_hub');
           const isSearchMode = queryStr.length > 0;
 
   let totalVisibleTabs = 0;
