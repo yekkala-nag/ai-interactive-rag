@@ -162,7 +162,7 @@ export function HubPage({ childId, onSelectTab }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 16, borderTop: `1px solid ${C.border}` }}>
         {prevChild && (
           <button
-            onClick={() => onSelectTab(prevChild.tabs[0]?.id || prevChild.id)}
+            onClick={() => onSelectTab(prevChild.id + "_hub")}
             style={{
               padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
               background: "transparent", color: C.teal, border: `1px solid ${C.teal}`,
@@ -184,7 +184,7 @@ export function HubPage({ childId, onSelectTab }) {
         </div>
         {nextChild && (
           <button
-            onClick={() => onSelectTab(nextChild.tabs[0]?.id || nextChild.id)}
+            onClick={() => onSelectTab(nextChild.id + "_hub")}
             style={{
               padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
               background: C.teal, color: "#000", border: "none",
