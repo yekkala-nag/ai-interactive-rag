@@ -16265,7 +16265,7 @@ export const ActiveLearningTab = ({ s }) => {
       <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#5EC4C8,#F0A89A,#C9B8E8,#F0A89A,#5EC4C8)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🎯</div>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#3A9B9F", marginBottom: "0.75rem" }}>Towards Data Science · ML Active Learning Guide</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#3A9B9F", marginBottom: "0.75rem" }}>TOWARDS DATA SCIENCE</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           Reducing Human Annotation<br />with <em style={{ color: "#3A9B9F", fontStyle: "italic" }}>ML Active Learning</em>
         </h2>
@@ -17039,7 +17039,7 @@ export const CompanyBrainTab = ({ s }) => {
       <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#5EC4C8,#F0A89A,#C9B8E8,#F0A89A,#5EC4C8)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🧠</div>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#3A9B9F", marginBottom: "0.75rem" }}>Towards Data Science · Tomer Mesika (CTO, modus)</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#3A9B9F", marginBottom: "0.75rem" }}>TOWARDS DATA SCIENCE</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           How to Build a <em style={{ color: "#3A9B9F", fontStyle: "italic" }}>Context Layer</em><br />and a Company Brain
         </h2>
@@ -17882,7 +17882,7 @@ export const AgentTasksTab = ({ s }) => {
       <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#5EC4C8,#F0A89A,#C9B8E8,#F0A89A,#5EC4C8)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>📋</div>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#3A9B9F", marginBottom: "0.75rem" }}>Towards Data Science · Eivind Kjosbakken</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#3A9B9F", marginBottom: "0.75rem" }}>TOWARDS DATA SCIENCE</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           How to Organize All of Your <em style={{ color: "#3A9B9F", fontStyle: "italic" }}>Coding Agent Tasks</em>
         </h2>
@@ -18325,7 +18325,7 @@ export const PromptMgmtTab = ({ s }) => {
       <div style={{ background: "linear-gradient(135deg,#eff8f4,#faf6ef,#f4f2fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#5EC4C8,#9B89C4,#C9B8E8,#F0A89A,#5EC4C8)" }} />
         <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "5rem", fontWeight: 900, color: "rgba(42,138,132,0.06)", lineHeight: 1, pointerEvents: "none" }}>🛡️</div>
-        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#5EC4C8", marginBottom: "0.75rem" }}>Towards Data Science · Emmimal P Alexander</div>
+        <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#5EC4C8", marginBottom: "0.75rem" }}>TOWARDS DATA SCIENCE</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.55rem", fontWeight: 900, lineHeight: 1.15, marginBottom: "0.75rem" }}>
           Prompt Engineering Is Solved — <em style={{ color: "#5EC4C8", fontStyle: "italic" }}>Prompt Management Isn't</em>
         </h2>
@@ -20987,11 +20987,7 @@ export const MedallionArchTab = ({ s }) => {
               ETL pipelines become harder to trust as they grow. The Medallion Architecture organizes data into three progressive layers: <strong>Bronze 🥉 (Raw Ingestion)</strong> → <strong>Silver 🥈 (Cleaned & Quarantined Foundation)</strong> → <strong>Gold 🥇 (Business Aggregates)</strong>.
             </p>
           </div>
-          <div style={{ background: "#3730a350", border: "1px solid #f59e0b60", padding: "0.8rem 1rem", borderRadius: 6, textAlign: "right" }}>
-            <div style={{ fontSize: "0.6rem", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.1em" }}>Author</div>
-            <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.85rem", fontWeight: 700, color: "#ffffff" }}>Thomas Reid</div>
-            <div style={{ fontSize: "0.58rem", color: "#818cf8", marginTop: "0.2rem" }}>Towards Data Science (2026)</div>
-          </div>
+
         </div>
       </div>
 
