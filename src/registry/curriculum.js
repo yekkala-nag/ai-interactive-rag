@@ -47,6 +47,31 @@ export const CHILD_UMBRELLAS = [
 
 // TOPIC_META: tabId → { c: childId, l: level 1|2|3, p: [prerequisite tabIds] }
 export const TOPIC_META = {
+  // ── Hub Pages (Phase 1) ───────────────────────────────────────────────────
+  fnd_start_hub: { c: 'fnd_start', l: 1, p: [] },
+  fnd_internals_hub: { c: 'fnd_internals', l: 1, p: [] },
+  fnd_prompts_hub: { c: 'fnd_prompts', l: 1, p: [] },
+  fnd_mlsoc_hub: { c: 'fnd_mlsoc', l: 1, p: [] },
+  fnd_multimodal_hub: { c: 'fnd_multimodal', l: 1, p: [] },
+  rag_core_hub: { c: 'rag_core', l: 1, p: [] },
+  rag_precision_hub: { c: 'rag_precision', l: 1, p: [] },
+  rag_advanced_hub: { c: 'rag_advanced', l: 1, p: [] },
+  rag_practice_hub: { c: 'rag_practice', l: 1, p: [] },
+  ctx_craft_hub: { c: 'ctx_craft', l: 1, p: [] },
+  ctx_memory_hub: { c: 'ctx_memory', l: 1, p: [] },
+  ctx_long_hub: { c: 'ctx_long', l: 1, p: [] },
+  agt_found_hub: { c: 'agt_found', l: 1, p: [] },
+  agt_safety_hub: { c: 'agt_safety', l: 1, p: [] },
+  agt_multi_hub: { c: 'agt_multi', l: 1, p: [] },
+  agt_prod_hub: { c: 'agt_prod', l: 1, p: [] },
+  data_found_hub: { c: 'data_found', l: 1, p: [] },
+  data_docs_hub: { c: 'data_docs', l: 1, p: [] },
+  data_ml_hub: { c: 'data_ml', l: 1, p: [] },
+  data_scale_hub: { c: 'data_scale', l: 1, p: [] },
+  fr_eval_hub: { c: 'fr_eval', l: 1, p: [] },
+  fr_ops_hub: { c: 'fr_ops', l: 1, p: [] },
+  fr_frontiers_hub: { c: 'fr_frontiers', l: 1, p: [] },
+
   // ── Foundations (23) ──
   overview: { c: 'fnd_start', l: 1, p: [] },
   airoadmap: { c: 'fnd_start', l: 1, p: [] },

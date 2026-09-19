@@ -19,7 +19,7 @@ export const UMBRELLA_TOPICS = [
     color: "#5EC4C8",
     dark: "#1F6B6E",
     description: "Roadmap stages 1–4: orientation, how LLMs work, prompting, models — home of the AI Engineer Roadmap",
-    tabs: ["airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "humancentric", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "vramconductor", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning", "visionlanguage", "diffusionmodels", "speechvoice", "datacentricai", "threesentenceprompt", "uipreview"]
+    tabs: ["fnd_start_hub", "fnd_internals_hub", "fnd_prompts_hub", "fnd_mlsoc_hub", "fnd_multimodal_hub", "airoadmap", "overview", "glossary", "reinforcementlearning", "trpo2grpo", "aimoralagency", "humancentric", "dialoguelamda", "modellandscape", "tokenization", "quantserve", "vramconductor", "promptfundamentals", "llmsampling", "selfattention", "posencoding", "archconcepts", "promptmgmt", "promptdependencygraph", "promptcontracts", "promptregression", "structuredoutputs", "topicmodeling", "workflows", "unhobbling", "aiharness", "promptlearning", "visionlanguage", "diffusionmodels", "speechvoice", "datacentricai", "threesentenceprompt", "uipreview"]
   },
   {
     id: "data_platform",
@@ -28,7 +28,7 @@ export const UMBRELLA_TOPICS = [
     color: "#3A9B9F",
     dark: "#1F6B6E",
     description: "Roadmap stage 5: embeddings, vector search and document pipelines that feed retrieval",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "nsquaredpizza", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "pandasmem", "geopopviz", "datahumanization", "llmfinetuning", "multilingualclassification", "textclusteringhdbscan"]
+    tabs: ["data_found_hub", "data_docs_hub", "data_ml_hub", "data_scale_hub", "threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "nsquaredpizza", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "pandasmem", "geopopviz", "datahumanization", "llmfinetuning", "multilingualclassification", "textclusteringhdbscan"]
   },
   {
     id: "rag_architecture",
@@ -37,7 +37,7 @@ export const UMBRELLA_TOPICS = [
     color: "#F0A89A",
     dark: "#C47A6A",
     description: "Roadmap stage 6: RAG systems end to end",
-    tabs: ["rag", "pipeline", "completepipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "agentfanout", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "amplifyexpert", "ragchunking", "textclassificationdata", "capstone1", "capstone3"]
+    tabs: ["rag_core_hub", "rag_precision_hub", "rag_advanced_hub", "rag_practice_hub", "rag", "pipeline", "completepipeline", "qparseloop", "filtering", "hierrag", "prodrag", "routercheap", "rerankers", "rageval", "multilingualrag", "multimodalrag", "texttosql", "crossdocjoins", "genpatterns", "fourpdfs", "agentfanout", "hallucbricks", "workflowloop", "proxypointer", "agenticrag", "ragcasestudies", "interviewprep", "rowlevelrag", "tablegridrag", "graphtraversalknowledge", "ragcorpusshapes", "amplifyexpert", "ragchunking", "textclassificationdata", "capstone1", "capstone3"]
   },
   {
     id: "context_memory",
@@ -46,7 +46,7 @@ export const UMBRELLA_TOPICS = [
     color: "#C9B8E8",
     dark: "#7A6BA8",
     description: "Memory layer behind stages 6–7: context craft, memory systems, long context",
-    tabs: ["ctxeng", "ctxmeasure", "memhierarchy", "longcontext", "vague", "hallucination", "contextgraph", "companybrain", "validitylayer", "memeng", "contextlimits"]
+    tabs: ["ctx_craft_hub", "ctx_memory_hub", "ctx_long_hub", "ctxeng", "ctxmeasure", "memhierarchy", "longcontext", "vague", "hallucination", "contextgraph", "companybrain", "validitylayer", "memeng", "contextlimits"]
   },
   {
     id: "agents_frameworks",
@@ -55,7 +55,7 @@ export const UMBRELLA_TOPICS = [
     color: "#F0A89A",
     dark: "#C47A6A",
     description: "Roadmap stage 7: agents, MCP and production deployment",
-    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "multiagentcoord", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "modeldeploy", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "finassistproject", "zerocostmultiagent", "capstone2"]
+    tabs: ["agt_found_hub", "agt_safety_hub", "agt_multi_hub", "agt_prod_hub", "fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "multiagentcoord", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "modeldeploy", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "finassistproject", "zerocostmultiagent", "capstone2"]
   },
   {
     id: "frontiers_production",
@@ -64,7 +64,7 @@ export const UMBRELLA_TOPICS = [
     color: "#9B89C4",
     dark: "#6B5E94",
     description: "Roadmap stage 8: evals, cost, observability — ship and stay reliable",
-    tabs: ["firstaiapp", "enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "enterprisegrade", "finops", "observability", "slmedge", "tokenbill", "llmevals", "modelvalidation", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
+    tabs: ["fr_eval_hub", "fr_ops_hub", "fr_frontiers_hub", "firstaiapp", "enterpriseadvancedplaybook", "tokenorchestrationplaybook", "productionragops", "enterpriseaiops", "enterprisegrade", "finops", "observability", "slmedge", "tokenbill", "llmevals", "modelvalidation", "reasoningbench", "practices", "powerfeatures", "ragbeyond", "frontiers", "progress", "guardrails", "llmreliability"]
   }
 ];
 
@@ -1556,6 +1556,214 @@ export const TABS_REGISTRY = [
     icon: "🔬",
     keywords: ["clustering", "HDBSCAN", "UMAP", "sentence-transformers", "topic discovery", "density-based", "unsupervised", "machine learning mastery"],
     component: lazy(() => import("../textClusteringHDBSCAN/TextClusteringHDBSCANTab.jsx"))
+  },
+  // ── Hub Pages (Phase 1) ───────────────────────────────────────────────────
+  {
+    id: "fnd_start_hub",
+    label: "Start Here",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🚀",
+    keywords: ["start", "orientation", "glossary", "first build"],
+    component: lazy(() => import("../hubPages/FndStartHubTab.jsx"))
+  },
+  {
+    id: "fnd_internals_hub",
+    label: "Model Internals",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🧠",
+    keywords: ["architecture", "attention", "sampling", "tokens", "serving"],
+    component: lazy(() => import("../hubPages/FndInternalsHubTab.jsx"))
+  },
+  {
+    id: "fnd_prompts_hub",
+    label: "Prompt Lifecycle",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "✍️",
+    keywords: ["prompt engineering", "contracts", "regression", "management"],
+    component: lazy(() => import("../hubPages/FndPromptsHubTab.jsx"))
+  },
+  {
+    id: "fnd_mlsoc_hub",
+    label: "ML & Society",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "⚖️",
+    keywords: ["alignment", "RL", "dialogue", "topic modeling", "ethics"],
+    component: lazy(() => import("../hubPages/FndMlsocHubTab.jsx"))
+  },
+  {
+    id: "fnd_multimodal_hub",
+    label: "Multimodal Models",
+    umbrellaId: "foundations",
+    category: "Foundations",
+    icon: "🎨",
+    keywords: ["vision", "diffusion", "speech", "multimodal"],
+    component: lazy(() => import("../hubPages/FndMultimodalHubTab.jsx"))
+  },
+  {
+    id: "rag_core_hub",
+    label: "RAG Core",
+    umbrellaId: "rag_architecture",
+    category: "RAG Architectures & Pipelines",
+    icon: "🔧",
+    keywords: ["pipeline", "chunking", "parsing", "retrieval"],
+    component: lazy(() => import("../hubPages/RagCoreHubTab.jsx"))
+  },
+  {
+    id: "rag_precision_hub",
+    label: "Retrieval Precision",
+    umbrellaId: "rag_architecture",
+    category: "RAG Architectures & Pipelines",
+    icon: "🎯",
+    keywords: ["rerank", "eval", "tables", "multilingual"],
+    component: lazy(() => import("../hubPages/RagPrecisionHubTab.jsx"))
+  },
+  {
+    id: "rag_advanced_hub",
+    label: "Advanced RAG",
+    umbrellaId: "rag_architecture",
+    category: "RAG Architectures & Pipelines",
+    icon: "🚀",
+    keywords: ["production", "agents", "graphs", "SQL", "verification"],
+    component: lazy(() => import("../hubPages/RagAdvancedHubTab.jsx"))
+  },
+  {
+    id: "rag_practice_hub",
+    label: "RAG in Practice",
+    umbrellaId: "rag_architecture",
+    category: "RAG Architectures & Pipelines",
+    icon: "📋",
+    keywords: ["case studies", "interview prep", "capstone"],
+    component: lazy(() => import("../hubPages/RagPracticeHubTab.jsx"))
+  },
+  {
+    id: "ctx_craft_hub",
+    label: "Context Craft",
+    umbrellaId: "context_memory",
+    category: "Context & Memory Engineering",
+    icon: "✂️",
+    keywords: ["curation", "hallucination", "measurement", "vagueness"],
+    component: lazy(() => import("../hubPages/CtxCraftHubTab.jsx"))
+  },
+  {
+    id: "ctx_memory_hub",
+    label: "Memory Systems",
+    umbrellaId: "context_memory",
+    category: "Context & Memory Engineering",
+    icon: "🧠",
+    keywords: ["tiers", "graphs", "company brain", "hierarchy"],
+    component: lazy(() => import("../hubPages/CtxMemoryHubTab.jsx"))
+  },
+  {
+    id: "ctx_long_hub",
+    label: "Long Context",
+    umbrellaId: "context_memory",
+    category: "Context & Memory Engineering",
+    icon: "📏",
+    keywords: ["limits", "compression", "tactics", "long context"],
+    component: lazy(() => import("../hubPages/CtxLongHubTab.jsx"))
+  },
+  {
+    id: "agt_found_hub",
+    label: "Agent Foundations",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🤖",
+    keywords: ["assets", "tools", "prep", "process"],
+    component: lazy(() => import("../hubPages/AgtFoundHubTab.jsx"))
+  },
+  {
+    id: "agt_safety_hub",
+    label: "Planning & Safety",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🛡️",
+    keywords: ["planners", "HITL", "sandboxes", "evals", "gates"],
+    component: lazy(() => import("../hubPages/AgtSafetyHubTab.jsx"))
+  },
+  {
+    id: "agt_multi_hub",
+    label: "Multi-Agent & Frameworks",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🤝",
+    keywords: ["orchestration", "A2A", "LangChain", "LangGraph", "MCP"],
+    component: lazy(() => import("../hubPages/AgtMultiHubTab.jsx"))
+  },
+  {
+    id: "agt_prod_hub",
+    label: "Agents in Production",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🚀",
+    keywords: ["CLI", "pair programming", "scale", "product"],
+    component: lazy(() => import("../hubPages/AgtProdHubTab.jsx"))
+  },
+  {
+    id: "data_found_hub",
+    label: "Data Foundations",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "📊",
+    keywords: ["pandas", "regression", "I/O", "storytelling"],
+    component: lazy(() => import("../hubPages/DataFoundHubTab.jsx"))
+  },
+  {
+    id: "data_docs_hub",
+    label: "Document Intelligence",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "📄",
+    keywords: ["parsing", "KBs", "vector search", "pipelines"],
+    component: lazy(() => import("../hubPages/DataDocsHubTab.jsx"))
+  },
+  {
+    id: "data_ml_hub",
+    label: "Classical + Self-Supervised ML",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "📈",
+    keywords: ["ML tools", "fraud", "VAEs", "BYOL", "LSTMs"],
+    component: lazy(() => import("../hubPages/DataMlHubTab.jsx"))
+  },
+  {
+    id: "data_scale_hub",
+    label: "Platform & Scale",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "⚙️",
+    keywords: ["lakehouse", "profiling", "finetuning", "use cases"],
+    component: lazy(() => import("../hubPages/DataScaleHubTab.jsx"))
+  },
+  {
+    id: "fr_eval_hub",
+    label: "Eval & Reliability",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "✅",
+    keywords: ["evals", "reasoning", "guardrails", "fault tolerance"],
+    component: lazy(() => import("../hubPages/FrEvalHubTab.jsx"))
+  },
+  {
+    id: "fr_ops_hub",
+    label: "Cost & Ops",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "💰",
+    keywords: ["FinOps", "tracing", "AgentOps", "playbooks"],
+    component: lazy(() => import("../hubPages/FrOpsHubTab.jsx"))
+  },
+  {
+    id: "fr_frontiers_hub",
+    label: "Frontiers",
+    umbrellaId: "frontiers_production",
+    category: "Advanced & Frontiers",
+    icon: "🔮",
+    keywords: ["vision", "diffusion", "speech", "edge SLMs"],
+    component: lazy(() => import("../hubPages/FrFrontiersHubTab.jsx"))
   }
 ];
 
