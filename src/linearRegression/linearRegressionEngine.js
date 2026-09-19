@@ -90,6 +90,46 @@ export const GRADIENT_DESCENT_STEP = (currentW, currentB, learningRateAlpha = 0.
   };
 };
 
+export const GET_OPTIMAL_WEIGHTS = () => {
+  // Analytical solution using Normal Equation: w = (X^T X)^-1 X^T y
+  // For simple linear regression with one feature:
+  // w = sum((x_i - x_mean)(y_i - y_mean)) / sum((x_i - x_mean)^2)
+  // b = y_mean - w * x_mean
+  const n = HOUSE_PRICE_DATASET.length;
+  const xValues = HOUSE_PRICE_DATASET.map(h => h.size / 1000);
+  const yValues = HOUSE_PRICE_DATASET.map(h => h.price);
+
+  const xMean = xValues.reduce((a, b) => a + b, 0) / n;
+  const yMean = yValues.reduce((a, b) => a + b, 0) / n;
+
+  let numerator = 0;
+  let denominator = 0;
+  for (let i = 0; i < n; i++) {
+    numerator += (xValues[i] - xMean) * (yValues[i] - yMean);
+    denominator += (xValues[i] - xMean) ** 2;
+  }
+
+  const optimalW = numerator / denominator;
+  const optimalB = yMean - optimalW * xMean;
+
+  return {
+    optimalW: Number(optimalW.toFixed(2)),
+    optimalB: Number(optimalB.toFixed(2)),
+  };
+};
+
+export const GENERATE_LOSS_SURFACE_DATA = (wRange = { min: 0, max: 150, step: 5 }, bRange = { min: 0, max: 200, step: 10 }) => {
+  // Generate 2D loss surface J(w, b) for both MSE and MAE
+  const data = [];
+  for (let w = wRange.min; w <= wRange.max; w += wRange.step) {
+    for (let b = bRange.min; b <= bRange.max; b += bRange.step) {
+      const fit = CALCULATE_LINE_FIT(w, b);
+      data.push({ w, b, mse: fit.mse, mae: fit.mae });
+    }
+  }
+  return data;
+};
+
 export const PYTHON_LINEAR_REGRESSION_CODE = `# ============================================================================
 # LINEAR REGRESSION, COST FUNCTION & GRADIENT DESCENT FROM SCRATCH
 # Based on Shreya Rao's TDS Guide (2023)

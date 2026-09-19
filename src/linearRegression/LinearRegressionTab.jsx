@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import * as Primitives from '../components/layout/Primitives.jsx';
 import { Hero, CodeBlock } from '../components/ui/Content.jsx';
 import { Card, Badge, Button, Callout } from '../components/ui/Core.jsx';
 import DiagramImage from '../components/ui/DiagramImage.jsx';
+import LossCurveChart from '../components/ui/LossCurveChart.jsx';
+import LossHistoryChart from '../components/ui/LossHistoryChart.jsx';
+import ScatterPlot from '../components/ui/ScatterPlot.jsx';
 import {
   HOUSE_PRICE_DATASET,
   TARGET_MARK_HOUSE_SIZE,
   CALCULATE_LINE_FIT,
   GENERATE_LOSS_CURVE_DATA,
   GRADIENT_DESCENT_STEP,
+  GET_OPTIMAL_WEIGHTS,
   PYTHON_LINEAR_REGRESSION_CODE
 } from './linearRegressionEngine.js';
 import DataTable from '../components/ui/DataTable.jsx';
@@ -18,33 +22,73 @@ import { Reveal, AnimatedNumber } from '../components/ui/AnimatedReveal.jsx';
 const { Container, Section, Grid, Flex, Stack } = Primitives;
 
 export default function LinearRegressionTab() {
-  const [activeSubTab, setActiveSubTab] = useState('fitting'); // 'fitting' | 'cost' | 'gradient' | 'code'
+  const [activeSubTab, setActiveSubTab] = useState('fitting');
+  const [costMetric, setCostMetric] = useState('mse'); // 'mse' | 'mae'
 
-  // Line fitting sliders
-  const [slopeW, setSlopeW] = useState(130);
-  const [interceptB, setInterceptB] = useState(30);
+  // Get optimal weights analytically
+  const { optimalW, optimalB } = GET_OPTIMAL_WEIGHTS();
+
+  // Line fitting sliders - default to optimal values
+  const [slopeW, setSlopeW] = useState(optimalW);
+  const [interceptB, setInterceptB] = useState(optimalB);
 
   // Gradient descent stepper state
   const [gdW, setGdW] = useState(0);
   const [gdB, setGdB] = useState(0);
   const [learningRate, setLearningRate] = useState(0.05);
   const [gdStepCount, setGdStepCount] = useState(0);
+  const [gdLossHistory, setGdLossHistory] = useState([]);
+  const [lastGradients, setLastGradients] = useState({ dJ_dw: 0, dJ_db: 0 });
 
   const fitResult = CALCULATE_LINE_FIT(slopeW, interceptB);
-  const lossCurveData = GENERATE_LOSS_CURVE_DATA(slopeW);
+  const lossCurveData = useMemo(() => GENERATE_LOSS_CURVE_DATA(slopeW), [slopeW]);
   const gdFitResult = CALCULATE_LINE_FIT(gdW, gdB);
+  const optimalFitResult = CALCULATE_LINE_FIT(optimalW, optimalB);
 
   const handleStepGD = () => {
     const next = GRADIENT_DESCENT_STEP(gdW, gdB, learningRate);
     setGdW(next.nextW);
     setGdB(next.nextB);
     setGdStepCount(prev => prev + 1);
+    setLastGradients({ dJ_dw: next.dJ_dw, dJ_db: next.dJ_db });
+    setGdLossHistory(prev => [...prev, { step: gdStepCount + 1, mse: CALCULATE_LINE_FIT(next.nextW, next.nextB).mse, w: next.nextW, b: next.nextB }]);
   };
 
   const handleResetGD = () => {
     setGdW(0);
     setGdB(0);
     setGdStepCount(0);
+    setGdLossHistory([]);
+    setLastGradients({ dJ_dw: 0, dJ_db: 0 });
+  };
+
+  const handleRunToConvergence = () => {
+    let w = gdW;
+    let b = gdB;
+    let steps = 0;
+    const history = [...gdLossHistory];
+    for (let i = 0; i < 500; i++) {
+      const next = GRADIENT_DESCENT_STEP(w, b, learningRate);
+      w = next.nextW;
+      b = next.nextB;
+      steps++;
+      history.push({ step: gdStepCount + steps, mse: CALCULATE_LINE_FIT(w, b).mse, w, b });
+      if (Math.abs(next.dJ_dw) < 0.01 && Math.abs(next.dJ_db) < 0.01) {
+        setLastGradients({ dJ_dw: next.dJ_dw, dJ_db: next.dJ_db });
+        break;
+      }
+    }
+    setGdW(w);
+    setGdB(b);
+    setGdStepCount(prev => prev + steps);
+    setGdLossHistory(history);
+  };
+
+  const handleResetToOptimal = () => {
+    setGdW(optimalW);
+    setGdB(optimalB);
+    setGdLossHistory([]);
+    setLastGradients({ dJ_dw: 0, dJ_db: 0 });
   };
 
   return (
@@ -144,6 +188,20 @@ export default function LinearRegressionTab() {
                   </div>
                 </Grid>
 
+                <Flex gap={3} style={{ marginBottom: 'var(--ds-space-2)' }}>
+                  <Button variant="subtle" size="sm" onClick={() => { setSlopeW(optimalW); setInterceptB(optimalB); }} style={{ borderColor: '#5EC4C8', color: '#5EC4C8' }}>
+                    ✨ Reset to Optimal (w={optimalW}, b={optimalB})
+                  </Button>
+                  <Badge variant="subtle" style={{ alignSelf: 'center' }}>Optimal MSE: {optimalFitResult.mse}</Badge>
+                </Flex>
+
+                <ScatterPlot
+                  points={fitResult.points}
+                  slopeW={slopeW}
+                  interceptB={interceptB}
+                  title="House Price vs Size with Regression Line"
+                />
+
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                     <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>MEAN SQUARED ERROR (MSE):</strong>
@@ -177,6 +235,42 @@ export default function LinearRegressionTab() {
                   </p>
                 </div>
 
+                <Flex gap={3} align="center" style={{ marginBottom: 'var(--ds-space-2)' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)' }}>
+                    <input
+                      type="radio"
+                      name="costMetric"
+                      value="mse"
+                      checked={costMetric === 'mse'}
+                      onChange={e => setCostMetric(e.target.value)}
+                      style={{ accentColor: 'var(--ds-color-module-foundations-primary)' }}
+                    />
+                    <span>MSE (Convex Parabola)</span>
+                  </label>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)' }}>
+                    <input
+                      type="radio"
+                      name="costMetric"
+                      value="mae"
+                      checked={costMetric === 'mae'}
+                      onChange={e => setCostMetric(e.target.value)}
+                      style={{ accentColor: 'var(--ds-color-module-foundations-primary)' }}
+                    />
+                    <span>MAE (V-Shaped)</span>
+                  </label>
+                  <span style={{ marginLeft: 'auto', fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>
+                    Slope w fixed at: {slopeW}
+                  </span>
+                </Flex>
+
+                <LossCurveChart
+                  data={lossCurveData}
+                  currentW={slopeW}
+                  currentB={interceptB}
+                  metric={costMetric}
+                  title={`${costMetric.toUpperCase()} Loss vs Intercept (b)`}
+                />
+
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                     <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>Mean Absolute Error (MAE):</strong>
@@ -209,17 +303,38 @@ export default function LinearRegressionTab() {
                   </p>
                 </div>
 
-                <Flex gap={3} align="center">
+                <div style={{ marginBottom: 'var(--ds-space-3)' }}>
+                  <label style={{ display: 'block', fontSize: 'var(--ds-font-size-caption)', marginBottom: '4px' }}>
+                    Learning Rate α ({learningRate}):
+                  </label>
+                  <input
+                    type="range"
+                    min="0.001"
+                    max="0.1"
+                    step="0.001"
+                    value={learningRate}
+                    onChange={e => setLearningRate(Number(e.target.value))}
+                    style={{ width: '100%' }}
+                  />
+                </div>
+
+                <Flex gap={3} align="center" flexWrap="wrap">
                   <Button variant="primary" size="sm" onClick={handleStepGD}>
-                    ▶️ Step Gradient Descent (+1 Iteration)
+                    ▶️ Step Gradient Descent (+1)
+                  </Button>
+                  <Button variant="primary" size="sm" onClick={handleRunToConvergence} style={{ background: '#5EC4C8' }}>
+                    ⏩ Run to Convergence (500 steps)
                   </Button>
                   <Button variant="subtle" size="sm" onClick={handleResetGD}>
-                    🔄 Reset Weights to (0, 0)
+                    🔄 Reset to (0, 0)
+                  </Button>
+                  <Button variant="subtle" size="sm" onClick={handleResetToOptimal} style={{ borderColor: '#5EC4C8', color: '#5EC4C8' }}>
+                    ✨ Reset to Optimal ({optimalW}, {optimalB})
                   </Button>
                   <Badge variant="subtle">Total Steps: {gdStepCount}</Badge>
                 </Flex>
 
-                <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
+                <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-3)">
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
                     <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>CURRENT WEIGHT w (SLOPE):</strong>
                     <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3A9B9F' }}>{gdW}</div>
@@ -234,7 +349,40 @@ export default function LinearRegressionTab() {
                     <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>CURRENT MSE LOSS:</strong>
                     <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3A9B9F' }}>{gdFitResult.mse}</div>
                   </Card>
+
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
+                    <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>OPTIMAL MSE:</strong>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#5EC4C8' }}>{optimalFitResult.mse}</div>
+                  </Card>
                 </Grid>
+
+                {/* Gradient Info */}
+                <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)" style={{ marginTop: 'var(--ds-space-2)' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #3A9B9F' }}>
+                    <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>GRADIENT dJ/dw (∂loss/∂w):</strong>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3A9B9F', fontFamily: 'DM Mono, monospace' }}>
+                      {lastGradients.dJ_dw.toFixed(2)}
+                    </div>
+                    <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', margin: '4px 0 0 0' }}>
+                      Steepness of loss w.r.t. slope
+                    </p>
+                  </Card>
+
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #8b5cf6' }}>
+                    <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>GRADIENT dJ/db (∂loss/∂b):</strong>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#8b5cf6', fontFamily: 'DM Mono, monospace' }}>
+                      {lastGradients.dJ_db.toFixed(2)}
+                    </div>
+                    <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', margin: '4px 0 0 0' }}>
+                      Steepness of loss w.r.t. intercept
+                    </p>
+                  </Card>
+                </Grid>
+
+                {/* Loss History Chart */}
+                {gdLossHistory.length > 0 && (
+                  <LossHistoryChart history={gdLossHistory} title="MSE Loss Convergence History" />
+                )}
               </Stack>
             </Card>
           </Stack>
@@ -305,12 +453,12 @@ export default function LinearRegressionTab() {
             <div>
               <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--ds-color-text-tertiary)' }}>Mark's 2400 sq ft Prediction</div>
               <div style={{ fontSize: '2.4rem', fontWeight: 800, color: 'var(--ds-color-module-foundations-primary)' }}>
-                $<AnimatedNumber value={CALCULATE_LINE_FIT(0.069, 1.5).markPredPrice} decimals={0} />k
+                $<AnimatedNumber value={optimalFitResult.markPredPrice} decimals={0} />k
               </div>
             </div>
             <div style={{ flex: 1, minWidth: 200, color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>
               With the fitted line, Mark's <strong>2400 sq ft</strong> house is predicted near the regression estimate
-              (slope {CALCULATE_LINE_FIT(0.069, 1.5).slopeW}, bias {CALCULATE_LINE_FIT(0.069, 1.5).interceptB}, MSE {CALCULATE_LINE_FIT(0.069, 1.5).mse}).
+              (slope {optimalW}, bias {optimalB}, MSE {optimalFitResult.mse}).
             </div>
           </Card>
         </Reveal>
