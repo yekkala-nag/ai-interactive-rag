@@ -8,7 +8,7 @@ import { STAGES, STEPS, QUERIES, RUN_PIPELINE, PYTHON_PIPELINE_CODE } from './pi
 const { Container, Grid, Flex, Stack } = Primitives;
 const NAV = { display: 'flex', gap: 'var(--ds-space-2)', marginBottom: 'var(--ds-space-6)', background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-2)', borderRadius: 'var(--ds-radius-lg)', border: '1px solid var(--ds-color-border-subtle)', overflowX: 'auto' };
 const navBtn = (a, b) => ({ flex: 1, minWidth: '200px', padding: 'var(--ds-space-3) var(--ds-space-4)', borderRadius: 'var(--ds-radius-md)', border: 'none', background: a === b ? 'var(--ds-color-module-foundations-primary)' : 'transparent', color: a === b ? 'white' : 'var(--ds-color-text-secondary)', cursor: 'pointer', textAlign: 'left' });
-const TONE = { ok: '#2AB5B0', bad: '#ef4444', warn: '#F5A623', info: 'var(--ds-color-text-secondary)' };
+const TONE = { ok: '#5EC4C8', bad: '#ef4444', warn: '#F5A623', info: 'var(--ds-color-text-secondary)' };
 
 export default function CompletePipelineTab() {
   const [sub, setSub] = useState('run');
@@ -161,7 +161,7 @@ export default function CompletePipelineTab() {
                 <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', animation: 'fadeIn 0.4s ease' }}>
                   <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>RUN METRICS</strong>
                   <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)" style={{ marginTop: '8px' }}>
-                    {[['Precision@' + k, m.precision, m.precision >= 0.5 ? '#2AB5B0' : '#ef4444'], ['Recall', m.recall, m.recall >= 0.5 ? '#2AB5B0' : '#ef4444'], ['Faithfulness', m.faithfulness, m.evaluated ? (m.faithfulness >= 0.85 ? '#2AB5B0' : '#F5A623') : '#64748b']].map(([l, v, c]) => (
+                    {[['Precision@' + k, m.precision, m.precision >= 0.5 ? '#5EC4C8' : '#ef4444'], ['Recall', m.recall, m.recall >= 0.5 ? '#5EC4C8' : '#ef4444'], ['Faithfulness', m.faithfulness, m.evaluated ? (m.faithfulness >= 0.85 ? '#5EC4C8' : '#F5A623') : '#64748b']].map(([l, v, c]) => (
                       <div key={l} style={{ textAlign: 'center' }}>
                         <div style={{ fontSize: '22px', fontWeight: 800, color: c }}>{v}</div>
                         <div style={{ fontSize: '10px', color: 'var(--ds-color-text-tertiary)' }}>{l}{l === 'Faithfulness' && !m.evaluated ? ' (unevaluated)' : ''}</div>
@@ -179,9 +179,9 @@ export default function CompletePipelineTab() {
                     {result.chunks.map((c, i) => {
                       const rel = c.rel[queryId] === 1;
                       return (
-                        <div key={c.id} style={{ fontSize: '11px', fontFamily: 'monospace', padding: '6px 8px', borderRadius: '6px', background: rel ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.08)', borderLeft: `3px solid ${rel ? '#2AB5B0' : '#ef4444'}` }}>
+                        <div key={c.id} style={{ fontSize: '11px', fontFamily: 'monospace', padding: '6px 8px', borderRadius: '6px', background: rel ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.08)', borderLeft: `3px solid ${rel ? '#5EC4C8' : '#ef4444'}` }}>
                           <span style={{ color: 'var(--ds-color-text-tertiary)' }}>#{i + 1} [{c.id}]</span>{' '}
-                          <span style={{ color: rel ? '#2AB5B0' : '#f87171' }}>{rel ? 'RELEVANT' : 'distractor'}</span>{' '}
+                          <span style={{ color: rel ? '#5EC4C8' : '#f87171' }}>{rel ? 'RELEVANT' : 'distractor'}</span>{' '}
                           <span style={{ color: 'var(--ds-color-text-secondary)' }}>{c.text}</span>
                         </div>
                       );

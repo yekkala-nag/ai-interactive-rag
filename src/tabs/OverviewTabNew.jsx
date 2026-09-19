@@ -42,7 +42,7 @@ const FOUR_PILLARS = [
     id: 'foundations',
     title: 'Foundations & Attention Mechanisms',
     icon: '🌱',
-    color: '#17837F',
+    color: '#3A9B9F',
     summary: 'Core LLM internals: building your first app, token sampling temperature/top-p, self-attention QKV, and structured outputs.',
     tabs: [
       { id: 'firstaiapp', label: 'First AI App', icon: '🚀', tag: 'Start Here' },
@@ -57,7 +57,7 @@ const FOUR_PILLARS = [
     id: 'rag',
     title: 'RAG & Retrieval Architectures',
     icon: '⚡',
-    color: '#17837F',
+    color: '#3A9B9F',
     summary: 'Vector embeddings, chunking strategies, question parsing loops, hierarchical retrieval, and production RAG pipelines.',
     tabs: [
       { id: 'rag', label: 'RAG Architectures', icon: '📄', tag: 'Overview' },
@@ -72,7 +72,7 @@ const FOUR_PILLARS = [
     id: 'agents',
     title: 'Autonomous Agent Systems',
     icon: '🤖',
-    color: '#5A4FA3',
+    color: '#7A6BA8',
     summary: 'ReAct agent loops, CLI agents, multi-agent collaboration, LangChain/LangGraph graphs, and stateful human-in-the-loop.',
     tabs: [
       { id: 'fiveassets', label: 'Five Agent Assets', icon: '🏛️', tag: 'Core Theory' },
@@ -87,7 +87,7 @@ const FOUR_PILLARS = [
     id: 'enterprise_ops',
     title: 'Production Ops & Token FinOps',
     icon: '🏢',
-    color: '#17837F',
+    color: '#3A9B9F',
     summary: 'Zero-model routers, token orchestration playbooks, LLM evaluations, high-concurrency guardrails, and enterprise SLA ops.',
     tabs: [
       { id: 'tokenorchestrationplaybook', label: 'Token Playbook', icon: '🪙', tag: 'FinOps' },
@@ -101,15 +101,15 @@ const FOUR_PILLARS = [
 ];
 
 const RAG_TYPES = [
-  { id: 'naive', label: 'Naive RAG', level: 'Foundational', icon: '📄', color: '#17837F', tagline: 'Chunk → embed → retrieve → generate' },
-  { id: 'advanced', label: 'Advanced RAG', level: 'Intermediate', icon: '⚙️', color: '#A34A28', tagline: 'HyDE + rerank + compression' },
+  { id: 'naive', label: 'Naive RAG', level: 'Foundational', icon: '📄', color: '#3A9B9F', tagline: 'Chunk → embed → retrieve → generate' },
+  { id: 'advanced', label: 'Advanced RAG', level: 'Intermediate', icon: '⚙️', color: '#C47A6A', tagline: 'HyDE + rerank + compression' },
   { id: 'hybrid', label: 'Hybrid RAG', level: 'Production Standard', icon: '🔀', color: '#DC2626', tagline: 'Dense + sparse via RRF' },
   { id: 'selfrag', label: 'Self-RAG', level: 'Advanced', icon: '🪞', color: '#DC2626', tagline: 'Model decides when to retrieve' },
   { id: 'crag', label: 'Corrective RAG', level: 'Advanced', icon: '🩺', color: '#DC2626', tagline: 'Web fallback when local retrieval fails' },
-  { id: 'graphrag', label: 'Graph RAG', level: 'Cutting Edge', icon: '🕸️', color: '#5A4FA3', tagline: 'Knowledge graphs for multi-hop reasoning' },
+  { id: 'graphrag', label: 'Graph RAG', level: 'Cutting Edge', icon: '🕸️', color: '#7A6BA8', tagline: 'Knowledge graphs for multi-hop reasoning' },
   { id: 'agentic', label: 'Agentic RAG', level: 'Advanced', icon: '🤖', color: '#DC2626', tagline: 'Multi-step ReAct retrieval loops' },
-  { id: 'multimodal', label: 'Multimodal RAG', level: 'Cutting Edge', icon: '🖼️', color: '#5A4FA3', tagline: 'Text + images + tables together' },
-  { id: 'raptor', label: 'RAPTOR', level: 'Cutting Edge', icon: '🌲', color: '#5A4FA3', tagline: 'Recursive tree of summaries' },
+  { id: 'multimodal', label: 'Multimodal RAG', level: 'Cutting Edge', icon: '🖼️', color: '#7A6BA8', tagline: 'Text + images + tables together' },
+  { id: 'raptor', label: 'RAPTOR', level: 'Cutting Edge', icon: '🌲', color: '#7A6BA8', tagline: 'Recursive tree of summaries' },
 ];
 
 export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
@@ -807,7 +807,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                   padding: '16px 20px',
                   borderRadius: 'var(--ds-radius-lg)',
                   background: 'var(--ds-color-bg-canvas)',
-                  border: `1px solid ${isActive ? '#FF8A6B' : 'var(--ds-color-border-subtle)'}`,
+                  border: `1px solid ${isActive ? '#F0A89A' : 'var(--ds-color-border-subtle)'}`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
@@ -939,9 +939,9 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
           <Section.Body>
             <Grid columns={{ base: 1, md: 3 }} gap="md">
               {[
-                { id: 'mla', icon: '🧠', label: 'Multi-Head Latent Attention', color: '#17837F', metric: '2.7–4.7×', sub: 'KV cache reduction', desc: 'Compresses KV cache by projecting to low-dimensional latent, up-projecting at inference.' },
-                { id: 'moe', icon: '🎯', label: 'Mixture of Experts', color: '#A34A28', metric: '5.5%', sub: 'Params active per token', desc: 'Routes each token to top-k experts; 671B total, 37B active — dense quality at sparse cost.' },
-                { id: 'spec', icon: '⚡', label: 'Speculative Decoding', color: '#5A4FA3', metric: '2–4×', sub: 'Throughput gain', desc: 'Small draft model proposes tokens; large model verifies in parallel. Lossless speedup.' },
+                { id: 'mla', icon: '🧠', label: 'Multi-Head Latent Attention', color: '#3A9B9F', metric: '2.7–4.7×', sub: 'KV cache reduction', desc: 'Compresses KV cache by projecting to low-dimensional latent, up-projecting at inference.' },
+                { id: 'moe', icon: '🎯', label: 'Mixture of Experts', color: '#C47A6A', metric: '5.5%', sub: 'Params active per token', desc: 'Routes each token to top-k experts; 671B total, 37B active — dense quality at sparse cost.' },
+                { id: 'spec', icon: '⚡', label: 'Speculative Decoding', color: '#7A6BA8', metric: '2–4×', sub: 'Throughput gain', desc: 'Small draft model proposes tokens; large model verifies in parallel. Lossless speedup.' },
               ].map(item => (
                 <Card key={item.id} variant="elevated" padding="lg" hover onClick={() => handleNavigate('archconcepts')} style={{ cursor: 'pointer' }}>
                   <Flex gap="md" align="flex-start" style={{ marginBottom: 'var(--ds-space-4)' }}>

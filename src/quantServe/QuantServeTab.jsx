@@ -32,8 +32,8 @@ export default function QuantServeTab() {
         {sub === 'quants' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Format</th><th style={{ padding: '8px' }}>Bits</th><th style={{ padding: '8px' }}>Quality</th><th style={{ padding: '8px' }}>70B VRAM</th><th style={{ textAlign: 'left', padding: '8px' }}>Use</th></tr></thead>
-            <tbody>{QUANT_TABLE.map((q, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{q.fmt}</td><td style={{ padding: '8px', textAlign: 'center', color: '#17837F', fontFamily: 'monospace' }}>{q.bits}</td><td style={{ padding: '8px', textAlign: 'center', color: q.quality.includes('lossless') || q.quality === 'baseline' ? '#2AB5B0' : '#F5A623' }}>{q.quality}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{q.vram70B}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{q.use}</td></tr>))}</tbody></table></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{SERVE_TABLE.map((st, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{st.stack}</div><div style={{ fontSize: '11px', color: '#17837F' }}>{st.best}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>{st.needs}</div></Card>))}</Grid>
+            <tbody>{QUANT_TABLE.map((q, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{q.fmt}</td><td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F', fontFamily: 'monospace' }}>{q.bits}</td><td style={{ padding: '8px', textAlign: 'center', color: q.quality.includes('lossless') || q.quality === 'baseline' ? '#5EC4C8' : '#F5A623' }}>{q.quality}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{q.vram70B}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{q.use}</td></tr>))}</tbody></table></div>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{SERVE_TABLE.map((st, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{st.stack}</div><div style={{ fontSize: '11px', color: '#3A9B9F' }}>{st.best}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>{st.needs}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 VRAM fit simulator (1×80GB assumed)</h3></div>
@@ -46,9 +46,9 @@ export default function QuantServeTab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Context: {ctx}k</label>
               <input type="range" min={4} max={128} step={4} value={ctx} onChange={e => setCtx(+e.target.value)} style={{ width: '100%' }} />
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${s.fits ? '#2AB5B0' : '#ef4444'}` }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${s.fits ? '#5EC4C8' : '#ef4444'}` }}>
               <div style={{ fontSize: '13px', color: 'white', fontFamily: 'monospace' }}>weights {s.weightsGB} + KV {s.kvGB} = {s.totalGB} GB {s.fits ? '✓ fits' : '✕ over'}</div>
-              <div style={{ fontSize: '12px', color: '#17837F', marginTop: '6px' }}>{s.stack}</div>
+              <div style={{ fontSize: '12px', color: '#3A9B9F', marginTop: '6px' }}>{s.stack}</div>
             </Card>
           </Grid>
         </Stack></Card></Stack>)}

@@ -64,15 +64,15 @@ export default function ProjectPrepFrameworkTab() {
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>Sequential but not waterfall: later discovery may invalidate earlier docs — go back, update explicitly. Never allow unacknowledged change.</p></div>
                 <Stack gap={3}>
                   {FRAMEWORK_STEPS.map(s => (
-                    <Card key={s.id} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <Card key={s.id} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '4px' }}>
-                        <strong style={{ color: '#17837F' }}>{s.n}. {s.title} — <span style={{ fontFamily: 'monospace', fontSize: '12px' }}>{s.doc}</span></strong>
-                        <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.15)', color: '#17837F', fontSize: '9px' }}>{s.question}</Badge>
+                        <strong style={{ color: '#3A9B9F' }}>{s.n}. {s.title} — <span style={{ fontFamily: 'monospace', fontSize: '12px' }}>{s.doc}</span></strong>
+                        <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.15)', color: '#3A9B9F', fontSize: '9px' }}>{s.question}</Badge>
                       </Flex>
                       <p style={{ margin: '4px 0', fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>{s.purpose}</p>
                       <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)" style={{ fontSize: '11px', marginTop: '8px' }}>
                         <div><span style={{ color: '#F5A623', fontWeight: 'bold' }}>War story: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{s.warStory}</span></div>
-                        <div><span style={{ color: '#17837F', fontWeight: 'bold' }}>Lesson: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{s.lesson}</span></div>
+                        <div><span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>Lesson: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{s.lesson}</span></div>
                         <div><span style={{ color: '#ef4444', fontWeight: 'bold' }}>Agent risk: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{s.agentRisk}</span></div>
                       </Grid>
                       <div style={{ marginTop: '6px', fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>Produces: {s.produces.join(' · ')}</div>
@@ -108,10 +108,10 @@ export default function ProjectPrepFrameworkTab() {
                         <input type="range" min="1" max="8" value={people} onChange={e => setPeople(+e.target.value)} style={{ width: '100%' }} /></div>
                     </Grid>
                   </Card>
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${readiness.score >= 65 ? '#ef4444' : readiness.score >= 35 ? '#F5A623' : '#2AB5B0'}` }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${readiness.score >= 65 ? '#ef4444' : readiness.score >= 35 ? '#F5A623' : '#5EC4C8'}` }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
                       <strong style={{ fontSize: '13px' }}>READINESS SCORE: {readiness.score}/100</strong>
-                      <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.15)', color: '#17837F', fontSize: '9px' }}>{readiness.triggersHit} triggers</Badge>
+                      <Badge variant="subtle" style={{ background: 'rgba(56,189,248,0.15)', color: '#3A9B9F', fontSize: '9px' }}>{readiness.triggersHit} triggers</Badge>
                     </Flex>
                     <div style={{ fontSize: '12px', color: '#F5A623', fontWeight: 'bold', marginBottom: '4px' }}>{readiness.verdict}</div>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginBottom: '6px' }}>{readiness.depth}</div>
@@ -150,7 +150,7 @@ export default function ProjectPrepFrameworkTab() {
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{reversal.advice}</div>
                   </Card>
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
-                    <strong style={{ fontSize: '11px', color: '#17837F' }}>RACI EXAMPLE (governance.md):</strong>
+                    <strong style={{ fontSize: '11px', color: '#3A9B9F' }}>RACI EXAMPLE (governance.md):</strong>
                     <div style={{ overflowX: 'auto', marginTop: '8px' }}>
                       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
                         <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}>
@@ -173,7 +173,7 @@ export default function ProjectPrepFrameworkTab() {
                       <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
                         <td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{r.decision}</td>
                         <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.reverseCost}</td>
-                        <td style={{ padding: '8px', color: r.scrutiny.includes('Deep') ? '#ef4444' : r.scrutiny === 'Minimal' ? '#2AB5B0' : '#F5A623' }}>{r.scrutiny}</td>
+                        <td style={{ padding: '8px', color: r.scrutiny.includes('Deep') ? '#ef4444' : r.scrutiny === 'Minimal' ? '#5EC4C8' : '#F5A623' }}>{r.scrutiny}</td>
                       </tr>))}</tbody>
                   </table>
                 </div>
@@ -190,8 +190,8 @@ export default function ProjectPrepFrameworkTab() {
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>AI case-intake request: "read docs, extract, auto-decide". Framework reroutes it before build.</p></div>
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">
                   {CASE_WALKTHROUGH.map((c, i) => (
-                    <Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}>
-                      <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>{c.step} → {c.doc}</div>
+                    <Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}>
+                      <div style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>{c.step} → {c.doc}</div>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{c.surprise}</div>
                     </Card>
                   ))}

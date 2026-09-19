@@ -31,11 +31,11 @@ export default function TextToSQLTab() {
           <button key={t.id} onClick={() => setSub(t.id)} style={navBtn(sub, t.id)}><div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'loop' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{SQL_LOOP.map(s2 => (<Card key={s2.step} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: '#17837F', fontWeight: 'bold' }}>{s2.step}. {s2.name}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s2.detail}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{SQL_LOOP.map(s2 => (<Card key={s2.step} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: '#3A9B9F', fontWeight: 'bold' }}>{s2.step}. {s2.name}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s2.detail}</div></Card>))}</Grid>
           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{GUARD_TABLE.map((g, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #ef4444' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{g.guard}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{g.blocks}</div></Card>))}</Grid>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ padding: '8px' }}>Level</th><th style={{ textAlign: 'left', padding: '8px' }}>Example</th><th style={{ textAlign: 'left', padding: '8px' }}>SQL shape</th><th style={{ padding: '8px' }}>Risk</th></tr></thead>
-            <tbody>{DIFFICULTY.map((x, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>{x.level}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{x.ex}</td><td style={{ padding: '8px', color: '#17837F', fontFamily: 'monospace' }}>{x.sql}</td><td style={{ padding: '8px', color: x.risk === 'low' ? '#2AB5B0' : '#F5A623' }}>{x.risk}</td></tr>))}</tbody></table></div>
+            <tbody>{DIFFICULTY.map((x, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>{x.level}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{x.ex}</td><td style={{ padding: '8px', color: '#3A9B9F', fontFamily: 'monospace' }}>{x.sql}</td><td style={{ padding: '8px', color: x.risk === 'low' ? '#5EC4C8' : '#F5A623' }}>{x.risk}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Guarded SQL draft simulator</h3></div>
@@ -48,9 +48,9 @@ export default function TextToSQLTab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Coverage</label>
               <select value={cov} onChange={e => setCov(e.target.value)} style={sel}><option value="property">property</option><option value="liability">liability</option></select>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-              <div style={{ fontSize: '12px', color: '#17837F', fontFamily: 'monospace' }}>{d.sql}</div>
-              {d.guards.map((g, i) => (<div key={i} style={{ fontSize: '11px', color: g.startsWith('⚠') ? '#F5A623' : '#2AB5B0', marginTop: '4px' }}>{g}</div>))}
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+              <div style={{ fontSize: '12px', color: '#3A9B9F', fontFamily: 'monospace' }}>{d.sql}</div>
+              {d.guards.map((g, i) => (<div key={i} style={{ fontSize: '11px', color: g.startsWith('⚠') ? '#F5A623' : '#5EC4C8', marginTop: '4px' }}>{g}</div>))}
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginTop: '6px' }}>{d.cite}</div>
             </Card>
           </Grid>

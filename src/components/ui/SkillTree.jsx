@@ -14,11 +14,11 @@ const ROW_H = 38;
 const TOP = 44;
 
 function nodeColor(id) {
-  if (isProven(id)) return { fill: 'rgba(42,181,176,0.14)', stroke: '#2AB5B0', text: '#22303C' };
-  if (isClaimed(id)) return { fill: 'rgba(255,138,107,0.12)', stroke: '#FF8A6B', text: '#22303C' };
+  if (isProven(id)) return { fill: 'rgba(42,181,176,0.14)', stroke: '#5EC4C8', text: '#22303C' };
+  if (isClaimed(id)) return { fill: 'rgba(255,138,107,0.12)', stroke: '#F0A89A', text: '#22303C' };
   const s = getMasteryScore(id);
-  if (s > 0) return { fill: 'rgba(197,173,234,0.2)', stroke: '#8B7BD8', text: '#22303C' };
-  return { fill: '#fff', stroke: '#C5ADEA', text: '#7A8AA0' };
+  if (s > 0) return { fill: 'rgba(197,173,234,0.2)', stroke: '#9B89C4', text: '#22303C' };
+  return { fill: '#fff', stroke: '#C9B8E8', text: '#7A8AA0' };
 }
 
 function isReady(id) {
@@ -65,7 +65,7 @@ export function SkillTree({ onSelectTab }) {
         <svg viewBox={`0 0 860 ${H}`} style={{ minWidth: '620px', width: '100%', height: 'auto', display: 'block' }} role="img" aria-label={`Skill tree for ${mod.title}`}>
           <defs>
             <filter id="readyGlow" x="-40%" y="-40%" width="180%" height="180%">
-              <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="#FF8A6B" floodOpacity="0.8" />
+              <feDropShadow dx="0" dy="0" stdDeviation="5" floodColor="#F0A89A" floodOpacity="0.8" />
             </filter>
           </defs>
           {[1, 2, 3].map(l => (
@@ -83,7 +83,7 @@ export function SkillTree({ onSelectTab }) {
               const x1 = b.x + NODE_W / 2, y1 = b.y;
               const x2 = a.x - NODE_W / 2, y2 = a.y;
               const mx = (x1 + x2) / 2;
-              return <path key={`${p}-${t.id}`} d={`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`} fill="none" stroke={isMastered(p) ? '#2AB5B0' : '#D5DDE8'} strokeWidth={isMastered(p) ? 2 : 1.2} opacity={isMastered(p) ? 0.9 : 0.8} />;
+              return <path key={`${p}-${t.id}`} d={`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`} fill="none" stroke={isMastered(p) ? '#5EC4C8' : '#D5DDE8'} strokeWidth={isMastered(p) ? 2 : 1.2} opacity={isMastered(p) ? 0.9 : 0.8} />;
             });
           })}
           {/* nodes */}
@@ -112,10 +112,10 @@ export function SkillTree({ onSelectTab }) {
         </svg>
       </div>
       <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginTop: '8px', fontSize: '0.7rem', color: 'var(--ds-color-text-tertiary)' }}>
-        <span><span style={{ color: '#2AB5B0' }}>●</span> proven</span>
-        <span><span style={{ color: '#FF8A6B' }}>●</span> claimed</span>
-        <span><span style={{ color: '#8B7BD8' }}>●</span> in progress</span>
-        <span><span style={{ color: '#C5ADEA' }}>●</span> untouched</span>
+        <span><span style={{ color: '#5EC4C8' }}>●</span> proven</span>
+        <span><span style={{ color: '#F0A89A' }}>●</span> claimed</span>
+        <span><span style={{ color: '#9B89C4' }}>●</span> in progress</span>
+        <span><span style={{ color: '#C9B8E8' }}>●</span> untouched</span>
         <span>✨ glow = ready (prereqs met) — click any node to jump in</span>
       </div>
     </div>

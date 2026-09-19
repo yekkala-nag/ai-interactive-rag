@@ -30,14 +30,14 @@ export default function FunctoolsTab() {
         </div>
         {sub === 'tricks' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           {TRICKS.map((t, i) => (
-            <Card key={i} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+            <Card key={i} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
               <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
                 <strong style={{ color: 'white', fontSize: '13px', fontFamily: 'monospace' }}>{t.name}</strong>
-                <Badge variant="subtle" style={{ fontSize: '9px', background: 'rgba(16,185,129,0.15)', color: '#17837F' }}>{t.lines[0]} → {t.lines[1]} lines</Badge>
+                <Badge variant="subtle" style={{ fontSize: '9px', background: 'rgba(16,185,129,0.15)', color: '#3A9B9F' }}>{t.lines[0]} → {t.lines[1]} lines</Badge>
               </Flex>
               <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)" style={{ fontSize: '11px', marginTop: '8px' }}>
-                <div><span style={{ color: '#17837F', fontWeight: 'bold' }}>Use when: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{t.need}</span></div>
-                <div><span style={{ color: '#17837F', fontWeight: 'bold' }}>Before → after: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{t.before} → {t.after}</span></div>
+                <div><span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>Use when: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{t.need}</span></div>
+                <div><span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>Before → after: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{t.before} → {t.after}</span></div>
                 <div><span style={{ color: '#F5A623', fontWeight: 'bold' }}>⚠ Caveat: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{t.caveat}</span></div>
               </Grid>
             </Card>
@@ -52,8 +52,8 @@ export default function FunctoolsTab() {
                 <label key={t.id} style={{ fontSize: '12px', color: 'white', fontFamily: 'monospace', cursor: 'pointer' }}><input type="checkbox" checked={use.includes(t.id)} onChange={() => toggle(t.id)} /> {t.name}</label>
               ))}</Stack>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-              <div style={{ fontSize: '20px', color: 'white', fontFamily: 'monospace' }}>{r.before} → {r.after} <span style={{ color: '#17837F' }}>−{r.savedPct}%</span></div>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+              <div style={{ fontSize: '20px', color: 'white', fontFamily: 'monospace' }}>{r.before} → {r.after} <span style={{ color: '#3A9B9F' }}>−{r.savedPct}%</span></div>
               <div style={{ fontSize: '11px', color: '#F5A623', marginTop: '8px' }}>CAVEATS ACTIVE:</div>
               {r.caveats.map((c, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>⚠ {c}</div>))}
               <div style={{ fontSize: '11px', color: 'white', marginTop: '8px' }}>{r.verdict}</div>

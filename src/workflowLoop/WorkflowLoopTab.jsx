@@ -76,7 +76,7 @@ export function WorkflowLoopTab() {
           The Dispatcher: When to Loop & When to Stop
         </h1>
         <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: '0.95rem', maxWidth: '880px', lineHeight: 1.5, margin: 0 }}>
-          Instead of handing orchestration to an unconstrained LLM agent, enterprise RAG keeps control in code. A <strong style={{ color: '#06b6d4' }}>Dispatcher</strong> sets pattern activations upfront, while a <strong style={{ color: '#17837F' }}>Bounded Loop</strong> with safety guards decides when to iterate and when to stop.
+          Instead of handing orchestration to an unconstrained LLM agent, enterprise RAG keeps control in code. A <strong style={{ color: '#06b6d4' }}>Dispatcher</strong> sets pattern activations upfront, while a <strong style={{ color: '#3A9B9F' }}>Bounded Loop</strong> with safety guards decides when to iterate and when to stop.
         </p>
       </Section>
 
@@ -313,8 +313,8 @@ export function WorkflowLoopTab() {
                 </div>
 
                 {/* Synthesized Output Draft */}
-                <div style={{ marginTop: 'auto', background: isFinalPass ? 'rgba(16, 185, 129, 0.06)' : 'rgba(6, 182, 212, 0.06)', border: `1px solid ${isFinalPass ? '#2AB5B0' : '#06b6d4'}`, borderRadius: '6px', padding: '10px 12px' }}>
-                  <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: isFinalPass ? '#2AB5B0' : '#06b6d4', fontWeight: 700, marginBottom: '4px' }}>
+                <div style={{ marginTop: 'auto', background: isFinalPass ? 'rgba(16, 185, 129, 0.06)' : 'rgba(6, 182, 212, 0.06)', border: `1px solid ${isFinalPass ? '#5EC4C8' : '#06b6d4'}`, borderRadius: '6px', padding: '10px 12px' }}>
+                  <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', color: isFinalPass ? '#5EC4C8' : '#06b6d4', fontWeight: 700, marginBottom: '4px' }}>
                     {isFinalPass ? '✅ Final Verified Cited Answer:' : '📝 Pass Draft Output:'}
                   </div>
                   <div style={{ fontSize: '0.82rem', color: 'var(--ds-color-text-primary)', lineHeight: 1.45, fontWeight: isFinalPass ? 600 : 400 }}>
@@ -347,21 +347,21 @@ export function WorkflowLoopTab() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.8rem', fontFamily: 'var(--ds-font-family-mono)', marginBottom: '14px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 8px', background: 'var(--ds-color-bg-canvas)', borderRadius: '4px' }}>
                       <span style={{ color: 'var(--ds-color-text-secondary)' }}>Confidence Score:</span>
-                      <strong style={{ color: currentPass.feedback.confidence >= 0.8 ? '#2AB5B0' : '#f59e0b' }}>
+                      <strong style={{ color: currentPass.feedback.confidence >= 0.8 ? '#5EC4C8' : '#f59e0b' }}>
                         {(currentPass.feedback.confidence * 100).toFixed(0)}%
                       </strong>
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 8px', background: 'var(--ds-color-bg-canvas)', borderRadius: '4px' }}>
                       <span style={{ color: 'var(--ds-color-text-secondary)' }}>Context Structured:</span>
-                      <strong style={{ color: currentPass.feedback.context_structured ? '#2AB5B0' : '#ef4444' }}>
+                      <strong style={{ color: currentPass.feedback.context_structured ? '#5EC4C8' : '#ef4444' }}>
                         {currentPass.feedback.context_structured ? 'True' : 'False (Requires Adaptive OCR)'}
                       </strong>
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 8px', background: 'var(--ds-color-bg-canvas)', borderRadius: '4px' }}>
                       <span style={{ color: 'var(--ds-color-text-secondary)' }}>Pending References:</span>
-                      <strong style={{ color: currentPass.feedback.pending_references?.length ? '#06b6d4' : '#2AB5B0' }}>
+                      <strong style={{ color: currentPass.feedback.pending_references?.length ? '#06b6d4' : '#5EC4C8' }}>
                         {currentPass.feedback.pending_references?.length ? JSON.stringify(currentPass.feedback.pending_references) : 'None'}
                       </strong>
                     </div>
@@ -388,7 +388,7 @@ export function WorkflowLoopTab() {
                 {/* Guardrail Decision Gate */}
                 <div style={{
                   background: guardDecision.shouldContinue ? 'linear-gradient(135deg, #083344 0%, #0f172a 100%)' : 'linear-gradient(135deg, #064e3b 0%, #022c22 100%)',
-                  border: `1px solid ${guardDecision.shouldContinue ? '#06b6d4' : '#2AB5B0'}`,
+                  border: `1px solid ${guardDecision.shouldContinue ? '#06b6d4' : '#5EC4C8'}`,
                   borderRadius: '6px',
                   padding: '10px 12px',
                   color: 'white'
@@ -514,7 +514,7 @@ export function WorkflowLoopTab() {
                       <Badge variant="success">Diagram 3: Pipeline Maturity</Badge>
                       <h3 style={{ margin: '4px 0 0 0', fontSize: '1.1rem' }}>Same Four Bricks. Five Levels of Control.</h3>
                     </div>
-                    <span style={{ fontSize: '0.78rem', color: '#A34A28', fontWeight: 'bold' }}>
+                    <span style={{ fontSize: '0.78rem', color: '#C47A6A', fontWeight: 'bold' }}>
                       ⚡ THE JUMP THAT MATTERS: Rungs 1–4 in Code ➔ Rung 5 in LLM
                     </span>
                   </Flex>
@@ -643,15 +643,15 @@ export function WorkflowLoopTab() {
                 </div>
 
                 {/* LAYER 2: BOUNDED ITERATION LOOP */}
-                <div style={{ borderLeft: '3px solid #2AB5B0', paddingLeft: '16px' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#17837F', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>
+                <div style={{ borderLeft: '3px solid #5EC4C8', paddingLeft: '16px' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3A9B9F', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '8px' }}>
                     Layer 2: Bounded Iteration Loop & Feedback Rails
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr', gap: '12px', alignItems: 'center' }}>
                     {/* Pass 1 Node */}
                     <div style={{
                       background: currentPassIndex === 0 ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.05)',
-                      border: currentPassIndex === 0 ? '2px solid #2AB5B0' : '1px solid #334155',
+                      border: currentPassIndex === 0 ? '2px solid #5EC4C8' : '1px solid #334155',
                       boxShadow: currentPassIndex === 0 ? '0 0 15px rgba(16, 185, 129, 0.4)' : 'none',
                       borderRadius: '8px',
                       padding: '12px 14px',
@@ -665,7 +665,7 @@ export function WorkflowLoopTab() {
                       </div>
                     </div>
 
-                    <span style={{ color: '#17837F', fontSize: '1.2rem', fontWeight: 900 }}>➔</span>
+                    <span style={{ color: '#3A9B9F', fontSize: '1.2rem', fontWeight: 900 }}>➔</span>
 
                     {/* Evaluate Node */}
                     <div style={{
@@ -682,12 +682,12 @@ export function WorkflowLoopTab() {
                       </div>
                     </div>
 
-                    <span style={{ color: '#17837F', fontSize: '1.2rem', fontWeight: 900 }}>➔</span>
+                    <span style={{ color: '#3A9B9F', fontSize: '1.2rem', fontWeight: 900 }}>➔</span>
 
                     {/* Pass 2 Node */}
                     <div style={{
                       background: currentPassIndex > 0 ? 'rgba(16, 185, 129, 0.25)' : 'rgba(255, 255, 255, 0.05)',
-                      border: currentPassIndex > 0 ? '2px solid #2AB5B0' : '1px solid #334155',
+                      border: currentPassIndex > 0 ? '2px solid #5EC4C8' : '1px solid #334155',
                       boxShadow: currentPassIndex > 0 ? '0 0 15px rgba(16, 185, 129, 0.4)' : 'none',
                       borderRadius: '8px',
                       padding: '12px 14px',

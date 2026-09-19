@@ -11,7 +11,7 @@ export default function PromptRegressionTab() {
   const [sub, setSub] = useState('signals');
   const [noise, setNoise] = useState(2);
   const g = RUN_GOLDEN(noise);
-  const gc = g.verdict.startsWith('SHIP') ? '#2AB5B0' : g.verdict.startsWith('GATE') ? '#F5A623' : '#ef4444';
+  const gc = g.verdict.startsWith('SHIP') ? '#5EC4C8' : g.verdict.startsWith('GATE') ? '#F5A623' : '#ef4444';
   const tabs = [
     { id: 'signals', icon: '📡', label: '1. Signals + Ladder', desc: '4 signals, 4 rollback rungs' },
     { id: 'sim', icon: '🔬', label: '2. Golden-Set Sim', desc: 'Inject noise, watch bands' },
@@ -32,7 +32,7 @@ export default function PromptRegressionTab() {
         </div>
         {sub === 'signals' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>📡 Four regression signals + rollback ladder</h3></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{REGRESSION_SIGNALS.map((s, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{s.signal}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.how}</div><div style={{ fontSize: '11px', color: '#ef4444', fontFamily: 'monospace' }}>alert: {s.alert}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{REGRESSION_SIGNALS.map((s, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{s.signal}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.how}</div><div style={{ fontSize: '11px', color: '#ef4444', fontFamily: 'monospace' }}>alert: {s.alert}</div></Card>))}</Grid>
           <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{ROLLBACK_LADDER.map((r, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #F5A623' }}><div style={{ fontSize: '12px', color: '#F5A623', fontWeight: 'bold' }}>{r.stage}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{r.action}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>cost: {r.cost}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>

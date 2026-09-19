@@ -98,13 +98,13 @@ export default function ClaudeCode100Tab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
                   {PIPELINE_STEPS.map((st) => (
-                    <Card key={st.step} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
+                    <Card key={st.step} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #5EC4C8' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                        <strong style={{ fontSize: '13px', color: '#17837F' }}>{st.title}</strong>
+                        <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>{st.title}</strong>
                         <span style={{ fontSize: '16px' }}>{st.icon}</span>
                       </Flex>
 
-                      <div style={{ background: '#090d16', padding: '6px 8px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#17837F', marginBottom: '8px' }}>
+                      <div style={{ background: '#090d16', padding: '6px 8px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#3A9B9F', marginBottom: '8px' }}>
                         {st.channel}
                       </div>
 
@@ -138,15 +138,15 @@ export default function ClaudeCode100Tab() {
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                   <Card style={{ padding: '16px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.3)' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '13px', color: '#17837F' }}>TYPE A: AUTONOMOUS SUB-AGENT TASKS</strong>
-                      <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.2)' }}>Direct to Dev</Badge>
+                      <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>TYPE A: AUTONOMOUS SUB-AGENT TASKS</strong>
+                      <Badge variant="subtle" style={{ color: '#3A9B9F', background: 'rgba(16,185,129,0.2)' }}>Direct to Dev</Badge>
                     </Flex>
                     <Stack gap={2} style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
                       <div>• CSS layout fixes, mobile responsive tweaks, color adjustments.</div>
                       <div>• Adding export buttons, CSV downloaders, table column re-ordering.</div>
                       <div>• Fixing localized bug exceptions with clear Sentry stack traces.</div>
                       <div>• Straightforward API endpoint updates with clear Pydantic schemas.</div>
-                      <div style={{ color: '#17837F', fontWeight: 'bold', marginTop: '6px' }}>➔ Spawns a parallel git worktree sub-agent and commits to dev.</div>
+                      <div style={{ color: '#3A9B9F', fontWeight: 'bold', marginTop: '6px' }}>➔ Spawns a parallel git worktree sub-agent and commits to dev.</div>
                     </Stack>
                   </Card>
 
@@ -181,8 +181,8 @@ export default function ClaudeCode100Tab() {
                   </p>
                 </div>
 
-                <Card style={{ padding: '18px', background: '#090d16', border: '1px solid #2AB5B0' }}>
-                  <div style={{ fontFamily: 'monospace', fontSize: '12px', color: '#17837F', lineHeight: '1.8' }}>
+                <Card style={{ padding: '18px', background: '#090d16', border: '1px solid #5EC4C8' }}>
+                  <div style={{ fontFamily: 'monospace', fontSize: '12px', color: '#3A9B9F', lineHeight: '1.8' }}>
                     [MAIN REPOSITORY ROOT]  (Branch: dev / main)<br/>
                     &nbsp;&nbsp;│<br/>
                     &nbsp;&nbsp;├── 📁 ../worktrees/LIN-101 ➔ [Sub-Agent A] (Fix mobile pricing toggle)<br/>
@@ -193,8 +193,8 @@ export default function ClaudeCode100Tab() {
                 </Card>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '6px' }}>
                       WHY GIT WORKTREES WIN OVER CLONES:
                     </strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -202,8 +202,8 @@ export default function ClaudeCode100Tab() {
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '6px' }}>
                       AUTOMATIC CLEANUP ON MERGE:
                     </strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -243,12 +243,12 @@ export default function ClaudeCode100Tab() {
                 </div>
 
                 {/* VERIFICATION CARD */}
-                <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #2AB5B0' }}>
+                <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #5EC4C8' }}>
                   <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>
                       VERIFICATION CHECKLIST FOR [{activeTask.id}]
                     </strong>
-                    <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
+                    <Badge variant="subtle" style={{ color: '#3A9B9F', background: 'rgba(16,185,129,0.15)' }}>
                       Status: {activeTask.status}
                     </Badge>
                   </Flex>
@@ -258,13 +258,13 @@ export default function ClaudeCode100Tab() {
                   </div>
 
                   <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>VERBATIM SOURCE ISSUE:</div>
-                  <div style={{ background: '#161e2e', padding: '8px 12px', borderRadius: '4px', color: '#17837F', fontSize: '12px', fontFamily: 'monospace', marginBottom: '10px' }}>
+                  <div style={{ background: '#161e2e', padding: '8px 12px', borderRadius: '4px', color: '#3A9B9F', fontSize: '12px', fontFamily: 'monospace', marginBottom: '10px' }}>
                     "{activeTask.notes}"
                   </div>
 
                   <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>DEEP-LINK TEST URL (ONE CLICK):</div>
-                  <div style={{ background: '#161e2e', padding: '8px 12px', borderRadius: '4px', color: '#17837F', fontSize: '12px', fontFamily: 'monospace', marginBottom: '10px' }}>
-                    <a href={activeTask.testUrl} target="_blank" rel="noreferrer" style={{ color: '#17837F', textDecoration: 'underline' }}>
+                  <div style={{ background: '#161e2e', padding: '8px 12px', borderRadius: '4px', color: '#3A9B9F', fontSize: '12px', fontFamily: 'monospace', marginBottom: '10px' }}>
+                    <a href={activeTask.testUrl} target="_blank" rel="noreferrer" style={{ color: '#3A9B9F', textDecoration: 'underline' }}>
                       {activeTask.testUrl}
                     </a>
                   </div>

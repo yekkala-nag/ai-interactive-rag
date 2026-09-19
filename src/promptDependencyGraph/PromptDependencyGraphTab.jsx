@@ -61,8 +61,8 @@ export default function PromptDependencyGraphTab() {
                     <strong style={{ color: '#ef4444' }}>Flat lookup fails on deep chains</strong>
                     <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>comp-b → agent → workflow → agent → workflow = 4 real consumers. One-hop lookup reports <b>1</b>, misses 3. Graph BFS reports <b>4</b>. Prompts layer like org charts; risks live hops away.</p>
                   </Card>
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ color: '#17837F' }}>Section model fixes over-counting</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ color: '#3A9B9F' }}>Section model fixes over-counting</strong>
                     <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace' }}>PromptComponent(name, version, sections) + SectionDependency(component, sections, kind). sales-* uses privacy, not refunds → excluded from refunds candidate. Kind (imports/inherits/…) modeled now, used in v2.</p>
                   </Card>
                 </Grid>
@@ -106,8 +106,8 @@ export default function PromptDependencyGraphTab() {
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>section seeds + downstream — the eval set</div>
                     <div style={{ marginTop: '6px', fontSize: '11px', fontFamily: 'monospace', color: 'white' }}>{impact.candidate.join(', ') || '—'}</div>
                   </Card>
-                  <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '12px', color: '#17837F' }}>SKIPPED: {impact.reachableNotCandidate.length + impact.notReachable.length}</strong>
+                  <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>SKIPPED: {impact.reachableNotCandidate.length + impact.notReachable.length}</strong>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>reachable-not-candidate: {impact.reachableNotCandidate.join(', ') || '—'}</div>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>not reachable: {impact.notReachable.join(', ') || '—'}</div>
                   </Card>
@@ -127,24 +127,24 @@ export default function PromptDependencyGraphTab() {
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
                     <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Change</th><th style={{ padding: '8px' }}>Reachable</th><th style={{ padding: '8px' }}>Candidate</th><th style={{ padding: '8px' }}>Narrowing</th><th style={{ textAlign: 'left', padding: '8px' }}>Why</th></tr></thead>
                     <tbody>{ARTICLE_RESULTS.map((r, i) => (
-                      <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontFamily: 'monospace', fontWeight: 'bold' }}>{r.change}</td><td style={{ padding: '8px', textAlign: 'center', color: '#ef4444' }}>{r.reachable}</td><td style={{ padding: '8px', textAlign: 'center', color: '#fb923c', fontWeight: 'bold' }}>{r.candidate}</td><td style={{ padding: '8px', textAlign: 'center', color: r.narrowing ? '#2AB5B0' : 'var(--ds-color-text-tertiary)' }}>{r.narrowing}%</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.note}</td></tr>))}</tbody>
+                      <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontFamily: 'monospace', fontWeight: 'bold' }}>{r.change}</td><td style={{ padding: '8px', textAlign: 'center', color: '#ef4444' }}>{r.reachable}</td><td style={{ padding: '8px', textAlign: 'center', color: '#fb923c', fontWeight: 'bold' }}>{r.candidate}</td><td style={{ padding: '8px', textAlign: 'center', color: r.narrowing ? '#5EC4C8' : 'var(--ds-color-text-tertiary)' }}>{r.narrowing}%</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.note}</td></tr>))}</tbody>
                   </table>
                 </div>
                 <div style={{ overflowX: 'auto' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
                     <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ padding: '8px' }}>Sharing</th><th style={{ padding: '8px' }}>Direct</th><th style={{ padding: '8px' }}>Reachable</th><th style={{ padding: '8px' }}>Candidate</th><th style={{ padding: '8px' }}>Narrowing</th></tr></thead>
                     <tbody>{SHARING_CURVE.map((r, i) => (
-                      <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>{r.sharing}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{r.sharedAgents}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{r.reachable}</td><td style={{ padding: '8px', textAlign: 'center', color: '#17837F' }}>{r.candidate}</td><td style={{ padding: '8px', textAlign: 'center', color: '#17837F', fontWeight: 'bold' }}>{r.narrowing}%</td></tr>))}</tbody>
+                      <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>{r.sharing}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{r.sharedAgents}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{r.reachable}</td><td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F' }}>{r.candidate}</td><td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F', fontWeight: 'bold' }}>{r.narrowing}%</td></tr>))}</tbody>
                   </table>
                 </div>
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
                     <strong style={{ fontSize: '11px', color: '#F5A623' }}>SAY THIS, NOT THAT:</strong>
-                    {VOCAB_TABLE.map((v, i) => (<div key={i} style={{ fontSize: '11px', marginTop: '4px', color: 'var(--ds-color-text-secondary)' }}><span style={{ color: '#ef4444', textDecoration: 'line-through' }}>{v.avoid}</span> → <span style={{ color: '#17837F', fontWeight: 'bold' }}>{v.use}</span> <span style={{ color: 'var(--ds-color-text-tertiary)' }}>— {v.why}</span></div>))}
+                    {VOCAB_TABLE.map((v, i) => (<div key={i} style={{ fontSize: '11px', marginTop: '4px', color: 'var(--ds-color-text-secondary)' }}><span style={{ color: '#ef4444', textDecoration: 'line-through' }}>{v.avoid}</span> → <span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>{v.use}</span> <span style={{ color: 'var(--ds-color-text-tertiary)' }}>— {v.why}</span></div>))}
                   </Card>
                   <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-                    <strong style={{ fontSize: '11px', color: '#17837F' }}>RUNTIME (Py3.12 CPU, stdlib core):</strong>
-                    {RUNTIME_TABLE.map((r, i) => (<div key={i} style={{ fontSize: '11px', marginTop: '4px', color: 'var(--ds-color-text-secondary)' }}><span style={{ color: 'white' }}>{r.op}</span>: <span style={{ fontFamily: 'monospace', color: '#17837F' }}>{r.latency}</span> <span style={{ color: 'var(--ds-color-text-tertiary)' }}>({r.notes})</span></div>))}
+                    <strong style={{ fontSize: '11px', color: '#3A9B9F' }}>RUNTIME (Py3.12 CPU, stdlib core):</strong>
+                    {RUNTIME_TABLE.map((r, i) => (<div key={i} style={{ fontSize: '11px', marginTop: '4px', color: 'var(--ds-color-text-secondary)' }}><span style={{ color: 'white' }}>{r.op}</span>: <span style={{ fontFamily: 'monospace', color: '#3A9B9F' }}>{r.latency}</span> <span style={{ color: 'var(--ds-color-text-tertiary)' }}>({r.notes})</span></div>))}
                     <div style={{ fontSize: '11px', marginTop: '8px', color: 'var(--ds-color-text-tertiary)' }}>Honest limits: mechanical text diff (1-char fix = full rewrite), no rename inference, kinds unused in v1, 55-node toy scope, no cycles / no prod-scale validation yet.</div>
                   </Card>
                 </Grid>

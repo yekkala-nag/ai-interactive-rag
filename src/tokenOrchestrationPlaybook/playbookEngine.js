@@ -235,7 +235,7 @@ export const FOUR_PHASE_ROADMAP = [
     phase: 1,
     title: 'Phase 1: Audit & Protect',
     timeframe: 'Week 1',
-    color: '#17837F',
+    color: '#3A9B9F',
     tasks: [
       { id: 'p1_1', text: 'Implement tiktoken pre-flight checks and auto-truncation in API middleware.', done: true },
       { id: 'p1_2', text: 'Set up LangSmith tracing with project keys to baseline current token usage & costs.', done: true },
@@ -246,7 +246,7 @@ export const FOUR_PHASE_ROADMAP = [
     phase: 2,
     title: 'Phase 2: Optimize Retrieval',
     timeframe: 'Weeks 2-3',
-    color: '#17837F',
+    color: '#3A9B9F',
     tasks: [
       { id: 'p2_1', text: 'Upgrade naive character chunking to Parent-Child (Auto-Merging) chunking in Qdrant.', done: true },
       { id: 'p2_2', text: 'Deploy neural cross-encoder reranker (FlashRank/Cohere) to maximize top-k NDCG.', done: true },

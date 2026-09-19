@@ -106,9 +106,9 @@ export default function ProductionRAGOpsTab() {
                 gap: '8px',
                 padding: '10px 16px',
                 borderRadius: '8px',
-                border: activeSubTab === tab.id ? '1px solid #2AB5B0' : '1px solid transparent',
+                border: activeSubTab === tab.id ? '1px solid #5EC4C8' : '1px solid transparent',
                 background: activeSubTab === tab.id ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                color: activeSubTab === tab.id ? '#2AB5B0' : 'var(--ds-color-text-secondary)',
+                color: activeSubTab === tab.id ? '#5EC4C8' : 'var(--ds-color-text-secondary)',
                 fontWeight: activeSubTab === tab.id ? 'bold' : 'normal',
                 fontSize: '13px',
                 cursor: 'pointer',
@@ -125,9 +125,9 @@ export default function ProductionRAGOpsTab() {
         {/* ─── SUBTAB 1: AGENTOPS VS MLOPS ─── */}
         {activeSubTab === 'agentops' && (
           <Stack gap={6}>
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #2AB5B0' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #5EC4C8' }}>
               <div style={{ marginBottom: '14px' }}>
-                <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
+                <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
                 <h3 style={{ margin: '4px 0 0 0', color: '#f8fafc' }}>Traditional MLOps Monitoring vs. Modern AgentOps Trajectories</h3>
               </div>
               <img
@@ -156,7 +156,7 @@ export default function ProductionRAGOpsTab() {
               <Grid cols={3} gap={4} style={{ marginBottom: '16px' }}>
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: 'bold', marginBottom: '6px' }}>
-                    <span style={{ color: '#17837F' }}>Per-Step Reliability: {perStepReliability}%</span>
+                    <span style={{ color: '#3A9B9F' }}>Per-Step Reliability: {perStepReliability}%</span>
                   </div>
                   <input
                     type="range"
@@ -164,7 +164,7 @@ export default function ProductionRAGOpsTab() {
                     max="99"
                     value={perStepReliability}
                     onChange={(e) => setPerStepReliability(Number(e.target.value))}
-                    style={{ width: '100%', accentColor: '#2AB5B0' }}
+                    style={{ width: '100%', accentColor: '#5EC4C8' }}
                   />
                   <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
                     Status quo MLOps dashboard number
@@ -173,7 +173,7 @@ export default function ProductionRAGOpsTab() {
 
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: 'bold', marginBottom: '6px' }}>
-                    <span style={{ color: '#17837F' }}>Trajectory Length: {stepCount} steps</span>
+                    <span style={{ color: '#3A9B9F' }}>Trajectory Length: {stepCount} steps</span>
                   </div>
                   <input
                     type="range"
@@ -181,7 +181,7 @@ export default function ProductionRAGOpsTab() {
                     max="15"
                     value={stepCount}
                     onChange={(e) => setStepCount(Number(e.target.value))}
-                    style={{ width: '100%', accentColor: '#2AB5B0' }}
+                    style={{ width: '100%', accentColor: '#5EC4C8' }}
                   />
                   <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
                     Number of autonomous tool/reasoning steps
@@ -209,7 +209,7 @@ export default function ProductionRAGOpsTab() {
               <Grid cols={3} gap={4} style={{ marginBottom: '16px' }}>
                 <div style={{ background: '#090d16', padding: '14px', borderRadius: '8px', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
                   <div style={{ fontSize: '11px', color: '#94a3b8' }}>MLOPS PER-STEP REPORT</div>
-                  <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#17837F' }}>{perStepReliability}% (Healthy)</div>
+                  <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#3A9B9F' }}>{perStepReliability}% (Healthy)</div>
                   <div style={{ fontSize: '11px', color: '#cbd5e1', marginTop: '2px' }}>What conventional dashboards show</div>
                 </div>
 
@@ -235,7 +235,7 @@ export default function ProductionRAGOpsTab() {
               </Grid>
 
               <div style={{ background: '#090d16', padding: '14px', borderRadius: '8px', border: '1px solid var(--ds-color-border-subtle)' }}>
-                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#17837F', marginBottom: '8px' }}>
+                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#3A9B9F', marginBottom: '8px' }}>
                   📉 Step Decay Curve: How Quality Deteriorates Along the Path
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-end', height: '90px', gap: '8px', paddingTop: '10px' }}>
@@ -245,7 +245,7 @@ export default function ProductionRAGOpsTab() {
                         style={{
                           width: '100%',
                           height: `${c.successRate}%`,
-                          background: c.successRate > 70 ? '#2AB5B0' : c.successRate > 40 ? '#f59e0b' : '#ef4444',
+                          background: c.successRate > 70 ? '#5EC4C8' : c.successRate > 40 ? '#f59e0b' : '#ef4444',
                           borderRadius: '3px 3px 0 0',
                           minHeight: '4px'
                         }}
@@ -261,7 +261,7 @@ export default function ProductionRAGOpsTab() {
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#17837F' }}>⚡ Interactive Agent Trajectory Replay & Hard Loop Cap</h3>
+                  <h3 style={{ margin: 0, color: '#3A9B9F' }}>⚡ Interactive Agent Trajectory Replay & Hard Loop Cap</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Simulate how autonomous tool calling encounters deterministic lockouts and why hard loop caps (3-5 retries) prevent $10+ token drain.
                   </p>
@@ -284,9 +284,9 @@ export default function ProductionRAGOpsTab() {
                       flex: 1,
                       padding: '10px 14px',
                       borderRadius: '6px',
-                      border: trajectoryScenario === s.id ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
+                      border: trajectoryScenario === s.id ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-subtle)',
                       background: trajectoryScenario === s.id ? 'rgba(56, 189, 248, 0.15)' : '#090d16',
-                      color: trajectoryScenario === s.id ? '#2AB5B0' : '#cbd5e1',
+                      color: trajectoryScenario === s.id ? '#5EC4C8' : '#cbd5e1',
                       cursor: 'pointer',
                       textAlign: 'left'
                     }}
@@ -303,7 +303,7 @@ export default function ProductionRAGOpsTab() {
                   <div style={{ display: 'flex', gap: '14px' }}>
                     <span>Total Tokens: <strong>{trajSim.totalTokens.toLocaleString()}</strong></span>
                     <span>•</span>
-                    <span>Cost: <strong style={{ color: '#17837F' }}>${trajSim.costEstimate.toFixed(3)}</strong></span>
+                    <span>Cost: <strong style={{ color: '#3A9B9F' }}>${trajSim.costEstimate.toFixed(3)}</strong></span>
                   </div>
                 </div>
 
@@ -314,7 +314,7 @@ export default function ProductionRAGOpsTab() {
                       justifyContent: 'space-between',
                       alignItems: 'center',
                       background: 'rgba(255,255,255,0.02)',
-                      borderLeft: `4px solid ${st.status.includes('RED') ? '#ef4444' : st.status.includes('AMBER') ? '#f59e0b' : '#2AB5B0'}`,
+                      borderLeft: `4px solid ${st.status.includes('RED') ? '#ef4444' : st.status.includes('AMBER') ? '#f59e0b' : '#5EC4C8'}`,
                       borderRadius: '4px',
                       padding: '8px 12px',
                       fontSize: '12px'
@@ -325,7 +325,7 @@ export default function ProductionRAGOpsTab() {
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: 'monospace', fontSize: '11px' }}>
                         <span style={{ color: '#64748b' }}>{st.latency}</span>
-                        <span style={{ color: st.status.includes('RED') ? '#ef4444' : st.status.includes('AMBER') ? '#f59e0b' : '#2AB5B0' }}>
+                        <span style={{ color: st.status.includes('RED') ? '#ef4444' : st.status.includes('AMBER') ? '#f59e0b' : '#5EC4C8' }}>
                           ● {st.status}
                         </span>
                       </div>
@@ -333,7 +333,7 @@ export default function ProductionRAGOpsTab() {
                   ))}
                 </div>
 
-                <div style={{ background: trajSim.hardCapTripped ? 'rgba(245, 158, 11, 0.1)' : 'rgba(16, 185, 129, 0.1)', border: `1px solid ${trajSim.hardCapTripped ? '#f59e0b' : '#2AB5B0'}`, borderRadius: '6px', padding: '10px', fontSize: '12px', color: '#f8fafc' }}>
+                <div style={{ background: trajSim.hardCapTripped ? 'rgba(245, 158, 11, 0.1)' : 'rgba(16, 185, 129, 0.1)', border: `1px solid ${trajSim.hardCapTripped ? '#f59e0b' : '#5EC4C8'}`, borderRadius: '6px', padding: '10px', fontSize: '12px', color: '#f8fafc' }}>
                   <strong>VERDICT:</strong> {trajSim.verdict}
                 </div>
               </div>
@@ -341,7 +341,7 @@ export default function ProductionRAGOpsTab() {
 
             {/* 5 Broken Assumptions Table */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 14px 0', color: '#17837F' }}>📋 The 5 Broken MLOps Assumptions vs. AgentOps Instrumentation</h3>
+              <h3 style={{ margin: '0 0 14px 0', color: '#3A9B9F' }}>📋 The 5 Broken MLOps Assumptions vs. AgentOps Instrumentation</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {MLOPS_BROKEN_ASSUMPTIONS.map(item => (
                   <div key={item.id} style={{ background: '#090d16', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '8px', padding: '12px 16px' }}>
@@ -357,7 +357,7 @@ export default function ProductionRAGOpsTab() {
                     <div style={{ fontSize: '12px', color: '#fca5a5', marginBottom: '6px' }}>
                       <strong>The Blind Spot:</strong> {item.blindSpot}
                     </div>
-                    <div style={{ fontSize: '12px', color: '#17837F', background: 'rgba(16, 185, 129, 0.08)', padding: '6px 10px', borderRadius: '4px' }}>
+                    <div style={{ fontSize: '12px', color: '#3A9B9F', background: 'rgba(16, 185, 129, 0.08)', padding: '6px 10px', borderRadius: '4px' }}>
                       <strong>✅ AgentOps Instrumentation:</strong> {item.agentOpsFix}
                     </div>
                   </div>
@@ -370,9 +370,9 @@ export default function ProductionRAGOpsTab() {
         {/* ─── SUBTAB 2: WHY RAG COMPLEXITY SHOULD BE EARNED ─── */}
         {activeSubTab === 'ragcomplexity' && (
           <Stack gap={6}>
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #2AB5B0' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #5EC4C8' }}>
               <div style={{ marginBottom: '14px' }}>
-                <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
+                <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
                 <h3 style={{ margin: '4px 0 0 0', color: '#f8fafc' }}>Earned RAG Complexity Escalation Ladder (Levels 0 to 8)</h3>
               </div>
               <img
@@ -387,7 +387,7 @@ export default function ProductionRAGOpsTab() {
             {/* Interactive RAG Complexity Escalator Sandbox */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ marginBottom: '16px' }}>
-                <h3 style={{ margin: 0, color: '#17837F' }}>🪜 Interactive RAG Complexity Escalator & Failure Mode Diagnostic</h3>
+                <h3 style={{ margin: 0, color: '#3A9B9F' }}>🪜 Interactive RAG Complexity Escalator & Failure Mode Diagnostic</h3>
                 <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                   Select a real production query archetype, step through the 8 complexity levels, and observe how latency, token costs, and Recall@5 scale.
                 </p>
@@ -408,9 +408,9 @@ export default function ProductionRAGOpsTab() {
                       style={{
                         padding: '10px 12px',
                         borderRadius: '6px',
-                        border: selectedQueryId === q.id ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
+                        border: selectedQueryId === q.id ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-subtle)',
                         background: selectedQueryId === q.id ? 'rgba(56, 189, 248, 0.15)' : '#090d16',
-                        color: selectedQueryId === q.id ? '#2AB5B0' : '#cbd5e1',
+                        color: selectedQueryId === q.id ? '#5EC4C8' : '#cbd5e1',
                         cursor: 'pointer',
                         textAlign: 'left'
                       }}
@@ -424,7 +424,7 @@ export default function ProductionRAGOpsTab() {
 
               <div style={{ marginBottom: '18px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#17837F' }}>
+                  <label style={{ fontSize: '12px', fontWeight: 'bold', color: '#3A9B9F' }}>
                     2. ESCALATION LEVEL: {RAG_COMPLEXITY_LEVELS[selectedLevelIndex].name}
                   </label>
                   <span style={{ fontSize: '11px', color: '#94a3b8' }}>Step 0 to 8</span>
@@ -438,8 +438,8 @@ export default function ProductionRAGOpsTab() {
                         flex: 1,
                         padding: '8px 4px',
                         borderRadius: '4px',
-                        border: selectedLevelIndex === idx ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
-                        background: selectedLevelIndex === idx ? '#2AB5B0' : '#090d16',
+                        border: selectedLevelIndex === idx ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-subtle)',
+                        background: selectedLevelIndex === idx ? '#5EC4C8' : '#090d16',
                         color: selectedLevelIndex === idx ? '#000' : '#94a3b8',
                         fontWeight: 'bold',
                         fontSize: '11px',
@@ -461,7 +461,7 @@ export default function ProductionRAGOpsTab() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                       <div>
                         <h4 style={{ margin: 0, fontSize: '15px', color: '#f8fafc' }}>{cur.name}</h4>
-                        <span style={{ fontSize: '11px', color: '#17837F' }}>{cur.subtitle}</span>
+                        <span style={{ fontSize: '11px', color: '#3A9B9F' }}>{cur.subtitle}</span>
                       </div>
                       <Badge variant={isOptimal ? 'success' : cur.level > activeQuery.bestLevel ? 'warning' : 'danger'}>
                         {isOptimal ? '🎯 OPTIMAL EARNED LEVEL' : cur.level > activeQuery.bestLevel ? '⚠️ OVER-ENGINEERED (EXCESS COST)' : '❌ INSUFFICIENT (RETRIEVAL MISS)'}
@@ -479,11 +479,11 @@ export default function ProductionRAGOpsTab() {
                     <Grid cols={4} gap={4}>
                       <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 12px', borderRadius: '4px' }}>
                         <div style={{ fontSize: '10px', color: '#94a3b8' }}>RECALL@5</div>
-                        <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#17837F' }}>{cur.recall5}</div>
+                        <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#3A9B9F' }}>{cur.recall5}</div>
                       </div>
                       <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 12px', borderRadius: '4px' }}>
                         <div style={{ fontSize: '10px', color: '#94a3b8' }}>NDCG@10</div>
-                        <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#17837F' }}>{cur.ndcg10}</div>
+                        <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#3A9B9F' }}>{cur.ndcg10}</div>
                       </div>
                       <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 12px', borderRadius: '4px' }}>
                         <div style={{ fontSize: '10px', color: '#94a3b8' }}>LATENCY (P50)</div>
@@ -525,9 +525,9 @@ export default function ProductionRAGOpsTab() {
         {/* ─── SUBTAB 3: FAQ AS RAG ─── */}
         {activeSubTab === 'faqasrag' && (
           <Stack gap={6}>
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #2AB5B0' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #5EC4C8' }}>
               <div style={{ marginBottom: '14px' }}>
-                <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
+                <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
                 <h3 style={{ margin: '4px 0 0 0', color: '#f8fafc' }}>FAQ as RAG: Inverted Architecture & Semantic Cache Router</h3>
               </div>
               <img
@@ -543,7 +543,7 @@ export default function ProductionRAGOpsTab() {
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#17837F' }}>🔄 Live FAQ-as-RAG Classification & Dispatch Sandbox</h3>
+                  <h3 style={{ margin: 0, color: '#3A9B9F' }}>🔄 Live FAQ-as-RAG Classification & Dispatch Sandbox</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Type or click a question to test the 3 outcomes: Direct Match (0 tokens, 2ms), Adjacent Match (Dynamic Few-Shot), or Miss (Expert Escalation).
                   </p>
@@ -573,14 +573,14 @@ export default function ProductionRAGOpsTab() {
                       cursor: 'pointer'
                     }}
                   >
-                    "{item.q}" <span style={{ color: '#17837F' }}>[{item.tag}]</span>
+                    "{item.q}" <span style={{ color: '#3A9B9F' }}>[{item.tag}]</span>
                   </button>
                 ))}
               </div>
 
               <Grid cols={2} gap={4} style={{ marginBottom: '16px' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#17837F', marginBottom: '6px' }}>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 'bold', color: '#3A9B9F', marginBottom: '6px' }}>
                     User Query:
                   </label>
                   <input
@@ -593,7 +593,7 @@ export default function ProductionRAGOpsTab() {
 
                 <Grid cols={2} gap={2}>
                   <div>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 'bold', color: '#17837F', marginBottom: '4px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 'bold', color: '#3A9B9F', marginBottom: '4px' }}>
                       Direct Threshold: {directThreshold}
                     </label>
                     <input
@@ -603,13 +603,13 @@ export default function ProductionRAGOpsTab() {
                       step="0.01"
                       value={directThreshold}
                       onChange={(e) => setDirectThreshold(Number(e.target.value))}
-                      style={{ width: '100%', accentColor: '#2AB5B0' }}
+                      style={{ width: '100%', accentColor: '#5EC4C8' }}
                     />
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>Short-circuit cache threshold</div>
                   </div>
 
                   <div>
-                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 'bold', color: '#17837F', marginBottom: '4px' }}>
+                    <label style={{ display: 'block', fontSize: '11px', fontWeight: 'bold', color: '#3A9B9F', marginBottom: '4px' }}>
                       Adjacent Threshold: {adjacentThreshold}
                     </label>
                     <input
@@ -619,7 +619,7 @@ export default function ProductionRAGOpsTab() {
                       step="0.01"
                       value={adjacentThreshold}
                       onChange={(e) => setAdjacentThreshold(Number(e.target.value))}
-                      style={{ width: '100%', accentColor: '#2AB5B0' }}
+                      style={{ width: '100%', accentColor: '#5EC4C8' }}
                     />
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>Dynamic few-shot threshold</div>
                   </div>
@@ -629,12 +629,12 @@ export default function ProductionRAGOpsTab() {
               <div style={{ background: '#090d16', padding: '16px', borderRadius: '8px', border: '1px solid var(--ds-color-border-subtle)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '8px' }}>
                   <div style={{ display: 'flex', gap: '16px', fontSize: '12px' }}>
-                    <span>Cosine Similarity: <strong style={{ color: '#17837F' }}>{faqClassification.highestSim}</strong></span>
+                    <span>Cosine Similarity: <strong style={{ color: '#3A9B9F' }}>{faqClassification.highestSim}</strong></span>
                     <span>•</span>
                     <span>Matched Canonical: <strong style={{ color: '#f8fafc' }}>{faqClassification.bestMatch.qid} ({faqClassification.bestMatch.tag})</strong></span>
                   </div>
                   <div style={{ display: 'flex', gap: '12px', fontSize: '12px' }}>
-                    <span>Tokens: <strong style={{ color: '#17837F' }}>{faqClassification.tokensConsumed}</strong></span>
+                    <span>Tokens: <strong style={{ color: '#3A9B9F' }}>{faqClassification.tokensConsumed}</strong></span>
                     <span>•</span>
                     <span>Latency: <strong style={{ color: '#f59e0b' }}>{faqClassification.latencyMs}ms</strong></span>
                   </div>
@@ -655,7 +655,7 @@ export default function ProductionRAGOpsTab() {
 
             {/* The Continuous Flywheel: Clustered Misses */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 6px 0', color: '#17837F' }}>🔄 The FAQ Feedback Flywheel: Promoting High-Frequency Misses</h3>
+              <h3 style={{ margin: '0 0 6px 0', color: '#3A9B9F' }}>🔄 The FAQ Feedback Flywheel: Promoting High-Frequency Misses</h3>
               <p style={{ margin: '0 0 16px 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                 A weekly job clusters unanswered queries by embedding proximity. Human experts write 1 canonical answer for top clusters, turning yesterday's misses into tomorrow's instant cache hits.
               </p>
@@ -668,12 +668,12 @@ export default function ProductionRAGOpsTab() {
                         <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#f8fafc' }}>{cl.theme}</span>
                         <Badge variant="warning">{cl.count} Misses This Week</Badge>
                       </div>
-                      <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>{cl.status}</span>
+                      <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>{cl.status}</span>
                     </div>
                     <div style={{ fontSize: '11px', color: '#94a3b8', marginBottom: '8px' }}>
                       Sample Queries: {cl.sampleQueries.map((sq, idx) => <span key={idx}>"{sq}"{idx < cl.sampleQueries.length - 1 ? ', ' : ''}</span>)}
                     </div>
-                    <div style={{ fontSize: '11px', color: '#17837F', background: 'rgba(16, 185, 129, 0.08)', padding: '6px 10px', borderRadius: '4px' }}>
+                    <div style={{ fontSize: '11px', color: '#3A9B9F', background: 'rgba(16, 185, 129, 0.08)', padding: '6px 10px', borderRadius: '4px' }}>
                       <strong>Suggested Action:</strong> {cl.suggestedAction}
                     </div>
                   </div>
@@ -740,7 +740,7 @@ export default function ProductionRAGOpsTab() {
                   <div style={{ fontSize: '12px', color: '#ef4444' }}>
                     <strong>Corrupted Input:</strong> <code>"{noisyBenchmark.query}"</code>
                   </div>
-                  <div style={{ fontSize: '12px', color: '#17837F', marginTop: '2px' }}>
+                  <div style={{ fontSize: '12px', color: '#3A9B9F', marginTop: '2px' }}>
                     <strong>Clean Reference Target:</strong> <code>"{noisyBenchmark.cleanTarget}"</code>
                   </div>
                 </div>
@@ -758,7 +758,7 @@ export default function ProductionRAGOpsTab() {
                       fontSize: '12px'
                     }}>
                       <strong style={{ color: '#f8fafc' }}>{algo.name}</strong>
-                      <span style={{ color: Number(algo.recall.replace('%','')) > 70 ? '#2AB5B0' : Number(algo.recall.replace('%','')) > 30 ? '#f59e0b' : '#ef4444', fontWeight: 'bold' }}>
+                      <span style={{ color: Number(algo.recall.replace('%','')) > 70 ? '#5EC4C8' : Number(algo.recall.replace('%','')) > 30 ? '#f59e0b' : '#ef4444', fontWeight: 'bold' }}>
                         Recall: {algo.recall}
                       </span>
                       <span style={{ color: '#64748b', fontFamily: 'monospace' }}>{algo.latency}</span>
@@ -771,14 +771,14 @@ export default function ProductionRAGOpsTab() {
 
             {/* 4 Noise Failure Modes */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 12px 0', color: '#17837F' }}>⚠️ The 4 Noisy Text Failure Modes in Enterprise Documents</h3>
+              <h3 style={{ margin: '0 0 12px 0', color: '#3A9B9F' }}>⚠️ The 4 Noisy Text Failure Modes in Enterprise Documents</h3>
               <Grid cols={2} gap={4}>
                 {NOISE_FAILURE_MODES.map(mode => (
                   <div key={mode.id} style={{ background: '#090d16', padding: '14px', borderRadius: '8px', border: '1px solid var(--ds-color-border-subtle)' }}>
                     <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#f8fafc', marginBottom: '4px' }}>
                       {mode.name}
                     </div>
-                    <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace', marginBottom: '6px' }}>
+                    <div style={{ fontSize: '11px', color: '#3A9B9F', fontFamily: 'monospace', marginBottom: '6px' }}>
                       Ex: {mode.example}
                     </div>
                     <div style={{ fontSize: '11px', color: '#ef4444', marginBottom: '4px' }}>
@@ -797,9 +797,9 @@ export default function ProductionRAGOpsTab() {
         {/* ─── SUBTAB 5: DEFENSIBLE ABSENCE (4 EVIDENCE BRICKS) ─── */}
         {activeSubTab === 'absenceevidence' && (
           <Stack gap={6}>
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #2AB5B0' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #5EC4C8' }}>
               <div style={{ marginBottom: '14px' }}>
-                <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
+                <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
                 <h3 style={{ margin: '4px 0 0 0', color: '#f8fafc' }}>Defensible "Not in This Document" RAG: The 4-Brick Evidence Chain</h3>
               </div>
               <img
@@ -815,7 +815,7 @@ export default function ProductionRAGOpsTab() {
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#17837F' }}>🛡️ Interactive Absence Verification Engine</h3>
+                  <h3 style={{ margin: 0, color: '#3A9B9F' }}>🛡️ Interactive Absence Verification Engine</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Select an inquiry case where the answer does not exist. Inspect the 4 distinct proofs produced across the pipeline.
                   </p>
@@ -832,9 +832,9 @@ export default function ProductionRAGOpsTab() {
                     style={{
                       padding: '12px 14px',
                       borderRadius: '6px',
-                      border: selectedAbsenceCaseId === c.id ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
+                      border: selectedAbsenceCaseId === c.id ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-subtle)',
                       background: selectedAbsenceCaseId === c.id ? 'rgba(56, 189, 248, 0.15)' : '#090d16',
-                      color: selectedAbsenceCaseId === c.id ? '#2AB5B0' : '#cbd5e1',
+                      color: selectedAbsenceCaseId === c.id ? '#5EC4C8' : '#cbd5e1',
                       cursor: 'pointer',
                       textAlign: 'left'
                     }}
@@ -850,8 +850,8 @@ export default function ProductionRAGOpsTab() {
                 {/* Brick 1 */}
                 <div style={{ background: '#090d16', border: '1px solid rgba(56, 189, 248, 0.3)', borderRadius: '8px', padding: '14px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                    <strong style={{ color: '#17837F', fontSize: '13px' }}>BRICK 1: RELATIONAL PARSE COVERAGE PROOF</strong>
-                    <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>● {activeAbsenceCase.parseCoverage.evidenceStatus}</span>
+                    <strong style={{ color: '#3A9B9F', fontSize: '13px' }}>BRICK 1: RELATIONAL PARSE COVERAGE PROOF</strong>
+                    <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>● {activeAbsenceCase.parseCoverage.evidenceStatus}</span>
                   </div>
                   <p style={{ margin: '0 0 10px 0', fontSize: '12px', color: '#cbd5e1' }}>
                     {activeAbsenceCase.parseCoverage.summary}
@@ -861,20 +861,20 @@ export default function ProductionRAGOpsTab() {
                       <span style={{ color: '#94a3b8' }}>Pages Parsed:</span> <strong style={{ color: '#f8fafc' }}>{activeAbsenceCase.parseCoverage.totalPages} / {activeAbsenceCase.parseCoverage.pagesWithText}</strong>
                     </div>
                     <div style={{ background: 'rgba(255,255,255,0.03)', padding: '6px 10px', borderRadius: '4px', fontSize: '11px' }}>
-                      <span style={{ color: '#94a3b8' }}>OCR Dropouts:</span> <strong style={{ color: '#17837F' }}>{activeAbsenceCase.parseCoverage.ocrDropouts}</strong>
+                      <span style={{ color: '#94a3b8' }}>OCR Dropouts:</span> <strong style={{ color: '#3A9B9F' }}>{activeAbsenceCase.parseCoverage.ocrDropouts}</strong>
                     </div>
                     <div style={{ background: 'rgba(255,255,255,0.03)', padding: '6px 10px', borderRadius: '4px', fontSize: '11px' }}>
                       <span style={{ color: '#94a3b8' }}>Lines Indexed:</span> <strong style={{ color: '#f8fafc' }}>{activeAbsenceCase.parseCoverage.extractedLines.toLocaleString()}</strong>
                     </div>
                     <div style={{ background: 'rgba(255,255,255,0.03)', padding: '6px 10px', borderRadius: '4px', fontSize: '11px' }}>
-                      <span style={{ color: '#94a3b8' }}>Blank Dropouts:</span> <strong style={{ color: '#17837F' }}>{activeAbsenceCase.parseCoverage.blankPages}</strong>
+                      <span style={{ color: '#94a3b8' }}>Blank Dropouts:</span> <strong style={{ color: '#3A9B9F' }}>{activeAbsenceCase.parseCoverage.blankPages}</strong>
                     </div>
                   </Grid>
                 </div>
 
                 {/* Brick 2 */}
                 <div style={{ background: '#090d16', border: '1px solid rgba(16, 185, 129, 0.3)', borderRadius: '8px', padding: '14px' }}>
-                  <strong style={{ color: '#17837F', fontSize: '13px', display: 'block', marginBottom: '8px' }}>
+                  <strong style={{ color: '#3A9B9F', fontSize: '13px', display: 'block', marginBottom: '8px' }}>
                     BRICK 2: VALIDATED DOMAIN CONCEPT VOCABULARY
                   </strong>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -882,7 +882,7 @@ export default function ProductionRAGOpsTab() {
                       <div key={idx} style={{ background: 'rgba(255,255,255,0.02)', padding: '8px 12px', borderRadius: '4px', fontSize: '11px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                           <span style={{ fontWeight: 'bold', color: '#f8fafc' }}>{cv.concept}</span>
-                          <span style={{ color: '#17837F' }}>Source: {cv.source}</span>
+                          <span style={{ color: '#3A9B9F' }}>Source: {cv.source}</span>
                         </div>
                         <div style={{ color: '#94a3b8' }}>
                           Exhaustive Variant Synonyms: {cv.synonyms.map((s, si) => <code key={si} style={{ color: '#cbd5e1', marginRight: '4px' }}>"{s}"</code>)}
@@ -1010,13 +1010,13 @@ export default function ProductionRAGOpsTab() {
 
                 <Grid cols={2} gap={4} style={{ marginBottom: '12px' }}>
                   <div>
-                    <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>CONSTRAINED JSON SCHEMA:</span>
+                    <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>CONSTRAINED JSON SCHEMA:</span>
                     <pre style={{ margin: '4px 0 0 0', padding: '10px', background: '#060a12', borderRadius: '4px', fontSize: '11px', color: '#7dd3fc', fontFamily: 'monospace' }}>
                       {activeFailureMode.validSchema}
                     </pre>
                   </div>
                   <div>
-                    <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>GENERATED JSON (VALID BUT WRONG!):</span>
+                    <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>GENERATED JSON (VALID BUT WRONG!):</span>
                     <pre style={{ margin: '4px 0 0 0', padding: '10px', background: '#060a12', borderRadius: '4px', fontSize: '11px', color: '#fca5a5', fontFamily: 'monospace' }}>
                       {activeFailureMode.generatedJson}
                     </pre>
@@ -1028,7 +1028,7 @@ export default function ProductionRAGOpsTab() {
                   <div style={{ color: '#cbd5e1', marginTop: '2px' }}>{activeFailureMode.semanticViolation}</div>
                 </div>
 
-                <div style={{ background: 'rgba(16, 185, 129, 0.08)', borderLeft: '4px solid #2AB5B0', padding: '10px 14px', borderRadius: '4px', fontSize: '12px' }}>
+                <div style={{ background: 'rgba(16, 185, 129, 0.08)', borderLeft: '4px solid #5EC4C8', padding: '10px 14px', borderRadius: '4px', fontSize: '12px' }}>
                   <strong style={{ color: '#6ee7b7' }}>✅ Layer 2/3 Defense Solution:</strong>
                   <div style={{ color: '#cbd5e1', marginTop: '2px' }}>{activeFailureMode.layer2Fix}</div>
                 </div>
@@ -1080,7 +1080,7 @@ export default function ProductionRAGOpsTab() {
           <Stack gap={6}>
             {/* Python Code 1: OpenTelemetry GenAI Agent Spans */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 4px 0', color: '#17837F' }}>🐍 1. OpenTelemetry GenAI Agent Spans & Hard Loop Cap</h3>
+              <h3 style={{ margin: '0 0 4px 0', color: '#3A9B9F' }}>🐍 1. OpenTelemetry GenAI Agent Spans & Hard Loop Cap</h3>
               <p style={{ margin: '0 0 14px 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                 Instrumenting vendor-neutral agent tracing using OpenTelemetry GenAI semantic conventions, catching non-progress loops after 3 retries.
               </p>
@@ -1187,7 +1187,7 @@ class AnswerWithAbsenceEvidence(BaseModel):
 
             {/* Python Code 3: Layer 2 Pydantic Semantic & Cross-Field Validators */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 4px 0', color: '#17837F' }}>🏗️ 3. Layer 2 Semantic & Cross-Field Pydantic Validators</h3>
+              <h3 style={{ margin: '0 0 4px 0', color: '#3A9B9F' }}>🏗️ 3. Layer 2 Semantic & Cross-Field Pydantic Validators</h3>
               <p style={{ margin: '0 0 14px 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                 Catching cross-field contradictions, enum hallucinations, and distributional collapse beyond Layer 1 JSON syntax.
               </p>

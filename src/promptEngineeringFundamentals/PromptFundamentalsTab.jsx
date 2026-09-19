@@ -135,9 +135,9 @@ Return strictly valid ${outputFormat}.`;
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                      <strong style={{ fontSize: '13px', color: '#17837F' }}>{activePattern.name}</strong>
+                      <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>{activePattern.name}</strong>
                       <Badge variant="outline">{activePattern.paper}</Badge>
                     </Flex>
 
@@ -145,7 +145,7 @@ Return strictly valid ${outputFormat}.`;
                       {activePattern.mechanism}
                     </p>
 
-                    <div style={{ fontSize: '11px', color: '#17837F' }}>
+                    <div style={{ fontSize: '11px', color: '#3A9B9F' }}>
                       🎯 <strong>When to Use:</strong> {activePattern.whenToUse}
                     </div>
                   </Card>
@@ -154,7 +154,7 @@ Return strictly valid ${outputFormat}.`;
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '6px' }}>
                       EXEMPLAR PROMPT FORMAT:
                     </div>
-                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#17837F', whiteSpace: 'pre-wrap' }}>
+                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#3A9B9F', whiteSpace: 'pre-wrap' }}>
                       {activePattern.samplePrompt}
                     </pre>
                   </Card>
@@ -178,14 +178,14 @@ Return strictly valid ${outputFormat}.`;
 
                 <Grid columns={{ base: '1fr', sm: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {PROMPT_STRUCTURE_COMPONENTS.map((comp, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
-                      <strong style={{ fontSize: '12px', color: '#17837F', display: 'block', marginBottom: '4px' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #5EC4C8' }}>
+                      <strong style={{ fontSize: '12px', color: '#3A9B9F', display: 'block', marginBottom: '4px' }}>
                         {comp.section}
                       </strong>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '0 0 8px 0' }}>
                         {comp.purpose}
                       </p>
-                      <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#17837F' }}>
+                      <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#3A9B9F' }}>
                         {comp.example}
                       </div>
                     </Card>
@@ -263,14 +263,14 @@ Return strictly valid ${outputFormat}.`;
                     </div>
                   </Stack>
 
-                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #2AB5B0' }}>
+                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #5EC4C8' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '12px', color: '#17837F' }}>ASSEMBLED PRODUCTION PROMPT:</strong>
-                      <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
+                      <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>ASSEMBLED PRODUCTION PROMPT:</strong>
+                      <Badge variant="subtle" style={{ color: '#3A9B9F', background: 'rgba(16,185,129,0.15)' }}>
                         READY TO COPY
                       </Badge>
                     </Flex>
-                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#17837F', whiteSpace: 'pre-wrap', maxHeight: '280px', overflowY: 'auto' }}>
+                    <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#3A9B9F', whiteSpace: 'pre-wrap', maxHeight: '280px', overflowY: 'auto' }}>
                       {assembledPrompt}
                     </pre>
                   </Card>
@@ -330,10 +330,10 @@ Return strictly valid ${outputFormat}.`;
                       <tbody>
                         {COT_VS_TOT_COMPARISON.map((c, i) => (
                           <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
-                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{c.dimension}</td>
+                            <td style={{ padding: '8px', color: '#3A9B9F', fontWeight: 'bold' }}>{c.dimension}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{c.cot}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{c.tot}</td>
-                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{c.winner}</td>
+                            <td style={{ padding: '8px', color: '#3A9B9F', fontWeight: 'bold' }}>{c.winner}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -346,11 +346,11 @@ Return strictly valid ${outputFormat}.`;
                   <h4 style={{ margin: '0 0 8px 0', color: 'var(--ds-color-text-primary)' }}>🔀 Hybrid Patterns — Best of Both Worlds</h4>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--ds-space-3)' }}>
                     {COT_TOT_HYBRID_PATTERNS.map((h, i) => (
-                      <Card key={i} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}>
-                        <div style={{ fontSize: '12px', color: '#17837F', fontWeight: 'bold', marginBottom: '4px' }}>{h.name}</div>
+                      <Card key={i} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}>
+                        <div style={{ fontSize: '12px', color: '#3A9B9F', fontWeight: 'bold', marginBottom: '4px' }}>{h.name}</div>
                         <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginBottom: '4px' }}>{h.description}</div>
                         <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>✓ {h.whenToUse}</div>
-                        <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>Cost reduction: {h.costReduction}</div>
+                        <div style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>Cost reduction: {h.costReduction}</div>
                       </Card>
                     ))}
                   </div>
@@ -372,7 +372,7 @@ Return strictly valid ${outputFormat}.`;
                       <tbody>
                         {AGENTIC_REASONING_PATTERNS.map((a, i) => (
                           <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
-                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{a.pattern}</td>
+                            <td style={{ padding: '8px', color: '#3A9B9F', fontWeight: 'bold' }}>{a.pattern}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace', fontSize: '10px' }}>{a.trace}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.useCase}</td>
                             <td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-tertiary)' }}>{a.cost}</td>

@@ -30,8 +30,8 @@ export default function DataPipelineTab() {
         {sub === 'stream' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Concept</th><th style={{ textAlign: 'left', padding: '8px' }}>Rule</th><th style={{ textAlign: 'left', padding: '8px' }}>Example</th></tr></thead>
-            <tbody>{STREAM_TABLE.map((r, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{r.concept}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.rule}</td><td style={{ padding: '8px', color: '#17837F', fontFamily: 'monospace' }}>{r.ex}</td></tr>))}</tbody></table></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{LINEAGE_TABLE.map((l, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{l.layer}</div><div style={{ fontSize: '11px', color: '#17837F' }}>{l.tool}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace' }}>{l.answers}</div></Card>))}</Grid>
+            <tbody>{STREAM_TABLE.map((r, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{r.concept}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.rule}</td><td style={{ padding: '8px', color: '#3A9B9F', fontFamily: 'monospace' }}>{r.ex}</td></tr>))}</tbody></table></div>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{LINEAGE_TABLE.map((l, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{l.layer}</div><div style={{ fontSize: '11px', color: '#3A9B9F' }}>{l.tool}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace' }}>{l.answers}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Partition + lineage simulator</h3></div>
@@ -40,10 +40,10 @@ export default function DataPipelineTab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Events/sec: {(eps / 1000).toFixed(0)}k</label>
               <input type="range" min={1000} max={200000} step={1000} value={eps} onChange={e => setEps(+e.target.value)} style={{ width: '100%' }} />
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${s.lagRisk.startsWith('HIGH') ? '#ef4444' : '#2AB5B0'}` }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${s.lagRisk.startsWith('HIGH') ? '#ef4444' : '#5EC4C8'}` }}>
               <div style={{ fontSize: '16px', color: 'white', fontFamily: 'monospace' }}>{s.partitions} partitions</div>
-              <div style={{ fontSize: '12px', color: s.lagRisk.startsWith('HIGH') ? '#ef4444' : '#2AB5B0' }}>{s.lagRisk}</div>
-              <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace', marginTop: '6px' }}>{s.lineage.map((l, i) => (<div key={i}>{i + 1}. {l}</div>))}</div>
+              <div style={{ fontSize: '12px', color: s.lagRisk.startsWith('HIGH') ? '#ef4444' : '#5EC4C8' }}>{s.lagRisk}</div>
+              <div style={{ fontSize: '11px', color: '#3A9B9F', fontFamily: 'monospace', marginTop: '6px' }}>{s.lineage.map((l, i) => (<div key={i}>{i + 1}. {l}</div>))}</div>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>{s.advice}</div>
             </Card>
           </Grid>

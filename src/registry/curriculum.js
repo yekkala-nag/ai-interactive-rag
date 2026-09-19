@@ -8,9 +8,9 @@
 import { JOURNEY_LOOPS as _JOURNEY } from './diagnostics.js';
 
 export const LEVELS = {
-  1: { label: 'L1 · Core', short: 'L1', color: '#2AB5B0', text: '#17837F', blurb: 'Entry points. No prerequisites.' },
-  2: { label: 'L2 · Practitioner', short: 'L2', color: '#8B7BD8', text: '#5A4FA3', blurb: 'Builds on L1. Hands-on patterns.' },
-  3: { label: 'L3 · Advanced', short: 'L3', color: '#FF8A6B', text: '#A34A28', blurb: 'Deep / high-stakes. Needs L2.' }
+  1: { label: 'L1 · Core', short: 'L1', color: '#5EC4C8', text: '#3A9B9F', blurb: 'Entry points. No prerequisites.' },
+  2: { label: 'L2 · Practitioner', short: 'L2', color: '#9B89C4', text: '#7A6BA8', blurb: 'Builds on L1. Hands-on patterns.' },
+  3: { label: 'L3 · Advanced', short: 'L3', color: '#F0A89A', text: '#C47A6A', blurb: 'Deep / high-stakes. Needs L2.' }
 };
 
 export const CHILD_UMBRELLAS = [

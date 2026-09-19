@@ -150,7 +150,7 @@ export default function ContextLimitsTab() {
 
                     <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                       <Card style={{ padding: '14px', background: '#090d16', border: '1px solid var(--ds-color-border-subtle)' }}>
-                        <strong style={{ fontSize: '11px', color: '#17837F' }}>GENERATED CODE SNIPPET (N = {numVarsInput}):</strong>
+                        <strong style={{ fontSize: '11px', color: '#3A9B9F' }}>GENERATED CODE SNIPPET (N = {numVarsInput}):</strong>
                         <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '10px', borderRadius: '4px', marginTop: '8px', fontFamily: 'monospace', fontSize: '11px', maxHeight: '160px', overflowY: 'auto' }}>
                           {trackingResult.lines.map((line, lIdx) => (
                             <div key={lIdx}>{line}</div>
@@ -160,9 +160,9 @@ export default function ContextLimitsTab() {
                       </Card>
 
                       <Stack gap={3}>
-                        <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: `4px solid ${trackingResult.isRandomGuessing ? '#ef4444' : '#2AB5B0'}` }}>
+                        <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: `4px solid ${trackingResult.isRandomGuessing ? '#ef4444' : '#5EC4C8'}` }}>
                           <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>ESTIMATED LLM REASONING ACCURACY:</strong>
-                          <div style={{ fontSize: '1.6rem', fontWeight: 'bold', color: trackingResult.isRandomGuessing ? '#ef4444' : '#2AB5B0' }}>
+                          <div style={{ fontSize: '1.6rem', fontWeight: 'bold', color: trackingResult.isRandomGuessing ? '#ef4444' : '#5EC4C8' }}>
                             {trackingResult.accuracy}%
                           </div>
                           {trackingResult.isRandomGuessing && (
@@ -172,9 +172,9 @@ export default function ContextLimitsTab() {
                           )}
                         </Card>
 
-                        <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                        <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                           <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>GROUND TRUTH VALUE:</strong>
-                          <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#17837F' }}>
+                          <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3A9B9F' }}>
                             "{trackingResult.currentVal}"
                           </div>
                         </Card>
@@ -212,10 +212,10 @@ export default function ContextLimitsTab() {
                   ))}
                 </Flex>
 
-                <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${activeTask.type === 'BAPO-Hard' ? '#ef4444' : '#2AB5B0'}` }}>
+                <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${activeTask.type === 'BAPO-Hard' ? '#ef4444' : '#5EC4C8'}` }}>
                   <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
                     <strong style={{ fontSize: 'var(--ds-font-size-body)', color: 'var(--ds-color-text-primary)' }}>{activeTask.name}</strong>
-                    <Badge variant="subtle" style={{ background: activeTask.type === 'BAPO-Hard' ? 'rgba(255,77,77,0.15)' : 'rgba(46,204,140,0.15)', color: activeTask.type === 'BAPO-Hard' ? '#ef4444' : '#2AB5B0' }}>
+                    <Badge variant="subtle" style={{ background: activeTask.type === 'BAPO-Hard' ? 'rgba(255,77,77,0.15)' : 'rgba(46,204,140,0.15)', color: activeTask.type === 'BAPO-Hard' ? '#ef4444' : '#5EC4C8' }}>
                       {activeTask.type}
                     </Badge>
                   </Flex>

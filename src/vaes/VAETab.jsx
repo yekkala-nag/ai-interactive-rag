@@ -123,8 +123,8 @@ export default function VAETab() {
                     </ul>
                   </Card>
 
-                  <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <h4 style={{ margin: '0 0 8px 0', color: '#17837F' }}>✅ Variational Autoencoder (VAE) Solution</h4>
+                  <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <h4 style={{ margin: '0 0 8px 0', color: '#3A9B9F' }}>✅ Variational Autoencoder (VAE) Solution</h4>
                     <ul style={{ margin: 0, paddingLeft: '18px', fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', lineHeight: 1.6 }}>
                       <li><strong>Distribution Mapping:</strong> Maps input x to Gaussian parameters μ(x) and σ²(x).</li>
                       <li><strong>Smooth Latent Space:</strong> Regularized by KL Divergence around standard normal N(0, I).</li>
@@ -151,7 +151,7 @@ export default function VAETab() {
                           <tr key={idx} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
                             <td style={{ padding: '10px', fontWeight: 'bold' }}>{row.feature}</td>
                             <td style={{ padding: '10px', color: 'var(--ds-color-text-tertiary)' }}>{row.vanilla}</td>
-                            <td style={{ padding: '10px', color: '#17837F', fontWeight: 'medium' }}>{row.vae}</td>
+                            <td style={{ padding: '10px', color: '#3A9B9F', fontWeight: 'medium' }}>{row.vae}</td>
                             <td style={{ padding: '10px', fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{row.impact}</td>
                           </tr>
                         ))}
@@ -230,9 +230,9 @@ export default function VAETab() {
 
                     {/* LIVE COMPUTED METRICS */}
                     <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>RECONSTRUCTION LOSS:</strong>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#17837F' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3A9B9F' }}>
                           {elboResults.reconstructionLoss}
                         </div>
                         <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
@@ -250,9 +250,9 @@ export default function VAETab() {
                         </div>
                       </Card>
 
-                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>TOTAL VAE LOSS (TO MINIMIZE):</strong>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#17837F' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3A9B9F' }}>
                           {elboResults.totalLoss}
                         </div>
                         <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
@@ -299,7 +299,7 @@ export default function VAETab() {
                       </label>
                     </Flex>
 
-                    <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                    <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                       <div style={{ fontFamily: 'var(--ds-font-family-mono)', fontSize: 'var(--ds-font-size-body)' }}>
                         z = μ + σ ⊙ ε = {muInput} + ({sigmaInput} × {epsVal}) = <strong>{reparamZ}</strong>
                       </div>

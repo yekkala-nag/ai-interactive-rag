@@ -91,9 +91,9 @@ export default function TokenPlaybookTab() {
                 gap: '8px',
                 padding: '10px 16px',
                 borderRadius: '8px',
-                border: activeSubTab === tab.id ? '1px solid #2AB5B0' : '1px solid transparent',
+                border: activeSubTab === tab.id ? '1px solid #5EC4C8' : '1px solid transparent',
                 background: activeSubTab === tab.id ? 'rgba(56, 189, 248, 0.15)' : 'rgba(255, 255, 255, 0.03)',
-                color: activeSubTab === tab.id ? '#2AB5B0' : 'var(--ds-color-text-secondary)',
+                color: activeSubTab === tab.id ? '#5EC4C8' : 'var(--ds-color-text-secondary)',
                 fontWeight: activeSubTab === tab.id ? 'bold' : 'normal',
                 fontSize: '13px',
                 cursor: 'pointer',
@@ -110,9 +110,9 @@ export default function TokenPlaybookTab() {
         {/* ─── SUBTAB 1: DEPLOYMENT ARCHITECTURE ─── */}
         {activeSubTab === 'deployment' && (
           <Stack gap={6}>
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #2AB5B0' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #5EC4C8' }}>
               <div style={{ marginBottom: '14px' }}>
-                <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
+                <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
                 <h3 style={{ margin: '4px 0 0 0', color: '#f8fafc' }}>Containerized Microservices Architecture & Kubernetes Production</h3>
               </div>
               <img
@@ -126,17 +126,17 @@ export default function TokenPlaybookTab() {
 
             {/* Container Topology Service Cards */}
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
-              <h3 style={{ margin: '0 0 14px 0', color: '#17837F' }}>📦 Containerized Stack Services & Port Visualizer</h3>
+              <h3 style={{ margin: '0 0 14px 0', color: '#3A9B9F' }}>📦 Containerized Stack Services & Port Visualizer</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '20px' }}>
                 {CONTAINER_SERVICES.map(srv => (
                   <div key={srv.id} style={{ background: '#090d16', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '8px', padding: '14px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                       <strong style={{ fontSize: '14px', color: '#f8fafc' }}>{srv.name}</strong>
-                      <span style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#17837F', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold' }}>
+                      <span style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#3A9B9F', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold' }}>
                         ● {srv.status}
                       </span>
                     </div>
-                    <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace', marginBottom: '6px' }}>
+                    <div style={{ fontSize: '11px', color: '#3A9B9F', fontFamily: 'monospace', marginBottom: '6px' }}>
                       Port: {srv.port}
                     </div>
                     <p style={{ margin: '0 0 10px 0', fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
@@ -156,9 +156,9 @@ export default function TokenPlaybookTab() {
                   style={{
                     padding: '8px 14px',
                     borderRadius: '6px',
-                    border: deploymentView === 'compose' ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
+                    border: deploymentView === 'compose' ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-subtle)',
                     background: deploymentView === 'compose' ? 'rgba(56, 189, 248, 0.15)' : '#090d16',
-                    color: deploymentView === 'compose' ? '#2AB5B0' : '#cbd5e1',
+                    color: deploymentView === 'compose' ? '#5EC4C8' : '#cbd5e1',
                     fontSize: '12px',
                     cursor: 'pointer'
                   }}
@@ -170,9 +170,9 @@ export default function TokenPlaybookTab() {
                   style={{
                     padding: '8px 14px',
                     borderRadius: '6px',
-                    border: deploymentView === 'dockerfile' ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
+                    border: deploymentView === 'dockerfile' ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-subtle)',
                     background: deploymentView === 'dockerfile' ? 'rgba(56, 189, 248, 0.15)' : '#090d16',
-                    color: deploymentView === 'dockerfile' ? '#2AB5B0' : '#cbd5e1',
+                    color: deploymentView === 'dockerfile' ? '#5EC4C8' : '#cbd5e1',
                     fontSize: '12px',
                     cursor: 'pointer'
                   }}
@@ -184,9 +184,9 @@ export default function TokenPlaybookTab() {
                   style={{
                     padding: '8px 14px',
                     borderRadius: '6px',
-                    border: deploymentView === 'k8s' ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
+                    border: deploymentView === 'k8s' ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-subtle)',
                     background: deploymentView === 'k8s' ? 'rgba(56, 189, 248, 0.15)' : '#090d16',
-                    color: deploymentView === 'k8s' ? '#2AB5B0' : '#cbd5e1',
+                    color: deploymentView === 'k8s' ? '#5EC4C8' : '#cbd5e1',
                     fontSize: '12px',
                     cursor: 'pointer'
                   }}
@@ -302,9 +302,9 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
         {/* ─── SUBTAB 2: OBSERVABILITY & LANGSMITH ─── */}
         {activeSubTab === 'observability' && (
           <Stack gap={6}>
-            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #2AB5B0' }}>
+            <Card style={{ padding: 'var(--ds-space-5)', background: '#090d16', border: '1px solid #5EC4C8' }}>
               <div style={{ marginBottom: '14px' }}>
-                <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
+                <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>AI ARCHITECTURAL INFOGRAPHIC</span>
                 <h3 style={{ margin: '4px 0 0 0', color: '#f8fafc' }}>LangSmith Token Governance & Executive ROI Tracking</h3>
               </div>
               <img
@@ -320,7 +320,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#17837F' }}>⚡ Interactive LangSmith Run-Tree Simulator</h3>
+                  <h3 style={{ margin: 0, color: '#3A9B9F' }}>⚡ Interactive LangSmith Run-Tree Simulator</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Select an inquiry scenario to observe how custom metadata tags track cache hits and token savings in real time.
                   </p>
@@ -339,9 +339,9 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
                     style={{
                       padding: '12px 14px',
                       borderRadius: '6px',
-                      border: selectedScenarioId === sc.id ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
+                      border: selectedScenarioId === sc.id ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-subtle)',
                       background: selectedScenarioId === sc.id ? 'rgba(16, 185, 129, 0.15)' : '#090d16',
-                      color: selectedScenarioId === sc.id ? '#2AB5B0' : '#cbd5e1',
+                      color: selectedScenarioId === sc.id ? '#5EC4C8' : '#cbd5e1',
                       cursor: 'pointer',
                       textAlign: 'left'
                     }}
@@ -359,9 +359,9 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
                   <div style={{ display: 'flex', gap: '14px' }}>
                     <span>Latency: <strong style={{ color: '#f59e0b' }}>{activeScenario.latencyMs}ms</strong></span>
                     <span>•</span>
-                    <span>Tokens Saved: <strong style={{ color: '#17837F' }}>{activeScenario.tokensSaved}</strong></span>
+                    <span>Tokens Saved: <strong style={{ color: '#3A9B9F' }}>{activeScenario.tokensSaved}</strong></span>
                     <span>•</span>
-                    <span>Cost Avoided: <strong style={{ color: '#17837F' }}>{activeScenario.costAvoided}</strong></span>
+                    <span>Cost Avoided: <strong style={{ color: '#3A9B9F' }}>{activeScenario.costAvoided}</strong></span>
                   </div>
                 </div>
 
@@ -375,7 +375,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
                       padding: '8px 12px',
                       borderRadius: '4px',
                       fontSize: '12px',
-                      borderLeft: `4px solid ${sp.type === 'chain' ? '#2AB5B0' : sp.type === 'tool' ? '#2AB5B0' : '#a855f7'}`
+                      borderLeft: `4px solid ${sp.type === 'chain' ? '#5EC4C8' : sp.type === 'tool' ? '#5EC4C8' : '#a855f7'}`
                     }}>
                       <div>
                         <span style={{ color: '#94a3b8', marginRight: '6px' }}>[{sp.type}]</span>
@@ -446,7 +446,7 @@ def process_enterprise_query(query: str):
               <Grid cols={3} gap={4} style={{ marginBottom: '18px' }}>
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: 'bold', marginBottom: '6px' }}>
-                    <span style={{ color: faithfulness < 0.80 ? '#ef4444' : '#2AB5B0' }}>1. Faithfulness: {faithfulness.toFixed(2)}</span>
+                    <span style={{ color: faithfulness < 0.80 ? '#ef4444' : '#5EC4C8' }}>1. Faithfulness: {faithfulness.toFixed(2)}</span>
                     <span style={{ fontSize: '11px', color: '#94a3b8' }}>Gate: ≥ 0.80</span>
                   </div>
                   <input
@@ -456,7 +456,7 @@ def process_enterprise_query(query: str):
                     step="0.01"
                     value={faithfulness}
                     onChange={(e) => setFaithfulness(Number(e.target.value))}
-                    style={{ width: '100%', accentColor: faithfulness < 0.80 ? '#ef4444' : '#2AB5B0' }}
+                    style={{ width: '100%', accentColor: faithfulness < 0.80 ? '#ef4444' : '#5EC4C8' }}
                   />
                   <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
                     Measures hallucination vs retrieved context
@@ -465,7 +465,7 @@ def process_enterprise_query(query: str):
 
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: 'bold', marginBottom: '6px' }}>
-                    <span style={{ color: '#17837F' }}>2. Answer Relevancy: {relevancy.toFixed(2)}</span>
+                    <span style={{ color: '#3A9B9F' }}>2. Answer Relevancy: {relevancy.toFixed(2)}</span>
                     <span style={{ fontSize: '11px', color: '#94a3b8' }}>Gate: ≥ 0.75</span>
                   </div>
                   <input
@@ -475,7 +475,7 @@ def process_enterprise_query(query: str):
                     step="0.01"
                     value={relevancy}
                     onChange={(e) => setRelevancy(Number(e.target.value))}
-                    style={{ width: '100%', accentColor: '#2AB5B0' }}
+                    style={{ width: '100%', accentColor: '#5EC4C8' }}
                   />
                   <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
                     Evaluates how well answer addresses question
@@ -505,7 +505,7 @@ def process_enterprise_query(query: str):
               {/* Live Diagnostic Callout */}
               <div style={{
                 background: ragasEval.isFaithfulnessCritical ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
-                border: `1px solid ${ragasEval.isFaithfulnessCritical ? '#ef4444' : '#2AB5B0'}`,
+                border: `1px solid ${ragasEval.isFaithfulnessCritical ? '#ef4444' : '#5EC4C8'}`,
                 borderRadius: '8px',
                 padding: '14px',
                 marginBottom: '16px',
@@ -571,11 +571,11 @@ def process_enterprise_query(query: str):
                 <Grid cols={3} gap={4} style={{ marginBottom: '12px' }}>
                   <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '4px' }}>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>LATENCY</div>
-                    <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#17837F' }}>{activePerfMode.latency}</div>
+                    <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#3A9B9F' }}>{activePerfMode.latency}</div>
                   </div>
                   <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '4px' }}>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>CONCURRENCY</div>
-                    <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#17837F' }}>{activePerfMode.concurrency}</div>
+                    <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#3A9B9F' }}>{activePerfMode.concurrency}</div>
                   </div>
                   <div style={{ background: 'rgba(255,255,255,0.03)', padding: '10px', borderRadius: '4px' }}>
                     <div style={{ fontSize: '10px', color: '#94a3b8' }}>SERVER THROUGHPUT</div>
@@ -591,7 +591,7 @@ def process_enterprise_query(query: str):
               {/* Code Snippets */}
               <Grid cols={2} gap={4}>
                 <div>
-                  <span style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>4.1 Async FastAPI (.ainvoke)</span>
+                  <span style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>4.1 Async FastAPI (.ainvoke)</span>
                   <CodeBlock
                     language="python"
                     code={`@app.post("/query")
@@ -623,20 +623,20 @@ responses = await llm.abatch(
             <Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                 <div>
-                  <h3 style={{ margin: 0, color: '#17837F' }}>🏁 Enterprise Implementation Roadmap & Execution Checklist</h3>
+                  <h3 style={{ margin: 0, color: '#3A9B9F' }}>🏁 Enterprise Implementation Roadmap & Execution Checklist</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: '13px' }}>
                     Step-by-step 2-month execution plan for establishing token governance and production reliability.
                   </p>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: '18px', fontWeight: 900, color: '#17837F' }}>{progressPct}% Complete</div>
+                  <div style={{ fontSize: '18px', fontWeight: 900, color: '#3A9B9F' }}>{progressPct}% Complete</div>
                   <span style={{ fontSize: '11px', color: '#94a3b8' }}>{completedTasks} of {allTasks.length} Milestones</span>
                 </div>
               </div>
 
               {/* Progress Bar */}
               <div style={{ height: '8px', width: '100%', background: '#090d16', borderRadius: '4px', overflow: 'hidden', marginBottom: '20px' }}>
-                <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, #2AB5B0, #2AB5B0)', transition: 'width 0.3s ease' }} />
+                <div style={{ height: '100%', width: `${progressPct}%`, background: 'linear-gradient(90deg, #5EC4C8, #5EC4C8)', transition: 'width 0.3s ease' }} />
               </div>
 
               {/* Phase Columns */}
@@ -675,7 +675,7 @@ responses = await llm.abatch(
                             type="checkbox"
                             checked={task.done}
                             onChange={() => {}}
-                            style={{ accentColor: '#2AB5B0', cursor: 'pointer' }}
+                            style={{ accentColor: '#5EC4C8', cursor: 'pointer' }}
                           />
                           <span style={{
                             fontSize: '12px',

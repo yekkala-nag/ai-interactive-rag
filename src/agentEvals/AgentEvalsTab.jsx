@@ -14,7 +14,7 @@ export default function AgentEvalsTab() {
   const [k, setK] = useState(3);
   const [blk, setBlk] = useState(3);
   const r = SCORE_AGENT(p, k, blk, 4);
-  const rc = r.verdict === 'SHIP' ? '#2AB5B0' : r.verdict === 'GATE' ? '#F5A623' : '#ef4444';
+  const rc = r.verdict === 'SHIP' ? '#5EC4C8' : r.verdict === 'GATE' ? '#F5A623' : '#ef4444';
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
       <Hero moduleId="agents_frameworks" moduleLabel="Agent Systems & Frameworks [Agent Evals & Red-Team]"
@@ -32,11 +32,11 @@ export default function AgentEvalsTab() {
         </div>
         {sub === 'tasks' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div><h3 style={{ margin: 0 }}>🧪 τ-style task battery</h3></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{EVAL_TASKS.map((t, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{t.task}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{t.checks}</div><div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace' }}>{t.metric}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{EVAL_TASKS.map((t, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{t.task}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{t.checks}</div><div style={{ fontSize: '11px', color: '#3A9B9F', fontFamily: 'monospace' }}>{t.metric}</div></Card>))}</Grid>
           <div><h3 style={{ margin: 0 }}>🔴 Red-team attack catalog</h3></div>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Attack</th><th style={{ textAlign: 'left', padding: '8px' }}>Vector</th><th style={{ textAlign: 'left', padding: '8px' }}>Defence</th><th style={{ textAlign: 'left', padding: '8px' }}>Detect</th></tr></thead>
-            <tbody>{ATTACK_CATALOG.map((a, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: '#ef4444', fontWeight: 'bold' }}>{a.attack}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.vector}</td><td style={{ padding: '8px', color: '#17837F' }}>{a.defence}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace' }}>{a.detect}</td></tr>))}</tbody></table></div>
+            <tbody>{ATTACK_CATALOG.map((a, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: '#ef4444', fontWeight: 'bold' }}>{a.attack}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.vector}</td><td style={{ padding: '8px', color: '#3A9B9F' }}>{a.defence}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace' }}>{a.detect}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Ship-gate simulator</h3></div>

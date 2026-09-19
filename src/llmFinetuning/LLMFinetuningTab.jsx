@@ -152,12 +152,12 @@ export default function LLMFinetuningTab() {
 
                 <Stack gap={3}>
                   {FINE_TUNE_VS_RAG_MATRIX.map((m, idx) => (
-                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${m.winner === 'Fine-Tuning' ? '#2AB5B0' : '#2AB5B0'}` }}>
+                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${m.winner === 'Fine-Tuning' ? '#5EC4C8' : '#5EC4C8'}` }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: m.winner === 'Fine-Tuning' ? '#2AB5B0' : '#2AB5B0' }}>
+                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: m.winner === 'Fine-Tuning' ? '#5EC4C8' : '#5EC4C8' }}>
                           {m.criterion}
                         </strong>
-                        <Badge variant="subtle" style={{ background: m.winner === 'Fine-Tuning' ? 'rgba(46,204,140,0.15)' : 'rgba(56,189,248,0.15)', color: m.winner === 'Fine-Tuning' ? '#2AB5B0' : '#2AB5B0' }}>
+                        <Badge variant="subtle" style={{ background: m.winner === 'Fine-Tuning' ? 'rgba(46,204,140,0.15)' : 'rgba(56,189,248,0.15)', color: m.winner === 'Fine-Tuning' ? '#5EC4C8' : '#5EC4C8' }}>
                           WINNER: {m.winner.toUpperCase()}
                         </Badge>
                       </Flex>
@@ -170,7 +170,7 @@ export default function LLMFinetuningTab() {
 
                         <div>
                           <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>Fine-Tuning (QLoRA) Approach:</div>
-                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>{m.fineTuneApproach}</div>
+                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', fontWeight: 'bold' }}>{m.fineTuneApproach}</div>
                         </div>
                       </Grid>
 
@@ -187,11 +187,11 @@ export default function LLMFinetuningTab() {
                     {FINE_TUNING_PARADIGMS.map((p) => (
                       <Card key={p.id} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
                         <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                          <strong style={{ color: '#17837F' }}>{p.name}</strong>
+                          <strong style={{ color: '#3A9B9F' }}>{p.name}</strong>
                           <Badge variant="outline">{p.type}</Badge>
                         </Flex>
                         <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>
-                          Trainable Parameters: <span style={{ color: '#17837F' }}>{p.paramsUpdated}</span> | Memory Multiplier: <span style={{ color: '#F5A623' }}>{p.memoryMultiplier}</span>
+                          Trainable Parameters: <span style={{ color: '#3A9B9F' }}>{p.paramsUpdated}</span> | Memory Multiplier: <span style={{ color: '#F5A623' }}>{p.memoryMultiplier}</span>
                         </div>
                         <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '4px' }}>
                           <strong>Pros:</strong> {p.pros}
@@ -199,7 +199,7 @@ export default function LLMFinetuningTab() {
                         <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '4px' }}>
                           <strong>Cons:</strong> {p.cons}
                         </div>
-                        <div style={{ fontSize: '11px', color: '#17837F' }}>
+                        <div style={{ fontSize: '11px', color: '#3A9B9F' }}>
                           <strong>Best for:</strong> {p.idealFor}
                         </div>
                       </Card>
@@ -225,11 +225,11 @@ export default function LLMFinetuningTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {LORA_MATHEMATICAL_CONCEPTS.map((c, idx) => (
-                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', display: 'block', marginBottom: '4px' }}>
+                    <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#3A9B9F', display: 'block', marginBottom: '4px' }}>
                         {c.concept}
                       </strong>
-                      <Card style={{ padding: '8px 12px', background: '#090d16', color: '#17837F', fontFamily: 'monospace', fontSize: '11px', margin: '4px 0 8px 0', overflowX: 'auto' }}>
+                      <Card style={{ padding: '8px 12px', background: '#090d16', color: '#3A9B9F', fontFamily: 'monospace', fontSize: '11px', margin: '4px 0 8px 0', overflowX: 'auto' }}>
                         {c.formula}
                       </Card>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '0 0 6px 0' }}>
@@ -243,13 +243,13 @@ export default function LLMFinetuningTab() {
                 </Grid>
 
                 <div>
-                  <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                  <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                     Empirical Hyperparameter Defaults & Best Practices (Schulman's Rule)
                   </strong>
                   <div style={{ overflowX: 'auto' }}>
                     <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 'var(--ds-font-size-caption)' }}>
                       <thead>
-                        <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', textAlign: 'left', color: '#17837F' }}>
+                        <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', textAlign: 'left', color: '#3A9B9F' }}>
                           <th style={{ padding: '8px' }}>Hyperparameter</th>
                           <th style={{ padding: '8px' }}>Recommended Default</th>
                           <th style={{ padding: '8px' }}>Search Sweep Range</th>
@@ -259,7 +259,7 @@ export default function LLMFinetuningTab() {
                       <tbody>
                         {HYPERPARAMETER_DEFAULTS.map((hp, idx) => (
                           <tr key={idx} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{hp.name}</td>
+                            <td style={{ padding: '8px', color: '#3A9B9F', fontWeight: 'bold' }}>{hp.name}</td>
                             <td style={{ padding: '8px', fontFamily: 'monospace', color: 'white' }}>{hp.defaultVal}</td>
                             <td style={{ padding: '8px', fontFamily: 'monospace', color: '#F5A623' }}>{hp.sweep}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{hp.note}</td>
@@ -373,12 +373,12 @@ export default function LLMFinetuningTab() {
 
                 {/* VRAM ESTIMATE RESULTS */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: '#090d16', border: `1px solid ${hwEstimate.isFeasibleSingleGpu ? '#2AB5B0' : '#ef4444'}` }}>
+                  <Card style={{ padding: '16px', background: '#090d16', border: `1px solid ${hwEstimate.isFeasibleSingleGpu ? '#5EC4C8' : '#ef4444'}` }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '12px' }}>
-                      <strong style={{ fontSize: '13px', color: hwEstimate.isFeasibleSingleGpu ? '#2AB5B0' : '#ef4444' }}>
+                      <strong style={{ fontSize: '13px', color: hwEstimate.isFeasibleSingleGpu ? '#5EC4C8' : '#ef4444' }}>
                         TOTAL ESTIMATED VRAM REQUIRED:
                       </strong>
-                      <Badge variant="subtle" style={{ background: hwEstimate.isFeasibleSingleGpu ? 'rgba(46,204,140,0.15)' : 'rgba(239,68,68,0.15)', color: hwEstimate.isFeasibleSingleGpu ? '#2AB5B0' : '#ef4444' }}>
+                      <Badge variant="subtle" style={{ background: hwEstimate.isFeasibleSingleGpu ? 'rgba(46,204,140,0.15)' : 'rgba(239,68,68,0.15)', color: hwEstimate.isFeasibleSingleGpu ? '#5EC4C8' : '#ef4444' }}>
                         {hwEstimate.totalVramGb} GB VRAM
                       </Badge>
                     </Flex>
@@ -402,15 +402,15 @@ export default function LLMFinetuningTab() {
                       </Flex>
                       <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '6px' }}>
                         <Flex justify="space-between">
-                          <span style={{ color: '#17837F' }}>Trainable Parameters:</span>
-                          <span style={{ color: '#17837F', fontWeight: 'bold' }}>{hwEstimate.trainableParamsM}M params</span>
+                          <span style={{ color: '#3A9B9F' }}>Trainable Parameters:</span>
+                          <span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>{hwEstimate.trainableParamsM}M params</span>
                         </Flex>
                       </div>
                     </Stack>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       HARDWARE RECOMMENDATION & CLUSTER TARGET:
                     </strong>
                     <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'white', fontWeight: 'bold', marginBottom: '8px' }}>
@@ -505,22 +505,22 @@ export default function LLMFinetuningTab() {
                 </Grid>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '14px', background: '#090d16', border: '1px solid #2AB5B0' }}>
+                  <Card style={{ padding: '14px', background: '#090d16', border: '1px solid #5EC4C8' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '11px', color: '#17837F' }}>FINAL ACCURACY & LOSS:</strong>
-                      <Badge variant="subtle" style={{ background: 'rgba(46,204,140,0.15)', color: '#17837F' }}>
+                      <strong style={{ fontSize: '11px', color: '#3A9B9F' }}>FINAL ACCURACY & LOSS:</strong>
+                      <Badge variant="subtle" style={{ background: 'rgba(46,204,140,0.15)', color: '#3A9B9F' }}>
                         {simResult.finalAccuracy}% ACCURACY
                       </Badge>
                     </Flex>
 
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginBottom: '8px' }}>
-                      Accuracy Jump: 35.0% (Prompt+RAG) ➔ <strong style={{ color: '#17837F' }}>{simResult.finalAccuracy}% (QLoRA)</strong> | Eval Loss: <strong style={{ color: '#17837F' }}>{simResult.finalLoss}</strong>
+                      Accuracy Jump: 35.0% (Prompt+RAG) ➔ <strong style={{ color: '#3A9B9F' }}>{simResult.finalAccuracy}% (QLoRA)</strong> | Eval Loss: <strong style={{ color: '#3A9B9F' }}>{simResult.finalLoss}</strong>
                     </div>
 
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>Live Step Progress & Gradient Norm:</div>
                     <div style={{ height: '160px', overflowY: 'auto', background: 'var(--ds-color-bg-surface)', borderRadius: '4px', padding: '8px', fontFamily: 'monospace', fontSize: '10px', marginTop: '4px' }}>
                       {simResult.steps.map((st, i) => (
-                        <div key={i} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px', color: st.epoch === simEpochs ? '#2AB5B0' : 'white' }}>
+                        <div key={i} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px', color: st.epoch === simEpochs ? '#5EC4C8' : 'white' }}>
                           <span>Step {st.globalStep} (Ep {st.epoch})</span>
                           <span>Train: {st.trainLoss}</span>
                           <span>Eval: {st.evalLoss}</span>
@@ -531,16 +531,16 @@ export default function LLMFinetuningTab() {
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '11px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '11px', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       HARDWARE & FINANCIAL ROI COMPARISON:
                     </strong>
                     <Stack gap={2} style={{ fontSize: 'var(--ds-font-size-caption)' }}>
                       <div>Full Fine-Tuning VRAM: <span style={{ color: '#ef4444' }}>~1,200 GB VRAM (Multi-node Cluster)</span></div>
-                      <div>QLoRA 4-bit NF4 VRAM: <span style={{ color: '#17837F', fontWeight: 'bold' }}>&lt; 24 GB VRAM (Single GPU)</span></div>
-                      <div>VRAM Saved: <span style={{ color: '#17837F' }}>{simResult.vramSavingsGb} GB saved per run</span></div>
-                      <div>Single GPU Compute Cost: <span style={{ color: '#17837F', fontWeight: 'bold' }}>{simResult.estimatedCost}</span></div>
-                      <div>API Savings at Scale: <span style={{ color: '#17837F', fontWeight: 'bold' }}>~$320,000 / year</span></div>
+                      <div>QLoRA 4-bit NF4 VRAM: <span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>&lt; 24 GB VRAM (Single GPU)</span></div>
+                      <div>VRAM Saved: <span style={{ color: '#3A9B9F' }}>{simResult.vramSavingsGb} GB saved per run</span></div>
+                      <div>Single GPU Compute Cost: <span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>{simResult.estimatedCost}</span></div>
+                      <div>API Savings at Scale: <span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>~$320,000 / year</span></div>
                     </Stack>
                   </Card>
                 </Grid>
@@ -575,7 +575,7 @@ export default function LLMFinetuningTab() {
                 </div>
 
                 <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
-                  <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', marginBottom: '8px' }}>
+                  <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#3A9B9F', marginBottom: '8px' }}>
                     {DATASET_FORMATS[selectedDatasetIdx].desc}
                   </div>
                   <CodeBlock language="json" code={DATASET_FORMATS[selectedDatasetIdx].example} />
@@ -614,7 +614,7 @@ export default function LLMFinetuningTab() {
                   ))}
                 </div>
 
-                <Card style={{ padding: '12px 14px', background: '#090d16', borderLeft: '4px solid #2AB5B0' }}>
+                <Card style={{ padding: '12px 14px', background: '#090d16', borderLeft: '4px solid #5EC4C8' }}>
                   <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>INPUT USER PROMPT:</div>
                   <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'white', fontFamily: 'monospace' }}>
                     {INFERENCE_BENCHMARK_CASES[selectedBenchmarkIdx].inputPrompt}
@@ -641,15 +641,15 @@ export default function LLMFinetuningTab() {
                   {/* FINE-TUNED OUTPUT */}
                   <Card style={{ padding: '14px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.3)' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '12px', color: '#17837F' }}>✅ FINE-TUNED (QLORA ADAPTER)</strong>
-                      <Badge variant="subtle" style={{ background: 'rgba(16,185,129,0.2)', color: '#17837F' }}>
+                      <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>✅ FINE-TUNED (QLORA ADAPTER)</strong>
+                      <Badge variant="subtle" style={{ background: 'rgba(16,185,129,0.2)', color: '#3A9B9F' }}>
                         {INFERENCE_BENCHMARK_CASES[selectedBenchmarkIdx].fineTunedAccuracy}
                       </Badge>
                     </Flex>
                     <div style={{ background: '#090d16', padding: '10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#34d399', minHeight: '120px', whiteSpace: 'pre-wrap' }}>
                       {INFERENCE_BENCHMARK_CASES[selectedBenchmarkIdx].fineTunedOutput}
                     </div>
-                    <div style={{ fontSize: '11px', color: '#17837F', marginTop: '8px' }}>
+                    <div style={{ fontSize: '11px', color: '#3A9B9F', marginTop: '8px' }}>
                       🎯 <strong>Deterministic Compliance:</strong> 100% compliant with target schema without bloated context prompt overhead.
                     </div>
                   </Card>
@@ -744,10 +744,10 @@ export default function LLMFinetuningTab() {
                       <tbody>
                         {AGENTIC_FINE_TUNING_PIPELINE.map((s, i) => (
                           <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
-                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{s.stage}</td>
+                            <td style={{ padding: '8px', color: '#3A9B9F', fontWeight: 'bold' }}>{s.stage}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{s.description}</td>
                             <td style={{ padding: '8px' }}>
-                              <ul style={{ margin: 0, paddingLeft: '16px', color: '#17837F' }}>
+                              <ul style={{ margin: 0, paddingLeft: '16px', color: '#3A9B9F' }}>
                                 {s.keyTechniques.map((t, j) => <li key={j} style={{ fontSize: '10px' }}>{t}</li>)}
                               </ul>
                             </td>
@@ -768,7 +768,7 @@ export default function LLMFinetuningTab() {
                       <Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #F5A623' }}>
                         <div style={{ fontSize: '12px', color: '#F5A623', fontWeight: 'bold', marginBottom: '4px' }}>{c.challenge}</div>
                         <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginBottom: '6px' }}>{c.detail}</div>
-                        <div style={{ fontSize: '11px', color: '#17837F', fontStyle: 'italic' }}>→ {c.mitigation}</div>
+                        <div style={{ fontSize: '11px', color: '#3A9B9F', fontStyle: 'italic' }}>→ {c.mitigation}</div>
                       </Card>
                     ))}
                   </div>
@@ -792,7 +792,7 @@ export default function LLMFinetuningTab() {
                       <tbody>
                         {AGENTIC_FINE_TUNING_RECIPES.map((r, i) => (
                           <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
-                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{r.name}</td>
+                            <td style={{ padding: '8px', color: '#3A9B9F', fontWeight: 'bold' }}>{r.name}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontFamily: 'monospace', fontSize: '10px' }}>{r.baseModel}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontSize: '10px' }}>{r.method}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', fontSize: '10px' }}>{r.data}</td>

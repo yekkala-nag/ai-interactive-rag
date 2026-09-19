@@ -15,7 +15,7 @@ export default function EnterpriseGradeTab() {
   const [flags, setFlags] = useState({ data: true, bias: false, perf: true, deploy: false, monitor: false, buyin: true });
   const toggle = (k) => setFlags(f => ({ ...f, [k]: !f[k] }));
   const r = READINESS_SCORE(flags);
-  const rc = r.score >= 85 ? '#2AB5B0' : r.score >= 60 ? '#F5A623' : '#ef4444';
+  const rc = r.score >= 85 ? '#5EC4C8' : r.score >= 60 ? '#F5A623' : '#ef4444';
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
       <Hero moduleId="frontiers_production" moduleLabel="Production & Frontiers [Enterprise-Grade AI]"
@@ -31,10 +31,10 @@ export default function EnterpriseGradeTab() {
           <button key={t.id} onClick={() => setSub(t.id)} style={navBtn(sub, t.id)}><div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'plays' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{VALUE_PLAYS.map((v, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{v.play}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{v.ex}</div><div style={{ fontSize: '11px', color: '#17837F' }}>{v.why}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{VALUE_PLAYS.map((v, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{v.play}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{v.ex}</div><div style={{ fontSize: '11px', color: '#3A9B9F' }}>{v.why}</div></Card>))}</Grid>
           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-              <strong style={{ fontSize: '12px', color: '#17837F' }}>Data diligence (CRISP-DM heart):</strong>
+              <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>Data diligence (CRISP-DM heart):</strong>
               {DATA_DILIGENCE.map((d, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}><span style={{ color: 'white' }}>{d.check}:</span> {d.detail}</div>))}
             </Card>
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
@@ -65,7 +65,7 @@ export default function EnterpriseGradeTab() {
           </Grid>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Drift</th><th style={{ textAlign: 'left', padding: '8px' }}>Means</th><th style={{ padding: '8px' }}>Signal needs</th></tr></thead>
-            <tbody>{DRIFT_TYPES.map((d, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{d.drift}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{d.means}</td><td style={{ padding: '8px', textAlign: 'center', color: d.needs === 'Labels' ? '#F5A623' : '#2AB5B0' }}>{d.needs}</td></tr>))}</tbody></table></div>
+            <tbody>{DRIFT_TYPES.map((d, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{d.drift}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{d.means}</td><td style={{ padding: '8px', textAlign: 'center', color: d.needs === 'Labels' ? '#F5A623' : '#5EC4C8' }}>{d.needs}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'code' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🛠️ Readiness gate + drift sketch</h3></div>

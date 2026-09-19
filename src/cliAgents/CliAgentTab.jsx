@@ -6,7 +6,7 @@ const STEPS = [
     title: "Setup & Local Model Selection",
     icon: "⚙️",
     badge: "Environment",
-    badgeColor: "#2AB5B0",
+    badgeColor: "#5EC4C8",
     summary: "Download Ollama and pull Alibaba Qwen 2.5 for fast, local, zero-cost intelligence.",
     detail: "Ollama (v0.6.2) runs open-source models natively on macOS, Linux, and Windows. We choose Qwen 2.5 because it excels at instruction following, JSON function calling, and structured reasoning while keeping memory usage lightweight.",
     code: `# 1. Install Ollama Python SDK
@@ -21,7 +21,7 @@ ollama run qwen2.5`,
     title: "Define Shell Command Execution Tool",
     icon: "💻",
     badge: "Subprocess",
-    badgeColor: "#FF8A6B",
+    badgeColor: "#F0A89A",
     summary: "Use Python's subprocess module to run terminal commands safely with timeouts.",
     detail: "The agent needs a bridge between model reasoning and computer execution. We wrap subprocess.run with shell=True, capture_output=True, text=True, and a 10-second timeout to prevent runaway hanging processes.",
     code: `import subprocess
@@ -46,7 +46,7 @@ def execute_shell_command(command: str) -> str:
     title: "Tool Schema & Function Dispatcher",
     icon: "🧩",
     badge: "Ollama Schema",
-    badgeColor: "#C5ADEA",
+    badgeColor: "#C9B8E8",
     summary: "Map Python functions to Ollama JSON tool schemas so the model knows when and how to call them.",
     detail: "Ollama follows standard OpenAI function calling JSON schemas. We define parameter types, descriptions, and required fields, along with a dictionary TOOL_MAP for instant string-to-function lookup.",
     code: `# Dispatcher dictionary
@@ -81,7 +81,7 @@ TOOLS_SCHEMA = [
     title: "Multi-Role Message History",
     icon: "💬",
     badge: "Roles & Context",
-    badgeColor: "#FF8A6B",
+    badgeColor: "#F0A89A",
     summary: "Manage system, user, assistant, and tool roles to maintain context throughout execution turns.",
     detail: "Chat completion requires tracking conversation state. System role initializes guardrails, User role receives input, Assistant role holds LLM reasoning / tool requests, and Tool role injects subprocess output back into context.",
     code: `# Initialize system instructions
@@ -105,7 +105,7 @@ messages.append({
     title: "The ReAct Tool-Calling Loop",
     icon: "🔄",
     badge: "Execution Loop",
-    badgeColor: "#2AB5B0",
+    badgeColor: "#5EC4C8",
     summary: "Loop until the LLM produces a final text synthesis instead of requesting tool invocations.",
     detail: "The core loop invokes ollama.chat(model=llm, messages=messages, tools=TOOLS_SCHEMA). While response contains tool_calls, it extracts function arguments, calls Python execute_shell_command, appends output as role 'tool', and queries Ollama again.",
     code: `import ollama, json, sys
@@ -259,7 +259,7 @@ export default function CliAgentTab() {
       <div style={{ background: "linear-gradient(135deg, #111827 0%, #1f2937 100%)", borderRadius: 16, padding: "2.5rem", border: "1px solid #374151", marginBottom: "2.5rem", boxShadow: "0 20px 25px -5px rgba(0,0,0,0.5)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1.5rem" }}>
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(42,138,132,0.15)", border: "1px solid #2AB5B0", padding: "0.3rem 0.8rem", borderRadius: 20, fontSize: "0.75rem", color: "#17837F", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(42,138,132,0.15)", border: "1px solid #5EC4C8", padding: "0.3rem 0.8rem", borderRadius: 20, fontSize: "0.75rem", color: "#3A9B9F", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
               <span>🤖 Agentic AI Guide</span> · <span>Ollama + Python</span>
             </div>
             <h1 style={{ fontFamily: "Playfair Display, serif", fontSize: "2.5rem", fontWeight: 900, color: "#f9fafb", margin: 0, lineHeight: 1.1 }}>
@@ -272,11 +272,11 @@ export default function CliAgentTab() {
 
           <div style={{ display: "flex", gap: "1rem" }}>
             <div style={{ background: "#111827", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #374151", textAlign: "center" }}>
-              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#A34A28" }}>$0.00</div>
+              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#C47A6A" }}>$0.00</div>
               <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase", letterSpacing: "0.05em" }}>API Cost</div>
             </div>
             <div style={{ background: "#111827", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #374151", textAlign: "center" }}>
-              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#17837F" }}>100%</div>
+              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#3A9B9F" }}>100%</div>
               <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase", letterSpacing: "0.05em" }}>Local Privacy</div>
             </div>
           </div>
@@ -298,29 +298,29 @@ export default function CliAgentTab() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <div style={{ background: "#11111b", padding: "1.2rem", borderRadius: 10, borderLeft: "4px solid #FF8A6B" }}>
-              <div style={{ fontWeight: 700, color: "#A34A28", fontSize: "0.85rem", textTransform: "uppercase" }}>1. User Input & System Prompt</div>
+            <div style={{ background: "#11111b", padding: "1.2rem", borderRadius: 10, borderLeft: "4px solid #F0A89A" }}>
+              <div style={{ fontWeight: 700, color: "#C47A6A", fontSize: "0.85rem", textTransform: "uppercase" }}>1. User Input & System Prompt</div>
               <div style={{ fontSize: "0.82rem", color: "#d1d5db", marginTop: "0.3rem" }}>
                 Natural language request is packaged with system instructions and JSON tool schemas (`execute_shell_command`).
               </div>
             </div>
 
-            <div style={{ background: "#11111b", padding: "1.2rem", borderRadius: 10, borderLeft: "4px solid #2AB5B0" }}>
-              <div style={{ fontWeight: 700, color: "#17837F", fontSize: "0.85rem", textTransform: "uppercase" }}>2. Ollama Function Calling</div>
+            <div style={{ background: "#11111b", padding: "1.2rem", borderRadius: 10, borderLeft: "4px solid #5EC4C8" }}>
+              <div style={{ fontWeight: 700, color: "#3A9B9F", fontSize: "0.85rem", textTransform: "uppercase" }}>2. Ollama Function Calling</div>
               <div style={{ fontSize: "0.82rem", color: "#d1d5db", marginTop: "0.3rem" }}>
                 Model evaluates intent and yields structured JSON: <code>{`{"name": "execute_shell_command", "arguments": {"command": "df -h"}}`}</code>.
               </div>
             </div>
 
-            <div style={{ background: "#11111b", padding: "1.2rem", borderRadius: 10, borderLeft: "4px solid #C5ADEA" }}>
-              <div style={{ fontWeight: 700, color: "#5A4FA3", fontSize: "0.85rem", textTransform: "uppercase" }}>3. Subprocess Execution & Observation</div>
+            <div style={{ background: "#11111b", padding: "1.2rem", borderRadius: 10, borderLeft: "4px solid #C9B8E8" }}>
+              <div style={{ fontWeight: 700, color: "#7A6BA8", fontSize: "0.85rem", textTransform: "uppercase" }}>3. Subprocess Execution & Observation</div>
               <div style={{ fontSize: "0.82rem", color: "#d1d5db", marginTop: "0.3rem" }}>
                 Python executes command via `subprocess.run()`, captures stdout/stderr, and appends output to history with `role="tool"`.
               </div>
             </div>
 
-            <div style={{ background: "#11111b", padding: "1.2rem", borderRadius: 10, borderLeft: "4px solid #2AB5B0" }}>
-              <div style={{ fontWeight: 700, color: "#17837F", fontSize: "0.85rem", textTransform: "uppercase" }}>4. Final LLM Synthesis</div>
+            <div style={{ background: "#11111b", padding: "1.2rem", borderRadius: 10, borderLeft: "4px solid #5EC4C8" }}>
+              <div style={{ fontWeight: 700, color: "#3A9B9F", fontSize: "0.85rem", textTransform: "uppercase" }}>4. Final LLM Synthesis</div>
               <div style={{ fontSize: "0.82rem", color: "#d1d5db", marginTop: "0.3rem" }}>
                 Ollama reads execution results from history and synthesizes a human-readable text answer.
               </div>
@@ -450,9 +450,9 @@ export default function CliAgentTab() {
               key={idx}
               onClick={() => runSimulation(idx)}
               style={{
-                background: simIndex === idx ? "#2AB5B0" : "#11111b",
+                background: simIndex === idx ? "#5EC4C8" : "#11111b",
                 color: simIndex === idx ? "#ffffff" : "#d1d5db",
-                border: `1px solid ${simIndex === idx ? "#2AB5B0" : "#374151"}`,
+                border: `1px solid ${simIndex === idx ? "#5EC4C8" : "#374151"}`,
                 padding: "0.5rem 1rem",
                 borderRadius: 8,
                 fontSize: "0.82rem",
@@ -473,10 +473,10 @@ export default function CliAgentTab() {
             <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
               <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#ef4444" }} />
               <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#f59e0b" }} />
-              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#2AB5B0" }} />
+              <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#5EC4C8" }} />
               <span style={{ fontSize: "0.75rem", color: "#6b7280", marginLeft: "0.5rem" }}>bash — python CLIagent.py (Ollama qwen2.5)</span>
             </div>
-            <div style={{ fontSize: "0.7rem", color: simPhase === "complete" ? "#2AB5B0" : "#FF8A6B", fontWeight: 700 }}>
+            <div style={{ fontSize: "0.7rem", color: simPhase === "complete" ? "#5EC4C8" : "#F0A89A", fontWeight: 700 }}>
               ● STATUS: {simPhase.toUpperCase()}
             </div>
           </div>
@@ -498,7 +498,7 @@ export default function CliAgentTab() {
 
             {/* JSON TOOL CALL */}
             {showJsonToolCall && (simPhase === "tool_exec" || simPhase === "synthesizing" || simPhase === "complete") && (
-              <div style={{ background: "#11111e", borderLeft: "3px solid #C5ADEA", padding: "0.8rem", borderRadius: 6, margin: "0.6rem 0", color: "#c084fc", fontSize: "0.78rem" }}>
+              <div style={{ background: "#11111e", borderLeft: "3px solid #C9B8E8", padding: "0.8rem", borderRadius: 6, margin: "0.6rem 0", color: "#c084fc", fontSize: "0.78rem" }}>
                 <div>🔧 &gt; [Executing Tool] {currentPreset.toolName}</div>
                 <div style={{ color: "#e9d5ff", marginTop: "0.3rem" }}>
                   arguments: {JSON.stringify(currentPreset.toolArgs, null, 2)}
@@ -508,7 +508,7 @@ export default function CliAgentTab() {
 
             {/* SUBPROCESS OUTPUT */}
             {(simPhase === "synthesizing" || simPhase === "complete") && (
-              <div style={{ background: "#051311", borderLeft: "3px solid #2AB5B0", padding: "0.8rem", borderRadius: 6, margin: "0.6rem 0", color: "#6ee7b7", fontSize: "0.78rem" }}>
+              <div style={{ background: "#051311", borderLeft: "3px solid #5EC4C8", padding: "0.8rem", borderRadius: 6, margin: "0.6rem 0", color: "#6ee7b7", fontSize: "0.78rem" }}>
                 <div>📋 &gt; [Subprocess Observation (role="tool")]</div>
                 <div style={{ whiteSpace: "pre-wrap", marginTop: "0.3rem", color: "#a7f3d0" }}>
                   {currentPreset.rawOutput}
@@ -610,7 +610,7 @@ export default function CliAgentTab() {
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", fontSize: "0.85rem" }}>
             <thead>
-              <tr style={{ background: "#11111b", borderBottom: "2px solid #374151", color: "#A34A28" }}>
+              <tr style={{ background: "#11111b", borderBottom: "2px solid #374151", color: "#C47A6A" }}>
                 <th style={{ padding: "0.9rem 1rem" }}>Agent Category</th>
                 <th style={{ padding: "0.9rem 1rem" }}>Prominent Examples</th>
                 <th style={{ padding: "0.9rem 1rem" }}>Hosting Model</th>
@@ -623,10 +623,10 @@ export default function CliAgentTab() {
               {TAXONOMY_MATRIX.map((row, idx) => (
                 <tr key={idx} style={{ borderBottom: "1px solid #262636", background: idx % 2 === 0 ? "transparent" : "rgba(255,255,255,0.02)" }}>
                   <td style={{ padding: "1rem", fontWeight: 700, color: "#f9fafb" }}>{row.type}</td>
-                  <td style={{ padding: "1rem", color: "#17837F", fontWeight: 600 }}>{row.examples}</td>
+                  <td style={{ padding: "1rem", color: "#3A9B9F", fontWeight: 600 }}>{row.examples}</td>
                   <td style={{ padding: "1rem", color: "#d1d5db" }}>{row.hosting}</td>
                   <td style={{ padding: "1rem", color: "#9ca3af" }}>{row.privacy}</td>
-                  <td style={{ padding: "1rem", color: "#A34A28", fontWeight: 700 }}>{row.cost}</td>
+                  <td style={{ padding: "1rem", color: "#C47A6A", fontWeight: 700 }}>{row.cost}</td>
                   <td style={{ padding: "1rem", color: "#9ca3af", fontSize: "0.8rem" }}>{row.bestFor}</td>
                 </tr>
               ))}
@@ -653,7 +653,7 @@ export default function CliAgentTab() {
                 onClick={() => toggleFlip(idx)}
                 style={{
                   background: isFlipped ? "#1f2937" : "#0d0d15",
-                  border: `1px solid ${isFlipped ? "#2AB5B0" : "#374151"}`,
+                  border: `1px solid ${isFlipped ? "#5EC4C8" : "#374151"}`,
                   borderRadius: 12,
                   padding: "1.5rem",
                   cursor: "pointer",
@@ -666,7 +666,7 @@ export default function CliAgentTab() {
               >
                 <div>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.8rem" }}>
-                    <span style={{ fontSize: "0.7rem", color: "#A34A28", fontWeight: 700, textTransform: "uppercase" }}>{card.cat}</span>
+                    <span style={{ fontSize: "0.7rem", color: "#C47A6A", fontWeight: 700, textTransform: "uppercase" }}>{card.cat}</span>
                     <span style={{ fontSize: "0.7rem", color: "#6b7280" }}>{isFlipped ? "Answer" : "Question"}</span>
                   </div>
                   <div style={{ fontSize: "0.9rem", color: isFlipped ? "#a7f3d0" : "#f9fafb", fontWeight: isFlipped ? 500 : 700, lineHeight: 1.5 }}>

@@ -6,7 +6,7 @@ import DiagramImage from '../components/ui/DiagramImage.jsx';
 import { MEMORY_TIERS, MEMGPT_LOOP, FORGETTING_RULES, ROUTE_MEMORY, PYTHON_MEMORY_CODE, MEMORY_FRAMEWORKS_2026, MEMORY_FRAMEWORK_SELECTION_GUIDE, PYTHON_MEMORY_FRAMEWORK_COMPARISON } from './memoryEngine.js';
 
 const { Container, Grid, Flex, Stack } = Primitives;
-const TIER_COLORS = { Working: '#2AB5B0', Episodic: '#F5A623', Semantic: '#2AB5B0', 'Cold archive': '#64748b' };
+const TIER_COLORS = { Working: '#5EC4C8', Episodic: '#F5A623', Semantic: '#5EC4C8', 'Cold archive': '#64748b' };
 
 export default function MemHierarchyTab() {
   const [sub, setSub] = useState('tiers');
@@ -40,7 +40,7 @@ export default function MemHierarchyTab() {
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Tier</th><th style={{ textAlign: 'left', padding: '8px' }}>Scope</th><th style={{ padding: '8px' }}>Capacity</th><th style={{ textAlign: 'left', padding: '8px' }}>Eviction</th><th style={{ textAlign: 'left', padding: '8px' }}>Example</th></tr></thead>
             <tbody>{MEMORY_TIERS.map((r, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: TIER_COLORS[r.tier], fontWeight: 'bold' }}>{r.tier}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.scope}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)', textAlign: 'center' }}>{r.capacity}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.evict}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.example}</td></tr>))}</tbody></table></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{MEMGPT_LOOP.map(s => (<Card key={s.step} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>{s.step}. {s.name}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.detail}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{MEMGPT_LOOP.map(s => (<Card key={s.step} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>{s.step}. {s.name}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.detail}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Memory router simulator</h3><p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>Score = 0.6·salience + 0.3·recency + 0.1·frequency. PII short-circuits everything.</p></div>
@@ -56,17 +56,17 @@ export default function MemHierarchyTab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Salience: {sal.toFixed(2)}</label>
               <input type="range" min="0" max="100" value={sal * 100} onChange={e => setSal(+e.target.value / 100)} style={{ width: '100%' }} />
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-              <strong style={{ color: '#17837F' }}>TIER: {route.tier}</strong>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+              <strong style={{ color: '#3A9B9F' }}>TIER: {route.tier}</strong>
               <div style={{ fontSize: '12px', color: 'white', marginTop: '6px' }}>{route.action}</div>
-              {route.score !== undefined && <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace', marginTop: '4px' }}>score = {route.score}</div>}
+              {route.score !== undefined && <div style={{ fontSize: '11px', color: '#3A9B9F', fontFamily: 'monospace', marginTop: '4px' }}>score = {route.score}</div>}
               {route.risk && <div style={{ fontSize: '11px', color: '#ef4444', marginTop: '4px' }}>risk: {route.risk}</div>}
             </Card>
           </Grid>
         </Stack></Card></Stack>)}
         {sub === 'code' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🛠️ Forgetting rules + Python router</h3></div>
-          <Stack gap={3}>{FORGETTING_RULES.map((r, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #F5A623' }}><div style={{ fontSize: '12px', color: '#F5A623', fontWeight: 'bold' }}>{r.rule}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{r.detail}</div><div style={{ fontSize: '11px', color: '#17837F' }}>keeps: {r.keeps}</div></Card>))}</Stack>
+          <Stack gap={3}>{FORGETTING_RULES.map((r, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #F5A623' }}><div style={{ fontSize: '12px', color: '#F5A623', fontWeight: 'bold' }}>{r.rule}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{r.detail}</div><div style={{ fontSize: '11px', color: '#3A9B9F' }}>keeps: {r.keeps}</div></Card>))}</Stack>
           <CodeBlock language="python" code={PYTHON_MEMORY_CODE} />
           <Callout type="success"><strong>Privacy invariant:</strong> quarantine → hash + TTL before any scoring. 'Forget X' deletes with receipt; contradictions tombstone via valid_to.</Callout>
         </Stack></Card></Stack>)}
@@ -86,10 +86,10 @@ export default function MemHierarchyTab() {
                 {/* Framework Cards */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--ds-space-3)' }}>
                   {MEMORY_FRAMEWORKS_2026.map((f, i) => (
-                    <Card key={i} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}>
+                    <Card key={i} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                         <div>
-                          <div style={{ fontSize: '14px', color: '#17837F', fontWeight: 'bold' }}>{f.name}</div>
+                          <div style={{ fontSize: '14px', color: '#3A9B9F', fontWeight: 'bold' }}>{f.name}</div>
                           <div style={{ fontSize: '11px', color: '#F5A623', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{f.category}</div>
                         </div>
                       </div>
@@ -99,13 +99,13 @@ export default function MemHierarchyTab() {
                       </div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '8px' }}>
                         {f.strengths.slice(0, 2).map((s, j) => (
-                          <span key={j} style={{ background: 'rgba(38,191,176,0.15)', color: '#17837F', padding: '2px 6px', borderRadius: '3px', fontSize: '9px' }}>{s}</span>
+                          <span key={j} style={{ background: 'rgba(38,191,176,0.15)', color: '#3A9B9F', padding: '2px 6px', borderRadius: '3px', fontSize: '9px' }}>{s}</span>
                         ))}
                       </div>
                       <div style={{ fontSize: '10px', color: '#ef4444', marginBottom: '8px' }}>
                         ⚠ {f.limitations[0]}
                       </div>
-                      <div style={{ fontSize: '10px', color: '#17837F', fontWeight: 'bold' }}>
+                      <div style={{ fontSize: '10px', color: '#3A9B9F', fontWeight: 'bold' }}>
                         ✓ Best for: {f.bestFor}
                       </div>
                     </Card>
@@ -128,7 +128,7 @@ export default function MemHierarchyTab() {
                         {MEMORY_FRAMEWORK_SELECTION_GUIDE.map((g, i) => (
                           <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{g.scenario}</td>
-                            <td style={{ padding: '8px', color: '#17837F', fontWeight: 'bold' }}>{g.recommended}</td>
+                            <td style={{ padding: '8px', color: '#3A9B9F', fontWeight: 'bold' }}>{g.recommended}</td>
                             <td style={{ padding: '8px', color: 'var(--ds-color-text-tertiary)' }}>{g.reason}</td>
                           </tr>
                         ))}

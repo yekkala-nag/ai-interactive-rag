@@ -100,8 +100,8 @@ export default function FirstAIAppTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {FIVE_APP_STAGES.map((s, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                      <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                      <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '6px' }}>
                         {s.stage}
                       </strong>
 
@@ -113,7 +113,7 @@ export default function FirstAIAppTab() {
                         <strong>Anti-Pattern:</strong> {s.antiPattern}
                       </div>
 
-                      <div style={{ background: 'rgba(16,185,129,0.08)', padding: '6px 8px', borderRadius: '4px', borderLeft: '3px solid #2AB5B0', fontSize: '11px', color: '#34d399' }}>
+                      <div style={{ background: 'rgba(16,185,129,0.08)', padding: '6px 8px', borderRadius: '4px', borderLeft: '3px solid #5EC4C8', fontSize: '11px', color: '#34d399' }}>
                         <strong>Best Practice:</strong> {s.bestPractice}
                       </div>
                     </Card>
@@ -173,7 +173,7 @@ export default function FirstAIAppTab() {
                     />
                   </div>
 
-                  <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
+                  <Badge variant="subtle" style={{ color: '#3A9B9F', background: 'rgba(16,185,129,0.15)' }}>
                     Total Words: {simResult.totalWords} | Chunks Created: {simResult.chunkCount} | Est. Tokens: {simResult.totalTokensEstimated}
                   </Badge>
                 </Flex>
@@ -185,8 +185,8 @@ export default function FirstAIAppTab() {
                   </strong>
                   <Grid columns={{ base: '1fr', md: `repeat(${Math.min(simResult.chunkCount, 4)}, 1fr)` }} gap="var(--ds-space-3)">
                     {simResult.chunks.map((c, i) => (
-                      <Card key={i} style={{ padding: '10px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
-                        <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>Chunk #{i + 1} ({c.split(' ').length} words)</div>
+                      <Card key={i} style={{ padding: '10px', background: '#090d16', borderTop: '3px solid #5EC4C8' }}>
+                        <div style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>Chunk #{i + 1} ({c.split(' ').length} words)</div>
                         <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px', maxHeight: '70px', overflowY: 'auto' }}>
                           "{c.slice(0, 80)}..."
                         </div>
@@ -198,7 +198,7 @@ export default function FirstAIAppTab() {
                 {/* FINAL SUMMARY OUTPUT */}
                 <Card style={{ padding: '16px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.3)' }}>
                   <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>🎯 Generated Executive Summary:</strong>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>🎯 Generated Executive Summary:</strong>
                     <span style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', fontFamily: 'monospace' }}>
                       Latency: {simResult.executionTimeMs}ms
                     </span>
@@ -225,7 +225,7 @@ export default function FirstAIAppTab() {
                 </div>
 
                 <div style={{ background: '#090d16', padding: '14px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                  <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#17837F', lineHeight: '1.6' }}>
+                  <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#3A9B9F', lineHeight: '1.6' }}>
 {`{
   "id": "chatcmpl-9Abc123xyz",
   "object": "chat.completion",
@@ -251,8 +251,8 @@ export default function FirstAIAppTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '12px', color: '#17837F' }}>1. Extracting Content</strong>
+                  <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>1. Extracting Content</strong>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
                       Always access <code>response.choices[0].message.content</code> rather than printing raw response.
                     </div>

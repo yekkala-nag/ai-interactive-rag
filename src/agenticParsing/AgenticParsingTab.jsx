@@ -261,7 +261,7 @@ export default function AgenticParsingTab() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
           <span style={{
-            background: 'var(--ds-color-module-foundations-primary, #2AB5B0)',
+            background: 'var(--ds-color-module-foundations-primary, #5EC4C8)',
             color: 'white',
             fontSize: '0.75rem',
             fontWeight: 700,
@@ -274,7 +274,7 @@ export default function AgenticParsingTab() {
           </span>
           <span style={{
             background: 'rgba(13, 148, 136, 0.15)',
-            color: '#17837F',
+            color: '#3A9B9F',
             fontSize: '0.75rem',
             fontWeight: 600,
             padding: '4px 10px',
@@ -284,7 +284,7 @@ export default function AgenticParsingTab() {
           </span>
         </div>
 
-        <h1 style={{ fontSize: '2rem', fontWeight: 800, margin: '6px 0 10px 0', letterSpacing: '-0.02em', background: 'linear-gradient(90deg, #1e293b, #2AB5B0, #17837F)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+        <h1 style={{ fontSize: '2rem', fontWeight: 800, margin: '6px 0 10px 0', letterSpacing: '-0.02em', background: 'linear-gradient(90deg, #1e293b, #5EC4C8, #3A9B9F)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
           Agentic Document Parsing & Synthesis Dispatcher
         </h1>
         <p style={{ fontSize: '1.05rem', color: 'var(--ds-color-text-secondary, #64748b)', margin: 0, maxWidth: '960px', lineHeight: 1.5 }}>
@@ -294,10 +294,10 @@ export default function AgenticParsingTab() {
         {/* 4 Stages Quick Bar */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginTop: '20px' }}>
           {[
-            { num: '1', title: 'Nature Probe', desc: '6 deterministic signals; 0 LLMs', icon: '🔍', color: '#17837F' },
-            { num: '2', title: 'Plan Generator', desc: 'Deterministic MethodStep order', icon: '📋', color: '#17837F' },
-            { num: '3', title: 'Execute Shim', desc: '_run_step with error isolation', icon: '⚙️', color: '#A34A28' },
-            { num: '4', title: 'Synthesizer', desc: '_pick_richer multi-frame folding', icon: '🧩', color: '#5A4FA3' },
+            { num: '1', title: 'Nature Probe', desc: '6 deterministic signals; 0 LLMs', icon: '🔍', color: '#3A9B9F' },
+            { num: '2', title: 'Plan Generator', desc: 'Deterministic MethodStep order', icon: '📋', color: '#3A9B9F' },
+            { num: '3', title: 'Execute Shim', desc: '_run_step with error isolation', icon: '⚙️', color: '#C47A6A' },
+            { num: '4', title: 'Synthesizer', desc: '_pick_richer multi-frame folding', icon: '🧩', color: '#7A6BA8' },
           ].map(stage => (
             <div key={stage.num} style={{
               background: 'var(--ds-color-bg-surface, rgba(255, 255, 255, 0.8))',
@@ -353,7 +353,7 @@ export default function AgenticParsingTab() {
             style={{
               padding: '10px 16px',
               border: 'none',
-              background: activeSubTab === tab.id ? 'var(--ds-color-module-foundations-primary, #2AB5B0)' : 'transparent',
+              background: activeSubTab === tab.id ? 'var(--ds-color-module-foundations-primary, #5EC4C8)' : 'transparent',
               color: activeSubTab === tab.id ? 'white' : 'var(--ds-color-text-secondary, #64748b)',
               fontWeight: 700,
               fontSize: '0.9rem',
@@ -402,9 +402,9 @@ export default function AgenticParsingTab() {
                     style={{
                       padding: '6px 14px',
                       borderRadius: '8px',
-                      border: selectedPresetId === preset.id ? '2px solid #2AB5B0' : '1px solid var(--ds-color-border, #cbd5e1)',
+                      border: selectedPresetId === preset.id ? '2px solid #5EC4C8' : '1px solid var(--ds-color-border, #cbd5e1)',
                       background: selectedPresetId === preset.id ? 'rgba(37, 99, 235, 0.1)' : 'transparent',
-                      color: selectedPresetId === preset.id ? '#2AB5B0' : 'var(--ds-color-text-primary, #334155)',
+                      color: selectedPresetId === preset.id ? '#5EC4C8' : 'var(--ds-color-text-primary, #334155)',
                       fontWeight: 600,
                       fontSize: '0.85rem',
                       cursor: 'pointer',
@@ -421,7 +421,7 @@ export default function AgenticParsingTab() {
                 onClick={handleRunPipeline}
                 disabled={executing}
                 style={{
-                  background: executing ? '#94a3b8' : 'linear-gradient(135deg, #2AB5B0, #1d4ed8)',
+                  background: executing ? '#94a3b8' : 'linear-gradient(135deg, #5EC4C8, #1d4ed8)',
                   color: 'white',
                   border: 'none',
                   borderRadius: '10px',
@@ -457,12 +457,12 @@ export default function AgenticParsingTab() {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ background: '#2AB5B0', color: 'white', padding: '2px 8px', borderRadius: '6px', fontSize: '0.8rem' }}>1</span>
+                  <span style={{ background: '#5EC4C8', color: 'white', padding: '2px 8px', borderRadius: '6px', fontSize: '0.8rem' }}>1</span>
                   Document Nature Signals
                 </h3>
                 <span style={{
                   background: 'rgba(37, 99, 235, 0.1)',
-                  color: '#17837F',
+                  color: '#3A9B9F',
                   fontSize: '0.75rem',
                   fontWeight: 700,
                   padding: '3px 8px',
@@ -492,7 +492,7 @@ export default function AgenticParsingTab() {
                       style={{
                         padding: '10px 12px',
                         borderRadius: '8px',
-                        border: isActive ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border, #e2e8f0)',
+                        border: isActive ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border, #e2e8f0)',
                         background: isActive ? 'rgba(37, 99, 235, 0.06)' : 'var(--ds-color-bg-surfaceHover, #f8fafc)',
                         display: 'flex',
                         alignItems: 'center',
@@ -504,7 +504,7 @@ export default function AgenticParsingTab() {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         <span style={{ fontSize: '1.1rem' }}>{sig.icon}</span>
                         <div>
-                          <code style={{ fontSize: '0.85rem', fontWeight: 700, color: isActive ? '#2AB5B0' : 'inherit' }}>{sig.label}</code>
+                          <code style={{ fontSize: '0.85rem', fontWeight: 700, color: isActive ? '#5EC4C8' : 'inherit' }}>{sig.label}</code>
                           <div style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary, #64748b)' }}>{sig.desc}</div>
                         </div>
                       </div>
@@ -512,7 +512,7 @@ export default function AgenticParsingTab() {
                         width: '38px',
                         height: '22px',
                         borderRadius: '12px',
-                        background: isActive ? '#2AB5B0' : '#cbd5e1',
+                        background: isActive ? '#5EC4C8' : '#cbd5e1',
                         position: 'relative',
                         transition: 'background 0.2s ease',
                       }}>
@@ -542,7 +542,7 @@ export default function AgenticParsingTab() {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ background: '#17837F', color: 'white', padding: '2px 8px', borderRadius: '6px', fontSize: '0.8rem' }}>2</span>
+                  <span style={{ background: '#3A9B9F', color: 'white', padding: '2px 8px', borderRadius: '6px', fontSize: '0.8rem' }}>2</span>
                   Planned Method Steps ({currentPlan.length})
                 </h3>
                 <span style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary, #64748b)' }}>
@@ -556,7 +556,7 @@ export default function AgenticParsingTab() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {currentPlan.map((step, idx) => {
                   const isOptional = step.optional;
-                  const familyColor = step.family === 'native' ? '#2AB5B0' : step.family === 'layout' ? '#17837F' : step.family === 'ocr' ? '#FF8A6B' : '#8B7BD8';
+                  const familyColor = step.family === 'native' ? '#5EC4C8' : step.family === 'layout' ? '#3A9B9F' : step.family === 'ocr' ? '#F0A89A' : '#9B89C4';
                   return (
                     <div
                       key={step.id}
@@ -580,7 +580,7 @@ export default function AgenticParsingTab() {
                             padding: '2px 6px',
                             borderRadius: '4px',
                             background: isOptional ? 'rgba(217, 119, 6, 0.12)' : 'rgba(37, 99, 235, 0.12)',
-                            color: isOptional ? '#FF8A6B' : '#2AB5B0',
+                            color: isOptional ? '#F0A89A' : '#5EC4C8',
                           }}>
                             {isOptional ? 'Optional' : 'Mandatory'}
                           </span>
@@ -596,7 +596,7 @@ export default function AgenticParsingTab() {
 
               {/* Error Injection Simulator Toggle */}
               <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: '1px dashed var(--ds-color-border, #e2e8f0)' }}>
-                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#A34A28', marginBottom: '6px' }}>
+                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#C47A6A', marginBottom: '6px' }}>
                   🧪 Fault Isolation Simulator (Test Error Handling):
                 </div>
                 <select
@@ -633,7 +633,7 @@ export default function AgenticParsingTab() {
               flexDirection: 'column',
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#17837F', fontWeight: 700 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#3A9B9F', fontWeight: 700 }}>
                   <span>⚡</span> Dispatcher Execution Trace
                 </div>
                 <span style={{ fontSize: '0.7rem', color: '#64748b' }}>
@@ -661,7 +661,7 @@ export default function AgenticParsingTab() {
                 ) : (
                   executionLogs.map((log, i) => (
                     <div key={i} style={{
-                      color: log.includes('🚨') ? '#ef4444' : log.includes('⚠️') ? '#f59e0b' : log.includes('✅') ? '#2AB5B0' : log.includes('🎉') ? '#a855f7' : '#94a3b8',
+                      color: log.includes('🚨') ? '#ef4444' : log.includes('⚠️') ? '#f59e0b' : log.includes('✅') ? '#5EC4C8' : log.includes('🎉') ? '#a855f7' : '#94a3b8',
                       lineHeight: 1.4,
                     }}>
                       {log}
@@ -684,11 +684,11 @@ export default function AgenticParsingTab() {
               <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', gap: '12px' }}>
                 <div>
                   <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ background: '#8B7BD8', color: 'white', padding: '2px 8px', borderRadius: '6px', fontSize: '0.85rem' }}>4</span>
+                    <span style={{ background: '#9B89C4', color: 'white', padding: '2px 8px', borderRadius: '6px', fontSize: '0.85rem' }}>4</span>
                     Synthesized Relational Corpus Dictionary
                   </h3>
                   <div style={{ fontSize: '0.8rem', color: 'var(--ds-color-text-secondary, #64748b)', marginTop: '4px' }}>
-                    Unified dictionary output folded via <code style={{ color: '#5A4FA3', fontWeight: 700 }}>_pick_richer</code> heuristic.
+                    Unified dictionary output folded via <code style={{ color: '#7A6BA8', fontWeight: 700 }}>_pick_richer</code> heuristic.
                   </div>
                 </div>
 
@@ -707,9 +707,9 @@ export default function AgenticParsingTab() {
                       style={{
                         padding: '6px 12px',
                         borderRadius: '6px',
-                        border: selectedCorpusFrame === f.key ? '2px solid #8B7BD8' : '1px solid var(--ds-color-border, #cbd5e1)',
+                        border: selectedCorpusFrame === f.key ? '2px solid #9B89C4' : '1px solid var(--ds-color-border, #cbd5e1)',
                         background: selectedCorpusFrame === f.key ? 'rgba(124, 58, 237, 0.1)' : 'transparent',
-                        color: selectedCorpusFrame === f.key ? '#8B7BD8' : 'inherit',
+                        color: selectedCorpusFrame === f.key ? '#9B89C4' : 'inherit',
                         fontWeight: 700,
                         fontSize: '0.8rem',
                         cursor: 'pointer',
@@ -743,7 +743,7 @@ export default function AgenticParsingTab() {
                     <tbody>
                       {synthesizedCorpus.toc_df.map((row, idx) => (
                         <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                          <td style={{ padding: '8px', fontWeight: 700, color: '#5A4FA3' }}>L{row.level || 1}</td>
+                          <td style={{ padding: '8px', fontWeight: 700, color: '#7A6BA8' }}>L{row.level || 1}</td>
                           <td style={{ padding: '8px', fontWeight: (row.level || 1) === 1 ? 700 : 500, paddingLeft: `${((row.level || 1) - 1) * 20 + 8}px` }}>
                             {row.title}
                           </td>
@@ -768,7 +768,7 @@ export default function AgenticParsingTab() {
                         <div key={i} style={{ marginBottom: '16px', background: 'white', padding: '12px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                             <strong>Table #{i + 1} (Page {tbl.page})</strong>
-                            <span style={{ fontSize: '0.72rem', background: '#17837F', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>{tbl.source}</span>
+                            <span style={{ fontSize: '0.72rem', background: '#3A9B9F', color: 'white', padding: '2px 6px', borderRadius: '4px' }}>{tbl.source}</span>
                           </div>
                           <pre style={{ margin: 0, fontSize: '0.75rem', background: '#f8fafc', padding: '10px', borderRadius: '6px', overflowX: 'auto' }}>
                             {tbl.markdown}
@@ -804,7 +804,7 @@ export default function AgenticParsingTab() {
                     {synthesizedCorpus.line_df.slice(0, 15).map((l, i) => (
                       <div key={i} style={{ display: 'flex', gap: '12px', padding: '4px 0', borderBottom: '1px solid #f1f5f9' }}>
                         <span style={{ color: '#94a3b8', width: '60px' }}>P.{l.page || 1}</span>
-                        <span style={{ color: '#17837F', width: '60px' }}>{l.size || 10}pt</span>
+                        <span style={{ color: '#3A9B9F', width: '60px' }}>{l.size || 10}pt</span>
                         <span style={{ flex: 1, fontFamily: 'monospace' }}>{l.text}</span>
                       </div>
                     ))}
@@ -817,7 +817,7 @@ export default function AgenticParsingTab() {
                     {synthesizedCorpus.sources.map((s, i) => (
                       <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 12px', background: 'white', borderRadius: '6px', marginBottom: '6px', border: '1px solid #e2e8f0' }}>
                         <code>{s.frame}</code>
-                        <span style={{ fontWeight: 700, color: '#17837F' }}>{s.method}</span>
+                        <span style={{ fontWeight: 700, color: '#3A9B9F' }}>{s.method}</span>
                         <span style={{ color: '#64748b' }}>{s.count} items</span>
                       </div>
                     ))}
@@ -947,11 +947,11 @@ export default function AgenticParsingTab() {
                   </div>
                   <div>
                     <div style={{ color: '#94a3b8' }}>LLM?</div>
-                    <div style={{ fontWeight: 700, color: card.callsLlm ? '#FF8A6B' : '#2AB5B0' }}>{card.callsLlm ? 'Yes (Leaf)' : 'No'}</div>
+                    <div style={{ fontWeight: 700, color: card.callsLlm ? '#F0A89A' : '#5EC4C8' }}>{card.callsLlm ? 'Yes (Leaf)' : 'No'}</div>
                   </div>
                   <div>
                     <div style={{ color: '#94a3b8' }}>Preserves Style?</div>
-                    <div style={{ fontWeight: 700, color: card.preservesStyle ? '#2AB5B0' : '#64748b' }}>{card.preservesStyle ? 'Yes' : 'No'}</div>
+                    <div style={{ fontWeight: 700, color: card.preservesStyle ? '#5EC4C8' : '#64748b' }}>{card.preservesStyle ? 'Yes' : 'No'}</div>
                   </div>
                 </div>
 
@@ -1049,7 +1049,7 @@ export default function AgenticParsingTab() {
                   </div>
                   <div>
                     <div style={{ color: '#94a3b8' }}>LLM Needed?</div>
-                    <div style={{ fontWeight: 700, color: selectedCardForModal.callsLlm ? '#FF8A6B' : '#2AB5B0' }}>
+                    <div style={{ fontWeight: 700, color: selectedCardForModal.callsLlm ? '#F0A89A' : '#5EC4C8' }}>
                       {selectedCardForModal.callsLlm ? 'Yes (Leaf)' : 'No'}
                     </div>
                   </div>
@@ -1066,7 +1066,7 @@ export default function AgenticParsingTab() {
                 </div>
 
                 <div style={{ marginBottom: '16px' }}>
-                  <h4 style={{ fontSize: '0.9rem', fontWeight: 700, margin: '0 0 6px 0', color: '#17837F' }}>✅ Where It Shines (Strengths)</h4>
+                  <h4 style={{ fontSize: '0.9rem', fontWeight: 700, margin: '0 0 6px 0', color: '#3A9B9F' }}>✅ Where It Shines (Strengths)</h4>
                   <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.85rem', color: '#334155', lineHeight: 1.5 }}>
                     {selectedCardForModal.strengths.map((s, i) => (
                       <li key={i}>{s}</li>
@@ -1104,11 +1104,11 @@ export default function AgenticParsingTab() {
           padding: '24px',
         }}>
           <div style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '16px', marginBottom: '20px' }}>
-            <span style={{ background: '#2AB5B0', color: 'white', fontSize: '0.75rem', fontWeight: 700, padding: '3px 8px', borderRadius: '4px' }}>
+            <span style={{ background: '#5EC4C8', color: 'white', fontSize: '0.75rem', fontWeight: 700, padding: '3px 8px', borderRadius: '4px' }}>
               Article Section 4 Deep Dive
             </span>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '8px 0 4px 0' }}>
-              Real Run Walkthrough: Attention Is All You Need (<code style={{ color: '#17837F' }}>data/paper/1706.03762v7.pdf</code>)
+              Real Run Walkthrough: Attention Is All You Need (<code style={{ color: '#3A9B9F' }}>data/paper/1706.03762v7.pdf</code>)
             </h2>
             <p style={{ fontSize: '0.9rem', color: '#64748b', margin: 0 }}>
               Tracing the exact four-step plan produced by the dispatcher on the 15-page canonical NeurIPS transformer paper.
@@ -1118,7 +1118,7 @@ export default function AgenticParsingTab() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '24px' }}>
             {/* Step 1: Detected Nature */}
             <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#17837F', marginBottom: '8px' }}>
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#3A9B9F', marginBottom: '8px' }}>
                 1. Detected Nature: <code style={{ color: '#1e293b' }}>native-with-outline</code>
               </div>
               <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', lineHeight: 1.6, color: '#475569' }}>
@@ -1132,7 +1132,7 @@ export default function AgenticParsingTab() {
 
             {/* Step 2: 4-Step Plan */}
             <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#17837F', marginBottom: '8px' }}>
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#3A9B9F', marginBottom: '8px' }}>
                 2. Resulting 4-Step Plan
               </div>
               <ol style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', lineHeight: 1.6, color: '#475569' }}>
@@ -1145,7 +1145,7 @@ export default function AgenticParsingTab() {
 
             {/* Step 3: Enriched Relational Dict */}
             <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '10px', border: '1px solid #e2e8f0' }}>
-              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#5A4FA3', marginBottom: '8px' }}>
+              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#7A6BA8', marginBottom: '8px' }}>
                 3. Merged Corpus Dictionary
               </div>
               <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '0.85rem', lineHeight: 1.6, color: '#475569' }}>
@@ -1161,7 +1161,7 @@ export default function AgenticParsingTab() {
           {/* Key Insight Callout */}
           <div style={{
             background: 'rgba(37, 99, 235, 0.06)',
-            borderLeft: '4px solid #2AB5B0',
+            borderLeft: '4px solid #5EC4C8',
             padding: '16px 20px',
             borderRadius: '0 8px 8px 0',
             fontSize: '0.9rem',
@@ -1241,9 +1241,9 @@ export default function AgenticParsingTab() {
                 <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
                   <td style={{ padding: '10px 12px', fontWeight: 700 }}>{row.profile}</td>
                   <td style={{ padding: '10px 12px' }}><code style={{ fontSize: '0.75rem', background: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>{row.signals}</code></td>
-                  <td style={{ padding: '10px 12px', color: '#17837F', fontSize: '0.8rem' }}>{row.plan}</td>
+                  <td style={{ padding: '10px 12px', color: '#3A9B9F', fontSize: '0.8rem' }}>{row.plan}</td>
                   <td style={{ padding: '10px 12px', fontWeight: 600 }}>{row.toc}</td>
-                  <td style={{ padding: '10px 12px', color: '#17837F' }}>{row.table}</td>
+                  <td style={{ padding: '10px 12px', color: '#3A9B9F' }}>{row.table}</td>
                 </tr>
               ))}
             </tbody>
@@ -1323,7 +1323,7 @@ export default function AgenticParsingTab() {
             {/* Ex-Ante Card */}
             <div style={{
               background: 'rgba(37, 99, 235, 0.05)',
-              border: '2px solid #2AB5B0',
+              border: '2px solid #5EC4C8',
               borderRadius: '10px',
               padding: '20px',
               display: 'flex',
@@ -1331,7 +1331,7 @@ export default function AgenticParsingTab() {
               justifyContent: 'space-between',
             }}>
               <div>
-                <span style={{ background: '#2AB5B0', color: 'white', fontSize: '0.7rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
+                <span style={{ background: '#5EC4C8', color: 'white', fontSize: '0.7rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
                   Ex-Ante Agentic Dispatcher (This Article)
                 </span>
                 <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '8px 0 4px 0' }}>All-Up Ingest Pass</h3>
@@ -1339,20 +1339,20 @@ export default function AgenticParsingTab() {
               </div>
 
               <div style={{ margin: '16px 0' }}>
-                <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#17837F' }}>${costCalculations.exAnteTotalMonthly} <span style={{ fontSize: '0.85rem', fontWeight: 500, color: '#64748b' }}>/ mo</span></div>
+                <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#3A9B9F' }}>${costCalculations.exAnteTotalMonthly} <span style={{ fontSize: '0.85rem', fontWeight: 500, color: '#64748b' }}>/ mo</span></div>
                 <div style={{ fontSize: '0.8rem', color: '#64748b' }}>${costCalculations.exAnteCostPerDoc} per document</div>
               </div>
 
               <div style={{ fontSize: '0.8rem', borderTop: '1px solid rgba(37, 99, 235, 0.2)', paddingTop: '10px' }}>
                 <div>⚡ Query Latency: <strong>{costCalculations.exAnteQueryLatencyMs}ms</strong> (Pre-parsed)</div>
-                <div style={{ color: '#17837F', marginTop: '4px', fontWeight: 600 }}>Best for high-value contracts & papers</div>
+                <div style={{ color: '#3A9B9F', marginTop: '4px', fontWeight: 600 }}>Best for high-value contracts & papers</div>
               </div>
             </div>
 
             {/* Lazy Adaptive Card */}
             <div style={{
               background: 'rgba(13, 148, 136, 0.05)',
-              border: '2px solid #17837F',
+              border: '2px solid #3A9B9F',
               borderRadius: '10px',
               padding: '20px',
               display: 'flex',
@@ -1360,7 +1360,7 @@ export default function AgenticParsingTab() {
               justifyContent: 'space-between',
             }}>
               <div>
-                <span style={{ background: '#17837F', color: 'white', fontSize: '0.7rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
+                <span style={{ background: '#3A9B9F', color: 'white', fontSize: '0.7rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
                   Lazy Adaptive Parsing (Vol.2 Preview)
                 </span>
                 <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '8px 0 4px 0' }}>On-Demand Retrieval Pass</h3>
@@ -1368,20 +1368,20 @@ export default function AgenticParsingTab() {
               </div>
 
               <div style={{ margin: '16px 0' }}>
-                <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#17837F' }}>${costCalculations.lazyTotalMonthly} <span style={{ fontSize: '0.85rem', fontWeight: 500, color: '#64748b' }}>/ mo</span></div>
+                <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#3A9B9F' }}>${costCalculations.lazyTotalMonthly} <span style={{ fontSize: '0.85rem', fontWeight: 500, color: '#64748b' }}>/ mo</span></div>
                 <div style={{ fontSize: '0.8rem', color: '#64748b' }}>${costCalculations.lazyCostPerDoc} per active document</div>
               </div>
 
               <div style={{ fontSize: '0.8rem', borderTop: '1px solid rgba(13, 148, 136, 0.2)', paddingTop: '10px' }}>
                 <div>⏱️ Query Latency: <strong>{costCalculations.lazyQueryLatencyMs}ms</strong> (Runtime Parse)</div>
-                <div style={{ color: '#17837F', marginTop: '4px', fontWeight: 600 }}>Best for 100k+ page unqueried archives</div>
+                <div style={{ color: '#3A9B9F', marginTop: '4px', fontWeight: 600 }}>Best for 100k+ page unqueried archives</div>
               </div>
             </div>
           </div>
 
           <div style={{ background: '#f8fafc', padding: '16px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.85rem' }}>
             <strong>Recommendation for your parameters: </strong>
-            <span style={{ color: '#17837F', fontWeight: 700 }}>{costCalculations.recommendedRegime}</span>.
+            <span style={{ color: '#3A9B9F', fontWeight: 700 }}>{costCalculations.recommendedRegime}</span>.
             {queryRatio < 40 ? ' Because less than 40% of pages are queried, lazy adaptive parsing reduces monthly spend.' : ' Because most pages are queried repeatedly, upfront agentic dispatching eliminates query latency.'}
           </div>
         </div>

@@ -155,23 +155,23 @@ export default function PythonEngineeringTab() {
 
                 {/* METRICS */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #5EC4C8' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>FINAL STEADY-STATE VALUE</div>
-                    <div style={{ fontSize: '18px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '18px', color: '#3A9B9F', fontWeight: 'bold', marginTop: '4px' }}>
                       {pidResult.steadyStateVal} (Target: 10.0)
                     </div>
                   </Card>
 
                   <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #ef4444' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>OVERSHOOT PERCENTAGE</div>
-                    <div style={{ fontSize: '18px', color: Number(pidResult.overshootPct) > 20 ? '#ef4444' : '#2AB5B0', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '18px', color: Number(pidResult.overshootPct) > 20 ? '#ef4444' : '#5EC4C8', fontWeight: 'bold', marginTop: '4px' }}>
                       {pidResult.overshootPct}%
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #5EC4C8' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>STABILITY STATUS</div>
-                    <div style={{ fontSize: '18px', color: pidResult.isStable ? '#2AB5B0' : '#ef4444', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '18px', color: pidResult.isStable ? '#5EC4C8' : '#ef4444', fontWeight: 'bold', marginTop: '4px' }}>
                       {pidResult.isStable ? '✓ STABLE CONVERGENCE' : '⚠️ UNSTABLE OSCILLATION'}
                     </div>
                   </Card>
@@ -235,7 +235,7 @@ export default function PythonEngineeringTab() {
                         Regime: <strong>{oscResult.regime}</strong>
                       </div>
                     </div>
-                    <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
+                    <Badge variant="subtle" style={{ color: '#3A9B9F', background: 'rgba(16,185,129,0.15)' }}>
                       Initial Displacement: 5.0m
                     </Badge>
                   </Flex>
@@ -290,9 +290,9 @@ export default function PythonEngineeringTab() {
                 </Grid>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #5EC4C8' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>TURBINE WORK OUTPUT</div>
-                    <div style={{ fontSize: '18px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '18px', color: '#3A9B9F', fontWeight: 'bold', marginTop: '4px' }}>
                       {rankineResult.turbineWorkKj} kJ/kg
                     </div>
                   </Card>
@@ -304,9 +304,9 @@ export default function PythonEngineeringTab() {
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                  <Card style={{ padding: '14px', background: '#090d16', borderTop: '3px solid #5EC4C8' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>THERMAL EFFICIENCY (η_th)</div>
-                    <div style={{ fontSize: '18px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '18px', color: '#3A9B9F', fontWeight: 'bold', marginTop: '4px' }}>
                       {rankineResult.thermalEfficiency}%
                     </div>
                   </Card>
@@ -330,7 +330,7 @@ export default function PythonEngineeringTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                   <Card style={{ padding: '16px', background: '#090d16', border: '1px solid rgba(255,255,255,0.1)' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       TRUSS ELEMENT STIFFNESS MATRIX (k_e):
                     </strong>
                     <pre style={{ margin: 0, fontFamily: 'monospace', fontSize: '11px', color: '#34d399', lineHeight: '1.6' }}>
@@ -344,8 +344,8 @@ where c = cos(θ), s = sin(θ)`}
                     </pre>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       NUMERICAL COMPUTATION PIPELINE:
                     </strong>
                     <Stack gap={2} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>

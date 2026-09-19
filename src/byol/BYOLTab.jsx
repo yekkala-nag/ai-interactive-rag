@@ -129,8 +129,8 @@ export default function BYOLTab() {
                     </ul>
                   </Card>
 
-                  <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <h4 style={{ margin: '0 0 8px 0', color: '#17837F' }}>🟢 Non-Contrastive BYOL (DeepMind)</h4>
+                  <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <h4 style={{ margin: '0 0 8px 0', color: '#3A9B9F' }}>🟢 Non-Contrastive BYOL (DeepMind)</h4>
                     <ul style={{ margin: 0, paddingLeft: '18px', fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', lineHeight: 1.6 }}>
                       <li><strong>Zero Negative Pairs:</strong> Trained purely by predicting target representation of augmented views.</li>
                       <li><strong>Memory Efficient:</strong> Works robustly on standard single-GPU batch sizes (256-512).</li>
@@ -156,12 +156,12 @@ export default function BYOLTab() {
                         {SSL_COMPARISON_MATRIX.map((row, idx) => (
                           <tr key={idx} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
                             <td style={{ padding: '10px', fontWeight: 'bold' }}>{row.architecture}</td>
-                            <td style={{ padding: '10px', color: row.negativePairs.includes('Not Required') ? '#2AB5B0' : '#ef4444', fontWeight: 'bold' }}>
+                            <td style={{ padding: '10px', color: row.negativePairs.includes('Not Required') ? '#5EC4C8' : '#ef4444', fontWeight: 'bold' }}>
                               {row.negativePairs}
                             </td>
                             <td style={{ padding: '10px', fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{row.targetMechanism}</td>
                             <td style={{ padding: '10px', fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{row.collapsePrevention}</td>
-                            <td style={{ padding: '10px', fontWeight: 'bold', color: '#17837F' }}>{row.linearProbeAccuracy}</td>
+                            <td style={{ padding: '10px', fontWeight: 'bold', color: '#3A9B9F' }}>{row.linearProbeAccuracy}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -238,7 +238,7 @@ export default function BYOLTab() {
                     </Grid>
 
                     {/* LIVE UPDATED TARGET WEIGHT */}
-                    <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                    <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                       <div style={{ fontFamily: 'var(--ds-font-family-mono)', fontSize: 'var(--ds-font-size-body)' }}>
                         ξ_new = {tauVal} × {targetWeight} + (1 - {tauVal}) × {onlineWeight} = <strong>{emaResult.updatedTarget}</strong>
                       </div>
@@ -273,7 +273,7 @@ export default function BYOLTab() {
                     <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>Adjust Vector Elements:</strong>
                     <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                       <div>
-                        <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F' }}>Online Predictor Vector q_θ(z):</strong>
+                        <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F' }}>Online Predictor Vector q_θ(z):</strong>
                         <div style={{ marginTop: '6px' }}>
                           <label style={{ display: 'block', fontSize: '11px' }}>Dim 1: {pVal1}</label>
                           <input type="range" min="-2.0" max="2.0" step="0.1" value={pVal1} onChange={e => setPVal1(Number(e.target.value))} style={{ width: '100%' }} />
@@ -283,7 +283,7 @@ export default function BYOLTab() {
                       </div>
 
                       <div>
-                        <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F' }}>Target Projection Vector z'_ξ:</strong>
+                        <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F' }}>Target Projection Vector z'_ξ:</strong>
                         <div style={{ marginTop: '6px' }}>
                           <label style={{ display: 'block', fontSize: '11px' }}>Dim 1: {zVal1}</label>
                           <input type="range" min="-2.0" max="2.0" step="0.1" value={zVal1} onChange={e => setZVal1(Number(e.target.value))} style={{ width: '100%' }} />
@@ -294,16 +294,16 @@ export default function BYOLTab() {
                     </Grid>
 
                     <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
-                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>COSINE SIMILARITY:</strong>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#17837F' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3A9B9F' }}>
                           {lossResult.cosineSim}
                         </div>
                       </Card>
 
-                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>BYOL REGRESSION LOSS (2 - 2·cos):</strong>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#17837F' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3A9B9F' }}>
                           {lossResult.byolLoss}
                         </div>
                       </Card>

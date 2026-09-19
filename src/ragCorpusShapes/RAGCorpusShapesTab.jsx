@@ -131,7 +131,7 @@ export default function RAGCorpusShapesTab() {
 
                         <div>
                           <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>Required Architectural Fix:</div>
-                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>{f.fix}</div>
+                          <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', fontWeight: 'bold' }}>{f.fix}</div>
                         </div>
                       </Grid>
                     </Card>
@@ -205,8 +205,8 @@ export default function RAGCorpusShapesTab() {
                     </Stack>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '11px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '11px', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       RECOMMENDED ARCHITECTURE & SELECTION:
                     </strong>
 
@@ -214,7 +214,7 @@ export default function RAGCorpusShapesTab() {
                       {q2UniversalFields && q3Bundles ? 'Shape 3: Case File Bundles' : q2UniversalFields ? 'Shape 2: Homogeneous Typed Corpus' : 'Shape 1: Pile of Unrelated PDFs'}
                     </div>
 
-                    <div style={{ fontSize: '11px', color: '#17837F', marginBottom: '8px' }}>
+                    <div style={{ fontSize: '11px', color: '#3A9B9F', marginBottom: '8px' }}>
                       Preparation Strategy: {q2UniversalFields && q3Bundles ? 'Assemble bundle manifest first; run cross-file comparison.' : q2UniversalFields ? 'Build SQL Metadata Index (`doc_type = X AND client = Y`).' : 'Summary lines per file + Hierarchical TOC routing.'}
                     </div>
 
@@ -226,13 +226,13 @@ export default function RAGCorpusShapesTab() {
 
                 <Stack gap={3}>
                   {CORPUS_SHAPES_TAXONOMY.map((s, idx) => (
-                    <Card key={idx} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', display: 'block', marginBottom: '4px' }}>
+                    <Card key={idx} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#3A9B9F', display: 'block', marginBottom: '4px' }}>
                         {s.shape}
                       </strong>
                       <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)" style={{ fontSize: 'var(--ds-font-size-caption)' }}>
                         <div>Characteristics: <span style={{ color: 'var(--ds-color-text-secondary)' }}>{s.characteristics}</span></div>
-                        <div>Architecture: <span style={{ color: '#17837F', fontWeight: 'bold' }}>{s.architecture}</span></div>
+                        <div>Architecture: <span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>{s.architecture}</span></div>
                       </Grid>
                     </Card>
                   ))}
@@ -270,28 +270,28 @@ export default function RAGCorpusShapesTab() {
                     </select>
 
                     <Stack gap={2} style={{ fontSize: '11px' }}>
-                      <div>Applied Filter: <span style={{ color: '#17837F', fontFamily: 'monospace' }}>{benchResult.queryFilterApplied}</span></div>
+                      <div>Applied Filter: <span style={{ color: '#3A9B9F', fontFamily: 'monospace' }}>{benchResult.queryFilterApplied}</span></div>
                       <div>Total Documents Evaluated: <span style={{ color: 'white' }}>{benchResult.totalDocuments} PDFs</span></div>
                     </Stack>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${benchArch === 'metadata_index' ? '#2AB5B0' : '#ef4444'}` }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${benchArch === 'metadata_index' ? '#5EC4C8' : '#ef4444'}` }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: benchArch === 'metadata_index' ? '#2AB5B0' : '#ef4444' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: benchArch === 'metadata_index' ? '#5EC4C8' : '#ef4444' }}>
                         BENCHMARK PERFORMANCE
                       </strong>
-                      <Badge variant="subtle" style={{ background: benchArch === 'metadata_index' ? 'rgba(46,204,140,0.15)' : 'rgba(239,68,68,0.15)', color: benchArch === 'metadata_index' ? '#2AB5B0' : '#ef4444', fontSize: '9px' }}>
+                      <Badge variant="subtle" style={{ background: benchArch === 'metadata_index' ? 'rgba(46,204,140,0.15)' : 'rgba(239,68,68,0.15)', color: benchArch === 'metadata_index' ? '#5EC4C8' : '#ef4444', fontSize: '9px' }}>
                         WASTED CALLS: {benchResult.wastedCallPct}%
                       </Badge>
                     </Flex>
 
                     <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)" style={{ fontSize: '11px', marginBottom: '8px' }}>
                       <div>Wall-Time: <span style={{ color: 'white', fontWeight: 'bold' }}>{benchResult.totalWallTimeSec}s</span></div>
-                      <div>Wasted LLM Calls: <span style={{ color: benchArch === 'metadata_index' ? '#2AB5B0' : '#ef4444', fontWeight: 'bold' }}>{benchResult.wastedCalls} / {benchResult.totalDocuments}</span></div>
+                      <div>Wasted LLM Calls: <span style={{ color: benchArch === 'metadata_index' ? '#5EC4C8' : '#ef4444', fontWeight: 'bold' }}>{benchResult.wastedCalls} / {benchResult.totalDocuments}</span></div>
                     </Grid>
 
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>Result Document:</div>
-                    <div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace' }}>
+                    <div style={{ fontSize: '11px', color: '#3A9B9F', fontFamily: 'monospace' }}>
                       {benchResult.retrievedResult}
                     </div>
                   </Card>

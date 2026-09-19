@@ -33,8 +33,8 @@ export default function VectorDBOpsTab() {
         {sub === 'index' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Index</th><th style={{ padding: '8px' }}>Recall</th><th style={{ padding: '8px' }}>QPS</th><th style={{ padding: '8px' }}>RAM</th><th style={{ textAlign: 'left', padding: '8px' }}>Use</th></tr></thead>
-            <tbody>{INDEX_TABLE.map((r, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{r.index}</td><td style={{ padding: '8px', textAlign: 'center', color: '#17837F', fontFamily: 'monospace' }}>{r.recall}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{r.qps}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{r.ram}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.use}</td></tr>))}</tbody></table></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{STORE_TABLE.map((st, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{st.dim}</div><div style={{ fontSize: '11px', color: '#17837F' }}>+ {st.strength}</div><div style={{ fontSize: '11px', color: '#F5A623' }}>! {st.watch}</div></Card>))}</Grid>
+            <tbody>{INDEX_TABLE.map((r, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{r.index}</td><td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F', fontFamily: 'monospace' }}>{r.recall}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{r.qps}</td><td style={{ padding: '8px', textAlign: 'center', color: 'var(--ds-color-text-secondary)' }}>{r.ram}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{r.use}</td></tr>))}</tbody></table></div>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{STORE_TABLE.map((st, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{st.dim}</div><div style={{ fontSize: '11px', color: '#3A9B9F' }}>+ {st.strength}</div><div style={{ fontSize: '11px', color: '#F5A623' }}>! {st.watch}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Index sizing simulator</h3></div>
@@ -46,9 +46,9 @@ export default function VectorDBOpsTab() {
               <input type="range" min={128} max={3072} step={128} value={dim} onChange={e => setDim(+e.target.value)} style={{ width: '100%', marginBottom: '8px' }} />
               <select value={kind} onChange={e => setKind(e.target.value)} style={sel}><option value="flat">flat</option><option value="ivf">ivf</option><option value="hnsw">hnsw</option><option value="pq">pq</option></select>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
               <div style={{ fontSize: '13px', color: 'white', fontFamily: 'monospace' }}>raw {s.rawGB} GB → {kind} {s.estGB} GB</div>
-              <div style={{ fontSize: '12px', color: '#17837F', marginTop: '6px' }}>{s.guidance}</div>
+              <div style={{ fontSize: '12px', color: '#3A9B9F', marginTop: '6px' }}>{s.guidance}</div>
               <div style={{ fontSize: '11px', color: '#F5A623', marginTop: '4px' }}>{s.recallNote}</div>
             </Card>
           </Grid>

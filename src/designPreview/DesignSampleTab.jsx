@@ -1,15 +1,15 @@
 /**
  * DESIGN SAMPLE — isolated preview of the proposed uniform dashboard language.
- * Palette: teal #2AB5B0 · coral #FF8A6B · lavender #C5ADEA · white bg.
+ * Palette: teal #5EC4C8 · coral #F0A89A · lavender #C9B8E8 · white bg.
  * NOTHING outside this file is affected. Approve to roll out app-wide.
  */
 import React, { useState } from 'react';
 import { Container } from '../components/layout/Primitives.jsx';
 
-const TEAL = '#2AB5B0';
-const TEAL_DARK = '#17837F';
-const CORAL = '#FF8A6B';
-const LAV = '#C5ADEA';
+const TEAL = '#5EC4C8';
+const TEAL_DARK = '#3A9B9F';
+const CORAL = '#F0A89A';
+const LAV = '#C9B8E8';
 const INK = '#22303C';
 const MUTED = '#7A8AA0';
 const EDITOR_BG = '#10141D';

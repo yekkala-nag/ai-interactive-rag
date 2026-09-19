@@ -128,13 +128,13 @@ export default function SelfAttentionTab() {
                           key={i}
                           style={{
                             padding: '6px 12px',
-                            background: isTarget ? '#2AB5B0' : `rgba(56, 189, 248, ${Math.max(0.1, weight * 1.5)})`,
+                            background: isTarget ? '#5EC4C8' : `rgba(56, 189, 248, ${Math.max(0.1, weight * 1.5)})`,
                             color: isTarget ? '#090d16' : 'white',
                             borderRadius: '6px',
                             fontFamily: 'monospace',
                             fontSize: '13px',
                             fontWeight: isTarget || weight > 0.3 ? 'bold' : 'normal',
-                            border: weight > 0.3 ? '1px solid #2AB5B0' : '1px solid rgba(255,255,255,0.1)',
+                            border: weight > 0.3 ? '1px solid #5EC4C8' : '1px solid rgba(255,255,255,0.1)',
                             textAlign: 'center'
                           }}
                         >
@@ -147,7 +147,7 @@ export default function SelfAttentionTab() {
                     })}
                   </div>
 
-                  <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', background: '#090d16', padding: '12px', borderRadius: '4px', borderLeft: '4px solid #2AB5B0' }}>
+                  <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', background: '#090d16', padding: '12px', borderRadius: '4px', borderLeft: '4px solid #5EC4C8' }}>
                     💡 <strong>Self-Attention Resolution:</strong> {activeSentence.explanation}
                   </div>
                 </Card>
@@ -158,8 +158,8 @@ export default function SelfAttentionTab() {
                     The 4 Steps of Scaled Dot-Product Attention:
                   </strong>
                   <Grid columns={{ base: '1fr', md: 'repeat(4, 1fr)' }} gap="var(--ds-space-3)">
-                    <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
-                      <strong style={{ fontSize: '11px', color: '#17837F' }}>Step 1: Linear Projections</strong>
+                    <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #5EC4C8' }}>
+                      <strong style={{ fontSize: '11px', color: '#3A9B9F' }}>Step 1: Linear Projections</strong>
                       <div style={{ fontFamily: 'monospace', fontSize: '10px', color: 'white', background: '#090d16', padding: '6px', margin: '6px 0', borderRadius: '3px' }}>
                         Q = X * W_Q<br/>K = X * W_K<br/>V = X * W_V
                       </div>
@@ -168,8 +168,8 @@ export default function SelfAttentionTab() {
                       </div>
                     </Card>
 
-                    <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
-                      <strong style={{ fontSize: '11px', color: '#17837F' }}>Step 2: Scaled Dot-Product</strong>
+                    <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #5EC4C8' }}>
+                      <strong style={{ fontSize: '11px', color: '#3A9B9F' }}>Step 2: Scaled Dot-Product</strong>
                       <div style={{ fontFamily: 'monospace', fontSize: '10px', color: 'white', background: '#090d16', padding: '6px', margin: '6px 0', borderRadius: '3px' }}>
                         S = (Q * K^T) / sqrt(d_k)
                       </div>
@@ -247,7 +247,7 @@ export default function SelfAttentionTab() {
                       <tr>
                         <th style={{ padding: '6px 10px', color: 'var(--ds-color-text-tertiary)', textAlign: 'right' }}>Query \ Key</th>
                         {activeSentence.sentence.map((tok, j) => (
-                          <th key={j} style={{ padding: '6px 8px', color: '#17837F', textAlign: 'center' }}>
+                          <th key={j} style={{ padding: '6px 8px', color: '#3A9B9F', textAlign: 'center' }}>
                             {tok}
                           </th>
                         ))}
@@ -256,7 +256,7 @@ export default function SelfAttentionTab() {
                     <tbody>
                       {activeSentence.sentence.map((queryTok, i) => (
                         <tr key={i}>
-                          <td style={{ padding: '6px 10px', color: '#17837F', fontWeight: 'bold', textAlign: 'right', borderRight: '1px solid rgba(255,255,255,0.1)' }}>
+                          <td style={{ padding: '6px 10px', color: '#3A9B9F', fontWeight: 'bold', textAlign: 'right', borderRight: '1px solid rgba(255,255,255,0.1)' }}>
                             {queryTok}
                           </td>
                           {heatmapMatrix[i].map((val, j) => {
@@ -306,10 +306,10 @@ export default function SelfAttentionTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {ATTENTION_ARCHITECTURES.map((arch) => (
-                    <Card key={arch.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <Card key={arch.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                        <strong style={{ fontSize: '13px', color: '#17837F' }}>{arch.name}</strong>
-                        <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
+                        <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>{arch.name}</strong>
+                        <Badge variant="subtle" style={{ color: '#3A9B9F', background: 'rgba(16,185,129,0.15)' }}>
                           {arch.kvMemoryMultiplier}
                         </Badge>
                       </Flex>
@@ -319,8 +319,8 @@ export default function SelfAttentionTab() {
                       </div>
 
                       <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', marginBottom: '8px' }}>
-                        <div style={{ color: '#17837F' }}>Query Heads: {arch.qHeads}</div>
-                        <div style={{ color: '#17837F' }}>Key/Value Heads: {arch.kvHeads}</div>
+                        <div style={{ color: '#3A9B9F' }}>Query Heads: {arch.qHeads}</div>
+                        <div style={{ color: '#3A9B9F' }}>Key/Value Heads: {arch.kvHeads}</div>
                       </div>
 
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -348,9 +348,9 @@ export default function SelfAttentionTab() {
 
                 <Stack gap={3}>
                   {POSITIONAL_ENCODINGS.map((pe) => (
-                    <Card key={pe.id} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <Card key={pe.id} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                        <strong style={{ fontSize: '13px', color: '#17837F' }}>{pe.name}</strong>
+                        <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>{pe.name}</strong>
                         <Badge variant="outline">{pe.usedBy}</Badge>
                       </Flex>
 

@@ -1,76 +1,85 @@
 /**
  * Design Tokens — Single source of truth for the visual language
  * All values as CSS custom properties for runtime theming
+ *
+ * MASTER PALETTE (v4.0 — September 2026)
+ * ─────────────────────────────────────────
+ * Primary Teal:      #5EC4C8  (94, 196, 200)  — Headers, buttons, active nav, links
+ * Secondary Coral:   #F0A89A  (240, 168, 154) — Accent cards, warnings, highlights
+ * Tertiary Lavender: #C9B8E8  (201, 184, 232) — Footer bg, info tags, tertiary accents
+ * Base White:        #F5F5F7  (245, 245, 247) — Page bg, card fills, inputs
+ * Dark Text/Icon:    #2D2D3A  (45, 45, 58)    — All body text, headings, icons
+ * Muted Gray:        #B8B8C4  (184, 184, 196) — Dividers, placeholders, inactive borders
  */
 
 export const tokens = {
   // Color — Semantic, module-coded, accessible
   color: {
-    // Base surfaces (light mode)
+    // Base surfaces (light mode) — APPROVED PALETTE
     bg: {
-      canvas: '#FAFAF9',
+      canvas: '#F5F5F7',
       surface: '#FFFFFF',
-      surfaceHover: '#F5F5F4',
+      surfaceHover: '#EDEDF0',
       elevated: '#FFFFFF',
     },
     border: {
-      subtle: '#E7E5E4',
-      default: '#D6D3D1',
-      strong: '#A8A29E',
-      focus: '#17837F',
+      subtle: '#E8E8EC',
+      default: '#D4D4DA',
+      strong: '#B8B8C4',
+      focus: '#5EC4C8',
     },
     text: {
-      primary: '#0F172A',
-      secondary: '#334155',
-      tertiary: '#475569',
-      inverse: '#FAFAF9',
-      link: '#17837F',
-      linkHover: '#0C4F4C',
+      primary: '#2D2D3A',
+      secondary: '#4A4A5A',
+      tertiary: '#6E6E80',
+      inverse: '#F5F5F7',
+      link: '#5EC4C8',
+      linkHover: '#3A9B9F',
     },
 
-    // Module accents — trio-mapped, all pairs contrast-verified (see P1 notes).
+    // Module accents — trio-mapped, all pairs contrast-verified.
     // primary = fills/graphics · dark = any text on white · light = tinted bg.
     module: {
-      foundations: { primary: '#2AB5B0', light: 'rgba(42,181,176,0.14)', dark: '#0C4F4C' },
-      rag: { primary: '#FF8A6B', light: 'rgba(255,138,107,0.14)', dark: '#A34A28' },
-      context: { primary: '#8B7BD8', light: 'rgba(139,123,216,0.14)', dark: '#4A3F7A' },
-      agents: { primary: '#FF8A6B', light: 'rgba(255,138,107,0.14)', dark: '#A34A28' },
-      platform: { primary: '#2AB5B0', light: 'rgba(42,181,176,0.14)', dark: '#0C4F4C' },
-      frontiers: { primary: '#8B7BD8', light: 'rgba(139,123,216,0.14)', dark: '#4A3F7A' },
+      foundations: { primary: '#5EC4C8', light: 'rgba(94,196,200,0.14)', dark: '#1F6B6E' },
+      rag: { primary: '#F0A89A', light: 'rgba(240,168,154,0.14)', dark: '#C47A6A' },
+      context: { primary: '#C9B8E8', light: 'rgba(201,184,232,0.14)', dark: '#6B5E94' },
+      agents: { primary: '#F0A89A', light: 'rgba(240,168,154,0.14)', dark: '#C47A6A' },
+      platform: { primary: '#5EC4C8', light: 'rgba(94,196,200,0.14)', dark: '#1F6B6E' },
+      frontiers: { primary: '#C9B8E8', light: 'rgba(201,184,232,0.14)', dark: '#6B5E94' },
     },
 
-    // Brand palette — uniform dashboard language (see DesignSampleTab)
+    // Brand palette — uniform dashboard language
     // Brights = fills/graphics/dots only. Text on white MUST use ink/deep.
     brand: {
-      teal: '#2AB5B0',
-      tealDark: '#17837F',
-      tealInk: '#0C4F4C',
-      tealSoft: 'rgba(42,181,176,0.12)',
-      coral: '#FF8A6B',
-      coralDeep: '#A34A28',
-      coralSoft: 'rgba(255,138,107,0.14)',
-      lav: '#C5ADEA',
-      lavDeep: '#8B7BD8',
-      lavInk: '#4A3F7A',
-      lavSoft: 'rgba(139,123,216,0.14)',
-      ink: '#22303C',
-      muted: '#7A8AA0',
-      line: '#E6EBF2',
-      editor: '#10141D',
+      teal: '#5EC4C8',
+      tealDark: '#3A9B9F',
+      tealInk: '#1F6B6E',
+      tealSoft: 'rgba(94,196,200,0.12)',
+      coral: '#F0A89A',
+      coralDeep: '#C47A6A',
+      coralSoft: 'rgba(240,168,154,0.14)',
+      lav: '#C9B8E8',
+      lavDeep: '#9B89C4',
+      lavInk: '#6B5E94',
+      lavSoft: 'rgba(201,184,232,0.14)',
+      ink: '#2D2D3A',
+      muted: '#B8B8C4',
+      line: '#E8E8EC',
+      editor: '#0F1219',
     },
 
     // Semantic states
     state: {
-      success: { light: '#16A34A', dark: '#22C55E' },
-      warning: { light: '#CA8A04', dark: '#EAB308' },
-      error: { light: '#DC2626', dark: '#EF4444' },
-      info: { light: '#2563EB', dark: '#3B82F6' },
+      success: { light: '#2D9D6F', dark: '#34C47D' },
+      warning: { light: '#D4930A', dark: '#F5B731' },
+      error: { light: '#D44D4D', dark: '#EF6B6B' },
+      info: { light: '#4A7DC9', dark: '#6B9EE8' },
     },
 
     // Overlay
     overlay: {
-      backdrop: 'rgba(28, 25, 23, 0.4)',
-      modal: 'rgba(28, 25, 23, 0.6)',
+      backdrop: 'rgba(45, 45, 58, 0.4)',
+      modal: 'rgba(45, 45, 58, 0.6)',
     },
   },
 

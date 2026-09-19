@@ -145,9 +145,9 @@ export default function LinearRegressionTab() {
                 </Grid>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                     <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>MEAN SQUARED ERROR (MSE):</strong>
-                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#17837F' }}>{fitResult.mse}</div>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3A9B9F' }}>{fitResult.mse}</div>
                   </Card>
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #8b5cf6' }}>
@@ -155,9 +155,9 @@ export default function LinearRegressionTab() {
                     <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#8b5cf6' }}>{fitResult.mae}</div>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                     <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>MARK'S 2,400 SQ FT PREDICTED PRICE:</strong>
-                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#17837F' }}>${fitResult.markPredPrice}k</div>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3A9B9F' }}>${fitResult.markPredPrice}k</div>
                   </Card>
                 </Grid>
               </Stack>
@@ -178,15 +178,15 @@ export default function LinearRegressionTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>Mean Absolute Error (MAE):</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>Mean Absolute Error (MAE):</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '4px 0 0 0' }}>
                       Calculates the average magnitude of absolute residuals. Provides linear penalties without heavily skewing for single extreme outliers.
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>Mean Squared Error (MSE):</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>Mean Squared Error (MSE):</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '4px 0 0 0' }}>
                       Calculates average squared residuals. Produces a smooth convex parabola $J(w, b)$, making mathematical derivative gradient descent updates clean and tractable.
                     </p>
@@ -222,7 +222,7 @@ export default function LinearRegressionTab() {
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
                     <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>CURRENT WEIGHT w (SLOPE):</strong>
-                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#17837F' }}>{gdW}</div>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3A9B9F' }}>{gdW}</div>
                   </Card>
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
@@ -232,7 +232,7 @@ export default function LinearRegressionTab() {
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
                     <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>CURRENT MSE LOSS:</strong>
-                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#17837F' }}>{gdFitResult.mse}</div>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#3A9B9F' }}>{gdFitResult.mse}</div>
                   </Card>
                 </Grid>
               </Stack>

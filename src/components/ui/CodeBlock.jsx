@@ -12,7 +12,7 @@ export default function CodeBlock({ code, lang = "python" }) {
   return (
     <div style={{ position: "relative", background: "#0d0d1a", borderRadius: 4, border: "1px solid #e0dcd4", overflow: "hidden" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.5rem 1rem", borderBottom: "1px solid #2a2a3a", background: "#0d0d1a" }}>
-        <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#17837F", letterSpacing: "0.1em", textTransform: "uppercase" }}>{lang}</span>
+        <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#3A9B9F", letterSpacing: "0.1em", textTransform: "uppercase" }}>{lang}</span>
         <button 
           onClick={copy} 
           style={{ 
@@ -20,7 +20,7 @@ export default function CodeBlock({ code, lang = "python" }) {
             border: "1px solid rgba(255,255,255,0.1)", 
             borderRadius: 3, 
             padding: "0.2rem 0.6rem", 
-            color: copied ? "#2AB5B0" : "#334155", 
+            color: copied ? "#5EC4C8" : "#334155", 
             fontSize: "0.6rem", 
             cursor: "pointer", 
             fontFamily: "DM Mono, monospace", 

@@ -137,7 +137,7 @@ export default function XLSTMTab() {
                             <td style={{ padding: '10px', fontWeight: 'bold' }}>{row.architecture}</td>
                             <td style={{ padding: '10px', color: 'var(--ds-color-text-secondary)' }}>{row.memoryCell}</td>
                             <td style={{ padding: '10px', fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{row.gatingMechanism}</td>
-                            <td style={{ padding: '10px', fontWeight: 'bold', color: row.parallelization.includes('Fully') ? '#2AB5B0' : '#ef4444' }}>
+                            <td style={{ padding: '10px', fontWeight: 'bold', color: row.parallelization.includes('Fully') ? '#5EC4C8' : '#ef4444' }}>
                               {row.parallelization}
                             </td>
                             <td style={{ padding: '10px', fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{row.contextHandling}</td>
@@ -187,9 +187,9 @@ export default function XLSTMTab() {
                         <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#ef4444' }}>{classicalResult.f_t}</div>
                       </Card>
 
-                      <Card style={{ padding: '12px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                      <Card style={{ padding: '12px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>INPUT GATE i_t:</strong>
-                        <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#17837F' }}>{classicalResult.i_t}</div>
+                        <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#3A9B9F' }}>{classicalResult.i_t}</div>
                       </Card>
 
                       <Card style={{ padding: '12px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #f59e0b' }}>
@@ -204,9 +204,9 @@ export default function XLSTMTab() {
                     </Grid>
 
                     <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
-                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>UPDATED CELL STATE C_t:</strong>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#17837F' }}>{classicalResult.c_t}</div>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3A9B9F' }}>{classicalResult.c_t}</div>
                       </Card>
 
                       <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #06b6d4' }}>
@@ -260,14 +260,14 @@ export default function XLSTMTab() {
                         <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#ef4444' }}>{slstmResult.exp_f}</div>
                       </Card>
 
-                      <Card style={{ padding: '12px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                      <Card style={{ padding: '12px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>EXP INPUT i_t = exp(·):</strong>
-                        <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#17837F' }}>{slstmResult.exp_i}</div>
+                        <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#3A9B9F' }}>{slstmResult.exp_i}</div>
                       </Card>
 
-                      <Card style={{ padding: '12px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                      <Card style={{ padding: '12px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>NORMALIZER STATE n_t:</strong>
-                        <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#17837F' }}>{slstmResult.n_t}</div>
+                        <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#3A9B9F' }}>{slstmResult.n_t}</div>
                       </Card>
                     </Grid>
 

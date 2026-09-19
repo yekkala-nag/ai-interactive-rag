@@ -32,7 +32,7 @@ export default function AgentA2ATab() {
         {sub === 'proto' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Protocol</th><th style={{ textAlign: 'left', padding: '8px' }}>How</th><th style={{ padding: '8px' }}>Overhead</th><th style={{ textAlign: 'left', padding: '8px' }}>Best for</th><th style={{ textAlign: 'left', padding: '8px' }}>Risk</th></tr></thead>
-            <tbody>{PROTOCOL_TABLE.map((p, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{p.proto}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{p.how}</td><td style={{ padding: '8px', textAlign: 'center', color: '#17837F', fontFamily: 'monospace' }}>{p.overhead}</td><td style={{ padding: '8px', color: '#17837F' }}>{p.best}</td><td style={{ padding: '8px', color: '#ef4444' }}>{p.risk}</td></tr>))}</tbody></table></div>
+            <tbody>{PROTOCOL_TABLE.map((p, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{p.proto}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{p.how}</td><td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F', fontFamily: 'monospace' }}>{p.overhead}</td><td style={{ padding: '8px', color: '#3A9B9F' }}>{p.best}</td><td style={{ padding: '8px', color: '#ef4444' }}>{p.risk}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Topology cost simulator</h3></div>
@@ -43,9 +43,9 @@ export default function AgentA2ATab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Topology</label>
               <select value={topo} onChange={e => setTopo(e.target.value)} style={sel}><option value="star">star (supervisor)</option><option value="mesh">mesh (A2A peers)</option><option value="chain">chain (handoffs)</option></select>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
               <strong style={{ color: 'white' }}>{est.topology} × {est.agents} agents</strong>
-              <div style={{ fontSize: '12px', color: '#17837F', fontFamily: 'monospace', marginTop: '6px' }}>{est.messages} msgs · ~{(est.estLatencyMs / 1000).toFixed(1)}s @120ms · {est.bottleneck}</div>
+              <div style={{ fontSize: '12px', color: '#3A9B9F', fontFamily: 'monospace', marginTop: '6px' }}>{est.messages} msgs · ~{(est.estLatencyMs / 1000).toFixed(1)}s @120ms · {est.bottleneck}</div>
               <div style={{ fontSize: '11px', color: '#F5A623', marginTop: '6px' }}>{est.advice}</div>
             </Card>
           </Grid>

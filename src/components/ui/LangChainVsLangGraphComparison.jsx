@@ -341,7 +341,7 @@ export function LangChainVsLangGraphComparison() {
               <button
                 onClick={handlePlayToggle}
                 style={{
-                  background: isPlaying ? '#dc2626' : '#2AB5B0',
+                  background: isPlaying ? '#dc2626' : '#5EC4C8',
                   border: 'none',
                   color: 'white',
                   fontWeight: 700,
@@ -405,9 +405,9 @@ export function LangChainVsLangGraphComparison() {
                   style={{
                     padding: '10px 16px',
                     borderRadius: 'var(--ds-radius-lg)',
-                    border: isSelected ? '2px solid #2AB5B0' : '1px solid var(--ds-color-border-default)',
+                    border: isSelected ? '2px solid #5EC4C8' : '1px solid var(--ds-color-border-default)',
                     background: isSelected ? 'rgba(37, 99, 235, 0.08)' : 'var(--ds-color-bg-surface)',
-                    color: isSelected ? '#2AB5B0' : 'var(--ds-color-text-primary)',
+                    color: isSelected ? '#5EC4C8' : 'var(--ds-color-text-primary)',
                     fontWeight: 700,
                     fontSize: '0.85rem',
                     cursor: 'pointer',
@@ -422,7 +422,7 @@ export function LangChainVsLangGraphComparison() {
                   <span style={{ fontSize: '1.1rem' }}>{sc.icon}</span>
                   <div style={{ textAlign: 'left' }}>
                     <div style={{ lineHeight: 1.2 }}>{sc.title}</div>
-                    <div style={{ fontSize: '0.7rem', color: isSelected ? '#2AB5B0' : 'var(--ds-color-text-tertiary)', fontWeight: 500 }}>
+                    <div style={{ fontSize: '0.7rem', color: isSelected ? '#5EC4C8' : 'var(--ds-color-text-tertiary)', fontWeight: 500 }}>
                       {sc.badge}
                     </div>
                   </div>
@@ -458,7 +458,7 @@ export function LangChainVsLangGraphComparison() {
                       height: '8px',
                       borderRadius: '4px',
                       border: 'none',
-                      background: isActive ? '#2AB5B0' : isPassed ? '#2AB5B0' : 'var(--ds-color-border-default)',
+                      background: isActive ? '#5EC4C8' : isPassed ? '#5EC4C8' : 'var(--ds-color-border-default)',
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
                       position: 'relative'
@@ -508,7 +508,7 @@ export function LangChainVsLangGraphComparison() {
                   <g onClick={() => setInspectedNode({ framework: 'LangChain', name: 'ChatPromptTemplate', desc: 'Formats variables into prompt message payload', payload: currentStep.lcState })} style={{ cursor: 'pointer' }}>
                     <rect
                       x="4" y="16" width="26" height="18" rx="4"
-                      fill={currentStep.lcNode === 'prompt' || currentStep.lcNode === 'r1_in' || currentStep.lcNode === 's1_ok' ? '#2AB5B0' : '#1e293b'}
+                      fill={currentStep.lcNode === 'prompt' || currentStep.lcNode === 'r1_in' || currentStep.lcNode === 's1_ok' ? '#5EC4C8' : '#1e293b'}
                       stroke={currentStep.lcNode === 'prompt' || currentStep.lcNode === 'r1_in' || currentStep.lcNode === 's1_ok' ? '#4ade80' : '#334155'}
                       strokeWidth={currentStep.lcNode === 'prompt' ? '1.8' : '1'}
                       style={{ transition: 'all 0.3s' }}
@@ -523,7 +523,7 @@ export function LangChainVsLangGraphComparison() {
                   <g onClick={() => setInspectedNode({ framework: 'LangChain', name: 'ChatAnthropic / ChatOpenAI', desc: 'Single-turn stateless model inference', payload: currentStep.lcState })} style={{ cursor: 'pointer' }}>
                     <rect
                       x="37" y="16" width="26" height="18" rx="4"
-                      fill={currentStep.lcNode === 'llm' || currentStep.lcNode === 'r1_run' || currentStep.lcNode === 'chain_exec' || currentStep.lcNode === 's2_ok' ? '#2AB5B0' : '#1e293b'}
+                      fill={currentStep.lcNode === 'llm' || currentStep.lcNode === 'r1_run' || currentStep.lcNode === 'chain_exec' || currentStep.lcNode === 's2_ok' ? '#5EC4C8' : '#1e293b'}
                       stroke={currentStep.lcNode === 'llm' || currentStep.lcNode === 'r1_run' || currentStep.lcNode === 'chain_exec' || currentStep.lcNode === 's2_ok' ? '#4ade80' : '#334155'}
                       strokeWidth={currentStep.lcNode === 'llm' ? '1.8' : '1'}
                       style={{ transition: 'all 0.3s' }}
@@ -538,7 +538,7 @@ export function LangChainVsLangGraphComparison() {
                   <g onClick={() => setInspectedNode({ framework: 'LangChain', name: 'StrOutputParser', desc: 'Extracts formatted strings or JSON dictionaries', payload: currentStep.lcState })} style={{ cursor: 'pointer' }}>
                     <rect
                       x="70" y="16" width="26" height="18" rx="4"
-                      fill={currentStep.lcNode === 'parser' || currentStep.lcNode === 'r2_run' || currentStep.lcNode === 's3_fail' ? (currentStep.lcNode === 's3_fail' ? '#ef4444' : '#2AB5B0') : '#1e293b'}
+                      fill={currentStep.lcNode === 'parser' || currentStep.lcNode === 'r2_run' || currentStep.lcNode === 's3_fail' ? (currentStep.lcNode === 's3_fail' ? '#ef4444' : '#5EC4C8') : '#1e293b'}
                       stroke={currentStep.lcNode === 'parser' || currentStep.lcNode === 's3_fail' ? '#f87171' : '#334155'}
                       strokeWidth={currentStep.lcNode === 'parser' || currentStep.lcNode === 's3_fail' ? '1.8' : '1'}
                       style={{ transition: 'all 0.3s' }}
@@ -588,11 +588,11 @@ export function LangChainVsLangGraphComparison() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '8px', marginBottom: '12px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <span style={{ fontSize: '1.2rem' }}>🕸️</span>
-                  <span style={{ color: '#17837F', fontWeight: 800, fontSize: '0.9rem', letterSpacing: '0.02em' }}>
+                  <span style={{ color: '#3A9B9F', fontWeight: 800, fontSize: '0.9rem', letterSpacing: '0.02em' }}>
                     LANGGRAPH (STATEGRAPH MACHINE)
                   </span>
                 </div>
-                <Badge variant="default" size="sm" style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#17837F', border: '1px solid rgba(56, 189, 248, 0.3)' }}>
+                <Badge variant="default" size="sm" style={{ background: 'rgba(56, 189, 248, 0.15)', color: '#3A9B9F', border: '1px solid rgba(56, 189, 248, 0.3)' }}>
                   Cyclic State Graph
                 </Badge>
               </div>
@@ -601,16 +601,16 @@ export function LangChainVsLangGraphComparison() {
               <div style={{ minHeight: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg viewBox="0 0 100 56" style={{ width: '100%', height: '100%', maxHeight: '180px' }}>
                   {/* Start Node */}
-                  <circle cx="10" cy="28" r="5" fill="#2AB5B0" stroke="#60a5fa" strokeWidth="1" />
+                  <circle cx="10" cy="28" r="5" fill="#5EC4C8" stroke="#60a5fa" strokeWidth="1" />
                   <text x="10" y="29.5" textAnchor="middle" fill="#ffffff" fontSize="3.5" fontWeight="bold">Start</text>
 
-                  <line x1="15" y1="28" x2="24" y2="28" stroke="#2AB5B0" strokeWidth="1.2" markerEnd="url(#arrow-lg-1)" />
+                  <line x1="15" y1="28" x2="24" y2="28" stroke="#5EC4C8" strokeWidth="1.2" markerEnd="url(#arrow-lg-1)" />
 
                   {/* Agent Node */}
                   <g onClick={() => setInspectedNode({ framework: 'LangGraph', name: 'Agent Node (LLM Brain)', desc: 'Processes messages, decides tool invocation, appends to state schema', payload: currentStep.lgState })} style={{ cursor: 'pointer' }}>
                     <rect
                       x="24" y="18" width="24" height="20" rx="4"
-                      fill={currentStep.lgNode === 'agent' || currentStep.lgNode === 'agent_loop' || currentStep.lgNode === 'agent_propose' || currentStep.lgNode === 'node_alpha' ? '#2AB5B0' : '#1e293b'}
+                      fill={currentStep.lgNode === 'agent' || currentStep.lgNode === 'agent_loop' || currentStep.lgNode === 'agent_propose' || currentStep.lgNode === 'node_alpha' ? '#5EC4C8' : '#1e293b'}
                       stroke={currentStep.lgNode === 'agent' || currentStep.lgNode === 'agent_loop' ? '#60a5fa' : '#334155'}
                       strokeWidth={currentStep.lgNode === 'agent' || currentStep.lgNode === 'agent_loop' ? '1.8' : '1'}
                       style={{ transition: 'all 0.3s' }}
@@ -620,13 +620,13 @@ export function LangChainVsLangGraphComparison() {
                   </g>
 
                   {/* Conditional Edge Forward */}
-                  <line x1="48" y1="28" x2="58" y2="28" stroke={activeStepIndex >= 2 ? '#2AB5B0' : '#475569'} strokeWidth="1.2" markerEnd="url(#arrow-lg-2)" />
+                  <line x1="48" y1="28" x2="58" y2="28" stroke={activeStepIndex >= 2 ? '#5EC4C8' : '#475569'} strokeWidth="1.2" markerEnd="url(#arrow-lg-2)" />
 
                   {/* Tools Node / HITL Checkpoint Node */}
                   <g onClick={() => setInspectedNode({ framework: 'LangGraph', name: 'Tools / Checkpoint Node', desc: 'Executes tools or triggers interrupt() for human checkpointing', payload: currentStep.lgState })} style={{ cursor: 'pointer' }}>
                     <rect
                       x="58" y="18" width="24" height="20" rx="4"
-                      fill={currentStep.lgNode === 'tools' || currentStep.lgNode === 'hitl_interrupt' || currentStep.lgNode === 'node_beta' ? '#17837F' : '#1e293b'}
+                      fill={currentStep.lgNode === 'tools' || currentStep.lgNode === 'hitl_interrupt' || currentStep.lgNode === 'node_beta' ? '#3A9B9F' : '#1e293b'}
                       stroke={currentStep.lgNode === 'tools' || currentStep.lgNode === 'hitl_interrupt' ? '#2dd4bf' : '#334155'}
                       strokeWidth={currentStep.lgNode === 'tools' || currentStep.lgNode === 'hitl_interrupt' ? '1.8' : '1'}
                       style={{ transition: 'all 0.3s' }}
@@ -643,32 +643,32 @@ export function LangChainVsLangGraphComparison() {
                   <path
                     d="M 70 18 C 70 7, 36 7, 36 18"
                     fill="none"
-                    stroke={activeStepIndex === 3 && activeScenarioId === 0 ? '#2AB5B0' : 'rgba(56, 189, 248, 0.2)'}
+                    stroke={activeStepIndex === 3 && activeScenarioId === 0 ? '#5EC4C8' : 'rgba(56, 189, 248, 0.2)'}
                     strokeWidth={activeStepIndex === 3 ? '1.8' : '1'}
                     strokeDasharray={activeStepIndex === 3 ? 'none' : '3,2'}
                     markerEnd="url(#arrow-lg-loop)"
                   />
-                  <text x="53" y="10" textAnchor="middle" fill="#2AB5B0" fontSize="2.8" fontWeight="bold">
+                  <text x="53" y="10" textAnchor="middle" fill="#5EC4C8" fontSize="2.8" fontWeight="bold">
                     Cyclic Feedback Loop
                   </text>
 
                   {/* End Node */}
-                  <line x1="82" y1="28" x2="89" y2="28" stroke={activeStepIndex >= 4 ? '#2AB5B0' : '#475569'} strokeWidth="1.2" markerEnd="url(#arrow-lg-3)" />
-                  <circle cx="94" cy="28" r="4.5" fill={activeStepIndex >= 4 ? '#2AB5B0' : '#334155'} stroke="#4ade80" strokeWidth="1" />
+                  <line x1="82" y1="28" x2="89" y2="28" stroke={activeStepIndex >= 4 ? '#5EC4C8' : '#475569'} strokeWidth="1.2" markerEnd="url(#arrow-lg-3)" />
+                  <circle cx="94" cy="28" r="4.5" fill={activeStepIndex >= 4 ? '#5EC4C8' : '#334155'} stroke="#4ade80" strokeWidth="1" />
                   <text x="94" y="29.2" textAnchor="middle" fill="#ffffff" fontSize="3" fontWeight="bold">END</text>
 
                   <defs>
                     <marker id="arrow-lg-1" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-                      <path d="M0,0 L0,6 L6,3 z" fill="#2AB5B0" />
+                      <path d="M0,0 L0,6 L6,3 z" fill="#5EC4C8" />
                     </marker>
                     <marker id="arrow-lg-2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-                      <path d="M0,0 L0,6 L6,3 z" fill={activeStepIndex >= 2 ? '#2AB5B0' : '#475569'} />
+                      <path d="M0,0 L0,6 L6,3 z" fill={activeStepIndex >= 2 ? '#5EC4C8' : '#475569'} />
                     </marker>
                     <marker id="arrow-lg-3" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-                      <path d="M0,0 L0,6 L6,3 z" fill={activeStepIndex >= 4 ? '#2AB5B0' : '#475569'} />
+                      <path d="M0,0 L0,6 L6,3 z" fill={activeStepIndex >= 4 ? '#5EC4C8' : '#475569'} />
                     </marker>
                     <marker id="arrow-lg-loop" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-                      <path d="M0,0 L0,6 L6,3 z" fill="#2AB5B0" />
+                      <path d="M0,0 L0,6 L6,3 z" fill="#5EC4C8" />
                     </marker>
                   </defs>
                 </svg>
@@ -692,7 +692,7 @@ export function LangChainVsLangGraphComparison() {
             <div style={{
               marginTop: 'var(--ds-space-4)',
               background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%)',
-              border: '1px solid #FF8A6B',
+              border: '1px solid #F0A89A',
               borderRadius: 'var(--ds-radius-md)',
               padding: '12px 16px',
               display: 'flex',
@@ -702,7 +702,7 @@ export function LangChainVsLangGraphComparison() {
               gap: '12px'
             }}>
               <div>
-                <strong style={{ color: '#A34A28', fontSize: '0.9rem' }}>🛑 Human Approval Checkpoint Active:</strong>
+                <strong style={{ color: '#C47A6A', fontSize: '0.9rem' }}>🛑 Human Approval Checkpoint Active:</strong>
                 <span style={{ fontSize: '0.85rem', color: 'var(--ds-color-text-primary)', marginLeft: '8px' }}>
                   LangGraph interrupted thread <code style={{ fontFamily: 'var(--ds-font-family-mono)' }}>#wire-774</code>. Choose action to resume graph:
                 </span>
@@ -838,9 +838,9 @@ export function LangChainVsLangGraphComparison() {
                 style={{
                   padding: '6px 14px',
                   borderRadius: '6px',
-                  border: activeCodeTab === 'langchain' ? '2px solid #2AB5B0' : '1px solid var(--ds-color-border-default)',
+                  border: activeCodeTab === 'langchain' ? '2px solid #5EC4C8' : '1px solid var(--ds-color-border-default)',
                   background: activeCodeTab === 'langchain' ? 'rgba(74, 154, 74, 0.1)' : 'transparent',
-                  color: activeCodeTab === 'langchain' ? '#2AB5B0' : 'inherit',
+                  color: activeCodeTab === 'langchain' ? '#5EC4C8' : 'inherit',
                   fontWeight: 700,
                   fontSize: '0.8rem',
                   cursor: 'pointer',

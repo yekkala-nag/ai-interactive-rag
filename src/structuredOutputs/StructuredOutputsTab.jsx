@@ -123,28 +123,28 @@ export default function StructuredOutputsTab() {
                   </Card>
 
                   {/* PARADIGM 2 */}
-                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '4px solid #2AB5B0' }}>
+                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '4px solid #5EC4C8' }}>
                     <Stack gap={2}>
                       <Badge variant="primary">2. API Provider Enforcement</Badge>
                       <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>OpenAI Strict Mode & Tool Calling</strong>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
                         Provider applies server-side grammar constraints during generation. Guarantees schema adherence on hosted endpoints.
                       </p>
-                      <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>
+                      <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', fontWeight: 'bold' }}>
                         Tradeoff: Vendor lock-in; unavailable on self-hosted open-weights models.
                       </div>
                     </Stack>
                   </Card>
 
                   {/* PARADIGM 3 */}
-                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '4px solid #2AB5B0', background: 'rgba(16,185,129,0.04)' }}>
+                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '4px solid #5EC4C8', background: 'rgba(16,185,129,0.04)' }}>
                     <Stack gap={2}>
                       <Badge variant="success">3. Constrained Decoding with FSM</Badge>
                       <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>Outlines / SGLang / Guidance / llama.cpp</strong>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
                         Compiles JSON Schema into a Deterministic Finite Automaton (DFA). Masks invalid token logits to -inf at every generation step.
                       </p>
-                      <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>
+                      <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', fontWeight: 'bold' }}>
                         Advantage: 100% Mathematical guarantee, zero retries, native open-weights.
                       </div>
                     </Stack>
@@ -203,7 +203,7 @@ export default function StructuredOutputsTab() {
                     <Stack gap={3}>
                       <Flex justify="space-between" align="center">
                         <Badge variant="primary">FSM State: {activeFsmStep.fsmState}</Badge>
-                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', fontWeight: 'bold' }}>
                           Step #{activeFsmStep.step} of 5
                         </span>
                       </Flex>
@@ -238,7 +238,7 @@ export default function StructuredOutputsTab() {
                     <Stack gap={3}>
                       <Flex justify="space-between" align="center">
                         <Badge variant="success">Synthesized Schema Stream</Badge>
-                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>
+                        <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', fontWeight: 'bold' }}>
                           Mathematical Validity: 100%
                         </span>
                       </Flex>
@@ -246,7 +246,7 @@ export default function StructuredOutputsTab() {
                       <div>
                         <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold', color: 'var(--ds-color-text-tertiary)' }}>OUTPUT BUFFER:</span>
                         <pre style={{ margin: '4px 0 0 0', padding: '10px', background: 'var(--ds-color-bg-surface)', borderRadius: '6px', fontSize: 'var(--ds-font-size-bodySm)', fontFamily: 'var(--ds-font-family-mono)', color: 'var(--ds-color-text-primary)' }}>
-                          {activeFsmStep.generatedSoFar}<span style={{ background: '#2AB5B0', color: 'white', padding: '1px 4px', borderRadius: '3px' }}>{activeFsmStep.chosenToken}</span>
+                          {activeFsmStep.generatedSoFar}<span style={{ background: '#5EC4C8', color: 'white', padding: '1px 4px', borderRadius: '3px' }}>{activeFsmStep.chosenToken}</span>
                         </pre>
                       </div>
                     </Stack>
@@ -325,9 +325,9 @@ export default function StructuredOutputsTab() {
                         style={{
                           padding: '8px 14px',
                           borderRadius: 'var(--ds-radius-md)',
-                          border: `1px solid ${activeMethod === m.id ? '#17837F' : 'var(--ds-color-border-subtle)'}`,
+                          border: `1px solid ${activeMethod === m.id ? '#3A9B9F' : 'var(--ds-color-border-subtle)'}`,
                           background: activeMethod === m.id ? 'var(--ds-color-bg-surfaceHover)' : 'var(--ds-color-bg-surface)',
-                          color: activeMethod === m.id ? '#17837F' : 'var(--ds-color-text-primary)',
+                          color: activeMethod === m.id ? '#3A9B9F' : 'var(--ds-color-text-primary)',
                           cursor: 'pointer',
                           fontWeight: activeMethod === m.id ? 'bold' : 'normal'
                         }}
@@ -338,7 +338,7 @@ export default function StructuredOutputsTab() {
                   </Flex>
 
                   {/* METHOD RESULT CARD */}
-                  <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #17837F' }}>
+                  <Card style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #3A9B9F' }}>
                     <Stack gap={2}>
                       <Flex justify="space-between" align="center">
                         <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>Extraction Result Payload:</strong>

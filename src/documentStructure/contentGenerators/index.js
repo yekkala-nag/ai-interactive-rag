@@ -73,8 +73,8 @@ export function workflowToMermaid(workflow) {
     lines.push(`  ${edge.from} --> ${edge.to}`);
   }
   if (workflow.nodes.some(n => n.type === 'root')) {
-    lines.push('  classDef root fill:#2AB5B0,color:#fff');
-    lines.push('  classDef section fill:#2AB5B0,color:#fff');
+    lines.push('  classDef root fill:#5EC4C8,color:#fff');
+    lines.push('  classDef section fill:#5EC4C8,color:#fff');
     lines.push('  classDef subsection fill:#60a5fa,color:#fff');
   }
   return lines.join('\n');

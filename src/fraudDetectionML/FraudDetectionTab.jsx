@@ -100,24 +100,24 @@ export default function FraudDetectionTab() {
                     <thead>
                       <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
                         <th style={{ textAlign: 'left', padding: '8px', color: 'var(--ds-color-text-tertiary)' }}>Model Name</th>
-                        <th style={{ textAlign: 'center', padding: '8px', color: '#17837F' }}>AUROC</th>
-                        <th style={{ textAlign: 'center', padding: '8px', color: '#17837F' }}>F1 Score</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#3A9B9F' }}>AUROC</th>
+                        <th style={{ textAlign: 'center', padding: '8px', color: '#3A9B9F' }}>F1 Score</th>
                         <th style={{ textAlign: 'center', padding: '8px', color: '#F5A623' }}>p99 Latency</th>
                         <th style={{ textAlign: 'center', padding: '8px', color: '#a78bfa' }}>Memory</th>
-                        <th style={{ textAlign: 'left', padding: '8px', color: '#17837F' }}>Production Status</th>
+                        <th style={{ textAlign: 'left', padding: '8px', color: '#3A9B9F' }}>Production Status</th>
                       </tr>
                     </thead>
                     <tbody>
                       {SIX_FRAUD_MODELS.map((m, i) => (
                         <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', background: m.productionStatus.includes('SELECTED') ? 'rgba(16,185,129,0.08)' : 'transparent' }}>
                           <td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{m.name}</td>
-                          <td style={{ padding: '8px', textAlign: 'center', color: '#17837F' }}>{m.offlineAuroc.toFixed(3)}</td>
-                          <td style={{ padding: '8px', textAlign: 'center', color: '#17837F' }}>{m.f1Score.toFixed(3)}</td>
-                          <td style={{ padding: '8px', textAlign: 'center', color: m.latencyMs > 15 ? '#ef4444' : '#2AB5B0', fontWeight: 'bold' }}>
+                          <td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F' }}>{m.offlineAuroc.toFixed(3)}</td>
+                          <td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F' }}>{m.f1Score.toFixed(3)}</td>
+                          <td style={{ padding: '8px', textAlign: 'center', color: m.latencyMs > 15 ? '#ef4444' : '#5EC4C8', fontWeight: 'bold' }}>
                             {m.latencyMs} ms {m.latencyMs > 15 ? '⚠️' : '✓'}
                           </td>
                           <td style={{ padding: '8px', textAlign: 'center', color: '#a78bfa' }}>{m.memoryMb} MB</td>
-                          <td style={{ padding: '8px', color: m.productionStatus.includes('SELECTED') ? '#2AB5B0' : m.productionStatus.includes('Rejected') ? '#ef4444' : '#F5A623' }}>
+                          <td style={{ padding: '8px', color: m.productionStatus.includes('SELECTED') ? '#5EC4C8' : m.productionStatus.includes('Rejected') ? '#ef4444' : '#F5A623' }}>
                             {m.productionStatus}
                           </td>
                         </tr>
@@ -149,10 +149,10 @@ export default function FraudDetectionTab() {
                 {/* THRESHOLD SLIDER */}
                 <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)' }}>
                   <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>
                       Decision Threshold (P_thresh): {threshold.toFixed(2)}
                     </strong>
-                    <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
+                    <Badge variant="subtle" style={{ color: '#3A9B9F', background: 'rgba(16,185,129,0.15)' }}>
                       Total Financial Loss: ${simResult.totalCost.toLocaleString()}
                     </Badge>
                   </Flex>
@@ -176,9 +176,9 @@ export default function FraudDetectionTab() {
 
                 {/* SIMULATED METRICS */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                  <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #5EC4C8' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>TRUE POSITIVES (BLOCKED FRAUD)</div>
-                    <div style={{ fontSize: '16px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>{simResult.tp} cases</div>
+                    <div style={{ fontSize: '16px', color: '#3A9B9F', fontWeight: 'bold', marginTop: '4px' }}>{simResult.tp} cases</div>
                   </Card>
 
                   <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #ef4444' }}>
@@ -195,9 +195,9 @@ export default function FraudDetectionTab() {
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #2AB5B0' }}>
+                  <Card style={{ padding: '12px', background: '#090d16', borderTop: '3px solid #5EC4C8' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>FRAUD RECALL RATE</div>
-                    <div style={{ fontSize: '16px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '16px', color: '#3A9B9F', fontWeight: 'bold', marginTop: '4px' }}>
                       {(simResult.recall * 100).toFixed(1)}%
                     </div>
                   </Card>
@@ -220,15 +220,15 @@ export default function FraudDetectionTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', sm: '1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>1. Strict Latency SLA (&lt; 15ms)</strong>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>1. Strict Latency SLA (&lt; 15ms)</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       Payment gateways like Stripe, Visa, and Flutterwave have hard timeout budgets. Models requiring heavy deep learning or large tree ensembles cause timeout spikes.
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>2. Regulatory Explainability (SHAP)</strong>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>2. Regulatory Explainability (SHAP)</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       Central banks and compliance auditors mandate exact reason codes when a transaction or loan is denied. TreeSHAP provides mathematically guaranteed attribution.
                     </p>

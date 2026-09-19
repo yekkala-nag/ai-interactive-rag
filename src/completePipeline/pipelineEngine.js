@@ -5,9 +5,9 @@
 // ============================================================================
 
 export const STAGES = [
-  { n: 1, name: "INGESTION", color: "#17837F", blurb: "Everything downstream depends on this" },
+  { n: 1, name: "INGESTION", color: "#3A9B9F", blurb: "Everything downstream depends on this" },
   { n: 2, name: "INDEXING", color: "#8b5cf6", blurb: "Output: a searchable knowledge base" },
-  { n: 3, name: "RETRIEVAL", color: "#A34A28", blurb: "Sharper query → sharper match" },
+  { n: 3, name: "RETRIEVAL", color: "#C47A6A", blurb: "Sharper query → sharper match" },
   { n: 4, name: "GENERATION & CHECK", color: "#f472b6", blurb: "No retrieval, no grounded answer" }
 ];
 

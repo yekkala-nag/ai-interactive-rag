@@ -123,8 +123,8 @@ export default function PythonProfilingTab() {
 
                   <Card style={{ padding: '16px', background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.3)' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '13px', color: '#17837F' }}>✅ PROFILED & OPTIMIZED</strong>
-                      <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.2)' }}>
+                      <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>✅ PROFILED & OPTIMIZED</strong>
+                      <Badge variant="subtle" style={{ color: '#3A9B9F', background: 'rgba(16,185,129,0.2)' }}>
                         {activeCase.optimizedTimeMs.toLocaleString()} ms ({activeCase.speedup})
                       </Badge>
                     </Flex>
@@ -155,9 +155,9 @@ export default function PythonProfilingTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {PROFILING_TOOL_TIERS.map((t, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                        <strong style={{ fontSize: '13px', color: '#17837F' }}>{t.tool}</strong>
+                        <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>{t.tool}</strong>
                         <Badge variant="outline">{t.overhead}</Badge>
                       </Flex>
 
@@ -165,7 +165,7 @@ export default function PythonProfilingTab() {
                         Scope: {t.scope}
                       </div>
 
-                      <div style={{ background: '#090d16', padding: '6px 8px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#17837F', marginBottom: '8px' }}>
+                      <div style={{ background: '#090d16', padding: '6px 8px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#3A9B9F', marginBottom: '8px' }}>
                         Output: {t.output}
                       </div>
 
@@ -193,15 +193,15 @@ export default function PythonProfilingTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>1. tottime (Total Internal Time)</strong>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>1. tottime (Total Internal Time)</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       The total time spent <strong>strictly inside this function itself</strong>, excluding any sub-functions or external helpers it calls. High <code>tottime</code> highlights CPU-heavy inner calculations.
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>2. cumtime (Cumulative Time)</strong>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>2. cumtime (Cumulative Time)</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       The total time spent in this function <strong>plus all sub-functions called from it</strong>. High <code>cumtime</code> but low <code>tottime</code> means the function is a high-level orchestrator calling a slow helper.
                     </p>

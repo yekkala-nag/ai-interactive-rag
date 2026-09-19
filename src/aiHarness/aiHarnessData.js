@@ -246,7 +246,7 @@ export const QUIZ_QUESTIONS = [
 export const LOOP_TYPES = [
   {
     id: 'supervised',
-    icon: '🎯', bg: 'rgba(56,189,248,0.12)', color: '#17837F',
+    icon: '🎯', bg: 'rgba(56,189,248,0.12)', color: '#3A9B9F',
     name: 'Supervised Training Loop', badge: 'FOUNDATION', badgeBg: 'rgba(56,189,248,0.15)',
     desc: 'The canonical ML loop: labelled (x, y) pairs feed a model, a loss measures prediction error against ground truth, gradients flow back, and weights update. Repeats for every mini-batch across many epochs.',
     specs: ['Labelled dataset required', 'Loss: CE / MSE / Huber', 'Optimizer: Adam/SGD', 'Eval: val loss + metrics'],

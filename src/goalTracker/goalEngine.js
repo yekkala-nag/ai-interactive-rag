@@ -5,8 +5,8 @@
 // ============================================================================
 
 export const GOAL_CATEGORIES = [
-  { id: "health_fitness", name: "Health & Fitness", color: "#17837F", icon: "🏃‍♂️" },
-  { id: "ai_engineering", name: "AI Engineering & RAG", color: "#17837F", icon: "🧠" },
+  { id: "health_fitness", name: "Health & Fitness", color: "#3A9B9F", icon: "🏃‍♂️" },
+  { id: "ai_engineering", name: "AI Engineering & RAG", color: "#3A9B9F", icon: "🧠" },
   { id: "career_leadership", name: "Career & Leadership", color: "#8b5cf6", icon: "🚀" },
   { id: "finance_wealth", name: "Finance & Investments", color: "#f59e0b", icon: "💰" },
   { id: "mindfulness", name: "Mindfulness & Sleep", color: "#ec4899", icon: "🧘‍♀️" },

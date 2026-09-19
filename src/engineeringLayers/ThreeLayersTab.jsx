@@ -5,7 +5,7 @@ const LAYERS = [
     id: "prompt",
     name: "Layer 1: Prompt Engineering",
     tagline: "The Call Itself — System Prompt, Role, Constraints & Typed Output Schema",
-    color: "#A34A28",
+    color: "#C47A6A",
     icon: "💬",
     timeframe: "2022–2023",
     owns: "What the model reads on a single call: system message, user prompt, and JSON output schema.",
@@ -21,7 +21,7 @@ const LAYERS = [
     id: "context",
     name: "Layer 2: Context Engineering",
     tagline: "What Fills the Window — LangChain's 4 Strategies: Write, Select, Compress, Isolate",
-    color: "#17837F",
+    color: "#3A9B9F",
     icon: "📚",
     timeframe: "2024–2025",
     owns: "Curating what enters and exits the model's finite context window between turns.",
@@ -38,7 +38,7 @@ const LAYERS = [
     id: "loop",
     name: "Layer 3: Loop Engineering",
     tagline: "Around the Call — Triggers, Termination, Recovery & Anthropic's 7 Loop Patterns",
-    color: "#5A4FA3",
+    color: "#7A6BA8",
     icon: "🔄",
     timeframe: "2026+",
     owns: "Orchestrating when the next call fires, when the loop stops, and how failures recover.",
@@ -130,7 +130,7 @@ export default function ThreeLayersTab() {
       <div style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%)", borderRadius: 16, padding: "2.5rem", border: "1px solid #334155", marginBottom: "2.5rem", boxShadow: "0 20px 25px -5px rgba(0,0,0,0.5)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1.5rem" }}>
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(155,127,212,0.15)", border: "1px solid #C5ADEA", padding: "0.3rem 0.8rem", borderRadius: 20, fontSize: "0.75rem", color: "#5A4FA3", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(155,127,212,0.15)", border: "1px solid #C9B8E8", padding: "0.3rem 0.8rem", borderRadius: 20, fontSize: "0.75rem", color: "#7A6BA8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1rem" }}>
               <span>🏗️ Enterprise RAG Architecture</span> · <span>3 Engineering Layers</span>
             </div>
             <h1 style={{ fontFamily: "Playfair Display, serif", fontSize: "2.5rem", fontWeight: 900, color: "#f8fafc", margin: 0, lineHeight: 1.1 }}>
@@ -143,15 +143,15 @@ export default function ThreeLayersTab() {
 
           <div style={{ display: "flex", gap: "1rem" }}>
             <div style={{ background: "#0f172a", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #334155", textAlign: "center" }}>
-              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#A34A28" }}>Layer 1</div>
+              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#C47A6A" }}>Layer 1</div>
               <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase" }}>Prompt</div>
             </div>
             <div style={{ background: "#0f172a", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #334155", textAlign: "center" }}>
-              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#17837F" }}>Layer 2</div>
+              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#3A9B9F" }}>Layer 2</div>
               <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase" }}>Context</div>
             </div>
             <div style={{ background: "#0f172a", padding: "1rem 1.5rem", borderRadius: 12, border: "1px solid #334155", textAlign: "center" }}>
-              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#5A4FA3" }}>Layer 3</div>
+              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "#7A6BA8" }}>Layer 3</div>
               <div style={{ fontSize: "0.7rem", color: "#CBD5E1", textTransform: "uppercase" }}>Loop</div>
             </div>
           </div>
@@ -264,33 +264,33 @@ export default function ThreeLayersTab() {
           {/* CONTROL PANEL */}
           <div style={{ background: "#0d0d15", padding: "1.5rem", borderRadius: 12, border: "1px solid #2b2b3d", display: "flex", flexDirection: "column", gap: "1.2rem" }}>
             <div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", color: "#17837F", fontWeight: 700, marginBottom: "0.4rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", color: "#3A9B9F", fontWeight: 700, marginBottom: "0.4rem" }}>
                 <span>Layer 2: Context Window Size</span>
                 <span>{contextSize}k Tokens</span>
               </div>
               <input
                 type="range" min={4} max={128} step={4}
                 value={contextSize} onChange={e => setContextSize(Number(e.target.value))}
-                style={{ width: "100%", accentColor: "#2AB5B0" }}
+                style={{ width: "100%", accentColor: "#5EC4C8" }}
               />
               <div style={{ fontSize: "0.7rem", color: "#6b7280", marginTop: "0.2rem" }}>Small (4k) → Massively Curated (128k)</div>
             </div>
 
             <div>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", color: "#5A4FA3", fontWeight: 700, marginBottom: "0.4rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", color: "#7A6BA8", fontWeight: 700, marginBottom: "0.4rem" }}>
                 <span>Layer 3: Max Retry Loop Budget</span>
                 <span>{maxRetries} Iterations</span>
               </div>
               <input
                 type="range" min={0} max={8} step={1}
                 value={maxRetries} onChange={e => setMaxRetries(Number(e.target.value))}
-                style={{ width: "100%", accentColor: "#C5ADEA" }}
+                style={{ width: "100%", accentColor: "#C9B8E8" }}
               />
               <div style={{ fontSize: "0.7rem", color: "#6b7280", marginTop: "0.2rem" }}>0 (Single pass) → 8 (Deep verification loop)</div>
             </div>
 
             <div>
-              <div style={{ fontSize: "0.8rem", color: "#A34A28", fontWeight: 700, marginBottom: "0.4rem" }}>
+              <div style={{ fontSize: "0.8rem", color: "#C47A6A", fontWeight: 700, marginBottom: "0.4rem" }}>
                 Layer 1: Model Tier
               </div>
               <div style={{ display: "flex", gap: "0.5rem" }}>
@@ -300,7 +300,7 @@ export default function ThreeLayersTab() {
                     onClick={() => setModelTier(tier)}
                     style={{
                       flex: 1,
-                      background: modelTier === tier ? "#FF8A6B" : "#181825",
+                      background: modelTier === tier ? "#F0A89A" : "#181825",
                       color: modelTier === tier ? "#000000" : "#d1d5db",
                       border: "1px solid #374151",
                       padding: "0.5rem",
@@ -322,7 +322,7 @@ export default function ThreeLayersTab() {
           <div style={{ background: "#09090e", padding: "1.5rem", borderRadius: 12, border: "1px solid #2b2b3d", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
             <div style={{ background: "#11111b", padding: "1rem", borderRadius: 10, border: "1px solid #262636" }}>
               <div style={{ fontSize: "0.7rem", color: "#9ca3af", textTransform: "uppercase" }}>Estimated Turn Cost</div>
-              <div style={{ fontSize: "1.6rem", fontWeight: 900, color: "#A34A28", marginTop: "0.2rem" }}>${calculatedCost}</div>
+              <div style={{ fontSize: "1.6rem", fontWeight: 900, color: "#C47A6A", marginTop: "0.2rem" }}>${calculatedCost}</div>
               <div style={{ fontSize: "0.7rem", color: "#6b7280" }}>Per query execution</div>
             </div>
 
@@ -334,13 +334,13 @@ export default function ThreeLayersTab() {
 
             <div style={{ background: "#11111b", padding: "1rem", borderRadius: 10, border: "1px solid #262636" }}>
               <div style={{ fontSize: "0.7rem", color: "#9ca3af", textTransform: "uppercase" }}>Retrieval Recall</div>
-              <div style={{ fontSize: "1.6rem", fontWeight: 900, color: "#17837F", marginTop: "0.2rem" }}>{calculatedRecall}%</div>
+              <div style={{ fontSize: "1.6rem", fontWeight: 900, color: "#3A9B9F", marginTop: "0.2rem" }}>{calculatedRecall}%</div>
               <div style={{ fontSize: "0.7rem", color: "#6b7280" }}>Context quality score</div>
             </div>
 
             <div style={{ background: "#11111b", padding: "1rem", borderRadius: 10, border: "1px solid #262636" }}>
               <div style={{ fontSize: "0.7rem", color: "#9ca3af", textTransform: "uppercase" }}>Hallucination Risk</div>
-              <div style={{ fontSize: "1.6rem", fontWeight: 900, color: hallucinationRisk > 20 ? "#ef4444" : "#2AB5B0", marginTop: "0.2rem" }}>{hallucinationRisk}%</div>
+              <div style={{ fontSize: "1.6rem", fontWeight: 900, color: hallucinationRisk > 20 ? "#ef4444" : "#5EC4C8", marginTop: "0.2rem" }}>{hallucinationRisk}%</div>
               <div style={{ fontSize: "0.7rem", color: "#6b7280" }}>Likelihood of error</div>
             </div>
           </div>
@@ -358,9 +358,9 @@ export default function ThreeLayersTab() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.2rem" }}>
           {LANGCHAIN_STRATEGIES.map((st, idx) => (
-            <div key={idx} style={{ background: "#0d0d15", padding: "1.5rem", borderRadius: 12, border: "1px solid #2b2b3d", borderTop: "4px solid #2AB5B0" }}>
+            <div key={idx} style={{ background: "#0d0d15", padding: "1.5rem", borderRadius: 12, border: "1px solid #2b2b3d", borderTop: "4px solid #5EC4C8" }}>
               <div style={{ fontSize: "1.6rem", marginBottom: "0.4rem" }}>{st.icon}</div>
-              <div style={{ fontWeight: 800, color: "#17837F", fontSize: "1.05rem" }}>{st.name}</div>
+              <div style={{ fontWeight: 800, color: "#3A9B9F", fontSize: "1.05rem" }}>{st.name}</div>
               <div style={{ fontWeight: 600, color: "#f9fafb", fontSize: "0.85rem", margin: "0.4rem 0" }}>{st.desc}</div>
               <div style={{ fontSize: "0.8rem", color: "#9ca3af", lineHeight: 1.5 }}>{st.detail}</div>
             </div>
@@ -380,7 +380,7 @@ export default function ThreeLayersTab() {
             </div>
           </div>
 
-          <div style={{ background: "rgba(201,168,76,0.15)", border: "1px solid #FF8A6B", color: "#A34A28", padding: "0.4rem 0.8rem", borderRadius: 8, fontSize: "0.75rem", fontWeight: 700 }}>
+          <div style={{ background: "rgba(201,168,76,0.15)", border: "1px solid #F0A89A", color: "#C47A6A", padding: "0.4rem 0.8rem", borderRadius: 8, fontSize: "0.75rem", fontWeight: 700 }}>
             ⭐ Golden Rule: Every retry MUST change something!
           </div>
         </div>
@@ -390,7 +390,7 @@ export default function ThreeLayersTab() {
             <div key={idx} style={{ background: "#0d0d15", padding: "1.2rem", borderRadius: 10, border: "1px solid #2b2b3d", display: "flex", alignItems: "flex-start", gap: "0.8rem" }}>
               <span style={{ fontSize: "1.5rem" }}>{lp.icon}</span>
               <div>
-                <div style={{ fontWeight: 800, color: "#5A4FA3", fontSize: "0.9rem" }}>{lp.name}</div>
+                <div style={{ fontWeight: 800, color: "#7A6BA8", fontSize: "0.9rem" }}>{lp.name}</div>
                 <div style={{ fontSize: "0.8rem", color: "#9ca3af", marginTop: "0.2rem", lineHeight: 1.4 }}>{lp.desc}</div>
               </div>
             </div>
@@ -407,7 +407,7 @@ export default function ThreeLayersTab() {
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left", fontSize: "0.85rem" }}>
             <thead>
-              <tr style={{ background: "#11111b", borderBottom: "2px solid #374151", color: "#A34A28" }}>
+              <tr style={{ background: "#11111b", borderBottom: "2px solid #374151", color: "#C47A6A" }}>
                 <th style={{ padding: "0.9rem 1rem" }}>Observed Production Symptom</th>
                 <th style={{ padding: "0.9rem 1rem" }}>Culprit Layer</th>
                 <th style={{ padding: "0.9rem 1rem" }}>Actionable Debugging Steps</th>
@@ -444,7 +444,7 @@ export default function ThreeLayersTab() {
                 onClick={() => toggleFlip(idx)}
                 style={{
                   background: isFlipped ? "#1e1b4b" : "#0d0d15",
-                  border: `1px solid ${isFlipped ? "#C5ADEA" : "#374151"}`,
+                  border: `1px solid ${isFlipped ? "#C9B8E8" : "#374151"}`,
                   borderRadius: 12,
                   padding: "1.5rem",
                   cursor: "pointer",
@@ -457,7 +457,7 @@ export default function ThreeLayersTab() {
               >
                 <div>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.8rem" }}>
-                    <span style={{ fontSize: "0.7rem", color: "#A34A28", fontWeight: 700, textTransform: "uppercase" }}>{card.cat}</span>
+                    <span style={{ fontSize: "0.7rem", color: "#C47A6A", fontWeight: 700, textTransform: "uppercase" }}>{card.cat}</span>
                     <span style={{ fontSize: "0.7rem", color: "#6b7280" }}>{isFlipped ? "Answer" : "Question"}</span>
                   </div>
                   <div style={{ fontSize: "0.9rem", color: isFlipped ? "#c084fc" : "#f9fafb", fontWeight: isFlipped ? 500 : 700, lineHeight: 1.5 }}>

@@ -34,10 +34,10 @@ export default function PromptContractsTab() {
         </div>
         {sub === 'parts' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div><h3 style={{ margin: 0 }}>📜 Four contract parts + breaking table</h3></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{CONTRACT_PARTS.map((c, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: '#17837F', fontWeight: 'bold' }}>{c.part}</div><div style={{ fontSize: '11px', color: 'white' }}>{c.rule}</div><div style={{ fontSize: '11px', color: '#ef4444' }}>breaks: {c.breaks}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{CONTRACT_PARTS.map((c, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: '#3A9B9F', fontWeight: 'bold' }}>{c.part}</div><div style={{ fontSize: '11px', color: 'white' }}>{c.rule}</div><div style={{ fontSize: '11px', color: '#ef4444' }}>breaks: {c.breaks}</div></Card>))}</Grid>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Change</th><th style={{ padding: '8px' }}>Breaking?</th><th style={{ textAlign: 'left', padding: '8px' }}>Gate</th></tr></thead>
-            <tbody>{BREAKING_TABLE.map((b, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white' }}>{b.change}</td><td style={{ padding: '8px', textAlign: 'center', color: b.breaking === 'YES' ? '#ef4444' : '#2AB5B0', fontWeight: 'bold' }}>{b.breaking}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{b.gate}</td></tr>))}</tbody></table></div>
+            <tbody>{BREAKING_TABLE.map((b, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white' }}>{b.change}</td><td style={{ padding: '8px', textAlign: 'center', color: b.breaking === 'YES' ? '#ef4444' : '#5EC4C8', fontWeight: 'bold' }}>{b.breaking}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{b.gate}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Change-gate simulator</h3></div>
@@ -48,8 +48,8 @@ export default function PromptContractsTab() {
                   <label key={i} style={{ fontSize: '12px', color: 'white', cursor: 'pointer' }}><input type="checkbox" checked={val} onChange={e => set(e.target.checked)} /> {l}</label>))}
               </Stack>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${v.violations.length ? '#ef4444' : '#2AB5B0'}` }}>
-              <strong style={{ color: v.violations.length ? '#ef4444' : '#2AB5B0' }}>{v.verdict}</strong>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${v.violations.length ? '#ef4444' : '#5EC4C8'}` }}>
+              <strong style={{ color: v.violations.length ? '#ef4444' : '#5EC4C8' }}>{v.verdict}</strong>
               {v.violations.map((x, i) => (<div key={i} style={{ fontSize: '11px', color: '#ef4444', marginTop: '4px' }}>✕ {x}</div>))}
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '8px' }}>{v.next}</div>
             </Card>

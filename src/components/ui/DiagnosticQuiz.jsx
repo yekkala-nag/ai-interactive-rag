@@ -183,7 +183,7 @@ export function DiagnosticQuiz({ open, onClose, initialGoal = 'foundations', onC
                   const isAnswer = origIdx === q.answer;
                   const isPicked = picked === origIdx;
                   let border = 'var(--ds-color-border-default)', bg = 'transparent';
-                  if (revealed && isAnswer) { border = '#2AB5B0'; bg = 'rgba(16,185,129,0.12)'; }
+                  if (revealed && isAnswer) { border = '#5EC4C8'; bg = 'rgba(16,185,129,0.12)'; }
                   else if (revealed && isPicked) { border = '#ef4444'; bg = 'rgba(239,68,68,0.1)'; }
                   return (
                     <button

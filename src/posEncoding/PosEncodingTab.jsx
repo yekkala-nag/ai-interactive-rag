@@ -30,14 +30,14 @@ export default function PosEncodingTab() {
           <button key={t.id} onClick={() => setSub(t.id)} style={navBtn(sub, t.id)}><div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'pipeline' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{PE_PIPELINE.map((s, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${i === 3 ? '#ef4444' : i === 4 ? '#2AB5B0' : '#2AB5B0'}` }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{s.step}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.detail}</div><div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace' }}>{s.math}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{PE_PIPELINE.map((s, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `3px solid ${i === 3 ? '#ef4444' : i === 4 ? '#5EC4C8' : '#5EC4C8'}` }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{s.step}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{s.detail}</div><div style={{ fontSize: '11px', color: '#3A9B9F', fontFamily: 'monospace' }}>{s.math}</div></Card>))}</Grid>
           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
               <strong style={{ fontSize: '12px', color: '#F5A623' }}>Position must supply 5 things:</strong>
               {PE_REQUIREMENTS.map((r, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}><span style={{ color: 'white' }}>{r.need}:</span> {r.ex}</div>))}
             </Card>
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-              <strong style={{ fontSize: '12px', color: '#17837F' }}>Three encodings:</strong>
+              <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>Three encodings:</strong>
               {PE_METHODS.map((m, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}><span style={{ color: 'white' }}>{m.method}:</span> {m.how} <span style={{ color: 'var(--ds-color-text-tertiary)' }}>({m.cost}; {m.limit})</span></div>))}
             </Card>
           </Grid>
@@ -56,8 +56,8 @@ export default function PosEncodingTab() {
             </Card>
             <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #F5A623' }}>
               <div style={{ fontSize: '12px', color: '#ef4444' }}>no p: {d.noPE}</div>
-              <div style={{ fontSize: '12px', color: '#17837F', marginTop: '6px' }}>with p: {d.withPE}</div>
-              <div style={{ fontSize: '12px', color: '#17837F', marginTop: '6px' }}>{lag} → {lagInfo.captures}</div>
+              <div style={{ fontSize: '12px', color: '#3A9B9F', marginTop: '6px' }}>with p: {d.withPE}</div>
+              <div style={{ fontSize: '12px', color: '#3A9B9F', marginTop: '6px' }}>{lag} → {lagInfo.captures}</div>
               <div style={{ fontSize: '11px', color: 'white', fontWeight: 'bold', marginTop: '6px' }}>{d.verdict}</div>
             </Card>
           </Grid>

@@ -5,10 +5,10 @@
 // ============================================================================
 
 export const VALIDITY_STATES = [
-  { state: "ACTIVE", means: "Current evidence supports it — act", color: "#17837F" },
+  { state: "ACTIVE", means: "Current evidence supports it — act", color: "#3A9B9F" },
   { state: "STALE", means: "Once true, newer data exists — verify (1 step)", color: "#F5A623" },
   { state: "SUPERSEDED", means: "Replaced outright — replan now, zero execution", color: "#ef4444" },
-  { state: "UNKNOWN", means: "Insufficient evidence — verify, don't fail", color: "#17837F" }
+  { state: "UNKNOWN", means: "Insufficient evidence — verify, don't fail", color: "#3A9B9F" }
 ];
 
 export const INVALIDITY_TYPES = [

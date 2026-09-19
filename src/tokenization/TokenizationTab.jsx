@@ -32,10 +32,10 @@ export default function TokenizationTab() {
         {sub === 'algos' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Algorithm</th><th style={{ textAlign: 'left', padding: '8px' }}>How</th><th style={{ padding: '8px' }}>Vocab</th><th style={{ textAlign: 'left', padding: '8px' }}>Trait</th></tr></thead>
-            <tbody>{ALGO_TABLE.map((a, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{a.algo}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.how}</td><td style={{ padding: '8px', textAlign: 'center', color: '#17837F', fontFamily: 'monospace' }}>{a.vocab}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.trait}</td></tr>))}</tbody></table></div>
+            <tbody>{ALGO_TABLE.map((a, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{a.algo}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.how}</td><td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F', fontFamily: 'monospace' }}>{a.vocab}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{a.trait}</td></tr>))}</tbody></table></div>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Language</th><th style={{ padding: '8px' }}>Fertility ×</th><th style={{ textAlign: 'left', padding: '8px' }}>Note</th></tr></thead>
-            <tbody>{FERTILITY.map((f, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white' }}>{f.lang}</td><td style={{ padding: '8px', textAlign: 'center', color: f.mult >= 1.5 ? '#ef4444' : '#2AB5B0', fontWeight: 'bold' }}>{f.mult}x</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{f.note}</td></tr>))}</tbody></table></div>
+            <tbody>{FERTILITY.map((f, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white' }}>{f.lang}</td><td style={{ padding: '8px', textAlign: 'center', color: f.mult >= 1.5 ? '#ef4444' : '#5EC4C8', fontWeight: 'bold' }}>{f.mult}x</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{f.note}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Fertility & cost simulator</h3></div>
@@ -47,9 +47,9 @@ export default function TokenizationTab() {
               <select value={lang} onChange={e2 => setLang(e2.target.value)} style={{ width: '100%', background: 'var(--ds-color-bg-surface)', color: 'white', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '6px', fontSize: '12px' }}>
                 <option value="English">English</option><option value="Spanish">Spanish / French</option><option value="Hindi">Hindi / Arabic</option><option value="Chinese">Chinese</option><option value="Code">Code / JSON</option></select>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${e.fertility >= 2 ? '#ef4444' : '#2AB5B0'}` }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${e.fertility >= 2 ? '#ef4444' : '#5EC4C8'}` }}>
               <div style={{ fontSize: '16px', color: 'white', fontFamily: 'monospace' }}>{e.tokens.toLocaleString()} tokens</div>
-              <div style={{ fontSize: '12px', color: '#17837F' }}>fertility {e.fertility} t/w · ${e.costPer1kDocs}/1k docs @ $5/M</div>
+              <div style={{ fontSize: '12px', color: '#3A9B9F' }}>fertility {e.fertility} t/w · ${e.costPer1kDocs}/1k docs @ $5/M</div>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>{e.note}</div>
             </Card>
           </Grid>

@@ -30,18 +30,18 @@ function ensureWfKeyframes() {
 }
 
 const ACCENTS = {
-  rag: "#A34A28",
-  foundations: "#17837F",
-  context: "#8B7BD8",
+  rag: "#C47A6A",
+  foundations: "#3A9B9F",
+  context: "#9B89C4",
   agents: "#DC2626",
-  platform: "#2AB5B0",
-  frontiers: "#2AB5B0",
+  platform: "#5EC4C8",
+  frontiers: "#5EC4C8",
 };
 
 export default function Workflow({
   steps = [],
   orientation = "horizontal",
-  accent = "#17837F",
+  accent = "#3A9B9F",
   autoPlay = false,
   accentLabel,
   title,

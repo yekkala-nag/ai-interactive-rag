@@ -11,8 +11,8 @@ const COLORS = {
   text: "#E2E8F0",
   muted: "#7A8BA8",
   amber: "#F59E0B",
-  sky: "#2AB5B0",
-  emerald: "#2AB5B0",
+  sky: "#5EC4C8",
+  emerald: "#5EC4C8",
   rose: "#F43F5E",
   violet: "#A78BFA",
 };

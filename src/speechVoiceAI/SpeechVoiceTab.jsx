@@ -95,11 +95,11 @@ export default function SpeechVoiceTab() {
 
                 <Grid columns={{ base: '1fr', md: 'repeat(4, 1fr)' }} gap="var(--ds-space-3)">
                   {AUDIO_PROCESSING_STAGES.map((st, idx) => (
-                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
-                      <strong style={{ fontSize: '12px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
+                    <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #5EC4C8' }}>
+                      <strong style={{ fontSize: '12px', color: '#3A9B9F', display: 'block', marginBottom: '6px' }}>
                         {st.stage}
                       </strong>
-                      <div style={{ background: '#090d16', padding: '6px 8px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#17837F', marginBottom: '8px' }}>
+                      <div style={{ background: '#090d16', padding: '6px 8px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: '#3A9B9F', marginBottom: '8px' }}>
                         {st.tech}
                       </div>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -130,8 +130,8 @@ export default function SpeechVoiceTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       AUDIO ENCODER (TRANSFORMER):
                     </strong>
                     <Stack gap={2} style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
@@ -142,8 +142,8 @@ export default function SpeechVoiceTab() {
                     </Stack>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       TEXT DECODER & MULTITASK TOKENS:
                     </strong>
                     <Stack gap={2} style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
@@ -173,10 +173,10 @@ export default function SpeechVoiceTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                   {VOICE_AGENT_ARCHITECTURES.map((v) => (
-                    <Card key={v.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${v.id === 'native_s2s' ? '#2AB5B0' : '#F5A623'}` }}>
+                    <Card key={v.id} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${v.id === 'native_s2s' ? '#5EC4C8' : '#F5A623'}` }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '6px' }}>
-                        <strong style={{ fontSize: '13px', color: v.id === 'native_s2s' ? '#2AB5B0' : '#F5A623' }}>{v.name}</strong>
-                        <Badge variant="subtle" style={{ color: v.id === 'native_s2s' ? '#2AB5B0' : '#F5A623', background: v.id === 'native_s2s' ? 'rgba(16,185,129,0.15)' : 'rgba(245,166,35,0.15)' }}>
+                        <strong style={{ fontSize: '13px', color: v.id === 'native_s2s' ? '#5EC4C8' : '#F5A623' }}>{v.name}</strong>
+                        <Badge variant="subtle" style={{ color: v.id === 'native_s2s' ? '#5EC4C8' : '#F5A623', background: v.id === 'native_s2s' ? 'rgba(16,185,129,0.15)' : 'rgba(245,166,35,0.15)' }}>
                           {v.latency}
                         </Badge>
                       </Flex>
@@ -224,9 +224,9 @@ export default function SpeechVoiceTab() {
                   ))}
                 </div>
 
-                <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                   <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F' }}>
                       {AUDIO_CODEC_RVQ_LEVELS[selectedCodecLevel].level}
                     </strong>
                     <Badge variant="outline">
@@ -235,7 +235,7 @@ export default function SpeechVoiceTab() {
                   </Flex>
 
                   <div style={{ background: '#090d16', padding: '10px 12px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '12px', color: 'white', marginBottom: '8px' }}>
-                    Token Generation Rate: <span style={{ color: '#17837F' }}>{AUDIO_CODEC_RVQ_LEVELS[selectedCodecLevel].tokensPerSec} tokens / sec</span>
+                    Token Generation Rate: <span style={{ color: '#3A9B9F' }}>{AUDIO_CODEC_RVQ_LEVELS[selectedCodecLevel].tokensPerSec} tokens / sec</span>
                   </div>
 
                   <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: 0 }}>

@@ -59,7 +59,7 @@ export default function PdfOverlayViewer({ file, lineDf, candidates, threshold }
   return (
     <div style={{ background: '#ffffff', borderRadius: 8, border: '1px solid #e0dcd4', padding: '1rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.65rem', fontWeight: 700, color: '#17837F', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '0.65rem', fontWeight: 700, color: '#3A9B9F', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
           PDF Visual Bounding-Box Overlay Scorer
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -144,7 +144,7 @@ export default function PdfOverlayViewer({ file, lineDf, candidates, threshold }
                       right: -110,
                       top: -2,
                       background: '#1e293b',
-                      color: '#17837F',
+                      color: '#3A9B9F',
                       padding: '0.1rem 0.4rem',
                       borderRadius: 4,
                       fontSize: '0.55rem',
@@ -164,7 +164,7 @@ export default function PdfOverlayViewer({ file, lineDf, candidates, threshold }
 
       {hoveredCandidate && (
         <div style={{ marginTop: '0.75rem', background: '#0f172a', color: '#f8fafc', padding: '0.75rem', borderRadius: 6, fontSize: '0.68rem', fontFamily: 'DM Mono, monospace' }}>
-          <div style={{ color: '#17837F', fontWeight: 700, marginBottom: '0.3rem' }}>Line Inspector Telemetry</div>
+          <div style={{ color: '#3A9B9F', fontWeight: 700, marginBottom: '0.3rem' }}>Line Inspector Telemetry</div>
           <div>Text: "{hoveredCandidate.text}"</div>
           <div>Heading Score: {hoveredCandidate.heading_score?.toFixed(2) || '0.00'} | Font Size: {hoveredCandidate.font_size?.toFixed(1)}pt | Bold Ratio: {((hoveredCandidate.bold_ratio || 0) * 100).toFixed(0)}%</div>
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.3rem', fontSize: '0.6rem', color: '#94a3b8' }}>

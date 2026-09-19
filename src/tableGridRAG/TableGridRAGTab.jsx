@@ -67,10 +67,10 @@ export default function TableGridRAGTab() {
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>PDF table = drawn rectangles + positioned text, no row/column markers. Three simultaneous failures: structure lost → label/value split; header on p1 only → later pages are noise; no rows → line-citation (Art.8) can't point at "row 47". Fix: restore native structured form early.</p></div>
                 <Stack gap={3}>
                   {REPRESENTATION_LEVELS.map(l => (
-                    <Card key={l.id} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${l.id === 'A' ? '#2AB5B0' : l.id === 'B' ? '#F5A623' : l.id === 'C' ? '#2AB5B0' : '#64748b'}` }}>
-                      <Flex justify="space-between" align="center"><strong style={{ color: 'white' }}>Level {l.id}: {l.name}</strong><Badge variant="subtle" style={{ fontSize: '9px', background: 'rgba(56,189,248,0.15)', color: '#17837F' }}>{l.shape}</Badge></Flex>
+                    <Card key={l.id} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${l.id === 'A' ? '#5EC4C8' : l.id === 'B' ? '#F5A623' : l.id === 'C' ? '#5EC4C8' : '#64748b'}` }}>
+                      <Flex justify="space-between" align="center"><strong style={{ color: 'white' }}>Level {l.id}: {l.name}</strong><Badge variant="subtle" style={{ fontSize: '9px', background: 'rgba(56,189,248,0.15)', color: '#3A9B9F' }}>{l.shape}</Badge></Flex>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>{l.when}</div>
-                      <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#17837F', marginTop: '4px' }}>{l.example}</div>
+                      <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#3A9B9F', marginTop: '4px' }}>{l.example}</div>
                     </Card>
                   ))}
                 </Stack>
@@ -102,10 +102,10 @@ export default function TableGridRAGTab() {
                     <label style={{ fontSize: '11px', color: 'white' }}>Question type</label>
                     <select value={question} onChange={e => setQuestion(e.target.value)} style={sel}><option value="cell">cell lookup</option><option value="column">range / column</option><option value="aggregate">aggregate</option></select>
                   </Card>
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '12px', color: '#17837F' }}>COMPOSITION: {dispatch.composition}</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>COMPOSITION: {dispatch.composition}</strong>
                     <div style={{ fontSize: '11px', color: 'white', marginTop: '6px' }}>Level: {dispatch.level}</div>
-                    <div style={{ fontSize: '11px', color: '#17837F', marginTop: '4px' }}>Answer: {dispatch.answer}</div>
+                    <div style={{ fontSize: '11px', color: '#3A9B9F', marginTop: '4px' }}>Answer: {dispatch.answer}</div>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginTop: '8px' }}>AUDIT TRAIL:</div>
                     {dispatch.audit.map((a, i) => (<div key={i} style={{ fontSize: '11px', fontFamily: 'monospace', color: 'var(--ds-color-text-secondary)' }}>{i + 1}. {a}</div>))}
                   </Card>
@@ -121,8 +121,8 @@ export default function TableGridRAGTab() {
                   <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                     <div><div style={{ fontSize: '11px', color: '#ef4444', fontWeight: 'bold' }}>FLATTENED ({proj.flattenedChars} chars, {proj.flattenedRows} rows of noise):</div>
                       <div style={{ fontSize: '11px', fontFamily: 'monospace', color: 'var(--ds-color-text-tertiary)' }}>label … value … which row is wheat?</div></div>
-                    <div><div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>PROJECTED (O3): {proj.cellAnswer}</div>
-                      <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#17837F' }}>{proj.sql}</div></div>
+                    <div><div style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>PROJECTED (O3): {proj.cellAnswer}</div>
+                      <div style={{ fontSize: '11px', fontFamily: 'monospace', color: '#3A9B9F' }}>{proj.sql}</div></div>
                   </Grid>
                 </Card>
               </Stack>
@@ -138,11 +138,11 @@ export default function TableGridRAGTab() {
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>Each op takes table_df → returns table_df. Idempotent: non-matching precondition = no-op. O4 is the B→C/D promotion.</p></div>
                 <Stack gap={3}>
                   {OPERATIONS.map(o => (
-                    <Card key={o.id} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${o.id === 'O5' ? '#ef4444' : o.id === 'O4' ? '#2AB5B0' : '#2AB5B0'}` }}>
+                    <Card key={o.id} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${o.id === 'O5' ? '#ef4444' : o.id === 'O4' ? '#5EC4C8' : '#5EC4C8'}` }}>
                       <Flex justify="space-between" align="center"><strong style={{ color: 'white' }}>{o.id}: {o.name}</strong><Badge variant="subtle" style={{ fontSize: '9px' }}>{o.cost}</Badge></Flex>
                       <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)" style={{ fontSize: '11px', marginTop: '6px' }}>
                         <div><span style={{ color: '#F5A623', fontWeight: 'bold' }}>When: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{o.pre}</span></div>
-                        <div><span style={{ color: '#17837F', fontWeight: 'bold' }}>Does: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{o.does}</span></div>
+                        <div><span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>Does: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{o.does}</span></div>
                         <div><span style={{ color: '#ef4444', fontWeight: 'bold' }}>Fails: </span><span style={{ color: 'var(--ds-color-text-secondary)' }}>{o.fail}</span></div>
                       </Grid>
                     </Card>
@@ -150,8 +150,8 @@ export default function TableGridRAGTab() {
                 </Stack>
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">
                   {QUESTION_TYPES.map((q, i) => (
-                    <Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #FF8A6B' }}>
-                      <div style={{ fontSize: '11px', color: '#A34A28', fontWeight: 'bold' }}>{q.type}</div>
+                    <Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #F0A89A' }}>
+                      <div style={{ fontSize: '11px', color: '#C47A6A', fontWeight: 'bold' }}>{q.type}</div>
                       <div style={{ fontSize: '11px', color: 'white' }}>"{q.q}"</div>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{q.path}</div>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>cite: {q.cite}</div>
@@ -170,10 +170,10 @@ export default function TableGridRAGTab() {
                 <div><h3 style={{ margin: 0 }}>🛠️ Evidence on real docs + dispatcher code</h3></div>
                 <Stack gap={3}>
                   {REAL_EXAMPLES.map((e, i) => (
-                    <Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                    <Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                       <strong style={{ fontSize: '12px', color: 'white' }}>{e.doc}</strong>
                       <div style={{ fontSize: '11px', color: '#F5A623', marginTop: '4px' }}>Diagnostic: {e.diag}</div>
-                      <div style={{ fontSize: '11px', color: '#17837F', marginTop: '2px' }}>Fix: {e.fix}</div>
+                      <div style={{ fontSize: '11px', color: '#3A9B9F', marginTop: '2px' }}>Fix: {e.fix}</div>
                     </Card>
                   ))}
                 </Stack>
@@ -181,7 +181,7 @@ export default function TableGridRAGTab() {
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
                     <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Diagnostic field</th><th style={{ textAlign: 'left', padding: '8px' }}>Values</th><th style={{ textAlign: 'left', padding: '8px' }}>Drives</th></tr></thead>
                     <tbody>{DIAGNOSTIC_FIELDS.map((d, i) => (
-                      <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{d.field}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{d.values.join(' · ')}</td><td style={{ padding: '8px', color: '#17837F' }}>{d.drives}</td></tr>))}</tbody>
+                      <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{d.field}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{d.values.join(' · ')}</td><td style={{ padding: '8px', color: '#3A9B9F' }}>{d.drives}</td></tr>))}</tbody>
                   </table>
                 </div>
                 <CodeBlock language="python" code={PYTHON_TABLE_GRID_CODE} />

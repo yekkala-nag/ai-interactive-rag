@@ -14,7 +14,7 @@ export default function HumanCentricTab() {
   const [auto, setAuto] = useState(1);
   const [ext, setExt] = useState(1);
   const r = ROLLOUT_GATE(auto, ext);
-  const rc = r.zone.startsWith('GREEN') ? '#2AB5B0' : r.zone.startsWith('AMBER') ? '#F5A623' : '#ef4444';
+  const rc = r.zone.startsWith('GREEN') ? '#5EC4C8' : r.zone.startsWith('AMBER') ? '#F5A623' : '#ef4444';
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
       <Hero moduleId="foundations" moduleLabel="Foundations & Architecture [Human-Centric AI]"
@@ -42,7 +42,7 @@ export default function HumanCentricTab() {
               <input type="range" min="0" max="3" value={auto} onChange={e => setAuto(+e.target.value)} style={{ width: '100%', marginBottom: '8px' }} />
               <label style={{ fontSize: '11px', color: 'white' }}>Exposure: {['internal', 'advisors', 'applicants', 'customers'][ext]}</label>
               <input type="range" min="0" max="3" value={ext} onChange={e => setExt(+e.target.value)} style={{ width: '100%' }} />
-              <div style={{ marginTop: '8px' }}>{CONCENTRIC_AXES.map((c, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}><span style={{ color: '#17837F' }}>{c.axis}:</span> {c.rule}</div>))}</div>
+              <div style={{ marginTop: '8px' }}>{CONCENTRIC_AXES.map((c, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}><span style={{ color: '#3A9B9F' }}>{c.axis}:</span> {c.rule}</div>))}</div>
             </Card>
             <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${rc}` }}>
               <div style={{ fontSize: '20px', color: rc, fontWeight: 'bold' }}>{r.risk} · {r.zone}</div>
@@ -54,7 +54,7 @@ export default function HumanCentricTab() {
         </Stack></Card></Stack>)}
         {sub === 'code' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🛠️ Value-sensitive pillars + rollout code</h3></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{VSD_PILLARS.map((v, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{v.pillar}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{v.does}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{VSD_PILLARS.map((v, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{v.pillar}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{v.does}</div></Card>))}</Grid>
           <CodeBlock language="python" code={PYTHON_HUMAN_CODE} />
           <Callout type="success"><strong>Obvion playbook:</strong> resource the ethics work explicitly, staff for process-understanding (not just numbers), and roll out concentrically — the mortgage stakes demand nothing less.</Callout>
         </Stack></Card></Stack>)}

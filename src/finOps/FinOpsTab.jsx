@@ -34,7 +34,7 @@ export default function FinOpsTab() {
         {sub === 'levers' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ padding: '8px' }}>#</th><th style={{ textAlign: 'left', padding: '8px' }}>Lever</th><th style={{ padding: '8px' }}>Saves</th><th style={{ textAlign: 'left', padding: '8px' }}>Needs</th><th style={{ textAlign: 'left', padding: '8px' }}>Risk</th></tr></thead>
-            <tbody>{COST_MODEL.map((c, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>{i + 1}</td><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{c.lever}</td><td style={{ padding: '8px', textAlign: 'center', color: '#17837F' }}>{c.saves}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{c.needs}</td><td style={{ padding: '8px', color: '#F5A623' }}>{c.risk}</td></tr>))}</tbody></table></div>
+            <tbody>{COST_MODEL.map((c, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', textAlign: 'center', color: 'white', fontWeight: 'bold' }}>{i + 1}</td><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{c.lever}</td><td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F' }}>{c.saves}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{c.needs}</td><td style={{ padding: '8px', color: '#F5A623' }}>{c.risk}</td></tr>))}</tbody></table></div>
           <Callout type="success"><strong>Apply in order:</strong> cache → route → filter → compress → rerank. Each later lever multiplies a smaller base — order is the strategy.</Callout>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
@@ -52,9 +52,9 @@ export default function FinOpsTab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Cache hit: {cached}%</label>
               <input type="range" min="0" max="80" value={cached} onChange={e => setCached(+e.target.value)} style={{ width: '100%' }} />
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
               <div style={{ fontSize: '12px', color: 'var(--ds-color-text-tertiary)', textDecoration: 'line-through' }}>Flagship-only: ${b.full.toLocaleString()}/mo</div>
-              <div style={{ fontSize: '20px', color: '#17837F', fontWeight: 'bold' }}>${b.opt.toLocaleString()}/mo</div>
+              <div style={{ fontSize: '20px', color: '#3A9B9F', fontWeight: 'bold' }}>${b.opt.toLocaleString()}/mo</div>
               <div style={{ fontSize: '12px', color: 'white' }}>saved ${b.saved.toLocaleString()} ({b.savedPct}%)</div>
               <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>{b.note}</div>
             </Card>

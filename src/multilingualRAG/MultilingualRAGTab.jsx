@@ -34,8 +34,8 @@ export default function MultilingualRAGTab() {
         {sub === 'routes' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Route</th><th style={{ padding: '8px' }}>Quality</th><th style={{ padding: '8px' }}>Cost</th><th style={{ textAlign: 'left', padding: '8px' }}>Best for</th></tr></thead>
-            <tbody>{STRATEGY_TABLE.map((s2, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{s2.route}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{s2.quality}</td><td style={{ padding: '8px', textAlign: 'center', color: '#F5A623' }}>{s2.cost}</td><td style={{ padding: '8px', color: '#17837F' }}>{s2.best}</td></tr>))}</tbody></table></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{FAILURE_TABLE.map((f, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #ef4444' }}><div style={{ fontSize: '12px', color: '#ef4444', fontWeight: 'bold' }}>{f.fail}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{f.detail}</div><div style={{ fontSize: '11px', color: '#17837F' }}>fix: {f.fix}</div></Card>))}</Grid>
+            <tbody>{STRATEGY_TABLE.map((s2, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{s2.route}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{s2.quality}</td><td style={{ padding: '8px', textAlign: 'center', color: '#F5A623' }}>{s2.cost}</td><td style={{ padding: '8px', color: '#3A9B9F' }}>{s2.best}</td></tr>))}</tbody></table></div>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{FAILURE_TABLE.map((f, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #ef4444' }}><div style={{ fontSize: '12px', color: '#ef4444', fontWeight: 'bold' }}>{f.fail}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{f.detail}</div><div style={{ fontSize: '11px', color: '#3A9B9F' }}>fix: {f.fix}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Route picker simulator</h3></div>
@@ -49,8 +49,8 @@ export default function MultilingualRAGTab() {
               <select value={vol} onChange={e => setVol(e.target.value)} style={sel}><option value="low">low</option><option value="high">high</option></select>
               <label style={{ fontSize: '11px', color: 'white' }}><input type="checkbox" checked={lat} onChange={e => setLat(e.target.checked)} /> latency-sensitive</label>
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-              <strong style={{ color: '#17837F' }}>{r.route}</strong>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+              <strong style={{ color: '#3A9B9F' }}>{r.route}</strong>
               <div style={{ fontSize: '12px', color: 'white', marginTop: '6px' }}>{r.why}</div>
             </Card>
           </Grid>

@@ -156,8 +156,8 @@ export default function KnowledgeBaseTab() {
                       <Badge variant="primary">Deliverable</Badge>
                     </Flex>
 
-                    <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '12px 14px', borderRadius: '8px', borderLeft: '4px solid #17837F' }}>
-                      <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', textTransform: 'uppercase' }}>
+                    <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '12px 14px', borderRadius: '8px', borderLeft: '4px solid #3A9B9F' }}>
+                      <strong style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', textTransform: 'uppercase' }}>
                         KEY STAGE OUTCOME:
                       </strong>
                       <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-primary)', marginTop: '4px' }}>
@@ -174,7 +174,7 @@ export default function KnowledgeBaseTab() {
                           {TOP_10_SEED_QUESTIONS.map(q => (
                             <div key={q.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 10px', background: 'var(--ds-color-bg-surface)', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '6px' }}>
                               <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-primary)' }}>
-                                <strong style={{ color: '#17837F' }}>[{q.category}]</strong> {q.question}
+                                <strong style={{ color: '#3A9B9F' }}>[{q.category}]</strong> {q.question}
                               </span>
                               <Badge variant="success" size="sm">{q.status}</Badge>
                             </div>
@@ -233,7 +233,7 @@ export default function KnowledgeBaseTab() {
                   </Card>
 
                   {/* CLEANED & NORMALIZED */}
-                  <Card style={{ padding: 'var(--ds-space-4)', background: activeDoc.isDuplicate ? 'rgba(239,68,68,0.04)' : 'rgba(16,185,129,0.04)', border: `1px solid ${activeDoc.isDuplicate ? '#ef4444' : '#2AB5B0'}` }}>
+                  <Card style={{ padding: 'var(--ds-space-4)', background: activeDoc.isDuplicate ? 'rgba(239,68,68,0.04)' : 'rgba(16,185,129,0.04)', border: `1px solid ${activeDoc.isDuplicate ? '#ef4444' : '#5EC4C8'}` }}>
                     <Stack gap={2}>
                       <Badge variant={activeDoc.isDuplicate ? 'danger' : 'success'}>
                         {activeDoc.isDuplicate ? `DUPLICATE DETECTED (${(activeDoc.similarityScore * 100).toFixed(0)}% Similarity ➔ PURGED)` : 'CLEANED & NORMALIZED'}
@@ -283,7 +283,7 @@ export default function KnowledgeBaseTab() {
                         key={doc.id}
                         style={{
                           padding: 'var(--ds-space-4)',
-                          borderTop: `4px solid ${isAllowed ? '#2AB5B0' : '#ef4444'}`,
+                          borderTop: `4px solid ${isAllowed ? '#5EC4C8' : '#ef4444'}`,
                           opacity: isAllowed ? 1 : 0.6
                         }}
                       >
@@ -328,7 +328,7 @@ export default function KnowledgeBaseTab() {
                       key={strat.id}
                       style={{
                         padding: 'var(--ds-space-4)',
-                        borderTop: `4px solid ${selectedIndexStrategy === strat.id ? '#17837F' : 'var(--ds-color-border-subtle)'}`,
+                        borderTop: `4px solid ${selectedIndexStrategy === strat.id ? '#3A9B9F' : 'var(--ds-color-border-subtle)'}`,
                         background: selectedIndexStrategy === strat.id ? 'var(--ds-color-bg-surfaceHover)' : 'var(--ds-color-bg-surface)',
                         cursor: 'pointer'
                       }}
@@ -343,7 +343,7 @@ export default function KnowledgeBaseTab() {
                           <strong>Recall Accuracy:</strong> {strat.recallAccuracy}
                         </div>
                         <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
-                          <strong>Search Latency (1M):</strong> <span style={{ color: '#17837F', fontWeight: 'bold' }}>{strat.latency1M}</span>
+                          <strong>Search Latency (1M):</strong> <span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>{strat.latency1M}</span>
                         </div>
                         <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)' }}>
                           <strong>Memory Footprint:</strong> {strat.memoryUsage}
@@ -373,7 +373,7 @@ export default function KnowledgeBaseTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '4px solid #2AB5B0' }}>
+                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '4px solid #5EC4C8' }}>
                     <Stack gap={2}>
                       <Badge variant="success">Active (Fresh)</Badge>
                       <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>OAuth2 PKCE Docs (v4.2)</strong>

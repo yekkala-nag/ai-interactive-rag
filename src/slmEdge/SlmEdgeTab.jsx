@@ -33,8 +33,8 @@ export default function SlmEdgeTab() {
         {sub === 'distill' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Method</th><th style={{ textAlign: 'left', padding: '8px' }}>How</th><th style={{ padding: '8px' }}>Keeps</th><th style={{ textAlign: 'left', padding: '8px' }}>Needs</th></tr></thead>
-            <tbody>{DISTILL_TABLE.map((d, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{d.method}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{d.how}</td><td style={{ padding: '8px', textAlign: 'center', color: '#17837F' }}>{d.keeps}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{d.needs}</td></tr>))}</tbody></table></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{SLM_TABLE.map((m, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{m.model}</div><div style={{ fontSize: '11px', color: '#17837F', fontFamily: 'monospace' }}>{m.ram}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{m.best}</div></Card>))}</Grid>
+            <tbody>{DISTILL_TABLE.map((d, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{d.method}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{d.how}</td><td style={{ padding: '8px', textAlign: 'center', color: '#3A9B9F' }}>{d.keeps}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{d.needs}</td></tr>))}</tbody></table></div>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{SLM_TABLE.map((m, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{m.model}</div><div style={{ fontSize: '11px', color: '#3A9B9F', fontFamily: 'monospace' }}>{m.ram}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{m.best}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Edge fit simulator</h3></div>
@@ -49,7 +49,7 @@ export default function SlmEdgeTab() {
               <label style={{ fontSize: '11px', color: 'white' }}>Needed tok/s: {tps}</label>
               <input type="range" min={5} max={60} step={5} value={tps} onChange={e => setTps(+e.target.value)} style={{ width: '100%' }} />
             </Card>
-            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${f.fits ? '#2AB5B0' : '#ef4444'}` }}>
+            <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: `4px solid ${f.fits ? '#5EC4C8' : '#ef4444'}` }}>
               <div style={{ fontSize: '13px', color: 'white', fontFamily: 'monospace' }}>needs {f.needGB} GB · {f.tps} · {f.fits ? '✓ fits' : '✕ over'}</div>
               <div style={{ fontSize: '12px', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>{f.advice}</div>
             </Card>

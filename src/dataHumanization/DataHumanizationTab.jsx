@@ -148,14 +148,14 @@ export default function DataHumanizationTab() {
                   </Card>
 
                   <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)' }}>
-                    <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                    <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       ESCAPING THE 'DATA-RICH, ACTION-POOR' PARADOX:
                     </strong>
                     <Stack gap={2}>
                       <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-primary)' }}>
                         • <strong>Raw KPI (The What)</strong>: Merely states the symptom (e.g., "Cart abandonment is 75%").
                       </div>
-                      <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F' }}>
+                      <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F' }}>
                         • <strong>Humanized Insight (The Why & Who)</strong>: Explains root cause & human friction ("60% drop off at shipping page due to $15 unexpected fees").
                       </div>
                       <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#F5A623' }}>
@@ -184,7 +184,7 @@ export default function DataHumanizationTab() {
                 <div style={{ overflowX: 'auto' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 'var(--ds-font-size-caption)' }}>
                     <thead>
-                      <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', textAlign: 'left', color: '#17837F' }}>
+                      <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', textAlign: 'left', color: '#3A9B9F' }}>
                         <th style={{ padding: '8px' }}>Category</th>
                         <th style={{ padding: '8px' }}>Standard KPI (Symptom / What)</th>
                         <th style={{ padding: '8px' }}>Humanized Insight (Root Cause / Why)</th>
@@ -196,8 +196,8 @@ export default function DataHumanizationTab() {
                         <tr key={item.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                           <td style={{ padding: '8px', color: '#F5A623', fontWeight: 'bold' }}>{item.impactCategory}</td>
                           <td style={{ padding: '8px', color: '#ef4444', fontFamily: 'monospace' }}>{item.symptomKpi}</td>
-                          <td style={{ padding: '8px', color: '#17837F' }}>{item.humanizedInsight}</td>
-                          <td style={{ padding: '8px', color: '#17837F' }}>{item.actionPlan}</td>
+                          <td style={{ padding: '8px', color: '#3A9B9F' }}>{item.humanizedInsight}</td>
+                          <td style={{ padding: '8px', color: '#3A9B9F' }}>{item.actionPlan}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -229,8 +229,8 @@ export default function DataHumanizationTab() {
                   </Button>
                 </Flex>
 
-                <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                  <strong style={{ fontSize: 'var(--ds-font-size-body)', color: '#17837F', display: 'block', marginBottom: '4px' }}>
+                <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                  <strong style={{ fontSize: 'var(--ds-font-size-body)', color: '#3A9B9F', display: 'block', marginBottom: '4px' }}>
                     {frameworkData.name}
                   </strong>
                   <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '0 0 12px 0' }}>
@@ -240,7 +240,7 @@ export default function DataHumanizationTab() {
                   <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                     {frameworkData.steps.map((s, idx) => (
                       <Card key={idx} style={{ padding: '12px', background: '#090d16', border: '1px solid var(--ds-color-border-subtle)' }}>
-                        <strong style={{ fontSize: '11px', color: '#17837F', display: 'block', marginBottom: '4px' }}>
+                        <strong style={{ fontSize: '11px', color: '#3A9B9F', display: 'block', marginBottom: '4px' }}>
                           Step {idx + 1}: {s.stage}
                         </strong>
                         <div style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-primary)' }}>
@@ -269,7 +269,7 @@ export default function DataHumanizationTab() {
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
-                    <strong style={{ fontSize: '11px', color: '#17837F', display: 'block', marginBottom: '12px' }}>
+                    <strong style={{ fontSize: '11px', color: '#3A9B9F', display: 'block', marginBottom: '12px' }}>
                       ROI INPUT PARAMETERS:
                     </strong>
                     <Stack gap={3}>
@@ -293,7 +293,7 @@ export default function DataHumanizationTab() {
                   </Card>
 
                   <Card style={{ padding: '14px', background: '#090d16', border: '1px solid var(--ds-color-border-subtle)' }}>
-                    <strong style={{ fontSize: '11px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                    <strong style={{ fontSize: '11px', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       FINANCIAL ROI CALCULATION SUMMARY:
                     </strong>
                     <Stack gap={2}>
@@ -307,27 +307,27 @@ export default function DataHumanizationTab() {
                       </Flex>
                       <Flex justify="space-between">
                         <span style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>Monthly Recovered Time Value (85% savings):</span>
-                        <strong style={{ color: '#17837F', fontFamily: 'monospace' }}>+${roiResult.monthlyTimeSavings.toLocaleString()}</strong>
+                        <strong style={{ color: '#3A9B9F', fontFamily: 'monospace' }}>+${roiResult.monthlyTimeSavings.toLocaleString()}</strong>
                       </Flex>
                       <Flex justify="space-between">
                         <span style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>Monthly Decision Value Gains:</span>
-                        <strong style={{ color: '#17837F', fontFamily: 'monospace' }}>+${roiResult.decisionGainMonthly.toLocaleString()}</strong>
+                        <strong style={{ color: '#3A9B9F', fontFamily: 'monospace' }}>+${roiResult.decisionGainMonthly.toLocaleString()}</strong>
                       </Flex>
                       <hr style={{ border: 'none', borderTop: '1px solid var(--ds-color-border-subtle)', margin: '4px 0' }} />
                       <Flex justify="space-between">
                         <span style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>Annual Net Value Realized:</span>
-                        <strong style={{ color: '#17837F', fontSize: '14px', fontFamily: 'monospace' }}>${roiResult.annualValue.toLocaleString()}</strong>
+                        <strong style={{ color: '#3A9B9F', fontSize: '14px', fontFamily: 'monospace' }}>${roiResult.annualValue.toLocaleString()}</strong>
                       </Flex>
                       <Flex justify="space-between">
                         <span style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>First Year ROI %:</span>
-                        <strong style={{ color: '#17837F', fontSize: '16px', fontFamily: 'monospace' }}>+{roiResult.roiPct}% ROI</strong>
+                        <strong style={{ color: '#3A9B9F', fontSize: '16px', fontFamily: 'monospace' }}>+{roiResult.roiPct}% ROI</strong>
                       </Flex>
                     </Stack>
                   </Card>
                 </Grid>
 
                 <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)' }}>
-                  <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                  <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                     PRODUCTION PYTHON DATA HUMANATION PIPELINE:
                   </strong>
                   <CodeBlock language="python" code={PYTHON_DATA_HUMANIZATION_PIPELINE} />

@@ -127,7 +127,7 @@ export default function AIHarnessTab() {
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
       }
 
-      const color = explodes ? '#FB7185' : stability > 0.75 ? '#C5ADEA' : '#F5A623';
+      const color = explodes ? '#FB7185' : stability > 0.75 ? '#C9B8E8' : '#F5A623';
       ctx.strokeStyle = color;
       ctx.lineWidth = 2.5;
       ctx.shadowColor = color;
@@ -270,10 +270,10 @@ export default function AIHarnessTab() {
                       <path d="M0 0 L6 3 L0 6 Z" fill="#F5A623" opacity="0.8"/>
                     </marker>
                     <marker id="arrH2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                      <path d="M0 0 L6 3 L0 6 Z" fill="#2AB5B0" opacity="0.8"/>
+                      <path d="M0 0 L6 3 L0 6 Z" fill="#5EC4C8" opacity="0.8"/>
                     </marker>
                     <marker id="arrH3" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                      <path d="M0 0 L6 3 L0 6 Z" fill="#2AB5B0" opacity="0.8"/>
+                      <path d="M0 0 L6 3 L0 6 Z" fill="#5EC4C8" opacity="0.8"/>
                     </marker>
                   </defs>
 
@@ -281,13 +281,13 @@ export default function AIHarnessTab() {
                   <line x1="80" y1="110" x2="600" y2="110" stroke="#F5A623" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="8 4" markerEnd="url(#arrH)" />
                   <text x="340" y="102" textAnchor="middle" fill="#F5A623" fontSize="8" fontFamily="monospace" opacity="0.8">DATA / CONTEXT BUS</text>
 
-                  <path d="M160 110 Q160 60 130 38" stroke="#2AB5B0" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH2)"/>
-                  <path d="M270 110 Q270 55 255 32" stroke="#2AB5B0" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH2)"/>
-                  <path d="M400 110 Q400 55 415 32" stroke="#2AB5B0" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH2)"/>
-                  <path d="M520 110 Q520 60 545 38" stroke="#2AB5B0" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH2)"/>
+                  <path d="M160 110 Q160 60 130 38" stroke="#5EC4C8" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH2)"/>
+                  <path d="M270 110 Q270 55 255 32" stroke="#5EC4C8" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH2)"/>
+                  <path d="M400 110 Q400 55 415 32" stroke="#5EC4C8" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH2)"/>
+                  <path d="M520 110 Q520 60 545 38" stroke="#5EC4C8" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH2)"/>
 
-                  <path d="M220 110 Q220 160 205 182" stroke="#2AB5B0" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH3)"/>
-                  <path d="M460 110 Q460 160 475 182" stroke="#2AB5B0" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH3)"/>
+                  <path d="M220 110 Q220 160 205 182" stroke="#5EC4C8" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH3)"/>
+                  <path d="M460 110 Q460 160 475 182" stroke="#5EC4C8" strokeWidth="1.5" fill="none" opacity="0.8" markerEnd="url(#arrH3)"/>
 
                   <rect x="28" y="94" width="56" height="32" rx="6" fill="#131820" stroke="#F5A623" strokeWidth="1.5"/>
                   <text x="56" y="108" textAnchor="middle" fill="#F5A623" fontSize="7" fontFamily="monospace">DATA</text>
@@ -297,36 +297,36 @@ export default function AIHarnessTab() {
                   <text x="631" y="108" textAnchor="middle" fill="#F5A623" fontSize="7" fontFamily="monospace">INFER-</text>
                   <text x="631" y="119" textAnchor="middle" fill="#F5A623" fontSize="7" fontFamily="monospace">ENCE</text>
 
-                  <circle cx="160" cy="110" r="5" fill="#2AB5B0"/>
-                  <circle cx="270" cy="110" r="5" fill="#2AB5B0"/>
+                  <circle cx="160" cy="110" r="5" fill="#5EC4C8"/>
+                  <circle cx="270" cy="110" r="5" fill="#5EC4C8"/>
                   <circle cx="400" cy="110" r="6" fill="#F5A623"/>
-                  <circle cx="520" cy="110" r="5" fill="#2AB5B0"/>
-                  <circle cx="220" cy="110" r="4" fill="#2AB5B0"/>
-                  <circle cx="460" cy="110" r="4" fill="#2AB5B0"/>
+                  <circle cx="520" cy="110" r="5" fill="#5EC4C8"/>
+                  <circle cx="220" cy="110" r="4" fill="#5EC4C8"/>
+                  <circle cx="460" cy="110" r="4" fill="#5EC4C8"/>
 
-                  <rect x="100" y="22" width="60" height="22" rx="5" fill="#131820" stroke="#2AB5B0" strokeWidth="1.3"/>
-                  <text x="130" y="37" textAnchor="middle" fill="#2AB5B0" fontSize="7" fontFamily="monospace">TOKENISER</text>
+                  <rect x="100" y="22" width="60" height="22" rx="5" fill="#131820" stroke="#5EC4C8" strokeWidth="1.3"/>
+                  <text x="130" y="37" textAnchor="middle" fill="#5EC4C8" fontSize="7" fontFamily="monospace">TOKENISER</text>
 
-                  <rect x="220" y="16" width="70" height="22" rx="5" fill="#131820" stroke="#2AB5B0" strokeWidth="1.3"/>
-                  <text x="255" y="31" textAnchor="middle" fill="#2AB5B0" fontSize="7" fontFamily="monospace">EMBEDDING</text>
+                  <rect x="220" y="16" width="70" height="22" rx="5" fill="#131820" stroke="#5EC4C8" strokeWidth="1.3"/>
+                  <text x="255" y="31" textAnchor="middle" fill="#5EC4C8" fontSize="7" fontFamily="monospace">EMBEDDING</text>
 
-                  <rect x="378" y="16" width="76" height="22" rx="5" fill="#131820" stroke="#2AB5B0" strokeWidth="1.3"/>
-                  <text x="416" y="31" textAnchor="middle" fill="#2AB5B0" fontSize="7" fontFamily="monospace">ATTENTION</text>
+                  <rect x="378" y="16" width="76" height="22" rx="5" fill="#131820" stroke="#5EC4C8" strokeWidth="1.3"/>
+                  <text x="416" y="31" textAnchor="middle" fill="#5EC4C8" fontSize="7" fontFamily="monospace">ATTENTION</text>
 
-                  <rect x="506" y="22" width="78" height="22" rx="5" fill="#131820" stroke="#2AB5B0" strokeWidth="1.3"/>
-                  <text x="545" y="37" textAnchor="middle" fill="#2AB5B0" fontSize="7" fontFamily="monospace">FEED-FWRD</text>
+                  <rect x="506" y="22" width="78" height="22" rx="5" fill="#131820" stroke="#5EC4C8" strokeWidth="1.3"/>
+                  <text x="545" y="37" textAnchor="middle" fill="#5EC4C8" fontSize="7" fontFamily="monospace">FEED-FWRD</text>
 
-                  <rect x="158" y="176" width="95" height="22" rx="5" fill="#131820" stroke="#2AB5B0" strokeWidth="1.3"/>
-                  <text x="205" y="191" textAnchor="middle" fill="#2AB5B0" fontSize="7" fontFamily="monospace">KV CACHE / MEM</text>
+                  <rect x="158" y="176" width="95" height="22" rx="5" fill="#131820" stroke="#5EC4C8" strokeWidth="1.3"/>
+                  <text x="205" y="191" textAnchor="middle" fill="#5EC4C8" fontSize="7" fontFamily="monospace">KV CACHE / MEM</text>
 
-                  <rect x="428" y="176" width="95" height="22" rx="5" fill="#131820" stroke="#2AB5B0" strokeWidth="1.3"/>
-                  <text x="475" y="191" textAnchor="middle" fill="#2AB5B0" fontSize="7" fontFamily="monospace">EVAL / RLHF</text>
+                  <rect x="428" y="176" width="95" height="22" rx="5" fill="#131820" stroke="#5EC4C8" strokeWidth="1.3"/>
+                  <text x="475" y="191" textAnchor="middle" fill="#5EC4C8" fontSize="7" fontFamily="monospace">EVAL / RLHF</text>
                 </svg>
 
                 <Flex gap={4} justify="center" style={{ marginTop: '16px', flexWrap: 'wrap', fontSize: '0.8rem', color: 'var(--ds-color-text-secondary)' }}>
                   <span><strong style={{ color: '#F5A623' }}>—</strong> Data Bus</span>
-                  <span><strong style={{ color: '#2AB5B0' }}>●</strong> Model Layers</span>
-                  <span><strong style={{ color: '#2AB5B0' }}>●</strong> Memory & Evals</span>
+                  <span><strong style={{ color: '#5EC4C8' }}>●</strong> Model Layers</span>
+                  <span><strong style={{ color: '#5EC4C8' }}>●</strong> Memory & Evals</span>
                 </Flex>
               </div>
 
@@ -337,15 +337,15 @@ export default function AIHarnessTab() {
                   <div style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)' }}>Params in Frontier LLMs</div>
                 </Card>
                 <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)' }}>
-                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#2AB5B0', fontFamily: 'monospace' }}>96+</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#5EC4C8', fontFamily: 'monospace' }}>96+</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)' }}>Transformer Layers (GPT-4)</div>
                 </Card>
                 <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)' }}>
-                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#2AB5B0', fontFamily: 'monospace' }}>3</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#5EC4C8', fontFamily: 'monospace' }}>3</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)' }}>Training Stages (PT➔SFT➔RLHF)</div>
                 </Card>
                 <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)' }}>
-                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#C5ADEA', fontFamily: 'monospace' }}>128k+</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#C9B8E8', fontFamily: 'monospace' }}>128k+</div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)' }}>Context Window (Tokens)</div>
                 </Card>
               </Grid>
@@ -406,23 +406,23 @@ export default function AIHarnessTab() {
                       <rect x="20" y="10" width="240" height="270" rx="10" fill="#131820" stroke={selectedPartId === 'boundary' ? '#F5A623' : '#242E3F'} strokeWidth={selectedPartId === 'boundary' ? '2.5' : '1'} style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('boundary')} />
                       <text x="140" y="28" textAnchor="middle" fill="#F5A623" fontSize="8" fontFamily="monospace">SYSTEM BOUNDARY</text>
 
-                      <rect x="40" y="38" width="200" height="30" rx="6" fill="#0B0E14" stroke={selectedPartId === 'tokeniser' ? '#2AB5B0' : '#242E3F'} strokeWidth={selectedPartId === 'tokeniser' ? '2' : '1'} style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('tokeniser')} />
-                      <text x="140" y="56" textAnchor="middle" fill="#2AB5B0" fontSize="9" fontFamily="monospace">TOKENISER</text>
+                      <rect x="40" y="38" width="200" height="30" rx="6" fill="#0B0E14" stroke={selectedPartId === 'tokeniser' ? '#5EC4C8' : '#242E3F'} strokeWidth={selectedPartId === 'tokeniser' ? '2' : '1'} style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('tokeniser')} />
+                      <text x="140" y="56" textAnchor="middle" fill="#5EC4C8" fontSize="9" fontFamily="monospace">TOKENISER</text>
 
                       <rect x="40" y="76" width="200" height="30" rx="6" fill="#0B0E14" stroke={selectedPartId === 'embedding' ? '#F5A623' : '#242E3F'} strokeWidth={selectedPartId === 'embedding' ? '2' : '1'} style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('embedding')} />
                       <text x="140" y="94" textAnchor="middle" fill="#F5A623" fontSize="9" fontFamily="monospace">EMBEDDING LAYER</text>
 
-                      <rect x="40" y="114" width="200" height="74" rx="6" fill="#1A2130" stroke={selectedPartId === 'transformer' ? '#C5ADEA' : '#242E3F'} strokeWidth={selectedPartId === 'transformer' ? '2.5' : '1'} style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('transformer')} />
-                      <text x="140" y="132" textAnchor="middle" fill="#C5ADEA" fontSize="9" fontFamily="monospace">TRANSFORMER BLOCK ×N</text>
+                      <rect x="40" y="114" width="200" height="74" rx="6" fill="#1A2130" stroke={selectedPartId === 'transformer' ? '#C9B8E8' : '#242E3F'} strokeWidth={selectedPartId === 'transformer' ? '2.5' : '1'} style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('transformer')} />
+                      <text x="140" y="132" textAnchor="middle" fill="#C9B8E8" fontSize="9" fontFamily="monospace">TRANSFORMER BLOCK ×N</text>
 
-                      <rect x="52" y="142" width="80" height="20" rx="4" fill="#131820" stroke={selectedPartId === 'attention' ? '#C5ADEA' : '#242E3F'} strokeWidth="1.5" style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('attention')} />
-                      <text x="92" y="155" textAnchor="middle" fill="#C5ADEA" fontSize="7" fontFamily="monospace">ATTENTION</text>
+                      <rect x="52" y="142" width="80" height="20" rx="4" fill="#131820" stroke={selectedPartId === 'attention' ? '#C9B8E8' : '#242E3F'} strokeWidth="1.5" style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('attention')} />
+                      <text x="92" y="155" textAnchor="middle" fill="#C9B8E8" fontSize="7" fontFamily="monospace">ATTENTION</text>
 
-                      <rect x="148" y="142" width="80" height="20" rx="4" fill="#131820" stroke={selectedPartId === 'ffn' ? '#C5ADEA' : '#242E3F'} strokeWidth="1.5" style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('ffn')} />
-                      <text x="188" y="155" textAnchor="middle" fill="#C5ADEA" fontSize="7" fontFamily="monospace">FEED-FWRD</text>
+                      <rect x="148" y="142" width="80" height="20" rx="4" fill="#131820" stroke={selectedPartId === 'ffn' ? '#C9B8E8' : '#242E3F'} strokeWidth="1.5" style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('ffn')} />
+                      <text x="188" y="155" textAnchor="middle" fill="#C9B8E8" fontSize="7" fontFamily="monospace">FEED-FWRD</text>
 
-                      <rect x="40" y="196" width="200" height="26" rx="6" fill="#0B0E14" stroke={selectedPartId === 'kvcache' ? '#2AB5B0' : '#242E3F'} strokeWidth={selectedPartId === 'kvcache' ? '2' : '1'} strokeDasharray="5 3" style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('kvcache')} />
-                      <text x="140" y="213" textAnchor="middle" fill="#2AB5B0" fontSize="8" fontFamily="monospace">KV CACHE (inference)</text>
+                      <rect x="40" y="196" width="200" height="26" rx="6" fill="#0B0E14" stroke={selectedPartId === 'kvcache' ? '#5EC4C8' : '#242E3F'} strokeWidth={selectedPartId === 'kvcache' ? '2' : '1'} strokeDasharray="5 3" style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('kvcache')} />
+                      <text x="140" y="213" textAnchor="middle" fill="#5EC4C8" fontSize="8" fontFamily="monospace">KV CACHE (inference)</text>
 
                       <rect x="40" y="230" width="200" height="30" rx="6" fill="#0B0E14" stroke={selectedPartId === 'head' ? '#FB7185' : '#242E3F'} strokeWidth={selectedPartId === 'head' ? '2' : '1'} style={{ cursor: 'pointer' }} onClick={() => setSelectedPartId('head')} />
                       <text x="140" y="248" textAnchor="middle" fill="#FB7185" fontSize="9" fontFamily="monospace">OUTPUT HEAD</text>
@@ -656,7 +656,7 @@ export default function AIHarnessTab() {
                           flex: 1,
                           height: '4px',
                           borderRadius: '2px',
-                          background: qIdx < quizIndex ? '#2AB5B0' : qIdx === quizIndex ? '#F5A623' : 'var(--ds-color-border-subtle)'
+                          background: qIdx < quizIndex ? '#5EC4C8' : qIdx === quizIndex ? '#F5A623' : 'var(--ds-color-border-subtle)'
                         }}
                       />
                     ))}
@@ -682,7 +682,7 @@ export default function AIHarnessTab() {
                       if (quizAnswered) {
                         if (isCorrect) {
                           bg = 'rgba(46,204,140,0.12)';
-                          border = '1px solid #2AB5B0';
+                          border = '1px solid #5EC4C8';
                         } else if (isSelected) {
                           bg = 'rgba(255,77,77,0.12)';
                           border = '1px solid #FF4D4D';
@@ -862,7 +862,7 @@ export default function AIHarnessTab() {
                           </ul>
                         </Card>
                         <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)' }}>
-                          <strong style={{ fontSize: '11px', color: '#17837F' }}>ADVANTAGES:</strong>
+                          <strong style={{ fontSize: '11px', color: '#3A9B9F' }}>ADVANTAGES:</strong>
                           <ul style={{ margin: '4px 0 0 14px', padding: 0, fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>
                             {selectedLoop.pros.map((p, i) => <li key={i}>{p}</li>)}
                           </ul>
@@ -882,17 +882,17 @@ export default function AIHarnessTab() {
                         TRAINING LOOP COMPUTATION GRAPH:
                       </div>
                       <svg viewBox="0 0 700 160" width="100%">
-                        <rect x="20" y="55" width="72" height="48" rx="8" fill="#131820" stroke="#2AB5B0" strokeWidth="1.5"/>
-                        <text x="56" y="76" textAnchor="middle" fill="#2AB5B0" fontSize="8" fontFamily="monospace">DATA BATCH</text>
+                        <rect x="20" y="55" width="72" height="48" rx="8" fill="#131820" stroke="#5EC4C8" strokeWidth="1.5"/>
+                        <text x="56" y="76" textAnchor="middle" fill="#5EC4C8" fontSize="8" fontFamily="monospace">DATA BATCH</text>
 
-                        <line x1="92" y1="79" x2="148" y2="79" stroke="#2AB5B0" strokeWidth="2"/>
-                        <text x="120" y="70" textAnchor="middle" fill="#2AB5B0" fontSize="7" fontFamily="monospace">forward</text>
+                        <line x1="92" y1="79" x2="148" y2="79" stroke="#5EC4C8" strokeWidth="2"/>
+                        <text x="120" y="70" textAnchor="middle" fill="#5EC4C8" fontSize="7" fontFamily="monospace">forward</text>
 
-                        <rect x="150" y="45" width="90" height="68" rx="8" fill="#131820" stroke="#C5ADEA" strokeWidth="2"/>
-                        <text x="195" y="73" textAnchor="middle" fill="#C5ADEA" fontSize="8" fontFamily="monospace">MODEL (Weights)</text>
+                        <rect x="150" y="45" width="90" height="68" rx="8" fill="#131820" stroke="#C9B8E8" strokeWidth="2"/>
+                        <text x="195" y="73" textAnchor="middle" fill="#C9B8E8" fontSize="8" fontFamily="monospace">MODEL (Weights)</text>
 
-                        <line x1="240" y1="79" x2="296" y2="79" stroke="#2AB5B0" strokeWidth="2"/>
-                        <text x="268" y="70" textAnchor="middle" fill="#2AB5B0" fontSize="7" fontFamily="monospace">pred y_hat</text>
+                        <line x1="240" y1="79" x2="296" y2="79" stroke="#5EC4C8" strokeWidth="2"/>
+                        <text x="268" y="70" textAnchor="middle" fill="#5EC4C8" fontSize="7" fontFamily="monospace">pred y_hat</text>
 
                         <rect x="298" y="55" width="76" height="48" rx="8" fill="#131820" stroke="#FB7185" strokeWidth="1.5"/>
                         <text x="336" y="76" textAnchor="middle" fill="#FB7185" fontSize="8" fontFamily="monospace">LOSS L(y_hat, y)</text>
@@ -900,11 +900,11 @@ export default function AIHarnessTab() {
                         <line x1="374" y1="79" x2="430" y2="79" stroke="#FB7185" strokeWidth="2"/>
                         <text x="402" y="70" textAnchor="middle" fill="#FB7185" fontSize="7" fontFamily="monospace">dL/dW</text>
 
-                        <rect x="432" y="55" width="86" height="48" rx="8" fill="#131820" stroke="#C5ADEA" strokeWidth="1.5"/>
-                        <text x="475" y="74" textAnchor="middle" fill="#C5ADEA" fontSize="8" fontFamily="monospace">OPTIMIZER</text>
+                        <rect x="432" y="55" width="86" height="48" rx="8" fill="#131820" stroke="#C9B8E8" strokeWidth="1.5"/>
+                        <text x="475" y="74" textAnchor="middle" fill="#C9B8E8" fontSize="8" fontFamily="monospace">OPTIMIZER</text>
 
-                        <path d="M518 79 Q600 79 600 25 Q600 12 475 12 Q195 12 195 45" stroke="#C5ADEA" strokeWidth="1.5" fill="none" strokeDasharray="5 3"/>
-                        <text x="600" y="45" textAnchor="middle" fill="#C5ADEA" fontSize="7" fontFamily="monospace">Δ weights</text>
+                        <path d="M518 79 Q600 79 600 25 Q600 12 475 12 Q195 12 195 45" stroke="#C9B8E8" strokeWidth="1.5" fill="none" strokeDasharray="5 3"/>
+                        <text x="600" y="45" textAnchor="middle" fill="#C9B8E8" fontSize="7" fontFamily="monospace">Δ weights</text>
                       </svg>
                     </Card>
                   </Stack>
@@ -980,27 +980,27 @@ export default function AIHarnessTab() {
                         {/* RESULTS GRID */}
                         <Grid columns={{ base: '1fr 1fr', md: '1fr 1fr 1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: stability < 0.5 ? '#ef4444' : '#2AB5B0' }}>{(stability * 100).toFixed(0)}%</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: stability < 0.5 ? '#ef4444' : '#5EC4C8' }}>{(stability * 100).toFixed(0)}%</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>Stability Score</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#17837F' }}>{finalLoss}</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#3A9B9F' }}>{finalLoss}</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>Est. Final Loss</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#C5ADEA' }}>{convergenceSpeed}k</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#C9B8E8' }}>{convergenceSpeed}k</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>Steps to Converge</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: gpuUtil > 85 ? '#2AB5B0' : '#F5A623' }}>{gpuUtil}%</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: gpuUtil > 85 ? '#5EC4C8' : '#F5A623' }}>{gpuUtil}%</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>GPU Utilisation</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#2AB5B0' }}>{memGB} GB</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#5EC4C8' }}>{memGB} GB</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>VRAM (GB est.)</div>
                           </Card>
                           <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: overfit === 'HIGH' ? '#ef4444' : '#2AB5B0' }}>{overfit}</div>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 'bold', color: overfit === 'HIGH' ? '#ef4444' : '#5EC4C8' }}>{overfit}</div>
                             <div style={{ fontSize: '9px', color: 'var(--ds-color-text-tertiary)' }}>Overfit Risk</div>
                           </Card>
                         </Grid>
@@ -1015,7 +1015,7 @@ export default function AIHarnessTab() {
                           {explodes && <div style={{ color: '#ef4444', marginBottom: '4px' }}>🔴 <strong>Exploding Gradients:</strong> Learning rate too high for optimizer — expect NaN loss. Reduce LR or switch to AdamW.</div>}
                           {vanishes && <div style={{ color: '#ef4444', marginBottom: '4px' }}>🔴 <strong>Vanishing Gradients:</strong> Deep architecture with SGD at low LR. Add residual connections or use AdamW.</div>}
                           {slowConv && <div style={{ color: '#F5A623', marginBottom: '4px' }}>⚠️ <strong>Slow Convergence:</strong> Learning rate is very low for SGD. Increase LR or add warmup schedule.</div>}
-                          {stability > 0.85 && <div style={{ color: '#17837F' }}>✅ <strong>Healthy Configuration:</strong> Hyperparameters are well-balanced for stable training.</div>}
+                          {stability > 0.85 && <div style={{ color: '#3A9B9F' }}>✅ <strong>Healthy Configuration:</strong> Hyperparameters are well-balanced for stable training.</div>}
                         </Card>
                       </Stack>
                     </Card>
@@ -1030,7 +1030,7 @@ export default function AIHarnessTab() {
                         {PROCESS_STEPS.map((step, idx) => (
                           <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
                             <Flex gap={3} align="flex-start">
-                              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--ds-color-bg-canvas)', border: '2px solid #C5ADEA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'monospace', fontSize: '11px', color: '#C5ADEA', flexShrink: 0 }}>
+                              <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--ds-color-bg-canvas)', border: '2px solid #C9B8E8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'monospace', fontSize: '11px', color: '#C9B8E8', flexShrink: 0 }}>
                                 {step.n}
                               </div>
                               <div>
@@ -1045,33 +1045,33 @@ export default function AIHarnessTab() {
                       </Stack>
 
                       <Stack gap={3}>
-                        <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                          <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#2AB5B0' }}>Chain Rule — Gradient Backprop</strong>
+                        <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                          <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#5EC4C8' }}>Chain Rule — Gradient Backprop</strong>
                           <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', margin: '4px 0 8px 0' }}>
                             Backprop applies the chain rule layer-by-layer from output back to input weights.
                           </p>
-                          <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '10px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '11px', color: '#2AB5B0' }}>
+                          <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '10px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '11px', color: '#5EC4C8' }}>
                             dL/dW1 = (dL/dy_hat) * (dy_hat/dh) * (dh/dW1)
                           </div>
                         </Card>
 
-                        <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #C5ADEA' }}>
-                          <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#C5ADEA' }}>Adam Weight Update Rule</strong>
+                        <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #C9B8E8' }}>
+                          <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#C9B8E8' }}>Adam Weight Update Rule</strong>
                           <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', margin: '4px 0 8px 0' }}>
                             Adaptive moment estimation maintains running average of gradients & squared gradients.
                           </p>
-                          <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '10px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '11px', color: '#C5ADEA' }}>
+                          <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '10px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '11px', color: '#C9B8E8' }}>
                             m_hat = m / (1 - beta1^t);  v_hat = v / (1 - beta2^t)<br />
                             Theta_new = Theta - alpha * m_hat / (sqrt(v_hat) + eps)
                           </div>
                         </Card>
 
-                        <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                          <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#2AB5B0' }}>RLHF Outer Loop Objective</strong>
+                        <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                          <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#5EC4C8' }}>RLHF Outer Loop Objective</strong>
                           <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', margin: '4px 0 8px 0' }}>
                             Optimizes policy under KL constraint to prevent reward hacking.
                           </p>
-                          <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '10px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '11px', color: '#2AB5B0' }}>
+                          <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '10px', borderRadius: '6px', fontFamily: 'monospace', fontSize: '11px', color: '#5EC4C8' }}>
                             pi* = argmax E[R(x,y)] - beta * KL(pi || pi_ref)
                           </div>
                         </Card>
@@ -1093,7 +1093,7 @@ export default function AIHarnessTab() {
                           <Flex gap={2} align="center">
                             <Badge variant="subtle" style={{
                               background: fault.sev === 'high' ? 'rgba(255,77,77,0.15)' : fault.sev === 'medium' ? 'rgba(245,166,35,0.15)' : 'rgba(46,204,140,0.15)',
-                              color: fault.sev === 'high' ? '#FF4D4D' : fault.sev === 'medium' ? '#F5A623' : '#2AB5B0',
+                              color: fault.sev === 'high' ? '#FF4D4D' : fault.sev === 'medium' ? '#F5A623' : '#5EC4C8',
                               fontSize: '9px',
                               fontFamily: 'monospace'
                             }}>
@@ -1109,8 +1109,8 @@ export default function AIHarnessTab() {
                           <strong>Cause:</strong> {fault.cause}
                         </p>
                         {openFaults[idx] && (
-                          <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', marginTop: '8px', borderLeft: '3px solid #2AB5B0', fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-primary)' }}>
-                            <strong style={{ color: '#2AB5B0' }}>🔧 Remedy & Fix:</strong> {fault.remedy}
+                          <Card style={{ padding: '10px', background: 'var(--ds-color-bg-canvas)', marginTop: '8px', borderLeft: '3px solid #5EC4C8', fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-primary)' }}>
+                            <strong style={{ color: '#5EC4C8' }}>🔧 Remedy & Fix:</strong> {fault.remedy}
                           </Card>
                         )}
                       </Card>

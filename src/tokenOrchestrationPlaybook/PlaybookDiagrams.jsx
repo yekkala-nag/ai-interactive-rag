@@ -5,14 +5,14 @@ export function ContainerStackTopologyDiagram() {
   return (
     <div style={{
       background: '#090d16',
-      border: '1px solid #2AB5B0',
+      border: '1px solid #5EC4C8',
       borderRadius: '12px',
       padding: '24px 20px',
       color: '#f8fafc',
       boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
     }}>
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#17837F' }}>
+        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#3A9B9F' }}>
           🐳 Containerized Microservices Stack (Docker & Kubernetes)
         </h3>
         <p style={{ margin: '6px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
@@ -22,9 +22,9 @@ export function ContainerStackTopologyDiagram() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
         {/* Service 1 */}
-        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '10px', padding: '16px' }}>
+        <div style={{ background: '#0f172a', border: '1px solid #5EC4C8', borderRadius: '10px', padding: '16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#17837F' }}>SERVICE: ai-api</span>
+            <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#3A9B9F' }}>SERVICE: ai-api</span>
             <span style={{ background: 'rgba(56, 189, 248, 0.2)', color: '#7dd3fc', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold' }}>PORT 8000</span>
           </div>
           <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff', marginBottom: '4px' }}>
@@ -56,9 +56,9 @@ export function ContainerStackTopologyDiagram() {
         </div>
 
         {/* Service 3 */}
-        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '10px', padding: '16px' }}>
+        <div style={{ background: '#0f172a', border: '1px solid #5EC4C8', borderRadius: '10px', padding: '16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-            <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#17837F' }}>SERVICE: qdrant</span>
+            <span style={{ fontSize: '12px', fontWeight: 'bold', color: '#3A9B9F' }}>SERVICE: qdrant</span>
             <span style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#6ee7b7', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold' }}>PORT 6333 / 6334</span>
           </div>
           <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff', marginBottom: '4px' }}>
@@ -81,14 +81,14 @@ export function LangSmithTraceWaterfallDiagram() {
   return (
     <div style={{
       background: '#090d16',
-      border: '1px solid #2AB5B0',
+      border: '1px solid #5EC4C8',
       borderRadius: '12px',
       padding: '24px 20px',
       color: '#f8fafc',
       boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
     }}>
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#17837F' }}>
+        <h3 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#3A9B9F' }}>
           📊 LangSmith Token Governance & Custom Business Metadata
         </h3>
         <p style={{ margin: '6px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
@@ -103,17 +103,17 @@ export function LangSmithTraceWaterfallDiagram() {
             RUN-TREE WATERFALL SPANS
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <div style={{ background: '#1e293b', padding: '8px 12px', borderRadius: '4px', fontSize: '12px', borderLeft: '4px solid #2AB5B0' }}>
+            <div style={{ background: '#1e293b', padding: '8px 12px', borderRadius: '4px', fontSize: '12px', borderLeft: '4px solid #5EC4C8' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <strong>root: Enterprise RAG Pipeline</strong>
-                <span style={{ color: '#17837F' }}>14ms</span>
+                <span style={{ color: '#3A9B9F' }}>14ms</span>
               </div>
             </div>
 
-            <div style={{ background: '#1e293b', padding: '8px 12px', borderRadius: '4px', fontSize: '12px', borderLeft: '4px solid #2AB5B0', marginLeft: '16px' }}>
+            <div style={{ background: '#1e293b', padding: '8px 12px', borderRadius: '4px', fontSize: '12px', borderLeft: '4px solid #5EC4C8', marginLeft: '16px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span>tool: redis_semantic_cache_check</span>
-                <span style={{ color: '#17837F' }}>12ms</span>
+                <span style={{ color: '#3A9B9F' }}>12ms</span>
               </div>
               <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
                 <span style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#6ee7b7', padding: '1px 6px', borderRadius: '3px', fontSize: '10px' }}>
@@ -139,10 +139,10 @@ export function LangSmithTraceWaterfallDiagram() {
           <div style={{ fontSize: '11px', color: '#94a3b8', fontWeight: 'bold', marginBottom: '8px' }}>
             EXECUTIVE ROI DASHBOARD
           </div>
-          <div style={{ fontSize: '28px', fontWeight: 900, color: '#17837F', marginBottom: '4px' }}>
+          <div style={{ fontSize: '28px', fontWeight: 900, color: '#3A9B9F', marginBottom: '4px' }}>
             12.45M TOKENS SAVED
           </div>
-          <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#17837F', marginBottom: '12px' }}>
+          <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#3A9B9F', marginBottom: '12px' }}>
             $8,715 Cost Avoidance This Month
           </div>
           <div style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
@@ -176,8 +176,8 @@ export function LangGraphParallelBranchingDiagram() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 60px 1fr 60px 1fr', alignItems: 'center', gap: '8px', textAlign: 'center' }}>
         {/* Entry Point */}
-        <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '14px' }}>
-          <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold' }}>ENTRY NODE</div>
+        <div style={{ background: '#0f172a', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '14px' }}>
+          <div style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold' }}>ENTRY NODE</div>
           <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#ffffff', margin: '4px 0' }}>User Query</div>
           <div style={{ fontSize: '10px', color: '#94a3b8' }}>State: <code>AgentState</code></div>
         </div>
@@ -186,12 +186,12 @@ export function LangGraphParallelBranchingDiagram() {
 
         {/* Parallel Branches */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '10px', fontSize: '12px' }}>
-            <strong style={{ color: '#17837F' }}>Node A: vector_search</strong>
+          <div style={{ background: '#0f172a', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '10px', fontSize: '12px' }}>
+            <strong style={{ color: '#3A9B9F' }}>Node A: vector_search</strong>
             <div style={{ fontSize: '10px', color: '#94a3b8' }}>Runs async Qdrant query</div>
           </div>
-          <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '10px', fontSize: '12px' }}>
-            <strong style={{ color: '#17837F' }}>Node B: sql_search</strong>
+          <div style={{ background: '#0f172a', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '10px', fontSize: '12px' }}>
+            <strong style={{ color: '#3A9B9F' }}>Node B: sql_search</strong>
             <div style={{ fontSize: '10px', color: '#94a3b8' }}>Runs async SQL database query</div>
           </div>
         </div>

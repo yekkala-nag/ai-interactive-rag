@@ -144,13 +144,13 @@ export function SIMULATE_TOOL_EXECUTION(toolName, params) {
 export const OBSERVABILITY_LAYERS = [
   {
     layer: '1. Business Metrics Layer',
-    color: '#17837F',
+    color: '#3A9B9F',
     metrics: ['Cost per query (USD)', 'User CSAT rating (1-5)', 'Business unit attribution', 'Token ROI / cost avoided'],
     tooling: 'LangSmith metadata, Custom Analytics Warehouse'
   },
   {
     layer: '2. Application Metrics Layer',
-    color: '#17837F',
+    color: '#3A9B9F',
     metrics: ['P95 / P99 Latency (ms)', 'Request throughput (req/s)', 'Cache hit rate (%)', 'Error / fallback frequency'],
     tooling: 'Prometheus, Datadog, CloudWatch'
   },

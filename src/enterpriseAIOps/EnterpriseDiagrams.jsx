@@ -48,12 +48,12 @@ export function AdvancedRAGPipelineDiagram() {
         </div>
 
         {/* Arrow */}
-        <div style={{ color: '#17837F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
+        <div style={{ color: '#3A9B9F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
 
         {/* Node 2: Semantic Cache */}
         <div style={{ flex: '0 0 auto', width: '145px', textAlign: 'center' }}>
           <div style={{
-            background: '#2AB5B0',
+            background: '#5EC4C8',
             borderRadius: '12px',
             padding: '24px 10px',
             fontWeight: 700,
@@ -69,7 +69,7 @@ export function AdvancedRAGPipelineDiagram() {
         </div>
 
         {/* Arrow */}
-        <div style={{ color: '#17837F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
+        <div style={{ color: '#3A9B9F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
 
         {/* Node 3: Hybrid Vector Search */}
         <div style={{ flex: '0 0 auto', width: '155px', textAlign: 'center' }}>
@@ -90,12 +90,12 @@ export function AdvancedRAGPipelineDiagram() {
         </div>
 
         {/* Arrow */}
-        <div style={{ color: '#17837F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
+        <div style={{ color: '#3A9B9F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
 
         {/* Node 4: Reranker */}
         <div style={{ flex: '0 0 auto', width: '145px', textAlign: 'center' }}>
           <div style={{
-            background: '#2AB5B0',
+            background: '#5EC4C8',
             borderRadius: '12px',
             padding: '24px 10px',
             fontWeight: 700,
@@ -111,12 +111,12 @@ export function AdvancedRAGPipelineDiagram() {
         </div>
 
         {/* Arrow */}
-        <div style={{ color: '#17837F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
+        <div style={{ color: '#3A9B9F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
 
         {/* Node 5: Token Compression */}
         <div style={{ flex: '0 0 auto', width: '155px', textAlign: 'center' }}>
           <div style={{
-            background: '#2AB5B0',
+            background: '#5EC4C8',
             borderRadius: '12px',
             padding: '24px 10px',
             fontWeight: 700,
@@ -132,7 +132,7 @@ export function AdvancedRAGPipelineDiagram() {
         </div>
 
         {/* Arrow */}
-        <div style={{ color: '#17837F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
+        <div style={{ color: '#3A9B9F', fontSize: '22px', fontWeight: 'bold' }}>➔</div>
 
         {/* Node 6: Large Language Model */}
         <div style={{ flex: '0 0 auto', width: '155px', textAlign: 'center' }}>
@@ -212,7 +212,7 @@ export function MapReducePatternDiagram() {
                 flex: 1,
                 maxWidth: '180px',
                 background: '#60a5fa',
-                border: '2px solid #2AB5B0',
+                border: '2px solid #5EC4C8',
                 borderRadius: '12px',
                 padding: '18px 12px',
                 textAlign: 'center',
@@ -284,7 +284,7 @@ export function DynamicModelRoutingDiagram() {
         {/* Node 1: Incoming Request */}
         <div style={{
           background: '#e0f2fe',
-          border: '2px solid #2AB5B0',
+          border: '2px solid #5EC4C8',
           borderRadius: '24px',
           padding: '12px 32px',
           fontWeight: 800,
@@ -300,7 +300,7 @@ export function DynamicModelRoutingDiagram() {
 
         {/* Node 2: AI Router (Hexagonal Shape) */}
         <div style={{
-          background: '#2AB5B0',
+          background: '#5EC4C8',
           border: '2px solid #0369a1',
           borderRadius: '14px',
           padding: '14px 36px',
@@ -318,10 +318,10 @@ export function DynamicModelRoutingDiagram() {
 
         {/* Branching Arrows with Labels */}
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', maxWidth: '640px', padding: '0 40px' }}>
-          <div style={{ fontSize: '13px', fontWeight: 700, color: '#17837F' }}>
+          <div style={{ fontSize: '13px', fontWeight: 700, color: '#3A9B9F' }}>
             ↙ Low Complexity
           </div>
-          <div style={{ fontSize: '13px', fontWeight: 700, color: '#17837F' }}>
+          <div style={{ fontSize: '13px', fontWeight: 700, color: '#3A9B9F' }}>
             High Complexity ↘
           </div>
         </div>
@@ -332,7 +332,7 @@ export function DynamicModelRoutingDiagram() {
           <div style={{
             flex: 1,
             background: '#34d399',
-            border: '2px solid #2AB5B0',
+            border: '2px solid #5EC4C8',
             borderRadius: '14px',
             padding: '20px 16px',
             textAlign: 'center',
@@ -347,7 +347,7 @@ export function DynamicModelRoutingDiagram() {
           <div style={{
             flex: 1,
             background: '#60a5fa',
-            border: '2px solid #2AB5B0',
+            border: '2px solid #5EC4C8',
             borderRadius: '14px',
             padding: '20px 16px',
             textAlign: 'center',
@@ -361,14 +361,14 @@ export function DynamicModelRoutingDiagram() {
 
         {/* Converging Down Arrows */}
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', maxWidth: '400px', padding: '0 50px' }}>
-          <div style={{ color: '#17837F', fontSize: '20px', fontWeight: 'bold' }}>↘</div>
-          <div style={{ color: '#17837F', fontSize: '20px', fontWeight: 'bold' }}>↙</div>
+          <div style={{ color: '#3A9B9F', fontSize: '20px', fontWeight: 'bold' }}>↘</div>
+          <div style={{ color: '#3A9B9F', fontSize: '20px', fontWeight: 'bold' }}>↙</div>
         </div>
 
         {/* Node 4: Final Output */}
         <div style={{
-          background: '#17837F',
-          border: '2px solid #0C4F4C',
+          background: '#3A9B9F',
+          border: '2px solid #1F6B6E',
           borderRadius: '24px',
           padding: '12px 36px',
           fontWeight: 800,
@@ -395,7 +395,7 @@ export function EnterpriseDecisionTreeDiagram() {
       boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
     }}>
       <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-        <h3 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: '#17837F' }}>
+        <h3 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: '#3A9B9F' }}>
           🌳 Enterprise Context Strategy Decision Tree
         </h3>
         <p style={{ margin: '6px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
@@ -407,12 +407,12 @@ export function EnterpriseDecisionTreeDiagram() {
       <div style={{ maxWidth: '640px', margin: '0 auto 20px auto', textAlign: 'center' }}>
         <div style={{
           background: '#1e293b',
-          border: '2px solid #2AB5B0',
+          border: '2px solid #5EC4C8',
           borderRadius: '10px',
           padding: '16px 20px',
           boxShadow: '0 4px 14px rgba(56, 189, 248, 0.15)'
         }}>
-          <div style={{ fontSize: '12px', color: '#17837F', fontWeight: 'bold', marginBottom: '4px' }}>
+          <div style={{ fontSize: '12px', color: '#3A9B9F', fontWeight: 'bold', marginBottom: '4px' }}>
             START EVALUATION
           </div>
           <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#ffffff' }}>
@@ -427,7 +427,7 @@ export function EnterpriseDecisionTreeDiagram() {
         {/* BRANCH NO: Standard Prompting */}
         <div style={{
           background: 'rgba(16, 185, 129, 0.06)',
-          border: '1px solid #2AB5B0',
+          border: '1px solid #5EC4C8',
           borderRadius: '10px',
           padding: '18px',
           display: 'flex',
@@ -435,10 +435,10 @@ export function EnterpriseDecisionTreeDiagram() {
           justifyContent: 'space-between'
         }}>
           <div>
-            <div style={{ display: 'inline-block', background: '#2AB5B0', color: '#000', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', marginBottom: '10px' }}>
+            <div style={{ display: 'inline-block', background: '#5EC4C8', color: '#000', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', marginBottom: '10px' }}>
               BRANCH: NO
             </div>
-            <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', color: '#17837F' }}>
+            <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', color: '#3A9B9F' }}>
               Use Standard Prompting
             </h4>
             <p style={{ margin: 0, fontSize: '12px', color: '#cbd5e1', lineHeight: '1.5' }}>
@@ -458,14 +458,14 @@ export function EnterpriseDecisionTreeDiagram() {
           borderRadius: '10px',
           padding: '18px'
         }}>
-          <div style={{ display: 'inline-block', background: '#2AB5B0', color: '#000', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', marginBottom: '10px' }}>
+          <div style={{ display: 'inline-block', background: '#5EC4C8', color: '#000', fontWeight: 'bold', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', marginBottom: '10px' }}>
             BRANCH: YES ➔ What is the primary goal of the task?
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginTop: '10px' }}>
             
             {/* Goal 1: Specific Q&A */}
-            <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '12px' }}>
+            <div style={{ background: '#0f172a', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '12px' }}>
               <div style={{ fontSize: '11px', color: '#93c5fd', fontWeight: 'bold', marginBottom: '4px' }}>
                 GOAL: Specific Q&A on Knowledge Base
               </div>
@@ -478,7 +478,7 @@ export function EnterpriseDecisionTreeDiagram() {
             </div>
 
             {/* Goal 2: Massive Document Summary */}
-            <div style={{ background: '#0f172a', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '12px' }}>
+            <div style={{ background: '#0f172a', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '12px' }}>
               <div style={{ fontSize: '11px', color: '#6ee7b7', fontWeight: 'bold', marginBottom: '4px' }}>
                 GOAL: Analyze Massive Document (100+ pgs)
               </div>
@@ -529,14 +529,14 @@ export function PreflightFallbackWorkflowDiagram() {
   return (
     <div style={{
       background: '#090d16',
-      border: '1px solid #2AB5B0',
+      border: '1px solid #5EC4C8',
       borderRadius: '12px',
       padding: '28px 20px',
       color: '#f8fafc',
       boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)'
     }}>
       <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-        <h3 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: '#17837F' }}>
+        <h3 style={{ margin: 0, fontSize: '22px', fontWeight: 800, color: '#3A9B9F' }}>
           🛡️ Pre-Flight Token Check & Multi-Tier AI Fallback Cascade
         </h3>
         <p style={{ margin: '6px 0 0 0', color: '#94a3b8', fontSize: '13px' }}>
@@ -557,12 +557,12 @@ export function PreflightFallbackWorkflowDiagram() {
       }}>
         {/* Left: Input & Estimator */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', justifyContent: 'center' }}>
-          <div style={{ background: '#1e293b', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '12px', textAlign: 'center' }}>
+          <div style={{ background: '#1e293b', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '12px', textAlign: 'center' }}>
             <div style={{ fontSize: '11px', color: '#94a3b8' }}>USER REQUEST</div>
             <div style={{ fontSize: '14px', fontWeight: 'bold', color: '#ffffff' }}>Incoming Prompt + Context</div>
           </div>
-          <div style={{ textAlign: 'center', color: '#17837F', fontSize: '18px' }}>⬇️</div>
-          <div style={{ background: '#2AB5B0', border: '2px solid #2AB5B0', borderRadius: '8px', padding: '14px', textAlign: 'center', color: '#ffffff', boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)' }}>
+          <div style={{ textAlign: 'center', color: '#3A9B9F', fontSize: '18px' }}>⬇️</div>
+          <div style={{ background: '#5EC4C8', border: '2px solid #5EC4C8', borderRadius: '8px', padding: '14px', textAlign: 'center', color: '#ffffff', boxShadow: '0 4px 12px rgba(56, 189, 248, 0.3)' }}>
             <div style={{ fontSize: '11px', fontWeight: 'bold' }}>🛡️ PRE-FLIGHT GATE</div>
             <div style={{ fontSize: '13px', fontWeight: 'bold' }}>Token Estimator Shield</div>
             <div style={{ fontSize: '10px', opacity: 0.9, marginTop: '2px' }}>(cl100k_base &lt; 4,000 threshold)</div>
@@ -572,15 +572,15 @@ export function PreflightFallbackWorkflowDiagram() {
         {/* Right: 3 Execution Paths */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {/* Green Path */}
-          <div style={{ background: 'rgba(16, 185, 129, 0.08)', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ background: 'rgba(16, 185, 129, 0.08)', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <span style={{ background: '#2AB5B0', color: '#000', fontWeight: 'bold', fontSize: '10px', padding: '2px 6px', borderRadius: '3px', marginRight: '8px' }}>
+              <span style={{ background: '#5EC4C8', color: '#000', fontWeight: 'bold', fontSize: '10px', padding: '2px 6px', borderRadius: '3px', marginRight: '8px' }}>
                 1) GREEN PATH
               </span>
-              <strong style={{ color: '#17837F', fontSize: '13px' }}>Safe Context &lt; 4,000 Tokens</strong>
+              <strong style={{ color: '#3A9B9F', fontSize: '13px' }}>Safe Context &lt; 4,000 Tokens</strong>
               <div style={{ fontSize: '11px', color: '#cbd5e1', marginTop: '2px' }}>Proceeds directly without modification to Primary LLM.</div>
             </div>
-            <div style={{ background: '#2AB5B0', color: '#000', padding: '6px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: 'bold' }}>
+            <div style={{ background: '#5EC4C8', color: '#000', padding: '6px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: 'bold' }}>
               ➔ Primary LLM (GPT-4o)
             </div>
           </div>
@@ -629,19 +629,19 @@ export function PreflightFallbackWorkflowDiagram() {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px' }}>
           {/* Tier 1: Primary */}
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '12px' }}>
+          <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
-              <span style={{ color: '#17837F', fontWeight: 'bold' }}>TIER 1: PRIMARY</span>
-              <span style={{ color: '#17837F' }}>● HEALTHY</span>
+              <span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>TIER 1: PRIMARY</span>
+              <span style={{ color: '#3A9B9F' }}>● HEALTHY</span>
             </div>
             <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#f8fafc', marginBottom: '4px' }}>OpenAI GPT-4o</div>
             <div style={{ fontSize: '11px', color: '#cbd5e1' }}>Direct fast inference (P50 150ms). Primary production traffic.</div>
           </div>
 
           {/* Tier 2: Secondary */}
-          <div style={{ background: 'rgba(56, 189, 248, 0.1)', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '12px' }}>
+          <div style={{ background: 'rgba(56, 189, 248, 0.1)', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
-              <span style={{ color: '#17837F', fontWeight: 'bold' }}>TIER 2: SECONDARY</span>
+              <span style={{ color: '#3A9B9F', fontWeight: 'bold' }}>TIER 2: SECONDARY</span>
               <span style={{ color: '#f59e0b' }}>● STANDBY / AUTO</span>
             </div>
             <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#f8fafc', marginBottom: '4px' }}>Claude 3.5 Sonnet (Bedrock)</div>
@@ -652,7 +652,7 @@ export function PreflightFallbackWorkflowDiagram() {
           <div style={{ background: 'rgba(168, 85, 247, 0.1)', border: '1px solid #a855f7', borderRadius: '8px', padding: '12px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
               <span style={{ color: '#a855f7', fontWeight: 'bold' }}>TIER 3: AIR-GAP / LOCAL</span>
-              <span style={{ color: '#17837F' }}>● AIR-GAP READY</span>
+              <span style={{ color: '#3A9B9F' }}>● AIR-GAP READY</span>
             </div>
             <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#f8fafc', marginBottom: '4px' }}>Local vLLM (Llama 3.1 70B)</div>
             <div style={{ fontSize: '11px', color: '#cbd5e1' }}>Disaster recovery fallback during multi-cloud WAN outages.</div>

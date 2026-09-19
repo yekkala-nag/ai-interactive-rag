@@ -32,8 +32,8 @@ export const RASTER_VS_VECTOR = [
 // ── Simulator: source agreement by admin level ──────────────────────────────
 export const AGREEMENT = (level = "L1") => {
   const table = {
-    L0: { corr: 0.99, gap: "0.8M (0.8%)", use: "Either — national totals agree", color: "#17837F" },
-    L1: { corr: 0.97, gap: "±3% typical", use: "Either, spot-check outliers", color: "#17837F" },
+    L0: { corr: 0.99, gap: "0.8M (0.8%)", use: "Either — national totals agree", color: "#3A9B9F" },
+    L1: { corr: 0.97, gap: "±3% typical", use: "Either, spot-check outliers", color: "#3A9B9F" },
     L2: { corr: 0.88, gap: "HCMC/Binh Duong diverge", use: "Question decides: recency→FB, stability→WP", color: "#F5A623" },
     L3: { corr: 0.72, gap: "Wide local gaps", use: "Field-validate; neither source is truth", color: "#ef4444" }
   };

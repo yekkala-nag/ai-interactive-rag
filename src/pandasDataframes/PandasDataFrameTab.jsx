@@ -138,7 +138,7 @@ export default function PandasDataFrameTab() {
 
                         <Card style={{ padding: '10px', background: '#090d16', border: '1px solid var(--ds-color-border-subtle)' }}>
                           <strong style={{ fontSize: '10px', color: '#F5A623' }}>SYNTAX:</strong>
-                          <div style={{ fontFamily: 'monospace', fontSize: '11px', color: '#17837F', marginTop: '4px' }}>
+                          <div style={{ fontFamily: 'monospace', fontSize: '11px', color: '#3A9B9F', marginTop: '4px' }}>
                             {ds.syntax}
                           </div>
                         </Card>
@@ -167,7 +167,7 @@ export default function PandasDataFrameTab() {
                   {ARRAY_DIMENSIONS_DATA.map((dim, idx) => (
                     <Card key={idx} style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
                       <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#17837F' }}>{dim.dim}</strong>
+                        <strong style={{ fontSize: 'var(--ds-font-size-bodySm)', color: '#3A9B9F' }}>{dim.dim}</strong>
                         <Badge variant="subtle" style={{ fontSize: '9px', fontFamily: 'monospace' }}>Shape: {dim.shape}</Badge>
                       </Flex>
                       <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '0 0 8px 0' }}>
@@ -175,7 +175,7 @@ export default function PandasDataFrameTab() {
                       </p>
                       <Card style={{ padding: '10px', background: '#090d16', border: '1px solid var(--ds-color-border-subtle)' }}>
                         <div style={{ fontFamily: 'monospace', fontSize: '10px', color: '#A78BFA' }}>{dim.code}</div>
-                        <div style={{ fontSize: '10px', color: '#17837F', marginTop: '6px' }}>{dim.vectorizedExample}</div>
+                        <div style={{ fontSize: '10px', color: '#3A9B9F', marginTop: '6px' }}>{dim.vectorizedExample}</div>
                       </Card>
                     </Card>
                   ))}
@@ -210,8 +210,8 @@ export default function PandasDataFrameTab() {
                   ))}
                 </Flex>
 
-                <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                  <strong style={{ fontSize: 'var(--ds-font-size-body)', color: '#17837F', display: 'block', marginBottom: '4px' }}>
+                <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                  <strong style={{ fontSize: 'var(--ds-font-size-body)', color: '#3A9B9F', display: 'block', marginBottom: '4px' }}>
                     {activeWorkflow.name}
                   </strong>
                   <p style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)', margin: '0 0 12px 0' }}>
@@ -267,7 +267,7 @@ export default function PandasDataFrameTab() {
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
                   <Card style={{ padding: '14px', background: '#090d16', border: '1px solid var(--ds-color-border-subtle)' }}>
                     <strong style={{ fontSize: '11px', color: '#F5A623' }}>PYTHON COMMAND:</strong>
-                    <div style={{ fontFamily: 'monospace', fontSize: '12px', color: '#17837F', marginTop: '6px' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: '12px', color: '#3A9B9F', marginTop: '6px' }}>
                       {opResult.code}
                     </div>
                     <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '8px' }}>
@@ -276,13 +276,13 @@ export default function PandasDataFrameTab() {
                   </Card>
 
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)' }}>
-                    <strong style={{ fontSize: '11px', color: '#17837F', display: 'block', marginBottom: '8px' }}>
+                    <strong style={{ fontSize: '11px', color: '#3A9B9F', display: 'block', marginBottom: '8px' }}>
                       RESULTING DATAFRAME IN-MEMORY OUTPUT ({opResult.title}):
                     </strong>
                     <div style={{ overflowX: 'auto' }}>
                       <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 'var(--ds-font-size-caption)' }}>
                         <thead>
-                          <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', textAlign: 'left', color: '#17837F' }}>
+                          <tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', textAlign: 'left', color: '#3A9B9F' }}>
                             {opResult.columns.map((c, idx) => (
                               <th key={idx} style={{ padding: '6px' }}>{c}</th>
                             ))}

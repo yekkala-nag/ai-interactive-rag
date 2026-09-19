@@ -27,12 +27,12 @@ import { isMastered } from '../../services/mastery.js';
 // Category accents — trio-mapped. primary = fills/graphics only;
 // dark = any text on white (all ≥4.5); NEVER white text on primary.
 const MODULE_ACCENTS = {
-  foundations: { primary: '#2AB5B0', dark: '#0C4F4C', gradient: 'linear-gradient(135deg, #2AB5B0, #17837F)', lightBg: 'rgba(42,181,176,0.12)', border: 'rgba(42,181,176,0.35)' },
-  rag_architecture: { primary: '#FF8A6B', dark: '#A34A28', gradient: 'linear-gradient(135deg, #FF8A6B, #A34A28)', lightBg: 'rgba(255,138,107,0.14)', border: 'rgba(255,138,107,0.4)' },
-  context_memory: { primary: '#8B7BD8', dark: '#4A3F7A', gradient: 'linear-gradient(135deg, #C5ADEA, #8B7BD8)', lightBg: 'rgba(139,123,216,0.14)', border: 'rgba(139,123,216,0.4)' },
-  agents_frameworks: { primary: '#FF8A6B', dark: '#A34A28', gradient: 'linear-gradient(135deg, #FF8A6B, #A34A28)', lightBg: 'rgba(255,138,107,0.14)', border: 'rgba(255,138,107,0.4)' },
-  data_platform: { primary: '#2AB5B0', dark: '#0C4F4C', gradient: 'linear-gradient(135deg, #2AB5B0, #17837F)', lightBg: 'rgba(42,181,176,0.12)', border: 'rgba(42,181,176,0.35)' },
-  frontiers_production: { primary: '#8B7BD8', dark: '#4A3F7A', gradient: 'linear-gradient(135deg, #C5ADEA, #8B7BD8)', lightBg: 'rgba(139,123,216,0.14)', border: 'rgba(139,123,216,0.4)' }
+  foundations: { primary: '#5EC4C8', dark: '#1F6B6E', gradient: 'linear-gradient(135deg, #5EC4C8, #3A9B9F)', lightBg: 'rgba(42,181,176,0.12)', border: 'rgba(42,181,176,0.35)' },
+  rag_architecture: { primary: '#F0A89A', dark: '#C47A6A', gradient: 'linear-gradient(135deg, #F0A89A, #C47A6A)', lightBg: 'rgba(255,138,107,0.14)', border: 'rgba(255,138,107,0.4)' },
+  context_memory: { primary: '#9B89C4', dark: '#6B5E94', gradient: 'linear-gradient(135deg, #C9B8E8, #9B89C4)', lightBg: 'rgba(139,123,216,0.14)', border: 'rgba(139,123,216,0.4)' },
+  agents_frameworks: { primary: '#F0A89A', dark: '#C47A6A', gradient: 'linear-gradient(135deg, #F0A89A, #C47A6A)', lightBg: 'rgba(255,138,107,0.14)', border: 'rgba(255,138,107,0.4)' },
+  data_platform: { primary: '#5EC4C8', dark: '#1F6B6E', gradient: 'linear-gradient(135deg, #5EC4C8, #3A9B9F)', lightBg: 'rgba(42,181,176,0.12)', border: 'rgba(42,181,176,0.35)' },
+  frontiers_production: { primary: '#9B89C4', dark: '#6B5E94', gradient: 'linear-gradient(135deg, #C9B8E8, #9B89C4)', lightBg: 'rgba(139,123,216,0.14)', border: 'rgba(139,123,216,0.4)' }
 };
 
 // ============================================
@@ -160,7 +160,7 @@ export function Sidebar({
             {/* Apple Squircle Brand Icon */}
             <div style={{
               width: '32px', height: '32px', borderRadius: '9px',
-              background: 'linear-gradient(135deg, #06b6d4 0%, #2AB5B0 50%, #6366f1 100%)',
+              background: 'linear-gradient(135deg, #06b6d4 0%, #5EC4C8 50%, #6366f1 100%)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontWeight: 800, fontSize: '0.95rem', color: 'white', flexShrink: 0,
               boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4), 0 3px 8px rgba(37, 99, 235, 0.35)'
@@ -295,7 +295,7 @@ export function Sidebar({
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '5px 8px', borderRadius: '6px',
                 background: activeTab === 'overview' ? '#ffffff' : 'transparent',
-                color: activeTab === 'overview' ? '#17837F' : 'rgba(255,255,255,0.88)',
+                color: activeTab === 'overview' ? '#3A9B9F' : 'rgba(255,255,255,0.88)',
                 border: 'none', cursor: 'pointer', textAlign: 'left', fontSize: '0.78rem',
                 fontWeight: activeTab === 'overview' ? 700 : 500,
                 transition: 'all 0.12s ease'
@@ -516,7 +516,7 @@ export function Sidebar({
                           padding: '5px 8px',
                           borderRadius: '6px',
                           background: isActive ? '#ffffff' : 'transparent',
-                          color: isActive ? '#17837F' : 'rgba(255,255,255,0.88)',
+                          color: isActive ? '#3A9B9F' : 'rgba(255,255,255,0.88)',
                           border: 'none', cursor: 'pointer', textAlign: 'left',
                           fontSize: '0.78rem',
                           fontWeight: isActive ? 700 : 500,
@@ -547,7 +547,7 @@ export function Sidebar({
                         }}>
                           {tab.label}
                           {meta.deep && (
-                            <span title="Deep dive — optional, skippable on the core path" style={{ color: '#A34A28', fontSize: '0.7rem', marginLeft: '4px' }}>✦</span>
+                            <span title="Deep dive — optional, skippable on the core path" style={{ color: '#C47A6A', fontSize: '0.7rem', marginLeft: '4px' }}>✦</span>
                           )}
                         </span>
                         {showFullBadge ? (
@@ -555,7 +555,7 @@ export function Sidebar({
                             title={lvl.label}
                             style={{
                               fontSize: '0.58rem', fontWeight: 700, fontFamily: 'SF Mono, monospace',
-                              color: '#17837F',
+                              color: '#3A9B9F',
                               background: 'rgba(42,181,176,0.14)',
                               border: '1px solid rgba(42,181,176,0.4)',
                               padding: '0px 5px', borderRadius: '9999px', flexShrink: 0
@@ -575,7 +575,7 @@ export function Sidebar({
                           />
                         )}
                         {isActive && (
-                          <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#17837F', flexShrink: 0 }} />
+                          <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#3A9B9F', flexShrink: 0 }} />
                         )}
                       </button>
                     );
@@ -858,9 +858,9 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '6px',
               padding: '3px 10px', borderRadius: '16px',
-              background: nextInChild ? 'var(--ds-color-brand-tealDark, #17837F)' : 'transparent',
+              background: nextInChild ? 'var(--ds-color-brand-tealDark, #3A9B9F)' : 'transparent',
               color: nextInChild ? '#ffffff' : 'var(--ds-color-text-tertiary)',
-              border: `1px solid ${nextInChild ? 'var(--ds-color-brand-tealDark, #17837F)' : 'var(--ds-color-border-subtle)'}`,
+              border: `1px solid ${nextInChild ? 'var(--ds-color-brand-tealDark, #3A9B9F)' : 'var(--ds-color-border-subtle)'}`,
               fontSize: '0.74rem', fontWeight: nextInChild ? 700 : 500,
               cursor: nextInChild ? 'pointer' : 'default',
               opacity: nextInChild ? 1 : 0.5,
@@ -974,7 +974,7 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
                 <div style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--ds-color-text-primary)' }}>{tab.label}</div>
                 <div style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }}>{tab.umbrellaId ? UMBRELLA_TOPICS.find(u => u.id === t.umbrellaId)?.title : ''}</div>
               </div>
-              {i === selectedIndex && <span style={{ color: '#17837F', fontSize: '0.85rem' }}>➔</span>}
+              {i === selectedIndex && <span style={{ color: '#3A9B9F', fontSize: '0.85rem' }}>➔</span>}
             </button>
           ))
         )}

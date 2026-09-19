@@ -61,7 +61,7 @@ export function ZeroModelRouterTab() {
           Cut RAG Latency & Cost by Calling the LLM Less
         </h1>
         <p style={{ color: 'var(--ds-color-text-secondary)', fontSize: '0.95rem', maxWidth: '880px', lineHeight: 1.5, margin: 0 }}>
-          Instead of buying a faster model, a cheap deterministic keyword signal (0.1ms) calculated on <code style={{ fontFamily: 'var(--ds-font-family-mono)', color: '#17837F' }}>line_df</code> routes easy factoid questions past all 3 hosted model calls, saving ~2 seconds and 100% of tokens with zero hallucination risk.
+          Instead of buying a faster model, a cheap deterministic keyword signal (0.1ms) calculated on <code style={{ fontFamily: 'var(--ds-font-family-mono)', color: '#3A9B9F' }}>line_df</code> routes easy factoid questions past all 3 hosted model calls, saving ~2 seconds and 100% of tokens with zero hallucination risk.
         </p>
       </Section>
 
@@ -96,9 +96,9 @@ export function ZeroModelRouterTab() {
             style={{
               padding: '8px 16px',
               borderRadius: 'var(--ds-radius-md)',
-              border: activeSubTab === tab.id ? '2px solid #2AB5B0' : '1px solid var(--ds-color-border-default)',
+              border: activeSubTab === tab.id ? '2px solid #5EC4C8' : '1px solid var(--ds-color-border-default)',
               background: activeSubTab === tab.id ? 'rgba(16, 185, 129, 0.1)' : 'var(--ds-color-bg-surface)',
-              color: activeSubTab === tab.id ? '#2AB5B0' : 'var(--ds-color-text-primary)',
+              color: activeSubTab === tab.id ? '#5EC4C8' : 'var(--ds-color-text-primary)',
               fontWeight: 700,
               fontSize: '0.85rem',
               cursor: 'pointer',
@@ -192,7 +192,7 @@ export function ZeroModelRouterTab() {
               {/* Left Column: Decision Verdict Card */}
               <div style={{
                 background: routingResult.confident ? 'linear-gradient(135deg, #064e3b 0%, #022c22 100%)' : 'linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%)',
-                border: `1px solid ${routingResult.confident ? '#2AB5B0' : '#6366f1'}`,
+                border: `1px solid ${routingResult.confident ? '#5EC4C8' : '#6366f1'}`,
                 borderRadius: 'var(--ds-radius-lg)',
                 padding: 'var(--ds-space-5)',
                 color: 'white',
@@ -288,7 +288,7 @@ export function ZeroModelRouterTab() {
                         style={{
                           padding: '8px 10px',
                           borderRadius: '6px',
-                          border: isWinner ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-subtle)',
+                          border: isWinner ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-subtle)',
                           background: isWinner ? 'rgba(16, 185, 129, 0.08)' : 'var(--ds-color-bg-canvas)',
                           fontSize: '0.78rem',
                           display: 'flex',
@@ -297,7 +297,7 @@ export function ZeroModelRouterTab() {
                         }}
                       >
                         <div style={{
-                          background: isWinner ? '#2AB5B0' : 'var(--ds-color-bg-surfaceHover)',
+                          background: isWinner ? '#5EC4C8' : 'var(--ds-color-bg-surfaceHover)',
                           color: isWinner ? 'white' : 'var(--ds-color-text-tertiary)',
                           fontWeight: 700,
                           fontSize: '0.75rem',
@@ -343,10 +343,10 @@ export function ZeroModelRouterTab() {
 
               {/* Summary Stats Badges */}
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #2AB5B0', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, color: '#17837F' }}>
+                <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid #5EC4C8', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, color: '#3A9B9F' }}>
                   ⚡ {fastPercentage}% Fast-Path Coverage ({fastCount}/{totalQueries})
                 </div>
-                <div style={{ background: 'rgba(37, 99, 235, 0.1)', border: '1px solid #2AB5B0', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, color: '#17837F' }}>
+                <div style={{ background: 'rgba(37, 99, 235, 0.1)', border: '1px solid #5EC4C8', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, color: '#3A9B9F' }}>
                   ⏱ {totalLatencySavedSec}s User Latency Saved
                 </div>
                 <div style={{ background: 'rgba(168, 85, 247, 0.1)', border: '1px solid #a855f7', padding: '4px 10px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, color: '#a855f7' }}>
@@ -370,9 +370,9 @@ export function ZeroModelRouterTab() {
                   style={{
                     padding: '4px 10px',
                     borderRadius: '6px',
-                    border: benchmarkFilter === btn.id ? '1px solid #2AB5B0' : '1px solid var(--ds-color-border-default)',
+                    border: benchmarkFilter === btn.id ? '1px solid #5EC4C8' : '1px solid var(--ds-color-border-default)',
                     background: benchmarkFilter === btn.id ? 'rgba(16, 185, 129, 0.1)' : 'var(--ds-color-bg-surface)',
-                    color: benchmarkFilter === btn.id ? '#2AB5B0' : 'inherit',
+                    color: benchmarkFilter === btn.id ? '#5EC4C8' : 'inherit',
                     fontSize: '0.78rem',
                     fontWeight: 600,
                     cursor: 'pointer'
@@ -417,10 +417,10 @@ export function ZeroModelRouterTab() {
                               {isFast ? '⚡ Fast Path' : '🧠 Full 3-LLM'}
                             </Badge>
                           </td>
-                          <td style={{ padding: '10px 12px', fontFamily: 'var(--ds-font-family-mono)', color: isFast ? '#2AB5B0' : '#6366f1', fontWeight: 700 }}>
+                          <td style={{ padding: '10px 12px', fontFamily: 'var(--ds-font-family-mono)', color: isFast ? '#5EC4C8' : '#6366f1', fontWeight: 700 }}>
                             {row.latencyMs} ms
                           </td>
-                          <td style={{ padding: '10px 12px', color: isFast ? '#2AB5B0' : 'var(--ds-color-text-secondary)', fontSize: '0.75rem' }}>
+                          <td style={{ padding: '10px 12px', color: isFast ? '#5EC4C8' : 'var(--ds-color-text-secondary)', fontSize: '0.75rem' }}>
                             {isFast ? `Direct Match: ${row.docAnswer}` : row.docAnswer}
                           </td>
                         </tr>
@@ -457,7 +457,7 @@ export function ZeroModelRouterTab() {
                     1. Question Store / Cache
                   </h3>
                 </div>
-                <div style={{ fontSize: '0.75rem', fontFamily: 'var(--ds-font-family-mono)', color: '#17837F', marginBottom: '8px' }}>
+                <div style={{ fontSize: '0.75rem', fontFamily: 'var(--ds-font-family-mono)', color: '#3A9B9F', marginBottom: '8px' }}>
                   Latency: 0.05 ms · Cost: $0.00
                 </div>
                 <p style={{ fontSize: '0.82rem', color: 'var(--ds-color-text-secondary)', lineHeight: 1.5, margin: 0 }}>
@@ -466,14 +466,14 @@ export function ZeroModelRouterTab() {
               </div>
 
               {/* Front 2 */}
-              <div style={{ background: 'var(--ds-color-bg-surface)', border: '1px solid #2AB5B0', borderRadius: '8px', padding: '14px', boxShadow: '0 2px 8px rgba(16, 185, 129, 0.1)' }}>
+              <div style={{ background: 'var(--ds-color-bg-surface)', border: '1px solid #5EC4C8', borderRadius: '8px', padding: '14px', boxShadow: '0 2px 8px rgba(16, 185, 129, 0.1)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
                   <span style={{ fontSize: '1.2rem' }}>📏</span>
-                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: '#17837F' }}>
+                  <h3 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: '#3A9B9F' }}>
                     2. Retrieval Line Score Margin
                   </h3>
                 </div>
-                <div style={{ fontSize: '0.75rem', fontFamily: 'var(--ds-font-family-mono)', color: '#17837F', marginBottom: '8px' }}>
+                <div style={{ fontSize: '0.75rem', fontFamily: 'var(--ds-font-family-mono)', color: '#3A9B9F', marginBottom: '8px' }}>
                   Latency: 0.10 ms · Cost: $0.00
                 </div>
                 <p style={{ fontSize: '0.82rem', color: 'var(--ds-color-text-secondary)', lineHeight: 1.5, margin: 0 }}>
@@ -489,7 +489,7 @@ export function ZeroModelRouterTab() {
                     3. Expert Dictionary Shapes
                   </h3>
                 </div>
-                <div style={{ fontSize: '0.75rem', fontFamily: 'var(--ds-font-family-mono)', color: '#17837F', marginBottom: '8px' }}>
+                <div style={{ fontSize: '0.75rem', fontFamily: 'var(--ds-font-family-mono)', color: '#3A9B9F', marginBottom: '8px' }}>
                   Latency: 0.02 ms · Cost: $0.00
                 </div>
                 <p style={{ fontSize: '0.82rem', color: 'var(--ds-color-text-secondary)', lineHeight: 1.5, margin: 0 }}>
@@ -576,7 +576,7 @@ export function ZeroModelRouterTab() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.82rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <span>Fast-Path Triage Rate:</span>
-                      <strong style={{ color: '#17837F' }}>{fastPercentage}% ({fastCount} of {totalQueries})</strong>
+                      <strong style={{ color: '#3A9B9F' }}>{fastPercentage}% ({fastCount} of {totalQueries})</strong>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <span>LLM Escalation Rate:</span>
@@ -588,7 +588,7 @@ export function ZeroModelRouterTab() {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <span>Hallucination Risk on Hard Qs:</span>
-                      <strong style={{ color: minMargin >= 3 ? '#2AB5B0' : '#ef4444' }}>
+                      <strong style={{ color: minMargin >= 3 ? '#5EC4C8' : '#ef4444' }}>
                         {minMargin >= 3 ? '0% (Safe)' : '⚠️ Elevated (Margin too narrow)'}
                       </strong>
                     </div>

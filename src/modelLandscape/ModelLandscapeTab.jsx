@@ -167,10 +167,10 @@ export default function ModelLandscapeTab() {
 
                 {/* RECOMMENDATION RESULT */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #2AB5B0' }}>
+                  <Card style={{ padding: '16px', background: '#090d16', border: '1px solid #5EC4C8' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '12px', color: '#17837F' }}>RECOMMENDED FOUNDATION MODEL:</strong>
-                      <Badge variant="subtle" style={{ color: '#17837F', background: 'rgba(16,185,129,0.15)' }}>
+                      <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>RECOMMENDED FOUNDATION MODEL:</strong>
+                      <Badge variant="subtle" style={{ color: '#3A9B9F', background: 'rgba(16,185,129,0.15)' }}>
                         OPTIMAL MATCH
                       </Badge>
                     </Flex>
@@ -180,14 +180,14 @@ export default function ModelLandscapeTab() {
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)', marginBottom: '4px' }}>
                       HOSTING & DEPLOYMENT TOPOLOGY:
                     </div>
-                    <div style={{ fontSize: '12px', color: '#17837F', fontFamily: 'monospace' }}>
+                    <div style={{ fontSize: '12px', color: '#3A9B9F', fontFamily: 'monospace' }}>
                       {recommendation.hostingTopology}
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
                     <Flex justify="space-between" align="center" style={{ marginBottom: '8px' }}>
-                      <strong style={{ fontSize: '12px', color: '#17837F' }}>ESTIMATED PRODUCTION COST:</strong>
+                      <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>ESTIMATED PRODUCTION COST:</strong>
                       <Badge variant="outline">{recommendation.estimatedCostPer10kCalls} / 10k calls</Badge>
                     </Flex>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', margin: '0 0 8px 0' }}>
@@ -218,7 +218,7 @@ export default function ModelLandscapeTab() {
                 <Stack gap={4}>
                   {MODEL_FAMILIES_TAXONOMY.map((fam, idx) => (
                     <Card key={idx} style={{ padding: '16px', background: 'var(--ds-color-bg-surface)' }}>
-                      <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '2px' }}>
+                      <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '2px' }}>
                         {fam.family}
                       </strong>
                       <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', margin: '0 0 10px 0' }}>
@@ -231,7 +231,7 @@ export default function ModelLandscapeTab() {
                             <div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold', marginBottom: '4px' }}>
                               {m.name}
                             </div>
-                            <div style={{ fontSize: '10px', color: '#17837F', fontFamily: 'monospace', marginBottom: '6px' }}>
+                            <div style={{ fontSize: '10px', color: '#3A9B9F', fontFamily: 'monospace', marginBottom: '6px' }}>
                               Context: {m.context} | Input: {m.inputCostPerM} | Output: {m.outputCostPerM}
                             </div>
                             <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', margin: 0 }}>
@@ -261,15 +261,15 @@ export default function ModelLandscapeTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '12px', color: '#17837F' }}>1. Synthetic Data Filtering</strong>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>1. Synthetic Data Filtering</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       Filtering raw web crawls to keep only clean educational explanations allows compact networks to learn dense world representations without memorizing web noise.
                     </p>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '12px', color: '#17837F' }}>2. On-Device Privacy & Zero Latency</strong>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderTop: '3px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>2. On-Device Privacy & Zero Latency</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginTop: '6px' }}>
                       Runs locally on Apple Silicon (via MLX) or mobile phones (via ONNX/WebGPU) with zero internet dependency, zero API egress costs, and absolute data confidentiality.
                     </p>
@@ -300,26 +300,26 @@ export default function ModelLandscapeTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '6px' }}>
                       PRE-TRAINING SCALING VS TEST-TIME COMPUTE:
                     </strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '8px' }}>
                       Traditional LLMs scale capabilities by adding parameters and pre-training tokens. Reasoning models scale capabilities dynamically at inference time by generating internal Chain-of-Thought scratchpads, self-correcting mistakes before returning the final answer.
                     </p>
-                    <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#17837F' }}>
+                    <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#3A9B9F' }}>
                       More Thinking Tokens = Higher Accuracy on Hard Logic
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '13px', color: '#17837F', display: 'block', marginBottom: '6px' }}>
+                  <Card style={{ padding: '16px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '13px', color: '#3A9B9F', display: 'block', marginBottom: '6px' }}>
                       DEEPSEEK-R1 PURE REINFORCEMENT LEARNING:
                     </strong>
                     <p style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-secondary)', marginBottom: '8px' }}>
                       Trained using Large-Scale Reinforcement Learning (RL) directly on base models with rule-based verifiable rewards (compiler pass/fail for code, exact match for math) without human Supervised Fine-Tuning (SFT) warm-starts.
                     </p>
-                    <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#17837F' }}>
+                    <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontFamily: 'monospace', fontSize: '11px', color: '#3A9B9F' }}>
                       Emergent Behaviors: Self-Verification, Backtracking, Reflection
                     </div>
                   </Card>

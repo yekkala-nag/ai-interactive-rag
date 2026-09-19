@@ -15,7 +15,7 @@ export default function CodingEvalsTab() {
   const [p, setP] = useState(0.7);
   const [serious, setSerious] = useState(0);
   const r = TRIAL_STATS(runs, p, 0.8, serious);
-  const rc = r.verdict.startsWith('SHIP') ? '#2AB5B0' : r.verdict.startsWith('GATE') ? '#F5A623' : '#ef4444';
+  const rc = r.verdict.startsWith('SHIP') ? '#5EC4C8' : r.verdict.startsWith('GATE') ? '#F5A623' : '#ef4444';
   const [checked, setChecked] = useState(CONTRACT_CHECKS.map(() => true));
   const toggle = (i) => setChecked(c => c.map((v, j) => (j === i ? !v : v)));
   const coverage = Math.round((checked.filter(Boolean).length / checked.length) * 100);
@@ -34,19 +34,19 @@ export default function CodingEvalsTab() {
           <button key={t.id} onClick={() => setSub(t.id)} style={navBtn(sub, t.id)}><div style={{ display: 'flex', gap: '8px', fontSize: 'var(--ds-font-size-body)' }}><span>{t.icon}</span><span>{t.label}</span></div><div style={{ fontSize: 'var(--ds-font-size-caption)', opacity: 0.75 }}>{t.desc}</div></button>))}
         </div>
         {sub === 'contracts' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{AGENT_SYSTEM.map((a, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{a.part}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{a.note}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{AGENT_SYSTEM.map((a, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{a.part}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{a.note}</div></Card>))}</Grid>
           <div><h3 style={{ margin: 0 }}>📜 Executable contract — toggle to feel coverage drop</h3></div>
           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">{CONTRACT_CHECKS.map((c, i) => (
             <label key={i} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', padding: '10px', background: 'var(--ds-color-bg-surface)', borderRadius: '8px', border: `1px solid ${checked[i] ? 'rgba(16,185,129,0.4)' : 'var(--ds-color-border-subtle)'}`, cursor: 'pointer', fontSize: '12px', color: 'white' }}>
               <input type="checkbox" checked={checked[i]} onChange={() => toggle(i)} style={{ marginTop: '2px' }} />
               <span><strong>{c.check}</strong> <span style={{ color: 'var(--ds-color-text-tertiary)' }}>— bars: {c.bars}</span></span>
             </label>))}</Grid>
-          <div style={{ fontSize: '12px', color: coverage === 100 ? '#2AB5B0' : coverage >= 60 ? '#F5A623' : '#ef4444', fontWeight: 'bold' }}>
+          <div style={{ fontSize: '12px', color: coverage === 100 ? '#5EC4C8' : coverage >= 60 ? '#F5A623' : '#ef4444', fontWeight: 'bold' }}>
             Contract coverage: {coverage}% {coverage < 100 && '— every unchecked box is a bluffable surface.'}
           </div>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Layer</th><th style={{ textAlign: 'left', padding: '8px' }}>Asks</th><th style={{ textAlign: 'left', padding: '8px' }}>Metric</th></tr></thead>
-            <tbody>{SIX_LAYERS.map((l, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{l.layer}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{l.asks}</td><td style={{ padding: '8px', color: '#17837F', fontFamily: 'monospace' }}>{l.metric}</td></tr>))}</tbody></table></div>
+            <tbody>{SIX_LAYERS.map((l, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{l.layer}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{l.asks}</td><td style={{ padding: '8px', color: '#3A9B9F', fontFamily: 'monospace' }}>{l.metric}</td></tr>))}</tbody></table></div>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Trial-statistics simulator</h3></div>
@@ -67,11 +67,11 @@ export default function CodingEvalsTab() {
           </Grid>
           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-2)">
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-              <strong style={{ fontSize: '12px', color: '#17837F' }}>Statistics rules</strong>
+              <strong style={{ fontSize: '12px', color: '#3A9B9F' }}>Statistics rules</strong>
               {STATISTICS_RULES.map((s, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}><span style={{ color: 'white' }}>{s.rule}:</span> {s.how}</div>))}
             </Card>
             <Card style={{ padding: '12px', background: 'var(--ds-color-bg-surface)' }}>
-              <strong style={{ fontSize: '12px', color: '#A34A28' }}>Open-ended bounds</strong>
+              <strong style={{ fontSize: '12px', color: '#C47A6A' }}>Open-ended bounds</strong>
               {OPEN_ENDED.map((o, i) => (<div key={i} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}><span style={{ color: 'white' }}>{o.move}:</span> {o.why}</div>))}
             </Card>
           </Grid>

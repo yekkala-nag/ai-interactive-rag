@@ -1002,7 +1002,7 @@ export default function RAGCaseStudiesTab() {
                               <Stack gap={3}>
                                 <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
                                   <Badge variant="info">⚡ Live Query Telemetry Trace</Badge>
-                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', fontWeight: 'bold' }}>
                                     p95 Latency: {trace.latencyMs}ms (Budget: &lt;2000ms)
                                   </span>
                                 </Flex>
@@ -1029,7 +1029,7 @@ export default function RAGCaseStudiesTab() {
 
                                 <div style={{ background: 'var(--ds-color-bg-canvas)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
                                   <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>SANDBOX & COMPLIANCE GATE:</span>
-                                  <div style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: trace.sandboxStatus.includes('✓') ? '#2AB5B0' : 'var(--ds-color-text-primary)', marginTop: '2px' }}>
+                                  <div style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: trace.sandboxStatus.includes('✓') ? '#5EC4C8' : 'var(--ds-color-text-primary)', marginTop: '2px' }}>
                                     {trace.sandboxStatus}
                                   </div>
                                 </div>
@@ -1352,13 +1352,13 @@ export default function RAGCaseStudiesTab() {
                     </Card>
 
                     <Card style={{ padding: 'var(--ds-space-4)' }}>
-                      <h4 style={{ color: '#17837F', marginBottom: 'var(--ds-space-3)' }}>⚡ Technical Latency & Recall</h4>
+                      <h4 style={{ color: '#3A9B9F', marginBottom: 'var(--ds-space-3)' }}>⚡ Technical Latency & Recall</h4>
                       {FINANCIAL_CASE_STUDY.metrics.technical.map((m, i) => (
                         <div key={i} style={{ marginBottom: 'var(--ds-space-3)' }}>
                           <div style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-secondary)' }}>{m.label}</div>
                           <div style={{ display: 'flex', gap: 'var(--ds-space-2)', alignItems: 'center' }}>
                             <span style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-tertiary)' }}>Target: {m.target}</span>
-                            <span style={{ fontWeight: 'bold', color: '#17837F' }}>Actual: {m.actual}</span>
+                            <span style={{ fontWeight: 'bold', color: '#3A9B9F' }}>Actual: {m.actual}</span>
                           </div>
                         </div>
                       ))}
@@ -1483,14 +1483,14 @@ export default function RAGCaseStudiesTab() {
                               <Stack gap={3}>
                                 <Flex justify="space-between" align="center" style={{ flexWrap: 'wrap', gap: '8px' }}>
                                   <Badge variant="success">💼 Grounded Advisor Intelligence Output</Badge>
-                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', fontWeight: 'bold' }}>
+                                  <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', fontWeight: 'bold' }}>
                                     Latency: {res.latencyMs}ms | Scope: {res.clientsAffected}
                                   </span>
                                 </Flex>
 
                                 <div style={{ background: 'var(--ds-color-bg-canvas)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
                                   <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', fontWeight: 'bold' }}>REGULATORY COMPLIANCE VERIFICATION:</span>
-                                  <div style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: res.complianceStatus.includes('✓') ? '#2AB5B0' : '#A34A28', marginTop: '2px' }}>
+                                  <div style={{ fontSize: 'var(--ds-font-size-bodySm)', fontWeight: 'bold', color: res.complianceStatus.includes('✓') ? '#5EC4C8' : '#C47A6A', marginTop: '2px' }}>
                                     {res.complianceStatus}
                                   </div>
                                 </div>
@@ -1630,25 +1630,25 @@ export default function RAGCaseStudiesTab() {
                 <Grid columns={4} gap={3} style={{ marginTop: 'var(--ds-space-2)' }}>
                   <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
                     <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Retrieval Recall@10</span>
-                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: configRetrieval === 'hybrid' ? '#2AB5B0' : '#A34A28' }}>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: configRetrieval === 'hybrid' ? '#5EC4C8' : '#C47A6A' }}>
                       {configRetrieval === 'hybrid' ? '94.2%' : configRetrieval === 'dense' ? '71.0%' : '68.5%'}
                     </div>
                   </div>
                   <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
                     <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Syntax & Compilation Pass Rate</span>
-                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: configChunking === 'ast' && configGuardrails === 'docker_pass1' ? '#2AB5B0' : '#DC2626' }}>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: configChunking === 'ast' && configGuardrails === 'docker_pass1' ? '#5EC4C8' : '#DC2626' }}>
                       {configChunking === 'ast' && configGuardrails === 'docker_pass1' ? '98.5%' : configChunking === 'ast' ? '82.0%' : '62.4%'}
                     </div>
                   </div>
                   <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
                     <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Total Pipeline Latency</span>
-                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: '#17837F' }}>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: '#3A9B9F' }}>
                       {calculatedLatency}ms
                     </div>
                   </div>
                   <div style={{ background: 'var(--ds-color-bg-surface)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
                     <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)' }}>Secret & Policy Leaks</span>
-                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: configSecurity === 'gitleaks_acl' ? '#2AB5B0' : '#DC2626' }}>
+                    <div style={{ fontSize: 'var(--ds-font-size-h3)', fontWeight: 'bold', color: configSecurity === 'gitleaks_acl' ? '#5EC4C8' : '#DC2626' }}>
                       {configSecurity === 'gitleaks_acl' ? '0 Secrets' : '⚠️ 12 Leaks'}
                     </div>
                   </div>
@@ -1773,7 +1773,7 @@ export default function RAGCaseStudiesTab() {
                   <div style={{
                     height: '100%',
                     width: `${latencyPct}%`,
-                    background: latencyPct > 90 ? '#DC2626' : 'linear-gradient(90deg, #2AB5B0, #A34A28)',
+                    background: latencyPct > 90 ? '#DC2626' : 'linear-gradient(90deg, #5EC4C8, #C47A6A)',
                     transition: 'width 0.4s ease'
                   }} />
                 </div>
@@ -1892,11 +1892,11 @@ export default function RAGCaseStudiesTab() {
                     <p style={{ fontSize: 'var(--ds-font-size-bodySm)', margin: '4px 0 0 0' }}>{SDLC_CASE_STUDY_DATA.sdlcStarStory.situation}</p>
                   </div>
                   <div style={{ background: 'var(--ds-color-bg-canvas)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
-                    <strong style={{ color: '#17837F' }}>T — Task</strong>
+                    <strong style={{ color: '#3A9B9F' }}>T — Task</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-bodySm)', margin: '4px 0 0 0' }}>{SDLC_CASE_STUDY_DATA.sdlcStarStory.task}</p>
                   </div>
                   <div style={{ background: 'var(--ds-color-bg-canvas)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>
-                    <strong style={{ color: '#A34A28' }}>A — Action</strong>
+                    <strong style={{ color: '#C47A6A' }}>A — Action</strong>
                     <p style={{ fontSize: 'var(--ds-font-size-bodySm)', margin: '4px 0 0 0' }}>{SDLC_CASE_STUDY_DATA.sdlcStarStory.action}</p>
                   </div>
                   <div style={{ background: 'var(--ds-color-bg-canvas)', padding: 'var(--ds-space-3)', borderRadius: 'var(--ds-radius-md)' }}>

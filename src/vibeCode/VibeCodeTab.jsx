@@ -15,7 +15,7 @@ export default function VibeCodeTab() {
   const [searches, setSearches] = useState(1.5);
   const [cost, setCost] = useState(0.17);
   const r = DAILY_PNL(visitors, searches, cost);
-  const rc = r.net >= 0 ? '#2AB5B0' : '#ef4444';
+  const rc = r.net >= 0 ? '#5EC4C8' : '#ef4444';
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
       <Hero moduleId="agents_frameworks" moduleLabel="Agent Systems & Frameworks [Vibe-Coding Economics]"
@@ -33,8 +33,8 @@ export default function VibeCodeTab() {
         {sub === 'case' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={3}>
           <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px' }}>
             <thead><tr style={{ borderBottom: '2px solid var(--ds-color-border-subtle)', color: 'var(--ds-color-text-secondary)' }}><th style={{ textAlign: 'left', padding: '8px' }}>Line</th><th style={{ padding: '8px' }}>Value</th><th style={{ textAlign: 'left', padding: '8px' }}>Note</th></tr></thead>
-            <tbody>{UNIT_CASE.map((u, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{u.line}</td><td style={{ padding: '8px', textAlign: 'center', color: i === 2 || i === 3 ? '#ef4444' : '#2AB5B0', fontFamily: 'monospace', fontWeight: 'bold' }}>{u.value}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{u.note}</td></tr>))}</tbody></table></div>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{FAILURE_MODES.map((f, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #ef4444' }}><div style={{ fontSize: '12px', color: '#ef4444', fontWeight: 'bold' }}>{f.mode}</div><div style={{ fontSize: '11px', color: 'white' }}>{f.detail}</div><div style={{ fontSize: '11px', color: '#17837F' }}>→ {f.fix}</div></Card>))}</Grid>
+            <tbody>{UNIT_CASE.map((u, i) => (<tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}><td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{u.line}</td><td style={{ padding: '8px', textAlign: 'center', color: i === 2 || i === 3 ? '#ef4444' : '#5EC4C8', fontFamily: 'monospace', fontWeight: 'bold' }}>{u.value}</td><td style={{ padding: '8px', color: 'var(--ds-color-text-secondary)' }}>{u.note}</td></tr>))}</tbody></table></div>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-2)">{FAILURE_MODES.map((f, i) => (<Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #ef4444' }}><div style={{ fontSize: '12px', color: '#ef4444', fontWeight: 'bold' }}>{f.mode}</div><div style={{ fontSize: '11px', color: 'white' }}>{f.detail}</div><div style={{ fontSize: '11px', color: '#3A9B9F' }}>→ {f.fix}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'sim' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🔬 Daily P&L simulator (the $52 day, tunable)</h3></div>
@@ -51,10 +51,10 @@ export default function VibeCodeTab() {
               <div style={{ fontSize: '12px', color: 'var(--ds-color-text-secondary)' }}>cost ${r.cost} · revenue ${r.rev}</div>
               <div style={{ fontSize: '20px', color: rc, fontWeight: 'bold' }}>{r.net >= 0 ? '+' : ''}${r.net}/day</div>
               <div style={{ fontSize: '12px', color: 'white', marginTop: '4px' }}>{r.verdict}</div>
-              <div style={{ fontSize: '11px', color: '#17837F', marginTop: '4px' }}>{r.staticAlt}</div>
+              <div style={{ fontSize: '11px', color: '#3A9B9F', marginTop: '4px' }}>{r.staticAlt}</div>
             </Card>
           </Grid>
-          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{VIBE_DISCIPLINE.map((d, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #2AB5B0' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{d.rule}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{d.how}</div><div style={{ fontSize: '11px', color: '#ef4444' }}>kills: {d.kills}</div></Card>))}</Grid>
+          <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr 1fr' }} gap="var(--ds-space-2)">{VIBE_DISCIPLINE.map((d, i) => (<Card key={i} style={{ padding: '10px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}><div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{d.rule}</div><div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{d.how}</div><div style={{ fontSize: '11px', color: '#ef4444' }}>kills: {d.kills}</div></Card>))}</Grid>
         </Stack></Card></Stack>)}
         {sub === 'code' && (<Stack gap={6}><Card style={{ padding: 'var(--ds-space-5)', background: 'var(--ds-color-bg-canvas)' }}><Stack gap={4}>
           <div><h3 style={{ margin: 0 }}>🛠️ P&L gate + MVP-offer code</h3></div>

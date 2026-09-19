@@ -126,7 +126,7 @@ export default function AIUseCasesTab() {
                       <p style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', margin: '0 0 4px 0' }}>
                         <strong>AI Solution:</strong> {uc.solution}
                       </p>
-                      <div style={{ fontSize: '11px', color: '#17837F', fontWeight: 'bold', marginTop: '4px' }}>
+                      <div style={{ fontSize: '11px', color: '#3A9B9F', fontWeight: 'bold', marginTop: '4px' }}>
                         Value: {uc.businessValue}
                       </div>
                     </Card>
@@ -164,15 +164,15 @@ export default function AIUseCasesTab() {
                 </Flex>
 
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '11px', color: '#17837F' }}>UNSTRUCTURED RAW RESUME TEXT:</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '11px', color: '#3A9B9F' }}>UNSTRUCTURED RAW RESUME TEXT:</strong>
                     <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '6px', color: 'var(--ds-color-text-secondary)', fontStyle: 'italic' }}>
                       "{activeLead.rawResume}"
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #2AB5B0' }}>
-                    <strong style={{ fontSize: '11px', color: '#17837F' }}>LLM EXTRACTED STRUCTURED VARIABLES:</strong>
+                  <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
+                    <strong style={{ fontSize: '11px', color: '#3A9B9F' }}>LLM EXTRACTED STRUCTURED VARIABLES:</strong>
                     <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '10px', borderRadius: 'var(--ds-radius-sm)', marginTop: '8px', fontFamily: 'var(--ds-font-family-mono)', fontSize: '11px' }}>
                       <div>job_title: "{activeLead.llmExtracted.jobTitle}"</div>
                       <div>years_experience: {activeLead.llmExtracted.yearsExp}</div>
@@ -213,7 +213,7 @@ export default function AIUseCasesTab() {
                         {lead.llmExtracted.jobTitle} ({lead.llmExtracted.industry})
                       </div>
                       <div style={{ background: 'var(--ds-color-bg-canvas)', padding: '8px', borderRadius: 'var(--ds-radius-sm)', marginTop: '6px', fontFamily: 'var(--ds-font-family-mono)', fontSize: '11px' }}>
-                        ICP Similarity: <strong style={{ color: lead.icpSimilarity > 0.8 ? '#2AB5B0' : '#ef4444' }}>{lead.icpSimilarity}</strong>
+                        ICP Similarity: <strong style={{ color: lead.icpSimilarity > 0.8 ? '#5EC4C8' : '#ef4444' }}>{lead.icpSimilarity}</strong>
                       </div>
                     </Card>
                   ))}
@@ -260,9 +260,9 @@ export default function AIUseCasesTab() {
                     </Grid>
 
                     <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
-                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #2AB5B0' }}>
+                      <Card style={{ padding: '14px', background: 'var(--ds-color-bg-canvas)', borderLeft: '4px solid #5EC4C8' }}>
                         <strong style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>PREDICTED CONVERSION PROBABILITY:</strong>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#17837F' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3A9B9F' }}>
                           {(predictedScore.score * 100).toFixed(0)}%
                         </div>
                       </Card>

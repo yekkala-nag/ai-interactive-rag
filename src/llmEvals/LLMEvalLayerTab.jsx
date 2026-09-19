@@ -194,24 +194,24 @@ export default function LLMEvalLayerTab() {
                       <div style={{ background: 'var(--ds-color-bg-surface)', padding: '10px 14px', borderRadius: '8px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                           <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold' }}>Attribution (Grounding)</span>
-                          <strong style={{ color: selectedScenario.scores.attribution > 0.7 ? '#2AB5B0' : '#ef4444' }}>
+                          <strong style={{ color: selectedScenario.scores.attribution > 0.7 ? '#5EC4C8' : '#ef4444' }}>
                             {(selectedScenario.scores.attribution * 100).toFixed(0)}%
                           </strong>
                         </div>
                         <div style={{ height: 6, background: '#e2e8f0', borderRadius: 3, overflow: 'hidden' }}>
-                          <div style={{ width: `${selectedScenario.scores.attribution * 100}%`, height: '100%', background: selectedScenario.scores.attribution > 0.7 ? '#2AB5B0' : '#ef4444' }} />
+                          <div style={{ width: `${selectedScenario.scores.attribution * 100}%`, height: '100%', background: selectedScenario.scores.attribution > 0.7 ? '#5EC4C8' : '#ef4444' }} />
                         </div>
                       </div>
 
                       <div style={{ background: 'var(--ds-color-bg-surface)', padding: '10px 14px', borderRadius: '8px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                           <span style={{ fontSize: 'var(--ds-font-size-caption)', fontWeight: 'bold' }}>Specificity (Detail Density)</span>
-                          <strong style={{ color: '#17837F' }}>
+                          <strong style={{ color: '#3A9B9F' }}>
                             {(selectedScenario.scores.specificity * 100).toFixed(0)}%
                           </strong>
                         </div>
                         <div style={{ height: 6, background: '#e2e8f0', borderRadius: 3, overflow: 'hidden' }}>
-                          <div style={{ width: `${selectedScenario.scores.specificity * 100}%`, height: '100%', background: '#2AB5B0' }} />
+                          <div style={{ width: `${selectedScenario.scores.specificity * 100}%`, height: '100%', background: '#5EC4C8' }} />
                         </div>
                       </div>
 
@@ -244,7 +244,7 @@ export default function LLMEvalLayerTab() {
                               padding: '8px 12px',
                               background: 'var(--ds-color-bg-surface)',
                               borderRadius: '6px',
-                              borderLeft: `4px solid ${claim.status === 'GROUNDED' ? '#2AB5B0' : claim.status === 'GROUNDED_BUT_VAGUE' ? '#f59e0b' : '#ef4444'}`
+                              borderLeft: `4px solid ${claim.status === 'GROUNDED' ? '#5EC4C8' : claim.status === 'GROUNDED_BUT_VAGUE' ? '#f59e0b' : '#ef4444'}`
                             }}
                           >
                             <span style={{ fontSize: 'var(--ds-font-size-bodySm)', color: 'var(--ds-color-text-primary)' }}>
@@ -287,7 +287,7 @@ export default function LLMEvalLayerTab() {
                       key={idx}
                       style={{
                         padding: 'var(--ds-space-4)',
-                        borderTop: `4px solid ${idx === 0 ? '#2AB5B0' : idx === 1 ? '#ef4444' : idx === 2 ? '#f59e0b' : '#64748b'}`,
+                        borderTop: `4px solid ${idx === 0 ? '#5EC4C8' : idx === 1 ? '#ef4444' : idx === 2 ? '#f59e0b' : '#64748b'}`,
                         background: 'var(--ds-color-bg-surface)'
                       }}
                     >
@@ -326,7 +326,7 @@ export default function LLMEvalLayerTab() {
                 </div>
 
                 <Grid columns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '4px solid #2AB5B0', background: 'rgba(16,185,129,0.04)' }}>
+                  <Card style={{ padding: 'var(--ds-space-4)', borderTop: '4px solid #5EC4C8', background: 'rgba(16,185,129,0.04)' }}>
                     <Stack gap={2}>
                       <Badge variant="success">1. SERVE (Delivery Gate)</Badge>
                       <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>Criteria: Attribution &gt; 85% & Relevance &gt; 80%</strong>
@@ -410,10 +410,10 @@ export default function LLMEvalLayerTab() {
                               <td style={{ padding: '10px', fontFamily: 'var(--ds-font-family-mono)' }}>{t.testId}</td>
                               <td style={{ padding: '10px', fontWeight: 'bold' }}>{t.name}</td>
                               <td style={{ padding: '10px', textAlign: 'center' }}>{(t.baselineScore * 100).toFixed(0)}%</td>
-                              <td style={{ padding: '10px', textAlign: 'center', fontWeight: 'bold', color: isFail ? '#ef4444' : '#2AB5B0' }}>
+                              <td style={{ padding: '10px', textAlign: 'center', fontWeight: 'bold', color: isFail ? '#ef4444' : '#5EC4C8' }}>
                                 {(t.candidateScore * 100).toFixed(0)}%
                               </td>
-                              <td style={{ padding: '10px', textAlign: 'center', color: isFail ? '#ef4444' : '#2AB5B0' }}>
+                              <td style={{ padding: '10px', textAlign: 'center', color: isFail ? '#ef4444' : '#5EC4C8' }}>
                                 {delta > 0 ? `+${delta}` : delta}
                               </td>
                               <td style={{ padding: '10px', textAlign: 'center' }}>
@@ -631,7 +631,7 @@ class DeterministicEvalLayer:
                           <Stack gap={2}>
                             <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>PM Launch Decision: Model v1 vs Model v2 Tradeoff Analysis</strong>
                             <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
-                              <Card style={{ padding: '12px', borderLeft: '4px solid #2AB5B0' }}>
+                              <Card style={{ padding: '12px', borderLeft: '4px solid #5EC4C8' }}>
                                 <Badge variant="success" size="sm">{activeParadigm.v1Model.name}</Badge>
                                 <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '4px' }}>
                                   Overall Accuracy: <strong>{activeParadigm.v1Model.overallAccuracy}</strong>
@@ -667,7 +667,7 @@ class DeterministicEvalLayer:
                   </div>
                   <Grid columns={{ base: '1fr', md: 'repeat(3, 1fr)' }} gap="var(--ds-space-3)">
                     {PM_ARCHETYPES.map((arch, idx) => (
-                      <Card key={idx} style={{ padding: 'var(--ds-space-4)', borderTop: `4px solid ${arch.badgeVariant === 'danger' ? '#ef4444' : arch.badgeVariant === 'warning' ? '#f59e0b' : '#2AB5B0'}` }}>
+                      <Card key={idx} style={{ padding: 'var(--ds-space-4)', borderTop: `4px solid ${arch.badgeVariant === 'danger' ? '#ef4444' : arch.badgeVariant === 'warning' ? '#f59e0b' : '#5EC4C8'}` }}>
                         <Stack gap={2}>
                           <Flex align="center" justify="space-between">
                             <span style={{ fontSize: '1.2rem' }}>{arch.icon}</span>
@@ -783,7 +783,7 @@ class DeterministicEvalLayer:
                             <div style={{ fontSize: 'var(--ds-font-size-bodySm)', marginTop: '4px', fontWeight: 'bold' }}>
                               "{activeExp.baseProblem.question}"
                             </div>
-                            <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#17837F', marginTop: '4px', fontFamily: 'var(--ds-font-family-mono)' }}>
+                            <div style={{ fontSize: 'var(--ds-font-size-caption)', color: '#3A9B9F', marginTop: '4px', fontFamily: 'var(--ds-font-family-mono)' }}>
                               Equation: {activeExp.baseProblem.equation} ➔ Answer: {activeExp.baseProblem.answer}
                             </div>
                           </Card>
@@ -791,7 +791,7 @@ class DeterministicEvalLayer:
                           <strong style={{ fontSize: 'var(--ds-font-size-bodySm)' }}>Symbolic Mutations & LLM Performance Drift:</strong>
                           <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-3)">
                             {activeExp.mutatedProblems.map((mut, idx) => (
-                              <Card key={idx} style={{ padding: '12px', borderLeft: `4px solid ${mut.llmBehavior.includes('FAIL') ? '#ef4444' : '#2AB5B0'}` }}>
+                              <Card key={idx} style={{ padding: '12px', borderLeft: `4px solid ${mut.llmBehavior.includes('FAIL') ? '#ef4444' : '#5EC4C8'}` }}>
                                 <Badge variant={mut.llmBehavior.includes('FAIL') ? 'danger' : 'success'} size="sm">{mut.mutationName}</Badge>
                                 <div style={{ fontSize: 'var(--ds-font-size-caption)', marginTop: '6px' }}>
                                   "{mut.question}"
@@ -799,7 +799,7 @@ class DeterministicEvalLayer:
                                 <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', marginTop: '4px' }}>
                                   Expected: {mut.equation} = {mut.answer}
                                 </div>
-                                <div style={{ fontSize: 'var(--ds-font-size-caption)', color: mut.llmBehavior.includes('FAIL') ? '#ef4444' : '#2AB5B0', marginTop: '6px', fontWeight: 'bold' }}>
+                                <div style={{ fontSize: 'var(--ds-font-size-caption)', color: mut.llmBehavior.includes('FAIL') ? '#ef4444' : '#5EC4C8', marginTop: '6px', fontWeight: 'bold' }}>
                                   {mut.llmBehavior}
                                 </div>
                               </Card>
