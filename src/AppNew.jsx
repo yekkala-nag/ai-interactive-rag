@@ -126,6 +126,9 @@ const TabComponents = {
   agentsdk: lazy(() => import('./agentsSDK/AgentsSDKTab.jsx')),
   loopengineering: lazy(() => import('./loopEngineering/LoopEngineeringTab.jsx')),
   finassistproject: lazy(() => import('./finAssistProject/FinAssistProjectTab.jsx')),
+  zerocostmultiagent: lazy(() => import('./zeroCostMultiAgent/ZeroCostMultiAgentTab.jsx')),
+  multilingualclassification: lazy(() => import('./multilingualClassification/MultilingualClassificationTab.jsx')),
+  textclusteringhdbscan: lazy(() => import('./textClusteringHDBSCAN/TextClusteringHDBSCANTab.jsx')),
 
   threelayers: lazy(() => import('./engineeringLayers/ThreeLayersTab.jsx')),
   docstruct: lazy(() => import('./documentStructure/DocumentStructureTab.jsx')),

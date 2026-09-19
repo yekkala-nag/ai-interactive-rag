@@ -28,7 +28,7 @@ export const UMBRELLA_TOPICS = [
     color: "#3A9B9F",
     dark: "#1F6B6E",
     description: "Roadmap stage 5: embeddings, vector search and document pipelines that feed retrieval",
-    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "nsquaredpizza", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "pandasmem", "geopopviz", "datahumanization", "llmfinetuning"]
+    tabs: ["threelayers", "docstruct", "agenticparsing", "knowledgebase", "vectordbops", "datapipeline", "aidataplat", "medallionarch", "aitestdatabottleneck", "classicalml", "frauddetectionml", "modernioformats", "pythonprofiling", "pythonengineering", "nsquaredpizza", "functools", "activelearn", "goaltracker", "vaes", "keras3", "byol", "xlstm", "timeseriesanomaly", "aiusecases", "linearregression", "pandasdataframes", "pandasmem", "geopopviz", "datahumanization", "llmfinetuning", "multilingualclassification", "textclusteringhdbscan"]
   },
   {
     id: "rag_architecture",
@@ -55,7 +55,7 @@ export const UMBRELLA_TOPICS = [
     color: "#F0A89A",
     dark: "#C47A6A",
     description: "Roadmap stage 7: agents, MCP and production deployment",
-    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "multiagentcoord", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "modeldeploy", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "finassistproject", "capstone2"]
+    tabs: ["fiveassets", "redesign", "projectprepframework", "agentplanner", "agenthitl", "agenta2a", "agentsandbox", "agentevals", "handoffwatch", "verifiedpipes", "codingevals", "claudecode100", "typedagentgate", "agentpairprogramming", "vibecode", "agentsastools", "toolcalling", "agenttasks", "cliagent", "codingagentsnonprog", "multiagent", "multiagentcoord", "modelrouting", "langchain", "langgraph", "frameworkcompare", "agentdebugging", "agentscale", "modeldeploy", "aiproductbuilder", "mcpclient", "agentsdk", "loopengineering", "finassistproject", "zerocostmultiagent", "capstone2"]
   },
   {
     id: "frontiers_production",
@@ -1529,6 +1529,33 @@ export const TABS_REGISTRY = [
     icon: "🏦",
     keywords: ["banking AI", "MCP", "LangGraph", "compliance", "PII redaction", "RAG", "agentic workflow", "realtime project", "portfolio", "FinAssist"],
     component: lazy(() => import("../finAssistProject/FinAssistProjectTab.jsx"))
+  },
+  {
+    id: "zerocostmultiagent",
+    label: "Zero-Cost Multi-Agent on Aging Hardware",
+    umbrellaId: "agents_frameworks",
+    category: "Agents & Frameworks",
+    icon: "🥔",
+    keywords: ["multi-agent", "zero-cost", "aging hardware", "quantized models", "C++ daemons", "Win32", "SwarmForge", "O.D.I.N.", "lazy loading", "hacker noon"],
+    component: lazy(() => import("../zeroCostMultiAgent/ZeroCostMultiAgentTab.jsx"))
+  },
+  {
+    id: "multilingualclassification",
+    label: "Multilingual Text Classification",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🌐",
+    keywords: ["multilingual", "BGE-M3", "scikit-llm", "Ollama", "text classification", "embeddings", "logistic regression", "machine learning mastery"],
+    component: lazy(() => import("../multilingualClassification/MultilingualClassificationTab.jsx"))
+  },
+  {
+    id: "textclusteringhdbscan",
+    label: "Text Clustering with HDBSCAN",
+    umbrellaId: "data_platform",
+    category: "Data & Platform Layers",
+    icon: "🔬",
+    keywords: ["clustering", "HDBSCAN", "UMAP", "sentence-transformers", "topic discovery", "density-based", "unsupervised", "machine learning mastery"],
+    component: lazy(() => import("../textClusteringHDBSCAN/TextClusteringHDBSCANTab.jsx"))
   }
 ];
 
