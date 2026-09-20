@@ -12,7 +12,7 @@ export const PROMPT_LIFECYCLE_CONTENT = {
     {
       id: "l1-foundations",
       label: "L1 Foundations (30 min)",
-      description: "Write better prompts, manage versions, master the 3-sentence pattern",
+      description: "Write better prompts, manage versions, master frameworks and methodology patterns",
       topics: ["promptfundamentals", "promptmgmt", "threesentenceprompt"],
       icon: "📝",
       color: "#5EC4C8"
@@ -39,7 +39,7 @@ export const PROMPT_LIFECYCLE_CONTENT = {
     nodes: [
       { id: "promptfundamentals", label: "Fundamentals", level: 1, x: 100, y: 100, unlocks: ["promptmgmt", "structuredoutputs", "threesentenceprompt", "workflows", "unhobbling"] },
       { id: "promptmgmt", label: "Management", level: 1, x: 100, y: 220, unlocks: ["promptlearning", "promptdependencygraph"] },
-      { id: "threesentenceprompt", label: "3-Sentence", level: 1, x: 100, y: 340, unlocks: [] },
+      { id: "threesentenceprompt", label: "Framework", level: 1, x: 100, y: 340, unlocks: [] },
       { id: "structuredoutputs", label: "Structured Out", level: 2, x: 300, y: 100, unlocks: [] },
       { id: "workflows", label: "Workflows", level: 2, x: 300, y: 220, unlocks: [] },
       { id: "unhobbling", label: "Unhobbling", level: 2, x: 300, y: 340, unlocks: [] },
@@ -180,9 +180,9 @@ export const LEVEL_DEFINITIONS = {
   3: {
     label: "L3 · Advanced",
     short: "L3",
-    color: "#F0A89A",
-    bg: "#F0A89A15",
-    border: "#F0A89A40",
+    color: "#E8837A",
+    bg: "#E8837A15",
+    border: "#E8837A40",
     blurb: "Deep / high-stakes. Needs L2 mastery. Governance, safety, scale."
   }
 };
@@ -207,7 +207,7 @@ export const TOPIC_DETAILS = {
     keyConcept: "Prompts evolve — version them like code"
   },
   threesentenceprompt: {
-    title: "Three-Sentence Prompt Pattern",
+    title: "Framework & Methodology",
     level: 1,
     duration: "15 min",
     prerequisites: ["promptfundamentals"],

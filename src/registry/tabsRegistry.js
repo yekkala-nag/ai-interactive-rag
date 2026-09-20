@@ -1514,11 +1514,11 @@ export const TABS_REGISTRY = [
   },
   {
     id: "threesentenceprompt",
-    label: "Better AI Answers in 3 Sentences",
+    label: "Framework & Methodology",
     umbrellaId: "foundations",
     category: "Foundations",
     icon: "✍️",
-    keywords: ["prompt engineering", "3 sentences", "plan-first", "better prompts", "AI productivity", "brain dump", "messy prompts", "course correction"],
+    keywords: ["prompt engineering", "3 sentences", "plan-first", "better prompts", "AI productivity", "brain dump", "messy prompts", "course correction", "framework", "methodology", "prompt patterns", "prompt framework"],
     component: lazy(() => import("../threeSentencePrompt/ThreeSentencePromptTab.jsx"))
   },
   {

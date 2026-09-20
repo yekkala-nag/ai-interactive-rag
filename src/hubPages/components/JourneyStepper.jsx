@@ -4,7 +4,7 @@ const C = {
   bg: "#0F1219", surface: "#161B26", s2: "#1C2433", s3: "#243044",
   border: "#2A3548", text: "#E2E8F0", muted: "#B8B8C4",
   teal: "#5EC4C8", tealDark: "#3A9B9F", tealInk: "#1F6B6E",
-  coral: "#F0A89A", coralDeep: "#C47A6A",
+  coral: "#E8837A", coralDeep: "#C47A6A",
   lav: "#C9B8E8", lavDeep: "#9B89C4",
 };
 
@@ -157,7 +157,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
 
             {isExpanded && canExpand && (
               <div style={{ padding: "0 20 20", animation: "slideDown 0.2s ease" }}>
-                <style jsx>{`
+                <style>{`
                   @keyframes slideDown {
                     from { opacity: 0; transform: translateY(-10px); }
                     to { opacity: 1; transform: translateY(0); }

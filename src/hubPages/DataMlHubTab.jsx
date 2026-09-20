@@ -5,7 +5,7 @@ const C = {
   bg: "#0F1219", surface: "#161B26", s2: "#1C2433", s3: "#243044",
   border: "#2A3548", text: "#E2E8F0", muted: "#B8B8C4",
   teal: "#5EC4C8", tealDark: "#3A9B9F", tealInk: "#1F6B6E",
-  coral: "#F0A89A", coralDeep: "#C47A6A",
+  coral: "#E8837A", coralDeep: "#C47A6A",
   lav: "#C9B8E8", lavDeep: "#9B89C4",
   purple: "#8b5cf6", amber: "#f59e0b", green: "#14b8a6",
 };
@@ -13,7 +13,7 @@ const C = {
 const LEVEL_BADGES = {
   1: { label: "L1", color: "#5EC4C8" },
   2: { label: "L2", color: "#9B89C4" },
-  3: { label: "L3", color: "#F0A89A" },
+  3: { label: "L3", color: "#E8837A" },
 };
 
 const TOPIC_GROUPS = [
