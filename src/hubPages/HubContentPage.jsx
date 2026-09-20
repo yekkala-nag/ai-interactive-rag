@@ -17,93 +17,6 @@ const LEVEL_BADGE = {
   3: { label: "L3 · Advanced", color: "#F0A89A", ink: "#C47A6A" },
 };
 
-// Realistic per-topic positioning copy for the seven Agent Foundations topics.
-const TOPIC_COPY = {
-  fiveassets: {
-    tagline: "Tools, evals, prompts, data, harnesses",
-    description:
-      "The five assets every agent team owns whether they plan to or not. Inventory yours first: which tools the agent can call, how you evaluate it, what its prompts promise, what data it reads, and what harness runs it — then invest where the gaps are.",
-    outcomes: ["Inventory 5 assets", "Find the gaps", "Invest in order"],
-  },
-  projectprepframework: {
-    tagline: "Solve the right problem, on paper, first",
-    description:
-      "Six short documents before a single line of agent code: problem statement, discovery notes, functional and technical requirements, governance, and roadmap. The prep framework that kills doomed agent projects in days instead of quarters.",
-    outcomes: ["6-doc prep pack", "Kill bad projects early", "Reversibility checks"],
-  },
-  redesign: {
-    tagline: "Automate the redesigned work, not the mess",
-    description:
-      "Agents pasted onto broken processes produce faster broken processes. Redesign the workflow first — remove steps, decide what needs judgment, then automate what's left. Work-first thinking beats tool-first demos.",
-    outcomes: ["Process before tools", "Judgment mapping", "Redesign checklist"],
-  },
-  agentsastools: {
-    tagline: "Agents calling agents",
-    description:
-      "The composition pattern behind every multi-agent system: wrap a specialist agent behind a tool interface so an orchestrator can call it like any function. Learn the boundary design — inputs, outputs, error contracts — that makes nesting work.",
-    outcomes: ["Agent-as-tool boundary", "Typed I/O contracts", "Nesting without chaos"],
-  },
-  toolcalling: {
-    tagline: "The bridge from words to actions",
-    description:
-      "Function calling fundamentals: JSON schemas, parallel calls, strict mode, and error handling across OpenAI and Anthropic tool-use APIs. The single mechanism that turns a chatbot into something that does work.",
-    outcomes: ["Schema design", "Parallel calls", "Error handling"],
-  },
-  agenttasks: {
-    tagline: "Eleven shapes of agent work",
-    description:
-      "Research, code, triage, reconcile, monitor — agent work falls into eleven archetypes with different planning needs, eval strategies, and failure modes. Recognize the archetype before choosing the architecture.",
-    outcomes: ["Name the archetype", "Match architecture", "Plan the eval"],
-  },
-  codingagentsnonprog: {
-    tagline: "Agents for everyone else",
-    description:
-      "Non-programmers shipping software with coding agents: what works, what breaks, and which guardrails matter when the operator can't read the diff. The fastest-growing agent user base deserves its own playbook.",
-    outcomes: ["No-code workflows", "Trust without diffs", "Guardrails that matter"],
-  },
-};
-
-const FOUNDATION_STAGES = [
-  { icon: "📦", title: "Inventory", desc: "List the five assets you already own — tools, evals, prompts, data, harnesses." },
-  { icon: "🧭", title: "Prepare", desc: "Define the right problem on paper and redesign the work before automating." },
-  { icon: "🛠️", title: "Compose", desc: "Bridge words to actions with tools — including agents as tools." },
-  { icon: "📋", title: "Recognize", desc: "Name the task archetype and match the architecture to it." },
-];
-
-const KEY_METRICS = [
-  { label: "Projects killed in prep", value: "1 in 3", trend: "6-doc framework", description: "Share of proposed agent projects that the prep documents reveal as ill-posed, unmeasurable, or reversible-by-hand — before any build cost." },
-  { label: "Tool-call failure rate", value: "−76%", trend: "schema discipline", description: "Malformed or misrouted tool calls eliminated by strict schemas, typed outputs, and named error contracts." },
-  { label: "Time to first working agent", value: "2 days", trend: "assets-first order", description: "How fast teams ship a scoped, evaluated agent once tools, evals, and prompts exist as assets instead of afterthoughts." },
-  { label: "Rework from wrong archetype", value: "−64%", trend: "archetype matching", description: "Rebuilds avoided by recognizing the task archetype up front and choosing planning depth, evals, and autonomy to match." },
-];
-
-const FAQS = [
-  {
-    q: "Do I need all five assets before building anything?",
-    a: "No — you need to know which ones you're missing. The 5 Assets topic is an inventory exercise, not a gate: a prototype can start with one tool and one eval, as long as you've named the gaps. The failures come from never listing them, not from starting small.",
-  },
-  {
-    q: "Why redesign work before automating it?",
-    a: "Because agents amplify process quality in both directions. A clean, judgment-mapped workflow becomes dramatically faster; a messy approval-by-email chain becomes a faster mess with new failure modes. One week of redesign routinely saves a quarter of automation rework.",
-  },
-  {
-    q: "Agents as tools vs. multi-agent — what's the difference?",
-    a: "Agents-as-tools is the mechanism: one agent exposing a typed interface another can call. Multi-agent is what you build with it: orchestrators, specialists, reviewers composed into systems. This hub teaches the mechanism; the Multi-Agent & Frameworks hub teaches the systems.",
-  },
-  {
-    q: "Is function calling really a whole topic?",
-    a: "Yes, because it is the load-bearing interface of all agent work. Schema design decides what the model can express; parallel-call patterns decide latency; error contracts decide recoverability. Most 'agent is dumb' incidents are tool-interface incidents wearing a costume.",
-  },
-  {
-    q: "Which archetype should I learn first?",
-    a: "Whichever matches the agent you're actually building — the 11 Archetypes topic is a field guide, not a sequence. Read the whole map once, then go deep on your archetype's planning needs, eval strategy, and characteristic failures.",
-  },
-  {
-    q: "How does this hub relate to Planning & Safety?",
-    a: "Foundations is what you build; Planning & Safety is how you keep it from hurting anyone. Planners, human-in-the-loop gates, sandboxes, and evals all assume the vocabulary here — assets, tools, archetypes. Complete this hub first, then earn autonomy in the next one.",
-  },
-];
-
 function FaqItem({ faq }) {
   const [open, setOpen] = useState(false);
   return (
@@ -125,26 +38,38 @@ function FaqItem({ faq }) {
   );
 }
 
-export default function AgtFoundHubTab({ onSelectTab }) {
-  const child = getChildById("agt_found");
-  const seq = useMemo(() => getChildSequence("agt_found"), []);
+/**
+ * HubContentPage — data-driven full hub page (hero, stage strip, progress,
+ * topic cards, metrics, FAQ, CTA). Content comes from the `content` prop:
+ * { hero: {title, subtitle, description, hours, icon}, stageWord, stages,
+ *   topicNoun, topicBlurb, topicCopy, metrics, faqs, cta: {title, sub} }.
+ */
+export default function HubContentPage({ childId, content, onSelectTab }) {
+  const child = getChildById(childId);
+  const seq = useMemo(() => getChildSequence(childId), [childId]);
 
   const [progress, setProgress] = useState(() => {
     try {
-      const stored = localStorage.getItem("hub_progress_agt_found");
+      const stored = localStorage.getItem(`hub_progress_${childId}`);
       return stored ? JSON.parse(stored) : { completed: [] };
     } catch { return { completed: [] }; }
   });
 
   useEffect(() => {
     try {
-      localStorage.setItem("hub_progress_agt_found", JSON.stringify(progress));
+      localStorage.setItem(`hub_progress_${childId}`, JSON.stringify(progress));
     } catch {}
-  }, [progress]);
+  }, [progress, childId]);
 
   const completed = progress?.completed || [];
   const pct = seq.length ? Math.round((completed.length / seq.length) * 100) : 0;
   const nextUp = seq.find(id => !completed.includes(id)) || seq[0];
+
+  const levelCounts = {};
+  seq.forEach(id => {
+    const l = getTopicMeta(id).l || 1;
+    levelCounts[l] = (levelCounts[l] || 0) + 1;
+  });
 
   const toggleDone = (id) => {
     setProgress(p => ({
@@ -156,25 +81,26 @@ export default function AgtFoundHubTab({ onSelectTab }) {
 
   if (!child) return <div style={{ padding: 24, color: C.muted }}>Child umbrella not found</div>;
 
+  const { hero, stageWord, stages, topicNoun, topicBlurb, topicCopy, metrics, faqs, cta } = content;
+
   return (
     <div style={{ padding: 24, maxWidth: 1200, margin: "0 auto" }}>
       <HubHero
-        title="Agent Foundations"
-        subtitle="Before autonomy: assets, prep, tools, and knowing what you're building."
-        description="Seven core topics that turn agent hype into engineering: inventory your five assets, define the right problem on paper, redesign the work before automating it, master the tool-calling bridge — including agents calling agents — and recognize which of eleven archetypes you're actually building. Everything in the agent track assumes this hub."
-        estimatedHours={8}
+        title={hero.title}
+        subtitle={hero.subtitle}
+        description={hero.description}
+        estimatedHours={hero.hours}
         totalTopics={seq.length}
-        levels={{ 1: seq.length }}
-        icon="🤖"
+        levels={levelCounts}
+        icon={hero.icon}
         accentColor={C.teal}
       />
 
-      {/* Foundation strip */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginBottom: 24 }}>
-        {FOUNDATION_STAGES.map((s, i) => (
+        {stages.map((s, i) => (
           <div key={s.title} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18 }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: C.tealInk, letterSpacing: "0.08em", marginBottom: 8 }}>
-              PHASE {i + 1}
+              {stageWord} {i + 1}
             </div>
             <div style={{ fontSize: 24, marginBottom: 8 }}>{s.icon}</div>
             <div style={{ fontSize: 15, fontWeight: 700, color: C.text, marginBottom: 6 }}>{s.title}</div>
@@ -183,7 +109,6 @@ export default function AgtFoundHubTab({ onSelectTab }) {
         ))}
       </div>
 
-      {/* Progress + CTA */}
       <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: "16px 20px", marginBottom: 24 }}>
         <div style={{ flex: 1, minWidth: 200 }}>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: C.muted, marginBottom: 6 }}>
@@ -202,16 +127,14 @@ export default function AgtFoundHubTab({ onSelectTab }) {
         </button>
       </div>
 
-      {/* Topic cards */}
-      <h3 style={{ margin: "0 0 6px", fontSize: 18, fontWeight: 700, color: C.text }}>The seven topics</h3>
-      <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>Follow the sequence, or jump to any topic. Tick topics off as you finish them.</p>
+      <h3 style={{ margin: "0 0 6px", fontSize: 18, fontWeight: 700, color: C.text }}>{topicNoun}</h3>
+      <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>{topicBlurb}</p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 12, marginBottom: 24 }}>
         {seq.map((id, i) => {
           const tab = getTabById(id) || { label: id, icon: "📝" };
-          const meta = getTopicMeta(id);
-          const level = meta?.l || 1;
+          const level = getTopicMeta(id).l || 1;
           const badge = LEVEL_BADGE[level];
-          const copy = TOPIC_COPY[id] || { tagline: "", description: "", outcomes: [] };
+          const copy = (topicCopy && topicCopy[id]) || { tagline: "", description: "", outcomes: [] };
           const done = completed.includes(id);
           return (
             <div key={id} style={{ background: done ? "rgba(94,196,200,0.10)" : C.surface, border: `1px solid ${done ? C.tealDark : C.border}`, borderRadius: 12, padding: 18, display: "flex", flexDirection: "column", gap: 10 }}>
@@ -256,10 +179,9 @@ export default function AgtFoundHubTab({ onSelectTab }) {
         })}
       </div>
 
-      {/* Key metrics */}
       <h3 style={{ margin: "0 0 16px", fontSize: 18, fontWeight: 700, color: C.text }}>Why this hub pays off</h3>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginBottom: 24 }}>
-        {KEY_METRICS.map(m => (
+        {metrics.map(m => (
           <div key={m.label} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 20 }}>
             <div style={{ fontSize: 11, color: C.muted, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>{m.label}</div>
             <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 4 }}>
@@ -271,18 +193,16 @@ export default function AgtFoundHubTab({ onSelectTab }) {
         ))}
       </div>
 
-      {/* FAQ */}
       <h3 style={{ margin: "0 0 6px", fontSize: 18, fontWeight: 700, color: C.text }}>Frequently asked questions</h3>
-      <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>The questions every team asks before building their first agent.</p>
+      <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>{content.faqBlurb}</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 }}>
-        {FAQS.map(f => <FaqItem key={f.q} faq={f} />)}
+        {faqs.map(f => <FaqItem key={f.q} faq={f} />)}
       </div>
 
-      {/* Bottom CTA */}
       <div style={{ padding: 24, background: "linear-gradient(135deg, rgba(94,196,200,0.16) 0%, rgba(240,168,154,0.12) 55%, rgba(201,184,232,0.16) 100%)", border: `1px solid ${C.border}`, borderRadius: 16, textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${C.teal}, ${C.coral}, ${C.lav}, ${C.teal})`, pointerEvents: "none" }} />
-        <h3 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 700, color: C.text }}>Earn autonomy — start with assets.</h3>
-        <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>Start with 5 Assets for Agents — the inventory everything else builds on.</p>
+        <h3 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 700, color: C.text }}>{cta.title}</h3>
+        <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>{cta.sub}</p>
         <button
           onClick={() => onSelectTab(seq[0])}
           style={{ padding: "12px 28px", background: C.tealDark, color: "#FFFFFF", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}

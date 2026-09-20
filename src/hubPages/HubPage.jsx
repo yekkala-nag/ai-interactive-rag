@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getTabById, getChildrenForUmbrella, getChildById } from "../registry/tabsRegistry.js";
-import { getChildrenForUmbrella as getChildren, getChildById as getChild } from "../registry/curriculum.js";
+import { getTabById } from "../registry/tabsRegistry.js";
+import { getChildrenForUmbrella as getChildren, getChildById as getChild, getChildSequence, getTopicMeta, getHubPageId } from "../registry/curriculum.js";
 
 const C = {
   bg: "#F5F5F7", surface: "#FFFFFF", s2: "#EDEDF0", s3: "#EDEDF0",
@@ -32,11 +32,12 @@ export function HubPage({ childId, onSelectTab }) {
   const child = getChild(childId);
   if (!child) return <div style={{ padding: 24, color: C.muted }}>Child umbrella not found: {childId}</div>;
 
-  const tabs = getChildren(child.umbrellaId).find(c => c.id === childId)?.tabs || [];
+  const tabs = getChildSequence(childId);
   const topicMeta = {};
-  tabs.forEach(t => {
-    const meta = getTabById(t.id);
-    if (meta) topicMeta[t.id] = meta;
+  tabs.forEach(id => {
+    const tab = getTabById(id);
+    const meta = getTopicMeta(id);
+    topicMeta[id] = { l: meta?.l || 1, p: meta?.p || [], keywords: tab?.keywords || [] };
   });
 
   const [progress, setProgress] = useState(() => {
@@ -60,6 +61,7 @@ export function HubPage({ childId, onSelectTab }) {
   const currentIndex = children.findIndex(c => c.id === childId);
   const nextChild = children[currentIndex + 1];
   const prevChild = children[currentIndex - 1];
+  const firstHubId = children.length ? getHubPageId(children[0].id) : null;
 
   function handleTabClick(tabId) {
     if (isTabUnlocked(tabId, topicMeta, progress)) {
@@ -149,7 +151,7 @@ export function HubPage({ childId, onSelectTab }) {
                 {completed && <span style={{ color: C.tealDark, fontSize: 16 }}>✓</span>}
               </div>
               <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: unlocked ? C.text : C.muted }}>
-                {tabId}
+                {(getTabById(tabId) || {}).label || tabId}
               </h3>
               <p style={{ margin: 0, fontSize: 11, color: C.muted, lineHeight: 1.4 }}>
                 {meta?.keywords?.slice(0, 3).join(", ") || "No description"}
@@ -179,13 +181,13 @@ export function HubPage({ childId, onSelectTab }) {
         )}
         <div style={{ flex: 1, textAlign: "center" }}>
           <button
-            onClick={() => onSelectTab(child.umbrellaId)}
+            onClick={() => firstHubId && onSelectTab(firstHubId)}
             style={{
               padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
               margin: "0 8px", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}`,
             }}
           >
-            Back to {child.umbrellaId.replace("_", " ")}
+            Back to start of section
           </button>
         </div>
         {nextChild && (
