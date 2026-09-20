@@ -14,7 +14,7 @@ import {
   getChildrenForUmbrella,
   PILOT_COLLAPSED_CHILDREN,
 } from '../../registry/curriculum.js';
-import { getTabById, getUmbrellaForTab } from '../../registry/tabsRegistry.js';
+import { getTabById, getUmbrellaForTab, UMBRELLA_TOPICS } from '../../registry/tabsRegistry.js';
 import { isProven, isClaimed } from '../../services/mastery.js';
 
 const LEVEL_INK = { 1: '#1F6B6E', 2: '#6B5E94', 3: '#C47A6A' };
@@ -68,12 +68,21 @@ export default function HubSequenceNav({ tabId, onSelectTab }) {
       : { label: '○ Not yet proven', color: 'var(--ds-color-text-tertiary)' };
 
   // Next hub in the same umbrella (overview landing per hub-click rule).
+  // Fallback: first hub of the next umbrella so the last topic of a final
+  // child (e.g. Speech AI & Voice Agents) still has a forward path.
   let nextHub = null;
+  let nextHubCrossSection = false;
   const umbrella = getUmbrellaForTab(tabId);
   if (umbrella) {
     const siblings = getChildrenForUmbrella(umbrella.id);
     const at = siblings.findIndex(c => c.id === meta.c);
     if (at >= 0 && at < siblings.length - 1) nextHub = siblings[at + 1];
+    if (!nextHub) {
+      const uIdx = UMBRELLA_TOPICS.findIndex(u => u.id === umbrella.id);
+      const nextUmbrella = uIdx >= 0 ? UMBRELLA_TOPICS[uIdx + 1] : null;
+      const firstChild = nextUmbrella ? getChildrenForUmbrella(nextUmbrella.id)[0] : null;
+      if (firstChild) { nextHub = firstChild; nextHubCrossSection = true; }
+    }
   }
 
   const go = (id) => { if (id && onSelectTab) onSelectTab(id); };
@@ -158,18 +167,15 @@ export default function HubSequenceNav({ tabId, onSelectTab }) {
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '32vw' }}>{nextTab.label}</span>
             <span aria-hidden="true">›</span>
           </button>
+        ) : nextHub ? (
+          <button onClick={() => go(getHubPageId(nextHub.id))} title={nextHubCrossSection ? `Next section: ${nextHub.title}` : `Next hub: ${nextHub.title}`} aria-label={nextHubCrossSection ? `Next section: ${nextHub.title}` : `Next hub: ${nextHub.title}`} style={navBtn(true)}>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '32vw' }}>{nextHubCrossSection ? `Next: ${nextHub.title}` : `Next hub: ${nextHub.title}`}</span>
+            <span aria-hidden="true">›</span>
+          </button>
         ) : (
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            <button onClick={() => go(hubPageId)} title="Back to hub overview" aria-label="Back to hub overview" style={navBtn(false)}>
-              <span>Hub overview</span>
-            </button>
-            {nextHub && (
-              <button onClick={() => go(getHubPageId(nextHub.id))} title={`Next hub: ${nextHub.title}`} aria-label={`Next hub: ${nextHub.title}`} style={navBtn(true)}>
-                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '32vw' }}>Next hub: {nextHub.title}</span>
-                <span aria-hidden="true">›</span>
-              </button>
-            )}
-          </div>
+          <button onClick={() => go(hubPageId)} title="Back to hub overview" aria-label="Back to hub overview" style={navBtn(false)}>
+            <span>Hub overview</span>
+          </button>
         )}
       </div>
     </nav>

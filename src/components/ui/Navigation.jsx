@@ -861,8 +861,22 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
   const isHubPage = typeof activeTab === 'string' && activeTab.endsWith('_hub');
   const hubSiblings = activeChild ? getChildrenForUmbrella(activeChild.umbrellaId) : [];
   const hubAt = activeChild ? hubSiblings.findIndex(c => c.id === activeChild.id) : -1;
-  const nextHub = hubAt >= 0 && hubAt < hubSiblings.length - 1 ? hubSiblings[hubAt + 1] : null;
-  const prevHub = hubAt > 0 ? hubSiblings[hubAt - 1] : null;
+  let nextHub = hubAt >= 0 && hubAt < hubSiblings.length - 1 ? hubSiblings[hubAt + 1] : null;
+  let prevHub = hubAt > 0 ? hubSiblings[hubAt - 1] : null;
+  // Cross-section fallback so first/last hubs never dead-end (e.g.
+  // fnd_multimodal_hub → Data Foundations, fnd_start_hub → ML & Society).
+  const umbrellaOrderIdx = activeChild ? UMBRELLA_TOPICS.findIndex(u => u.id === activeChild.umbrellaId) : -1;
+  if (!nextHub && umbrellaOrderIdx >= 0) {
+    const nextUmbrella = UMBRELLA_TOPICS[umbrellaOrderIdx + 1];
+    const firstChild = nextUmbrella ? getChildrenForUmbrella(nextUmbrella.id)[0] : null;
+    if (firstChild) nextHub = firstChild;
+  }
+  if (!prevHub && umbrellaOrderIdx > 0) {
+    const prevUmbrella = UMBRELLA_TOPICS[umbrellaOrderIdx - 1];
+    const prevChildren = prevUmbrella ? getChildrenForUmbrella(prevUmbrella.id) : [];
+    const lastChild = prevChildren.length ? prevChildren[prevChildren.length - 1] : null;
+    if (lastChild) prevHub = lastChild;
+  }
   const hubPageId = activeChild ? getHubPageId(activeChild.id) : null;
 
   return (

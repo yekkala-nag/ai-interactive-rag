@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getTabById } from "../registry/tabsRegistry.js";
+import { getTabById, UMBRELLA_TOPICS } from "../registry/tabsRegistry.js";
 import { getChildrenForUmbrella as getChildren, getChildById as getChild, getChildSequence, getTopicMeta, getHubPageId } from "../registry/curriculum.js";
 
 const C = {
@@ -62,6 +62,17 @@ export function HubPage({ childId, onSelectTab }) {
   const nextChild = children[currentIndex + 1];
   const prevChild = children[currentIndex - 1];
   const firstHubId = children.length ? getHubPageId(children[0].id) : null;
+  // Cross-section escape (no dead-ends): last hub in an umbrella links to the
+  // first hub of the next umbrella; first hub links back to the last hub of
+  // the previous umbrella (e.g. Multimodal Models → Data Foundations).
+  const umbrellaIdx = UMBRELLA_TOPICS.findIndex(u => u.id === child.umbrellaId);
+  const nextUmbrella = umbrellaIdx >= 0 ? UMBRELLA_TOPICS[umbrellaIdx + 1] : null;
+  const prevUmbrella = umbrellaIdx > 0 ? UMBRELLA_TOPICS[umbrellaIdx - 1] : null;
+  const nextSectionFirst = !nextChild && nextUmbrella ? getChildren(nextUmbrella.id)[0] : null;
+  const prevSectionLast = !prevChild && prevUmbrella ? getChildren(prevUmbrella.id).slice(-1)[0] : null;
+  const nextTarget = nextChild || nextSectionFirst;
+  const prevTarget = prevChild || prevSectionLast;
+  const nextIsCrossSection = !nextChild && !!nextSectionFirst;
 
   function handleTabClick(tabId) {
     onSelectTab(tabId);
@@ -188,17 +199,18 @@ export function HubPage({ childId, onSelectTab }) {
 
       {/* Navigation */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 16, borderTop: `1px solid ${C.border}` }}>
-        {prevChild && (
+        {prevTarget ? (
           <button
-            onClick={() => onSelectTab(prevChild.id + "_hub")}
+            onClick={() => onSelectTab(getHubPageId(prevTarget.id))}
+            title={prevChild ? `Previous: ${prevTarget.title}` : `Previous section: ${prevTarget.title}`}
             style={{
               padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
               background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}`,
             }}
           >
-            ← {prevChild.title}
+            ← {prevTarget.title}
           </button>
-        )}
+        ) : <span />}
         <div style={{ flex: 1, textAlign: "center" }}>
           <button
             onClick={() => firstHubId && onSelectTab(firstHubId)}
@@ -210,17 +222,18 @@ export function HubPage({ childId, onSelectTab }) {
             Back to start of section
           </button>
         </div>
-        {nextChild && (
+        {nextTarget ? (
           <button
-            onClick={() => onSelectTab(nextChild.id + "_hub")}
+            onClick={() => onSelectTab(getHubPageId(nextTarget.id))}
+            title={nextIsCrossSection ? `Next section: ${nextTarget.title}` : `Next: ${nextTarget.title}`}
             style={{
               padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
               background: C.coralDeep, color: "#FFFFFF", border: "none",
             }}
           >
-            {nextChild.title} →
+            {nextTarget.title} →
           </button>
-        )}
+        ) : <span />}
       </div>
     </>
   );
