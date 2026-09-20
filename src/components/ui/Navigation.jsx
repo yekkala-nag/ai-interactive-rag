@@ -18,7 +18,11 @@ import {
   getTopicMeta,
   getLevelInfo,
   getChildLevelCounts,
+  getChildLevelSpan,
   getChildById,
+  getChildSequence,
+  getHubPageId,
+  PILOT_COLLAPSED_CHILDREN,
   sortTopicsLikeJourney
 } from '../../registry/curriculum.js';
 import { useModalA11y } from '../../hooks/useModalA11y.js';
@@ -34,6 +38,107 @@ const MODULE_ACCENTS = {
   data_platform: { primary: '#5EC4C8', dark: '#1F6B6E', gradient: 'linear-gradient(135deg, #5EC4C8, #3A9B9F)', lightBg: 'rgba(42,181,176,0.12)', border: 'rgba(42,181,176,0.35)' },
   frontiers_production: { primary: '#9B89C4', dark: '#6B5E94', gradient: 'linear-gradient(135deg, #C9B8E8, #9B89C4)', lightBg: 'rgba(139,123,216,0.14)', border: 'rgba(139,123,216,0.4)' }
 };
+
+// ============================================
+// PilotHubRow — one collapsed sidebar row per pilot hub (Batch: prompt hub).
+// Replaces the flat per-subtopic list for children in
+// PILOT_COLLAPSED_CHILDREN. Click opens the hub overview (page 0);
+// position ("N of 10") + level chip show while inside the hub.
+// In search mode the caller bypasses this and lists matches flat.
+// ============================================
+function PilotHubRow({ child, rawTabs, activeTab, onSelectTab }) {
+  const seq = getChildSequence(child.id);
+  const hubId = getHubPageId(child.id);
+  const hubTab = getTabById(hubId) || { label: child.title, icon: '📚' };
+  const proven = seq.filter(isMastered).length;
+  const pct = seq.length ? Math.round((proven / seq.length) * 100) : 0;
+  const activeIndex = seq.indexOf(activeTab);
+  const isInside = activeIndex >= 0 || activeTab === hubId;
+  const activeLevel = activeIndex >= 0 ? (getTopicMeta(activeTab).l || 1) : null;
+  const levelInk = { 1: '#1F6B6E', 2: '#6B5E94', 3: '#C47A6A' };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '6px' }}>
+      <button
+        onClick={() => onSelectTab(hubId)}
+        title={`${child.title} — ${child.blurb} (${proven}/${seq.length} proven)`}
+        style={{
+          display: 'flex', alignItems: 'center', gap: '8px',
+          padding: '5px 8px',
+          borderRadius: '6px',
+          background: isInside ? '#ffffff' : 'transparent',
+          color: isInside ? '#3A9B9F' : 'rgba(15,18,25,0.75)',
+          border: 'none', cursor: 'pointer', textAlign: 'left',
+          fontSize: '0.78rem',
+          fontWeight: isInside ? 700 : 500,
+          transition: 'all 0.12s ease',
+          width: '100%',
+          boxShadow: isInside ? '0 3px 10px rgba(0,0,0,0.2)' : 'none'
+        }}
+        onMouseEnter={e => {
+          if (!isInside) {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.45)';
+            e.currentTarget.style.color = '#0F1219';
+          }
+        }}
+        onMouseLeave={e => {
+          if (!isInside) {
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = 'rgba(15,18,25,0.75)';
+          }
+        }}
+      >
+        <span style={{ fontSize: '0.85rem', flexShrink: 0 }}>{hubTab.icon}</span>
+        <span style={{
+          lineHeight: 1.25,
+          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          flex: 1
+        }}>
+          {child.title}
+        </span>
+        {activeLevel && (
+          <span style={{
+            fontSize: '0.58rem', fontWeight: 700, fontFamily: 'SF Mono, monospace',
+            color: levelInk[activeLevel],
+            background: 'rgba(94,196,200,0.14)',
+            border: '1px solid rgba(94,196,200,0.4)',
+            padding: '0px 5px', borderRadius: '9999px', flexShrink: 0
+          }}>
+            L{activeLevel}
+          </span>
+        )}
+        <span style={{
+          fontSize: '0.62rem', fontWeight: 700, fontFamily: 'SF Mono, monospace',
+          color: isInside ? '#3A9B9F' : 'rgba(15,18,25,0.55)',
+          flexShrink: 0
+        }}>
+          {activeIndex >= 0 ? `${activeIndex + 1}/${seq.length}` : `${proven}/${seq.length}`}
+        </span>
+      </button>
+      <div style={{ padding: '2px 8px 4px 8px' }} title={`${child.blurb} — ${proven}/${seq.length} proven`}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
+          color: 'rgba(15,18,25,0.6)', marginBottom: '3px'
+        }}>
+          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {getChildLevelSpan(child.id, rawTabs)} · {seq.length} topics
+          </span>
+          <span style={{ fontFamily: 'SF Mono, monospace', fontWeight: 600, flexShrink: 0, marginLeft: '6px' }}>
+            {pct}%
+          </span>
+        </div>
+        <div style={{ height: '3px', borderRadius: '3px', background: 'rgba(15,18,25,0.15)', overflow: 'hidden' }}>
+          <div style={{
+            height: '100%', width: `${pct}%`, borderRadius: '3px',
+            background: '#1F6B6E',
+            transition: 'width 0.3s ease'
+          }} />
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ============================================
 // Sidebar — Apple macOS Sequoia Glass Sidebar
@@ -377,7 +482,10 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
               : rawTabs.filter(isHubTab);
 
             // If active tab is in this module but not a hub, show it for backward compatibility
-            const showNonHubActive = !isSearchMode && rawTabs.some(t => t.id === activeTab && !isHubTab(t.id));
+            // (pilot-collapsed hubs are exempt — the hub row already represents them).
+            const activeMetaForCompat = getTopicMeta(activeTab);
+            const showNonHubActive = !isSearchMode && rawTabs.some(t => t.id === activeTab && !isHubTab(t.id))
+              && !(activeMetaForCompat.c && PILOT_COLLAPSED_CHILDREN.includes(activeMetaForCompat.c));
             const displayTabs = isSearchMode ? tabs : (showNonHubActive ? [...tabs, rawTabs.find(t => t.id === activeTab)].filter(Boolean) : tabs);
 
             if (isSearchMode && tabs.length === 0) return null;
@@ -474,7 +582,20 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                   marginTop: '3px',
                   marginBottom: '4px'
                 }}>
-                  {getGroupedTabsForUmbrella(moduleId, rawTabs).map(group => (
+                  {getGroupedTabsForUmbrella(moduleId, rawTabs).map(group => {
+                    // Pilot hubs collapse to a single row (flat list in search mode).
+                    if (group.child && PILOT_COLLAPSED_CHILDREN.includes(group.child.id) && !isSearchMode) {
+                      return (
+                        <PilotHubRow
+                          key={group.child.id}
+                          child={group.child}
+                          rawTabs={rawTabs}
+                          activeTab={activeTab}
+                          onSelectTab={onSelectTab}
+                        />
+                      );
+                    }
+                    return (
                     <div key={group.child ? group.child.id : 'ungrouped'} style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: group.child ? '6px' : 0 }}>
                       {group.child && (() => {
                         const provenCount = group.tabs.filter(t => isMastered(t.id)).length;
@@ -590,7 +711,8 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                     );
                       })}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -670,11 +792,16 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
 
   const activeTrack = getTrackById(trackId);
 
-  // Position-in-child: the single source of "where am I" (replaces sibling pills)
+  // Position-in-child: the single source of "where am I" (replaces sibling pills).
+  // Pilot hubs use the canonical getChildSequence order (hub overview excluded)
+  // so the TopBar counter agrees with the in-hub footer stepper.
   const activeMeta = getTopicMeta(activeTab);
   const activeChild = activeMeta.c ? getChildById(activeMeta.c) : null;
+  const pilotSeq = activeChild && PILOT_COLLAPSED_CHILDREN.includes(activeChild.id) && !activeTab.endsWith('_hub');
   const childTabs = activeChild
-    ? sortTopicsLikeJourney(getTabsForUmbrella(currentModule.id).filter(t => getTopicMeta(t.id).c === activeChild.id))
+    ? (pilotSeq
+        ? getChildSequence(activeChild.id).map(id => getTabById(id))
+        : sortTopicsLikeJourney(getTabsForUmbrella(currentModule.id).filter(t => getTopicMeta(t.id).c === activeChild.id)))
     : [];
   const childIndex = childTabs.findIndex(t => t.id === activeTab);
   const prevInChild = childIndex > 0 ? childTabs[childIndex - 1] : null;

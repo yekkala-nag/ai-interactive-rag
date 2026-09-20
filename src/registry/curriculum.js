@@ -336,3 +336,31 @@ export function getChildLevelCounts(childId, tabsInUmbrella) {
 export function getPrereqIds(tabId) {
   return getTopicMeta(tabId).p || [];
 }
+
+/**
+ * Pilot gate: child umbrellas collapsed to a single sidebar row with a
+ * sequential in-hub experience (overview page 0 + ordered subtopics).
+ * Roll out hub-by-hub by appending child ids here.
+ */
+export const PILOT_COLLAPSED_CHILDREN = ['fnd_prompts'];
+
+/** Convention: a child's overview page id is `<childId>_hub`. */
+export function getHubPageId(childId) {
+  return `${childId}_hub`;
+}
+
+/**
+ * Canonical in-hub learning sequence: non-hub topics of a child ordered by
+ * level (L1 → L2 → L3), journey order as tiebreak, registry order as final
+ * fallback. Every surface (sidebar row, TopBar position bar, sequence footer)
+ * must use this — never a competing order.
+ */
+export function getChildSequence(childId) {
+  const ids = Object.keys(TOPIC_META).filter(id =>
+    TOPIC_META[id].c === childId && id !== getHubPageId(childId));
+  return [1, 2, 3].map(l =>
+    sortTopicsLikeJourney(
+      ids.filter(id => (TOPIC_META[id].l || 1) === l).map(id => ({ id }))
+    ).map(t => t.id)
+  ).flat();
+}

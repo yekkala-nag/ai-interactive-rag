@@ -10,6 +10,7 @@ import { Sidebar, TopBar, CommandPalette } from './components/ui/Navigation.jsx'
 import { AdaptiveWorkflowBar } from './components/ui/AdaptiveWorkflowBar.jsx';
 import { ToastProvider, useToast, Skeleton } from './components/ui/Feedback.jsx';
 import { TopicFooter } from './components/ui/TopicFooter.jsx';
+import HubSequenceNav from './components/ui/HubSequenceNav.jsx';
 import { UMBRELLA_TOPICS, getUmbrellaForTab, getTabsForUmbrella, getTabById, TABS_REGISTRY } from './registry/tabsRegistry.js';
 import ErrorBoundary from './ErrorBoundary.jsx';
 import { s as legacyStyles } from './styles/legacyStyles.js';
@@ -226,6 +227,8 @@ function TabLoader({ tabId, onSelectTab }) {
           <Component s={legacyStyles} onSelectTab={onSelectTab} setActiveTab={onSelectTab} />
         </ErrorBoundary>
       </Suspense>
+      {/* Pilot: sequential in-hub nav renders only inside collapsed hubs */}
+      <HubSequenceNav tabId={tabId} onSelectTab={onSelectTab} />
       <TopicFooter tabId={tabId} onSelectTab={onSelectTab} />
     </>
   );
