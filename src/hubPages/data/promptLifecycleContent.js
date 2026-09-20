@@ -207,7 +207,7 @@ export const TOPIC_DETAILS = {
     keyConcept: "Prompts evolve — version them like code"
   },
   threesentenceprompt: {
-    title: "Framework & Methodology",
+    title: "Prompt Framework & Methodology",
     level: 1,
     duration: "15 min",
     prerequisites: ["promptfundamentals"],

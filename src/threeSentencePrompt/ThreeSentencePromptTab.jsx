@@ -1449,6 +1449,716 @@ function AdvancedVersion() {
   );
 }
 
+/* ─── FrameworkPipeline ───────────────────────────────── */
+
+function FrameworkPipeline() {
+  const stages = [
+    "Understand",
+    "Constrain",
+    "Decompose",
+    "Plan",
+    "Execute",
+    "Challenge",
+    "Verify",
+    "Refine",
+    "Final Gate",
+  ];
+
+  return (
+    <div style={{ ...sectionStyle, border: `2px solid ${C.teal}44` }}>
+      <div style={labelStyle(C.teal)}>UNIVERSAL PROMPT QUALITY FRAMEWORK · PIPELINE</div>
+      <div style={{ color: C.muted, fontSize: 12, lineHeight: 1.6, marginBottom: 14 }}>
+        Every high-quality prompt moves through the same 9 control gates. Add only the gates your
+        task needs — simple questions need 2, complex projects need all 9.
+      </div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          flexWrap: "wrap",
+          marginBottom: 16,
+        }}
+      >
+        {stages.map((s, i) => (
+          <React.Fragment key={s}>
+            <span
+              style={{
+                padding: "6px 12px",
+                borderRadius: 20,
+                background: i === stages.length - 1 ? C.teal + "22" : C.s2,
+                border: `1px solid ${i === stages.length - 1 ? C.teal : C.border}`,
+                color: i === stages.length - 1 ? C.teal : C.text,
+                fontSize: 11,
+                fontWeight: 700,
+                whiteSpace: "nowrap",
+                ...mono,
+              }}
+            >
+              {i + 1} · {s}
+            </span>
+            {i < stages.length - 1 && (
+              <span style={{ color: C.teal, fontSize: 12, fontWeight: 700 }}>→</span>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      <div
+        style={{
+          background: "#0F1219",
+          borderRadius: 8,
+          padding: "12px 16px",
+          borderLeft: `3px solid ${C.teal}`,
+        }}
+      >
+        <div style={{ color: C.muted, fontSize: 10, marginBottom: 4, ...mono }}>
+          THE FORMULA
+        </div>
+        <div style={{ color: C.teal, fontSize: 13, fontWeight: 700, lineHeight: 1.6, ...mono }}>
+          Prompt = Task + Context + Constraints + Control Strategy + Output Contract + Quality Gate
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── StageLibrary ────────────────────────────────────── */
+
+const STAGES = [
+  {
+    n: 1,
+    title: "Understand Before Acting",
+    subs: [
+      {
+        name: "Intent Reflection",
+        text: "Before doing the task, restate my request in your own words. Identify the actual objective, intended outcome, and target audience. Do not solve the task yet. If your understanding is incomplete, explicitly identify what is missing.",
+      },
+      {
+        name: "Goal Extraction",
+        text: "Analyze my request and extract: 1. Primary goal 2. Desired outcome 3. Target audience/user 4. Required deliverable 5. Success criteria 6. Constraints 7. Important preferences. Do not produce the final answer yet.",
+      },
+      {
+        name: "Ambiguity Detection",
+        text: "Before proceeding, identify anything in my request that could reasonably be interpreted in more than one way. Separate genuine ambiguities from assumptions that can safely be made. Ask only the questions whose answers would materially change the result.",
+      },
+    ],
+  },
+  {
+    n: 2,
+    title: "Constraint Intelligence",
+    subs: [
+      {
+        name: "Constraint Extraction",
+        text: "Extract every constraint contained in my request, including explicit requirements, implicit expectations, formatting requirements, exclusions, technical limitations, audience considerations, and quality expectations. Classify each as: Mandatory, Preferred, Optional, Unknown. Do not produce the final deliverable yet.",
+      },
+      {
+        name: "Constraint Compliance",
+        text: "Treat the requirements in my request as a specification. Before producing the final output, verify that every mandatory requirement has been addressed. If any requirement conflicts with another, identify the conflict rather than silently choosing one.",
+      },
+      {
+        name: "Don't Invent Requirements",
+        text: "Do not silently introduce requirements, technologies, assumptions, facts, or constraints that I did not provide. When something is genuinely necessary but unspecified, identify it explicitly and either ask me or label it as an assumption.",
+      },
+    ],
+  },
+  {
+    n: 3,
+    title: "Assumption Control",
+    subs: [
+      {
+        name: "Assumption Ledger",
+        text: "Before solving the task, list the assumptions you need to make. For each assumption, explain why it is necessary and how it could affect the result. Clearly distinguish assumptions from facts provided by me.",
+      },
+      {
+        name: "Minimum-Assumption Mode",
+        text: "Solve the task using the minimum number of assumptions possible. Do not fill gaps with plausible guesses when the missing information could materially affect the answer. Flag such gaps explicitly.",
+      },
+      {
+        name: "Confidence Classification",
+        text: "For important claims or decisions, classify your basis as: Explicitly provided, Known fact, Strong inference, Reasonable assumption, Uncertain. Do not present assumptions or uncertain information as established facts.",
+      },
+    ],
+  },
+  {
+    n: 4,
+    title: "Decomposition",
+    subs: [
+      {
+        name: "Break the Problem Down",
+        text: "Before solving the problem, decompose it into the smallest meaningful subproblems required to produce a high-quality result. Show the dependency between the subproblems and identify which ones are critical.",
+      },
+      {
+        name: "Complexity Detector",
+        text: "Determine whether this task is simple, moderately complex, or highly complex. Explain briefly what makes it complex and what workflow you will use accordingly.",
+      },
+      {
+        name: "Hidden Work Detector",
+        text: "Before answering, identify the work that must happen behind the scenes for this request to be completed correctly. Include research, validation, calculations, dependencies, edge cases, testing, or other necessary steps.",
+      },
+    ],
+  },
+  {
+    n: 5,
+    title: "Plan Before Execution",
+    subs: [
+      {
+        name: "Execution Plan",
+        text: "Do not produce the final result yet. Create an execution plan containing: 1. Steps 2. Dependencies 3. Expected output of each step 4. Validation required 5. Potential failure points. Wait for approval before executing.",
+      },
+      {
+        name: "Architecture Before Implementation",
+        text: "Do not write code yet. First define the proposed architecture, components, interfaces, data flow, dependencies, error-handling strategy, and testing strategy. Identify important tradeoffs.",
+      },
+      {
+        name: "Research Plan",
+        text: "Before answering, create a research plan identifying the questions that need to be answered, the evidence required, the preferred source types, and how conflicting information will be handled.",
+      },
+    ],
+  },
+  {
+    n: 6,
+    title: "Generate Alternatives",
+    subs: [
+      {
+        name: "Multiple Approaches",
+        text: "Before committing to a solution, generate 2-3 fundamentally different approaches. For each, explain the core idea, advantages, disadvantages, assumptions, complexity, and appropriate use case. Do not declare a winner unless I explicitly ask you to evaluate them.",
+      },
+      {
+        name: "Tradeoff Analysis",
+        text: "For each viable approach, identify the major tradeoffs across simplicity, cost, scalability, reliability, maintainability, performance, flexibility, and implementation effort. Use only dimensions relevant to the task.",
+      },
+    ],
+  },
+  {
+    n: 7,
+    title: "Structured Execution",
+    subs: [
+      {
+        name: "Output Contract",
+        text: "Before producing the answer, determine the appropriate output structure for the task. Define the sections, format, level of detail, and ordering needed to make the result easy to use. Then follow that structure consistently.",
+      },
+      {
+        name: "Schema-First",
+        text: "First define the output schema and the meaning of each field. Then populate it. Ensure every required field is present, types are consistent, and no unsupported fields are invented.",
+      },
+      {
+        name: "Evidence-to-Conclusion",
+        text: "Separate your response into: Evidence, Analysis, Interpretation, Conclusion. Do not mix assumptions or interpretations with factual evidence.",
+      },
+    ],
+  },
+  {
+    n: 8,
+    title: "Quality Control",
+    subs: [
+      {
+        name: "Expert Review",
+        text: "After producing the draft, stop and review it as a skeptical expert in the relevant domain. Identify the most important errors, omissions, unsupported assumptions, inconsistencies, and weaknesses. Then revise the answer to address them.",
+      },
+      {
+        name: "Adversarial Review",
+        text: "Try to break your own answer. Look specifically for edge cases, contradictions, missing requirements, incorrect assumptions, failure scenarios, misleading statements, and situations where the proposed solution would not work. Revise accordingly.",
+      },
+      {
+        name: "Completeness Audit",
+        text: "Compare the final output against the original request line by line. Identify anything requested that is missing, incomplete, contradictory, or insufficiently addressed. Fix all material gaps before delivering the final answer.",
+      },
+    ],
+  },
+  {
+    n: 9,
+    title: "Verification",
+    subs: [
+      {
+        name: "Fact Verification",
+        text: "Before presenting factual claims, identify which claims require verification. Verify time-sensitive, technical, numerical, legal, financial, or otherwise consequential claims where appropriate. Clearly distinguish verified information from inference.",
+      },
+      {
+        name: "Code Verification",
+        text: "Before presenting the code as complete, mentally/test-review it for syntax errors, missing imports, incorrect APIs, type inconsistencies, edge cases, error handling, security issues, and integration assumptions. Fix identified issues before delivering it.",
+      },
+      {
+        name: "Requirement Verification",
+        text: "Run a final requirements check. Create a checklist from my original request and mark each requirement as satisfied, partially satisfied, or unresolved. Resolve every material unresolved item before final delivery.",
+      },
+    ],
+  },
+  {
+    n: 10,
+    title: "Refinement",
+    subs: [
+      {
+        name: "Progressive Refinement",
+        text: "Produce the best initial version you can. Then improve it through three passes: Pass 1 - Correctness: Fix factual, logical, technical, and structural errors. Pass 2 - Completeness: Identify and fill important omissions. Pass 3 - Quality: Improve clarity, usefulness, precision, consistency, and usability. Return only the final refined version unless I ask to see the intermediate passes.",
+      },
+      {
+        name: "Expert + Beginner Review",
+        text: "Review the output twice: first as a domain expert checking technical correctness, then as the intended user checking clarity and usability. Resolve issues identified in either review before finalizing.",
+      },
+    ],
+  },
+  {
+    n: 11,
+    title: "Edge-Case Thinking",
+    subs: [
+      {
+        name: "Edge-Case Generator",
+        text: "Before finalizing, identify the most important edge cases that could cause this solution, explanation, design, or recommendation to fail. Address each material edge case in the final result.",
+      },
+      {
+        name: "Failure Mode Analysis",
+        text: "Assume the proposed solution has failed in production. Identify the most plausible reasons for failure, their impact, how they could be detected, and how the design could prevent or mitigate them. Incorporate the important safeguards into the final solution.",
+      },
+    ],
+  },
+  {
+    n: 12,
+    title: "Context Management",
+    subs: [
+      {
+        name: "Context Priority",
+        text: "When information conflicts, prioritize it in this order: 1. Explicit requirements in my latest instruction 2. Explicit constraints established earlier 3. Verified source information 4. Reasonable assumptions. Identify conflicts rather than silently resolving important contradictions.",
+      },
+      {
+        name: "Context Relevance",
+        text: "Use only information relevant to the current task. Do not allow unrelated context, previous assumptions, or earlier decisions to influence the result unless they are explicitly applicable.",
+      },
+    ],
+  },
+  {
+    n: 13,
+    title: "Communication Quality",
+    subs: [
+      {
+        name: "Audience Calibration",
+        text: "Before writing, determine the reader's likely expertise, objective, and expected level of detail. Adapt terminology, examples, depth, and structure accordingly. Do not oversimplify important concepts or add unnecessary complexity.",
+      },
+      {
+        name: "Explain the Why",
+        text: "For every major recommendation, design choice, or step, briefly explain why it is necessary or useful. Avoid adding explanations for obvious mechanical steps unless they prevent misunderstanding.",
+      },
+      {
+        name: "Signal-to-Noise Control",
+        text: "Prioritize information that materially helps accomplish the objective. Remove repetition, generic filler, unnecessary disclaimers, and information that does not affect the decision or outcome.",
+      },
+    ],
+  },
+  {
+    n: 14,
+    title: "Final Delivery Control",
+    subs: [
+      {
+        name: "Final Gate",
+        text: "Before delivering the final answer, perform a final quality gate: Correctness - Is it accurate? Completeness - Did it address the full request? Consistency - Do the parts agree with each other? Constraints - Did it follow every important requirement? Usability - Can the user actually use the result? Clarity - Is the structure easy to understand? Robustness - Does it handle important edge cases? Fix material issues before responding. Return the finished result, not the internal review.",
+      },
+    ],
+  },
+  {
+    n: 15,
+    title: "Universal Quality Controller",
+    subs: [
+      {
+        name: "Universal Quality Controller (full 10-step meta-prompt)",
+        text: "Apply the Universal Quality Controller to my request. Step 1 - Understand: restate my request in your own words, identifying the objective, outcome, and audience. Step 2 - Extract requirements: list every explicit and implicit constraint and classify each as Mandatory, Preferred, Optional, or Unknown. Step 3 - Detect ambiguity: identify anything interpretable in more than one way and ask only the questions whose answers would materially change the result. Step 4 - Decompose: break the task into the smallest meaningful subproblems with dependencies. Step 5 - Plan: create an execution plan with steps, dependencies, expected outputs, validation, and failure points, and wait for approval on complex tasks. Step 6 - Execute: produce the result following a clear output contract (sections, format, detail level). Step 7 - Challenge: review the draft as a skeptical expert and as an adversary trying to break it; identify errors, omissions, contradictions, and edge cases. Step 8 - Verify: verify consequential factual, technical, numerical, or code claims, and check every requirement as satisfied, partially satisfied, or unresolved. Step 9 - Refine: run three passes - Correctness, Completeness, Quality - and keep only the final refined version unless intermediate passes are requested. Step 10 - Final gate: check Correctness, Completeness, Consistency, Constraints, Usability, Clarity, and Robustness; fix material issues before responding. Default behaviors: do not guess when uncertainty matters; do not silently ignore requirements; do not invent facts, sources, capabilities, or constraints; prefer structured output; prefer explicit assumptions with confidence labels; prefer verification; optimize for usefulness. Lightweight mode: for simple questions use Steps 1 + 10 only. Full mode: for complex, high-stakes, or high-risk tasks use all 10 steps.",
+      },
+    ],
+  },
+];
+
+function StageLibrary() {
+  const [open, setOpen] = useState(1);
+  const [copied, setCopied] = useState(null);
+
+  function copy(text, key) {
+    navigator.clipboard.writeText(text);
+    setCopied(key);
+    setTimeout(() => setCopied(null), 1500);
+  }
+
+  return (
+    <div style={sectionStyle}>
+      <div style={labelStyle(C.teal)}>STAGE LIBRARY · 15 CONTROL STAGES</div>
+      <div style={{ color: C.muted, fontSize: 12, lineHeight: 1.6, marginBottom: 16 }}>
+        Each stage is a reusable control. Copy any sub-prompt and paste it above your task. Stage
+        15 combines everything into one meta-prompt.
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {STAGES.map((stage) => {
+          const isOpen = open === stage.n;
+          return (
+            <div
+              key={stage.n}
+              style={{
+                background: C.s2,
+                border: `1px solid ${isOpen ? C.teal : C.border}`,
+                borderRadius: 10,
+                overflow: "hidden",
+              }}
+            >
+              <div
+                onClick={() => setOpen(isOpen ? null : stage.n)}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "12px 14px",
+                  cursor: "pointer",
+                  background: isOpen ? C.teal + "0d" : "transparent",
+                }}
+              >
+                <div style={{ color: C.text, fontSize: 13, fontWeight: 700 }}>
+                  <span style={{ color: C.teal, ...mono, marginRight: 8 }}>
+                    {String(stage.n).padStart(2, "0")}
+                  </span>
+                  {stage.title}
+                  <span style={{ color: C.muted, fontWeight: 400, fontSize: 11, marginLeft: 8 }}>
+                    ({stage.subs.length} prompt{stage.subs.length > 1 ? "s" : ""})
+                    {stage.n === 15 ? " · ★ featured" : ""}
+                  </span>
+                </div>
+                <span
+                  style={{
+                    color: C.muted,
+                    fontSize: 13,
+                    transform: isOpen ? "rotate(180deg)" : "none",
+                    transition: "transform 0.2s",
+                  }}
+                >
+                  ▼
+                </span>
+              </div>
+              {isOpen && (
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 10, padding: "0 14px 14px" }}
+                >
+                  {stage.subs.map((sub, j) => {
+                    const key = `${stage.n}-${j}`;
+                    return (
+                      <div
+                        key={key}
+                        style={{ background: "#0F1219", borderRadius: 8, padding: 12 }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginBottom: 8,
+                          }}
+                        >
+                          <div style={{ color: C.lav, fontSize: 12, fontWeight: 700 }}>
+                            {sub.name}
+                          </div>
+                          <button
+                            onClick={() => copy(sub.text, key)}
+                            style={{
+                              padding: "4px 10px",
+                              borderRadius: 4,
+                              background: C.teal + "22",
+                              border: `1px solid ${C.teal}`,
+                              color: C.teal,
+                              fontSize: 10,
+                              cursor: "pointer",
+                              fontWeight: 600,
+                            }}
+                          >
+                            {copied === key ? "Copied ✓" : "Copy"}
+                          </button>
+                        </div>
+                        <div
+                          style={{
+                            color: C.text,
+                            fontSize: 12,
+                            lineHeight: 1.7,
+                            ...mono,
+                          }}
+                        >
+                          {sub.text}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ─── TaskControlsMatrix ──────────────────────────────── */
+
+function TaskControlsMatrix() {
+  const rows = [
+    { task: "Simple question", chain: "Understand → Verify → Final Gate" },
+    { task: "Writing", chain: "Understand → Constrain → Plan → Execute → Refine → Final Gate" },
+    { task: "Coding", chain: "Understand → Constrain → Decompose → Plan → Execute → Verify → Refine → Final Gate" },
+    { task: "Research", chain: "Understand → Decompose → Plan → Execute → Challenge → Verify → Refine → Final Gate" },
+    { task: "Product design", chain: "Understand → Constrain → Decompose → Plan → Alternatives → Execute → Challenge → Final Gate" },
+    { task: "Strategy", chain: "Understand → Decompose → Alternatives → Challenge → Verify → Refine → Final Gate" },
+    { task: "Complex project", chain: "Full pipeline: Understand → Constrain → Decompose → Plan → Execute → Challenge → Verify → Refine → Final Gate" },
+    { task: "High-risk task", chain: "Understand → Constrain → Plan → Execute → Challenge → Verify → Refine → Final Gate" },
+    { task: "Creative task", chain: "Understand → Alternatives → Execute → Refine → Final Gate" },
+    { task: "Data analysis", chain: "Understand → Constrain → Decompose → Execute → Verify → Final Gate" },
+    { task: "Education", chain: "Understand → Decompose → Execute → Challenge → Refine → Final Gate" },
+  ];
+
+  return (
+    <div style={sectionStyle}>
+      <div style={labelStyle(C.lav)}>TASK → CONTROLS MATRIX</div>
+      <div style={{ color: C.muted, fontSize: 12, lineHeight: 1.6, marginBottom: 14 }}>
+        Pick your task type, apply only its control chain. Heavier tasks get more gates; simple
+        questions stay lightweight.
+      </div>
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11, ...mono }}>
+          <thead>
+            <tr>
+              {["Task type", "Control chain"].map((h) => (
+                <th
+                  key={h}
+                  style={{
+                    textAlign: "left",
+                    padding: "8px 10px",
+                    borderBottom: `1px solid ${C.border}`,
+                    color: C.muted,
+                    fontWeight: 600,
+                    fontSize: 10,
+                  }}
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.task}>
+                <td
+                  style={{
+                    padding: "8px 10px",
+                    borderBottom: `1px solid ${C.border}`,
+                    color: C.text,
+                    fontWeight: 700,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {r.task}
+                </td>
+                <td
+                  style={{
+                    padding: "8px 10px",
+                    borderBottom: `1px solid ${C.border}`,
+                    color: C.teal,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {r.chain}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+/* ─── PromptOptimizer ─────────────────────────────────── */
+
+const OPTIMIZER_CONTROLS = {
+  Writing: [
+    { control: "Audience Calibration", why: "Adapts terminology and depth to the reader so the draft lands on first pass." },
+    { control: "Output Contract", why: "Locks sections, format, and detail level before drafting to avoid rambling output." },
+    { control: "Expert + Beginner Review", why: "Checks correctness as an expert and clarity as the reader." },
+    { control: "Final Gate", why: "Verifies completeness, consistency, and usability before delivery." },
+  ],
+  Coding: [
+    { control: "Architecture Before Implementation", why: "Forces component, interface, and error-handling decisions before code." },
+    { control: "Constraint Compliance", why: "Treats stack, version, and compatibility notes as a binding spec." },
+    { control: "Code Verification", why: "Catches syntax, import, API, type, and security issues pre-delivery." },
+    { control: "Edge-Case Generator", why: "Surfaces failure paths the happy-path implementation would miss." },
+    { control: "Final Gate", why: "Confirms correctness, robustness, and usability of the delivered code." },
+  ],
+  Research: [
+    { control: "Research Plan", why: "Defines questions, evidence, sources, and conflict handling before searching." },
+    { control: "Evidence-to-Conclusion", why: "Separates verified evidence from interpretation and conclusion." },
+    { control: "Fact Verification", why: "Flags time-sensitive or consequential claims for verification." },
+    { control: "Final Gate", why: "Ensures the answer is accurate, complete, and clearly structured." },
+  ],
+  "Product design": [
+    { control: "Goal Extraction", why: "Extracts user, deliverable, success criteria, and constraints up front." },
+    { control: "Multiple Approaches", why: "Generates 2-3 fundamentally different directions before committing." },
+    { control: "Tradeoff Analysis", why: "Compares directions on simplicity, cost, scalability, and effort." },
+    { control: "Final Gate", why: "Checks usability, clarity, and constraint coverage of the chosen direction." },
+  ],
+  Strategy: [
+    { control: "Break the Problem Down", why: "Decomposes the decision into subproblems with dependencies." },
+    { control: "Multiple Approaches", why: "Prevents premature commitment to the first plausible strategy." },
+    { control: "Adversarial Review", why: "Stress-tests the strategy for contradictions and failure scenarios." },
+    { control: "Final Gate", why: "Validates completeness, consistency, and robustness of the recommendation." },
+  ],
+  "Data analysis": [
+    { control: "Goal Extraction", why: "Pins down the metric, audience, and decision the analysis must serve." },
+    { control: "Hidden Work Detector", why: "Surfaces validation, cleaning, and statistical checks behind the scenes." },
+    { control: "Evidence-to-Conclusion", why: "Keeps raw findings separate from interpretation." },
+    { control: "Requirement Verification", why: "Checks every requested metric and segment is actually delivered." },
+  ],
+  "Simple question": [
+    { control: "Intent Reflection", why: "Confirms the actual objective in one line before answering." },
+    { control: "Final Gate", why: "Lightweight correctness and clarity check without heavyweight process." },
+  ],
+  "Complex project": [
+    { control: "Complexity Detector", why: "Names what makes the project complex and selects the full workflow." },
+    { control: "Execution Plan", why: "Lays out steps, dependencies, validation, and failure points with a stop gate." },
+    { control: "Assumption Ledger", why: "Makes every cross-step assumption explicit and traceable." },
+    { control: "Progressive Refinement", why: "Runs Correctness → Completeness → Quality passes over the draft." },
+    { control: "Final Gate", why: "Full 7-dimension delivery check before handoff." },
+  ],
+};
+
+function PromptOptimizer() {
+  const [raw, setRaw] = useState("Write a launch announcement for our new search feature.");
+  const [taskType, setTaskType] = useState("Writing");
+  const [result, setResult] = useState(null);
+
+  function generate() {
+    const controls = OPTIMIZER_CONTROLS[taskType] || OPTIMIZER_CONTROLS["Writing"];
+    const controlNames = controls.map((c) => c.control).join(", ");
+    const optimized = `My task (${taskType}): ${raw.trim()}\n\nApply these controls: ${controlNames}.\n1. First restate my goal, audience, deliverable, and success criteria.\n2. Extract all constraints and classify them as Mandatory, Preferred, Optional, or Unknown.\n3. Propose a brief execution plan and wait for approval on complex parts.\n4. Produce the result following a clear output contract (sections, format, detail level).\n5. Challenge the draft as a skeptical expert, verify consequential claims, and run a final gate on Correctness, Completeness, Consistency, Constraints, Usability, Clarity, and Robustness before delivering.`;
+    setResult({ optimized, controls });
+  }
+
+  function copyOptimized() {
+    if (result) navigator.clipboard.writeText(result.optimized);
+  }
+
+  return (
+    <div style={{ ...sectionStyle, border: `1px solid ${C.teal}33` }}>
+      <div style={labelStyle(C.teal)}>PROMPT OPTIMIZER · ORDINARY → CONTROLLED</div>
+      <div style={{ color: C.muted, fontSize: 12, lineHeight: 1.6, marginBottom: 14 }}>
+        Paste an ordinary prompt, pick the task type, and get a controlled version with the right
+        quality gates added automatically.
+      </div>
+      <div style={{ color: C.muted, fontSize: 11, marginBottom: 6 }}>YOUR ORDINARY PROMPT</div>
+      <textarea
+        value={raw}
+        onChange={(e) => setRaw(e.target.value)}
+        style={{
+          width: "100%",
+          height: 80,
+          background: "#0F1219",
+          border: `1px solid ${C.border}`,
+          borderRadius: 8,
+          padding: 12,
+          color: C.text,
+          fontSize: 12,
+          ...mono,
+          resize: "vertical",
+          lineHeight: 1.6,
+          boxSizing: "border-box",
+          marginBottom: 12,
+        }}
+      />
+      <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+        <select
+          value={taskType}
+          onChange={(e) => setTaskType(e.target.value)}
+          style={{
+            flex: 1,
+            minWidth: 180,
+            padding: "10px 14px",
+            borderRadius: 8,
+            background: C.s2,
+            border: `1px solid ${C.border}`,
+            color: C.text,
+            fontSize: 12,
+            outline: "none",
+            ...mono,
+          }}
+        >
+          {Object.keys(OPTIMIZER_CONTROLS).map((t) => (
+            <option key={t} value={t}>
+              {t}
+            </option>
+          ))}
+        </select>
+        <button
+          onClick={generate}
+          style={{
+            padding: "10px 20px",
+            borderRadius: 8,
+            background: C.teal,
+            border: "none",
+            color: C.bg,
+            fontSize: 12,
+            fontWeight: 700,
+            cursor: "pointer",
+          }}
+        >
+          Generate Controlled Prompt
+        </button>
+      </div>
+      {result && (
+        <div>
+          <div style={{ background: "#0F1219", borderRadius: 8, padding: 16, marginBottom: 12 }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: 8,
+              }}
+            >
+              <div style={{ color: C.teal, fontSize: 10, fontWeight: 700 }}>
+                OPTIMIZED PROMPT
+              </div>
+              <button
+                onClick={copyOptimized}
+                style={{
+                  padding: "4px 10px",
+                  borderRadius: 4,
+                  background: C.teal + "22",
+                  border: `1px solid ${C.teal}`,
+                  color: C.teal,
+                  fontSize: 10,
+                  cursor: "pointer",
+                  fontWeight: 600,
+                }}
+              >
+                Copy
+              </button>
+            </div>
+            <div style={{ color: C.text, fontSize: 12, lineHeight: 1.7, ...mono, whiteSpace: "pre-wrap" }}>
+              {result.optimized}
+            </div>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {result.controls.map((c) => (
+              <div
+                key={c.control}
+                style={{
+                  padding: "8px 12px",
+                  background: C.s2,
+                  borderRadius: 6,
+                  borderLeft: `3px solid ${C.teal}`,
+                }}
+              >
+                <div style={{ color: C.teal, fontWeight: 700, fontSize: 11 }}>
+                  + {c.control}
+                </div>
+                <div style={{ color: C.muted, fontSize: 11, marginTop: 2 }}>{c.why}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /* ─── Main Export ─────────────────────────────────────── */
 
 export default function ThreeSentencePromptTab() {
@@ -1481,7 +2191,7 @@ export default function ThreeSentencePromptTab() {
               AI PRODUCTIVITY · SEPTEMBER 2026
             </div>
             <h2 style={{ margin: 0, fontSize: 22, fontWeight: 700, lineHeight: 1.2, color: C.text }}>
-              Framework & Methodology for Better AI Answers
+              Prompt Framework & Methodology for Better AI Answers
             </h2>
           </div>
         </div>
@@ -1552,6 +2262,10 @@ export default function ThreeSentencePromptTab() {
       </div>
 
       {/* All sections in order */}
+      <FrameworkPipeline />
+      <StageLibrary />
+      <TaskControlsMatrix />
+      <PromptOptimizer />
       <PatternLibrary />
       <PatternPicker />
       <ComparisonTable />

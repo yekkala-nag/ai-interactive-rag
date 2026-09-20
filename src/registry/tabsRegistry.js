@@ -1514,11 +1514,11 @@ export const TABS_REGISTRY = [
   },
   {
     id: "threesentenceprompt",
-    label: "Framework & Methodology",
+    label: "Prompt Framework & Methodology",
     umbrellaId: "foundations",
     category: "Foundations",
     icon: "✍️",
-    keywords: ["prompt engineering", "3 sentences", "plan-first", "better prompts", "AI productivity", "brain dump", "messy prompts", "course correction", "framework", "methodology", "prompt patterns", "prompt framework"],
+    keywords: ["prompt engineering", "3 sentences", "plan-first", "better prompts", "AI productivity", "brain dump", "messy prompts", "course correction", "framework", "methodology", "prompt patterns", "prompt framework", "prompt methodology", "quality controller", "prompt optimizer"],
     component: lazy(() => import("../threeSentencePrompt/ThreeSentencePromptTab.jsx"))
   },
   {
