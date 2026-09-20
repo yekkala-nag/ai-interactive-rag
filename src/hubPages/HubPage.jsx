@@ -53,9 +53,9 @@ export function HubPage({ childId, onSelectTab }) {
     } catch {}
   }, [progress, childId]);
 
-  const completedCount = progress?.completed?.length || 0;
+  const completedCount = (progress?.completed || []).filter(id => tabs.includes(id)).length;
   const totalCount = tabs.length;
-  const pct = totalCount ? Math.round((completedCount / totalCount) * 100) : 0;
+  const pct = totalCount ? Math.min(100, Math.round((completedCount / totalCount) * 100)) : 0;
 
   const children = getChildren(child.umbrellaId);
   const currentIndex = children.findIndex(c => c.id === childId);
@@ -91,8 +91,8 @@ export function HubPage({ childId, onSelectTab }) {
       {/* Header */}
       <div style={{ marginBottom: 24 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-          <span style={{ padding: "2px 8px", borderRadius: 4, fontSize: 11, background: "rgba(94,196,200,0.14)", color: C.tealInk, border: `1px solid ${C.tealDark}` }}>
-            {child.umbrellaId}
+          <span title={child.blurb} style={{ padding: "2px 8px", borderRadius: 4, fontSize: 11, background: "rgba(94,196,200,0.14)", color: C.tealInk, border: `1px solid ${C.tealDark}` }}>
+            {(UMBRELLA_TOPICS.find(u => u.id === child.umbrellaId) || {}).title || child.umbrellaId}
           </span>
           <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700 }}>{child.title}</h1>
         </div>
@@ -119,7 +119,7 @@ export function HubPage({ childId, onSelectTab }) {
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 8 }}>
             <div style={{ fontSize: 13, color: C.muted }}>Progress</div>
             <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "JetBrains Mono, monospace", color: C.coralDeep }}>
-              {progress?.completed?.length || 0} / {totalCount} topics
+              {completedCount} / {totalCount} topics
             </div>
           </div>
           <div style={{ display: "flex", gap: 24, fontSize: 12, color: C.muted }}>
@@ -174,7 +174,7 @@ export function HubPage({ childId, onSelectTab }) {
               </p>
               {meta?.p?.length ? (
                 <div style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${C.border}`, fontSize: 10, color: C.muted }}>
-                  {pendingPrereqs.length ? `Suggested after: ${pendingPrereqs.join(", ")}` : "Prerequisites complete ✓"}
+                  {pendingPrereqs.length ? `Suggested after: ${pendingPrereqs.map(p => (getTabById(p) || {}).label || p).join(", ")}` : "Prerequisites complete ✓"}
                 </div>
               ) : null}
               <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
@@ -212,6 +212,7 @@ export function HubPage({ childId, onSelectTab }) {
           </button>
         ) : <span />}
         <div style={{ flex: 1, textAlign: "center" }}>
+          {currentIndex > 0 && (
           <button
             onClick={() => firstHubId && onSelectTab(firstHubId)}
             style={{
@@ -221,6 +222,7 @@ export function HubPage({ childId, onSelectTab }) {
           >
             Back to start of section
           </button>
+          )}
         </div>
         {nextTarget ? (
           <button

@@ -213,7 +213,7 @@ export function TopicMap({ nodes, edges, completedTopics = [], unlockedTopics = 
                   pointerEvents: "none"
                 }}
               >
-                {node.label}
+                {node.label || node.id}
               </text>
               
               {selected && (

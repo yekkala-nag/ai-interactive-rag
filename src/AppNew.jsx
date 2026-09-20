@@ -116,7 +116,6 @@ const TabComponents = {
   langgraph: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.LangGraphTab }))),
   frameworkcompare: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.CompareTab }))),
   toolcalling: lazy(() => import('./toolCalling/ToolCallingTab.jsx')),
-  toolcalling: lazy(() => import('./toolCalling/ToolCallingTab.jsx')),
   agentscale: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.HighScaleAgentsTab }))),
   modeldeploy: lazy(() => import('./modelDeployment/ModelDeploymentTab.jsx')),
   agentdebugging: lazy(() => import('./AppContent.jsx').then(m => ({ default: m.AgentDebuggingTab }))),
@@ -282,15 +281,27 @@ export default function App() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Per-topic scroll memory (NAV-10) + history handling (NAV-02)
+  // Per-topic scroll memory + history handling
   const scrollMemory = useRef(new Map());
   const prevTabRef = useRef(activeTab);
   const isFirstSync = useRef(true);
+  const isPopRef = useRef(false);
+
+  // Normalize invalid ?tab= on mount so URL and state never diverge
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlTab = params.get('tab');
+    if (urlTab && !TABS_REGISTRY.some(t => t.id === urlTab)) {
+      params.set('tab', activeTab);
+      window.history.replaceState({ tab: activeTab }, '', `${window.location.pathname}?${params}`);
+    }
+  }, []);
 
   // URL sync: replace on first mount, push on topic change so Back/Forward works
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('tab') === activeTab && isFirstSync.current) {
+      window.history.replaceState({ tab: activeTab }, '', `${window.location.pathname}?${params}`);
       isFirstSync.current = false;
       return;
     }
@@ -309,6 +320,7 @@ export default function App() {
     const onPop = (e) => {
       const tab = e.state?.tab || new URLSearchParams(window.location.search).get('tab');
       if (tab && TABS_REGISTRY.some(t => t.id === tab)) {
+        isPopRef.current = true;
         setActiveTab(tab);
       }
     };
@@ -316,13 +328,18 @@ export default function App() {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  // Scroll restoration: remember offset per topic, scroll to top for new topics (NAV-01)
+  // Scroll behavior: Back/Forward restores saved offset; fresh jumps start at top
   useEffect(() => {
     const prev = prevTabRef.current;
     if (prev !== activeTab) {
       try { scrollMemory.current.set(prev, window.scrollY); } catch {}
-      const saved = scrollMemory.current.get(activeTab);
-      window.scrollTo(0, saved ?? 0);
+      if (isPopRef.current) {
+        const saved = scrollMemory.current.get(activeTab);
+        window.scrollTo(0, saved ?? 0);
+      } else {
+        window.scrollTo(0, 0);
+      }
+      isPopRef.current = false;
       // Move focus to main for keyboard / screen-reader users
       requestAnimationFrame(() => {
         document.getElementById('main-content')?.focus?.({ preventScroll: true });
@@ -350,6 +367,10 @@ export default function App() {
     return () => document.removeEventListener('keydown', handleKey);
   }, [sidebarCollapsed]);
 
+  const handleSidebarToggle = useCallback(() => {
+    setSidebarCollapsed(v => !v);
+  }, []);
+
   const handleTabSelect = useCallback((tabId) => {
     setActiveTab(tabId);
     setCommandPaletteOpen(false);
@@ -375,11 +396,11 @@ export default function App() {
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             collapsed={sidebarCollapsed}
-            onToggleCollapse={setSidebarCollapsed}
+            onToggleCollapse={handleSidebarToggle}
           />
         }
         sidebarCollapsed={sidebarCollapsed}
-        onSidebarToggle={setSidebarCollapsed}
+        onSidebarToggle={handleSidebarToggle}
       >
         <TopBar
           activeTab={activeTab}

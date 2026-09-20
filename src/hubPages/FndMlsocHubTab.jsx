@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { HubPage } from "./HubPage.jsx";
 import { getChildById, getChildSequence } from "../registry/curriculum.js";
 import {
   HubHero,
@@ -34,7 +33,6 @@ export default function FndMlsocHubTab({ onSelectTab }) {
 
   const [launchedEmbeds, setLaunchedEmbeds] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState(null);
-  const [activeView, setActiveView] = useState("hero");
 
   useEffect(() => {
     try {
@@ -44,18 +42,17 @@ export default function FndMlsocHubTab({ onSelectTab }) {
 
   const completedTopics = progress?.completed || [];
   // Free navigation: every topic is clickable. Prerequisites stay as guidance,
-  // never as a hard block — matches HubContentPage and fixed HubPage behavior.
+  // never as a hard block. Navigation goes straight to the topic via
+  // onSelectTab (parent shell swaps tabs); no local view switching.
   const unlockedTopics = useMemo(() => [...tabs], [tabs]);
 
   const handleTabClick = (tabId) => {
     setSelectedTopic(tabId);
-    setActiveView("topic");
     onSelectTab(tabId);
   };
 
   const handleStartPath = (pathId, topicId) => {
     setSelectedTopic(topicId);
-    setActiveView("topic");
     onSelectTab(topicId);
   };
 
@@ -63,40 +60,8 @@ export default function FndMlsocHubTab({ onSelectTab }) {
     setLaunchedEmbeds(prev => [...new Set([...prev, embed.id])]);
   };
 
-  const handleBackToHub = () => {
-    setActiveView("hero");
-    setSelectedTopic(null);
-  };
-
   const content = ML_SOCIETY_CONTENT;
   const visualMap = content.visualMap;
-
-  if (activeView === "topic" && selectedTopic) {
-    return (
-      <div style={{ padding: 24 }}>
-        <button 
-          onClick={handleBackToHub}
-          style={{
-            marginBottom: 16,
-            padding: "8px 16px",
-            background: "transparent",
-            color: "#6B5E94",
-            border: `1px solid ${C.lavDeep}`,
-            borderRadius: 6,
-            fontSize: 12,
-            fontWeight: 600,
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: 6
-          }}
-        >
-          ← Back to ML & Society Hub
-        </button>
-        <HubPage childId="fnd_mlsoc" onSelectTab={onSelectTab} />
-      </div>
-    );
-  }
 
   return (
     <div style={{ padding: 24, maxWidth: 1200, margin: "0 auto" }}>
@@ -193,7 +158,7 @@ export default function FndMlsocHubTab({ onSelectTab }) {
             <WarStoryCard
               key={story.id}
               story={story}
-              onViewDetails={(s) => console.log("View details:", s)}
+              onViewDetails={(s) => { const target = s?.topics?.[0]; if (target) onSelectTab(target); }}
             />
           ))}
         </div>
@@ -234,6 +199,7 @@ export default function FndMlsocHubTab({ onSelectTab }) {
               embed={embed}
               onLaunch={handleLaunchEmbed}
               launchedEmbeds={launchedEmbeds}
+              onSelectTab={onSelectTab}
             />
           ))}
         </div>
@@ -261,7 +227,7 @@ export default function FndMlsocHubTab({ onSelectTab }) {
           Ready to start?
         </h3>
         <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>
-          Pick a learning path above or jump directly to any unlocked topic
+          Pick a learning path above or jump directly to any topic
         </p>
         <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
           {content.quickStartPaths.map(path => (

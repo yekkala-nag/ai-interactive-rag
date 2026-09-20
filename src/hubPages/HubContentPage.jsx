@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { HubHero } from "./components/index.js";
-import { getChildById, getChildSequence, getTopicMeta } from "../registry/curriculum.js";
-import { getTabById } from "../registry/tabsRegistry.js";
+import { getChildById, getChildrenForUmbrella, getChildSequence, getTopicMeta, getHubPageId } from "../registry/curriculum.js";
+import { getTabById, UMBRELLA_TOPICS } from "../registry/tabsRegistry.js";
 
 const C = {
   bg: "#F5F5F7", surface: "#FFFFFF", s2: "#EDEDF0", s3: "#EDEDF0",
@@ -61,9 +61,22 @@ export default function HubContentPage({ childId, content, onSelectTab }) {
     } catch {}
   }, [progress, childId]);
 
-  const completed = progress?.completed || [];
-  const pct = seq.length ? Math.round((completed.length / seq.length) * 100) : 0;
+  const completed = (progress?.completed || []).filter(id => seq.includes(id));
+  const pct = seq.length ? Math.min(100, Math.round((completed.length / seq.length) * 100)) : 0;
   const nextUp = seq.find(id => !completed.includes(id)) || seq[0];
+  const isComplete = seq.length > 0 && completed.length >= seq.length;
+
+  // Hub-to-hub footer targets (same cross-section rule as HubPage)
+  const hubSiblings = child ? getChildrenForUmbrella(child.umbrellaId) : [];
+  const hubAt = child ? hubSiblings.findIndex(c => c.id === childId) : -1;
+  const uIdx = child ? UMBRELLA_TOPICS.findIndex(u => u.id === child.umbrellaId) : -1;
+  const nextHubTarget = hubSiblings[hubAt + 1]
+    || (uIdx >= 0 && UMBRELLA_TOPICS[uIdx + 1] ? getChildrenForUmbrella(UMBRELLA_TOPICS[uIdx + 1].id)[0] : null)
+    || null;
+  const prevHubTarget = hubSiblings[hubAt - 1]
+    || (uIdx > 0 ? getChildrenForUmbrella(UMBRELLA_TOPICS[uIdx - 1].id).slice(-1)[0] : null)
+    || null;
+  const hubFirstId = hubSiblings.length ? getHubPageId(hubSiblings[0].id) : null;
 
   const levelCounts = {};
   seq.forEach(id => {
@@ -119,12 +132,14 @@ export default function HubContentPage({ childId, content, onSelectTab }) {
             <div style={{ height: "100%", width: `${pct}%`, borderRadius: 4, background: C.tealDark, transition: "width 0.3s" }} />
           </div>
         </div>
+        {seq.length > 0 && (
         <button
           onClick={() => nextUp && onSelectTab(nextUp)}
           style={{ padding: "12px 24px", background: C.tealDark, color: "#FFFFFF", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}
         >
-          {completed.length === 0 ? "Start the hub →" : `Continue: ${(getTabById(nextUp) || {}).label || nextUp} →`}
+          {completed.length === 0 ? `Start the hub →` : (isComplete ? `Review: ${(getTabById(seq[0]) || {}).label || seq[0]} →` : `Continue: ${(getTabById(nextUp) || {}).label || nextUp} →`)}
         </button>
+        )}
       </div>
 
       <h3 style={{ margin: "0 0 6px", fontSize: 18, fontWeight: 700, color: C.text }}>{topicNoun}</h3>
@@ -203,16 +218,50 @@ export default function HubContentPage({ childId, content, onSelectTab }) {
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${C.teal}, ${C.coral}, ${C.lav}, ${C.teal})`, pointerEvents: "none" }} />
         <h3 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 700, color: C.text }}>{cta.title}</h3>
         <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>{cta.sub}</p>
+        {seq.length > 0 && (
         <button
           onClick={() => nextUp && onSelectTab(nextUp)}
           style={{ padding: "12px 28px", background: C.tealDark, color: "#FFFFFF", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}
         >
           {completed.length === 0
             ? `Start with ${(getTabById(nextUp) || {}).label || "topic 1"} →`
-            : (completed.length >= seq.length
+            : (isComplete
               ? `Review: ${(getTabById(seq[0]) || {}).label || "topic 1"} →`
               : `Continue: ${(getTabById(nextUp) || {}).label || nextUp} →`)}
         </button>
+        )}
+      </div>
+
+      {/* Hub-to-hub footer (same cross-section rule as HubPage) */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 16, marginTop: 8, borderTop: `1px solid ${C.border}` }}>
+        {prevHubTarget ? (
+          <button
+            onClick={() => onSelectTab(getHubPageId(prevHubTarget.id))}
+            title={`Previous section: ${prevHubTarget.title}`}
+            style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}` }}
+          >
+            ← {prevHubTarget.title}
+          </button>
+        ) : <span />}
+        <div style={{ flex: 1, textAlign: "center" }}>
+          {hubAt > 0 && hubFirstId && (
+            <button
+              onClick={() => onSelectTab(hubFirstId)}
+              style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", margin: "0 8px", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}` }}
+            >
+              Back to start of section
+            </button>
+          )}
+        </div>
+        {nextHubTarget ? (
+          <button
+            onClick={() => onSelectTab(getHubPageId(nextHubTarget.id))}
+            title={`Next section: ${nextHubTarget.title}`}
+            style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", background: C.coralDeep, color: "#FFFFFF", border: "none" }}
+          >
+            {nextHubTarget.title} →
+          </button>
+        ) : <span />}
       </div>
     </div>
   );

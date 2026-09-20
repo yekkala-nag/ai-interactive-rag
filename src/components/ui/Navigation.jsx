@@ -356,7 +356,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
 
           {!collapsed && onToggleCollapse && (
             <button
-              onClick={onToggleCollapse}
+              onClick={() => onToggleCollapse?.()}
               title="Collapse Sidebar (⌘[)"
               style={{
                 background: 'rgba(255, 255, 255, 0.16)',
@@ -603,7 +603,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
 
                 {!collapsed && (
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, marginLeft: '4px' }}>
-                    <span style={{
+                    <span title={isSearchMode ? `${tabs.length} matching topics` : `${tabs.length} sections in this module`} style={{
                       fontSize: '0.65rem',
                       fontWeight: 600,
                       fontFamily: 'SF Mono, monospace',
@@ -632,7 +632,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                   marginTop: '3px',
                   marginBottom: '4px'
                 }}>
-                  {getGroupedTabsForUmbrella(moduleId, rawTabs).map(group => {
+                  {getGroupedTabsForUmbrella(moduleId, isSearchMode ? tabs : rawTabs).map(group => {
                     // Pilot hubs collapse to a single row (flat list in search mode).
                     if (group.child && PILOT_COLLAPSED_CHILDREN.includes(group.child.id) && !isSearchMode) {
                       return (
@@ -795,7 +795,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
       {collapsed && (
         <div style={{ padding: '8px', borderTop: '1px solid rgba(15,18,25,0.12)', textAlign: 'center' }}>
           <button
-            onClick={onToggleCollapse}
+            onClick={() => onToggleCollapse?.()}
             title="Expand sidebar (⌘[)"
             style={{
               background: 'rgba(255, 255, 255, 0.16)',
@@ -821,8 +821,8 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
 // TopBar — macOS Toolbar & Breadcrumb Navigation
 // ============================================
 export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, sidebarCollapsed }) {
-  const currentModule = getUmbrellaForTab(activeTab);
-  const currentTab = getTabById(activeTab);
+  const currentModule = getUmbrellaForTab(activeTab) || UMBRELLA_TOPICS[0];
+  const currentTab = getTabById(activeTab) || { id: activeTab, label: activeTab, icon: '📝' };
   const siblingTabs = getTabsForUmbrella(currentModule.id);
   const activeIndex = siblingTabs.findIndex(t => t.id === activeTab);
   const accent = MODULE_ACCENTS[currentModule.id] || MODULE_ACCENTS.foundations;
@@ -850,8 +850,8 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
   const pilotSeq = activeChild && PILOT_COLLAPSED_CHILDREN.includes(activeChild.id) && !activeTab.endsWith('_hub');
   const childTabs = activeChild
     ? (pilotSeq
-        ? getChildSequence(activeChild.id).map(id => getTabById(id))
-        : sortTopicsLikeJourney(getTabsForUmbrella(currentModule.id).filter(t => getTopicMeta(t.id).c === activeChild.id)))
+        ? getChildSequence(activeChild.id).map(id => getTabById(id) || { id, label: id }).filter(t => t && !String(t.id).endsWith('_hub'))
+        : sortTopicsLikeJourney(getTabsForUmbrella(currentModule.id).filter(t => getTopicMeta(t.id).c === activeChild.id && !String(t.id).endsWith('_hub'))))
     : [];
   const childIndex = childTabs.findIndex(t => t.id === activeTab);
   const prevInChild = childIndex > 0 ? childTabs[childIndex - 1] : null;
@@ -985,8 +985,8 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
 
           {/* Adaptive Track Badge */}
           <button
-            onClick={() => onSelectTab('overview')}
-            title={`Active Track: ${activeTrack.title} (${trackProgress.completed}/${trackProgress.total} mastered). Click to view track.`}
+            onClick={() => onSelectTab('airoadmap')}
+            title={`Active Track: ${activeTrack.title} (${trackProgress.completed}/${trackProgress.total} mastered). Click to view roadmap.`}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -1220,6 +1220,15 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
   if (!isOpen) return null;
 
   return (
+    <>
+    <div
+      onClick={onClose}
+      aria-hidden="true"
+      style={{
+        position: 'fixed', inset: 0, zIndex: 'var(--ds-zIndex-modal)',
+        background: 'rgba(0,0,0,0.4)',
+      }}
+    />
     <div
       ref={dialogRef}
       tabIndex={-1}
@@ -1293,6 +1302,7 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
         <Button variant="ghost" size="sm" onClick={onClose}>Close (Esc)</Button>
       </div>
     </div>
+    </>
   );
 }
 

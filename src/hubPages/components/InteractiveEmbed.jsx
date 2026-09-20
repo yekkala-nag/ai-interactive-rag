@@ -197,7 +197,7 @@ const DEMO_COMPONENTS = {
   "structured-output-builder": SchemaPromptDemo,
 };
 
-export function InteractiveEmbed({ embed, onLaunch, launchedEmbeds = [] }) {
+export function InteractiveEmbed({ embed, onLaunch, launchedEmbeds = [], onSelectTab }) {
   const isAlreadyLaunched = launchedEmbeds.includes(embed.id);
   const DemoComponent = DEMO_COMPONENTS[embed.id];
 
@@ -303,9 +303,18 @@ export function InteractiveEmbed({ embed, onLaunch, launchedEmbeds = [] }) {
           ) : (
             <div style={{
               padding: 16, background: C.s2, borderRadius: 8, marginTop: 8,
-              textAlign: "center", color: C.muted, fontSize: 12
+              textAlign: "center", color: C.muted, fontSize: 12,
+              display: "flex", flexDirection: "column", gap: 10, alignItems: "center"
             }}>
-              Demo launched — navigate to the topic tab for the full experience
+              <span>Demo launched — open the topic tab for the full experience</span>
+              {embed.engine && onSelectTab && (
+                <button
+                  onClick={() => onSelectTab(embed.engine)}
+                  style={{ padding: "8px 16px", background: C.tealDark, color: "#FFFFFF", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer" }}
+                >
+                  Open full topic →
+                </button>
+              )}
             </div>
           )}
           

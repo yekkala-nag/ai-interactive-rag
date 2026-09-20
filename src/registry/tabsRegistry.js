@@ -1770,13 +1770,13 @@ export const TABS_REGISTRY = [
 export const getUmbrellaForTab = (tabId) => {
   const tab = TABS_REGISTRY.find(t => t.id === tabId);
   if (tab && tab.umbrellaId) {
-    return UMBRELLA_TOPICS.find(u => u.id === tab.umbrellaId) || UMBRELLA_TOPICS[0];
+    return UMBRELLA_TOPICS.find(u => u.id === tab.umbrellaId) || null;
   }
-  return UMBRELLA_TOPICS.find(u => u.tabs.includes(tabId)) || UMBRELLA_TOPICS[0];
+  return UMBRELLA_TOPICS.find(u => u.tabs.includes(tabId)) || null;
 };
 
 export const getTabById = (tabId) => {
-  return TABS_REGISTRY.find(t => t.id === tabId) || TABS_REGISTRY[0];
+  return TABS_REGISTRY.find(t => t.id === tabId);
 };
 
 export const getTabsForUmbrella = (umbrellaId) => {

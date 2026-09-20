@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getTabById, getChildrenForUmbrella as getChildren, getChildById as getChild } from "../registry/curriculum.js";
 
 const C = {
   bg: "#0F1219", surface: "#161B26", s2: "#1C2433", s3: "#243044",
@@ -74,12 +73,6 @@ const TOPIC_META_MAP = {
   textclusteringhdbscan: { l: 2, p: ["classicalml"] },
 };
 
-function isTabUnlocked(tabId, progress) {
-  const meta = TOPIC_META_MAP[tabId];
-  if (!meta || !meta.p || !meta.p.length) return true;
-  return meta.p.every(p => progress.completed.includes(p));
-}
-
 function ProgressRing({ pct }) {
   const r = 37;
   const circ = 2 * Math.PI * r;
@@ -98,7 +91,7 @@ function ProgressRing({ pct }) {
 }
 
 export default function DataMlHubTab({ onSelectTab }) {
-  const tabs = getChildren("data_ml").find(c => c.id === "data_ml")?.tabs || [];
+  const allTopics = TOPIC_GROUPS.flatMap(g => g.topics.map(t => t.id));
 
   const [progress, setProgress] = useState(() => {
     try {
@@ -111,9 +104,17 @@ export default function DataMlHubTab({ onSelectTab }) {
     try { localStorage.setItem("hub_progress_data_ml", JSON.stringify(progress)); } catch {}
   }, [progress]);
 
-  const completedCount = progress.completed.length;
-  const totalCount = tabs.length;
-  const pct = totalCount ? Math.round((completedCount / totalCount) * 100) : 0;
+  const toggleDone = (id) => {
+    setProgress(p => ({
+      completed: (p?.completed || []).includes(id)
+        ? (p.completed || []).filter(t => t !== id)
+        : [...(p?.completed || []), id],
+    }));
+  };
+
+  const completedCount = (progress.completed || []).filter(id => allTopics.includes(id)).length;
+  const totalCount = allTopics.length;
+  const pct = totalCount ? Math.min(100, Math.round((completedCount / totalCount) * 100)) : 0;
 
   return (
     <div style={{ paddingBottom: 64 }}>
@@ -177,19 +178,19 @@ export default function DataMlHubTab({ onSelectTab }) {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 12 }}>
             {group.topics.map(topic => {
               const meta = TOPIC_META_MAP[topic.id] || { l: 1, p: [] };
-              const unlocked = isTabUnlocked(topic.id, progress);
-              const completed = progress.completed.includes(topic.id);
+              const completed = (progress.completed || []).includes(topic.id);
               const badge = LEVEL_BADGES[meta.l] || LEVEL_BADGES[1];
+              const pending = (meta.p || []).filter(p => !(progress.completed || []).includes(p));
 
               return (
-                <div key={topic.id} onClick={() => { if (unlocked) onSelectTab(topic.id); }}
+                <div key={topic.id} onClick={() => onSelectTab(topic.id)}
                   style={{
                     background: completed ? group.color + "08" : C.s2,
                     border: "1px solid " + (completed ? group.color : C.border),
                     borderRadius: 10,
                     padding: 16,
-                    cursor: unlocked ? "pointer" : "not-allowed",
-                    opacity: unlocked ? 1 : 0.5,
+                    cursor: "pointer",
+                    opacity: 1,
                     transition: "all 0.2s",
                   }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
@@ -204,7 +205,7 @@ export default function DataMlHubTab({ onSelectTab }) {
                     </span>
                     {completed && <span style={{ color: group.color, fontSize: 16 }}>✓</span>}
                   </div>
-                  <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: unlocked ? C.text : C.muted }}>
+                  <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: C.text }}>
                     {topic.title}
                   </h3>
                   <p style={{ margin: 0, fontSize: 11, color: C.muted, lineHeight: 1.4 }}>
@@ -212,9 +213,24 @@ export default function DataMlHubTab({ onSelectTab }) {
                   </p>
                   {topic.level === 2 && meta.p && meta.p.length > 0 && (
                     <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid " + C.border, fontSize: 10, color: C.muted }}>
-                      Requires: {meta.p.filter(p => !progress.completed.includes(p)).join(", ") || "completed ✓"}
+                      {pending.length ? `Suggested after: ${pending.join(", ")}` : "Prerequisites complete ✓"}
                     </div>
                   )}
+                  <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onSelectTab(topic.id); }}
+                      style={{ flex: 1, padding: "9px 12px", background: "transparent", color: C.teal, border: "1px solid " + C.teal, borderRadius: 8, fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}
+                    >
+                      Open topic →
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); toggleDone(topic.id); }}
+                      title={completed ? "Mark as not done" : "Mark as done"}
+                      style={{ padding: "9px 12px", background: completed ? C.teal : "transparent", color: completed ? "#000" : C.muted, border: "1px solid " + (completed ? C.teal : C.border), borderRadius: 8, fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}
+                    >
+                      {completed ? "✓ Done" : "Mark done"}
+                    </button>
+                  </div>
                 </div>
               );
             })}
@@ -229,10 +245,11 @@ export default function DataMlHubTab({ onSelectTab }) {
             background: "transparent", color: C.teal, border: "1px solid " + C.teal }}>
           ← Document Intelligence
         </button>
-        <button onClick={() => onSelectTab("data_platform")}
+        <button onClick={() => onSelectTab("data_found_hub")}
+          title="Back to Data Foundations (start of Data & Platform Layers)"
           style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
             background: "transparent", color: C.teal, border: "1px solid " + C.teal, margin: "0 8px" }}>
-          Back to Data Platform
+          Back to Data Foundations
         </button>
         <button onClick={() => onSelectTab("data_scale_hub")}
           style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getTabById } from "../../registry/tabsRegistry.js";
 
 const C = {
@@ -31,6 +31,10 @@ const PATH_FILL = {
 
 export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTopicClick, expandedPathId }) {
   const [activePath, setActivePath] = useState(expandedPathId || null);
+
+  useEffect(() => {
+    if (expandedPathId) setActivePath(expandedPathId);
+  }, [expandedPathId]);
 
   const getPathProgress = (path) => {
     const completed = path.topics.filter(t => completedTopics.includes(t)).length;
@@ -82,7 +86,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
               onClick={() => setActivePath(isExpanded ? null : path.id)}
               style={{
                 width: "100%",
-                padding: "16 20",
+                padding: "16px 20px",
                 background: isExpanded ? `${color}10` : "transparent",
                 border: "none",
                 borderBottom: isExpanded ? `1px solid ${color}30` : "none",
@@ -189,7 +193,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                           display: "flex",
                           alignItems: "center",
                           gap: 12,
-                          padding: "12 16",
+                          padding: "12px 16px",
                           background: status === "completed" ? `rgba(94,196,200,0.12)` : C.s2,
                           border: `1px solid ${styles.border}`,
                           borderRadius: 8,
@@ -255,7 +259,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                     }}
                     style={{
                       marginTop: 12,
-                      padding: "10 16",
+                      padding: "10px 16px",
                       background: PATH_FILL[path.id] || C.tealDark,
                       color: "#FFFFFF",
                       border: "none",
@@ -270,13 +274,31 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                       gap: 8
                     }}
                   >
-                    Continue: {(getTabById(path.topics.find(t => !completedTopics.includes(t))) || {}).label || "Complete"}
+                    {progress.completed === 0 ? "Start: " : "Continue: "}{(getTabById(path.topics.find(t => !completedTopics.includes(t))) || {}).label || "Complete"}
                   </button>
                 )}
                 {progress.completed >= progress.total && (
-                  <div style={{ marginTop: 12, fontSize: 12, color: C.muted, textAlign: 'center' }}>
-                    Path complete — review any topic above or pick the next path.
-                  </div>
+                  <button
+                    onClick={() => onStartPath?.(path.id, path.topics[0])}
+                    style={{
+                      marginTop: 12,
+                      padding: "10px 16px",
+                      background: "transparent",
+                      color: inkFor(color),
+                      border: `1px solid ${color}40`,
+                      borderRadius: 8,
+                      fontSize: 13,
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 8
+                    }}
+                  >
+                    Review path from the start →
+                  </button>
                 )}
               </div>
             )}

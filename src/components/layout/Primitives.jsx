@@ -44,7 +44,10 @@ export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle, mob
       )}
 
       {/* SIDEBAR CONTAINER */}
-      <div style={{
+      <div
+        aria-hidden={isMobile && !mobileOpen}
+        inert={isMobile && !mobileOpen ? true : undefined}
+        style={{
         height: '100vh',
         position: isMobile ? 'fixed' : 'sticky',
         top: 0, left: 0,
