@@ -342,7 +342,7 @@ export function getPrereqIds(tabId) {
  * sequential in-hub experience (overview page 0 + ordered subtopics).
  * Roll out hub-by-hub by appending child ids here.
  */
-export const PILOT_COLLAPSED_CHILDREN = ['fnd_prompts'];
+export const PILOT_COLLAPSED_CHILDREN = ['fnd_prompts', 'fnd_internals', 'fnd_start', 'fnd_mlsoc', 'fnd_multimodal', 'rag_core', 'rag_precision', 'rag_advanced', 'rag_practice', 'ctx_craft', 'ctx_memory', 'ctx_long', 'agt_found', 'agt_safety', 'agt_multi', 'agt_prod', 'data_found', 'data_docs', 'data_ml', 'data_scale', 'fr_eval', 'fr_ops', 'fr_frontiers'];
 
 /** Convention: a child's overview page id is `<childId>_hub`. */
 export function getHubPageId(childId) {
