@@ -65,17 +65,14 @@ export function HubPage({ childId, onSelectTab }) {
   const nextChild = children[currentIndex + 1];
   const prevChild = children[currentIndex - 1];
   const firstHubId = children.length ? getHubPageId(children[0].id) : null;
-  // Cross-section escape (no dead-ends): last hub in an umbrella links to the
-  // first hub of the next umbrella; first hub links back to the last hub of
-  // the previous umbrella (e.g. Multimodal Models → Data Foundations).
+  // Cross-section escape (no dead-ends): first hub in an umbrella links back
+  // to the last hub of the previous umbrella. Forward motion from a hub
+  // enters its own topics via Next (see footer); hub-to-hub stepping lives
+  // in the TopBar position bar and sidebar.
   const umbrellaIdx = UMBRELLA_TOPICS.findIndex(u => u.id === child.umbrellaId);
-  const nextUmbrella = umbrellaIdx >= 0 ? UMBRELLA_TOPICS[umbrellaIdx + 1] : null;
   const prevUmbrella = umbrellaIdx > 0 ? UMBRELLA_TOPICS[umbrellaIdx - 1] : null;
-  const nextSectionFirst = !nextChild && nextUmbrella ? getChildren(nextUmbrella.id)[0] : null;
   const prevSectionLast = !prevChild && prevUmbrella ? getChildren(prevUmbrella.id).slice(-1)[0] : null;
-  const nextTarget = nextChild || nextSectionFirst;
   const prevTarget = prevChild || prevSectionLast;
-  const nextIsCrossSection = !nextChild && !!nextSectionFirst;
 
   function handleTabClick(tabId) {
     onSelectTab(tabId);
@@ -243,16 +240,20 @@ export function HubPage({ childId, onSelectTab }) {
           </button>
           )}
         </div>
-        {nextTarget ? (
+        {nextUp ? (
           <button
-            onClick={() => onSelectTab(getHubPageId(nextTarget.id))}
-            title={nextIsCrossSection ? `Next section: ${nextTarget.title}` : `Next: ${nextTarget.title}`}
+            onClick={() => handleTabClick(nextUp)}
+            title={completedCount === 0 ? `Next: start with ${(getTabById(nextUp) || {}).label || nextUp}` : (isComplete ? `Next: review ${(getTabById(nextUp) || {}).label || nextUp}` : `Next: continue with ${(getTabById(nextUp) || {}).label || nextUp}`)}
             style={{
               padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
               background: C.coralDeep, color: "#FFFFFF", border: "none",
             }}
           >
-            {nextTarget.title} →
+            {completedCount === 0
+              ? `Next: ${(getTabById(nextUp) || {}).label || nextUp} →`
+              : (isComplete
+                ? `Next: review ${(getTabById(nextUp) || {}).label || nextUp} →`
+                : `Next: ${(getTabById(nextUp) || {}).label || nextUp} →`)}
           </button>
         ) : <span />}
       </div>
