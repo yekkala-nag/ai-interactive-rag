@@ -109,6 +109,38 @@ export default function HubContentPage({ childId, content, onSelectTab }) {
         accentColor={C.teal}
       />
 
+      {/* Navigation (top) */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 16, marginBottom: 16, borderBottom: `1px solid ${C.border}` }}>
+        {prevHubTarget ? (
+          <button
+            onClick={() => onSelectTab(getHubPageId(prevHubTarget.id))}
+            title={`Previous section: ${prevHubTarget.title}`}
+            style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}` }}
+          >
+            ← {prevHubTarget.title}
+          </button>
+        ) : <span />}
+        <div style={{ flex: 1, textAlign: "center" }}>
+          {hubAt > 0 && hubFirstId && (
+            <button
+              onClick={() => onSelectTab(hubFirstId)}
+              style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", margin: "0 8px", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}` }}
+            >
+              Back to start of section
+            </button>
+          )}
+        </div>
+        {nextHubTarget ? (
+          <button
+            onClick={() => onSelectTab(getHubPageId(nextHubTarget.id))}
+            title={`Next section: ${nextHubTarget.title}`}
+            style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", background: C.coralDeep, color: "#FFFFFF", border: "none" }}
+          >
+            {nextHubTarget.title} →
+          </button>
+        ) : <span />}
+      </div>
+
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginBottom: 24 }}>
         {stages.map((s, i) => (
           <div key={s.title} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: 12, padding: 18 }}>
@@ -232,37 +264,6 @@ export default function HubContentPage({ childId, content, onSelectTab }) {
         )}
       </div>
 
-      {/* Hub-to-hub footer (same cross-section rule as HubPage) */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 16, marginTop: 8, borderTop: `1px solid ${C.border}` }}>
-        {prevHubTarget ? (
-          <button
-            onClick={() => onSelectTab(getHubPageId(prevHubTarget.id))}
-            title={`Previous section: ${prevHubTarget.title}`}
-            style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}` }}
-          >
-            ← {prevHubTarget.title}
-          </button>
-        ) : <span />}
-        <div style={{ flex: 1, textAlign: "center" }}>
-          {hubAt > 0 && hubFirstId && (
-            <button
-              onClick={() => onSelectTab(hubFirstId)}
-              style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", margin: "0 8px", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}` }}
-            >
-              Back to start of section
-            </button>
-          )}
-        </div>
-        {nextHubTarget ? (
-          <button
-            onClick={() => onSelectTab(getHubPageId(nextHubTarget.id))}
-            title={`Next section: ${nextHubTarget.title}`}
-            style={{ padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer", background: C.coralDeep, color: "#FFFFFF", border: "none" }}
-          >
-            {nextHubTarget.title} →
-          </button>
-        ) : <span />}
-      </div>
     </div>
   );
 }

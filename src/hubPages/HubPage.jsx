@@ -99,6 +99,51 @@ export function HubPage({ childId, onSelectTab }) {
         <p style={{ color: C.muted, fontSize: 14, margin: 0 }}>{child.blurb}</p>
       </div>
 
+      {/* Navigation (top) */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 16, marginBottom: 8, borderBottom: `1px solid ${C.border}` }}>
+        {prevTarget ? (
+          <button
+            onClick={() => onSelectTab(getHubPageId(prevTarget.id))}
+            title={prevChild ? `Previous: ${prevTarget.title}` : `Previous section: ${prevTarget.title}`}
+            style={{
+              padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
+              background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}`,
+            }}
+          >
+            ← {prevTarget.title}
+          </button>
+        ) : <span />}
+        <div style={{ flex: 1, textAlign: "center" }}>
+          {currentIndex > 0 && (
+          <button
+            onClick={() => firstHubId && onSelectTab(firstHubId)}
+            style={{
+              padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
+              margin: "0 8px", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}`,
+            }}
+          >
+            Back to start of section
+          </button>
+          )}
+        </div>
+        {nextUp ? (
+          <button
+            onClick={() => handleTabClick(nextUp)}
+            title={completedCount === 0 ? `Next: start with ${(getTabById(nextUp) || {}).label || nextUp}` : (isComplete ? `Next: review ${(getTabById(nextUp) || {}).label || nextUp}` : `Next: continue with ${(getTabById(nextUp) || {}).label || nextUp}`)}
+            style={{
+              padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
+              background: C.coralDeep, color: "#FFFFFF", border: "none",
+            }}
+          >
+            {completedCount === 0
+              ? `Next: ${(getTabById(nextUp) || {}).label || nextUp} →`
+              : (isComplete
+                ? `Next: review ${(getTabById(nextUp) || {}).label || nextUp} →`
+                : `Next: ${(getTabById(nextUp) || {}).label || nextUp} →`)}
+          </button>
+        ) : <span />}
+      </div>
+
       {/* Progress Ring + Stats + Resume CTA */}
       <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, marginBottom: 16, alignItems: "center" }}>
         <svg width={80} height={80} style={{ transform: "rotate(-90deg)" }}>
@@ -211,51 +256,6 @@ export function HubPage({ childId, onSelectTab }) {
             </div>
           );
         })}
-      </div>
-
-      {/* Navigation */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 16, borderTop: `1px solid ${C.border}` }}>
-        {prevTarget ? (
-          <button
-            onClick={() => onSelectTab(getHubPageId(prevTarget.id))}
-            title={prevChild ? `Previous: ${prevTarget.title}` : `Previous section: ${prevTarget.title}`}
-            style={{
-              padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
-              background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}`,
-            }}
-          >
-            ← {prevTarget.title}
-          </button>
-        ) : <span />}
-        <div style={{ flex: 1, textAlign: "center" }}>
-          {currentIndex > 0 && (
-          <button
-            onClick={() => firstHubId && onSelectTab(firstHubId)}
-            style={{
-              padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
-              margin: "0 8px", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}`,
-            }}
-          >
-            Back to start of section
-          </button>
-          )}
-        </div>
-        {nextUp ? (
-          <button
-            onClick={() => handleTabClick(nextUp)}
-            title={completedCount === 0 ? `Next: start with ${(getTabById(nextUp) || {}).label || nextUp}` : (isComplete ? `Next: review ${(getTabById(nextUp) || {}).label || nextUp}` : `Next: continue with ${(getTabById(nextUp) || {}).label || nextUp}`)}
-            style={{
-              padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
-              background: C.coralDeep, color: "#FFFFFF", border: "none",
-            }}
-          >
-            {completedCount === 0
-              ? `Next: ${(getTabById(nextUp) || {}).label || nextUp} →`
-              : (isComplete
-                ? `Next: review ${(getTabById(nextUp) || {}).label || nextUp} →`
-                : `Next: ${(getTabById(nextUp) || {}).label || nextUp} →`)}
-          </button>
-        ) : <span />}
       </div>
     </>
   );
