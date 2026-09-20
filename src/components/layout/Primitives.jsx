@@ -62,7 +62,7 @@ export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle, mob
         {sidebar}
       </div>
 
-      <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', width: '100%' }} role="main">
+      <main id="main-content" tabIndex={-1} style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', width: '100%', outline: 'none' }} role="main">
         {children}
       </main>
     </div>

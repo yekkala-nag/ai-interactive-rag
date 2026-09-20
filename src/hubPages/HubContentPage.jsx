@@ -204,10 +204,14 @@ export default function HubContentPage({ childId, content, onSelectTab }) {
         <h3 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 700, color: C.text }}>{cta.title}</h3>
         <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>{cta.sub}</p>
         <button
-          onClick={() => onSelectTab(seq[0])}
+          onClick={() => nextUp && onSelectTab(nextUp)}
           style={{ padding: "12px 28px", background: C.tealDark, color: "#FFFFFF", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}
         >
-          Start with {(getTabById(seq[0]) || {}).label || "topic 1"} →
+          {completed.length === 0
+            ? `Start with ${(getTabById(nextUp) || {}).label || "topic 1"} →`
+            : (completed.length >= seq.length
+              ? `Review: ${(getTabById(seq[0]) || {}).label || "topic 1"} →`
+              : `Continue: ${(getTabById(nextUp) || {}).label || nextUp} →`)}
         </button>
       </div>
     </div>

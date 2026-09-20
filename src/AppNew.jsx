@@ -282,11 +282,53 @@ export default function App() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // URL sync
+  // Per-topic scroll memory (NAV-10) + history handling (NAV-02)
+  const scrollMemory = useRef(new Map());
+  const prevTabRef = useRef(activeTab);
+  const isFirstSync = useRef(true);
+
+  // URL sync: replace on first mount, push on topic change so Back/Forward works
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    if (params.get('tab') === activeTab && isFirstSync.current) {
+      isFirstSync.current = false;
+      return;
+    }
     params.set('tab', activeTab);
-    window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+    const url = `${window.location.pathname}?${params}`;
+    if (isFirstSync.current) {
+      window.history.replaceState({ tab: activeTab }, '', url);
+      isFirstSync.current = false;
+    } else {
+      window.history.pushState({ tab: activeTab }, '', url);
+    }
+  }, [activeTab]);
+
+  // Back/Forward support: sync activeTab from URL / state
+  useEffect(() => {
+    const onPop = (e) => {
+      const tab = e.state?.tab || new URLSearchParams(window.location.search).get('tab');
+      if (tab && TABS_REGISTRY.some(t => t.id === tab)) {
+        setActiveTab(tab);
+      }
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  // Scroll restoration: remember offset per topic, scroll to top for new topics (NAV-01)
+  useEffect(() => {
+    const prev = prevTabRef.current;
+    if (prev !== activeTab) {
+      try { scrollMemory.current.set(prev, window.scrollY); } catch {}
+      const saved = scrollMemory.current.get(activeTab);
+      window.scrollTo(0, saved ?? 0);
+      // Move focus to main for keyboard / screen-reader users
+      requestAnimationFrame(() => {
+        document.getElementById('main-content')?.focus?.({ preventScroll: true });
+      });
+      prevTabRef.current = activeTab;
+    }
   }, [activeTab]);
 
   // Keyboard shortcuts

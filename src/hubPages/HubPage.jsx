@@ -112,9 +112,9 @@ export function HubPage({ childId, onSelectTab }) {
             </div>
           </div>
           <div style={{ display: "flex", gap: 24, fontSize: 12, color: C.muted }}>
-            <span>L1: {tabs.filter(t => topicMeta[t.id]?.l === 1).length}</span>
-            <span>L2: {tabs.filter(t => topicMeta[t.id]?.l === 2).length}</span>
-            <span>L3: {tabs.filter(t => topicMeta[t.id]?.l === 3).length}</span>
+            <span>L1: {tabs.filter(t => topicMeta[t]?.l === 1).length}</span>
+            <span>L2: {tabs.filter(t => topicMeta[t]?.l === 2).length}</span>
+            <span>L3: {tabs.filter(t => topicMeta[t]?.l === 3).length}</span>
           </div>
         </div>
       </div>

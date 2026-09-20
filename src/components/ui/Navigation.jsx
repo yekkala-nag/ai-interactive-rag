@@ -20,6 +20,7 @@ import {
   getChildLevelCounts,
   getChildLevelSpan,
   getChildById,
+  getChildrenForUmbrella,
   getChildSequence,
   getHubPageId,
   PILOT_COLLAPSED_CHILDREN,
@@ -56,9 +57,13 @@ function PilotHubRow({ child, rawTabs, activeTab, onSelectTab }) {
   const isInside = activeIndex >= 0 || activeTab === hubId;
   const activeLevel = activeIndex >= 0 ? (getTopicMeta(activeTab).l || 1) : null;
   const levelInk = { 1: '#1F6B6E', 2: '#6B5E94', 3: '#C47A6A' };
+  // Direct jump: expandable per-topic list (NAV-03). Auto-expand when inside.
+  const [expanded, setExpanded] = useState(isInside);
+  useEffect(() => { if (isInside) setExpanded(true); }, [isInside]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '6px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
       <button
         onClick={() => onSelectTab(hubId)}
         title={`${child.title} — ${child.blurb} (${proven}/${seq.length} proven)`}
@@ -72,7 +77,8 @@ function PilotHubRow({ child, rawTabs, activeTab, onSelectTab }) {
           fontSize: '0.78rem',
           fontWeight: isInside ? 700 : 500,
           transition: 'all 0.12s ease',
-          width: '100%',
+          flex: 1,
+          minWidth: 0,
           boxShadow: isInside ? '0 3px 10px rgba(0,0,0,0.2)' : 'none'
         }}
         onMouseEnter={e => {
@@ -115,6 +121,21 @@ function PilotHubRow({ child, rawTabs, activeTab, onSelectTab }) {
           {activeIndex >= 0 ? `${activeIndex + 1}/${seq.length}` : `${proven}/${seq.length}`}
         </span>
       </button>
+        <button
+          onClick={() => setExpanded(e => !e)}
+          title={expanded ? `Collapse ${child.title} topics` : `Expand ${child.title} topics (${seq.length})`}
+          aria-expanded={expanded}
+          aria-label={`${expanded ? 'Collapse' : 'Expand'} ${child.title} topics`}
+          style={{
+            flexShrink: 0, width: '24px', height: '24px', borderRadius: '6px',
+            background: 'transparent', border: '1px solid rgba(15,18,25,0.2)',
+            color: 'rgba(15,18,25,0.7)', cursor: 'pointer', fontSize: '0.7rem',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          <span style={{ transform: expanded ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.15s ease' }}>‣</span>
+        </button>
+      </div>
       <div style={{ padding: '2px 8px 4px 8px' }} title={`${child.blurb} — ${proven}/${seq.length} proven`}>
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -136,6 +157,35 @@ function PilotHubRow({ child, rawTabs, activeTab, onSelectTab }) {
           }} />
         </div>
       </div>
+      {expanded && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', paddingLeft: '14px', marginTop: '2px' }} role="list" aria-label={`${child.title} topics`}>
+          {seq.map((id, i) => {
+            const t = getTabById(id) || { label: id, icon: '📝' };
+            const isActive = id === activeTab;
+            const done = isMastered(id);
+            return (
+              <button
+                key={id}
+                role="listitem"
+                onClick={() => onSelectTab(id)}
+                title={`${i + 1}. ${t.label}${done ? ' (proven ✓)' : ''}`}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: '6px',
+                  padding: '4px 8px', borderRadius: '5px',
+                  background: isActive ? '#ffffff' : 'transparent',
+                  color: isActive ? '#3A9B9F' : 'rgba(15,18,25,0.75)',
+                  border: 'none', cursor: 'pointer', textAlign: 'left',
+                  fontSize: '0.74rem', fontWeight: isActive ? 700 : 500,
+                  width: '100%',
+                }}
+              >
+                <span style={{ fontFamily: 'SF Mono, monospace', fontSize: '0.62rem', opacity: 0.7, flexShrink: 0 }}>{done ? '✓' : `${i + 1}`}</span>
+                <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1 }}>{t.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -419,9 +469,9 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
               <span style={{ fontSize: '0.65rem', opacity: 0.8, fontFamily: 'SF Mono, monospace' }}>All Topics</span>
             </button>
 
-            {/* Adaptive Track Quick Link */}
+            {/* Adaptive Track Quick Link — goes to roadmap (distinct from Overview) */}
             <button
-              onClick={() => onSelectTab('overview')}
+              onClick={() => onSelectTab('airoadmap')}
               style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '5px 8px', borderRadius: '6px',
@@ -434,7 +484,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
               }}
               onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.22)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)'; }}
-              title="Open Adaptive Learning Hub & Diagnostic"
+              title="Open AI Roadmap — adaptive track details"
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0 }}>
                 <span style={{ fontSize: '0.85rem' }}>{activeTrack.icon}</span>
@@ -806,6 +856,14 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
   const childIndex = childTabs.findIndex(t => t.id === activeTab);
   const prevInChild = childIndex > 0 ? childTabs[childIndex - 1] : null;
   const nextInChild = childIndex >= 0 && childIndex < childTabs.length - 1 ? childTabs[childIndex + 1] : null;
+  // Hub-to-hub escape (NAV-07): when on a hub overview or at end of child,
+  // offer the next child hub instead of a disabled dead-end.
+  const isHubPage = typeof activeTab === 'string' && activeTab.endsWith('_hub');
+  const hubSiblings = activeChild ? getChildrenForUmbrella(activeChild.umbrellaId) : [];
+  const hubAt = activeChild ? hubSiblings.findIndex(c => c.id === activeChild.id) : -1;
+  const nextHub = hubAt >= 0 && hubAt < hubSiblings.length - 1 ? hubSiblings[hubAt + 1] : null;
+  const prevHub = hubAt > 0 ? hubSiblings[hubAt - 1] : null;
+  const hubPageId = activeChild ? getHubPageId(activeChild.id) : null;
 
   return (
     <header style={{
@@ -856,20 +914,48 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
             </button>
           )}
 
-          {/* Module Pill */}
-          <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: '6px',
-            padding: '3px 8px', borderRadius: '6px',
-            background: accent.lightBg,
-            color: accent.dark,
-            fontSize: '0.78rem', fontWeight: 600,
-            border: `1px solid ${accent.border}`
-          }}>
+          {/* Module Pill — clickable breadcrumb root (NAV-04) */}
+          <button
+            onClick={() => onSelectTab('overview')}
+            title={`All modules — currently in ${currentModule.title}. Click for Overview & Roadmap.`}
+            aria-label={`Module: ${currentModule.title}. Go to Overview.`}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              padding: '3px 8px', borderRadius: '6px',
+              background: accent.lightBg,
+              color: accent.dark,
+              fontSize: '0.78rem', fontWeight: 600,
+              border: `1px solid ${accent.border}`,
+              cursor: 'pointer',
+            }}
+          >
             <span>{currentModule.icon}</span>
             <span>{currentModule.title}</span>
-          </div>
+          </button>
 
           <span style={{ color: 'var(--ds-color-text-tertiary)', fontSize: '0.8rem' }}>/</span>
+
+          {activeChild && !isHubPage ? (
+            <>
+              <button
+                onClick={() => hubPageId && onSelectTab(hubPageId)}
+                title={`${activeChild.title} — ${activeChild.blurb}. Click for hub overview.`}
+                aria-label={`Section: ${activeChild.title}. Go to hub overview.`}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  padding: '3px 8px', borderRadius: '6px',
+                  background: 'transparent',
+                  color: 'var(--ds-color-text-secondary)',
+                  fontSize: '0.78rem', fontWeight: 600,
+                  border: '1px solid var(--ds-color-border-subtle)',
+                  cursor: 'pointer',
+                }}
+              >
+                {activeChild.title}
+              </button>
+              <span style={{ color: 'var(--ds-color-text-tertiary)', fontSize: '0.8rem' }}>/</span>
+            </>
+          ) : null}
 
           {/* Active Tab Name */}
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
@@ -953,8 +1039,8 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
         </div>
       </div>
 
-      {/* POSITION BAR — prev/next within the child umbrella (replaces sibling pills) */}
-      {activeChild && childIndex >= 0 && (
+      {/* POSITION BAR — prev/next within child; hub overviews get hub-to-hub nav (NAV-05/07) */}
+      {activeChild && (
         <div
           style={{
             padding: '5px 12px',
@@ -963,50 +1049,111 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
             background: 'var(--ds-color-bg-canvas)',
           }}
         >
+          {childIndex >= 0 ? (
+            <>
           <button
-            onClick={() => prevInChild && onSelectTab(prevInChild.id)}
-            disabled={!prevInChild}
-            title={prevInChild ? `Previous in ${activeChild.title}: ${prevInChild.label}` : `First in ${activeChild.title}`}
-            aria-label={prevInChild ? `Previous topic: ${prevInChild.label}` : 'First topic in section'}
+            onClick={() => prevInChild ? onSelectTab(prevInChild.id) : (hubPageId && onSelectTab(hubPageId))}
+            title={prevInChild ? `Previous in ${activeChild.title}: ${prevInChild.label}` : `Back to ${activeChild.title} overview`}
+            aria-label={prevInChild ? `Previous topic: ${prevInChild.label}` : `Back to ${activeChild.title} overview`}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '6px',
               padding: '3px 10px', borderRadius: '16px',
               background: 'transparent',
-              color: prevInChild ? 'var(--ds-color-text-secondary)' : 'var(--ds-color-text-tertiary)',
+              color: 'var(--ds-color-text-secondary)',
               border: '1px solid var(--ds-color-border-subtle)',
               fontSize: '0.74rem', fontWeight: 500,
-              cursor: prevInChild ? 'pointer' : 'default',
-              opacity: prevInChild ? 1 : 0.5,
+              cursor: 'pointer',
+              opacity: 1,
               maxWidth: '42vw', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
             }}
           >
             <span aria-hidden="true">‹</span>
-            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{prevInChild ? prevInChild.label : 'Start'}</span>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{prevInChild ? prevInChild.label : 'Hub overview'}</span>
           </button>
-          <span style={{ fontSize: '0.68rem', color: 'var(--ds-color-text-tertiary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-            {activeChild.title}
-          </span>
           <button
-            onClick={() => nextInChild && onSelectTab(nextInChild.id)}
-            disabled={!nextInChild}
-            title={nextInChild ? `Next in ${activeChild.title}: ${nextInChild.label}` : `Last in ${activeChild.title} — continue in sidebar`}
-            aria-label={nextInChild ? `Next topic: ${nextInChild.label}` : 'Last topic in section'}
+            onClick={() => hubPageId && onSelectTab(hubPageId)}
+            title={`${activeChild.title} overview — ${childIndex + 1} of ${childTabs.length}`}
+            aria-label={`Go to ${activeChild.title} overview`}
+            style={{ fontSize: '0.68rem', color: 'var(--ds-color-text-tertiary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', background: 'transparent', border: 'none', cursor: 'pointer' }}
+          >
+            {activeChild.title} · {childIndex + 1} of {childTabs.length}
+          </button>
+          <button
+            onClick={() => {
+              if (nextInChild) onSelectTab(nextInChild.id);
+              else if (nextHub) onSelectTab(getHubPageId(nextHub.id));
+              else if (hubPageId) onSelectTab(hubPageId);
+              else onSelectTab('overview');
+            }}
+            title={nextInChild ? `Next in ${activeChild.title}: ${nextInChild.label}` : (nextHub ? `Next section: ${nextHub.title}` : `Back to ${activeChild.title} overview`)}
+            aria-label={nextInChild ? `Next topic: ${nextInChild.label}` : (nextHub ? `Next section: ${nextHub.title}` : 'Back to hub overview')}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '6px',
               padding: '3px 10px', borderRadius: '16px',
-              background: nextInChild ? 'var(--ds-color-brand-tealDark, #3A9B9F)' : 'transparent',
-              color: nextInChild ? '#ffffff' : 'var(--ds-color-text-tertiary)',
-              border: `1px solid ${nextInChild ? 'var(--ds-color-brand-tealDark, #3A9B9F)' : 'var(--ds-color-border-subtle)'}`,
-              fontSize: '0.74rem', fontWeight: nextInChild ? 700 : 500,
-              cursor: nextInChild ? 'pointer' : 'default',
-              opacity: nextInChild ? 1 : 0.5,
+              background: 'var(--ds-color-brand-tealDark, #3A9B9F)',
+              color: '#ffffff',
+              border: `1px solid var(--ds-color-brand-tealDark, #3A9B9F)`,
+              fontSize: '0.74rem', fontWeight: 700,
+              cursor: 'pointer',
+              opacity: 1,
               maxWidth: '42vw', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-              boxShadow: nextInChild ? '0 2px 8px rgba(23,131,127,0.35)' : 'none'
+              boxShadow: '0 2px 8px rgba(23,131,127,0.35)'
             }}
           >
-            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{nextInChild ? nextInChild.label : 'End'}</span>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{nextInChild ? nextInChild.label : (nextHub ? `Next: ${nextHub.title}` : 'Hub overview')}</span>
             <span aria-hidden="true">›</span>
           </button>
+            </>
+          ) : (
+            <>
+          <button
+            onClick={() => prevHub && onSelectTab(getHubPageId(prevHub.id))}
+            disabled={!prevHub}
+            title={prevHub ? `Previous section: ${prevHub.title}` : 'First section'}
+            aria-label={prevHub ? `Previous section: ${prevHub.title}` : 'First section'}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              padding: '3px 10px', borderRadius: '16px',
+              background: 'transparent',
+              color: prevHub ? 'var(--ds-color-text-secondary)' : 'var(--ds-color-text-tertiary)',
+              border: '1px solid var(--ds-color-border-subtle)',
+              fontSize: '0.74rem', fontWeight: 500,
+              cursor: prevHub ? 'pointer' : 'default',
+              opacity: prevHub ? 1 : 0.5,
+              maxWidth: '42vw', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
+            }}
+          >
+            <span aria-hidden="true">‹</span>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{prevHub ? prevHub.title : 'Start'}</span>
+          </button>
+          <span style={{ fontSize: '0.68rem', color: 'var(--ds-color-text-tertiary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {activeChild.title} · Hub overview
+          </span>
+          <button
+            onClick={() => {
+              if (nextHub) onSelectTab(getHubPageId(nextHub.id));
+              else onSelectTab('overview');
+            }}
+            title={nextHub ? `Next section: ${nextHub.title}` : 'Back to Overview'}
+            aria-label={nextHub ? `Next section: ${nextHub.title}` : 'Back to Overview'}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              padding: '3px 10px', borderRadius: '16px',
+              background: 'var(--ds-color-brand-tealDark, #3A9B9F)',
+              color: '#ffffff',
+              border: `1px solid var(--ds-color-brand-tealDark, #3A9B9F)`,
+              fontSize: '0.74rem', fontWeight: 700,
+              cursor: 'pointer',
+              opacity: 1,
+              maxWidth: '42vw', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+              boxShadow: '0 2px 8px rgba(23,131,127,0.35)'
+            }}
+          >
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{nextHub ? `Next: ${nextHub.title}` : 'Overview'}</span>
+            <span aria-hidden="true">›</span>
+          </button>
+            </>
+          )}
         </div>
       )}
     </header>
@@ -1108,7 +1255,7 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
               <span style={{ fontSize: '1.1rem', width: '24px', textAlign: 'center' }}>{tab.icon}</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--ds-color-text-primary)' }}>{tab.label}</div>
-                <div style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }}>{tab.umbrellaId ? UMBRELLA_TOPICS.find(u => u.id === t.umbrellaId)?.title : ''}</div>
+                <div style={{ fontSize: '0.72rem', color: 'var(--ds-color-text-tertiary)' }}>{tab.umbrellaId ? UMBRELLA_TOPICS.find(u => u.id === tab.umbrellaId)?.title : ''}</div>
               </div>
               {i === selectedIndex && <span style={{ color: '#3A9B9F', fontSize: '0.85rem' }}>➔</span>}
             </button>

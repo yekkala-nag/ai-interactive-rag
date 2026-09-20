@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getTabById } from "../../registry/tabsRegistry.js";
 
 const C = {
   bg: "#F5F5F7", surface: "#FFFFFF", s2: "#EDEDF0", s3: "#EDEDF0",
@@ -179,8 +180,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                   {path.topics.map((topicId, index) => {
                     const status = getTopicStatus(topicId, path.topics, index);
                     const styles = STATUS_STYLES[status];
-                    const isFirst = index === 0;
-                    
+                    const topicTab = getTabById(topicId) || { label: topicId };
                     return (
                       <button
                         key={topicId}
@@ -222,7 +222,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                             color: status === "completed" ? C.tealInk : styles.color,
                             marginBottom: 2
                           }}>
-                            {topicId}
+                            {topicTab.label}
                           </div>
                           <div style={{ fontSize: 11, color: C.muted }}>
                             {status === "completed" ? "Completed" : "Ready to start"}
@@ -270,8 +270,13 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                       gap: 8
                     }}
                   >
-                    Continue: {path.topics.find(t => !completedTopics.includes(t)) || "Complete"}
+                    Continue: {(getTabById(path.topics.find(t => !completedTopics.includes(t))) || {}).label || "Complete"}
                   </button>
+                )}
+                {progress.completed >= progress.total && (
+                  <div style={{ marginTop: 12, fontSize: 12, color: C.muted, textAlign: 'center' }}>
+                    Path complete — review any topic above or pick the next path.
+                  </div>
                 )}
               </div>
             )}
