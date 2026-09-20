@@ -28,7 +28,7 @@ export default function AIRoadmapTab({ onSelectTab }) {
 
   const go = (id) => { if (onSelectTab) onSelectTab(id); };
   const plan = BUILD_PLAN(bg, goal, hrs);
-  const sel = { width: '100%', background: 'var(--ds-color-bg-surface)', color: 'white', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '6px', fontSize: '12px', marginBottom: '8px' };
+  const sel = { width: '100%', background: 'var(--ds-color-bg-surface)', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '6px', fontSize: '12px', marginBottom: '8px' };
 
   return (
     <div style={{ paddingBottom: 'var(--ds-space-12)' }}>
@@ -56,7 +56,7 @@ export default function AIRoadmapTab({ onSelectTab }) {
             alt="AI Engineer Roadmap serpentine"
             title="The Journey: Orient → Ship"
             caption="Animated flow follows the learning order. Below, each stage expands into clickable, mastery-aware topics."
-            background="#090d16"
+            background="#0F1219"
             maxWidth={1100}
           />
         </div>
@@ -81,10 +81,10 @@ export default function AIRoadmapTab({ onSelectTab }) {
               return (
                 <Card key={s.id} style={{ padding: 'var(--ds-space-4)', background: 'var(--ds-color-bg-canvas)', borderLeft: `4px solid ${score === 100 ? '#5EC4C8' : '#5EC4C8'}` }}>
                   <Flex justify="space-between" align="center" style={{ marginBottom: '6px', flexWrap: 'wrap', gap: '8px' }}>
-                    <strong style={{ color: 'white', fontSize: '14px' }}>{s.n}. {s.title}</strong>
+                    <strong style={{ color: 'var(--ds-color-text-primary)', fontSize: '14px' }}>{s.n}. {s.title}</strong>
                     <Flex gap="var(--ds-space-2)" align="center">
                       <span style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>{done}/{s.tabs.length} proven · {score}</span>
-                      <div style={{ width: '90px', height: '6px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+                      <div style={{ width: '90px', height: '6px', borderRadius: '4px', background: '#E8E8EC', overflow: 'hidden' }}>
                         <div style={{ height: '100%', width: `${score}%`, background: score === 100 ? '#5EC4C8' : '#5EC4C8', borderRadius: '4px' }} />
                       </div>
                     </Flex>
@@ -102,12 +102,12 @@ export default function AIRoadmapTab({ onSelectTab }) {
                           style={{
                             display: 'inline-flex', alignItems: 'center', gap: '6px',
                             padding: '5px 10px', borderRadius: '16px', cursor: 'pointer',
-                            background: m ? 'rgba(16,185,129,0.12)' : 'var(--ds-color-bg-surface)',
+                            background: m ? 'rgba(94,196,200,0.14)' : 'var(--ds-color-bg-surface)',
                             border: `1px solid ${m ? '#5EC4C8' : 'var(--ds-color-border-subtle)'}`,
                             color: 'var(--ds-color-text-primary)', fontSize: '12px'
                           }}
                         >
-                          <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: m ? '#5EC4C8' : '#475569', flexShrink: 0 }} />
+                          <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: m ? '#5EC4C8' : '#B8B8C4', flexShrink: 0 }} />
                           <span>{t.icon} {t.label}</span>
                         </button>
                       );
@@ -127,21 +127,21 @@ export default function AIRoadmapTab({ onSelectTab }) {
                 <div><h3 style={{ margin: 0 }}>📅 Week planner — background × goal × pace</h3>
                   <p style={{ margin: '4px 0 0 0', color: 'var(--ds-color-text-secondary)', fontSize: 'var(--ds-font-size-bodySm)' }}>Devs fast-forward orientation; ML folks skip mechanics; goals re-weight stages. {plan.headline}.</p></div>
                 <Grid columns={{ base: '1fr', md: '1fr 1fr' }} gap="var(--ds-space-4)">
-                  <Card style={{ padding: '14px', background: '#090d16', border: '1px solid var(--ds-color-border-subtle)' }}>
-                    <label style={{ fontSize: '11px', color: 'white' }}>Background</label>
+                  <Card style={{ padding: '14px', background: '#0F1219', border: '1px solid var(--ds-color-border-subtle)' }}>
+                    <label style={{ fontSize: '11px', color: 'var(--ds-color-text-inverse)' }}>Background</label>
                     <select value={bg} onChange={e => setBg(e.target.value)} style={sel}>
                       <option value="new">New to code/AI</option>
                       <option value="dev">Developer, new to AI</option>
                       <option value="ml">ML background</option>
                     </select>
-                    <label style={{ fontSize: '11px', color: 'white' }}>Goal</label>
+                    <label style={{ fontSize: '11px', color: 'var(--ds-color-text-inverse)' }}>Goal</label>
                     <select value={goal} onChange={e => setGoal(e.target.value)} style={sel}>
                       <option value="rag">Ship RAG</option>
                       <option value="agent">Ship agents</option>
                       <option value="chat">Ship chatbot</option>
                       <option value="general">General mastery</option>
                     </select>
-                    <label style={{ fontSize: '11px', color: 'white' }}>Hours/week: {hrs}</label>
+                    <label style={{ fontSize: '11px', color: 'var(--ds-color-text-inverse)' }}>Hours/week: {hrs}</label>
                     <input type="range" min={2} max={20} value={hrs} onChange={e => setHrs(+e.target.value)} style={{ width: '100%' }} />
                   </Card>
                   <Card style={{ padding: '14px', background: 'var(--ds-color-bg-surface)', borderLeft: '4px solid #5EC4C8' }}>
@@ -149,7 +149,7 @@ export default function AIRoadmapTab({ onSelectTab }) {
                     <div style={{ marginTop: '8px', maxHeight: '220px', overflowY: 'auto' }}>
                       {plan.rows.filter(r => !r.skipped).map(r => (
                         <div key={r.n} style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)', padding: '3px 0', borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
-                          <span style={{ color: 'white', fontWeight: 'bold' }}>Wk {r.startWeek}{r.weeks > 1 ? `–${r.startWeek + r.weeks - 1}` : ''}</span> · Stage {r.n} {r.title} ({r.topics} topics)
+                          <span style={{ color: 'var(--ds-color-text-primary)', fontWeight: 'bold' }}>Wk {r.startWeek}{r.weeks > 1 ? `–${r.startWeek + r.weeks - 1}` : ''}</span> · Stage {r.n} {r.title} ({r.topics} topics)
                         </div>
                       ))}
                       {plan.rows.some(r => r.skipped) && (
@@ -183,13 +183,13 @@ export default function AIRoadmapTab({ onSelectTab }) {
                     <tbody>
                       {ROADMAP_NODE_MAP.map((m, i) => (
                         <tr key={i} style={{ borderBottom: '1px solid var(--ds-color-border-subtle)' }}>
-                          <td style={{ padding: '8px', color: 'white', fontWeight: 'bold' }}>{m.road}</td>
+                          <td style={{ padding: '8px', color: 'var(--ds-color-text-primary)', fontWeight: 'bold' }}>{m.road}</td>
                           <td style={{ padding: '8px' }}>
                             <Flex gap="6px" style={{ flexWrap: 'wrap' }}>
                               {m.ours.map(id => {
                                 const t = getTabById(id) || { label: id, icon: '📝' };
                                 return (
-                                  <button key={id} onClick={() => go(id)} style={{ background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', color: '#3A9B9F', borderRadius: '12px', padding: '2px 8px', fontSize: '11px', cursor: 'pointer' }}>
+                                  <button key={id} onClick={() => go(id)} style={{ background: 'rgba(94,196,200,0.14)', border: '1px solid rgba(94,196,200,0.4)', color: '#3A9B9F', borderRadius: '12px', padding: '2px 8px', fontSize: '11px', cursor: 'pointer' }}>
                                     {t.icon} {t.label}
                                   </button>
                                 );
@@ -220,7 +220,7 @@ export default function AIRoadmapTab({ onSelectTab }) {
                     ['4 · Review', 'Spaced queue resurfaces proven topics at ~14 days.']
                   ].map(([t, d], i) => (
                     <Card key={i} style={{ padding: '12px', background: 'var(--ds-color-bg-surface)', borderLeft: '3px solid #5EC4C8' }}>
-                      <div style={{ fontSize: '12px', color: 'white', fontWeight: 'bold' }}>{t}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--ds-color-text-primary)', fontWeight: 'bold' }}>{t}</div>
                       <div style={{ fontSize: '11px', color: 'var(--ds-color-text-secondary)' }}>{d}</div>
                     </Card>
                   ))}

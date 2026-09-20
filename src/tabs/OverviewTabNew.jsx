@@ -72,7 +72,7 @@ const FOUR_PILLARS = [
     id: 'agents',
     title: 'Autonomous Agent Systems',
     icon: '🤖',
-    color: '#7A6BA8',
+    color: '#6B5E94',
     summary: 'ReAct agent loops, CLI agents, multi-agent collaboration, LangChain/LangGraph graphs, and stateful human-in-the-loop.',
     tabs: [
       { id: 'fiveassets', label: 'Five Agent Assets', icon: '🏛️', tag: 'Core Theory' },
@@ -103,13 +103,13 @@ const FOUR_PILLARS = [
 const RAG_TYPES = [
   { id: 'naive', label: 'Naive RAG', level: 'Foundational', icon: '📄', color: '#3A9B9F', tagline: 'Chunk → embed → retrieve → generate' },
   { id: 'advanced', label: 'Advanced RAG', level: 'Intermediate', icon: '⚙️', color: '#C47A6A', tagline: 'HyDE + rerank + compression' },
-  { id: 'hybrid', label: 'Hybrid RAG', level: 'Production Standard', icon: '🔀', color: '#DC2626', tagline: 'Dense + sparse via RRF' },
-  { id: 'selfrag', label: 'Self-RAG', level: 'Advanced', icon: '🪞', color: '#DC2626', tagline: 'Model decides when to retrieve' },
-  { id: 'crag', label: 'Corrective RAG', level: 'Advanced', icon: '🩺', color: '#DC2626', tagline: 'Web fallback when local retrieval fails' },
-  { id: 'graphrag', label: 'Graph RAG', level: 'Cutting Edge', icon: '🕸️', color: '#7A6BA8', tagline: 'Knowledge graphs for multi-hop reasoning' },
-  { id: 'agentic', label: 'Agentic RAG', level: 'Advanced', icon: '🤖', color: '#DC2626', tagline: 'Multi-step ReAct retrieval loops' },
-  { id: 'multimodal', label: 'Multimodal RAG', level: 'Cutting Edge', icon: '🖼️', color: '#7A6BA8', tagline: 'Text + images + tables together' },
-  { id: 'raptor', label: 'RAPTOR', level: 'Cutting Edge', icon: '🌲', color: '#7A6BA8', tagline: 'Recursive tree of summaries' },
+  { id: 'hybrid', label: 'Hybrid RAG', level: 'Production Standard', icon: '🔀', color: '#C47A6A', tagline: 'Dense + sparse via RRF' },
+  { id: 'selfrag', label: 'Self-RAG', level: 'Advanced', icon: '🪞', color: '#C47A6A', tagline: 'Model decides when to retrieve' },
+  { id: 'crag', label: 'Corrective RAG', level: 'Advanced', icon: '🩺', color: '#C47A6A', tagline: 'Web fallback when local retrieval fails' },
+  { id: 'graphrag', label: 'Graph RAG', level: 'Cutting Edge', icon: '🕸️', color: '#6B5E94', tagline: 'Knowledge graphs for multi-hop reasoning' },
+  { id: 'agentic', label: 'Agentic RAG', level: 'Advanced', icon: '🤖', color: '#C47A6A', tagline: 'Multi-step ReAct retrieval loops' },
+  { id: 'multimodal', label: 'Multimodal RAG', level: 'Cutting Edge', icon: '🖼️', color: '#6B5E94', tagline: 'Text + images + tables together' },
+  { id: 'raptor', label: 'RAPTOR', level: 'Cutting Edge', icon: '🌲', color: '#6B5E94', tagline: 'Recursive tree of summaries' },
 ];
 
 export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
@@ -254,7 +254,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                             padding: '10px 8px',
                             borderRadius: '8px',
                             border: `1px solid ${diagExperience === opt.id ? 'var(--ds-color-module-foundations-primary)' : 'var(--ds-color-border-default)'}`,
-                            background: diagExperience === opt.id ? 'rgba(13, 148, 136, 0.12)' : 'var(--ds-color-bg-surface)',
+                            background: diagExperience === opt.id ? 'rgba(94,196,200,0.14)' : 'var(--ds-color-bg-surface)',
                             color: 'var(--ds-color-text-primary)',
                             cursor: 'pointer',
                             textAlign: 'center',
@@ -288,7 +288,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                             padding: '10px',
                             borderRadius: '8px',
                             border: `1px solid ${diagGoal === opt.id ? 'var(--ds-color-module-foundations-primary)' : 'var(--ds-color-border-default)'}`,
-                            background: diagGoal === opt.id ? 'rgba(13, 148, 136, 0.12)' : 'var(--ds-color-bg-surface)',
+                            background: diagGoal === opt.id ? 'rgba(94,196,200,0.14)' : 'var(--ds-color-bg-surface)',
                             color: 'var(--ds-color-text-primary)',
                             cursor: 'pointer',
                             textAlign: 'left',
@@ -469,7 +469,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                 const r = (size - 10) / 2, c = 2 * Math.PI * r;
                 return (
                   <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-                    <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="7" />
+                    <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#E8E8EC" strokeWidth="7" />
                     <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth="7" strokeLinecap="round"
                       strokeDasharray={`${(value / 100) * c} ${c}`} style={{ transition: 'stroke-dasharray 0.4s ease' }} />
                   </svg>
@@ -553,7 +553,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                               <span style={{ fontSize: '1.2rem' }}>{q.icon}</span>
                               <div style={{ flex: 1, minWidth: 0 }}>
                                 <div style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>{q.label}</div>
-                                <div style={{ fontSize: '0.7rem', color: '#F5A623' }}>{q.overdueDays === 0 ? 'due today' : `${q.overdueDays}d overdue`}</div>
+                                <div style={{ fontSize: '0.7rem', color: '#C47A6A' }}>{q.overdueDays === 0 ? 'due today' : `${q.overdueDays}d overdue`}</div>
                               </div>
                               <Button variant="secondary" size="sm" onClick={() => setRecapTab(q.id)}>Recap →</Button>
                             </div>
@@ -657,7 +657,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                     <div style={{ fontSize: '0.75rem', color: 'var(--ds-color-text-tertiary)' }}>
                       {loop.tabs.length} topics · {loop.duration} · {p.completed}/{p.total} proven
                     </div>
-                    <div style={{ height: '6px', borderRadius: '4px', background: 'rgba(255,255,255,0.08)', overflow: 'hidden' }}>
+                    <div style={{ height: '6px', borderRadius: '4px', background: '#E8E8EC', overflow: 'hidden' }}>
                       <div style={{ height: '100%', width: `${p.percent}%`, background: loop.color, borderRadius: '4px', transition: 'width 0.3s ease' }} />
                     </div>
                     {done && nextLoop ? (
@@ -916,7 +916,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
                             {t.label}
                           </span>
                         </div>
-                        <span style={{ fontSize: '0.65rem', color: 'var(--ds-color-text-tertiary)', background: 'rgba(255,255,255,0.04)', padding: '1px 5px', borderRadius: '4px' }}>
+                        <span style={{ fontSize: '0.65rem', color: 'var(--ds-color-text-tertiary)', background: 'var(--ds-color-bg-surface)', padding: '1px 5px', borderRadius: '4px', border: '1px solid var(--ds-color-border-subtle)' }}>
                           {t.tag}
                         </span>
                       </button>
@@ -941,7 +941,7 @@ export function OverviewTab({ onSelectTab, setActiveTab: setGlobalActiveTab }) {
               {[
                 { id: 'mla', icon: '🧠', label: 'Multi-Head Latent Attention', color: '#3A9B9F', metric: '2.7–4.7×', sub: 'KV cache reduction', desc: 'Compresses KV cache by projecting to low-dimensional latent, up-projecting at inference.' },
                 { id: 'moe', icon: '🎯', label: 'Mixture of Experts', color: '#C47A6A', metric: '5.5%', sub: 'Params active per token', desc: 'Routes each token to top-k experts; 671B total, 37B active — dense quality at sparse cost.' },
-                { id: 'spec', icon: '⚡', label: 'Speculative Decoding', color: '#7A6BA8', metric: '2–4×', sub: 'Throughput gain', desc: 'Small draft model proposes tokens; large model verifies in parallel. Lossless speedup.' },
+                { id: 'spec', icon: '⚡', label: 'Speculative Decoding', color: '#6B5E94', metric: '2–4×', sub: 'Throughput gain', desc: 'Small draft model proposes tokens; large model verifies in parallel. Lossless speedup.' },
               ].map(item => (
                 <Card key={item.id} variant="elevated" padding="lg" hover onClick={() => handleNavigate('archconcepts')} style={{ cursor: 'pointer' }}>
                   <Flex gap="md" align="flex-start" style={{ marginBottom: 'var(--ds-space-4)' }}>

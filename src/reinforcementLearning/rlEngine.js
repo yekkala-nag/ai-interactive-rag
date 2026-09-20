@@ -11,7 +11,7 @@ export const THREE_RL_BASELINES = [
     behavior: "Selects actions with equal probability: a ~ Uniform(A).",
     whyEssential: "If your DQN or PPO cannot beat a coin toss, the reward function is uninformative or the state representation suffers catastrophic forgetting.",
     expectedScore: "15.2 / 100",
-    color: "#ef4444"
+    color: "#C47A6A"
   },
   {
     name: "2. Greedy Domain Heuristic",
@@ -19,7 +19,7 @@ export const THREE_RL_BASELINES = [
     behavior: "Always picks the locally best immediate action (e.g. Nearest Neighbor, Minimum-Slack, FIFO, Highest-Margin).",
     whyEssential: "Proves whether RL is actually learning non-myopic long-term credit assignment rather than just greedily exploiting the immediate reward.",
     expectedScore: "68.5 / 100",
-    color: "#F5A623"
+    color: "#F0A89A"
   },
   {
     name: "3. Static / Cyclic Policy",

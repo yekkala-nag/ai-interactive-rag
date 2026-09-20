@@ -54,7 +54,7 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
   const checkAvailable = hasExitCheck(activeTab);
   // Claimed (migrated toggle, never proven) renders amber + hollow:
   // asserted progress must never look identical to earned progress.
-  const masteryTone = earned ? '#5EC4C8' : claimed ? '#F5A623' : 'var(--ds-color-text-secondary)';
+  const masteryTone = earned ? '#5EC4C8' : claimed ? '#F0A89A' : 'var(--ds-color-text-secondary)';
   const masteryLabel = earned
     ? `Mastered · ${mastery}`
     : claimed
@@ -175,7 +175,7 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
             {(() => {
               const claimedCount = (activeTrack.tabs || []).filter(isClaimed).length;
               return claimedCount > 0 ? (
-                <span title="Migrated checklist claims — pass exit checks to convert to proven" style={{ color: '#F5A623' }}>
+                <span title="Migrated checklist claims — pass exit checks to convert to proven" style={{ color: '#C47A6A' }}>
                   {' '}· {claimedCount} claimed
                 </span>
               ) : null;
@@ -208,7 +208,7 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
           fontSize: 'var(--ds-font-size-caption)',
           color: 'var(--ds-color-text-secondary)'
         }}>
-          <span style={{ fontWeight: 600, color: '#F5A623' }}>Needs first:</span>
+          <span style={{ fontWeight: 600, color: '#C47A6A' }}>Needs first:</span>
           {unmetPrereqs.map(t => (
             <button
               key={t.id}
@@ -218,8 +218,8 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '6px',
                 padding: '3px 10px', borderRadius: '16px',
-                background: 'rgba(245, 166, 35, 0.1)',
-                border: '1px solid rgba(245, 166, 35, 0.4)',
+                background: 'rgba(240, 168, 154, 0.1)',
+                border: '1px solid rgba(240, 168, 154, 0.4)',
                 color: 'var(--ds-color-text-primary)',
                 fontSize: '0.74rem', cursor: 'pointer'
               }}
@@ -244,8 +244,8 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
                 ? 'Migrated from your old checklist — pass the 3-question check to convert this claim into proven mastery'
                 : checkAvailable ? 'Prove mastery: 3 questions (best score keeps)' : 'Exit check landing soon — visits still count'}
               style={{
-                background: earned ? 'rgba(16, 185, 129, 0.15)' : claimed ? 'rgba(245, 166, 35, 0.12)' : 'var(--ds-color-bg-canvas)',
-                borderColor: earned ? '#5EC4C8' : claimed ? '#F5A623' : 'var(--ds-color-border-default)',
+                background: earned ? 'rgba(94, 196, 200, 0.14)' : claimed ? 'rgba(240, 168, 154, 0.14)' : 'var(--ds-color-bg-canvas)',
+                borderColor: earned ? '#5EC4C8' : claimed ? '#F0A89A' : 'var(--ds-color-border-default)',
                 color: masteryTone,
                 fontWeight: proven ? 600 : 500,
                 position: 'relative',
@@ -259,13 +259,13 @@ export function AdaptiveWorkflowBar({ activeTab, onSelectTab }) {
                 <span style={{
                   position: 'absolute',
                   top: '-18px',
-                  background: '#5EC4C8',
+                  background: '#3A9B9F',
                   color: 'white',
                   fontSize: '10px',
                   fontWeight: 700,
                   padding: '2px 8px',
                   borderRadius: '12px',
-                  boxShadow: '0 2px 8px rgba(16,185,129,0.4)',
+                  boxShadow: '0 2px 8px rgba(58,155,159,0.4)',
                   animation: 'bounce 0.4s ease'
                 }}>
                   🎉 Mastered!

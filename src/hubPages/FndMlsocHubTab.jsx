@@ -12,10 +12,10 @@ import {
 import { ML_SOCIETY_CONTENT, LEVEL_DEFINITIONS, TOPIC_DETAILS } from "./data/mlSocietyContent.js";
 
 const C = {
-  bg: "#0F1219", surface: "#161B26", s2: "#1C2433", s3: "#243044",
-  border: "#2A3548", text: "#E2E8F0", muted: "#B8B8C4",
+  bg: "#F5F5F7", surface: "#FFFFFF", s2: "#EDEDF0", s3: "#EDEDF0",
+  border: "#E8E8EC", text: "#2D2D3A", muted: "#4A4A5A",
   teal: "#5EC4C8", tealDark: "#3A9B9F", tealInk: "#1F6B6E",
-  coral: "#E8837A", coralDeep: "#C47A6A",
+  coral: "#F0A89A", coralDeep: "#C47A6A",
   lav: "#C9B8E8", lavDeep: "#9B89C4",
 };
 
@@ -90,8 +90,8 @@ export default function FndMlsocHubTab({ onSelectTab }) {
             marginBottom: 16,
             padding: "8px 16px",
             background: "transparent",
-            color: C.lav,
-            border: `1px solid ${C.lav}`,
+            color: "#6B5E94",
+            border: `1px solid ${C.lavDeep}`,
             borderRadius: 6,
             fontSize: 12,
             fontWeight: 600,
@@ -134,7 +134,7 @@ export default function FndMlsocHubTab({ onSelectTab }) {
           
           {visualMap.externalPrereqs && visualMap.externalPrereqs.length > 0 && (
             <div style={{ marginTop: 16, padding: 12, background: `${C.coral}10`, border: `1px solid ${C.coral}30`, borderRadius: 8 }}>
-              <div style={{ fontSize: 11, fontWeight: 700, color: C.coral, marginBottom: 8, textTransform: "uppercase" }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: C.coralDeep, marginBottom: 8, textTransform: "uppercase" }}>
                 External Prerequisites (from other hubs)
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, fontSize: 12, color: C.muted }}>
@@ -177,7 +177,7 @@ export default function FndMlsocHubTab({ onSelectTab }) {
                 <span style={{ fontSize: 28, fontWeight: 800, fontFamily: "JetBrains Mono, monospace", color: C.text }}>
                   {metric.value}
                 </span>
-                <span style={{ fontSize: 12, fontWeight: 600, color: C.lav }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "#6B5E94" }}>
                   {metric.trend}
                 </span>
               </div>
@@ -221,7 +221,10 @@ export default function FndMlsocHubTab({ onSelectTab }) {
             <BridgeCard
               key={bridge.id}
               bridge={bridge}
-              onExplore={(b) => console.log("Explore bridge:", b)}
+              onExplore={(b) => {
+                const target = b.toTopics?.[0] || b.fromTopics?.[0];
+                if (target) onSelectTab(target);
+              }}
             />
           ))}
         </div>
@@ -248,11 +251,22 @@ export default function FndMlsocHubTab({ onSelectTab }) {
 
       <div style={{ 
         padding: 24, 
-        background: `linear-gradient(135deg, ${C.lav}08 0%, ${C.surface} 100%)`,
-        border: `1px solid ${C.lav}33`,
+        background: "linear-gradient(135deg, rgba(94,196,200,0.16) 0%, rgba(240,168,154,0.12) 55%, rgba(201,184,232,0.16) 100%)",
+        border: `1px solid ${C.border}`,
         borderRadius: 16,
-        textAlign: "center"
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden"
       }}>
+        <div style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 3,
+          background: `linear-gradient(90deg, ${C.teal}, ${C.coral}, ${C.lav}, ${C.teal})`,
+          pointerEvents: "none"
+        }} />
         <h3 style={{ margin: "0 0 8px", fontSize: 20, fontWeight: 700, color: C.text }}>
           Ready to start?
         </h3>
@@ -271,8 +285,8 @@ export default function FndMlsocHubTab({ onSelectTab }) {
               style={{
                 padding: "12px 24px",
                 background: "transparent",
-                color: C.lav,
-                border: `1px solid ${C.lav}`,
+                color: "#6B5E94",
+                border: `1px solid ${C.lavDeep}`,
                 borderRadius: 8,
                 fontSize: 13,
                 fontWeight: 600,

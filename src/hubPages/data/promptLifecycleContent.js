@@ -180,9 +180,9 @@ export const LEVEL_DEFINITIONS = {
   3: {
     label: "L3 · Advanced",
     short: "L3",
-    color: "#E8837A",
-    bg: "#E8837A15",
-    border: "#E8837A40",
+    color: "#F0A89A",
+    bg: "#F0A89A15",
+    border: "#F0A89A40",
     blurb: "Deep / high-stakes. Needs L2 mastery. Governance, safety, scale."
   }
 };

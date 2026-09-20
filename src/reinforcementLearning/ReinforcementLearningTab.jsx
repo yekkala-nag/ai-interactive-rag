@@ -104,7 +104,7 @@ export default function ReinforcementLearningTab() {
                         <Badge variant="outline">{b.type}</Badge>
                       </Flex>
 
-                      <div style={{ background: '#090d16', padding: '8px 10px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: 'white', marginBottom: '8px' }}>
+                      <div style={{ background: '#0F1219', padding: '8px 10px', borderRadius: '4px', fontSize: '11px', fontFamily: 'monospace', color: 'var(--ds-color-text-inverse)', marginBottom: '8px' }}>
                         {b.behavior}
                       </div>
 
@@ -148,7 +148,7 @@ export default function ReinforcementLearningTab() {
                       type="number"
                       value={basePrice}
                       onChange={e => setBasePrice(Number(e.target.value))}
-                      style={{ width: '100%', background: 'var(--ds-color-bg-surface)', color: 'white', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '8px', fontSize: '12px' }}
+                      style={{ width: '100%', background: 'var(--ds-color-bg-surface)', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '8px', fontSize: '12px' }}
                     />
                   </div>
 
@@ -160,7 +160,7 @@ export default function ReinforcementLearningTab() {
                       type="number"
                       value={inventory}
                       onChange={e => setInventory(Number(e.target.value))}
-                      style={{ width: '100%', background: 'var(--ds-color-bg-surface)', color: 'white', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '8px', fontSize: '12px' }}
+                      style={{ width: '100%', background: 'var(--ds-color-bg-surface)', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '8px', fontSize: '12px' }}
                     />
                   </div>
 
@@ -172,28 +172,28 @@ export default function ReinforcementLearningTab() {
                       type="number"
                       value={daysLeft}
                       onChange={e => setDaysLeft(Number(e.target.value))}
-                      style={{ width: '100%', background: 'var(--ds-color-bg-surface)', color: 'white', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '8px', fontSize: '12px' }}
+                      style={{ width: '100%', background: 'var(--ds-color-bg-surface)', color: 'var(--ds-color-text-primary)', border: '1px solid var(--ds-color-border-subtle)', borderRadius: '4px', padding: '8px', fontSize: '12px' }}
                     />
                   </div>
                 </Grid>
 
                 {/* SIMULATED REVENUE COMPARISON */}
                 <Grid columns={{ base: '1fr', md: '1fr 1fr 1fr' }} gap="var(--ds-space-3)">
-                  <Card style={{ padding: '16px', background: '#090d16', borderTop: '3px solid #ef4444' }}>
+                  <Card style={{ padding: '16px', background: '#0F1219', borderTop: '3px solid #C47A6A' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>RANDOM POLICY REVENUE</div>
-                    <div style={{ fontSize: '20px', color: '#ef4444', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '20px', color: '#C47A6A', fontWeight: 'bold', marginTop: '4px' }}>
                       ${mdpResult.revenueRandom.toLocaleString()}
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: '#090d16', borderTop: '3px solid #F5A623' }}>
+                  <Card style={{ padding: '16px', background: '#0F1219', borderTop: '3px solid #F0A89A' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>GREEDY HEURISTIC REVENUE</div>
-                    <div style={{ fontSize: '20px', color: '#F5A623', fontWeight: 'bold', marginTop: '4px' }}>
+                    <div style={{ fontSize: '20px', color: '#F0A89A', fontWeight: 'bold', marginTop: '4px' }}>
                       ${mdpResult.revenueHeuristic.toLocaleString()}
                     </div>
                   </Card>
 
-                  <Card style={{ padding: '16px', background: '#090d16', borderTop: '3px solid #5EC4C8' }}>
+                  <Card style={{ padding: '16px', background: '#0F1219', borderTop: '3px solid #5EC4C8' }}>
                     <div style={{ fontSize: '11px', color: 'var(--ds-color-text-tertiary)' }}>LEARNED RL AGENT REVENUE</div>
                     <div style={{ fontSize: '20px', color: '#3A9B9F', fontWeight: 'bold', marginTop: '4px' }}>
                       ${mdpResult.revenueRL.toLocaleString()} (+{mdpResult.rlLiftVsHeuristic}%)

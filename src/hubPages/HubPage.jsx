@@ -3,11 +3,17 @@ import { getTabById, getChildrenForUmbrella, getChildById } from "../registry/ta
 import { getChildrenForUmbrella as getChildren, getChildById as getChild } from "../registry/curriculum.js";
 
 const C = {
-  bg: "#0F1219", surface: "#161B26", s2: "#1C2433", s3: "#243044",
-  border: "#2A3548", text: "#E2E8F0", muted: "#B8B8C4",
+  bg: "#F5F5F7", surface: "#FFFFFF", s2: "#EDEDF0", s3: "#EDEDF0",
+  border: "#E8E8EC", text: "#2D2D3A", muted: "#4A4A5A",
   teal: "#5EC4C8", tealDark: "#3A9B9F", tealInk: "#1F6B6E",
   coral: "#F0A89A", coralDeep: "#C47A6A",
   lav: "#C9B8E8", lavDeep: "#9B89C4",
+};
+
+const LEVEL_INK = {
+  1: "#1F6B6E",
+  2: "#6B5E94",
+  3: "#C47A6A",
 };
 
 const LEVEL_BADGES = {
@@ -66,7 +72,7 @@ export function HubPage({ childId, onSelectTab }) {
       {/* Header */}
       <div style={{ marginBottom: 24 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-          <span style={{ padding: "2px 8px", borderRadius: 4, fontSize: 11, background: C.teal + "22", color: C.teal, border: `1px solid ${C.teal}` }}>
+          <span style={{ padding: "2px 8px", borderRadius: 4, fontSize: 11, background: "rgba(94,196,200,0.14)", color: C.tealInk, border: `1px solid ${C.tealDark}` }}>
             {child.umbrellaId}
           </span>
           <h1 style={{ margin: 0, fontSize: 28, fontWeight: 700 }}>{child.title}</h1>
@@ -80,20 +86,20 @@ export function HubPage({ childId, onSelectTab }) {
           <circle cx="40" cy="40" r={37} fill="none" stroke={C.border} strokeWidth={6} />
           <circle
             cx="40" cy="40" r={37}
-            fill="none" stroke={C.teal} strokeWidth={6}
+            fill="none" stroke={C.coral} strokeWidth={6}
             strokeDasharray={2 * Math.PI * 37} strokeDashoffset={2 * Math.PI * 37 * (1 - pct / 100)}
             strokeLinecap="round"
             style={{ transition: "stroke-dashoffset 0.3s" }}
           />
           <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle"
-            fontSize={17} fontWeight={700} fontFamily="JetBrains Mono, monospace" fill={C.teal}>
+            fontSize={17} fontWeight={700} fontFamily="JetBrains Mono, monospace" fill={C.coralDeep}>
             {pct}%
           </text>
         </svg>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 8 }}>
             <div style={{ fontSize: 13, color: C.muted }}>Progress</div>
-            <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "JetBrains Mono, monospace", color: C.teal }}>
+            <div style={{ fontSize: 18, fontWeight: 700, fontFamily: "JetBrains Mono, monospace", color: C.coralDeep }}>
               {progress?.completed?.length || 0} / {totalCount} topics
             </div>
           </div>
@@ -122,11 +128,11 @@ export function HubPage({ childId, onSelectTab }) {
               style={{
                 cursor: unlocked ? "pointer" : "not-allowed",
                 opacity: unlocked ? 1 : 0.5,
-                borderColor: completed ? C.teal : unlocked ? C.border : C.border,
-                background: completed ? `${C.teal}08` : C.surface,
+                borderColor: completed ? C.tealDark : unlocked ? C.border : C.border,
+                background: completed ? `rgba(94,196,200,0.12)` : C.surface,
                 transition: "all 0.2s",
                 padding: 16,
-                border: `1px solid ${completed ? C.teal : unlocked ? C.border : C.border}`,
+                border: `1px solid ${completed ? C.tealDark : unlocked ? C.border : C.border}`,
                 borderRadius: 10,
               }}
             >
@@ -134,13 +140,13 @@ export function HubPage({ childId, onSelectTab }) {
                 <span style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",
                   padding: "2px 8px", borderRadius: 4, fontSize: 10, fontWeight: 600,
-                  background: completed ? C.teal + "22" : "transparent",
-                  color: completed ? C.teal : C.muted,
-                  border: `1px solid ${completed ? C.teal : C.border}`,
+                  background: completed ? "rgba(94,196,200,0.14)" : "transparent",
+                  color: completed ? LEVEL_INK[meta?.l || 1] : C.muted,
+                  border: `1px solid ${completed ? C.tealDark : C.border}`,
                 }}>
                   {LEVEL_BADGES[meta?.l || 1].label}
                 </span>
-                {completed && <span style={{ color: C.teal, fontSize: 16 }}>✓</span>}
+                {completed && <span style={{ color: C.tealDark, fontSize: 16 }}>✓</span>}
               </div>
               <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: unlocked ? C.text : C.muted }}>
                 {tabId}
@@ -165,7 +171,7 @@ export function HubPage({ childId, onSelectTab }) {
             onClick={() => onSelectTab(prevChild.id + "_hub")}
             style={{
               padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
-              background: "transparent", color: C.teal, border: `1px solid ${C.teal}`,
+              background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}`,
             }}
           >
             ← {prevChild.title}
@@ -176,7 +182,7 @@ export function HubPage({ childId, onSelectTab }) {
             onClick={() => onSelectTab(child.umbrellaId)}
             style={{
               padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
-              margin: "0 8px", background: "transparent", color: C.teal, border: `1px solid ${C.teal}`,
+              margin: "0 8px", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}`,
             }}
           >
             Back to {child.umbrellaId.replace("_", " ")}
@@ -187,7 +193,7 @@ export function HubPage({ childId, onSelectTab }) {
             onClick={() => onSelectTab(nextChild.id + "_hub")}
             style={{
               padding: "8px 16px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer",
-              background: C.teal, color: "#000", border: "none",
+              background: C.coralDeep, color: "#FFFFFF", border: "none",
             }}
           >
             {nextChild.title} →

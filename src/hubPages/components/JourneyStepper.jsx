@@ -1,17 +1,31 @@
 import React, { useState } from "react";
 
 const C = {
-  bg: "#0F1219", surface: "#161B26", s2: "#1C2433", s3: "#243044",
-  border: "#2A3548", text: "#E2E8F0", muted: "#B8B8C4",
+  bg: "#F5F5F7", surface: "#FFFFFF", s2: "#EDEDF0", s3: "#EDEDF0",
+  border: "#E8E8EC", text: "#2D2D3A", muted: "#4A4A5A",
   teal: "#5EC4C8", tealDark: "#3A9B9F", tealInk: "#1F6B6E",
-  coral: "#E8837A", coralDeep: "#C47A6A",
+  coral: "#F0A89A", coralDeep: "#C47A6A",
   lav: "#C9B8E8", lavDeep: "#9B89C4",
 };
+
+// Readable text variant of a bright accent (accents are fills/graphics only).
+const inkFor = (accent) => ({
+  "#5EC4C8": "#1F6B6E",
+  "#C9B8E8": "#6B5E94",
+  "#F0A89A": "#C47A6A",
+}[accent] || "#1F6B6E");
 
 const PATH_COLORS = {
   "l1-foundations": C.teal,
   "l2-practitioner": C.lav,
   "l3-advanced": C.coral
+};
+
+// Solid fills for buttons on light backgrounds (dark variant + white text).
+const PATH_FILL = {
+  "l1-foundations": C.tealDark,
+  "l2-practitioner": "#6B5E94",
+  "l3-advanced": C.coralDeep
 };
 
 export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTopicClick, expandedPathId }) {
@@ -30,8 +44,8 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
   };
 
   const STATUS_STYLES = {
-    completed: { bg: C.teal, color: "#000", border: C.teal, icon: "✓" },
-    available: { bg: "transparent", color: C.text, border: C.teal, icon: null },
+    completed: { bg: C.tealDark, color: "#FFFFFF", border: C.tealDark, icon: "✓" },
+    available: { bg: "transparent", color: C.text, border: C.tealDark, icon: null },
     locked: { bg: "transparent", color: C.muted, border: C.border, icon: "🔒" }
   };
 
@@ -108,8 +122,8 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                       padding: "2px 8px", 
                       borderRadius: 4, 
                       background: `${C.teal}20`, 
-                      color: C.teal,
-                      border: `1px solid ${C.teal}40`
+                      color: C.tealInk,
+                      border: `1px solid ${C.tealDark}40`
                     }}>
                       Complete
                     </span>
@@ -140,7 +154,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                   fontSize: 13, 
                   fontWeight: 600, 
                   fontFamily: "JetBrains Mono, monospace",
-                  color: pathCompleted ? C.teal : color
+                  color: pathCompleted ? C.tealInk : inkFor(color)
                 }}>
                   {progress.completed}/{progress.total}
                 </span>
@@ -180,7 +194,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                           alignItems: "center",
                           gap: 12,
                           padding: "12 16",
-                          background: status === "completed" ? `${C.teal}08` : C.s2,
+                          background: status === "completed" ? `rgba(94,196,200,0.12)` : C.s2,
                           border: `1px solid ${styles.border}`,
                           borderRadius: 8,
                           cursor: status === "locked" ? "not-allowed" : "pointer",
@@ -204,12 +218,12 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                         }}>
                           {styles.icon || (index + 1)}
                         </div>
-                        
-                        <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ 
+                          flex: 1, minWidth: 0 }}>
                           <div style={{ 
                             fontSize: 13, 
                             fontWeight: 600, 
-                            color: styles.color,
+                            color: status === "completed" ? C.tealInk : styles.color,
                             marginBottom: 2
                           }}>
                             {topicId}
@@ -226,7 +240,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                             padding: "2px 8px",
                             borderRadius: 4,
                             background: `${color}20`,
-                            color,
+                            color: inkFor(color),
                             border: `1px solid ${color}40`
                           }}>
                             Start
@@ -246,8 +260,8 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                     style={{
                       marginTop: 12,
                       padding: "10 16",
-                      background: color,
-                      color: "#000",
+                      background: PATH_FILL[path.id] || C.tealDark,
+                      color: "#FFFFFF",
                       border: "none",
                       borderRadius: 8,
                       fontSize: 13,

@@ -421,14 +421,14 @@ const CodeBlock = ({ code, lang = "python" }) => {
     setTimeout(() => setCopied(false), 2000);
   };
   return (
-    <div style={{ position: "relative", background: "#0d0d1a", borderRadius: 4, border: "1px solid #e0dcd4", overflow: "hidden" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.5rem 1rem", borderBottom: "1px solid #2a2a3a", background: "#0d0d1a" }}>
+    <div style={{ position: "relative", background: "#0F1219", borderRadius: 4, border: "1px solid #E8E8EC", overflow: "hidden" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.5rem 1rem", borderBottom: "1px solid rgba(255,255,255,0.12)", background: "#0F1219" }}>
         <span style={{ fontFamily: "DM Mono, monospace", fontSize: "0.6rem", color: "#3A9B9F", letterSpacing: "0.1em", textTransform: "uppercase" }}>{lang}</span>
-        <button onClick={copy} style={{ background: copied ? "rgba(74,154,74,0.2)" : "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 3, padding: "0.2rem 0.6rem", color: copied ? "#5EC4C8" : "#334155", fontSize: "0.6rem", cursor: "pointer", fontFamily: "DM Mono, monospace", transition: "all 0.2s" }}>
+        <button onClick={copy} style={{ background: copied ? "rgba(94,196,200,0.18)" : "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 3, padding: "0.2rem 0.6rem", color: copied ? "#5EC4C8" : "#B8B8C4", fontSize: "0.6rem", cursor: "pointer", fontFamily: "DM Mono, monospace", transition: "all 0.2s" }}>
           {copied ? "✓ Copied" : "Copy"}
         </button>
       </div>
-      <pre style={{ padding: "1rem", margin: 0, fontSize: "0.68rem", lineHeight: 1.8, color: "#a8d8a8", overflowX: "auto", whiteSpace: "pre" }}>{code}</pre>
+      <pre style={{ padding: "1rem", margin: 0, fontSize: "0.68rem", lineHeight: 1.8, color: "#E7E5E4", overflowX: "auto", whiteSpace: "pre" }}>{code}</pre>
     </div>
   );
 };
@@ -4980,14 +4980,14 @@ export const AIGlossaryTab = ({ s }) => {
   return (
     <div>
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg,#f0f4f8,#faf6ef,#f6f0fa)", border: "1px solid #e0dcd4", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
+      <div style={{ background: "linear-gradient(135deg,rgba(94,196,200,0.16),rgba(240,168,154,0.12),rgba(201,184,232,0.16))", border: "1px solid #E8E8EC", borderRadius: 6, padding: "2rem", marginBottom: "1.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg,#5EC4C8,#F0A89A,#C9B8E8,#F0A89A,#5EC4C8)" }} />
-        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "6rem", fontWeight: 900, color: "rgba(201,168,76,0.04)", lineHeight: 1, pointerEvents: "none" }}>ABC</div>
+        <div style={{ position: "absolute", right: "1.5rem", top: "0.5rem", fontFamily: "Playfair Display, serif", fontSize: "6rem", fontWeight: 900, color: "rgba(240,168,154,0.04)", lineHeight: 1, pointerEvents: "none" }}>ABC</div>
         <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: "#C47A6A", marginBottom: "0.75rem" }}>Plain-English Glossary · AI Terms · July 2026</div>
         <h2 style={{ fontFamily: "Playfair Display, serif", fontSize: "1.6rem", fontWeight: 900, lineHeight: 1.1, marginBottom: "0.75rem" }}>
           AI Terms Explained<br /><em style={{ color: "#C47A6A", fontStyle: "italic" }}>in Simple Words</em>
         </h2>
-        <p style={{ fontSize: "0.72rem", color: "#334155", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
+        <p style={{ fontSize: "0.72rem", color: "#4A4A5A", lineHeight: 1.8, maxWidth: 600, marginBottom: "1.2rem" }}>
           Every term has four layers: a plain-English summary, a technical definition, an analogy, and the most common misconception. Filter by category or difficulty. Search any term. Test yourself with the built-in quiz.
         </p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.6rem" }}>
@@ -4995,13 +4995,13 @@ export const AIGlossaryTab = ({ s }) => {
             { val: `${GLOSSARY_TERMS.length}`, label: "Terms", sub: "with 4 explanation layers", color: "#C47A6A" },
             { val: "6",  label: "Categories", sub: "Foundations to Architecture", color: "#3A9B9F" },
             { val: "2",  label: "Levels", sub: "Beginner + Intermediate", color: "#3A9B9F" },
-            { val: "3",  label: "Visuals", sub: "generated SVG diagrams", color: "#7A6BA8" },
+            { val: "3",  label: "Visuals", sub: "generated SVG diagrams", color: "#6B5E94" },
             { val: "6",  label: "Quiz Qs", sub: "test your knowledge", color: "#C47A6A" },
           ].map((m, i) => (
-            <div key={i} style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
+            <div key={i} style={{ background: "#ffffff", border: "1px solid #E8E8EC", borderRadius: 4, padding: "0.8rem", textAlign: "center" }}>
               <div style={{ fontFamily: "Playfair Display, serif", fontSize: "1.4rem", fontWeight: 900, color: m.color, lineHeight: 1, marginBottom: "0.25rem" }}>{m.val}</div>
-              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#1a1a2e", marginBottom: "0.1rem" }}>{m.label}</div>
-              <div style={{ fontSize: "0.52rem", color: "#334155" }}>{m.sub}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#2D2D3A", marginBottom: "0.1rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.52rem", color: "#4A4A5A" }}>{m.sub}</div>
             </div>
           ))}
         </div>
@@ -5024,16 +5024,16 @@ export const AIGlossaryTab = ({ s }) => {
       {/* SEARCH + FILTERS */}
       <div style={s.sectionLabel("#5EC4C8")}>Explore All Terms</div>
       <div style={{ display: "flex", gap: "0.8rem", marginBottom: "1rem", flexWrap: "wrap", alignItems: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 4, padding: "0.45rem 0.8rem", flex: 1, minWidth: 180 }}>
-          <span style={{ color: "#334155" }}>⌕</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "#ffffff", border: "1px solid #E8E8EC", borderRadius: 4, padding: "0.45rem 0.8rem", flex: 1, minWidth: 180 }}>
+          <span style={{ color: "#4A4A5A" }}>⌕</span>
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search terms, abbreviations…"
-            style={{ background: "none", border: "none", outline: "none", color: "#1a1a2e", fontFamily: "DM Mono, monospace", fontSize: "0.68rem", flex: 1 }} />
-          {search && <button onClick={() => setSearch("")} style={{ background: "none", border: "none", color: "#334155", cursor: "pointer" }}>×</button>}
+            style={{ background: "none", border: "none", outline: "none", color: "#2D2D3A", fontFamily: "DM Mono, monospace", fontSize: "0.68rem", flex: 1 }} />
+          {search && <button onClick={() => setSearch("")} style={{ background: "none", border: "none", color: "#4A4A5A", cursor: "pointer" }}>×</button>}
         </div>
         <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
           {GLOSSARY_LEVELS.map(l => (
             <button key={l} onClick={() => setLvlFilter(l)}
-              style={{ padding: "0.35rem 0.7rem", background: lvlFilter === l ? `${lvlColor[l] || "#F0A89A"}15` : "#ffffff", border: `1px solid ${lvlFilter === l ? (lvlColor[l] || "#F0A89A") : "#e0dcd4"}`, borderRadius: 4, color: lvlFilter === l ? (lvlColor[l] || "#F0A89A") : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", cursor: "pointer", transition: "all 0.2s" }}>
+              style={{ padding: "0.35rem 0.7rem", background: lvlFilter === l ? `${lvlColor[l] || "#F0A89A"}15` : "#ffffff", border: `1px solid ${lvlFilter === l ? (lvlColor[l] || "#F0A89A") : "#E8E8EC"}`, borderRadius: 4, color: lvlFilter === l ? (lvlColor[l] || "#F0A89A") : "#4A4A5A", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", cursor: "pointer", transition: "all 0.2s" }}>
               {l}
             </button>
           ))}
@@ -5041,13 +5041,13 @@ export const AIGlossaryTab = ({ s }) => {
         <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap" }}>
           {GLOSSARY_CATEGORIES.map(cat => (
             <button key={cat} onClick={() => setCatFilter(cat)}
-              style={{ padding: "0.35rem 0.7rem", background: catFilter === cat ? "rgba(201,168,76,0.15)" : "#ffffff", border: `1px solid ${catFilter === cat ? "#F0A89A" : "#e0dcd4"}`, borderRadius: 4, color: catFilter === cat ? "#F0A89A" : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", cursor: "pointer", transition: "all 0.2s" }}>
+              style={{ padding: "0.35rem 0.7rem", background: catFilter === cat ? "rgba(240,168,154,0.15)" : "#ffffff", border: `1px solid ${catFilter === cat ? "#F0A89A" : "#E8E8EC"}`, borderRadius: 4, color: catFilter === cat ? "#F0A89A" : "#4A4A5A", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", cursor: "pointer", transition: "all 0.2s" }}>
               {cat}
             </button>
           ))}
         </div>
       </div>
-      <div style={{ fontSize: "0.6rem", color: "#334155", marginBottom: "0.8rem", fontFamily: "Syne, sans-serif" }}>{filtered.length} term{filtered.length !== 1 ? "s" : ""} shown</div>
+      <div style={{ fontSize: "0.6rem", color: "#4A4A5A", marginBottom: "0.8rem", fontFamily: "Syne, sans-serif" }}>{filtered.length} term{filtered.length !== 1 ? "s" : ""} shown</div>
 
       {/* TERM GRID */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.6rem", marginBottom: "1.2rem" }}>
@@ -5063,17 +5063,17 @@ export const AIGlossaryTab = ({ s }) => {
               }, 80);
             }
           }}
-            style={{ background: activeTerm === t.id ? `${t.color}18` : "#ffffff", border: `2px solid ${activeTerm === t.id ? t.color : "#e0dcd4"}`, borderRadius: 6, padding: "0.9rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}
+            style={{ background: activeTerm === t.id ? `${t.color}18` : "#ffffff", border: `2px solid ${activeTerm === t.id ? t.color : "#E8E8EC"}`, borderRadius: 6, padding: "0.9rem", cursor: "pointer", textAlign: "left", transition: "all 0.2s" }}
             onMouseEnter={e => { if (activeTerm !== t.id) { e.currentTarget.style.borderColor = t.color + "60"; } }}
-            onMouseLeave={e => { if (activeTerm !== t.id) { e.currentTarget.style.borderColor = "#e0dcd4"; } }}>
+            onMouseLeave={e => { if (activeTerm !== t.id) { e.currentTarget.style.borderColor = "#E8E8EC"; } }}>
             <div style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.4rem" }}>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: activeTerm === t.id ? t.color : "#1a1a2e", lineHeight: 1.2 }}>{t.term}</div>
+                <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.7rem", color: activeTerm === t.id ? t.color : "#2D2D3A", lineHeight: 1.2 }}>{t.term}</div>
                 {t.abbr && <div style={{ fontFamily: "DM Mono, monospace", fontSize: "0.55rem", color: t.color, marginTop: "0.1rem" }}>{t.abbr}</div>}
               </div>
               <span style={{ fontSize: "0.5rem", padding: "0.15rem 0.4rem", background: `${lvlColor[t.level] || "#F0A89A"}12`, color: lvlColor[t.level] || "#F0A89A", borderRadius: 3, fontFamily: "Syne, sans-serif", fontWeight: 700, whiteSpace: "nowrap", flexShrink: 0 }}>{t.level}</span>
             </div>
-            <div style={{ fontSize: "0.6rem", color: "#334155", lineHeight: 1.5 }}>{t.simple.slice(0, 70)}…</div>
+            <div style={{ fontSize: "0.6rem", color: "#4A4A5A", lineHeight: 1.5 }}>{t.simple.slice(0, 70)}…</div>
             <div style={{ fontSize: "0.52rem", color: t.color, marginTop: "0.4rem", fontWeight: 700, fontFamily: "Syne, sans-serif" }}>
               {activeTerm === t.id ? "▲ Viewing Detail Below" : "Click to View Detail →"}
             </div>
@@ -5084,7 +5084,7 @@ export const AIGlossaryTab = ({ s }) => {
       {/* TERM DETAIL */}
       {term && (
         <div id="term-detail-section" style={{ background: "#ffffff", border: `2px solid ${term.color}`, borderRadius: 8, overflow: "hidden", marginBottom: "1.5rem", animation: "fadeIn 0.25s ease", scrollMarginTop: "100px" }}>
-          <div style={{ padding: "1rem 1.5rem", background: "#f7f5f0", borderBottom: "1px solid #e0dcd4", display: "flex", alignItems: "center", gap: "1rem" }}>
+          <div style={{ padding: "1rem 1.5rem", background: "#F5F5F7", borderBottom: "1px solid #E8E8EC", display: "flex", alignItems: "center", gap: "1rem" }}>
             <div style={{ flex: 1 }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", marginBottom: "0.2rem" }}>
                 <span style={{ fontFamily: "Playfair Display, serif", fontSize: "1.2rem", fontWeight: 900 }}>{term.term}</span>
@@ -5098,15 +5098,15 @@ export const AIGlossaryTab = ({ s }) => {
             <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", maxWidth: 200 }}>
               {term.related.map((r, i) => (
                 <button key={i} onClick={() => { const found = GLOSSARY_TERMS.find(t => t.term === r || t.abbr === r); if (found) { setActiveTerm(found.id); setTermTab("simple"); } }}
-                  style={{ fontSize: "0.52rem", padding: "0.2rem 0.5rem", background: "#e8e4dc", border: "1px solid #e0dcd4", borderRadius: 3, color: "#334155", cursor: "pointer", fontFamily: "Syne, sans-serif", transition: "all 0.15s" }}
+                  style={{ fontSize: "0.52rem", padding: "0.2rem 0.5rem", background: "#E8E8EC", border: "1px solid #E8E8EC", borderRadius: 3, color: "#4A4A5A", cursor: "pointer", fontFamily: "Syne, sans-serif", transition: "all 0.15s" }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = term.color; e.currentTarget.style.color = term.color; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = "#e0dcd4"; e.currentTarget.style.color = "#334155"; }}>
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "#E8E8EC"; e.currentTarget.style.color = "#4A4A5A"; }}>
                   → {r}
                 </button>
               ))}
             </div>
           </div>
-          <div style={{ display: "flex", borderBottom: "1px solid #e0dcd4" }}>
+          <div style={{ display: "flex", borderBottom: "1px solid #E8E8EC" }}>
             {[
               { id: "simple", label: "Simple" },
               { id: "technical", label: "Technical" },
@@ -5114,24 +5114,24 @@ export const AIGlossaryTab = ({ s }) => {
               { id: "misconception", label: "Misconception" },
             ].map(t => (
               <button key={t.id} onClick={() => setTermTab(t.id)}
-                style={{ flex: 1, padding: "0.65rem 0.4rem", background: termTab === t.id ? "#f0ede6" : "transparent", border: "none", borderBottom: termTab === t.id ? `2px solid ${term.color}` : "2px solid transparent", color: termTab === t.id ? term.color : "#334155", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
+                style={{ flex: 1, padding: "0.65rem 0.4rem", background: termTab === t.id ? "#EDEDF0" : "transparent", border: "none", borderBottom: termTab === t.id ? `2px solid ${term.color}` : "2px solid transparent", color: termTab === t.id ? term.color : "#4A4A5A", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.58rem", letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer", transition: "all 0.2s" }}>
                 {t.label}
               </button>
             ))}
           </div>
           <div style={{ padding: "1.5rem" }}>
-            {termTab === "simple" && <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.8 }}>{term.simple}</p>}
-            {termTab === "technical" && <p style={{ fontSize: "0.7rem", color: "#1E293B", lineHeight: 1.8, fontFamily: "DM Mono, monospace" }}>{term.technical}</p>}
+            {termTab === "simple" && <p style={{ fontSize: "0.72rem", color: "#2D2D3A", lineHeight: 1.8 }}>{term.simple}</p>}
+            {termTab === "technical" && <p style={{ fontSize: "0.7rem", color: "#2D2D3A", lineHeight: 1.8, fontFamily: "DM Mono, monospace" }}>{term.technical}</p>}
             {termTab === "analogy" && (
               <div style={{ padding: "1rem", background: `${term.color}08`, border: `1px solid ${term.color}25`, borderRadius: 4, borderLeft: `4px solid ${term.color}` }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: term.color, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>💡 Analogy</div>
-                <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.8, fontStyle: "italic" }}>{term.analogy}</p>
+                <p style={{ fontSize: "0.72rem", color: "#2D2D3A", lineHeight: 1.8, fontStyle: "italic" }}>{term.analogy}</p>
               </div>
             )}
             {termTab === "misconception" && (
               <div style={{ padding: "1rem", background: "rgba(196,87,42,0.06)", border: "1px solid #F0A89A30", borderRadius: 4, borderLeft: "4px solid #F0A89A" }}>
                 <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.58rem", fontWeight: 700, color: "#C47A6A", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.5rem" }}>⚠️ Common Misconception</div>
-                <p style={{ fontSize: "0.72rem", color: "#1E293B", lineHeight: 1.8 }}>{term.misconception}</p>
+                <p style={{ fontSize: "0.72rem", color: "#2D2D3A", lineHeight: 1.8 }}>{term.misconception}</p>
               </div>
             )}
           </div>
@@ -5140,12 +5140,12 @@ export const AIGlossaryTab = ({ s }) => {
 
       {/* QUIZ */}
       <div style={s.sectionLabel("#F0A89A")}>Knowledge Quiz — Test Yourself</div>
-      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
+      <div style={{ background: "#ffffff", border: "1px solid #E8E8EC", borderRadius: 6, padding: "1.5rem", marginBottom: "1.5rem" }}>
         {!quizActive && !quizDone && (
           <div style={{ textAlign: "center", padding: "1rem 0" }}>
             <div style={{ fontSize: "2rem", marginBottom: "0.8rem" }}>🧠</div>
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", marginBottom: "0.5rem" }}>Ready to test your AI knowledge?</div>
-            <div style={{ fontSize: "0.68rem", color: "#334155", marginBottom: "1.2rem" }}>{QUIZ_QS.length} questions · multiple choice · instant feedback</div>
+            <div style={{ fontSize: "0.68rem", color: "#4A4A5A", marginBottom: "1.2rem" }}>{QUIZ_QS.length} questions · multiple choice · instant feedback</div>
             <button onClick={() => setQuizActive(true)}
               style={{ background: "#ffffff", border: "1px solid #F0A89A", borderRadius: 4, padding: "0.6rem 1.5rem", color: "#C47A6A", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.7rem", cursor: "pointer", letterSpacing: "0.1em" }}>
               ▶ Start Quiz
@@ -5155,18 +5155,18 @@ export const AIGlossaryTab = ({ s }) => {
         {quizActive && !quizDone && (
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem" }}>
-              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#334155", letterSpacing: "0.1em" }}>Q {quizIdx + 1} OF {QUIZ_QS.length}</div>
+              <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#4A4A5A", letterSpacing: "0.1em" }}>Q {quizIdx + 1} OF {QUIZ_QS.length}</div>
               <div style={{ fontFamily: "Syne, sans-serif", fontSize: "0.65rem", fontWeight: 700, color: "#3A9B9F" }}>Score: {quizScore}</div>
             </div>
-            <div style={{ background: "#f7f5f0", borderRadius: 4, padding: "1rem 1.2rem", marginBottom: "1.2rem", border: "1px solid #e0dcd4" }}>
-              <p style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 700, lineHeight: 1.4, color: "#1a1a2e" }}>{quizQ.q}</p>
+            <div style={{ background: "#F5F5F7", borderRadius: 4, padding: "1rem 1.2rem", marginBottom: "1.2rem", border: "1px solid #E8E8EC" }}>
+              <p style={{ fontFamily: "Playfair Display, serif", fontSize: "1rem", fontWeight: 700, lineHeight: 1.4, color: "#2D2D3A" }}>{quizQ.q}</p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginBottom: "1rem" }}>
               {options[quizIdx].map((opt, i) => {
                 const isCorrect = opt === quizQ.a;
                 const isSelected = quizAnswer === opt;
                 const showResult = quizAnswer !== null;
-                let bg = "#f7f5f0", border = "#e0dcd4", color = "#1E293B";
+                let bg = "#F5F5F7", border = "#E8E8EC", color = "#2D2D3A";
                 if (showResult) {
                   if (isCorrect) { bg = "rgba(74,154,74,0.12)"; border = "#5EC4C8"; color = "#5EC4C8"; }
                   else if (isSelected) { bg = "rgba(196,87,42,0.12)"; border = "#F0A89A"; color = "#F0A89A"; }
@@ -5188,13 +5188,13 @@ export const AIGlossaryTab = ({ s }) => {
                   {quizAnswer === quizQ.a ? "✓ Correct!" : `✗ Correct answer: ${quizQ.a}`}
                 </div>
                 <button onClick={nextQuiz}
-                  style={{ background: "#0a1a14", border: "1px solid #5EC4C8", borderRadius: 4, padding: "0.45rem 1rem", color: "#3A9B9F", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: "pointer", letterSpacing: "0.08em" }}>
+                  style={{ background: "#0F1219", border: "1px solid #5EC4C8", borderRadius: 4, padding: "0.45rem 1rem", color: "#3A9B9F", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.62rem", cursor: "pointer", letterSpacing: "0.08em" }}>
                   {quizIdx + 1 >= QUIZ_QS.length ? "See Results →" : "Next →"}
                 </button>
               </div>
             )}
             {/* Progress bar */}
-            <div style={{ marginTop: "1rem", background: "#e8e4dc", borderRadius: 4, height: 4 }}>
+            <div style={{ marginTop: "1rem", background: "#E8E8EC", borderRadius: 4, height: 4 }}>
               <div style={{ width: `${((quizIdx + (quizAnswer ? 1 : 0)) / QUIZ_QS.length) * 100}%`, height: "100%", background: "#F0A89A", borderRadius: 4, transition: "width 0.4s" }} />
             </div>
           </div>
@@ -5207,11 +5207,11 @@ export const AIGlossaryTab = ({ s }) => {
             <div style={{ fontFamily: "Syne, sans-serif", fontWeight: 800, fontSize: "0.85rem", marginBottom: "0.5rem" }}>
               {quizScore === QUIZ_QS.length ? "Perfect! 🎉" : quizScore >= 4 ? "Great work! 🚀" : quizScore >= 2 ? "Getting there! 📚" : "Keep studying! 💪"}
             </div>
-            <div style={{ fontSize: "0.68rem", color: "#334155", marginBottom: "1.2rem" }}>
+            <div style={{ fontSize: "0.68rem", color: "#4A4A5A", marginBottom: "1.2rem" }}>
               {quizScore >= 4 ? "You have a solid grasp of AI fundamentals." : "Review the glossary cards above and try again."}
             </div>
             <button onClick={resetQuiz}
-              style={{ background: "#f7f5f0", border: "1px solid #F0A89A", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#C47A6A", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", cursor: "pointer", letterSpacing: "0.1em" }}>
+              style={{ background: "#F5F5F7", border: "1px solid #F0A89A", borderRadius: 4, padding: "0.5rem 1.2rem", color: "#C47A6A", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.65rem", cursor: "pointer", letterSpacing: "0.1em" }}>
               ↺ Try Again
             </button>
           </div>
@@ -5219,16 +5219,16 @@ export const AIGlossaryTab = ({ s }) => {
       </div>
 
       {/* QUICK REFERENCE TABLE */}
-      <div style={{ background: "#ffffff", border: "1px solid #e0dcd4", borderRadius: 6, overflow: "hidden" }}>
-        <div style={{ padding: "1rem 1.5rem", borderBottom: "1px solid #e0dcd4", fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#C47A6A", letterSpacing: "0.2em", textTransform: "uppercase" }}>
+      <div style={{ background: "#ffffff", border: "1px solid #E8E8EC", borderRadius: 6, overflow: "hidden" }}>
+        <div style={{ padding: "1rem 1.5rem", borderBottom: "1px solid #E8E8EC", fontFamily: "Syne, sans-serif", fontSize: "0.6rem", fontWeight: 700, color: "#C47A6A", letterSpacing: "0.2em", textTransform: "uppercase" }}>
           Quick Reference — All {GLOSSARY_TERMS.length} Terms
         </div>
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.65rem" }}>
             <thead>
-              <tr style={{ borderBottom: "1px solid #e0dcd4" }}>
+              <tr style={{ borderBottom: "1px solid #E8E8EC" }}>
                 {["Term", "Abbr", "Category", "Level", "One-line plain English"].map(h => (
-                  <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#334155", fontSize: "0.55rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
+                  <th key={h} style={{ textAlign: "left", padding: "0.6rem 0.8rem", fontFamily: "Syne, sans-serif", fontWeight: 700, color: "#4A4A5A", fontSize: "0.55rem", letterSpacing: "0.08em", textTransform: "uppercase" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -5246,19 +5246,19 @@ export const AIGlossaryTab = ({ s }) => {
                       el?.scrollIntoView({ behavior: "smooth", block: "center" });
                     }, 80);
                   }}
-                  onMouseEnter={e => { if (activeTerm !== t.id) e.currentTarget.style.background = "#f0ede6"; }}
+                  onMouseEnter={e => { if (activeTerm !== t.id) e.currentTarget.style.background = "#EDEDF0"; }}
                   onMouseLeave={e => { if (activeTerm !== t.id) e.currentTarget.style.background = "transparent"; }}>
                   <td style={{ padding: "0.55rem 0.8rem", color: t.color, fontFamily: "Syne, sans-serif", fontWeight: 700 }}>{t.term}</td>
-                  <td style={{ padding: "0.55rem 0.8rem", color: "#334155", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{t.abbr || "—"}</td>
-                  <td style={{ padding: "0.55rem 0.8rem", color: "#334155" }}>{t.category}</td>
+                  <td style={{ padding: "0.55rem 0.8rem", color: "#4A4A5A", fontFamily: "DM Mono, monospace", fontSize: "0.6rem" }}>{t.abbr || "—"}</td>
+                  <td style={{ padding: "0.55rem 0.8rem", color: "#4A4A5A" }}>{t.category}</td>
                   <td style={{ padding: "0.55rem 0.8rem", color: lvlColor[t.level] || "#F0A89A", fontFamily: "Syne, sans-serif", fontWeight: 700, fontSize: "0.6rem" }}>{t.level}</td>
-                  <td style={{ padding: "0.55rem 0.8rem", color: "#334155", maxWidth: 260 }}>{t.simple.slice(0, 80)}{t.simple.length > 80 ? "…" : ""}</td>
+                  <td style={{ padding: "0.55rem 0.8rem", color: "#4A4A5A", maxWidth: 260 }}>{t.simple.slice(0, 80)}{t.simple.length > 80 ? "…" : ""}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div style={{ padding: "0.6rem 1.5rem", fontSize: "0.58rem", color: "#1E293B", fontFamily: "Syne, sans-serif", borderTop: "1px solid #e8e4dc" }}>
+        <div style={{ padding: "0.6rem 1.5rem", fontSize: "0.58rem", color: "#2D2D3A", fontFamily: "Syne, sans-serif", borderTop: "1px solid #E8E8EC" }}>
           ↑ Click any row to open the full 4-layer explanation above
         </div>
       </div>
@@ -5311,7 +5311,7 @@ POSITION:
     id: "feedback",
     icon: "📋",
     category: "Feedback",
-    color: "#7A6BA8",
+    color: "#6B5E94",
     name: "Structured critique",
     trigger: "/critique",
     description: "Returns feedback in a fixed schema: Strengths / Gaps / Specific improvements / Priority order. No vague praise.",
@@ -5401,7 +5401,7 @@ NOTES:
 const OPENWIKI_STEPS = [
   { icon: "📁", label: "Point at repo", detail: "OpenWiki agent reads your codebase — files, structure, dependencies, README", color: "#3A9B9F" },
   { icon: "🧠", label: "Analyse & understand", detail: "Builds a semantic map: what each file does, how components relate, key entry points", color: "#C47A6A" },
-  { icon: "📝", label: "Generate docs", detail: "Produces WIKI.md, updates agent files (AGENTS.md, CLAUDE.md), writes per-module docs", color: "#7A6BA8" },
+  { icon: "📝", label: "Generate docs", detail: "Produces WIKI.md, updates agent files (AGENTS.md, CLAUDE.md), writes per-module docs", color: "#6B5E94" },
   { icon: "🔄", label: "Daily PR", detail: "Runs on a schedule. Every day: detects code changes → updates docs → opens a PR", color: "#C47A6A" },
   { icon: "✅", label: "Human review", detail: "You review and merge. Docs stay permanently current. New devs onboard in hours not days", color: "#3A9B9F" },
 ];
@@ -5438,7 +5438,7 @@ const AUTOMEM_OPS = [
     id: "organize",
     icon: "🗂️",
     name: "Organize",
-    color: "#7A6BA8",
+    color: "#6B5E94",
     description: "Periodically consolidates, deduplicates, and structures stored memories. Resolves contradictions. Builds a coherent, queryable knowledge base from raw interaction history.",
     contrast: "Without organisation, memory stores become noisy and contradictory over time. AUTOMEM runs a background consolidation pass.",
     example: "Two stored preferences contradict → AUTOMEM identifies conflict → keeps most recent + notes discrepancy → prompts for clarification",
@@ -5448,7 +5448,7 @@ const AUTOMEM_OPS = [
 const AUTOMEM_BENCHMARKS = [
   { task: "MemGPT benchmark",        baseline: 42, automem: 84,  gain: "2×",  color: "#3A9B9F" },
   { task: "LongMemEval",             baseline: 31, automem: 78,  gain: "2.5×", color: "#C47A6A" },
-  { task: "Task planning with memory",baseline: 28, automem: 71, gain: "2.5×", color: "#7A6BA8" },
+  { task: "Task planning with memory",baseline: 28, automem: 71, gain: "2.5×", color: "#6B5E94" },
   { task: "Multi-session coherence", baseline: 19, automem: 76,  gain: "4×",  color: "#C47A6A" },
 ];
 
@@ -5500,7 +5500,7 @@ const COPILOT_APPS = [
     id: "chat",
     icon: "💬",
     name: "Copilot Chat",
-    color: "#7A6BA8",
+    color: "#6B5E94",
     tagline: "Cross-app reasoning across your entire Microsoft 365 data",
     tips: [
       { tip: "Reference multiple files", detail: "Start with '/' to attach files, emails, or meetings. Ask questions that span across all of them: 'What did we agree about [topic] across these documents?'" },
@@ -5515,25 +5515,25 @@ const COPILOT_APPS = [
 // ── SVG: AUTOMEM benchmark chart ──
 const AutomemBenchmarkChart = () => (
   <svg viewBox="0 0 240 100" style={{ width: "100%", height: 150 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AUTOMEM BENCHMARK GAINS (Stanford, 2025)</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#4A4A5A" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">AUTOMEM BENCHMARK GAINS (Stanford, 2025)</text>
     {AUTOMEM_BENCHMARKS.map((b, i) => {
       const y = 20 + i * 20;
       const maxW = 110;
       return (
         <g key={i}>
-          <text x="80" y={y + 8} textAnchor="end" fontSize="3.8" fill="#334155" fontFamily="Syne, sans-serif">{b.task}</text>
+          <text x="80" y={y + 8} textAnchor="end" fontSize="3.8" fill="#4A4A5A" fontFamily="Syne, sans-serif">{b.task}</text>
           {/* baseline bar */}
-          <rect x="84" y={y} width={(b.baseline / 100) * maxW} height="7" rx={1} fill="#e0dcd4"/>
+          <rect x="84" y={y} width={(b.baseline / 100) * maxW} height="7" rx={1} fill="#E8E8EC"/>
           {/* automem bar */}
           <rect x="84" y={y + 8} width={(b.automem / 100) * maxW} height="7" rx={1} fill={b.color} opacity="0.75"/>
           <text x={84 + (b.automem / 100) * maxW + 2} y={y + 14} fontSize="4" fill={b.color} fontFamily="Syne, sans-serif" fontWeight="800">{b.gain}</text>
           {/* baseline label */}
-          <text x={84 + (b.baseline / 100) * maxW + 2} y={y + 6} fontSize="3.2" fill="#334155" fontFamily="DM Mono, monospace">{b.baseline}%</text>
+          <text x={84 + (b.baseline / 100) * maxW + 2} y={y + 6} fontSize="3.2" fill="#4A4A5A" fontFamily="DM Mono, monospace">{b.baseline}%</text>
         </g>
       );
     })}
-    <rect x="84" y="95" width="10" height="4" rx={1} fill="#e0dcd4"/>
-    <text x="97" y="99" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Baseline</text>
+    <rect x="84" y="95" width="10" height="4" rx={1} fill="#E8E8EC"/>
+    <text x="97" y="99" fontSize="3.5" fill="#4A4A5A" fontFamily="Syne, sans-serif">Baseline</text>
     <rect x="128" y="95" width="10" height="4" rx={1} fill="#5EC4C8" opacity="0.75"/>
     <text x="141" y="99" fontSize="3.5" fill="#5EC4C8" fontFamily="Syne, sans-serif">AUTOMEM</text>
   </svg>
@@ -5542,11 +5542,11 @@ const AutomemBenchmarkChart = () => (
 // ── SVG: OpenWiki flow ──
 const OpenWikiFlowDiagram = () => (
   <svg viewBox="0 0 240 70" style={{ width: "100%", height: 110 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">OPENWIKI DAILY DOCUMENTATION LOOP</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#4A4A5A" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">OPENWIKI DAILY DOCUMENTATION LOOP</text>
     {[
       { label: "Code\nChange", icon: "💻", x: 18,  color: "#3A9B9F" },
       { label: "OpenWiki\nDetects",  icon: "👁️", x: 60,  color: "#C47A6A" },
-      { label: "Updates\nDocs",      icon: "📝", x: 102, color: "#7A6BA8" },
+      { label: "Updates\nDocs",      icon: "📝", x: 102, color: "#6B5E94" },
       { label: "Opens\nPR",          icon: "🔀", x: 144, color: "#C47A6A" },
       { label: "Merged &\nLive",     icon: "✅", x: 186, color: "#3A9B9F" },
     ].map((n, i) => (
@@ -5554,34 +5554,34 @@ const OpenWikiFlowDiagram = () => (
         <rect x={n.x} y="18" width="34" height="30" rx={2} fill={`${n.color}12`} stroke={n.color} strokeWidth="0.7"/>
         <text x={n.x + 17} y="28" textAnchor="middle" fontSize="8" dominantBaseline="middle">{n.icon}</text>
         <text x={n.x + 17} y="40" textAnchor="middle" fontSize="3.5" fill={n.color} fontFamily="Syne, sans-serif" fontWeight="700">{n.label.split("\n")[0]}</text>
-        <text x={n.x + 17} y="46" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">{n.label.split("\n")[1]}</text>
-        {i < 4 && <text x={n.x + 36} y="34" fontSize="7" fill="#1E293B">›</text>}
+        <text x={n.x + 17} y="46" textAnchor="middle" fontSize="3.5" fill="#4A4A5A" fontFamily="Syne, sans-serif">{n.label.split("\n")[1]}</text>
+        {i < 4 && <text x={n.x + 36} y="34" fontSize="7" fill="#2D2D3A">›</text>}
       </g>
     ))}
-    <text x="120" y="62" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Runs daily · auto-detects changes · every PR has a human review gate · no stale docs</text>
+    <text x="120" y="62" textAnchor="middle" fontSize="3.5" fill="#4A4A5A" fontFamily="Syne, sans-serif">Runs daily · auto-detects changes · every PR has a human review gate · no stale docs</text>
   </svg>
 );
 
 // ── SVG: Claude shortcuts flow ──
 const ShortcutFlowDiagram = () => (
   <svg viewBox="0 0 240 80" style={{ width: "100%", height: 120 }}>
-    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#334155" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">FROM REPEATED PROMPT → REUSABLE COMMAND</text>
+    <text x="120" y="10" textAnchor="middle" fontSize="5.5" fill="#4A4A5A" fontFamily="Syne, sans-serif" fontWeight="700" letterSpacing="1">FROM REPEATED PROMPT → REUSABLE COMMAND</text>
     <rect x="12" y="18" width="64" height="28" rx={2} fill="rgba(196,87,42,0.1)" stroke="#F0A89A" strokeWidth="0.7"/>
     <text x="44" y="28" textAnchor="middle" fontSize="4" fill="#F0A89A" fontFamily="Syne, sans-serif" fontWeight="700">Repeated Prompt</text>
-    <text x="44" y="35" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">"Rewrite this in my</text>
-    <text x="44" y="41" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">voice, direct, no fluff..."</text>
-    <text x="80" y="34" fontSize="8" fill="#1E293B">→</text>
-    <rect x="88" y="18" width="64" height="28" rx={2} fill="rgba(201,168,76,0.1)" stroke="#F0A89A" strokeWidth="0.7"/>
+    <text x="44" y="35" textAnchor="middle" fontSize="3.2" fill="#4A4A5A" fontFamily="Syne, sans-serif">"Rewrite this in my</text>
+    <text x="44" y="41" textAnchor="middle" fontSize="3.2" fill="#4A4A5A" fontFamily="Syne, sans-serif">voice, direct, no fluff..."</text>
+    <text x="80" y="34" fontSize="8" fill="#2D2D3A">→</text>
+    <rect x="88" y="18" width="64" height="28" rx={2} fill="rgba(240,168,154,0.1)" stroke="#F0A89A" strokeWidth="0.7"/>
     <text x="120" y="27" textAnchor="middle" fontSize="4" fill="#F0A89A" fontFamily="Syne, sans-serif" fontWeight="700">Save as Instruction</text>
-    <text x="120" y="34" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Projects → Instructions</text>
-    <text x="120" y="41" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">or custom system prompt</text>
-    <text x="156" y="34" fontSize="8" fill="#1E293B">→</text>
+    <text x="120" y="34" textAnchor="middle" fontSize="3.2" fill="#4A4A5A" fontFamily="Syne, sans-serif">Projects → Instructions</text>
+    <text x="120" y="41" textAnchor="middle" fontSize="3.2" fill="#4A4A5A" fontFamily="Syne, sans-serif">or custom system prompt</text>
+    <text x="156" y="34" fontSize="8" fill="#2D2D3A">→</text>
     <rect x="164" y="18" width="64" height="28" rx={2} fill="rgba(74,154,74,0.12)" stroke="#5EC4C8" strokeWidth="0.8"/>
     <text x="196" y="27" textAnchor="middle" fontSize="4" fill="#5EC4C8" fontFamily="Syne, sans-serif" fontWeight="700">Reusable Command</text>
-    <text x="196" y="34" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Type: paste text.</text>
-    <text x="196" y="41" textAnchor="middle" fontSize="3.2" fill="#334155" fontFamily="Syne, sans-serif">Claude knows the rest.</text>
-    <text x="120" y="60" textAnchor="middle" fontSize="3.8" fill="#334155" fontFamily="Syne, sans-serif">Result: 15–60 min saved per week per repeated task · consistent output every time</text>
-    <text x="120" y="68" textAnchor="middle" fontSize="3.5" fill="#334155" fontFamily="Syne, sans-serif">Works for: writing style · critique format · spec-first code · research synthesis · meeting actions</text>
+    <text x="196" y="34" textAnchor="middle" fontSize="3.2" fill="#4A4A5A" fontFamily="Syne, sans-serif">Type: paste text.</text>
+    <text x="196" y="41" textAnchor="middle" fontSize="3.2" fill="#4A4A5A" fontFamily="Syne, sans-serif">Claude knows the rest.</text>
+    <text x="120" y="60" textAnchor="middle" fontSize="3.8" fill="#4A4A5A" fontFamily="Syne, sans-serif">Result: 15–60 min saved per week per repeated task · consistent output every time</text>
+    <text x="120" y="68" textAnchor="middle" fontSize="3.5" fill="#4A4A5A" fontFamily="Syne, sans-serif">Works for: writing style · critique format · spec-first code · research synthesis · meeting actions</text>
   </svg>
 );
 

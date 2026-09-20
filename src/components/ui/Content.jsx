@@ -146,15 +146,15 @@ export function CodeBlock({ code, language = 'text', filename, highlightLines, s
   const maxLineNum = lines.length.toString().length;
 
   return (
-    <div style={{ borderRadius: 'var(--ds-radius-lg)', overflow: 'hidden', background: 'var(--ds-color-brand-editor, #10141D)', border: '1px solid #1E2635', ...style }} {...props}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--ds-space-3) var(--ds-space-4)', background: 'var(--ds-color-brand-editor, #10141D)', borderBottom: '1px solid #1E2635' }}>
+    <div style={{ borderRadius: 'var(--ds-radius-lg)', overflow: 'hidden', background: 'var(--ds-color-brand-editor, #0F1219)', border: '1px solid rgba(94,196,200,0.25)', ...style }} {...props}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 'var(--ds-space-3) var(--ds-space-4)', background: 'var(--ds-color-brand-editor, #0F1219)', borderBottom: '1px solid rgba(255,255,255,0.12)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--ds-space-3)' }}>
           <span style={{ display: 'inline-flex', gap: '5px' }} aria-hidden="true">
-            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#FF5F57' }} />
-            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#FEBC2E' }} />
-            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#28C840' }} />
+            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#5EC4C8' }} />
+            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#F0A89A' }} />
+            <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#C9B8E8' }} />
           </span>
-          {filename && <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#8A94A8', fontFamily: 'var(--ds-font-family-mono)' }}>{filename}</span>}
+          {filename && <span style={{ fontSize: 'var(--ds-font-size-caption)', color: '#B8B8C4', fontFamily: 'var(--ds-font-family-mono)' }}>{filename}</span>}
           <span style={{ fontSize: 'var(--ds-font-size-caption)', color: 'var(--ds-color-text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 'var(--ds-font-weight-medium)' }}>{language}</span>
         </div>
         <Button variant="ghost" size="sm" onClick={copy} aria-label={copied ? 'Copied' : 'Copy code'}>
@@ -172,7 +172,7 @@ export function CodeBlock({ code, language = 'text', filename, highlightLines, s
             <div
               key={i}
               style={{
-                background: highlightLines?.includes(i + 1) ? 'rgba(202, 138, 4, 0.15)' : 'transparent',
+                background: highlightLines?.includes(i + 1) ? 'rgba(240, 168, 154, 0.18)' : 'transparent',
                 padding: '0 var(--ds-space-2)',
                 borderRadius: 'var(--ds-radius-sm)',
               }}

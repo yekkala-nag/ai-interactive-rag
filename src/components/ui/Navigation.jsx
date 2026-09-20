@@ -124,21 +124,21 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
       style={{
         width: '100%',
         height: '100vh',
-        background: 'linear-gradient(180deg, #147A76 0%, #0F6B68 100%)',
-        color: '#fff',
+        background: 'linear-gradient(135deg, #5EC4C8 0%, #06B6D4 100%)',
+        color: '#0F1219',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif',
         userSelect: 'none',
-        borderRight: '1px solid rgba(255,255,255,0.15)'
+        borderRight: '1px solid rgba(15,18,25,0.15)'
       }}
       aria-label="Main navigation"
     >
       {/* 1. APPLE MACOS HEADER & TRAFFIC LIGHTS */}
       <div style={{
         padding: collapsed ? '12px 6px' : '12px 14px',
-        borderBottom: '1px solid rgba(255,255,255,0.18)',
+        borderBottom: '1px solid rgba(15,18,25,0.12)',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
@@ -148,9 +148,9 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
         {/* macOS Traffic Lights (Desktop Decorative) */}
         {!collapsed && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '2px' }}>
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ff5f56', border: '1px solid rgba(0,0,0,0.1)' }} />
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ffbd2e', border: '1px solid rgba(0,0,0,0.1)' }} />
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#27c93f', border: '1px solid rgba(0,0,0,0.1)' }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#5EC4C8', border: '1px solid rgba(0,0,0,0.1)' }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#F0A89A', border: '1px solid rgba(0,0,0,0.1)' }} />
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#C9B8E8', border: '1px solid rgba(0,0,0,0.1)' }} />
           </div>
         )}
 
@@ -164,10 +164,10 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
             {/* Apple Squircle Brand Icon */}
             <div style={{
               width: '32px', height: '32px', borderRadius: '9px',
-              background: 'linear-gradient(135deg, #06b6d4 0%, #5EC4C8 50%, #6366f1 100%)',
+              background: 'linear-gradient(135deg, #06b6d4 0%, #5EC4C8 50%, #C9B8E8 100%)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontWeight: 800, fontSize: '0.95rem', color: 'white', flexShrink: 0,
-              boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4), 0 3px 8px rgba(37, 99, 235, 0.35)'
+              boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.4), 0 3px 8px rgba(58, 155, 159, 0.35)'
             }}>
               ⚡
             </div>
@@ -177,7 +177,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 <span style={{
                   fontWeight: 700,
                   fontSize: '0.92rem',
-                  color: '#fff',
+                  color: '#0F1219',
                   letterSpacing: '-0.02em',
                   lineHeight: 1.15,
                   whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
@@ -186,7 +186,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 </span>
                 <span style={{
                   fontSize: '0.62rem',
-                  color: 'rgba(255,255,255,0.75)',
+                  color: 'rgba(15,18,25,0.6)',
                   fontFamily: 'SF Mono, Menlo, Monaco, monospace',
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
@@ -207,14 +207,14 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 background: 'rgba(255, 255, 255, 0.16)',
                 border: '1px solid rgba(255,255,255,0.25)',
                 borderRadius: '7px',
-                color: '#fff',
+                color: '#0F1219',
                 cursor: 'pointer',
                 width: '26px', height: '26px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'all 0.15s ease',
                 fontSize: '0.75rem'
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.28)'; }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(15, 18, 25, 0.12)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.16)'; }}
               aria-label="Collapse sidebar"
             >
@@ -226,8 +226,8 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
 
       {/* 2. APPLE SPOTLIGHT SEARCH INPUT */}
       {!collapsed && (
-        <div style={{ padding: '10px 12px', borderBottom: '1px solid rgba(255,255,255,0.18)', flexShrink: 0 }}>
-          <style>{`.teal-search-input::placeholder { color: rgba(255,255,255,0.65); }`}</style>
+        <div style={{ padding: '10px 12px', borderBottom: '1px solid rgba(15,18,25,0.12)', flexShrink: 0 }}>
+          <style>{`.teal-search-input::placeholder { color: rgba(15,18,25,0.55); }`}</style>
           <div style={{
             position: 'relative', display: 'flex', alignItems: 'center',
             background: 'rgba(255, 255, 255, 0.16)',
@@ -236,7 +236,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
             padding: '5px 8px 5px 30px',
             transition: 'all 0.15s ease'
           }}>
-            <span style={{ position: 'absolute', left: '9px', color: 'rgba(255,255,255,0.8)', fontSize: '0.85rem', pointerEvents: 'none' }}>
+            <span style={{ position: 'absolute', left: '9px', color: 'rgba(15,18,25,0.6)', fontSize: '0.85rem', pointerEvents: 'none' }}>
               🔍
             </span>
             <input
@@ -249,7 +249,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 width: '100%',
                 background: 'transparent',
                 border: 'none',
-                color: '#fff',
+                color: '#0F1219',
                 fontSize: '0.8rem',
                 outline: 'none',
                 fontFamily: 'inherit'
@@ -262,7 +262,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 borderRadius: '4px',
                 background: 'rgba(255, 255, 255, 0.2)',
                 border: '1px solid rgba(255, 255, 255, 0.3)',
-                color: '#fff',
+                color: '#0F1219',
                 fontFamily: 'SF Mono, monospace',
                 fontWeight: 600,
                 flexShrink: 0
@@ -274,7 +274,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 onClick={() => onSearchChange?.('')}
                 style={{
                   background: 'none', border: 'none',
-                  color: '#fff', cursor: 'pointer', fontSize: '0.75rem', padding: '0 2px'
+                  color: '#0F1219', cursor: 'pointer', fontSize: '0.75rem', padding: '0 2px'
                 }}
                 aria-label="Clear search"
               >
@@ -287,8 +287,8 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
 
       {/* 3. PINNED FAVORITES & TOPICS SUMMARY */}
       {!collapsed && !queryStr && (
-        <div style={{ padding: '8px 12px 4px 12px', borderBottom: '1px solid rgba(255,255,255,0.18)', flexShrink: 0 }}>
-          <div style={{ fontSize: '0.62rem', fontWeight: 700, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+        <div style={{ padding: '8px 12px 4px 12px', borderBottom: '1px solid rgba(15,18,25,0.12)', flexShrink: 0 }}>
+          <div style={{ fontSize: '0.62rem', fontWeight: 700, color: 'rgba(15,18,25,0.6)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
             QUICK NAVIGATION
           </div>
 
@@ -299,7 +299,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '5px 8px', borderRadius: '6px',
                 background: activeTab === 'overview' ? '#ffffff' : 'transparent',
-                color: activeTab === 'overview' ? '#3A9B9F' : 'rgba(255,255,255,0.88)',
+                color: activeTab === 'overview' ? '#3A9B9F' : 'rgba(15,18,25,0.75)',
                 border: 'none', cursor: 'pointer', textAlign: 'left', fontSize: '0.78rem',
                 fontWeight: activeTab === 'overview' ? 700 : 500,
                 transition: 'all 0.12s ease'
@@ -321,7 +321,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 padding: '5px 8px', borderRadius: '6px',
                 background: 'rgba(255, 255, 255, 0.12)',
-                color: '#fff',
+                color: '#0F1219',
                 border: '1px solid rgba(255,255,255,0.22)',
                 cursor: 'pointer', textAlign: 'left', fontSize: '0.76rem',
                 transition: 'all 0.12s ease',
@@ -342,7 +342,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 padding: '1px 5px',
                 borderRadius: '4px',
                 background: 'rgba(255,255,255,0.2)',
-                color: '#fff',
+                color: '#0F1219',
                 fontWeight: 700,
                 flexShrink: 0
               }}>
@@ -402,7 +402,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                   padding: collapsed ? '8px' : '7px 8px',
                   background: hasActiveTab ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
                   border: `1px solid ${hasActiveTab ? 'rgba(255,255,255,0.3)' : 'transparent'}`,
-                  color: '#fff',
+                  color: '#0F1219',
                   cursor: 'pointer', textAlign: 'left',
                   borderRadius: '7px',
                   transition: 'all 0.15s ease',
@@ -434,7 +434,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                   {!collapsed && (
                     <span style={{
                       fontWeight: 600,
-                      color: hasActiveTab ? '#fff' : 'rgba(255,255,255,0.88)',
+                      color: hasActiveTab ? '#0F1219' : 'rgba(15,18,25,0.75)',
                       whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                       fontSize: '0.81rem', letterSpacing: '-0.01em'
                     }}>
@@ -450,14 +450,14 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                       fontWeight: 600,
                       fontFamily: 'SF Mono, monospace',
                       background: 'rgba(255, 255, 255, 0.2)',
-                      color: '#fff',
+                      color: '#0F1219',
                       padding: '1px 6px',
                       borderRadius: '9999px',
                       border: '1px solid rgba(255,255,255,0.25)'
                     }}>
                       {tabs.length}
                     </span>
-                    <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.75)', transition: 'transform 0.15s ease', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>
+                    <span style={{ fontSize: '0.7rem', color: 'rgba(15,18,25,0.6)', transition: 'transform 0.15s ease', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }}>
                       ‣
                     </span>
                   </div>
@@ -487,7 +487,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                             <div style={{
                               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                             fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase',
-                            color: 'rgba(255,255,255,0.75)', marginBottom: '3px'
+                            color: 'rgba(15,18,25,0.6)', marginBottom: '3px'
                             }}>
                               <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                 {group.child.title}
@@ -500,10 +500,10 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                                 {getChildLevelCounts(group.child.id, rawTabs)}
                               </span>
                             </div>
-                            <div style={{ height: '3px', borderRadius: '3px', background: 'rgba(255,255,255,0.25)', overflow: 'hidden' }}>
+                            <div style={{ height: '3px', borderRadius: '3px', background: 'rgba(15,18,25,0.15)', overflow: 'hidden' }}>
                               <div style={{
                                 height: '100%', width: `${pct}%`, borderRadius: '3px',
-                                background: '#fff',
+                                background: '#1F6B6E',
                                 transition: 'width 0.3s ease'
                               }} />
                             </div>
@@ -525,7 +525,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                           padding: '5px 8px',
                           borderRadius: '6px',
                           background: isActive ? '#ffffff' : 'transparent',
-                          color: isActive ? '#3A9B9F' : 'rgba(255,255,255,0.88)',
+                          color: isActive ? '#3A9B9F' : 'rgba(15,18,25,0.75)',
                           border: 'none', cursor: 'pointer', textAlign: 'left',
                           fontSize: '0.78rem',
                           fontWeight: isActive ? 700 : 500,
@@ -536,14 +536,14 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                         onMouseEnter={e => {
                           if (!isActive) {
                             e.currentTarget.style.background = 'rgba(255, 255, 255, 0.14)';
-                            e.currentTarget.style.color = '#ffffff';
+                            e.currentTarget.style.color = '#0F1219';
                             e.currentTarget.style.transform = 'translateX(2px)';
                           }
                         }}
                         onMouseLeave={e => {
                           if (!isActive) {
                             e.currentTarget.style.background = 'transparent';
-                            e.currentTarget.style.color = 'rgba(255,255,255,0.88)';
+                            e.currentTarget.style.color = 'rgba(15,18,25,0.75)';
                             e.currentTarget.style.transform = 'translateX(0)';
                           }
                         }}
@@ -579,7 +579,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                             style={{
                               width: '6px', height: '6px', borderRadius: '50%',
                               background: lvl.color, opacity: 0.9, flexShrink: 0,
-                              border: '1px solid rgba(255,255,255,0.65)'
+                              border: '1px solid rgba(15,18,25,0.55)'
                             }}
                           />
                         )}
@@ -598,7 +598,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
         })}
 
         {queryStr && totalVisibleTabs === 0 && (
-          <div style={{ padding: '24px 12px', textAlign: 'center', color: 'rgba(255,255,255,0.85)' }}>
+          <div style={{ padding: '24px 12px', textAlign: 'center', color: 'rgba(15,18,25,0.7)' }}>
             <div style={{ fontSize: '1.4rem', marginBottom: '6px' }}>🔍</div>
             <div style={{ fontSize: '0.8rem', marginBottom: '8px' }}>No topics match "{queryStr}"</div>
             <button
@@ -608,7 +608,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
                 borderRadius: '6px',
                 border: '1px solid rgba(255,255,255,0.3)',
                 background: 'rgba(255, 255, 255, 0.16)',
-                color: '#fff',
+                color: '#0F1219',
                 fontSize: '0.72rem',
                 cursor: 'pointer',
               }}
@@ -621,7 +621,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
 
       {/* 5. COLLAPSED EXPAND BUTTON */}
       {collapsed && (
-        <div style={{ padding: '8px', borderTop: '1px solid rgba(255,255,255,0.18)', textAlign: 'center' }}>
+        <div style={{ padding: '8px', borderTop: '1px solid rgba(15,18,25,0.12)', textAlign: 'center' }}>
           <button
             onClick={onToggleCollapse}
             title="Expand sidebar (⌘[)"
@@ -629,7 +629,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
               background: 'rgba(255, 255, 255, 0.16)',
               border: '1px solid rgba(255,255,255,0.25)',
               borderRadius: '6px',
-              color: '#fff',
+              color: '#0F1219',
               cursor: 'pointer',
               padding: '6px',
               fontSize: '0.8rem',
@@ -821,7 +821,7 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
             }}
           >
             <span>🔍 Search</span>
-            <kbd style={{ fontSize: '0.65rem', padding: '1px 5px', background: 'rgba(255,255,255,0.08)', borderRadius: '3px', border: '1px solid rgba(255,255,255,0.15)', color: 'var(--ds-color-text-tertiary)' }}>⌘K</kbd>
+            <kbd style={{ fontSize: '0.65rem', padding: '1px 5px', background: 'var(--ds-color-bg-canvas)', borderRadius: '3px', border: '1px solid var(--ds-color-border-default)', color: 'var(--ds-color-text-tertiary)' }}>⌘K</kbd>
           </button>
         </div>
       </div>
@@ -958,7 +958,7 @@ export function CommandPalette({ isOpen, onClose, tabs, onSelectTab }) {
             onChange={e => { setQuery(e.target.value); setSelectedIndex(0); }}
             style={{ background: 'none', border: 'none', outline: 'none', fontSize: '0.88rem', color: 'var(--ds-color-text-primary)', width: '100%', fontFamily: 'inherit' }}
           />
-          <kbd style={{ fontSize: '0.65rem', padding: '2px 6px', background: 'rgba(255,255,255,0.08)', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.15)', color: 'var(--ds-color-text-tertiary)', fontFamily: 'SF Mono, monospace' }}>⌘K</kbd>
+          <kbd style={{ fontSize: '0.65rem', padding: '2px 6px', background: 'var(--ds-color-bg-canvas)', borderRadius: '4px', border: '1px solid var(--ds-color-border-default)', color: 'var(--ds-color-text-tertiary)', fontFamily: 'SF Mono, monospace' }}>⌘K</kbd>
         </div>
       </div>
       <div style={{ maxHeight: '380px', overflowY: 'auto' }}>

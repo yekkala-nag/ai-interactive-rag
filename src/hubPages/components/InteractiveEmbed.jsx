@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 const C = {
-  bg: "#0F1219", surface: "#161B26", s2: "#1C2433", s3: "#243044",
-  border: "#2A3548", text: "#E2E8F0", muted: "#B8B8C4",
+  bg: "#F5F5F7", surface: "#FFFFFF", s2: "#EDEDF0", s3: "#EDEDF0",
+  border: "#E8E8EC", text: "#2D2D3A", muted: "#4A4A5A",
   teal: "#5EC4C8", tealDark: "#3A9B9F", tealInk: "#1F6B6E",
-  coral: "#E8837A", coralDeep: "#C47A6A",
+  coral: "#F0A89A", coralDeep: "#C47A6A",
   lav: "#C9B8E8", lavDeep: "#9B89C4",
 };
 
