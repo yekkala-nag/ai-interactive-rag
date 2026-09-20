@@ -17,6 +17,74 @@ const C = {
 const THREE_SENTENCES =
   "First, review my full message and any attached files, even if my thoughts are rough, fragmented, or unfiltered. Tell me what you think I'm actually trying to achieve, then propose a plan for me to review. Stop and wait for my approval before starting the task.";
 
+const PHASES = ["All", "Before generating", "While generating / grounding", "After generating / revising"];
+
+const REVISION_PROMPTS = [
+  {
+    name: "Diff-based editing",
+    text: "When editing my draft, show me only what you changed and why — not a full rewrite. If a change is stylistic rather than necessary, flag it as optional.",
+    when: "Use when editing long drafts.",
+    overhead: "Low",
+    level: "Easy",
+  },
+  {
+    name: "Preserve-voice constraint",
+    text: "Edit this for clarity/structure but keep my own voice and phrasing wherever possible. Don't smooth it into generic 'AI-sounding' prose.",
+    when: "Use for any edit of your own writing.",
+    overhead: "Low",
+    level: "Easy",
+  },
+  {
+    name: "Minimal viable fix",
+    text: "Fix only what's actually broken or unclear. Don't restructure, don't add sections, don't improve things I didn't ask about — tell me separately if you notice other issues.",
+    when: "Use for noisy drafts where restraint matters.",
+    overhead: "Low",
+    level: "Easy",
+  },
+  {
+    name: "Feedback incorporation",
+    text: "Here's feedback on your last draft. Before revising, tell me how you're interpreting each piece of feedback, in case I need to correct your read on it.",
+    when: "Use when iterating on AI drafts. (Paste the feedback itself before this prompt.)",
+    overhead: "Medium",
+    level: "Medium",
+  },
+  {
+    name: "Version comparison",
+    text: "Produce two versions with a genuinely different tradeoff (e.g. concise vs. thorough, conservative vs. bold), and tell me in one line what each optimizes for — not just 'version A' and 'version B'.",
+    when: "Use for tradeoff decisions.",
+    overhead: "Medium",
+    level: "Medium",
+  },
+  {
+    name: "Scope boundary check",
+    text: "Tell me what's out of scope for this task, based on what I've asked, so we both know what you're deliberately not doing.",
+    when: "Use for ambiguous tasks.",
+    overhead: "Low",
+    level: "Easy",
+  },
+  {
+    name: "Reversibility flag",
+    text: "If any part of what you're about to do is hard to undo or would require significant rework to change later (an architecture choice, a naming convention, a structural decision), flag it before proceeding, even if I didn't ask.",
+    when: "Use for architecture, naming, or structural choices.",
+    overhead: "Low",
+    level: "Medium",
+  },
+  {
+    name: "Teach-back check",
+    text: "After you explain something to me, ask me to restate it in my own words, or offer to quiz me — don't assume the explanation landed.",
+    when: "Use for learning and explanations.",
+    overhead: "Low",
+    level: "Easy",
+  },
+  {
+    name: "Silent-failure guard",
+    text: "If you can't actually do part of what I asked (missing info, tool limitation, outside your ability), say so explicitly rather than producing something that looks complete but quietly skips it.",
+    when: "Use for any task with possible capability gaps.",
+    overhead: "Low",
+    level: "Easy",
+  },
+];
+
 const PATTERNS = [
   {
     id: "plan-then-execute",
@@ -332,6 +400,8 @@ function ComparisonTable() {
       clarity: true,
       flexibility: true,
       setup: "None",
+      overhead: "Low",
+      level: "Core",
       color: C.teal,
     },
     ...PATTERNS.map((p) => ({
@@ -341,6 +411,19 @@ function ComparisonTable() {
       clarity: ["understand-before-acting", "assumption-surfacing", "constraint-extraction"].includes(p.id),
       flexibility: ["options-before-commitment", "self-critique-loop"].includes(p.id),
       setup: "Custom instruction",
+      overhead: "Low",
+      level: "Core",
+      color: C.muted,
+    })),
+    ...REVISION_PROMPTS.map((p) => ({
+      name: p.name,
+      approach: p.when,
+      pause: false,
+      clarity: p.name === "Silent-failure guard",
+      flexibility: p.name === "Version comparison",
+      setup: "Copy-paste",
+      overhead: p.overhead,
+      level: p.level,
       color: C.muted,
     })),
   ];
@@ -360,7 +443,7 @@ function ComparisonTable() {
         >
           <thead>
             <tr>
-              {["Pattern", "Approach", "Pause", "Clarity", "Flexibility", "Setup"].map(
+              {["Pattern", "Approach", "Pause", "Clarity", "Flexibility", "Setup", "Overhead", "Level"].map(
                 (h) => (
                   <th
                     key={h}
@@ -426,6 +509,46 @@ function ComparisonTable() {
                   }}
                 >
                   {r.setup}
+                </td>
+                <td
+                  style={{
+                    padding: "8px 10px",
+                    borderBottom: `1px solid ${C.border}`,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  <span
+                    style={{
+                      padding: "2px 8px",
+                      borderRadius: 4,
+                      fontSize: 9,
+                      fontWeight: 700,
+                      background: r.overhead === "Medium" ? C.coral + "22" : C.teal + "22",
+                      color: r.overhead === "Medium" ? C.coral : C.teal,
+                    }}
+                  >
+                    {r.overhead}
+                  </span>
+                </td>
+                <td
+                  style={{
+                    padding: "8px 10px",
+                    borderBottom: `1px solid ${C.border}`,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  <span
+                    style={{
+                      padding: "2px 8px",
+                      borderRadius: 4,
+                      fontSize: 9,
+                      fontWeight: 700,
+                      background: r.level === "Medium" ? C.lav + "22" : C.s3,
+                      color: r.level === "Medium" ? C.lav : C.muted,
+                    }}
+                  >
+                    {r.level}
+                  </span>
                 </td>
               </tr>
             ))}
@@ -1518,6 +1641,10 @@ function FrameworkPipeline() {
           Prompt = Task + Context + Constraints + Control Strategy + Output Contract + Quality Gate
         </div>
       </div>
+      <div style={{ color: C.muted, fontSize: 11, lineHeight: 1.6, marginTop: 12 }}>
+        Revision &amp; Collaboration loops back from Final Gate to Refine — revision is a loop, not a
+        one-way gate.
+      </div>
     </div>
   );
 }
@@ -1527,6 +1654,7 @@ function FrameworkPipeline() {
 const STAGES = [
   {
     n: 1,
+    phase: "Before generating",
     title: "Understand Before Acting",
     subs: [
       {
@@ -1545,6 +1673,7 @@ const STAGES = [
   },
   {
     n: 2,
+    phase: "Before generating",
     title: "Constraint Intelligence",
     subs: [
       {
@@ -1563,6 +1692,7 @@ const STAGES = [
   },
   {
     n: 3,
+    phase: "Before generating",
     title: "Assumption Control",
     subs: [
       {
@@ -1581,6 +1711,7 @@ const STAGES = [
   },
   {
     n: 4,
+    phase: "Before generating",
     title: "Decomposition",
     subs: [
       {
@@ -1599,6 +1730,7 @@ const STAGES = [
   },
   {
     n: 5,
+    phase: "Before generating",
     title: "Plan Before Execution",
     subs: [
       {
@@ -1617,6 +1749,7 @@ const STAGES = [
   },
   {
     n: 6,
+    phase: "Before generating",
     title: "Generate Alternatives",
     subs: [
       {
@@ -1631,6 +1764,7 @@ const STAGES = [
   },
   {
     n: 7,
+    phase: "While generating / grounding",
     title: "Structured Execution",
     subs: [
       {
@@ -1649,6 +1783,7 @@ const STAGES = [
   },
   {
     n: 8,
+    phase: "After generating / revising",
     title: "Quality Control",
     subs: [
       {
@@ -1667,6 +1802,7 @@ const STAGES = [
   },
   {
     n: 9,
+    phase: "While generating / grounding",
     title: "Verification",
     subs: [
       {
@@ -1685,6 +1821,7 @@ const STAGES = [
   },
   {
     n: 10,
+    phase: "After generating / revising",
     title: "Refinement",
     subs: [
       {
@@ -1699,6 +1836,7 @@ const STAGES = [
   },
   {
     n: 11,
+    phase: "After generating / revising",
     title: "Edge-Case Thinking",
     subs: [
       {
@@ -1713,6 +1851,7 @@ const STAGES = [
   },
   {
     n: 12,
+    phase: "While generating / grounding",
     title: "Context Management",
     subs: [
       {
@@ -1727,6 +1866,7 @@ const STAGES = [
   },
   {
     n: 13,
+    phase: "While generating / grounding",
     title: "Communication Quality",
     subs: [
       {
@@ -1745,6 +1885,7 @@ const STAGES = [
   },
   {
     n: 14,
+    phase: "After generating / revising",
     title: "Final Delivery Control",
     subs: [
       {
@@ -1755,6 +1896,7 @@ const STAGES = [
   },
   {
     n: 15,
+    phase: "After generating / revising",
     title: "Universal Quality Controller",
     subs: [
       {
@@ -1763,11 +1905,20 @@ const STAGES = [
       },
     ],
   },
+  {
+    n: 16,
+    phase: "After generating / revising",
+    title: "Revision & Collaboration",
+    subs: REVISION_PROMPTS.map((p) => ({ ...p })),
+  },
 ];
 
 function StageLibrary() {
   const [open, setOpen] = useState(1);
   const [copied, setCopied] = useState(null);
+  const [phaseFilter, setPhaseFilter] = useState("All");
+  const visibleStages =
+    phaseFilter === "All" ? STAGES : STAGES.filter((s) => s.phase === phaseFilter);
 
   function copy(text, key) {
     navigator.clipboard.writeText(text);
@@ -1777,13 +1928,35 @@ function StageLibrary() {
 
   return (
     <div style={sectionStyle}>
-      <div style={labelStyle(C.teal)}>STAGE LIBRARY · 15 CONTROL STAGES</div>
+      <div style={labelStyle(C.teal)}>STAGE LIBRARY · 16 CONTROL STAGES</div>
       <div style={{ color: C.muted, fontSize: 12, lineHeight: 1.6, marginBottom: 16 }}>
         Each stage is a reusable control. Copy any sub-prompt and paste it above your task. Stage
-        15 combines everything into one meta-prompt.
+        15 combines everything into one meta-prompt. Stage 16 covers revision &amp; collaboration
+        after generating.
+      </div>
+      <div style={{ display: "flex", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
+        {PHASES.map((ph) => (
+          <button
+            key={ph}
+            onClick={() => setPhaseFilter(ph)}
+            style={{
+              padding: "5px 12px",
+              borderRadius: 20,
+              background: phaseFilter === ph ? C.teal + "22" : C.s2,
+              border: `1px solid ${phaseFilter === ph ? C.teal : C.border}`,
+              color: phaseFilter === ph ? C.teal : C.muted,
+              fontSize: 11,
+              cursor: "pointer",
+              fontWeight: 600,
+              ...mono,
+            }}
+          >
+            {ph}
+          </button>
+        ))}
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {STAGES.map((stage) => {
+        {visibleStages.map((stage) => {
           const isOpen = open === stage.n;
           return (
             <div
@@ -1815,6 +1988,23 @@ function StageLibrary() {
                     ({stage.subs.length} prompt{stage.subs.length > 1 ? "s" : ""})
                     {stage.n === 15 ? " · ★ featured" : ""}
                   </span>
+                  {stage.phase && (
+                    <span
+                      style={{
+                        marginLeft: 8,
+                        padding: "2px 8px",
+                        borderRadius: 10,
+                        fontSize: 9,
+                        fontWeight: 700,
+                        background: C.s3,
+                        color: C.teal,
+                        ...mono,
+                      }}
+                    >
+                      {stage.phase}
+                      {stage.n === 15 ? " · full-pipeline reference" : ""}
+                    </span>
+                  )}
                 </div>
                 <span
                   style={{
@@ -1875,6 +2065,46 @@ function StageLibrary() {
                         >
                           {sub.text}
                         </div>
+                        {sub.when && (
+                          <div style={{ color: C.muted, fontSize: 11, lineHeight: 1.6, marginTop: 8 }}>
+                            <span style={{ color: C.teal, fontWeight: 700 }}>When to use: </span>
+                            {sub.when}
+                          </div>
+                        )}
+                        {(sub.overhead || sub.level) && (
+                          <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
+                            {sub.overhead && (
+                              <span
+                                style={{
+                                  padding: "2px 8px",
+                                  borderRadius: 4,
+                                  fontSize: 9,
+                                  fontWeight: 700,
+                                  background: sub.overhead === "Medium" ? C.coral + "22" : C.teal + "22",
+                                  color: sub.overhead === "Medium" ? C.coral : C.teal,
+                                  ...mono,
+                                }}
+                              >
+                                {sub.overhead} overhead
+                              </span>
+                            )}
+                            {sub.level && (
+                              <span
+                                style={{
+                                  padding: "2px 8px",
+                                  borderRadius: 4,
+                                  fontSize: 9,
+                                  fontWeight: 700,
+                                  background: sub.level === "Medium" ? C.lav + "22" : C.s3,
+                                  color: sub.level === "Medium" ? C.lav : C.muted,
+                                  ...mono,
+                                }}
+                              >
+                                {sub.level}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
                     );
                   })}
@@ -1899,10 +2129,11 @@ function TaskControlsMatrix() {
     { task: "Product design", chain: "Understand → Constrain → Decompose → Plan → Alternatives → Execute → Challenge → Final Gate" },
     { task: "Strategy", chain: "Understand → Decompose → Alternatives → Challenge → Verify → Refine → Final Gate" },
     { task: "Complex project", chain: "Full pipeline: Understand → Constrain → Decompose → Plan → Execute → Challenge → Verify → Refine → Final Gate" },
-    { task: "High-risk task", chain: "Understand → Constrain → Plan → Execute → Challenge → Verify → Refine → Final Gate" },
+    { task: "High-risk task", chain: "Understand → Constrain → Plan → Execute → Challenge → Verify → Refine → Final Gate + scope boundary & reversibility guards" },
     { task: "Creative task", chain: "Understand → Alternatives → Execute → Refine → Final Gate" },
     { task: "Data analysis", chain: "Understand → Constrain → Decompose → Execute → Verify → Final Gate" },
     { task: "Education", chain: "Understand → Decompose → Execute → Challenge → Refine → Final Gate" },
+    { task: "Revision", chain: "Draft → Diff edit → Voice check → Minimal fix → Final gate" },
   ];
 
   return (
@@ -2016,6 +2247,12 @@ const OPTIMIZER_CONTROLS = {
     { control: "Assumption Ledger", why: "Makes every cross-step assumption explicit and traceable." },
     { control: "Progressive Refinement", why: "Runs Correctness → Completeness → Quality passes over the draft." },
     { control: "Final Gate", why: "Full 7-dimension delivery check before handoff." },
+  ],
+  "Revising / editing existing draft": [
+    { control: "Diff-based editing", why: "Added so long-draft edits stay reviewable — you see only what changed and why." },
+    { control: "Preserve-voice constraint", why: "Added to keep your own phrasing instead of smoothing everything into generic AI prose." },
+    { control: "Minimal viable fix", why: "Added so only what's broken gets fixed and unrequested restructuring doesn't creep in." },
+    { control: "Silent-failure guard", why: "Added so anything that can't actually be done is flagged explicitly instead of quietly skipped." },
   ],
 };
 

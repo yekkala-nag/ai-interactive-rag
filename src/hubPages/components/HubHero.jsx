@@ -12,56 +12,66 @@ export function HubHero({ title, subtitle, description, estimatedHours, totalTop
   return (
     <div style={{
       padding: 32,
-      background: `linear-gradient(135deg, ${accentColor}08 0%, ${C.surface} 100%)`,
-      border: `1px solid ${accentColor}33`,
+      background: "linear-gradient(135deg, #0B1A1F 0%, #12182A 55%, #1A1028 100%)",
+      border: `1px solid ${C.border}`,
       borderRadius: 16,
       marginBottom: 24,
       position: "relative",
       overflow: "hidden"
     }}>
+      {/* Top accent hairline: teal → coral → lavender */}
       <div style={{
         position: "absolute",
-        top: -50,
-        right: -50,
-        width: 200,
-        height: 200,
-        borderRadius: "50%",
-        background: `radial-gradient(circle, ${accentColor}15 0%, transparent 70%)`,
+        top: 0,
+        left: 0,
+        right: 0,
+        height: 3,
+        background: `linear-gradient(90deg, ${C.teal}, ${C.coral}, ${C.lav}, ${C.teal})`,
         pointerEvents: "none"
       }} />
-      
+      {/* Soft accent glow */}
+      <div style={{
+        position: "absolute",
+        top: -60,
+        right: -60,
+        width: 240,
+        height: 240,
+        borderRadius: "50%",
+        background: `radial-gradient(circle, ${accentColor}18 0%, transparent 70%)`,
+        pointerEvents: "none"
+      }} />
+
       <div style={{ position: "relative", zIndex: 1 }}>
-        <div style={{ display: "flex", alignItems: "flex-start", gap: 16, marginBottom: 16 }}>
+        {/* Header row: icon + title block */}
+        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 12 }}>
           <div style={{
             width: 56,
             height: 56,
             borderRadius: 12,
-            background: `${accentColor}15`,
+            background: `linear-gradient(135deg, ${accentColor}22, ${accentColor}08)`,
             border: `1px solid ${accentColor}40`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 24
+            fontSize: 24,
+            flexShrink: 0
           }}>
             {icon}
           </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-              <h1 style={{ margin: 0, fontSize: 32, fontWeight: 800, color: C.text, letterSpacing: "-0.02em" }}>
-                {title}
-              </h1>
-            </div>
-            <p style={{ margin: "0 0 8px 72px", fontSize: 16, color: accentColor, fontWeight: 500 }}>
-              {subtitle}
-            </p>
-          </div>
+          <h1 style={{ margin: 0, fontSize: 32, fontWeight: 800, color: C.text, letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+            {title}
+          </h1>
         </div>
-        
-        <p style={{ margin: "16px 0 0 72px", color: C.muted, fontSize: 15, lineHeight: 1.7, maxWidth: 800 }}>
+
+        <p style={{ margin: "0 0 12px", fontSize: 16, color: accentColor, fontWeight: 500, lineHeight: 1.5 }}>
+          {subtitle}
+        </p>
+
+        <p style={{ margin: "0 0 4px", color: C.muted, fontSize: 15, lineHeight: 1.7, maxWidth: 800 }}>
           {description}
         </p>
-        
-        <div style={{ marginTop: 24, paddingLeft: 72, display: "flex", flexWrap: "wrap", gap: 24 }}>
+
+        <div style={{ marginTop: 24, display: "flex", flexWrap: "wrap", gap: 12 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px", background: C.s2, border: `1px solid ${C.border}`, borderRadius: 8 }}>
             <span style={{ fontSize: 18, fontWeight: 700, fontFamily: "JetBrains Mono, monospace", color: accentColor }}>
               {estimatedHours}h
