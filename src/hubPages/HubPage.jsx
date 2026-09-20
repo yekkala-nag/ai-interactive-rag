@@ -64,9 +64,15 @@ export function HubPage({ childId, onSelectTab }) {
   const firstHubId = children.length ? getHubPageId(children[0].id) : null;
 
   function handleTabClick(tabId) {
-    if (isTabUnlocked(tabId, topicMeta, progress)) {
-      onSelectTab(tabId);
-    }
+    onSelectTab(tabId);
+  }
+
+  function toggleDone(tabId) {
+    setProgress((p) => ({
+      completed: (p?.completed || []).includes(tabId)
+        ? (p.completed || []).filter((t) => t !== tabId)
+        : [...(p?.completed || []), tabId],
+    }));
   }
 
   return (
@@ -114,27 +120,26 @@ export function HubPage({ childId, onSelectTab }) {
       </div>
 
       {/* Topic Grid */}
+      <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>Follow the sequence, or jump to any topic. Tick topics off as you finish them.</p>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 12, marginBottom: 24 }}>
         {tabs.map(tabId => {
           const meta = topicMeta[tabId];
-          const unlocked = !meta?.p?.length || meta.p?.every(p => progress?.completed?.includes(p));
           const completed = progress?.completed?.includes(tabId);
           const level = meta?.l || 1;
+          const pendingPrereqs = (meta?.p || []).filter(p => !progress?.completed?.includes(p));
 
           return (
             <div
               key={tabId}
-              onClick={() => {
-                if (unlocked) onSelectTab(tabId);
-              }}
+              onClick={() => handleTabClick(tabId)}
               style={{
-                cursor: unlocked ? "pointer" : "not-allowed",
-                opacity: unlocked ? 1 : 0.5,
-                borderColor: completed ? C.tealDark : unlocked ? C.border : C.border,
+                cursor: "pointer",
+                opacity: 1,
+                borderColor: completed ? C.tealDark : C.border,
                 background: completed ? `rgba(94,196,200,0.12)` : C.surface,
                 transition: "all 0.2s",
                 padding: 16,
-                border: `1px solid ${completed ? C.tealDark : unlocked ? C.border : C.border}`,
+                border: `1px solid ${completed ? C.tealDark : C.border}`,
                 borderRadius: 10,
               }}
             >
@@ -150,17 +155,32 @@ export function HubPage({ childId, onSelectTab }) {
                 </span>
                 {completed && <span style={{ color: C.tealDark, fontSize: 16 }}>✓</span>}
               </div>
-              <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: unlocked ? C.text : C.muted }}>
+              <h3 style={{ margin: "0 0 6px", fontSize: 14, fontWeight: 600, color: C.text }}>
                 {(getTabById(tabId) || {}).label || tabId}
               </h3>
               <p style={{ margin: 0, fontSize: 11, color: C.muted, lineHeight: 1.4 }}>
                 {meta?.keywords?.slice(0, 3).join(", ") || "No description"}
               </p>
-              {meta?.p?.length && (
+              {meta?.p?.length ? (
                 <div style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${C.border}`, fontSize: 10, color: C.muted }}>
-                  Requires: {meta.p.filter(p => !progress?.completed?.includes(p)).join(", ")}
+                  {pendingPrereqs.length ? `Suggested after: ${pendingPrereqs.join(", ")}` : "Prerequisites complete ✓"}
                 </div>
-              )}
+              ) : null}
+              <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleTabClick(tabId); }}
+                  style={{ flex: 1, padding: "9px 12px", background: "transparent", color: C.tealInk, border: `1px solid ${C.tealDark}`, borderRadius: 8, fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}
+                >
+                  Open topic →
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); toggleDone(tabId); }}
+                  title={completed ? "Mark as not done" : "Mark as done"}
+                  style={{ padding: "9px 12px", background: completed ? C.tealDark : "transparent", color: completed ? "#FFFFFF" : C.muted, border: `1px solid ${completed ? C.tealDark : C.border}`, borderRadius: 8, fontSize: 12.5, fontWeight: 700, cursor: "pointer" }}
+                >
+                  {completed ? "✓ Done" : "Mark done"}
+                </button>
+              </div>
             </div>
           );
         })}

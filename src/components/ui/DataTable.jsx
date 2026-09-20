@@ -27,15 +27,20 @@ export default function DataTable({
   const [sort, setSort] = useState(initialSort || null);
   const [selected, setSelected] = useState(null);
 
-  const keys = searchKeys || columns.filter((c) => c.sortable !== false).map((c) => c.key);
+  const keys = useMemo(() => {
+    if (searchKeys && searchKeys.length) return searchKeys;
+    if (columns && columns.length) return columns.map((c) => c.key);
+    return [];
+  }, [searchKeys, columns]);
 
   const filtered = useMemo(() => {
     let out = rows;
     const q = query.trim().toLowerCase();
     if (q) {
-      out = out.filter((r) =>
-        keys.some((k) => String(r[k] ?? "").toLowerCase().includes(q))
-      );
+      out = out.filter((r) => {
+        const activeKeys = keys.length ? keys : Object.keys(r ?? {});
+        return activeKeys.some((k) => String(r[k] ?? "").toLowerCase().includes(q));
+      });
     }
     if (sort) {
       const col = columns.find((c) => c.key === sort.key);
