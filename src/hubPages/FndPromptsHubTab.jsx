@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { HubPage } from "./HubPage.jsx";
-import { getChildrenForUmbrella, getChildById, getTopicMeta } from "../registry/curriculum.js";
+import { getChildById, getChildSequence } from "../registry/curriculum.js";
 import {
   HubHero,
   TopicMap,
@@ -23,7 +23,7 @@ export default function FndPromptsHubTab({ onSelectTab }) {
   const child = getChildById("fnd_prompts");
   if (!child) return <div style={{ padding: 24, color: C.muted }}>Child umbrella not found</div>;
 
-  const tabs = getChildrenForUmbrella("foundations").find(c => c.id === "fnd_prompts")?.tabs || [];
+  const tabs = useMemo(() => getChildSequence("fnd_prompts"), []);
   
   const [progress, setProgress] = useState(() => {
     try {
@@ -43,24 +43,15 @@ export default function FndPromptsHubTab({ onSelectTab }) {
   }, [progress, child.id]);
 
   const completedTopics = progress?.completed || [];
-  const unlockedTopics = useMemo(() => {
-    const unlocked = new Set();
-    tabs.forEach(tabId => {
-      const meta = getTopicMeta(tabId);
-      const prereqs = meta?.p || [];
-      if (prereqs.every(p => completedTopics.includes(p))) {
-        unlocked.add(tabId);
-      }
-    });
-    return Array.from(unlocked);
-  }, [tabs, completedTopics]);
+  // Free navigation: every topic is clickable. Prerequisites stay as guidance
+  // (shown in HubPage cards), never as a hard block — matches HubContentPage
+  // and the fixed generic HubPage behavior.
+  const unlockedTopics = useMemo(() => [...tabs], [tabs]);
 
   const handleTabClick = (tabId) => {
-    if (unlockedTopics.includes(tabId)) {
-      setSelectedTopic(tabId);
-      setActiveView("topic");
-      onSelectTab(tabId);
-    }
+    setSelectedTopic(tabId);
+    setActiveView("topic");
+    onSelectTab(tabId);
   };
 
   const handleStartPath = (pathId, topicId) => {
@@ -256,17 +247,16 @@ export default function FndPromptsHubTab({ onSelectTab }) {
           Ready to start?
         </h3>
         <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>
-          Pick a learning path above or jump directly to any unlocked topic
+          Pick a learning path above or jump directly to any topic
         </p>
         <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
           {content.quickStartPaths.map(path => (
             <button
               key={path.id}
               onClick={() => {
-                const firstTopic = path.topics.find(t => unlockedTopics.includes(t));
+                const firstTopic = path.topics[0];
                 if (firstTopic) handleTabClick(firstTopic);
               }}
-              disabled={!path.topics.some(t => unlockedTopics.includes(t))}
               style={{
                 padding: "12px 24px",
                 background: path.id === "l1-foundations" ? C.tealDark : "transparent",
@@ -275,8 +265,8 @@ export default function FndPromptsHubTab({ onSelectTab }) {
                 borderRadius: 8,
                 fontSize: 13,
                 fontWeight: 600,
-                cursor: path.topics.some(t => unlockedTopics.includes(t)) ? "pointer" : "not-allowed",
-                opacity: path.topics.some(t => unlockedTopics.includes(t)) ? 1 : 0.5
+                cursor: "pointer",
+                opacity: 1
               }}
             >
               Start {path.label}

@@ -39,8 +39,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
 
   const getTopicStatus = (topicId, pathTopics, index) => {
     if (completedTopics.includes(topicId)) return "completed";
-    const prevCompleted = pathTopics.slice(0, index).every(t => completedTopics.includes(t));
-    return prevCompleted ? "available" : "locked";
+    return "available";
   };
 
   const STATUS_STYLES = {
@@ -55,7 +54,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
         Choose Your Learning Path
       </h3>
       <p style={{ margin: 0, color: C.muted, fontSize: 14 }}>
-        Three progressive journeys — each builds on the last. Complete L1 to unlock L2, L2 to unlock L3.
+        Three progressive journeys — each builds on the last. Follow in order, or jump to any topic.
       </p>
 
       {paths.map(path => {
@@ -63,10 +62,9 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
         const progress = getPathProgress(path);
         const isExpanded = activePath === path.id;
         const pathCompleted = progress.completed === progress.total;
-        const pathAvailable = path.id === "l1-foundations" || 
-          paths.find(p => p.id === "l1-foundations")?.topics.every(t => completedTopics.includes(t));
-        
-        const canExpand = pathAvailable || path.id === "l1-foundations";
+        // Free navigation: every path expands and every topic opens.
+        // Sequence stays as guidance; nothing is hard-locked.
+        const canExpand = true;
 
         return (
           <div 
@@ -81,15 +79,14 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
           >
             <button
               onClick={() => setActivePath(isExpanded ? null : path.id)}
-              disabled={!canExpand}
               style={{
                 width: "100%",
                 padding: "16 20",
                 background: isExpanded ? `${color}10` : "transparent",
                 border: "none",
                 borderBottom: isExpanded ? `1px solid ${color}30` : "none",
-                cursor: canExpand ? "pointer" : "not-allowed",
-                opacity: canExpand ? 1 : 0.5,
+                cursor: "pointer",
+                opacity: 1,
                 display: "flex",
                 alignItems: "center",
                 gap: 16,
@@ -112,7 +109,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
               
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 4 }}>
-                  <h4 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: canExpand ? C.text : C.muted }}>
+                  <h4 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: C.text }}>
                     {path.label}
                   </h4>
                   {pathCompleted && (
@@ -169,7 +166,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
               </div>
             </button>
 
-            {isExpanded && canExpand && (
+            {isExpanded && (
               <div style={{ padding: "0 20 20", animation: "slideDown 0.2s ease" }}>
                 <style>{`
                   @keyframes slideDown {
@@ -187,8 +184,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                     return (
                       <button
                         key={topicId}
-                        onClick={() => status !== "locked" && onTopicClick?.(topicId)}
-                        disabled={status === "locked"}
+                        onClick={() => onTopicClick?.(topicId)}
                         style={{
                           display: "flex",
                           alignItems: "center",
@@ -197,10 +193,10 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                           background: status === "completed" ? `rgba(94,196,200,0.12)` : C.s2,
                           border: `1px solid ${styles.border}`,
                           borderRadius: 8,
-                          cursor: status === "locked" ? "not-allowed" : "pointer",
+                          cursor: "pointer",
                           textAlign: "left",
                           transition: "all 0.2s",
-                          opacity: status === "locked" ? 0.5 : 1
+                          opacity: 1
                         }}
                       >
                         <div style={{
@@ -229,7 +225,7 @@ export function JourneyStepper({ paths, completedTopics = [], onStartPath, onTop
                             {topicId}
                           </div>
                           <div style={{ fontSize: 11, color: C.muted }}>
-                            {status === "completed" ? "Completed" : status === "available" ? "Ready to start" : "Complete previous topics"}
+                            {status === "completed" ? "Completed" : "Ready to start"}
                           </div>
                         </div>
                         
