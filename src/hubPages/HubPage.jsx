@@ -53,9 +53,12 @@ export function HubPage({ childId, onSelectTab }) {
     } catch {}
   }, [progress, childId]);
 
-  const completedCount = (progress?.completed || []).filter(id => tabs.includes(id)).length;
+  const completedIds = (progress?.completed || []).filter(id => tabs.includes(id));
+  const completedCount = completedIds.length;
   const totalCount = tabs.length;
   const pct = totalCount ? Math.min(100, Math.round((completedCount / totalCount) * 100)) : 0;
+  const nextUp = tabs.find(id => !completedIds.includes(id)) || tabs[0];
+  const isComplete = totalCount > 0 && completedCount >= totalCount;
 
   const children = getChildren(child.umbrellaId);
   const currentIndex = children.findIndex(c => c.id === childId);
@@ -99,8 +102,8 @@ export function HubPage({ childId, onSelectTab }) {
         <p style={{ color: C.muted, fontSize: 14, margin: 0 }}>{child.blurb}</p>
       </div>
 
-      {/* Progress Ring + Stats */}
-      <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, marginBottom: 24, alignItems: "center" }}>
+      {/* Progress Ring + Stats + Resume CTA */}
+      <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 24, marginBottom: 16, alignItems: "center" }}>
         <svg width={80} height={80} style={{ transform: "rotate(-90deg)" }}>
           <circle cx="40" cy="40" r={37} fill="none" stroke={C.border} strokeWidth={6} />
           <circle
@@ -129,6 +132,22 @@ export function HubPage({ childId, onSelectTab }) {
           </div>
         </div>
       </div>
+
+      {nextUp && (
+        <div style={{ marginBottom: 24 }}>
+          <button
+            onClick={() => handleTabClick(nextUp)}
+            title={completedCount === 0 ? `Start with ${(getTabById(nextUp) || {}).label || nextUp}` : (isComplete ? `Review ${(getTabById(nextUp) || {}).label || nextUp}` : `Continue with ${(getTabById(nextUp) || {}).label || nextUp}`)}
+            style={{ padding: "12px 24px", background: C.tealDark, color: "#FFFFFF", border: "none", borderRadius: 8, fontSize: 13, fontWeight: 700, cursor: "pointer" }}
+          >
+            {completedCount === 0
+              ? `Start the hub →`
+              : (isComplete
+                ? `Review: ${(getTabById(nextUp) || {}).label || nextUp} →`
+                : `Continue: ${(getTabById(nextUp) || {}).label || nextUp} →`)}
+          </button>
+        </div>
+      )}
 
       {/* Topic Grid */}
       <p style={{ margin: "0 0 16px", color: C.muted, fontSize: 14 }}>Follow the sequence, or jump to any topic. Tick topics off as you finish them.</p>
