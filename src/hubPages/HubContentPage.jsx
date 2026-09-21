@@ -98,18 +98,8 @@ export default function HubContentPage({ childId, content, onSelectTab }) {
 
   return (
     <div style={{ padding: 24, maxWidth: 1200, margin: "0 auto" }}>
-      <HubHero
-        title={hero.title}
-        subtitle={hero.subtitle}
-        description={hero.description}
-        estimatedHours={hero.hours}
-        totalTopics={seq.length}
-        levels={levelCounts}
-        icon={hero.icon}
-        accentColor={C.teal}
-      />
 
-      {/* Navigation (top) */}
+      {/* Navigation (top — before hero) */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 16, marginBottom: 16, borderBottom: `1px solid ${C.border}` }}>
         {prevHubTarget ? (
           <button
@@ -140,6 +130,17 @@ export default function HubContentPage({ childId, content, onSelectTab }) {
           </button>
         ) : <span />}
       </div>
+
+      <HubHero
+        title={hero.title}
+        subtitle={hero.subtitle}
+        description={hero.description}
+        estimatedHours={hero.hours}
+        totalTopics={seq.length}
+        levels={levelCounts}
+        icon={hero.icon}
+        accentColor={C.teal}
+      />
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginBottom: 24 }}>
         {stages.map((s, i) => (
