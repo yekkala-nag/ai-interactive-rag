@@ -286,6 +286,7 @@ export default function App() {
   const prevTabRef = useRef(activeTab);
   const isFirstSync = useRef(true);
   const isPopRef = useRef(false);
+  const contentScrollRef = useRef(null);
 
   // Normalize invalid ?tab= on mount so URL and state never diverge
   useEffect(() => {
@@ -332,12 +333,13 @@ export default function App() {
   useEffect(() => {
     const prev = prevTabRef.current;
     if (prev !== activeTab) {
-      try { scrollMemory.current.set(prev, window.scrollY); } catch {}
+      const el = contentScrollRef.current;
+      try { scrollMemory.current.set(prev, el?.scrollTop ?? 0); } catch {}
       if (isPopRef.current) {
         const saved = scrollMemory.current.get(activeTab);
-        window.scrollTo(0, saved ?? 0);
+        if (el) el.scrollTop = saved ?? 0;
       } else {
-        window.scrollTo(0, 0);
+        if (el) el.scrollTop = 0;
       }
       isPopRef.current = false;
       // Move focus to main for keyboard / screen-reader users
@@ -389,6 +391,15 @@ export default function App() {
       <Page
         mobileOpen={mobileOpen}
         onCloseMobile={() => setMobileOpen(false)}
+        header={
+          <TopBar
+            activeTab={activeTab}
+            onSelectTab={handleTabSelect}
+            onSearchOpen={handleSearchOpen}
+            onToggleSidebar={() => setMobileOpen(!mobileOpen)}
+            sidebarCollapsed={!mobileOpen}
+          />
+        }
         sidebar={
           <Sidebar
             activeTab={activeTab}
@@ -402,42 +413,36 @@ export default function App() {
         sidebarCollapsed={sidebarCollapsed}
         onSidebarToggle={handleSidebarToggle}
       >
-        <TopBar
-          activeTab={activeTab}
-          onSelectTab={handleTabSelect}
-          onSearchOpen={handleSearchOpen}
-          onToggleSidebar={() => setMobileOpen(!mobileOpen)}
-          sidebarCollapsed={!mobileOpen}
-        />
-
-        <Container size="normal">
-          <TabLoader tabId={activeTab} onSelectTab={handleTabSelect} />
-          <AdaptiveWorkflowBar activeTab={activeTab} onSelectTab={handleTabSelect} />
-          <footer
-            className="bottom-nav"
-            style={{
-              marginTop: 'var(--ds-space-12)',
-              paddingTop: 'var(--ds-space-6)',
-              paddingBottom: 'calc(var(--ds-space-8) + env(safe-area-inset-bottom, 0px))',
-              borderTop: '1px solid var(--ds-color-border-subtle)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              textAlign: 'center',
-              fontSize: '13px',
-              color: 'var(--ds-color-text-secondary)'
-            }}
-          >
-            <div style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>
-              Curated by: Nagaraj Y
-            </div>
-            <div style={{ fontSize: '12px', color: '#f59e0b' }}>
-              Educational use only. No commercial use.
-            </div>
-          </footer>
-        </Container>
+        <div ref={contentScrollRef} style={{ flex: 1 }}>
+          <Container size="normal">
+            <TabLoader tabId={activeTab} onSelectTab={handleTabSelect} />
+            <AdaptiveWorkflowBar activeTab={activeTab} onSelectTab={handleTabSelect} />
+            <footer
+              className="bottom-nav"
+              style={{
+                marginTop: 'var(--ds-space-12)',
+                paddingTop: 'var(--ds-space-6)',
+                paddingBottom: 'calc(var(--ds-space-8) + env(safe-area-inset-bottom, 0px))',
+                borderTop: '1px solid var(--ds-color-border-subtle)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                textAlign: 'center',
+                fontSize: '13px',
+                color: 'var(--ds-color-text-secondary)'
+              }}
+            >
+              <div style={{ fontWeight: 600, color: 'var(--ds-color-text-primary)' }}>
+                Curated by: Nagaraj Y
+              </div>
+              <div style={{ fontSize: '12px', color: '#f59e0b' }}>
+                Educational use only. No commercial use.
+              </div>
+            </footer>
+          </Container>
+        </div>
 
         <CommandPalette
           isOpen={commandPaletteOpen}

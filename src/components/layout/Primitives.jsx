@@ -10,7 +10,7 @@ import { useState, useEffect, useRef } from 'react';
 // ============================================
 // Page — Root layout with sidebar + main (Responsive Mobile/Tablet)
 // ============================================
-export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle, mobileOpen, onCloseMobile }) {
+export function Page({ children, sidebar, header, sidebarCollapsed, onSidebarToggle, mobileOpen, onCloseMobile }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle, mob
     : (sidebarCollapsed ? '72px' : '320px');
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--ds-color-bg-canvas)', position: 'relative' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden', background: 'var(--ds-color-bg-canvas)', position: 'relative' }}>
       {/* MOBILE BACKDROP OVERLAY */}
       {isMobile && mobileOpen && (
         <div
@@ -43,31 +43,44 @@ export function Page({ children, sidebar, sidebarCollapsed, onSidebarToggle, mob
         />
       )}
 
-      {/* SIDEBAR CONTAINER */}
-      <div
-        aria-hidden={isMobile && !mobileOpen}
-        inert={isMobile && !mobileOpen ? true : undefined}
-        style={{
-        height: '100vh',
-        position: isMobile ? 'fixed' : 'sticky',
-        top: 0, left: 0,
-        background: 'var(--ds-color-bg-surface)',
-        borderRight: '1px solid var(--ds-color-border-subtle)',
-        display: 'flex',
-        flexDirection: 'column',
-        zIndex: isMobile ? 100 : 'var(--ds-zIndex-sidebar)',
-        width: sidebarWidth,
-        minWidth: sidebarWidth,
-        transition: 'width 0.25s cubic-bezier(0.4, 0, 0.2, 1), min-width 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-        overflow: 'hidden',
-        boxShadow: isMobile && mobileOpen ? '0 20px 40px rgba(0,0,0,0.4)' : 'none'
-      }}>
-        {sidebar}
-      </div>
+      {/* HEADER — full-width, fixed at top, never scrolls */}
+      {header && (
+        <div style={{ flexShrink: 0, zIndex: 'var(--ds-zIndex-sticky)' }}>
+          {header}
+        </div>
+      )}
 
-      <main id="main-content" tabIndex={-1} style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', width: '100%', outline: 'none' }} role="main">
-        {children}
-      </main>
+      {/* BODY: sidebar + main side by side, fills remaining height */}
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
+
+        {/* SIDEBAR CONTAINER */}
+        <div
+          aria-hidden={isMobile && !mobileOpen}
+          inert={isMobile && !mobileOpen ? true : undefined}
+          style={{
+            height: '100%',
+            position: isMobile ? 'fixed' : 'relative',
+            top: 0, left: 0,
+            background: 'var(--ds-color-bg-surface)',
+            borderRight: '1px solid var(--ds-color-border-subtle)',
+            display: 'flex',
+            flexDirection: 'column',
+            zIndex: isMobile ? 100 : 'var(--ds-zIndex-sidebar)',
+            width: sidebarWidth,
+            minWidth: sidebarWidth,
+            transition: 'width 0.25s cubic-bezier(0.4, 0, 0.2, 1), min-width 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+            overflow: 'hidden',
+            boxShadow: isMobile && mobileOpen ? '0 20px 40px rgba(0,0,0,0.4)' : 'none'
+          }}>
+          {sidebar}
+        </div>
+
+        <main id="main-content" tabIndex={-1} style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden', outline: 'none' }} role="main">
+          <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

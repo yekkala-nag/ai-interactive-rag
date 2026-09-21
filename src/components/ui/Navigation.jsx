@@ -278,7 +278,7 @@ const moduleOrder = UMBRELLA_TOPICS.map(m => m.id);
     <aside
       style={{
         width: '100%',
-        height: '100vh',
+        height: '100%',
         background: 'linear-gradient(135deg, #5EC4C8 0%, #06B6D4 100%)',
         color: '#0F1219',
         display: 'flex',
@@ -883,7 +883,6 @@ export function TopBar({ activeTab, onSelectTab, onSearchOpen, onToggleSidebar, 
     <header style={{
       background: 'var(--ds-color-bg-surface)',
       borderBottom: '1px solid var(--ds-color-border-subtle)',
-      position: 'sticky', top: 0, zIndex: 'var(--ds-zIndex-sticky)',
       backdropFilter: 'blur(20px) saturate(180%)',
       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif'
     }}>
