@@ -209,6 +209,7 @@ const TabComponents = {
   fr_eval_hub: lazy(() => import('./hubPages/FrEvalHubTab.jsx')),
   fr_ops_hub: lazy(() => import('./hubPages/FrOpsHubTab.jsx')),
   fr_frontiers_hub: lazy(() => import('./hubPages/FrFrontiersHubTab.jsx')),
+  aigentools: lazy(() => import('./aiGenTools/AiGenToolsTab.jsx')),
 };
 
 function TabLoader({ tabId, onSelectTab }) {
