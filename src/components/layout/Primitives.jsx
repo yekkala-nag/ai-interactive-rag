@@ -99,7 +99,7 @@ export function Container({ children, size = 'normal', className, style, ...prop
     <div style={{
       width: '100%',
       margin: '0 auto',
-      padding: '0 clamp(12px, 3vw, 24px)',
+      padding: '0 clamp(16px, 3vw, 24px)',
       maxWidth: sizeMap[size],
       boxSizing: 'border-box',
       ...style
@@ -115,9 +115,9 @@ export function Container({ children, size = 'normal', className, style, ...prop
 export function Section({ children, variant = 'default', className, style, ...props }) {
   const variantStyles = {
     default: {},
-    bordered: { border: '1px solid var(--ds-color-border-subtle)', borderRadius: 'var(--ds-radius-lg)', padding: 'clamp(12px, 2.5vw, 20px)' },
-    elevated: { boxShadow: 'var(--ds-shadow-sm)', borderRadius: 'var(--ds-radius-lg)', padding: 'clamp(12px, 2.5vw, 20px)' },
-    hero: { borderRadius: 'var(--ds-radius-xl)', background: 'linear-gradient(135deg, var(--ds-color-bg-surface) 0%, var(--ds-color-bg-surfaceHover) 100%)', border: '1px solid var(--ds-color-border-subtle)', padding: 'clamp(16px, 3vw, 28px)' },
+    bordered: { border: '1px solid #E5E7EB', borderRadius: '12px', padding: 'clamp(16px, 2.5vw, 24px)', background: '#FFFFFF' },
+    elevated: { boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)', borderRadius: '12px', padding: 'clamp(16px, 2.5vw, 24px)', background: '#FFFFFF' },
+    hero: { borderRadius: '12px', background: 'linear-gradient(135deg, #FFFFFF 0%, #F7F8FA 100%)', border: '1px solid #E5E7EB', padding: 'clamp(20px, 3vw, 32px)' },
   };
   const sectionStyles = {
     section: { marginBottom: 'var(--ds-space-8)' },

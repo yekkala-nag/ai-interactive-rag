@@ -1,6 +1,6 @@
 /**
  * Global styles — CSS reset + design token injection
- * Import once at app root
+ * EdTech Redesign — Clean, minimal, card-based
  */
 
 import { generateCSSVariables } from './tokens.js';
@@ -9,66 +9,66 @@ export const globalStyles = `
 ${generateCSSVariables({
   color: {
     bg: {
-      canvas: '#F5F5F7',
+      canvas: '#F7F8FA',
       surface: '#FFFFFF',
-      surfaceHover: '#EDEDF0',
+      surfaceHover: '#F1F3F5',
       elevated: '#FFFFFF',
     },
     border: {
-      subtle: '#E8E8EC',
-      default: '#D4D4DA',
-      strong: '#B8B8C4',
-      focus: '#5EC4C8',
+      subtle: '#E5E7EB',
+      default: '#D1D5DB',
+      strong: '#9CA3AF',
+      focus: '#3A9B9F',
     },
     text: {
-      primary: '#2D2D3A',
-      secondary: '#4A4A5A',
-      tertiary: '#6E6E80',
-      inverse: '#F5F5F7',
-      link: '#5EC4C8',
-      linkHover: '#3A9B9F',
+      primary: '#1A1D26',
+      secondary: '#4B5563',
+      tertiary: '#9CA3AF',
+      inverse: '#FFFFFF',
+      link: '#3A9B9F',
+      linkHover: '#2E7D80',
     },
     module: {
-      foundations: { primary: '#5EC4C8', light: 'rgba(94,196,200,0.14)', dark: '#1F6B6E' },
-      rag: { primary: '#F0A89A', light: 'rgba(240,168,154,0.14)', dark: '#C47A6A' },
-      context: { primary: '#C9B8E8', light: 'rgba(201,184,232,0.14)', dark: '#6B5E94' },
-      agents: { primary: '#F0A89A', light: 'rgba(240,168,154,0.14)', dark: '#C47A6A' },
-      platform: { primary: '#5EC4C8', light: 'rgba(94,196,200,0.14)', dark: '#1F6B6E' },
-      frontiers: { primary: '#C9B8E8', light: 'rgba(201,184,232,0.14)', dark: '#6B5E94' },
+      foundations: { primary: '#3A9B9F', light: 'rgba(58,155,159,0.10)', dark: '#1A6B6E' },
+      rag: { primary: '#E8836A', light: 'rgba(232,131,106,0.10)', dark: '#B85A42' },
+      context: { primary: '#9B89C4', light: 'rgba(155,137,196,0.10)', dark: '#6B5E94' },
+      agents: { primary: '#E8836A', light: 'rgba(232,131,106,0.10)', dark: '#B85A42' },
+      platform: { primary: '#3A9B9F', light: 'rgba(58,155,159,0.10)', dark: '#1A6B6E' },
+      frontiers: { primary: '#9B89C4', light: 'rgba(155,137,196,0.10)', dark: '#6B5E94' },
     },
     brand: {
-      teal: '#5EC4C8',
-      tealDark: '#3A9B9F',
-      tealInk: '#1F6B6E',
-      tealSoft: 'rgba(94,196,200,0.12)',
-      coral: '#F0A89A',
-      coralDeep: '#C47A6A',
-      coralSoft: 'rgba(240,168,154,0.14)',
+      teal: '#3A9B9F',
+      tealDark: '#2E7D80',
+      tealInk: '#1A6B6E',
+      tealSoft: 'rgba(58,155,159,0.08)',
+      coral: '#E8836A',
+      coralDeep: '#B85A42',
+      coralSoft: 'rgba(232,131,106,0.10)',
       lav: '#C9B8E8',
       lavDeep: '#9B89C4',
       lavInk: '#6B5E94',
-      lavSoft: 'rgba(201,184,232,0.14)',
-      ink: '#2D2D3A',
-      muted: '#B8B8C4',
-      line: '#E8E8EC',
+      lavSoft: 'rgba(155,137,196,0.10)',
+      ink: '#1A1D26',
+      muted: '#9CA3AF',
+      line: '#E5E7EB',
       editor: '#0F1219',
     },
     state: {
-      success: { light: '#2D9D6F', dark: '#34C47D' },
-      warning: { light: '#D4930A', dark: '#F5B731' },
-      error: { light: '#D44D4D', dark: '#EF6B6B' },
-      info: { light: '#4A7DC9', dark: '#6B9EE8' },
+      success: { light: '#059669', dark: '#10B981' },
+      warning: { light: '#D97706', dark: '#F59E0B' },
+      error: { light: '#DC2626', dark: '#EF4444' },
+      info: { light: '#2563EB', dark: '#3B82F6' },
     },
     overlay: {
-      backdrop: 'rgba(45, 45, 58, 0.4)',
-      modal: 'rgba(45, 45, 58, 0.6)',
+      backdrop: 'rgba(0, 0, 0, 0.3)',
+      modal: 'rgba(0, 0, 0, 0.5)',
     },
   },
   font: {
     family: {
-      sans: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif',
+      sans: '-apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", system-ui, sans-serif',
       mono: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
-      display: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif',
+      display: '-apple-system, BlinkMacSystemFont, "Inter", "SF Pro Display", "Segoe UI", system-ui, sans-serif',
     },
     size: {
       display: '36px',
@@ -90,11 +90,11 @@ ${generateCSSVariables({
       bold: 700,
     },
     lineHeight: {
-      tight: 1.1,
-      snug: 1.25,
-      normal: 1.35,
-      relaxed: 1.6,
-      loose: 1.7,
+      tight: 1.15,
+      snug: 1.3,
+      normal: 1.5,
+      relaxed: 1.65,
+      loose: 1.75,
     },
     letterSpacing: {
       tight: '-0.02em',
@@ -116,18 +116,18 @@ ${generateCSSVariables({
     16: '64px',
   },
   radius: {
-    sm: '4px',
+    sm: '6px',
     md: '8px',
     lg: '12px',
     xl: '16px',
     full: '9999px',
   },
   shadow: {
-    xs: '0 1px 2px rgba(0,0,0,0.03)',
-    sm: '0 1px 3px rgba(0,0,0,0.05)',
-    md: '0 4px 12px rgba(0,0,0,0.06)',
-    lg: '0 12px 28px rgba(0,0,0,0.08)',
-    xl: '0 20px 40px rgba(0,0,0,0.10)',
+    xs: '0 1px 2px rgba(0,0,0,0.04)',
+    sm: '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
+    md: '0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04)',
+    lg: '0 10px 15px rgba(0,0,0,0.06), 0 4px 6px rgba(0,0,0,0.04)',
+    xl: '0 20px 25px rgba(0,0,0,0.08), 0 8px 10px rgba(0,0,0,0.04)',
   },
   motion: {
     duration: {
@@ -176,20 +176,21 @@ body {
   min-height: 100vh;
 }
 
-/* Typography */
+/* Typography — Clean hierarchy */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--ds-font-family-display);
   font-weight: var(--ds-font-weight-bold);
   line-height: var(--ds-font-lineHeight-tight);
   color: var(--ds-color-text-primary);
+  letter-spacing: -0.01em;
 }
 
-h1 { font-size: var(--ds-font-size-h1); letter-spacing: var(--ds-font-letterSpacing-tight); }
-h2 { font-size: var(--ds-font-size-h2); letter-spacing: var(--ds-font-letterSpacing-snug); }
-h3 { font-size: var(--ds-font-size-h3); letter-spacing: var(--ds-font-letterSpacing-normal); }
-h4 { font-size: var(--ds-font-size-h4); letter-spacing: var(--ds-font-letterSpacing-normal); }
+h1 { font-size: var(--ds-font-size-h1); }
+h2 { font-size: var(--ds-font-size-h2); font-weight: var(--ds-font-weight-semibold); }
+h3 { font-size: var(--ds-font-size-h3); font-weight: var(--ds-font-weight-semibold); }
+h4 { font-size: var(--ds-font-size-h4); font-weight: var(--ds-font-weight-medium); }
 
-p { margin-bottom: var(--ds-space-4); }
+p { margin-bottom: var(--ds-space-4); line-height: var(--ds-font-lineHeight-relaxed); }
 
 a {
   color: var(--ds-color-text-link);
@@ -212,7 +213,7 @@ img, video, iframe, canvas, svg {
 }
 
 /* Selection */
-::selection { background: var(--ds-color-module-foundations-light); color: var(--ds-color-module-foundations-dark); }
+::selection { background: rgba(58,155,159,0.15); color: #1A6B6E; }
 
 /* Focus visible for all interactive */
 :focus-visible {
@@ -243,11 +244,11 @@ img, video, iframe, canvas, svg {
   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; height: 8px; }
+/* Scrollbar — Clean, minimal */
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--ds-color-border-default); border-radius: var(--ds-radius-full); }
-::-webkit-scrollbar-thumb:hover { background: var(--ds-color-border-strong); }
+::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
 ::-webkit-scrollbar-corner { background: transparent; }
 
 /* Utility classes */
